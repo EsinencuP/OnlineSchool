@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-tools/
+.identity-ops/
+.turbo/
+pnpm-lock.yaml
+packages/db/src/generated/
+packages/api-contracts/src/generated/
+docs/
+graphify-out/
+ref/
+template/
+AGENTS.md
+.codex/
+.playwright-mcp/

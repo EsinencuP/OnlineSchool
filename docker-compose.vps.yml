@@ -1,0 +1,17 @@
+# Compose >=2.24.4. Use real certificate files outside the repository.
+services:
+  nginx:
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Set the exact VPS hostname}
+      NGINX_ENVSUBST_FILTER: ^PUBLIC_HOST$
+    ports: !override ['80:80', '443:443']
+    volumes: !override
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infra/nginx/tls.conf.template:/etc/nginx/templates/default.conf.template:ro
+      - ${TLS_CERT_DIR:?Set external certificate directory}:/etc/nginx/tls:ro
+    healthcheck:
+      test:
+        [
+          CMD-SHELL,
+          'wget -q --no-check-certificate -O /dev/null --header="Host: $$PUBLIC_HOST" https://127.0.0.1/health',
+        ]

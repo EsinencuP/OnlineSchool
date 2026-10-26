@@ -1,0 +1,13 @@
+name: Install workspace
+description: Node 24 and pinned pnpm; no deployment credentials or persistent cache
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      with:
+        node-version-file: .nvmrc
+        package-manager-cache: false
+    - shell: bash
+      run: npm install --global pnpm@10.34.9
+    - shell: bash
+      run: pnpm install --frozen-lockfile

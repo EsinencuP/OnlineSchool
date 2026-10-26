@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dist-tools/
+.identity-ops/
+.codex/
+.playwright-mcp/
+.vercel/
+.neon
+.turbo/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+packages/db/src/generated/
+*.log

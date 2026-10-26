@@ -1,0 +1,40 @@
+{
+  "name": "online-school",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": ">=9 <13"
+  },
+  "scripts": {
+    "postinstall": "pnpm run generate",
+    "generate": "pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "eslint . --max-warnings 0",
+    "lint:packages": "turbo run lint",
+    "test": "turbo run test && node --test scripts/monorepo-smoke.test.mjs",
+    "test:unit": "pnpm -r --if-present test:unit && node --test scripts/monorepo-smoke.test.mjs",
+    "test:integration:ci": "node infra/ci/integration.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:seed": "pnpm --filter @online-school/db db:seed",
+    "db:reset-qa": "pnpm --filter @online-school/db db:reset-qa",
+    "db:migrate:dry-run": "pnpm --filter @online-school/db db:migrate:dry-run",
+    "db:migrate:up": "pnpm --filter @online-school/db db:migrate:up",
+    "generate:client": "pnpm --filter @online-school/api build && pnpm --filter @online-school/api export:openapi && pnpm --filter @online-school/api-contracts generate:client"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@types/node": "24.19.2",
+    "eslint": "9.39.5",
+    "eslint-config-prettier": "10.1.8",
+    "globals": "17.13.0",
+    "prettier": "3.9.10",
+    "turbo": "2.11.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0"
+  }
+}

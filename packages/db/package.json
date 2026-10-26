@@ -1,0 +1,50 @@
+{
+  "name": "@online-school/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "build": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false",
+    "typecheck": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "test": "node --test test/*.test.mjs",
+    "test:unit": "node --test test/*.test.mjs",
+    "test:integration": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/integration/*.test.mjs",
+    "test:qa": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/qa/*.test.mjs",
+    "db:validate": "prisma validate",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "pnpm run build && node dist-tools/seed.js",
+    "db:seed:reference": "prisma db seed",
+    "db:reset-qa": "pnpm run build && node dist-tools/scripts/database-tools.js reset-qa",
+    "db:migrate:dry-run": "pnpm run build && node dist-tools/scripts/database-tools.js dry-run",
+    "db:migrate:up": "pnpm run build && node dist-tools/scripts/database-tools.js up",
+    "seed:run": "pnpm run build && node prisma/seed.mjs",
+    "db:migrate:legacy": "prisma migrate dev --config prisma.legacy.config.ts",
+    "db:deploy:legacy": "prisma migrate deploy --config prisma.legacy.config.ts"
+  },
+  "dependencies": {
+    "@online-school/shared": "workspace:*",
+    "@prisma/adapter-pg": "7.10.1",
+    "@prisma/client": "7.10.1",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@types/pg": "8.23.1",
+    "dotenv": "18.0.9",
+    "prisma": "7.10.1"
+  }
+}

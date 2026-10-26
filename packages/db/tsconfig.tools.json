@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "strict": true, "rootDir": ".", "outDir": "dist-tools", "types": ["node"] },
+  "include": ["seed.ts", "scripts/**/*.ts"]
+}
