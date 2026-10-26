@@ -7,7 +7,14 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "API process is running; database and worker checked separately"
+            "description": "API process is running; database and worker checked separately",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthProbeResponse"
+                }
+              }
+            }
           }
         },
         "summary": "Check API process liveness",
@@ -23,10 +30,24 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Fresh worker heartbeat in PostgreSQL"
+            "description": "Fresh worker heartbeat in PostgreSQL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthProbeResponse"
+                }
+              }
+            }
           },
           "503": {
-            "description": "Worker or database unavailable"
+            "description": "Worker or database unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthProbeResponse"
+                }
+              }
+            }
           }
         },
         "summary": "Check worker heartbeat",
@@ -6889,6 +6910,29 @@
         "type": "object",
         "properties": {},
         "additionalProperties": false
+      },
+      "HealthProbeResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "unavailable"
+            ]
+          },
+          "service": {
+            "type": "string",
+            "enum": [
+              "api",
+              "worker"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "service"
+        ]
       },
       "HealthResponse": {
         "type": "object",

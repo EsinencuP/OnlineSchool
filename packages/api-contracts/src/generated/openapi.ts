@@ -1149,6 +1149,12 @@ export interface components {
             [key: string]: unknown;
         };
         GenerateSlotOccurrencesRequest: Record<string, never>;
+        HealthProbeResponse: {
+            /** @enum {string} */
+            status: "ok" | "unavailable";
+            /** @enum {string} */
+            service: "api" | "worker";
+        };
         HealthResponse: {
             /** @enum {string} */
             status: "ok";
@@ -1781,7 +1787,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["HealthProbeResponse"];
+                };
             };
         };
     };
@@ -1799,14 +1807,18 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["HealthProbeResponse"];
+                };
             };
             /** @description Worker or database unavailable */
             503: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["HealthProbeResponse"];
+                };
             };
         };
     };

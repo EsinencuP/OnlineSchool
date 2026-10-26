@@ -326,6 +326,27 @@ export interface FinancialPeriodResponse {
 
 export interface GenerateSlotOccurrencesRequest { [key: string]: unknown }
 
+export type HealthProbeResponseStatus = typeof HealthProbeResponseStatus[keyof typeof HealthProbeResponseStatus];
+
+
+export const HealthProbeResponseStatus = {
+  ok: 'ok',
+  unavailable: 'unavailable',
+} as const;
+
+export type HealthProbeResponseService = typeof HealthProbeResponseService[keyof typeof HealthProbeResponseService];
+
+
+export const HealthProbeResponseService = {
+  api: 'api',
+  worker: 'worker',
+} as const;
+
+export interface HealthProbeResponse {
+  status: HealthProbeResponseStatus;
+  service: HealthProbeResponseService;
+}
+
 export type HealthResponseStatus = typeof HealthResponseStatus[keyof typeof HealthResponseStatus];
 
 
@@ -1040,7 +1061,7 @@ export const getGetApiHealthUrl = () => {
  */
 export const getApiHealth = ( options?: Parameters<typeof schoolFetch>[1]) => {
 
-  return schoolFetch<void>(getGetApiHealthUrl(),
+  return schoolFetch<HealthProbeResponse>(getGetApiHealthUrl(),
   {
     ...options,
     method: 'GET'
@@ -1065,7 +1086,7 @@ export const getGetWorkerHealthUrl = () => {
  */
 export const getWorkerHealth = ( options?: Parameters<typeof schoolFetch>[1]) => {
 
-  return schoolFetch<void>(getGetWorkerHealthUrl(),
+  return schoolFetch<HealthProbeResponse>(getGetWorkerHealthUrl(),
   {
     ...options,
     method: 'GET'

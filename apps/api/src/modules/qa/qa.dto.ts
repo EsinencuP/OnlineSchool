@@ -1,5 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
+export class HealthProbeResponse {
+  @ApiProperty({ enum: ['ok', 'unavailable'] }) status!: 'ok' | 'unavailable';
+  @ApiProperty({ enum: ['api', 'worker'] }) service!: 'api' | 'worker';
+}
+
 export class ComponentStatusResponse {
   @ApiProperty({ enum: ['ok'] }) api!: 'ok';
   @ApiProperty({ enum: ['ok', 'unavailable'] }) db!: 'ok' | 'unavailable';

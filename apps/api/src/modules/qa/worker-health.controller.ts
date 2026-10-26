@@ -3,6 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from '../../core/rbac/decorators.js';
 import { DatabaseService } from '../../core/database/database.module.js';
 import type { HttpResponse } from '../../core/http.js';
+import { HealthProbeResponse } from './qa.dto.js';
 
 @ApiTags('Foundation')
 @Controller('api/health/worker')
@@ -17,9 +18,17 @@ export class WorkerHealthController {
     description:
       'Public liveness only. Returns 503 when no worker heartbeat is fresh; no queue or personal data is exposed.',
   })
-  @ApiResponse({ status: 200, description: 'Fresh worker heartbeat in PostgreSQL' })
-  @ApiResponse({ status: 503, description: 'Worker or database unavailable' })
-  async health(@Res({ passthrough: true }) res: HttpResponse) {
+  @ApiResponse({
+    status: 200,
+    type: HealthProbeResponse,
+    description: 'Fresh worker heartbeat in PostgreSQL',
+  })
+  @ApiResponse({
+    status: 503,
+    type: HealthProbeResponse,
+    description: 'Worker or database unavailable',
+  })
+  async health(@Res({ passthrough: true }) res: HttpResponse): Promise<HealthProbeResponse> {
     res.setHeader('Cache-Control', 'no-store');
     try {
       const [row] = await this.database.client.$queryRaw<{ live: boolean }[]>`
@@ -43,9 +52,10 @@ export class ApiHealthController {
   @ApiOperation({ operationId: 'getApiHealth', summary: 'Check API process liveness' })
   @ApiResponse({
     status: 200,
+    type: HealthProbeResponse,
     description: 'API process is running; database and worker checked separately',
   })
-  health(@Res({ passthrough: true }) res: HttpResponse) {
+  health(@Res({ passthrough: true }) res: HttpResponse): HealthProbeResponse {
     res.setHeader('Cache-Control', 'no-store');
     return { status: 'ok', service: 'api' };
   }
