@@ -1,0 +1,98 @@
+name: Foundation CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm -r typecheck
+
+  lint:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm -r lint
+      - run: pnpm exec eslint infra scripts --max-warnings 0
+
+  unit-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @online-school/worker build
+      - run: pnpm test:unit
+
+  integration-test:
+    # Owner decision, TASK-14: one working environment, no additional test databases.
+    # Existing destructive/synthetic suites must not be redirected to the working Neon DB.
+    # Deferred until the owner approves a compatible TASK-15 verification strategy.
+    if: ${{ false }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_USER: postgres
+          # Disposable loopback CI service only. Existing tests create no-password runtime probes.
+          # Never apply this authentication configuration to Compose, Neon or a VPS.
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ['127.0.0.1:5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d postgres"
+          --health-interval 5s --health-timeout 3s --health-retries 15
+    env:
+      CI: 'true'
+      APP_ENV: test
+      # Ephemeral CI connections, not production repository secrets.
+      DATABASE_URL_CI: postgresql://postgres@127.0.0.1:5432/postgres
+      DATABASE_URL_TEST: postgresql://postgres@127.0.0.1:5432/online_school_test_template_ci
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @online-school/db build && pnpm --filter @online-school/worker build
+      - run: pnpm test:integration:ci
+
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm -r build
+        env:
+          BUILD_COMMIT_SHA: ${{ github.sha }}
+
+  docker-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - run: node infra/create-local-env.mjs
+      - run: docker compose config --quiet
+      - run: docker compose build
+      # No env files, Docker save, database dumps, traces or secret-bearing artifacts are uploaded.

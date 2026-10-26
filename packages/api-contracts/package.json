@@ -1,0 +1,33 @@
+{
+  "name": "@online-school/api-contracts",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "openapi"
+  ],
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "generate": "openapi-typescript openapi/openapi.json -o src/generated/openapi.ts",
+    "build": "pnpm run generate && tsc -b --pretty false",
+    "typecheck": "pnpm run generate && tsc -b --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "generate:client": "orval --config orval.config.mjs && pnpm run generate"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "orval": "8.45.0"
+  },
+  "dependencies": {
+    "@online-school/shared": "workspace:*"
+  }
+}

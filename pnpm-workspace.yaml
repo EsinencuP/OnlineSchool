@@ -1,0 +1,24 @@
+packages:
+  - apps/*
+  - packages/*
+
+minimumReleaseAgeExclude:
+  - '@pnpm/exe@10.34.9'
+  - '@pnpm/linux-arm64@10.34.9'
+  - '@pnpm/linux-x64@10.34.9'
+  - '@pnpm/macos-arm64@10.34.9'
+  - '@pnpm/macos-x64@10.34.9'
+  - '@pnpm/win-arm64@10.34.9'
+  - '@pnpm/win-x64@10.34.9'
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@prisma/engines'
+  - esbuild
+  - prisma
+
+# openapi-typescript 7.13.0 still declares TS ^5.x; generated output is checked with TS 6.0.3.
+# Keep strict peer validation for every other dependency.
+peerDependencyRules:
+  allowedVersions:
+    'openapi-typescript>typescript': '6.0.3'

@@ -1,0 +1,1981 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../src/generated/prisma"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "js"
+  previewFeatures        = ["partialIndexes"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AccountKind {
+  STUDENT
+  STAFF
+  TEACHER
+}
+
+enum RoleCode {
+  DIRECTOR
+  MANAGER
+  TEACHER
+  STUDENT
+  TECH_OPERATOR
+}
+
+enum RelationshipRole {
+  PARENT
+  LEGAL_GUARDIAN
+  AUTHORIZED_CONTACT
+  OTHER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  DISPUTED
+  REVOKED
+}
+
+enum MembershipStatus {
+  ACTIVE
+  ENDED
+  CANCELLED
+}
+
+enum StudentActivationBasis {
+  FULL_PAYMENT
+  LIMITED_DIRECTOR_ADMISSION
+}
+
+enum MfaChallengePurpose {
+  REGISTRATION
+  AUTHENTICATION
+  RECOVERY
+}
+
+enum LeadStage {
+  NEW
+  CONTACTED
+  TRIAL_SCHEDULED
+  TRIAL_DONE
+  AWAITING_PAYMENT
+  CONVERTED
+  CLOSED
+}
+
+enum ContactChannel {
+  CALL
+  MESSAGE
+  EMAIL
+  OTHER
+}
+
+enum CrmTaskType {
+  MANUAL
+  FOLLOW_UP
+  TRIAL_FOLLOW_UP
+  PAYMENT_FOLLOW_UP
+}
+
+enum CrmTaskStatus {
+  OPEN
+  RESOLVED
+  CANCELLED
+}
+
+// Owner: Student registry / Relations. Contacts never identify/deduplicate a person.
+model Student {
+  payment_contacts PaymentReceipt[] @relation("PaymentContactStudent")
+  id               String           @id @default(uuid()) @db.Uuid
+  full_name        String // PII
+  birth_date       DateTime?        @db.Date // PII
+  phone            String? // PII; deliberately not unique
+  email            String? // PII; deliberately not unique
+  archived_at      DateTime?        @db.Timestamptz(3)
+  created_at       DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at       DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+
+  representative_links                    StudentRepresentativeLink[] @relation("StudentRelations")
+  memberships                             HouseholdMembership[]       @relation("StudentMemberships")
+  accounts                                StudentAccount[]            @relation("StudentAccounts")
+  lead_links                              LeadStudentLink[]           @relation("StudentLeadLinks")
+  manager_assignments                     AssignedManager[]           @relation("StudentManagers")
+  contact_logs                            ContactLog[]                @relation("StudentContacts")
+  crm_tasks                               CrmTask[]                   @relation("StudentTasks")
+  t03_studentsubjectenrollment_student_id StudentSubjectEnrollment[]  @relation("StudentSubjectEnrollment_student_id")
+  t04_homeworksubmission_student_id       HomeworkSubmission[]        @relation("HomeworkSubmission_student_id")
+
+  @@map("students")
+}
+
+// A representative is a person, never a separate parent login.
+model Representative {
+  id          String    @id @default(uuid()) @db.Uuid
+  full_name   String // PII
+  phone       String? // PII; family members may share contacts
+  email       String? // PII
+  archived_at DateTime? @db.Timestamptz(3)
+  created_at  DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  student_links StudentRepresentativeLink[] @relation("RepresentativeRelations")
+  memberships   HouseholdMembership[]       @relation("RepresentativeMemberships")
+  contact_logs  ContactLog[]                @relation("RepresentativeContacts")
+
+  @@map("representatives")
+}
+
+model StudentRepresentativeLink {
+  id                   String             @id @default(uuid()) @db.Uuid
+  student_id           String             @db.Uuid
+  representative_id    String             @db.Uuid
+  role                 RelationshipRole
+  basis                String // PII: restricted legal/relationship basis, not a public document URL
+  verification_status  VerificationStatus @default(PENDING)
+  verified_at          DateTime?          @db.Timestamptz(3)
+  verified_by_staff_id String?            @db.Uuid
+  valid_from           DateTime           @default(now()) @db.Timestamptz(3)
+  valid_to             DateTime?          @db.Timestamptz(3)
+  created_at           DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+
+  student        Student                    @relation("StudentRelations", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_relation_student")
+  representative Representative             @relation("RepresentativeRelations", fields: [representative_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_relation_representative")
+  verified_by    StaffAccount?              @relation("RelationVerifiedBy", fields: [verified_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_relation_verifier")
+  verifications  RelationshipVerification[] @relation("RelationVerifications")
+
+  @@index([student_id, verification_status])
+  @@index([representative_id])
+  @@index([verified_by_staff_id])
+  @@map("student_representative_links")
+}
+
+// Membership groups people; it confers neither legal authority nor account access.
+model Household {
+  id                  String    @id @default(uuid()) @db.Uuid
+  label               String? // PII: may contain a family name
+  archived_at         DateTime? @db.Timestamptz(3)
+  created_by_staff_id String?   @db.Uuid
+  created_at          DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  memberships HouseholdMembership[] @relation("HouseholdMembers")
+  created_by  StaffAccount?         @relation("HouseholdCreator", fields: [created_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_household_creator")
+
+  @@map("households")
+}
+
+model HouseholdMembership {
+  id                   String           @id @default(uuid()) @db.Uuid
+  household_id         String           @db.Uuid
+  student_id           String?          @db.Uuid
+  representative_id    String?          @db.Uuid
+  status               MembershipStatus @default(ACTIVE)
+  valid_from           DateTime         @default(now()) @db.Timestamptz(3)
+  valid_to             DateTime?        @db.Timestamptz(3)
+  basis                String // PII: reason/evidence for this membership change
+  recorded_by_staff_id String           @db.Uuid
+  created_at           DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+
+  household      Household       @relation("HouseholdMembers", fields: [household_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_membership_household")
+  student        Student?        @relation("StudentMemberships", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_membership_student")
+  representative Representative? @relation("RepresentativeMemberships", fields: [representative_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_membership_representative")
+  recorded_by    StaffAccount    @relation("MembershipRecordedBy", fields: [recorded_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_membership_recorder")
+
+  @@unique([student_id], map: "uq_student_active_household", where: raw("status = 'ACTIVE'"))
+  @@unique([household_id, representative_id], map: "uq_representative_active_household", where: raw("status = 'ACTIVE'"))
+  @@index([household_id, status])
+  @@index([student_id, valid_from])
+  @@index([representative_id])
+  @@index([recorded_by_staff_id])
+  // SQL adds XOR/period checks and exclusion of overlapping student history.
+  @@map("household_memberships")
+}
+
+// Historical verification results are separate from the current link projection.
+model RelationshipVerification {
+  id                   String             @id @default(uuid()) @db.Uuid
+  link_id              String             @db.Uuid
+  result               VerificationStatus
+  basis                String // PII
+  evidence_ref         String? // PII: opaque private evidence reference; no public/signed URL
+  verified_by_staff_id String             @db.Uuid
+  verified_at          DateTime           @default(now()) @db.Timestamptz(3)
+  created_at           DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+
+  link        StudentRepresentativeLink @relation("RelationVerifications", fields: [link_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_verification_link")
+  verified_by StaffAccount              @relation("VerificationPerformedBy", fields: [verified_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_verification_staff")
+
+  @@index([link_id, verified_at])
+  @@index([verified_by_staff_id])
+  @@map("relationship_verifications")
+}
+
+// Owner: Identity / Access. Shared technical principal avoids polymorphic auth FKs.
+// Profile kind is enforced by composite FKs and SQL CHECKs, not inferred from contacts.
+model AuthAccount {
+  slot_changes                   SlotChangeEvent[] @relation("SlotChangeAuthor")
+  id                             String            @id @default(uuid()) @db.Uuid
+  kind                           AccountKind
+  login_id                       String            @unique // PII: authentication identifier, not a person deduplication key
+  password_hash                  String? // AUTH_SECRET: hash only; never a plaintext password
+  disabled_at                    DateTime?         @db.Timestamptz(3)
+  recovery_registration_required Boolean           @default(false)
+  created_at                     DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at                     DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
+
+  student_profile                 StudentAccount?         @relation("StudentAuth")
+  staff_profile                   StaffAccount?           @relation("StaffAuth")
+  teacher_profile                 TeacherAccount?         @relation("TeacherAuth")
+  role_assignments                RoleAssignment[]        @relation("AccountRoles")
+  sessions                        Session[]               @relation("AccountSessions")
+  webauthn_credentials            WebAuthnCredential[]    @relation("AccountCredentials")
+  mfa_challenges                  MfaChallenge[]          @relation("AccountChallenges")
+  revocations                     AccessRevocation[]      @relation("AccountRevocations")
+  performed_revocations           AccessRevocation[]      @relation("RevocationActor")
+  recovery_authorizations         RecoveryAuthorization[] @relation("RecoverySubject")
+  authorized_recoveries           RecoveryAuthorization[] @relation("RecoveryAuthorizer")
+  t03_lessonchangeevent_author_id LessonChangeEvent[]     @relation("LessonChangeEvent_author_id")
+  t04_s3object_uploaded_by        S3Object[]              @relation("S3Object_uploaded_by")
+  t04_filepermission_granted_by   FilePermission[]        @relation("FilePermission_granted_by")
+  t04_filepermission_revoked_by   FilePermission[]        @relation("FilePermission_revoked_by")
+  t04_file_permission_subject     FilePermission[]        @relation("FilePermissionSubject")
+  t04_fileauditlog_actor_id       FileAuditLog[]          @relation("FileAuditLog_actor_id")
+  t04_auditevent_actor_id         AuditEvent[]            @relation("AuditEvent_actor_id")
+
+  @@unique([id, kind], map: "uq_account_id_kind")
+  @@map("auth_accounts")
+}
+
+model StudentAccount {
+  id                                 String                 @id @default(uuid()) @db.Uuid
+  student_id                         String                 @db.Uuid
+  account_id                         String                 @db.Uuid
+  account_kind                       AccountKind            @default(STUDENT)
+  activation_basis                   StudentActivationBasis
+  // Payment and admission are now backed by financial FKs and SQL validation.
+  activation_subscription_id         String                 @db.Uuid
+  activation_payment_confirmation_id String                 @db.Uuid
+  activation_director_admission_id   String?                @db.Uuid
+  activation_confirmed_by_staff_id   String                 @db.Uuid
+  activated_at                       DateTime               @db.Timestamptz(3)
+  deactivated_at                     DateTime?              @db.Timestamptz(3)
+  created_at                         DateTime               @default(now()) @db.Timestamptz(3)
+  updated_at                         DateTime               @default(now()) @updatedAt @db.Timestamptz(3)
+
+  student                             Student                    @relation("StudentAccounts", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_student_account_student")
+  account                             AuthAccount                @relation("StudentAuth", fields: [account_id, account_kind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict, map: "fk_student_account_auth")
+  confirmed_by                        StaffAccount               @relation("StudentActivationConfirmedBy", fields: [activation_confirmed_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_student_activation_staff")
+  activation_subscription_ref         Subscription               @relation("StudentAccount_activation_subscription_id", fields: [activation_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_activation_subscription")
+  activation_payment_confirmation_ref PaymentReceipt             @relation("StudentAccount_activation_payment_confirmation_id", fields: [activation_payment_confirmation_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_activation_payment")
+  activation_director_admission_ref   TemporaryAccessPermission? @relation("StudentAccount_activation_director_admission_id", fields: [activation_director_admission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_activation_director")
+
+  @@unique([account_id, account_kind], map: "uq_student_auth_profile")
+  @@unique([student_id], map: "uq_student_active_account", where: raw("deactivated_at IS NULL"))
+  @@index([student_id, activated_at])
+  @@index([activation_confirmed_by_staff_id])
+  @@index([activation_subscription_id])
+  @@index([activation_payment_confirmation_id])
+  @@index([activation_director_admission_id])
+  @@map("student_accounts")
+}
+
+model StaffAccount {
+  exception_accruals   TeacherAccrual[]      @relation("AccrualExceptionDirector")
+  recorded_engagements TeacherEngagement[]   @relation("EngagementRecorder")
+  recorded_tenure      TeacherTenureCredit[] @relation("TenureRecorder")
+  promised_rates       TeacherRatePromise[]  @relation("RatePromiseRecorder")
+  id                   String                @id @default(uuid()) @db.Uuid
+  account_id           String                @db.Uuid
+  account_kind         AccountKind           @default(STAFF)
+  full_name            String // PII
+  phone                String? // PII
+  email                String? // PII
+  deactivated_at       DateTime?             @db.Timestamptz(3)
+  created_at           DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account                                               AuthAccount                 @relation("StaffAuth", fields: [account_id, account_kind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict, map: "fk_staff_account_auth")
+  created_households                                    Household[]                 @relation("HouseholdCreator")
+  verified_links                                        StudentRepresentativeLink[] @relation("RelationVerifiedBy")
+  verifications                                         RelationshipVerification[]  @relation("VerificationPerformedBy")
+  recorded_memberships                                  HouseholdMembership[]       @relation("MembershipRecordedBy")
+  activated_students                                    StudentAccount[]            @relation("StudentActivationConfirmedBy")
+  granted_roles                                         RoleAssignment[]            @relation("RoleGrantedBy")
+  checked_lead_links                                    LeadStudentLink[]           @relation("LeadLinkCheckedBy")
+  manager_assignments                                   AssignedManager[]           @relation("AssignedStaffManager")
+  contact_logs                                          ContactLog[]                @relation("ContactRecordedBy")
+  assigned_tasks                                        CrmTask[]                   @relation("TaskAssignedTo")
+  resolved_tasks                                        CrmTask[]                   @relation("TaskResolvedBy")
+  t03_teachingassignment_assigned_by_id                 TeachingAssignment[]        @relation("TeachingAssignment_assigned_by_id")
+  t03_lessonactualoutcome_confirmed_by_id               LessonActualOutcome[]       @relation("LessonActualOutcome_confirmed_by_id")
+  t03_paymentreceipt_registered_by_manager_id           PaymentReceipt[]            @relation("PaymentReceipt_registered_by_manager_id")
+  t03_paymentreceipt_confirmed_by_director_id           PaymentReceipt[]            @relation("PaymentReceipt_confirmed_by_director_id")
+  t03_paymentdistribution_approved_by_director_id       PaymentDistribution[]       @relation("PaymentDistribution_approved_by_director_id")
+  t03_temporaryaccesspermission_approved_by_director_id TemporaryAccessPermission[] @relation("TemporaryAccessPermission_approved_by_director_id")
+  t03_entitlementgrant_authorized_by_id                 EntitlementGrant[]          @relation("EntitlementGrant_authorized_by_id")
+  t03_entitlementconsumption_authorized_by_id           EntitlementConsumption[]    @relation("EntitlementConsumption_authorized_by_id")
+  t03_entitlementadjustment_author_id                   EntitlementAdjustment[]     @relation("EntitlementAdjustment_author_id")
+  t03_financialperiod_closed_by_id                      FinancialPeriod[]           @relation("FinancialPeriod_closed_by_id")
+  t03_refundrecord_approved_by_director_id              RefundRecord[]              @relation("RefundRecord_approved_by_director_id")
+  t03_teacheraccrual_authorized_by_id                   TeacherAccrual[]            @relation("TeacherAccrual_authorized_by_id")
+  t03_payoutattempt_attempted_by_id                     PayoutAttempt[]             @relation("PayoutAttempt_attempted_by_id")
+  t03_confirmedpayout_confirmed_by_id                   ConfirmedPayout[]           @relation("ConfirmedPayout_confirmed_by_id")
+  t03_ledgerentry_published_by_id                       LedgerEntry[]               @relation("LedgerEntry_published_by_id")
+
+  @@unique([account_id, account_kind], map: "uq_staff_auth_profile")
+  @@map("staff_accounts")
+}
+
+model TeacherAccount {
+  outcome_reports   LessonOutcomeReport[]   @relation("OutcomeReporter")
+  schedule_requests ScheduleChangeRequest[] @relation("ScheduleRequester")
+  engagements       TeacherEngagement[]     @relation("TeacherEngagements")
+  rate_promises     TeacherRatePromise[]    @relation("TeacherRatePromises")
+  id                String                  @id @default(uuid()) @db.Uuid
+  account_id        String                  @db.Uuid
+  account_kind      AccountKind             @default(TEACHER)
+  full_name         String // PII
+  phone             String? // PII
+  email             String? // PII
+  deactivated_at    DateTime?               @db.Timestamptz(3)
+  created_at        DateTime                @default(now()) @db.Timestamptz(3)
+  updated_at        DateTime                @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account                                   AuthAccount           @relation("TeacherAuth", fields: [account_id, account_kind], references: [id, kind], onDelete: Restrict, onUpdate: Restrict, map: "fk_teacher_account_auth")
+  t03_teachingassignment_teacher_id         TeachingAssignment[]  @relation("TeachingAssignment_teacher_id")
+  t03_teacheravailability_teacher_id        TeacherAvailability[] @relation("TeacherAvailability_teacher_id")
+  t03_lessonoccurrence_scheduled_teacher_id LessonOccurrence[]    @relation("LessonOccurrence_scheduled_teacher_id")
+  t03_lessonactualoutcome_actual_teacher_id LessonActualOutcome[] @relation("LessonActualOutcome_actual_teacher_id")
+  t03_teacheraccrual_teacher_id             TeacherAccrual[]      @relation("TeacherAccrual_teacher_id")
+  lessons_started                           LessonOccurrence[]    @relation("LessonStartTeacher")
+  t04_homeworkassignment_issued_by          HomeworkAssignment[]  @relation("HomeworkAssignment_issued_by")
+  t04_homeworkdelivery_issued_by            HomeworkDelivery[]    @relation("HomeworkDelivery_issued_by")
+  t04_submissionreview_reviewer_id          SubmissionReview[]    @relation("SubmissionReview_reviewer_id")
+  t04_skillassessment_assessed_by           SkillAssessment[]     @relation("SkillAssessment_assessed_by")
+  t04_educationreport_author_id             EducationReport[]     @relation("EducationReport_author_id")
+  t04_educationreport_published_by          EducationReport[]     @relation("EducationReport_published_by")
+
+  @@unique([account_id, account_kind], map: "uq_teacher_auth_profile")
+  @@map("teacher_accounts")
+}
+
+model Role {
+  id         String   @id @default(uuid()) @db.Uuid
+  code       RoleCode @unique
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+  assignments RoleAssignment[] @relation("RoleAssignments")
+
+  @@map("roles")
+}
+
+model RoleAssignment {
+  id                   String    @id @default(uuid()) @db.Uuid
+  account_id           String    @db.Uuid
+  role_id              String    @db.Uuid
+  assigned_by_staff_id String?   @db.Uuid // Null only for controlled initial provisioning.
+  valid_from           DateTime  @default(now()) @db.Timestamptz(3)
+  valid_to             DateTime? @db.Timestamptz(3)
+  created_at           DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account     AuthAccount   @relation("AccountRoles", fields: [account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_assignment_account")
+  role        Role          @relation("RoleAssignments", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_assignment_role")
+  assigned_by StaffAccount? @relation("RoleGrantedBy", fields: [assigned_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_role_assignment_staff")
+
+  @@unique([account_id, role_id], map: "uq_account_current_role", where: raw("valid_to IS NULL"))
+  @@index([role_id])
+  @@index([assigned_by_staff_id])
+  @@map("role_assignments")
+}
+
+model Session {
+  id              String    @id @default(uuid()) @db.Uuid
+  account_id      String    @db.Uuid
+  token_hash      String    @unique @db.Char(64) // AUTH_SECRET: SHA-256 of opaque cookie token; never store the token.
+  csrf_token_hash String?   @db.Char(64) // AUTH_SECRET
+  expires_at      DateTime  @db.Timestamptz(3)
+  revoked_at      DateTime? @db.Timestamptz(3)
+  mfa_verified_at DateTime? @db.Timestamptz(3)
+  recovery_only   Boolean   @default(false)
+  last_seen_at    DateTime? @db.Timestamptz(3)
+  created_at      DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at      DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account     AuthAccount        @relation("AccountSessions", fields: [account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_session_account")
+  challenges  MfaChallenge[]     @relation("SessionChallenges")
+  revocations AccessRevocation[] @relation("SessionRevocations")
+
+  @@unique([id, account_id], map: "uq_session_id_account")
+  @@index([account_id, expires_at])
+  @@index([expires_at])
+  @@map("sessions")
+}
+
+model WebAuthnCredential {
+  id              String    @id @default(uuid()) @db.Uuid
+  account_id      String    @db.Uuid
+  aaguid          String?   @db.Uuid
+  credential_id   Bytes     @unique // PII: persistent credential identifier
+  public_key      Bytes
+  sign_count      BigInt    @default(0) // WebAuthn uint32; zero-counter authenticators require protocol-aware handling.
+  transports      String[]
+  backup_eligible Boolean   @default(false)
+  backed_up       Boolean   @default(false)
+  last_used_at    DateTime? @db.Timestamptz(3)
+  revoked_at      DateTime? @db.Timestamptz(3)
+  created_at      DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at      DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account AuthAccount @relation("AccountCredentials", fields: [account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_credential_account")
+
+  @@index([account_id])
+  @@map("webauthn_credentials")
+}
+
+model MfaChallenge {
+  id                 String              @id @default(uuid()) @db.Uuid
+  account_id         String              @db.Uuid
+  session_id         String?             @db.Uuid
+  purpose            MfaChallengePurpose
+  challenge_hash     String              @unique @db.Char(64) // AUTH_SECRET: hash of random challenge, not a replayable token
+  login_binding_hash String?             @db.Char(64) // AUTH_SECRET: binds sessionless passkey login to a browser cookie
+  expires_at         DateTime            @db.Timestamptz(3)
+  used_at            DateTime?           @db.Timestamptz(3)
+  created_at         DateTime            @default(now()) @db.Timestamptz(3)
+  updated_at         DateTime            @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account AuthAccount @relation("AccountChallenges", fields: [account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_challenge_account")
+  session Session?    @relation("SessionChallenges", fields: [session_id, account_id], references: [id, account_id], onDelete: Restrict, onUpdate: Restrict, map: "fk_challenge_session_owner")
+
+  @@index([account_id, expires_at])
+  @@index([session_id, account_id])
+  @@index([expires_at])
+  @@map("mfa_challenges")
+}
+
+// Trusted evidence is provisioned through a maintenance role, never via an unverified HTTP boolean.
+model RecoveryAuthorization {
+  id                    String           @id @default(uuid()) @db.Uuid
+  subject_account_id    String           @db.Uuid
+  authorized_actor_id   String           @db.Uuid
+  identity_evidence_ref String // PII: opaque reference to separately verified identity evidence
+  owner_instruction_ref String? // PII: confirmed owner instruction for director recovery
+  reason                String // PII
+  verified_at           DateTime         @db.Timestamptz(3)
+  expires_at            DateTime         @db.Timestamptz(3)
+  created_at            DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at            DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+  subject               AuthAccount      @relation("RecoverySubject", fields: [subject_account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_recovery_subject")
+  authorized_actor      AuthAccount      @relation("RecoveryAuthorizer", fields: [authorized_actor_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_recovery_authorizer")
+  request               RecoveryRequest? @relation("RecoveryEvidence")
+
+  @@index([subject_account_id, expires_at])
+  @@map("recovery_authorizations")
+}
+
+model RecoveryRequest {
+  id                   String                @id @default(uuid()) @db.Uuid
+  authorization_id     String                @unique @db.Uuid
+  command_operation_id String                @unique @db.Uuid
+  token_hash           String                @unique @db.Char(64) // AUTH_SECRET: a one-time bootstrap proof, not backup codes
+  expires_at           DateTime              @db.Timestamptz(3)
+  completed_at         DateTime?             @db.Timestamptz(3)
+  revoked_at           DateTime?             @db.Timestamptz(3)
+  created_at           DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  authorization        RecoveryAuthorization @relation("RecoveryEvidence", fields: [authorization_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_recovery_request_authorization")
+
+  @@index([expires_at])
+  @@map("recovery_requests")
+}
+
+model AuthRateLimit {
+  id                String   @id @default(uuid()) @db.Uuid
+  bucket_key        String   @unique @db.Char(64) // PII: hash of rate-limit identity; no raw address/email
+  attempts          Int      @default(1)
+  window_started_at DateTime @db.Timestamptz(3)
+  expires_at        DateTime @db.Timestamptz(3)
+  created_at        DateTime @default(now()) @db.Timestamptz(3)
+  updated_at        DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+  @@index([expires_at])
+  @@map("auth_rate_limits")
+}
+
+model AccessRevocation {
+  id                    String   @id @default(uuid()) @db.Uuid
+  account_id            String   @db.Uuid
+  session_id            String?  @db.Uuid // Null means account-wide revocation.
+  revoked_by_account_id String?  @db.Uuid // Null for system-initiated revocation; source/reason remain mandatory.
+  reason                String // PII: restricted reason, no credentials
+  source                String
+  revoked_at            DateTime @default(now()) @db.Timestamptz(3)
+  created_at            DateTime @default(now()) @db.Timestamptz(3)
+  updated_at            DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+  account    AuthAccount  @relation("AccountRevocations", fields: [account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_revocation_account")
+  session    Session?     @relation("SessionRevocations", fields: [session_id, account_id], references: [id, account_id], onDelete: Restrict, onUpdate: Restrict, map: "fk_revocation_session_owner")
+  revoked_by AuthAccount? @relation("RevocationActor", fields: [revoked_by_account_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_revocation_actor")
+
+  @@index([account_id, revoked_at])
+  @@index([session_id, account_id])
+  @@index([revoked_by_account_id])
+  @@map("access_revocations")
+}
+
+// Owner: CRM / Intake. No account FK: a lead never grants login or paid rights.
+model Lead {
+  id          String    @id @default(uuid()) @db.Uuid
+  stage       LeadStage @default(NEW)
+  full_name   String // PII: incoming contact name, not a Student identity key
+  phone       String? // PII; deliberately not unique
+  email       String? // PII; deliberately not unique
+  source      String?
+  archived_at DateTime? @db.Timestamptz(3)
+  created_at  DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  student_links       LeadStudentLink[] @relation("LeadStudentLinks")
+  manager_assignments AssignedManager[] @relation("LeadManagers")
+  contact_logs        ContactLog[]      @relation("LeadContacts")
+  tasks               CrmTask[]         @relation("LeadTasks")
+
+  @@index([stage, created_at])
+  @@index([phone])
+  @@index([email])
+  @@map("leads")
+}
+
+model LeadStudentLink {
+  id                  String    @id @default(uuid()) @db.Uuid
+  lead_id             String    @db.Uuid
+  student_id          String    @db.Uuid
+  checked_by_staff_id String    @db.Uuid
+  basis               String // PII: manager's matching rationale, never an automatic contact match
+  linked_at           DateTime  @default(now()) @db.Timestamptz(3)
+  unlinked_at         DateTime? @db.Timestamptz(3)
+  created_at          DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  lead       Lead         @relation("LeadStudentLinks", fields: [lead_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lead_link_lead")
+  student    Student      @relation("StudentLeadLinks", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lead_link_student")
+  checked_by StaffAccount @relation("LeadLinkCheckedBy", fields: [checked_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lead_link_staff")
+
+  @@unique([lead_id, student_id], map: "uq_current_lead_student", where: raw("unlinked_at IS NULL"))
+  @@index([student_id])
+  @@index([checked_by_staff_id])
+  @@map("lead_student_links")
+}
+
+model AssignedManager {
+  id          String    @id @default(uuid()) @db.Uuid
+  manager_id  String    @db.Uuid
+  lead_id     String?   @db.Uuid
+  student_id  String?   @db.Uuid
+  assigned_at DateTime  @default(now()) @db.Timestamptz(3)
+  ended_at    DateTime? @db.Timestamptz(3)
+  created_at  DateTime  @default(now()) @db.Timestamptz(3)
+  updated_at  DateTime  @default(now()) @updatedAt @db.Timestamptz(3)
+
+  manager StaffAccount @relation("AssignedStaffManager", fields: [manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_manager_staff")
+  lead    Lead?        @relation("LeadManagers", fields: [lead_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_manager_lead")
+  student Student?     @relation("StudentManagers", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_manager_student")
+
+  @@unique([lead_id], map: "uq_lead_current_manager", where: raw("ended_at IS NULL"))
+  @@unique([student_id], map: "uq_student_current_manager", where: raw("ended_at IS NULL"))
+  @@index([manager_id, ended_at])
+  @@map("assigned_managers")
+}
+
+model ContactLog {
+  id                String         @id @default(uuid()) @db.Uuid
+  lead_id           String?        @db.Uuid
+  student_id        String?        @db.Uuid
+  representative_id String?        @db.Uuid
+  manager_id        String         @db.Uuid
+  channel           ContactChannel
+  outcome           String // PII: minimal necessary communication result
+  occurred_at       DateTime       @default(now()) @db.Timestamptz(3)
+  created_at        DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at        DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+
+  lead           Lead?           @relation("LeadContacts", fields: [lead_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_lead")
+  student        Student?        @relation("StudentContacts", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_student")
+  representative Representative? @relation("RepresentativeContacts", fields: [representative_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_representative")
+  manager        StaffAccount    @relation("ContactRecordedBy", fields: [manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_staff")
+
+  @@index([lead_id, occurred_at])
+  @@index([student_id, occurred_at])
+  @@index([representative_id])
+  @@index([manager_id])
+  @@map("contact_logs")
+}
+
+model CrmTask {
+  id                   String        @id @default(uuid()) @db.Uuid
+  lead_id              String?       @db.Uuid
+  student_id           String?       @db.Uuid
+  assigned_manager_id  String?       @db.Uuid
+  type                 CrmTaskType
+  status               CrmTaskStatus @default(OPEN)
+  title                String // PII: restricted task description
+  due_at               DateTime      @db.Timestamptz(3)
+  resolved_at          DateTime?     @db.Timestamptz(3)
+  resolved_by_staff_id String?       @db.Uuid
+  source_event_id      String?       @db.Uuid // Source event; multiple derived tasks may share it.
+  idempotency_key      String?       @unique // Stable key per derived task; one event may yield several tasks.
+  created_at           DateTime      @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
+
+  lead             Lead?         @relation("LeadTasks", fields: [lead_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_task_lead")
+  student          Student?      @relation("StudentTasks", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_task_student")
+  assigned_to      StaffAccount? @relation("TaskAssignedTo", fields: [assigned_manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_task_assigned_staff")
+  resolved_by      StaffAccount? @relation("TaskResolvedBy", fields: [resolved_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_task_resolved_staff")
+  source_event_ref OutboxEvent?  @relation("CrmTaskOutbox", fields: [source_event_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_crm_source_event")
+
+  @@index([assigned_manager_id, status, due_at])
+  @@index([lead_id])
+  @@index([student_id])
+  @@index([resolved_by_staff_id])
+  @@index([source_event_id])
+  @@map("crm_tasks")
+}
+
+// TASK-03: scheduling, quantitative rights and the universal money ledger.
+
+enum EnrollmentStatus {
+  ACTIVE
+  PAUSED
+  ENDED
+}
+
+enum LessonStatus {
+  SCHEDULED
+  STAR_PENDING
+  CONDUCTED
+  CANCELLED
+  DISPUTED
+}
+
+enum GrantBasis {
+  CONFIRMED_PAYMENT
+}
+
+enum ConsumptionBasis {
+  CONFIRMED_LESSON
+  APPROVED_CANCELLATION
+}
+
+enum EntitlementAdjustmentKind {
+  GRANT_DELTA
+  CONSUMPTION_CANCELLATION
+}
+
+enum LedgerDirection {
+  DEBIT
+  CREDIT
+}
+
+enum LedgerAccountType {
+  UNALLOCATED_FUNDS
+  CASH
+  CUSTOMER_ADVANCE
+  LESSON_REVENUE
+  TEACHER_EXPENSE
+  TEACHER_PAYABLE
+  REFUND_PAYABLE
+  CORRECTION
+}
+
+enum AccrualRateBasis {
+  ORDINARY_POINTS
+  INDIVIDUAL_PROMISE
+  FINANCIAL_EXCEPTION
+}
+
+enum PayoutAttemptStatus {
+  PENDING
+  UNKNOWN
+  FAILED
+  SUCCEEDED
+  RETURNED
+}
+
+model Subject {
+  id                                      String                     @id @default(uuid()) @db.Uuid
+  code                                    String                     @unique
+  name                                    String
+  archived_at                             DateTime?                  @db.Timestamptz(3)
+  created_at                              DateTime                   @default(now()) @db.Timestamptz(3)
+  updated_at                              DateTime                   @default(now()) @updatedAt @db.Timestamptz(3)
+  t03_studentsubjectenrollment_subject_id StudentSubjectEnrollment[] @relation("StudentSubjectEnrollment_subject_id")
+  t04_homeworkassignment_subject_id       HomeworkAssignment[]       @relation("HomeworkAssignment_subject_id")
+  t04_skillentry_subject_id               SkillEntry[]               @relation("SkillEntry_subject_id")
+
+  @@map("subjects")
+}
+
+model StudentSubjectEnrollment {
+  id                                   String               @id @default(uuid()) @db.Uuid
+  student_id                           String               @db.Uuid
+  subject_id                           String               @db.Uuid
+  status                               EnrollmentStatus     @default(ACTIVE)
+  valid_from                           DateTime             @db.Timestamptz(3)
+  valid_to                             DateTime?            @db.Timestamptz(3)
+  source_operation_id                  String               @unique @db.Uuid
+  created_at                           DateTime             @default(now()) @db.Timestamptz(3)
+  updated_at                           DateTime             @default(now()) @updatedAt @db.Timestamptz(3)
+  student_ref                          Student              @relation("StudentSubjectEnrollment_student_id", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_student_subject_enrollment_student")
+  subject_ref                          Subject              @relation("StudentSubjectEnrollment_subject_id", fields: [subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_student_subject_enrollment_subject")
+  t03_teachingassignment_enrollment_id TeachingAssignment[] @relation("TeachingAssignment_enrollment_id")
+  t03_recurringslot_enrollment_id      RecurringSlot[]      @relation("RecurringSlot_enrollment_id")
+  t03_lessonoccurrence_enrollment_id   LessonOccurrence[]   @relation("LessonOccurrence_enrollment_id")
+  t03_subscription_enrollment_id       Subscription[]       @relation("Subscription_enrollment_id")
+  t04_homeworkdelivery_enrollment_id   HomeworkDelivery[]   @relation("HomeworkDelivery_enrollment_id")
+  t04_skillassessment_enrollment_id    SkillAssessment[]    @relation("SkillAssessment_enrollment_id")
+  t04_progresscheckpoint_enrollment_id ProgressCheckpoint[] @relation("ProgressCheckpoint_enrollment_id")
+
+  @@unique([student_id, subject_id], map: "uq_current_student_subject", where: raw("valid_to IS NULL"))
+  @@index([student_id])
+  @@index([subject_id])
+  @@map("student_subject_enrollments")
+}
+
+model TeachingAssignment {
+  id                                          String                   @id @default(uuid()) @db.Uuid
+  enrollment_id                               String                   @db.Uuid
+  teacher_id                                  String                   @db.Uuid
+  valid_from                                  DateTime                 @db.Timestamptz(3)
+  valid_to                                    DateTime?                @db.Timestamptz(3)
+  basis                                       String
+  assigned_by_id                              String                   @db.Uuid
+  source_operation_id                         String                   @unique @db.Uuid
+  created_at                                  DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                                  DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  enrollment_ref                              StudentSubjectEnrollment @relation("TeachingAssignment_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teaching_assignment_enrollment")
+  teacher_ref                                 TeacherAccount           @relation("TeachingAssignment_teacher_id", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teaching_assignment_teacher")
+  assigned_by_ref                             StaffAccount             @relation("TeachingAssignment_assigned_by_id", fields: [assigned_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teaching_assignment_assigned_by")
+  t03_recurringslot_teaching_assignment_id    RecurringSlot[]          @relation("RecurringSlot_teaching_assignment_id")
+  t03_lessonoccurrence_teaching_assignment_id LessonOccurrence[]       @relation("LessonOccurrence_teaching_assignment_id")
+
+  @@index([enrollment_id])
+  @@index([teacher_id])
+  @@index([assigned_by_id])
+  @@map("teaching_assignments")
+}
+
+model TeacherAvailability {
+  id                  String         @id @default(uuid()) @db.Uuid
+  teacher_id          String         @db.Uuid
+  starts_at           DateTime       @db.Timestamptz(3)
+  ends_at             DateTime       @db.Timestamptz(3)
+  timezone            String
+  cancelled_at        DateTime?      @db.Timestamptz(3)
+  source_operation_id String         @unique @db.Uuid
+  created_at          DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  teacher_ref         TeacherAccount @relation("TeacherAvailability_teacher_id", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teacher_availability_teacher")
+
+  @@index([teacher_id])
+  @@map("teacher_availabilities")
+}
+
+model RecurringSlot {
+  version                                Int                      @default(1)
+  changes                                SlotChangeEvent[]        @relation("SlotChanges")
+  change_requests                        ScheduleChangeRequest[]  @relation("SlotChangeRequests")
+  id                                     String                   @id @default(uuid()) @db.Uuid
+  enrollment_id                          String                   @db.Uuid
+  teaching_assignment_id                 String                   @db.Uuid
+  rule                                   String
+  timezone                               String
+  active_from                            DateTime                 @db.Timestamptz(3)
+  active_until                           DateTime?                @db.Timestamptz(3)
+  duration_min                           Int
+  source_operation_id                    String                   @unique @db.Uuid
+  created_at                             DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                             DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  enrollment_ref                         StudentSubjectEnrollment @relation("RecurringSlot_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_recurring_slot_enrollment")
+  teaching_assignment_ref                TeachingAssignment       @relation("RecurringSlot_teaching_assignment_id", fields: [teaching_assignment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_recurring_slot_teaching_assignment")
+  t03_lessonoccurrence_recurring_slot_id LessonOccurrence[]       @relation("LessonOccurrence_recurring_slot_id")
+
+  @@index([enrollment_id])
+  @@index([teaching_assignment_id])
+  @@map("recurring_slots")
+}
+
+model LessonOccurrence {
+  confirmed_report_id                             String?                  @unique @db.Uuid
+  confirmed_report_ref                            LessonOutcomeReport?     @relation("ResolvedLessonReport", fields: [confirmed_report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lesson_confirmed_report")
+  occurrence_date                                 DateTime?                @db.Date
+  outcome_reports                                 LessonOutcomeReport[]    @relation("LessonReports")
+  schedule_requests                               ScheduleChangeRequest[]  @relation("LessonRequests")
+  rate_context_snapshot                           Json? // Inputs/evidence of the rate quote frozen at actual start.
+  // Written at actual start; confirmation/accrual must reuse this immutable snapshot.
+  actual_start_at                                 DateTime?                @db.Timestamptz(3)
+  actual_teacher_at_start_id                      String?                  @db.Uuid
+  rate_at_start_snapshot                          Decimal?                 @db.Decimal(20, 4)
+  points_at_start_snapshot                        Int?
+  rate_basis_at_start                             AccrualRateBasis?
+  rate_currency_at_start                          String?                  @db.VarChar(3)
+  actual_teacher_at_start_ref                     TeacherAccount?          @relation("LessonStartTeacher", fields: [actual_teacher_at_start_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_start_teacher")
+  id                                              String                   @id @default(uuid()) @db.Uuid
+  enrollment_id                                   String                   @db.Uuid
+  teaching_assignment_id                          String                   @db.Uuid
+  recurring_slot_id                               String?                  @db.Uuid
+  scheduled_teacher_id                            String                   @db.Uuid
+  original_scheduled_at                           DateTime                 @db.Timestamptz(3)
+  scheduled_at                                    DateTime                 @db.Timestamptz(3)
+  scheduled_end_at                                DateTime                 @db.Timestamptz(3)
+  status                                          LessonStatus             @default(SCHEDULED)
+  version                                         Int                      @default(1)
+  source_operation_id                             String                   @unique @db.Uuid
+  created_at                                      DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                                      DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  enrollment_ref                                  StudentSubjectEnrollment @relation("LessonOccurrence_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_occurrence_enrollment")
+  teaching_assignment_ref                         TeachingAssignment       @relation("LessonOccurrence_teaching_assignment_id", fields: [teaching_assignment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_occurrence_teaching_assignment")
+  recurring_slot_ref                              RecurringSlot?           @relation("LessonOccurrence_recurring_slot_id", fields: [recurring_slot_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_occurrence_recurring_slot")
+  scheduled_teacher_ref                           TeacherAccount           @relation("LessonOccurrence_scheduled_teacher_id", fields: [scheduled_teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_occurrence_scheduled_teacher")
+  t03_lessonchangeevent_lesson_occurrence_id      LessonChangeEvent[]      @relation("LessonChangeEvent_lesson_occurrence_id")
+  t03_lessonactualoutcome_lesson_occurrence_id    LessonActualOutcome?     @relation("LessonActualOutcome_lesson_occurrence_id")
+  t03_entitlementconsumption_lesson_occurrence_id EntitlementConsumption[] @relation("EntitlementConsumption_lesson_occurrence_id")
+  t04_homeworkassignment_lesson_occurrence_id     HomeworkAssignment[]     @relation("HomeworkAssignment_lesson_occurrence_id")
+  t04_skillassessment_lesson_ref                  SkillAssessment[]        @relation("SkillAssessment_lesson_ref")
+
+  @@unique([recurring_slot_id, occurrence_date], map: "uq_slot_occurrence_day")
+  @@unique([recurring_slot_id, original_scheduled_at], map: "uq_recurring_lesson_origin")
+  @@index([enrollment_id])
+  @@index([teaching_assignment_id])
+  @@index([recurring_slot_id])
+  @@index([scheduled_teacher_id])
+  @@index([scheduled_teacher_id, scheduled_at])
+  @@index([actual_teacher_at_start_id])
+  @@map("lesson_occurrences")
+}
+
+model LessonChangeEvent {
+  id                    String           @id @default(uuid()) @db.Uuid
+  lesson_occurrence_id  String           @db.Uuid
+  author_id             String           @db.Uuid
+  old_values            Json
+  new_values            Json
+  reason                String
+  effective_at          DateTime         @db.Timestamptz(3)
+  server_recorded_at    DateTime         @default(now()) @db.Timestamptz(3)
+  source_operation_id   String           @unique @db.Uuid
+  created_at            DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at            DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+  lesson_occurrence_ref LessonOccurrence @relation("LessonChangeEvent_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_change_event_lesson_occurrence")
+  author_ref            AuthAccount      @relation("LessonChangeEvent_author_id", fields: [author_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_change_event_author")
+
+  @@index([lesson_occurrence_id])
+  @@index([author_id])
+  @@map("lesson_change_events")
+}
+
+model LessonActualOutcome {
+  report_id                                       String?                    @unique @db.Uuid
+  report_ref                                      LessonOutcomeReport?       @relation("ConfirmedReport", fields: [report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_outcome_report")
+  currency                                        String                     @db.VarChar(3)
+  id                                              String                     @id @default(uuid()) @db.Uuid
+  lesson_occurrence_id                            String                     @unique @db.Uuid
+  actual_teacher_id                               String                     @db.Uuid
+  actual_started_at                               DateTime                   @db.Timestamptz(3)
+  duration_min                                    Int
+  confirmed_at                                    DateTime                   @db.Timestamptz(3)
+  confirmed_by_id                                 String                     @db.Uuid
+  temporary_access_permission_id                  String?                    @db.Uuid
+  rate_snapshot                                   Decimal                    @db.Decimal(20, 4)
+  points_snapshot                                 Int
+  rate_basis                                      AccrualRateBasis
+  basis                                           String
+  source_operation_id                             String                     @unique @db.Uuid
+  created_at                                      DateTime                   @default(now()) @db.Timestamptz(3)
+  updated_at                                      DateTime                   @default(now()) @updatedAt @db.Timestamptz(3)
+  lesson_occurrence_ref                           LessonOccurrence           @relation("LessonActualOutcome_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_actual_outcome_lesson_occurrence")
+  actual_teacher_ref                              TeacherAccount             @relation("LessonActualOutcome_actual_teacher_id", fields: [actual_teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_actual_outcome_actual_teacher")
+  confirmed_by_ref                                StaffAccount               @relation("LessonActualOutcome_confirmed_by_id", fields: [confirmed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_actual_outcome_confirmed_by")
+  temporary_access_permission_ref                 TemporaryAccessPermission? @relation("LessonActualOutcome_temporary_access_permission_id", fields: [temporary_access_permission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_lesson_actual_outcome_temporary_access_permission")
+  t03_teacheraccrual_lesson_actual_outcome_id     TeacherAccrual?            @relation("TeacherAccrual_lesson_actual_outcome_id")
+  t04_progresscheckpoint_lesson_actual_outcome_id ProgressCheckpoint[]       @relation("ProgressCheckpoint_lesson_actual_outcome_id")
+
+  @@index([actual_teacher_id])
+  @@index([confirmed_by_id])
+  @@index([temporary_access_permission_id])
+  @@map("lesson_actual_outcomes")
+}
+
+model SaleCondition {
+  id                                 String         @id @default(uuid()) @db.Uuid
+  code                               String
+  version                            Int
+  lesson_count                       Int
+  list_price                         Decimal        @db.Decimal(20, 4)
+  discount_amount                    Decimal        @db.Decimal(20, 4)
+  price                              Decimal        @db.Decimal(20, 4)
+  lesson_unit_price                  Decimal        @db.Decimal(20, 4)
+  currency                           String         @db.VarChar(3)
+  valid_from                         DateTime       @db.Timestamptz(3)
+  valid_to                           DateTime?      @db.Timestamptz(3)
+  source_operation_id                String         @unique @db.Uuid
+  created_at                         DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at                         DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  t03_subscription_sale_condition_id Subscription[] @relation("Subscription_sale_condition_id")
+
+  @@unique([code, version], map: "uq_sale_condition_version")
+  @@map("sale_conditions")
+}
+
+model Subscription {
+  id                                             String                      @id @default(uuid()) @db.Uuid
+  enrollment_id                                  String                      @db.Uuid
+  sale_condition_id                              String                      @db.Uuid
+  lesson_count                                   Int
+  full_price                                     Decimal                     @db.Decimal(20, 4)
+  initial_discount_amount                        Decimal                     @db.Decimal(20, 4)
+  original_paid_unit_price                       Decimal                     @db.Decimal(20, 4)
+  currency                                       String                      @db.VarChar(3)
+  valid_from                                     DateTime                    @db.Timestamptz(3)
+  valid_to                                       DateTime?                   @db.Timestamptz(3)
+  frozen_from                                    DateTime?                   @db.Timestamptz(3)
+  frozen_until                                   DateTime?                   @db.Timestamptz(3)
+  source_operation_id                            String                      @unique @db.Uuid
+  created_at                                     DateTime                    @default(now()) @db.Timestamptz(3)
+  updated_at                                     DateTime                    @default(now()) @updatedAt @db.Timestamptz(3)
+  enrollment_ref                                 StudentSubjectEnrollment    @relation("Subscription_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_subscription_enrollment")
+  sale_condition_ref                             SaleCondition               @relation("Subscription_sale_condition_id", fields: [sale_condition_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_subscription_sale_condition")
+  t03_paymentdistribution_subscription_id        PaymentDistribution[]       @relation("PaymentDistribution_subscription_id")
+  t03_temporaryaccesspermission_subscription_id  TemporaryAccessPermission[] @relation("TemporaryAccessPermission_subscription_id")
+  t03_entitlementgrant_subscription_id           EntitlementGrant[]          @relation("EntitlementGrant_subscription_id")
+  t03_entitlementconsumption_subscription_id     EntitlementConsumption[]    @relation("EntitlementConsumption_subscription_id")
+  t03_refundrecord_subscription_id               RefundRecord[]              @relation("RefundRecord_subscription_id")
+  t03_student_account_activation_subscription_id StudentAccount[]            @relation("StudentAccount_activation_subscription_id")
+
+  @@index([enrollment_id])
+  @@index([sale_condition_id])
+  @@map("subscriptions")
+}
+
+model PaymentReceipt {
+  student_id                                             String?               @db.Uuid // PII: CRM payment contact; allocation still checks each recipient independently.
+  student_contact                                        Student?              @relation("PaymentContactStudent", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_payment_contact_student")
+  id                                                     String                @id @default(uuid()) @db.Uuid
+  amount                                                 Decimal               @db.Decimal(20, 4)
+  currency                                               String                @db.VarChar(3)
+  registered_by_manager_id                               String                @db.Uuid
+  registered_at                                          DateTime              @db.Timestamptz(3)
+  confirmed_by_director_id                               String?               @db.Uuid
+  confirmed_by_director_at                               DateTime?             @db.Timestamptz(3)
+  confirmation_operation_id                              String?               @unique @db.Uuid
+  provider                                               String?
+  external_reference                                     String?
+  source_operation_id                                    String                @unique @db.Uuid
+  created_at                                             DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at                                             DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  registered_by_manager_ref                              StaffAccount          @relation("PaymentReceipt_registered_by_manager_id", fields: [registered_by_manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payment_receipt_registered_by_manager")
+  confirmed_by_director_ref                              StaffAccount?         @relation("PaymentReceipt_confirmed_by_director_id", fields: [confirmed_by_director_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payment_receipt_confirmed_by_director")
+  t03_paymentdistribution_payment_id                     PaymentDistribution[] @relation("PaymentDistribution_payment_id")
+  t03_ledgerdocument_payment_id                          LedgerDocument?       @relation("LedgerDocument_payment_id")
+  t03_student_account_activation_payment_confirmation_id StudentAccount[]      @relation("StudentAccount_activation_payment_confirmation_id")
+
+  @@unique([provider, external_reference], map: "uq_payment_provider_reference")
+  @@index([registered_by_manager_id])
+  @@index([confirmed_by_director_id])
+  @@map("payment_receipts")
+}
+
+model PaymentDistribution {
+  ledger_document                              LedgerDocument?    @relation("DistributionLedgerDocument")
+  id                                           String             @id @default(uuid()) @db.Uuid
+  payment_id                                   String             @db.Uuid
+  subscription_id                              String             @db.Uuid
+  amount                                       Decimal            @db.Decimal(20, 4)
+  currency                                     String             @db.VarChar(3)
+  approved_by_director_id                      String?            @db.Uuid
+  approved_at                                  DateTime?          @db.Timestamptz(3)
+  approval_operation_id                        String?            @unique @db.Uuid
+  source_operation_id                          String             @unique @db.Uuid
+  created_at                                   DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at                                   DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+  payment_ref                                  PaymentReceipt     @relation("PaymentDistribution_payment_id", fields: [payment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payment_distribution_payment")
+  subscription_ref                             Subscription       @relation("PaymentDistribution_subscription_id", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payment_distribution_subscription")
+  approved_by_director_ref                     StaffAccount?      @relation("PaymentDistribution_approved_by_director_id", fields: [approved_by_director_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payment_distribution_approved_by_director")
+  t03_entitlementgrant_payment_distribution_id EntitlementGrant[] @relation("EntitlementGrant_payment_distribution_id")
+
+  @@unique([payment_id, subscription_id], map: "uq_payment_distribution_unique")
+  @@index([payment_id])
+  @@index([subscription_id])
+  @@index([approved_by_director_id])
+  @@map("payment_distributions")
+}
+
+model TemporaryAccessPermission {
+  id                                                     String                @id @default(uuid()) @db.Uuid
+  subscription_id                                        String                @db.Uuid
+  approved_by_director_id                                String                @db.Uuid
+  approved_at                                            DateTime              @db.Timestamptz(3)
+  valid_from                                             DateTime              @db.Timestamptz(3)
+  valid_to                                               DateTime              @db.Timestamptz(3)
+  max_lessons                                            Int
+  reason                                                 String
+  revoked_at                                             DateTime?             @db.Timestamptz(3)
+  source_operation_id                                    String                @unique @db.Uuid
+  created_at                                             DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at                                             DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  subscription_ref                                       Subscription          @relation("TemporaryAccessPermission_subscription_id", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_temporary_access_permission_subscription")
+  approved_by_director_ref                               StaffAccount          @relation("TemporaryAccessPermission_approved_by_director_id", fields: [approved_by_director_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_temporary_access_permission_approved_by_director")
+  t03_lessonactualoutcome_temporary_access_permission_id LessonActualOutcome[] @relation("LessonActualOutcome_temporary_access_permission_id")
+  t03_student_account_activation_director_admission_id   StudentAccount[]      @relation("StudentAccount_activation_director_admission_id")
+
+  @@index([subscription_id])
+  @@index([approved_by_director_id])
+  @@map("temporary_access_permissions")
+}
+
+model EntitlementGrant {
+  id                                  String                   @id @default(uuid()) @db.Uuid
+  subscription_id                     String                   @db.Uuid
+  payment_distribution_id             String                   @db.Uuid
+  quantity                            Int
+  basis                               GrantBasis
+  granted_at                          DateTime                 @db.Timestamptz(3)
+  authorized_by_id                    String                   @db.Uuid
+  source_operation_id                 String                   @unique @db.Uuid
+  created_at                          DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                          DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  subscription_ref                    Subscription             @relation("EntitlementGrant_subscription_id", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_grant_subscription")
+  payment_distribution_ref            PaymentDistribution      @relation("EntitlementGrant_payment_distribution_id", fields: [payment_distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_grant_payment_distribution")
+  authorized_by_ref                   StaffAccount             @relation("EntitlementGrant_authorized_by_id", fields: [authorized_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_grant_authorized_by")
+  t03_entitlementconsumption_grant_id EntitlementConsumption[] @relation("EntitlementConsumption_grant_id")
+  t03_entitlementadjustment_grant_id  EntitlementAdjustment[]  @relation("EntitlementAdjustment_grant_id")
+
+  @@index([subscription_id])
+  @@index([payment_distribution_id])
+  @@index([authorized_by_id])
+  @@map("entitlement_grants")
+}
+
+model EntitlementConsumption {
+  ledger_document                                   LedgerDocument?         @relation("ConsumptionLedgerDocument")
+  id                                                String                  @id @default(uuid()) @db.Uuid
+  grant_id                                          String                  @db.Uuid
+  subscription_id                                   String                  @db.Uuid
+  lesson_occurrence_id                              String                  @db.Uuid
+  quantity                                          Int                     @default(1)
+  basis                                             ConsumptionBasis
+  reason                                            String
+  authorized_by_id                                  String                  @db.Uuid
+  consumed_at                                       DateTime                @db.Timestamptz(3)
+  cancelled_at                                      DateTime?               @db.Timestamptz(3)
+  cancellation_adjustment_id                        String?                 @unique @db.Uuid
+  source_operation_id                               String                  @unique @db.Uuid
+  created_at                                        DateTime                @default(now()) @db.Timestamptz(3)
+  updated_at                                        DateTime                @default(now()) @updatedAt @db.Timestamptz(3)
+  grant_ref                                         EntitlementGrant        @relation("EntitlementConsumption_grant_id", fields: [grant_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_consumption_grant")
+  subscription_ref                                  Subscription            @relation("EntitlementConsumption_subscription_id", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_consumption_subscription")
+  lesson_occurrence_ref                             LessonOccurrence        @relation("EntitlementConsumption_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_consumption_lesson_occurrence")
+  authorized_by_ref                                 StaffAccount            @relation("EntitlementConsumption_authorized_by_id", fields: [authorized_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_consumption_authorized_by")
+  cancellation_adjustment_ref                       EntitlementAdjustment?  @relation("EntitlementConsumption_cancellation_adjustment_id", fields: [cancellation_adjustment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_consumption_cancellation_adjustment")
+  t03_entitlementadjustment_original_consumption_id EntitlementAdjustment[] @relation("EntitlementAdjustment_original_consumption_id")
+
+  @@unique([lesson_occurrence_id, subscription_id], map: "uq_entitlement_consumption_lesson", where: raw("cancelled_at IS NULL"))
+  @@unique([lesson_occurrence_id], map: "uq_active_lesson_consumption", where: raw("cancelled_at IS NULL"))
+  @@index([grant_id])
+  @@index([subscription_id])
+  @@index([lesson_occurrence_id])
+  @@index([authorized_by_id])
+  @@map("entitlement_consumptions")
+}
+
+model EntitlementAdjustment {
+  id                                                    String                    @id @default(uuid()) @db.Uuid
+  grant_id                                              String                    @db.Uuid
+  original_consumption_id                               String?                   @db.Uuid
+  kind                                                  EntitlementAdjustmentKind
+  delta_quantity                                        Int
+  author_id                                             String                    @db.Uuid
+  reason                                                String
+  effective_at                                          DateTime                  @db.Timestamptz(3)
+  financial_period_id                                   String                    @db.Uuid
+  source_operation_id                                   String                    @unique @db.Uuid
+  created_at                                            DateTime                  @default(now()) @db.Timestamptz(3)
+  updated_at                                            DateTime                  @default(now()) @updatedAt @db.Timestamptz(3)
+  grant_ref                                             EntitlementGrant          @relation("EntitlementAdjustment_grant_id", fields: [grant_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_adjustment_grant")
+  original_consumption_ref                              EntitlementConsumption?   @relation("EntitlementAdjustment_original_consumption_id", fields: [original_consumption_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_adjustment_original_consumption")
+  author_ref                                            StaffAccount              @relation("EntitlementAdjustment_author_id", fields: [author_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_adjustment_author")
+  financial_period_ref                                  FinancialPeriod           @relation("EntitlementAdjustment_financial_period_id", fields: [financial_period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_adjustment_financial_period")
+  t03_entitlementconsumption_cancellation_adjustment_id EntitlementConsumption?   @relation("EntitlementConsumption_cancellation_adjustment_id")
+
+  @@index([grant_id])
+  @@index([original_consumption_id])
+  @@index([author_id])
+  @@index([financial_period_id])
+  @@map("entitlement_adjustments")
+}
+
+model FinancialPeriod {
+  id                                            String                  @id @default(uuid()) @db.Uuid
+  starts_at                                     DateTime                @db.Timestamptz(3)
+  ends_at                                       DateTime                @db.Timestamptz(3)
+  closed_at                                     DateTime?               @db.Timestamptz(3)
+  closed_by_id                                  String?                 @db.Uuid
+  closure_operation_id                          String?                 @unique @db.Uuid
+  source_operation_id                           String                  @unique @db.Uuid
+  created_at                                    DateTime                @default(now()) @db.Timestamptz(3)
+  updated_at                                    DateTime                @default(now()) @updatedAt @db.Timestamptz(3)
+  closed_by_ref                                 StaffAccount?           @relation("FinancialPeriod_closed_by_id", fields: [closed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_financial_period_closed_by")
+  t03_entitlementadjustment_financial_period_id EntitlementAdjustment[] @relation("EntitlementAdjustment_financial_period_id")
+  t03_teacheraccrual_financial_period_id        TeacherAccrual[]        @relation("TeacherAccrual_financial_period_id")
+  t03_ledgerentry_financial_period_id           LedgerEntry[]           @relation("LedgerEntry_financial_period_id")
+
+  @@unique([starts_at, ends_at], map: "uq_financial_period_range")
+  @@index([closed_by_id])
+  @@map("financial_periods")
+}
+
+model RefundRecord {
+  id                           String          @id @default(uuid()) @db.Uuid
+  subscription_id              String          @db.Uuid
+  calculated_amount            Decimal         @db.Decimal(20, 4)
+  original_paid_unit_price     Decimal         @db.Decimal(20, 4)
+  paid_unused_quantity         Int
+  calculation_basis            String
+  currency                     String          @db.VarChar(3)
+  approved_amount              Decimal?        @db.Decimal(20, 4)
+  approved_by_director_id      String?         @db.Uuid
+  approved_by_director_at      DateTime?       @db.Timestamptz(3)
+  approval_operation_id        String?         @unique @db.Uuid
+  executed_amount              Decimal?        @db.Decimal(20, 4)
+  executed_at                  DateTime?       @db.Timestamptz(3)
+  execution_reference          String?         @unique
+  source_operation_id          String          @unique @db.Uuid
+  created_at                   DateTime        @default(now()) @db.Timestamptz(3)
+  updated_at                   DateTime        @default(now()) @updatedAt @db.Timestamptz(3)
+  subscription_ref             Subscription    @relation("RefundRecord_subscription_id", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_refund_record_subscription")
+  approved_by_director_ref     StaffAccount?   @relation("RefundRecord_approved_by_director_id", fields: [approved_by_director_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_refund_record_approved_by_director")
+  t03_ledgerdocument_refund_id LedgerDocument? @relation("LedgerDocument_refund_id")
+
+  @@index([subscription_id])
+  @@index([approved_by_director_id])
+  @@map("refund_records")
+}
+
+model TeacherAccrual {
+  exception_authorized_by_id       String?             @db.Uuid
+  exception_director               StaffAccount?       @relation("AccrualExceptionDirector", fields: [exception_authorized_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_accrual_exception_director")
+  id                               String              @id @default(uuid()) @db.Uuid
+  lesson_actual_outcome_id         String              @unique @db.Uuid
+  teacher_id                       String              @db.Uuid
+  rate_snapshot                    Decimal             @db.Decimal(20, 4)
+  points_snapshot                  Int
+  rate_basis                       AccrualRateBasis
+  amount                           Decimal             @db.Decimal(20, 4)
+  currency                         String              @db.VarChar(3)
+  basis                            String
+  recognized_at                    DateTime            @db.Timestamptz(3)
+  authorized_by_id                 String              @db.Uuid
+  financial_period_id              String              @db.Uuid
+  source_operation_id              String              @unique @db.Uuid
+  created_at                       DateTime            @default(now()) @db.Timestamptz(3)
+  updated_at                       DateTime            @default(now()) @updatedAt @db.Timestamptz(3)
+  lesson_actual_outcome_ref        LessonActualOutcome @relation("TeacherAccrual_lesson_actual_outcome_id", fields: [lesson_actual_outcome_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teacher_accrual_lesson_actual_outcome")
+  teacher_ref                      TeacherAccount      @relation("TeacherAccrual_teacher_id", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teacher_accrual_teacher")
+  authorized_by_ref                StaffAccount        @relation("TeacherAccrual_authorized_by_id", fields: [authorized_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teacher_accrual_authorized_by")
+  financial_period_ref             FinancialPeriod     @relation("TeacherAccrual_financial_period_id", fields: [financial_period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_teacher_accrual_financial_period")
+  t03_payrollobligation_accrual_id PayrollObligation?  @relation("PayrollObligation_accrual_id")
+  t03_ledgerdocument_accrual_id    LedgerDocument?     @relation("LedgerDocument_accrual_id")
+
+  @@index([teacher_id])
+  @@index([authorized_by_id])
+  @@index([financial_period_id])
+  @@map("teacher_accruals")
+}
+
+model PayrollObligation {
+  id                              String          @id @default(uuid()) @db.Uuid
+  accrual_id                      String          @unique @db.Uuid
+  amount                          Decimal         @db.Decimal(20, 4)
+  currency                        String          @db.VarChar(3)
+  recognized_at                   DateTime        @db.Timestamptz(3)
+  recognition_entry_id            String?         @unique @db.Uuid
+  source_operation_id             String          @unique @db.Uuid
+  created_at                      DateTime        @default(now()) @db.Timestamptz(3)
+  updated_at                      DateTime        @default(now()) @updatedAt @db.Timestamptz(3)
+  accrual_ref                     TeacherAccrual  @relation("PayrollObligation_accrual_id", fields: [accrual_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payroll_obligation_accrual")
+  recognition_entry_ref           LedgerEntry?    @relation("PayrollObligation_recognition_entry_id", fields: [recognition_entry_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payroll_obligation_recognition_entry")
+  t03_payoutattempt_obligation_id PayoutAttempt[] @relation("PayoutAttempt_obligation_id")
+
+  @@map("payroll_obligations")
+}
+
+model PayoutAttempt {
+  id                             String              @id @default(uuid()) @db.Uuid
+  obligation_id                  String              @db.Uuid
+  amount                         Decimal             @db.Decimal(20, 4)
+  currency                       String              @db.VarChar(3)
+  status                         PayoutAttemptStatus @default(PENDING)
+  provider                       String
+  provider_request_id            String
+  attempted_by_id                String              @db.Uuid
+  attempted_at                   DateTime            @db.Timestamptz(3)
+  source_operation_id            String              @unique @db.Uuid
+  created_at                     DateTime            @default(now()) @db.Timestamptz(3)
+  updated_at                     DateTime            @default(now()) @updatedAt @db.Timestamptz(3)
+  obligation_ref                 PayrollObligation   @relation("PayoutAttempt_obligation_id", fields: [obligation_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payout_attempt_obligation")
+  attempted_by_ref               StaffAccount        @relation("PayoutAttempt_attempted_by_id", fields: [attempted_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_payout_attempt_attempted_by")
+  t03_confirmedpayout_attempt_id ConfirmedPayout?    @relation("ConfirmedPayout_attempt_id")
+
+  @@unique([provider, provider_request_id], map: "uq_payout_provider_request")
+  @@index([obligation_id])
+  @@index([attempted_by_id])
+  @@map("payout_attempts")
+}
+
+model ConfirmedPayout {
+  id                           String          @id @default(uuid()) @db.Uuid
+  attempt_id                   String          @unique @db.Uuid
+  amount                       Decimal         @db.Decimal(20, 4)
+  currency                     String          @db.VarChar(3)
+  confirmed_at                 DateTime        @db.Timestamptz(3)
+  confirmed_by_id              String          @db.Uuid
+  provider                     String
+  provider_confirmation_id     String
+  source_operation_id          String          @unique @db.Uuid
+  created_at                   DateTime        @default(now()) @db.Timestamptz(3)
+  updated_at                   DateTime        @default(now()) @updatedAt @db.Timestamptz(3)
+  attempt_ref                  PayoutAttempt   @relation("ConfirmedPayout_attempt_id", fields: [attempt_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_confirmed_payout_attempt")
+  confirmed_by_ref             StaffAccount    @relation("ConfirmedPayout_confirmed_by_id", fields: [confirmed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_confirmed_payout_confirmed_by")
+  t03_ledgerdocument_payout_id LedgerDocument? @relation("LedgerDocument_payout_id")
+
+  @@unique([provider, provider_confirmation_id], map: "uq_payout_confirmation")
+  @@index([confirmed_by_id])
+  @@map("confirmed_payouts")
+}
+
+model LedgerDocument {
+  distribution_id                              String?                 @unique @db.Uuid
+  consumption_id                               String?                 @unique @db.Uuid
+  distribution                                 PaymentDistribution?    @relation("DistributionLedgerDocument", fields: [distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_ledger_document_distribution")
+  consumption                                  EntitlementConsumption? @relation("ConsumptionLedgerDocument", fields: [consumption_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_ledger_document_consumption")
+  id                                           String                  @id @default(uuid()) @db.Uuid
+  payment_id                                   String?                 @unique @db.Uuid
+  refund_id                                    String?                 @unique @db.Uuid
+  accrual_id                                   String?                 @unique @db.Uuid
+  payout_id                                    String?                 @unique @db.Uuid
+  correction_of_document_id                    String?                 @db.Uuid
+  basis                                        String
+  source_operation_id                          String                  @unique @db.Uuid
+  created_at                                   DateTime                @default(now()) @db.Timestamptz(3)
+  updated_at                                   DateTime                @default(now()) @updatedAt @db.Timestamptz(3)
+  payment_ref                                  PaymentReceipt?         @relation("LedgerDocument_payment_id", fields: [payment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_document_payment")
+  refund_ref                                   RefundRecord?           @relation("LedgerDocument_refund_id", fields: [refund_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_document_refund")
+  accrual_ref                                  TeacherAccrual?         @relation("LedgerDocument_accrual_id", fields: [accrual_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_document_accrual")
+  payout_ref                                   ConfirmedPayout?        @relation("LedgerDocument_payout_id", fields: [payout_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_document_payout")
+  correction_of_document_ref                   LedgerDocument?         @relation("LedgerDocument_correction_of_document_id", fields: [correction_of_document_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_document_correction_of_document")
+  t03_ledgerdocument_correction_of_document_id LedgerDocument[]        @relation("LedgerDocument_correction_of_document_id")
+  t03_ledgerentry_document_id                  LedgerEntry?            @relation("LedgerEntry_document_id")
+
+  @@index([correction_of_document_id])
+  @@map("ledger_documents")
+}
+
+model LedgerEntry {
+  id                                         String             @id @default(uuid()) @db.Uuid
+  document_id                                String             @unique @db.Uuid
+  financial_period_id                        String             @db.Uuid
+  currency                                   String             @db.VarChar(3)
+  effective_at                               DateTime           @db.Timestamptz(3)
+  balanced_at                                DateTime?          @db.Timestamptz(3)
+  published_at                               DateTime?          @db.Timestamptz(3)
+  published_by_id                            String?            @db.Uuid
+  publication_operation_id                   String?            @unique @db.Uuid
+  balance_snapshot                           Json?
+  reverses_entry_id                          String?            @db.Uuid
+  source_operation_id                        String             @unique @db.Uuid
+  created_at                                 DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at                                 DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+  document_ref                               LedgerDocument     @relation("LedgerEntry_document_id", fields: [document_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_entry_document")
+  financial_period_ref                       FinancialPeriod    @relation("LedgerEntry_financial_period_id", fields: [financial_period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_entry_financial_period")
+  published_by_ref                           StaffAccount?      @relation("LedgerEntry_published_by_id", fields: [published_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_entry_published_by")
+  reverses_entry_ref                         LedgerEntry?       @relation("LedgerEntry_reverses_entry_id", fields: [reverses_entry_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_entry_reverses_entry")
+  t03_payrollobligation_recognition_entry_id PayrollObligation? @relation("PayrollObligation_recognition_entry_id")
+  t03_ledgerentry_reverses_entry_id          LedgerEntry[]      @relation("LedgerEntry_reverses_entry_id")
+  t03_ledgerline_entry_id                    LedgerLine[]       @relation("LedgerLine_entry_id")
+
+  @@unique([reverses_entry_id], map: "uq_ledger_single_reversal", where: raw("reverses_entry_id IS NOT NULL"))
+  @@index([financial_period_id])
+  @@index([published_by_id])
+  @@map("ledger_entries")
+}
+
+model LedgerLine {
+  id           String            @id @default(uuid()) @db.Uuid
+  entry_id     String            @db.Uuid
+  position     Int
+  account_type LedgerAccountType
+  amount       Decimal           @db.Decimal(20, 4)
+  direction    LedgerDirection
+  currency     String            @db.VarChar(3)
+  created_at   DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at   DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
+  entry_ref    LedgerEntry       @relation("LedgerLine_entry_id", fields: [entry_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_ledger_line_entry")
+
+  @@unique([entry_id, position], map: "uq_ledger_entry_position")
+  @@index([entry_id])
+  @@map("ledger_lines")
+}
+
+// TASK-04: education, private files, append-only audit and durable work.
+
+enum HomeworkReviewResult {
+  NEEDS_REVISION
+  ACCEPTED
+}
+
+enum SkillLevel {
+  INTRODUCING
+  PRACTICING
+  APPLYING
+}
+
+enum CheckpointType {
+  LESSON_4
+  LESSON_8
+}
+
+enum EducationReportStatus {
+  DRAFT
+  GENERATED
+  PUBLISHED
+}
+
+enum S3ObjectStatus {
+  PENDING
+  UPLOADED
+  VERIFIED
+  QUARANTINED
+  DELETED
+}
+
+enum FileAuditAction {
+  VIEW
+  DOWNLOAD
+  REVOKE
+}
+
+enum AuditActorKind {
+  ACCOUNT
+  SYSTEM
+  ANONYMOUS
+}
+
+enum AuditResult {
+  SUCCESS
+  DENIED
+  ERROR
+}
+
+enum IdempotencyStatus {
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCEEDED
+  RETRY_WAIT
+  FAILED
+  RECONCILIATION_REQUIRED
+  CANCELLED
+}
+
+enum JobRetryPolicy {
+  SAFE_RETRY
+  RECONCILE_BEFORE_RETRY
+}
+
+enum JobAttemptResult {
+  RUNNING
+  SUCCEEDED
+  FAILED
+  UNKNOWN
+}
+
+enum RecoveryStatus {
+  PENDING
+  CONFIRMED
+  FAILED
+  NEEDS_MANUAL
+}
+
+enum OutboxStatus {
+  PENDING
+  DELIVERED
+  DEAD
+}
+
+model HomeworkAssignment {
+  id                                 String             @id @default(uuid()) @db.Uuid
+  subject_id                         String             @db.Uuid
+  issued_by                          String             @db.Uuid
+  title                              String // PII: restricted educational content
+  content                            Json // PII
+  due_at                             DateTime?          @db.Timestamptz(3)
+  lesson_occurrence_id               String?            @db.Uuid
+  archived_at                        DateTime?          @db.Timestamptz(3)
+  source_operation_id                String             @unique @db.Uuid
+  created_at                         DateTime           @default(now()) @db.Timestamptz(3)
+  updated_at                         DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
+  subject_ref                        Subject            @relation("HomeworkAssignment_subject_id", fields: [subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_subject")
+  issued_by_ref                      TeacherAccount     @relation("HomeworkAssignment_issued_by", fields: [issued_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_issued_by")
+  lesson_occurrence_ref              LessonOccurrence?  @relation("HomeworkAssignment_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_lesson_occurrence")
+  t04_homeworkdelivery_assignment_id HomeworkDelivery[] @relation("HomeworkDelivery_assignment_id")
+
+  @@index([subject_id])
+  @@index([issued_by])
+  @@index([lesson_occurrence_id])
+  @@map("homework_assignments")
+}
+
+model HomeworkDelivery {
+  id                                 String                   @id @default(uuid()) @db.Uuid
+  assignment_id                      String                   @db.Uuid
+  enrollment_id                      String                   @db.Uuid
+  issued_by                          String                   @db.Uuid
+  issued_at                          DateTime                 @db.Timestamptz(3)
+  due_at                             DateTime                 @db.Timestamptz(3)
+  cancelled_at                       DateTime?                @db.Timestamptz(3)
+  source_operation_id                String                   @unique @db.Uuid
+  created_at                         DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                         DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  assignment_ref                     HomeworkAssignment       @relation("HomeworkDelivery_assignment_id", fields: [assignment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_delivery_assignment")
+  enrollment_ref                     StudentSubjectEnrollment @relation("HomeworkDelivery_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_delivery_enrollment")
+  issued_by_ref                      TeacherAccount           @relation("HomeworkDelivery_issued_by", fields: [issued_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_delivery_issued_by")
+  t04_homeworksubmission_delivery_id HomeworkSubmission[]     @relation("HomeworkSubmission_delivery_id")
+
+  @@unique([assignment_id, enrollment_id], map: "uq_homework_delivery")
+  @@index([assignment_id])
+  @@index([enrollment_id])
+  @@index([issued_by])
+  @@map("homework_deliveries")
+}
+
+model HomeworkSubmission {
+  id                                              String              @id @default(uuid()) @db.Uuid
+  delivery_id                                     String              @db.Uuid
+  student_id                                      String              @db.Uuid
+  submitted_at                                    DateTime            @db.Timestamptz(3)
+  version                                         Int
+  content                                         Json // PII: student work, private
+  supersedes_submission_id                        String?             @unique @db.Uuid
+  source_operation_id                             String              @unique @db.Uuid
+  created_at                                      DateTime            @default(now()) @db.Timestamptz(3)
+  updated_at                                      DateTime            @default(now()) @updatedAt @db.Timestamptz(3)
+  delivery_ref                                    HomeworkDelivery    @relation("HomeworkSubmission_delivery_id", fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_delivery")
+  student_ref                                     Student             @relation("HomeworkSubmission_student_id", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_student")
+  supersedes_submission_ref                       HomeworkSubmission? @relation("HomeworkSubmission_supersedes_submission_id", fields: [supersedes_submission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_supersedes_submission")
+  t04_homeworksubmission_supersedes_submission_id HomeworkSubmission? @relation("HomeworkSubmission_supersedes_submission_id")
+  t04_submissionreview_submission_id              SubmissionReview[]  @relation("SubmissionReview_submission_id")
+
+  @@unique([delivery_id, version], map: "uq_submission_version")
+  @@index([delivery_id])
+  @@index([student_id])
+  @@map("homework_submissions")
+}
+
+model SubmissionReview {
+  id                  String               @id @default(uuid()) @db.Uuid
+  submission_id       String               @db.Uuid
+  reviewer_id         String               @db.Uuid
+  version             Int                  @default(1)
+  result              HomeworkReviewResult
+  grade               String? // PII: rubric value, no invented numeric grading scale
+  comment             String? // PII
+  reviewed_at         DateTime             @db.Timestamptz(3)
+  source_operation_id String               @unique @db.Uuid
+  created_at          DateTime             @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime             @default(now()) @updatedAt @db.Timestamptz(3)
+  submission_ref      HomeworkSubmission   @relation("SubmissionReview_submission_id", fields: [submission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_submission_review_submission")
+  reviewer_ref        TeacherAccount       @relation("SubmissionReview_reviewer_id", fields: [reviewer_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_submission_review_reviewer")
+
+  @@unique([submission_id, version], map: "uq_submission_review_version")
+  @@index([submission_id])
+  @@index([reviewer_id])
+  @@map("submission_reviews")
+}
+
+model SkillEntry {
+  id                           String            @id @default(uuid()) @db.Uuid
+  subject_id                   String            @db.Uuid
+  code                         String
+  label                        String
+  description                  String?
+  archived_at                  DateTime?         @db.Timestamptz(3)
+  source_operation_id          String            @unique @db.Uuid
+  created_at                   DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at                   DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
+  subject_ref                  Subject           @relation("SkillEntry_subject_id", fields: [subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_entry_subject")
+  t04_skillassessment_skill_id SkillAssessment[] @relation("SkillAssessment_skill_id")
+
+  @@unique([subject_id, code], map: "uq_subject_skill_code")
+  @@index([subject_id])
+  @@map("skill_entries")
+}
+
+model SkillAssessment {
+  id                                           String                   @id @default(uuid()) @db.Uuid
+  skill_id                                     String                   @db.Uuid
+  enrollment_id                                String                   @db.Uuid
+  assessed_by                                  String                   @db.Uuid
+  assessed_at                                  DateTime                 @db.Timestamptz(3)
+  lesson_ref                                   String?                  @db.Uuid
+  level                                        SkillLevel
+  version                                      Int
+  basis                                        String // PII: pedagogical evidence
+  supersedes_assessment_id                     String?                  @unique @db.Uuid
+  source_operation_id                          String                   @unique @db.Uuid
+  created_at                                   DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                                   DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  skill_ref                                    SkillEntry               @relation("SkillAssessment_skill_id", fields: [skill_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_assessment_skill")
+  enrollment_ref                               StudentSubjectEnrollment @relation("SkillAssessment_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_assessment_enrollment")
+  assessed_by_ref                              TeacherAccount           @relation("SkillAssessment_assessed_by", fields: [assessed_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_assessment_assessed_by")
+  lesson_ref_ref                               LessonOccurrence?        @relation("SkillAssessment_lesson_ref", fields: [lesson_ref], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_assessment_lesson_ref")
+  supersedes_assessment_ref                    SkillAssessment?         @relation("SkillAssessment_supersedes_assessment_id", fields: [supersedes_assessment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_skill_assessment_supersedes_assessment")
+  t04_skillassessment_supersedes_assessment_id SkillAssessment?         @relation("SkillAssessment_supersedes_assessment_id")
+
+  @@unique([enrollment_id, skill_id, version], map: "uq_skill_assessment_version")
+  @@index([skill_id])
+  @@index([enrollment_id])
+  @@index([assessed_by])
+  @@index([lesson_ref])
+  @@map("skill_assessments")
+}
+
+model ProgressCheckpoint {
+  id                                String                   @id @default(uuid()) @db.Uuid
+  enrollment_id                     String                   @db.Uuid
+  type                              CheckpointType
+  confirmed_lesson_count            Int
+  lesson_actual_outcome_id          String                   @db.Uuid
+  triggered_at                      DateTime                 @db.Timestamptz(3)
+  completed_at                      DateTime?                @db.Timestamptz(3)
+  source_operation_id               String                   @unique @db.Uuid
+  created_at                        DateTime                 @default(now()) @db.Timestamptz(3)
+  updated_at                        DateTime                 @default(now()) @updatedAt @db.Timestamptz(3)
+  enrollment_ref                    StudentSubjectEnrollment @relation("ProgressCheckpoint_enrollment_id", fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_progress_checkpoint_enrollment")
+  lesson_actual_outcome_ref         LessonActualOutcome      @relation("ProgressCheckpoint_lesson_actual_outcome_id", fields: [lesson_actual_outcome_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_progress_checkpoint_lesson_actual_outcome")
+  t04_educationreport_checkpoint_id EducationReport[]        @relation("EducationReport_checkpoint_id")
+
+  @@unique([enrollment_id, type, confirmed_lesson_count], map: "uq_enrollment_checkpoint")
+  @@index([enrollment_id])
+  @@index([lesson_actual_outcome_id])
+  @@map("progress_checkpoints")
+}
+
+model EducationReport {
+  id                                       String                @id @default(uuid()) @db.Uuid
+  checkpoint_id                            String                @db.Uuid
+  author_id                                String                @db.Uuid
+  version                                  Int
+  period_start                             DateTime              @db.Timestamptz(3)
+  period_end                               DateTime              @db.Timestamptz(3)
+  content                                  Json // PII: educational report, not a public document
+  status                                   EducationReportStatus @default(DRAFT)
+  generated_at                             DateTime?             @db.Timestamptz(3)
+  published_at                             DateTime?             @db.Timestamptz(3)
+  published_by                             String?               @db.Uuid
+  supersedes_report_id                     String?               @unique @db.Uuid
+  source_operation_id                      String                @unique @db.Uuid
+  created_at                               DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at                               DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  checkpoint_ref                           ProgressCheckpoint    @relation("EducationReport_checkpoint_id", fields: [checkpoint_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_education_report_checkpoint")
+  author_ref                               TeacherAccount        @relation("EducationReport_author_id", fields: [author_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_education_report_author")
+  published_by_ref                         TeacherAccount?       @relation("EducationReport_published_by", fields: [published_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_education_report_published_by")
+  supersedes_report_ref                    EducationReport?      @relation("EducationReport_supersedes_report_id", fields: [supersedes_report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_education_report_supersedes_report")
+  t04_educationreport_supersedes_report_id EducationReport?      @relation("EducationReport_supersedes_report_id")
+
+  @@unique([checkpoint_id, version], map: "uq_report_version")
+  @@index([checkpoint_id])
+  @@index([author_id])
+  @@index([published_by])
+  @@map("education_reports")
+}
+
+model S3Object {
+  id                              String           @id @default(uuid()) @db.Uuid
+  bucket                          String
+  key                             String           @unique
+  size                            BigInt
+  content_type                    String
+  status                          S3ObjectStatus   @default(PENDING)
+  uploaded_at                     DateTime?        @db.Timestamptz(3)
+  verified_at                     DateTime?        @db.Timestamptz(3)
+  sha256                          String?          @db.Char(64)
+  uploaded_by                     String           @db.Uuid
+  source_operation_id             String           @unique @db.Uuid
+  created_at                      DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at                      DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+  uploaded_by_ref                 AuthAccount      @relation("S3Object_uploaded_by", fields: [uploaded_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_s3_object_uploaded_by")
+  t04_filepermission_s3_object_id FilePermission[] @relation("FilePermission_s3_object_id")
+  t04_fileauditlog_s3_object_id   FileAuditLog[]   @relation("FileAuditLog_s3_object_id")
+
+  @@index([uploaded_by])
+  @@map("s3_objects")
+}
+
+model FilePermission {
+  id                             String         @id @default(uuid()) @db.Uuid
+  s3_object_id                   String         @db.Uuid
+  subject_id                     String         @db.Uuid
+  subject_type                   AccountKind
+  granted_by                     String         @db.Uuid
+  granted_at                     DateTime       @default(now()) @db.Timestamptz(3)
+  can_download                   Boolean        @default(false)
+  expires_at                     DateTime?      @db.Timestamptz(3)
+  revoked_at                     DateTime?      @db.Timestamptz(3)
+  revoked_by                     String?        @db.Uuid
+  source_operation_id            String         @unique @db.Uuid
+  created_at                     DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at                     DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  s3_object_ref                  S3Object       @relation("FilePermission_s3_object_id", fields: [s3_object_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_permission_s3_object")
+  granted_by_ref                 AuthAccount    @relation("FilePermission_granted_by", fields: [granted_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_permission_granted_by")
+  revoked_by_ref                 AuthAccount?   @relation("FilePermission_revoked_by", fields: [revoked_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_permission_revoked_by")
+  subject_ref                    AuthAccount    @relation("FilePermissionSubject", fields: [subject_id, subject_type], references: [id, kind], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_permission_subject")
+  t04_fileauditlog_permission_id FileAuditLog[] @relation("FileAuditLog_permission_id")
+
+  @@unique([s3_object_id, subject_id, subject_type], map: "uq_active_file_permission", where: raw("revoked_at IS NULL"))
+  @@index([s3_object_id])
+  @@index([granted_by])
+  @@index([revoked_by])
+  @@index([expires_at])
+  @@index([subject_id, subject_type])
+  @@map("file_permissions")
+}
+
+model FileAuditLog {
+  id             String          @id @default(uuid()) @db.Uuid
+  s3_object_id   String          @db.Uuid
+  permission_id  String?         @db.Uuid
+  action         FileAuditAction
+  actor_id       String          @db.Uuid
+  at             DateTime        @default(now()) @db.Timestamptz(3)
+  result         AuditResult
+  request_id     String          @db.Uuid
+  event_key      String          @unique
+  created_at     DateTime        @default(now()) @db.Timestamptz(3)
+  updated_at     DateTime        @default(now()) @updatedAt @db.Timestamptz(3)
+  s3_object_ref  S3Object        @relation("FileAuditLog_s3_object_id", fields: [s3_object_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_audit_log_s3_object")
+  permission_ref FilePermission? @relation("FileAuditLog_permission_id", fields: [permission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_audit_log_permission")
+  actor_ref      AuthAccount     @relation("FileAuditLog_actor_id", fields: [actor_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_file_audit_log_actor")
+
+  @@index([s3_object_id])
+  @@index([permission_id])
+  @@index([actor_id])
+  @@map("file_audit_logs")
+}
+
+model AuditEvent {
+  id                             String         @id @default(uuid()) @db.Uuid
+  actor_id                       String?        @db.Uuid
+  actor_kind                     AuditActorKind
+  system_actor_ref               String?
+  action                         String
+  resource_type                  String
+  resource_id                    String?
+  result                         AuditResult
+  request_id                     String         @db.Uuid
+  source_operation_id            String?        @db.Uuid
+  event_key                      String         @unique
+  metadata                       Json?
+  recorded_at                    DateTime       @default(now()) @db.Timestamptz(3)
+  created_at                     DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at                     DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  actor_ref                      AuthAccount?   @relation("AuditEvent_actor_id", fields: [actor_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_audit_event_actor")
+  t04_outboxevent_audit_event_id OutboxEvent[]  @relation("OutboxEvent_audit_event_id")
+
+  @@index([actor_id])
+  @@index([request_id])
+  @@index([source_operation_id])
+  @@index([resource_type, resource_id, recorded_at])
+  @@map("audit_events")
+}
+
+model IdempotencyRecord {
+  id           String            @id @default(uuid()) @db.Uuid
+  scope        String
+  key          String            @db.VarChar(200)
+  command_type String
+  request_hash String            @db.Char(64)
+  status       IdempotencyStatus @default(IN_PROGRESS)
+  result_hash  String?           @db.Char(64)
+  result       Json?
+  completed_at DateTime?         @db.Timestamptz(3)
+  expires_at   DateTime          @default(dbgenerated("(CURRENT_TIMESTAMP + '48:00:00'::interval)")) @db.Timestamptz(3)
+  created_at   DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at   DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
+
+  @@unique([scope, command_type, key], map: "uq_idempotency_scope_command_key")
+  @@index([expires_at])
+  @@map("idempotency_records")
+}
+
+model OutboxEvent {
+  id                                   String       @id @default(uuid()) @db.Uuid
+  status                               OutboxStatus @default(PENDING)
+  topic                                String
+  schema_version                       Int          @default(1)
+  aggregate_type                       String
+  aggregate_id                         String       @db.Uuid
+  source_operation_id                  String       @db.Uuid
+  audit_event_id                       String       @db.Uuid
+  event_key                            String       @unique
+  payload                              Json
+  published_at                         DateTime?    @db.Timestamptz(3)
+  attempts                             Int          @default(0)
+  last_attempt_at                      DateTime?    @db.Timestamptz(3)
+  next_attempt_at                      DateTime     @default(now()) @db.Timestamptz(3)
+  locked_by                            String?
+  locked_until                         DateTime?    @db.Timestamptz(3)
+  delivery_reference                   String?
+  last_error_code                      String?
+  created_at                           DateTime     @default(now()) @db.Timestamptz(3)
+  updated_at                           DateTime     @default(now()) @updatedAt @db.Timestamptz(3)
+  audit_event_ref                      AuditEvent   @relation("OutboxEvent_audit_event_id", fields: [audit_event_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_outbox_event_audit_event")
+  t04_jobrecord_source_outbox_event_id JobRecord[]  @relation("JobRecord_source_outbox_event_id")
+  crm_tasks                            CrmTask[]    @relation("CrmTaskOutbox")
+
+  @@index([audit_event_id])
+  @@index([published_at, next_attempt_at])
+  @@index([status, next_attempt_at])
+  @@index([source_operation_id])
+  @@map("outbox_events")
+}
+
+model JobRecord {
+  id                       String          @id @default(uuid()) @db.Uuid
+  type                     String
+  status                   JobStatus       @default(PENDING)
+  payload                  Json
+  source_operation_id      String          @db.Uuid
+  source_outbox_event_id   String?         @db.Uuid
+  deduplication_key        String          @unique
+  retry_policy             JobRetryPolicy
+  attempts                 Int             @default(0)
+  max_attempts             Int
+  next_run_at              DateTime        @default(now()) @db.Timestamptz(3)
+  locked_by                String?
+  locked_until             DateTime?       @db.Timestamptz(3)
+  started_at               DateTime?       @db.Timestamptz(3)
+  finished_at              DateTime?       @db.Timestamptz(3)
+  last_error_code          String?
+  created_at               DateTime        @default(now()) @db.Timestamptz(3)
+  updated_at               DateTime        @default(now()) @updatedAt @db.Timestamptz(3)
+  source_outbox_event_ref  OutboxEvent?    @relation("JobRecord_source_outbox_event_id", fields: [source_outbox_event_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_job_record_source_outbox_event")
+  t04_jobattempt_job_id    JobAttempt[]    @relation("JobAttempt_job_id")
+  t04_recoverystate_job_id RecoveryState[] @relation("RecoveryState_job_id")
+
+  @@index([source_outbox_event_id])
+  @@index([status, next_run_at])
+  @@index([source_operation_id])
+  @@map("job_records")
+}
+
+model JobAttempt {
+  id                  String           @id @default(uuid()) @db.Uuid
+  job_id              String           @db.Uuid
+  attempt_no          Int
+  started_at          DateTime         @db.Timestamptz(3)
+  finished_at         DateTime?        @db.Timestamptz(3)
+  result              JobAttemptResult @default(RUNNING)
+  error               String? // Sanitized error code only; no provider payload, secret or stack trace.
+  provider_request_id String?
+  created_at          DateTime         @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+  job_ref             JobRecord        @relation("JobAttempt_job_id", fields: [job_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_job_attempt_job")
+
+  @@unique([job_id, attempt_no], map: "uq_job_attempt_number")
+  @@index([job_id])
+  @@map("job_attempts")
+}
+
+model RecoveryState {
+  id                  String         @id @default(uuid()) @db.Uuid
+  job_id              String         @db.Uuid
+  attempt_no          Int
+  operation_key       String         @unique
+  provider            String
+  provider_request_id String
+  ext_resource_id     String?
+  status              RecoveryStatus @default(PENDING)
+  check_attempts      Int            @default(0)
+  locked_by           String?
+  locked_until        DateTime?      @db.Timestamptz(3)
+  last_checked_at     DateTime?      @db.Timestamptz(3)
+  next_check_at       DateTime?      @db.Timestamptz(3)
+  reconciled_at       DateTime?      @db.Timestamptz(3)
+  evidence_ref        String?
+  reason_code         String?
+  created_at          DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  job_ref             JobRecord      @relation("RecoveryState_job_id", fields: [job_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_recovery_state_job")
+
+  @@unique([job_id, attempt_no], map: "uq_recovery_job_attempt")
+  @@index([provider, provider_request_id])
+  @@index([status, next_check_at])
+  @@map("recovery_states")
+}
+
+// Process liveness only; not evidence that the outbox is drained or a release gate passed.
+model RuntimeHeartbeat {
+  instance_id  String    @id
+  component    String    @default("worker")
+  last_seen_at DateTime  @default(now()) @db.Timestamptz(3)
+  stopped_at   DateTime? @db.Timestamptz(3)
+
+  @@index([component, last_seen_at])
+  @@map("runtime_heartbeats")
+}
+
+// HR facts are recorded by a director/controlled maintenance, not supplied as a payroll KPI by the client.
+model TeacherEngagement {
+  id                  String                @id @default(uuid()) @db.Uuid
+  teacher_id          String                @db.Uuid
+  starts_at           DateTime              @db.Timestamptz(3)
+  ends_at             DateTime?             @db.Timestamptz(3)
+  basis               String
+  recorded_by_id      String                @db.Uuid
+  source_operation_id String                @unique @db.Uuid
+  created_at          DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  teacher             TeacherAccount        @relation("TeacherEngagements", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_engagement_teacher")
+  recorder            StaffAccount          @relation("EngagementRecorder", fields: [recorded_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_engagement_recorder")
+  credits             TeacherTenureCredit[] @relation("EngagementCredits")
+
+  @@index([teacher_id, starts_at])
+  @@map("teacher_engagements")
+}
+
+model TeacherTenureCredit {
+  id                  String            @id @default(uuid()) @db.Uuid
+  engagement_id       String            @db.Uuid
+  starts_on           DateTime          @db.Date
+  ends_on             DateTime          @db.Date
+  basis               String
+  recorded_by_id      String            @db.Uuid
+  source_operation_id String            @unique @db.Uuid
+  created_at          DateTime          @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime          @default(now()) @updatedAt @db.Timestamptz(3)
+  engagement          TeacherEngagement @relation("EngagementCredits", fields: [engagement_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_tenure_engagement")
+  recorder            StaffAccount      @relation("TenureRecorder", fields: [recorded_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_tenure_recorder")
+
+  @@unique([engagement_id, starts_on], map: "uq_tenure_month")
+  @@map("teacher_tenure_credits")
+}
+
+model TeacherRatePromise {
+  id                  String         @id @default(uuid()) @db.Uuid
+  teacher_id          String         @db.Uuid
+  valid_from          DateTime       @db.Timestamptz(3)
+  valid_to            DateTime?      @db.Timestamptz(3)
+  minimum_rate        Decimal        @db.Decimal(20, 4)
+  additive_rate       Decimal        @db.Decimal(20, 4)
+  currency            String         @db.VarChar(3)
+  basis               String
+  recorded_by_id      String         @db.Uuid
+  source_operation_id String         @unique @db.Uuid
+  created_at          DateTime       @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
+  teacher             TeacherAccount @relation("TeacherRatePromises", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_rate_promise_teacher")
+  recorder            StaffAccount   @relation("RatePromiseRecorder", fields: [recorded_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_rate_promise_recorder")
+
+  @@index([teacher_id, valid_from])
+  @@map("teacher_rate_promises")
+}
+
+enum ReportedLessonResult {
+  CONDUCTED
+  NOT_CONDUCTED
+  DISPUTED
+}
+
+enum ScheduleRequestStatus {
+  PENDING
+  RESOLVED
+}
+
+model LessonOutcomeReport {
+  resolved_lesson      LessonOccurrence?    @relation("ResolvedLessonReport")
+  id                   String               @id @default(uuid()) @db.Uuid
+  lesson_occurrence_id String               @db.Uuid
+  reported_by_id       String               @db.Uuid
+  version              Int
+  lesson_version       Int
+  result               ReportedLessonResult
+  actual_started_at    DateTime?            @db.Timestamptz(3)
+  duration_min         Int?
+  note                 String // PII: private teacher report
+  reported_at          DateTime             @db.Timestamptz(3)
+  source_operation_id  String               @unique @db.Uuid
+  created_at           DateTime             @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime             @default(now()) @updatedAt @db.Timestamptz(3)
+  lesson_ref           LessonOccurrence     @relation("LessonReports", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_report_lesson")
+  reporter_ref         TeacherAccount       @relation("OutcomeReporter", fields: [reported_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_report_teacher")
+  confirmed_outcome    LessonActualOutcome? @relation("ConfirmedReport")
+
+  @@unique([lesson_occurrence_id, version], map: "uq_outcome_report_version")
+  @@index([reported_by_id])
+  @@map("lesson_outcome_reports")
+}
+
+model ScheduleChangeRequest {
+  id                   String                @id @default(uuid()) @db.Uuid
+  lesson_occurrence_id String?               @db.Uuid
+  recurring_slot_id    String?               @db.Uuid
+  teacher_id           String                @db.Uuid
+  requested_start_at   DateTime?             @db.Timestamptz(3)
+  requested_end_at     DateTime?             @db.Timestamptz(3)
+  reason               String // PII: private organizational request
+  status               ScheduleRequestStatus @default(PENDING)
+  source_operation_id  String                @unique @db.Uuid
+  created_at           DateTime              @default(now()) @db.Timestamptz(3)
+  updated_at           DateTime              @default(now()) @updatedAt @db.Timestamptz(3)
+  lesson_ref           LessonOccurrence?     @relation("LessonRequests", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_schedule_request_lesson")
+  slot_ref             RecurringSlot?        @relation("SlotChangeRequests", fields: [recurring_slot_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_schedule_request_slot")
+  teacher_ref          TeacherAccount        @relation("ScheduleRequester", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_schedule_request_teacher")
+
+  @@index([lesson_occurrence_id])
+  @@index([recurring_slot_id])
+  @@index([teacher_id, status])
+  @@map("schedule_change_requests")
+}
+
+model SlotChangeEvent {
+  id                  String        @id @default(uuid()) @db.Uuid
+  slot_id             String        @db.Uuid
+  author_id           String        @db.Uuid
+  old_values          Json
+  new_values          Json
+  reason              String
+  effective_at        DateTime      @db.Timestamptz(3)
+  server_recorded_at  DateTime      @default(now()) @db.Timestamptz(3)
+  source_operation_id String        @unique @db.Uuid
+  created_at          DateTime      @default(now()) @db.Timestamptz(3)
+  updated_at          DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
+  slot_ref            RecurringSlot @relation("SlotChanges", fields: [slot_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_slot_change_slot")
+  author_ref          AuthAccount   @relation("SlotChangeAuthor", fields: [author_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_slot_change_author")
+
+  @@index([slot_id])
+  @@index([author_id])
+  @@map("slot_change_events")
+}

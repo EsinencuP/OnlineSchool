@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "strict": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "types": ["node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../api" },
+    { "path": "../../packages/shared" },
+    { "path": "../../packages/db" }
+  ]
+}
