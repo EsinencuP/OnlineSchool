@@ -1,0 +1,35 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "node infra/vercel/build.mjs",
+  "outputDirectory": "apps/qa-shell/dist",
+  "regions": ["fra1"],
+  "functions": { "api/handler.ts": { "maxDuration": 60 } },
+  "daemons": {
+    "worker": {
+      "root": ".",
+      "entrypoint": "Dockerfile.worker",
+      "instances": { "fra1": 1 },
+      "resources": { "requests": { "memory": "1Gi" } },
+      "terminationGracePeriodSeconds": 45
+    }
+  },
+  "rewrites": [
+    { "source": "/api/health", "destination": "/api/handler" },
+    { "source": "/api/:path*", "destination": "/api/handler" },
+    { "source": "/health", "destination": "/api/handler" },
+    { "source": "/:path*", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "same-origin" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
+    },
+    { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }
+  ]
+}

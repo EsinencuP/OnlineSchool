@@ -1,6 +1,40 @@
 {
   "openapi": "3.1.0",
   "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getApiHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "API process is running; database and worker checked separately"
+          }
+        },
+        "summary": "Check API process liveness",
+        "tags": [
+          "Foundation"
+        ]
+      }
+    },
+    "/api/health/worker": {
+      "get": {
+        "description": "Public liveness only. Returns 503 when no worker heartbeat is fresh; no queue or personal data is exposed.",
+        "operationId": "getWorkerHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Fresh worker heartbeat in PostgreSQL"
+          },
+          "503": {
+            "description": "Worker or database unavailable"
+          }
+        },
+        "summary": "Check worker heartbeat",
+        "tags": [
+          "Foundation"
+        ]
+      }
+    },
     "/api/v1/accruals": {
       "post": {
         "description": "MFA required. MANAGER/DIRECTOR, assigned student; immutable actual-start snapshot. Unpaid performed work requires explicit director amount decision.",

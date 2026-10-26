@@ -1027,6 +1027,55 @@ export interface WebAuthnStartRequest {
   email?: string;
 }
 
+export const getGetApiHealthUrl = () => {
+
+
+
+
+  return `/api/health`
+}
+
+/**
+ * @summary Check API process liveness
+ */
+export const getApiHealth = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<void>(getGetApiHealthUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetWorkerHealthUrl = () => {
+
+
+
+
+  return `/api/health/worker`
+}
+
+/**
+ * Public liveness only. Returns 503 when no worker heartbeat is fresh; no queue or personal data is exposed.
+ * @summary Check worker heartbeat
+ */
+export const getWorkerHealth = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<void>(getGetWorkerHealthUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getCreateTeacherAccrualUrl = () => {
 
 

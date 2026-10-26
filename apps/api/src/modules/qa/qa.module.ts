@@ -6,6 +6,7 @@ import { AuditService } from '../../core/audit/audit.service.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import type { HttpRequest, HttpResponse } from '../../core/http.js';
 import { ComponentStatusResponse, FileAccessResponse } from './qa.dto.js';
+import { ApiHealthController, WorkerHealthController } from './worker-health.controller.js';
 
 @ApiTags('QA diagnostics')
 @ApiCookieAuth('sessionCookie')
@@ -116,5 +117,7 @@ export class FileAccessController {
   }
 }
 
-@Module({ controllers: [QaController, FileAccessController] })
+@Module({
+  controllers: [QaController, FileAccessController, ApiHealthController, WorkerHealthController],
+})
 export class QaModule {}

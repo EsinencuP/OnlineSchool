@@ -16,7 +16,9 @@ docker compose exec api pnpm prisma migrate deploy
 API слушает `127.0.0.1:3000`, nginx — `127.0.0.1:80`; порты задаются `API_PORT` и
 `HTTP_PORT`. PostgreSQL не публикует порт хоста. nginx проксирует API, включая
 `/health` и `/api/docs`; QA SPA пока обслуживается существующим Vercel-проектом.
-Это не второй облачный QA space. Временные БД CI — тестовые ресурсы runner, не продуктовая среда.
+Это инструкция для будущего VPS/локального запуска, не второй облачный QA space.
+По уточнению владельца в TASK-14 сейчас используется только существующая рабочая
+Neon main; дополнительные БД, в том числе временные CI-БД, автоматически не создаются.
 
 Порядок запуска: healthy PostgreSQL → одноразовый `migrate` → API/worker → nginx.
 Миграции выполняет `app_migrate`; reference seed добавляет только справочник ролей,
@@ -81,8 +83,11 @@ Override публикует 80/443, перенаправляет HTTP на фи�
 
 ## GitHub Actions
 
-`.github/workflows/ci.yml` запускает шесть jobs: typecheck, lint, unit-test,
-integration-test, build, docker-build. Node 24, pnpm 10.34.9, frozen lockfile;
+`.github/workflows/ci.yml` запускает typecheck, lint, unit-test, build, docker-build.
+`integration-test` явно пропущен по уточнению владельца TASK-14: существующие suites
+создают синтетические данные и отдельные БД. Они не перенаправляются на рабочую БД.
+Это означает, что текущий CI не является подтверждением DB-регрессии/FND-GATE.
+Node 24, pnpm 10.34.9, frozen lockfile;
 checkout/setup-node закреплены полными проверенными commit SHA. Токен имеет только
 `contents: read`, checkout не сохраняет credentials. Нет `pull_request_target`,
 деплой-секретов, автоматической публикации, merge, cache upload или upload artifacts.
@@ -92,14 +97,15 @@ Unit scripts используют существующий `node:test`; в эт�
 `test:unit` aliases, без замены тестового framework. Перед ними компилируются нужные
 workspace-зависимости. Новые FND-GATE/E2E наборы относятся к TASK-15.
 
-Integration job использует настоящий `postgres:18`, доступный только на loopback.
+Историческая проверка TASK-13 (до уточнения TASK-14) использовала настоящий
+`postgres:18`, доступный только на loopback. Её свидетельства сохранены.
 `DATABASE_URL_CI` — maintenance connection этого временного сервиса;
 `DATABASE_URL_TEST` — тестовый шаблон URL того же сервиса. Production secrets с этими
 именами подключать нельзя. Для PR не требуются долговечные GitHub secrets.
 Внешние CI secrets допустимы только для отдельной проверенной CI-БД, никогда для
 рабочего Neon; текущий runner намеренно отклоняет remote hosts и рабочее имя БД.
 
-`infra/ci/integration.mjs` проверяет CI=true, localhost, тестовый prefix и PostgreSQL 18,
+Сейчас не запускаемый `infra/ci/integration.mjs` проверяет CI=true, localhost, тестовый prefix и PostgreSQL 18,
 создаёт новый пустой template, один раз применяет миграции/reference seed, затем делает
 шесть новых изолированных клонов для DB, Core, Identity, Finance, Schedule и Worker.
 Не использует DROP/reset и не повторяет тесты в рабочей БД. Соединения редактируются
