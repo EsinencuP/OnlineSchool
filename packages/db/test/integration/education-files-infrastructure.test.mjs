@@ -503,14 +503,19 @@ test('outbox needs successful matching audit and delivery evidence; CRM uses an 
     const event = await audit(db);
     const pending = await outbox(db, event);
     assert.equal(pending.published_at, null);
+    assert.equal(pending.status, 'PENDING');
     await rejects(
       db,
       () => db.query('UPDATE outbox_events SET published_at=now() WHERE id=$1', [pending.id]),
       'ck_outbox_delivery',
     );
     await db.query(
-      "UPDATE outbox_events SET attempts=1,last_attempt_at=now(),published_at=now(),delivery_reference='synthetic:delivered' WHERE id=$1",
+      "UPDATE outbox_events SET status='DELIVERED',attempts=1,last_attempt_at=now(),published_at=now(),delivery_reference='synthetic:delivered' WHERE id=$1",
       [pending.id],
+    );
+    assert.equal(
+      (await db.query('SELECT status FROM outbox_events WHERE id=$1', [pending.id])).rows[0].status,
+      'DELIVERED',
     );
     await rejects(
       db,
