@@ -961,6 +961,7 @@ model SaleCondition {
 }
 
 model Subscription {
+  freeze_history SubscriptionFreezeHistory[]
   id                                             String                      @id @default(uuid()) @db.Uuid
   enrollment_id                                  String                      @db.Uuid
   sale_condition_id                              String                      @db.Uuid
@@ -988,6 +989,19 @@ model Subscription {
   @@index([enrollment_id])
   @@index([sale_condition_id])
   @@map("subscriptions")
+}
+
+model SubscriptionFreezeHistory {
+  id String @id @default(uuid()) @db.Uuid
+  subscription_id String @db.Uuid
+  frozen_from DateTime @db.Timestamptz(3)
+  frozen_until DateTime @db.Timestamptz(3)
+  replaced_at DateTime @db.Timestamptz(3)
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  updated_at DateTime @default(now()) @db.Timestamptz(3)
+  subscription Subscription @relation(fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_stu07_freeze_subscription")
+  @@index([subscription_id, replaced_at])
+  @@map("subscription_freeze_history")
 }
 
 model PaymentReceipt {

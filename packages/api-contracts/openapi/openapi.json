@@ -6765,6 +6765,285 @@
         ]
       }
     },
+    "/api/v1/student/subscription": {
+      "get": {
+        "description": "Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.",
+        "operationId": "getStudentSubscription",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionDetailsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read-only CRM subscription showcase",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subscription/ledger": {
+      "get": {
+        "description": "Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.",
+        "operationId": "getStudentSubscriptionLedger",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentSubscriptionLedgerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Chronological paid lesson-right operations for the selected subscription",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subscription/payments": {
+      "get": {
+        "description": "Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.",
+        "operationId": "getStudentSubscriptionPayments",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentHistoryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirmed payment allocations for the selected subscription",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/students": {
       "post": {
         "description": "CRM-owned stable Student identity; no account/entitlements. A manager receives an explicit student assignment.",
@@ -9935,6 +10214,72 @@
         ],
         "additionalProperties": true
       },
+      "PaymentHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Exact Decimal allocated to this subscription, at least two and up to four fraction digits"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "example": "MDL",
+            "description": "Actual CRM currency, including MDL; no conversion"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lessonsAdded": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "paymentId",
+          "confirmedAt",
+          "amount",
+          "currency",
+          "description",
+          "lessonsAdded"
+        ]
+      },
+      "PaymentHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentHistoryItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "PaymentReceiptResponse": {
         "type": "object",
         "properties": {
@@ -10854,6 +11199,81 @@
           "mustChangePassword"
         ]
       },
+      "StudentSubscriptionLedgerEntryDto": {
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs"
+          },
+          "entryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "DEDUCTION",
+              "CREDIT",
+              "FREEZE",
+              "UNFREEZE"
+            ]
+          },
+          "balanceBefore": {
+            "type": "string",
+            "description": "Lesson quantities, not monetary account totals"
+          },
+          "balanceAfter": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lessonId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "entryId",
+          "entryDate",
+          "type",
+          "balanceBefore",
+          "balanceAfter",
+          "description",
+          "lessonId"
+        ]
+      },
+      "StudentSubscriptionLedgerResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSubscriptionLedgerEntryDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "SubjectCreateRequest": {
         "type": "object",
         "properties": {
@@ -10956,6 +11376,89 @@
           "saleConditionId"
         ],
         "additionalProperties": false
+      },
+      "SubscriptionDetailsDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "planName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lessonsTotal": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lessonsRemaining": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Confirmed paid rights only, never future bookings or temporary admission limits"
+          },
+          "validFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "validUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "isFrozen": {
+            "type": "boolean"
+          },
+          "frozenFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "frozenUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "EXPIRED",
+              "FROZEN",
+              "NONE"
+            ]
+          }
+        },
+        "required": [
+          "subscriptionId",
+          "planName",
+          "lessonsTotal",
+          "lessonsRemaining",
+          "validFrom",
+          "validUntil",
+          "isFrozen",
+          "frozenFrom",
+          "frozenUntil",
+          "status"
+        ]
       },
       "SubscriptionResponse": {
         "type": "object",

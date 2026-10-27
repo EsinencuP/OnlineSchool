@@ -1025,6 +1025,16 @@ erDiagram
   }
   homework_submissions ||--o{ submission_reviews : "fk_t04_submission_review_submission"
   teacher_accounts ||--o{ submission_reviews : "fk_t04_submission_review_reviewer"
+  subscription_freeze_history {
+    String id PK
+    String subscription_id
+    DateTime frozen_from
+    DateTime frozen_until
+    DateTime replaced_at
+    DateTime created_at
+    DateTime updated_at
+  }
+  subscriptions ||--o{ subscription_freeze_history : "fk_stu07_freeze_subscription"
   subscriptions {
     String id PK
     String enrollment_id

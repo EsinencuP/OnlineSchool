@@ -884,6 +884,28 @@ export interface PaymentDistributionResponse {
   [key: string]: unknown;
  }
 
+export interface PaymentHistoryItemDto {
+  paymentId: string;
+  confirmedAt: string;
+  /** Exact Decimal allocated to this subscription, at least two and up to four fraction digits */
+  amount: string;
+  /**
+     * Actual CRM currency, including MDL; no conversion
+     * @pattern ^[A-Z]{3}$
+     */
+  currency: string;
+  description: string;
+  /** @nullable */
+  lessonsAdded: number | null;
+}
+
+export interface PaymentHistoryResponseDto {
+  items: PaymentHistoryItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export type PaymentReceiptResponseStatus = typeof PaymentReceiptResponseStatus[keyof typeof PaymentReceiptResponseStatus];
 
 
@@ -1227,6 +1249,36 @@ export interface StudentPasswordChangedDto {
   mustChangePassword: false;
 }
 
+export type StudentSubscriptionLedgerEntryDtoType = typeof StudentSubscriptionLedgerEntryDtoType[keyof typeof StudentSubscriptionLedgerEntryDtoType];
+
+
+export const StudentSubscriptionLedgerEntryDtoType = {
+  DEDUCTION: 'DEDUCTION',
+  CREDIT: 'CREDIT',
+  FREEZE: 'FREEZE',
+  UNFREEZE: 'UNFREEZE',
+} as const;
+
+export interface StudentSubscriptionLedgerEntryDto {
+  /** Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs */
+  entryId: string;
+  entryDate: string;
+  type: StudentSubscriptionLedgerEntryDtoType;
+  /** Lesson quantities, not monetary account totals */
+  balanceBefore: string;
+  balanceAfter: string;
+  description: string;
+  /** @nullable */
+  lessonId: string | null;
+}
+
+export interface StudentSubscriptionLedgerResponseDto {
+  items: StudentSubscriptionLedgerEntryDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface SubjectCreateRequest {
   code: string;
   name: string;
@@ -1266,6 +1318,40 @@ export interface SubmitResponseDto {
 export interface SubscriptionCreateRequest {
   enrollmentId: string;
   saleConditionId: string;
+}
+
+export type SubscriptionDetailsDtoStatus = typeof SubscriptionDetailsDtoStatus[keyof typeof SubscriptionDetailsDtoStatus];
+
+
+export const SubscriptionDetailsDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  FROZEN: 'FROZEN',
+  NONE: 'NONE',
+} as const;
+
+export interface SubscriptionDetailsDto {
+  /** @nullable */
+  subscriptionId: string | null;
+  /** @nullable */
+  planName: string | null;
+  /** @nullable */
+  lessonsTotal: number | null;
+  /**
+     * Confirmed paid rights only, never future bookings or temporary admission limits
+     * @nullable
+     */
+  lessonsRemaining: number | null;
+  /** @nullable */
+  validFrom: string | null;
+  /** @nullable */
+  validUntil: string | null;
+  isFrozen: boolean;
+  /** @nullable */
+  frozenFrom: string | null;
+  /** @nullable */
+  frozenUntil: string | null;
+  status: SubscriptionDetailsDtoStatus;
 }
 
 export interface SubscriptionResponse {
@@ -1492,6 +1578,45 @@ export type GetStudentMaterialsParams = {
  * Educational subject ID, not the permission recipient account
  */
 subjectId?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentSubscriptionParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
+};
+
+export type GetStudentSubscriptionLedgerParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentSubscriptionPaymentsParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
 /**
  * @minimum 1
  */
@@ -3479,6 +3604,102 @@ return schoolFetch<StudentPasswordChangedDto>(getChangeStudentPasswordUrl(),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(changeStudentPasswordDto)
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionUrl = (params?: GetStudentSubscriptionParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription?${stringifiedParams}` : `/api/v1/student/subscription`
+}
+
+/**
+ * Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.
+ * @summary Read-only CRM subscription showcase
+ */
+export const getStudentSubscription = (params?: GetStudentSubscriptionParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SubscriptionDetailsDto>(getGetStudentSubscriptionUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionLedgerUrl = (params?: GetStudentSubscriptionLedgerParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription/ledger?${stringifiedParams}` : `/api/v1/student/subscription/ledger`
+}
+
+/**
+ * Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.
+ * @summary Chronological paid lesson-right operations for the selected subscription
+ */
+export const getStudentSubscriptionLedger = (params?: GetStudentSubscriptionLedgerParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentSubscriptionLedgerResponseDto>(getGetStudentSubscriptionLedgerUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionPaymentsUrl = (params?: GetStudentSubscriptionPaymentsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription/payments?${stringifiedParams}` : `/api/v1/student/subscription/payments`
+}
+
+/**
+ * Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.
+ * @summary Confirmed payment allocations for the selected subscription
+ */
+export const getStudentSubscriptionPayments = (params?: GetStudentSubscriptionPaymentsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PaymentHistoryResponseDto>(getGetStudentSubscriptionPaymentsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 
