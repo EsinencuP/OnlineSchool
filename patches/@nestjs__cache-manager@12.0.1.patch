@@ -1,0 +1,13 @@
+diff --git a/dist/interfaces/cache-module.interface.d.ts b/dist/interfaces/cache-module.interface.d.ts
+index 96de160ee2d7c9deaf1eca38097d5bd5882ad7a9..d65d4829d4195c13e3ada41701ba425ca246837d 100644
+--- a/dist/interfaces/cache-module.interface.d.ts
++++ b/dist/interfaces/cache-module.interface.d.ts
+@@ -44,7 +44,7 @@ export interface CacheModuleAsyncOptions<StoreConfig extends Record<any, any> =
+     /**
+      * Dependencies that a Factory may inject.
+      */
+-    inject?: any[];
++    inject?: ConfigurableModuleAsyncOptions<CacheOptions<StoreConfig>, keyof CacheOptionsFactory>['inject'];
+     /**
+      * Extra providers to be registered within a scope of this module.
+      */

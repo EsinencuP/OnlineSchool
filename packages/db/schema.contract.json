@@ -9726,6 +9726,62 @@
     ]
   },
   {
+    "name": "StudentDashboardRevision",
+    "table": "student_dashboard_revisions",
+    "fields": [
+      {
+        "name": "student_id",
+        "column": "student_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "revision",
+        "column": "revision",
+        "type": "BigInt",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "updated_at",
+        "column": "updated_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "student",
+        "type": "Student",
+        "from": [
+          "student_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_dashboard_revision_student"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "student_id"
+      ]
+    ]
+  },
+  {
     "name": "StudentRepresentativeLink",
     "table": "student_representative_links",
     "fields": [
@@ -11549,6 +11605,15 @@
     "name": "TeachingAssignment",
     "table": "teaching_assignments",
     "fields": [
+      {
+        "name": "google_meet_link",
+        "column": "google_meet_link",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
       {
         "name": "id",
         "column": "id",

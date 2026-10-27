@@ -5157,6 +5157,74 @@
         ]
       }
     },
+    "/api/v1/student/dashboard": {
+      "get": {
+        "description": "Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.",
+        "operationId": "getStudentDashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Current student dashboard snapshot",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/me": {
       "get": {
         "description": "Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.",
@@ -6771,6 +6839,48 @@
         ],
         "additionalProperties": false
       },
+      "DashboardResponseDto": {
+        "type": "object",
+        "properties": {
+          "nextLesson": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NextLessonDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "homework": {
+            "$ref": "#/components/schemas/HomeworkCountsDto"
+          },
+          "subscription": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SubscriptionSummaryDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "skillProgress": {
+            "$ref": "#/components/schemas/SkillProgressDto"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "nextLesson",
+          "homework",
+          "subscription",
+          "skillProgress",
+          "generatedAt"
+        ]
+      },
       "EmptyRequest": {
         "type": "object",
         "properties": {},
@@ -7130,6 +7240,29 @@
           "service"
         ],
         "additionalProperties": false
+      },
+      "HomeworkCountsDto": {
+        "type": "object",
+        "properties": {
+          "notSubmitted": {
+            "type": "integer"
+          },
+          "submitted": {
+            "type": "integer"
+          },
+          "needsRevision": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "notSubmitted",
+          "submitted",
+          "needsRevision",
+          "total"
+        ]
       },
       "HouseholdCreatedResponse": {
         "type": "object",
@@ -7759,6 +7892,47 @@
         "required": [
           "whatsapp",
           "telegram"
+        ]
+      },
+      "NextLessonDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "meetLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canJoin": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "meetLink",
+          "canJoin"
         ]
       },
       "PasskeyRegisteredResponse": {
@@ -8521,6 +8695,29 @@
         ],
         "additionalProperties": false
       },
+      "SkillProgressDto": {
+        "type": "object",
+        "properties": {
+          "familiarizing": {
+            "type": "integer"
+          },
+          "practicing": {
+            "type": "integer"
+          },
+          "applying": {
+            "type": "integer"
+          },
+          "notStudied": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "familiarizing",
+          "practicing",
+          "applying",
+          "notStudied"
+        ]
+      },
       "SlotGenerationResponse": {
         "type": "object",
         "properties": {
@@ -8759,6 +8956,37 @@
         ],
         "additionalProperties": true
       },
+      "SubscriptionSummaryDto": {
+        "type": "object",
+        "properties": {
+          "lessonsRemaining": {
+            "type": "integer"
+          },
+          "validUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "isFrozen": {
+            "type": "boolean"
+          },
+          "frozenUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "lessonsRemaining",
+          "validUntil",
+          "isFrozen",
+          "frozenUntil"
+        ]
+      },
       "TeacherAccrualResponse": {
         "type": "object",
         "properties": {
@@ -8904,6 +9132,10 @@
       "TeachingAssignmentCreateRequest": {
         "type": "object",
         "properties": {
+          "googleMeetLink": {
+            "type": "string",
+            "pattern": "^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"
+          },
           "enrollmentId": {
             "type": "string",
             "format": "uuid"
@@ -8935,6 +9167,12 @@
       "TeachingAssignmentResponse": {
         "type": "object",
         "properties": {
+          "google_meet_link": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -8963,6 +9201,7 @@
           }
         },
         "required": [
+          "google_meet_link",
           "id",
           "enrollment_id",
           "teacher_id",

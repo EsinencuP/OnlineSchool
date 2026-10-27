@@ -214,6 +214,49 @@ export interface CsrfResponse {
   csrfToken: string;
 }
 
+export interface NextLessonDto {
+  lessonId: string;
+  scheduledAt: string;
+  /** @minimum 1 */
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  /** @nullable */
+  meetLink: string | null;
+  canJoin: boolean;
+}
+
+export interface HomeworkCountsDto {
+  notSubmitted: number;
+  submitted: number;
+  needsRevision: number;
+  total: number;
+}
+
+export interface SubscriptionSummaryDto {
+  lessonsRemaining: number;
+  /** @nullable */
+  validUntil: string | null;
+  isFrozen: boolean;
+  /** @nullable */
+  frozenUntil: string | null;
+}
+
+export interface SkillProgressDto {
+  familiarizing: number;
+  practicing: number;
+  applying: number;
+  notStudied: number;
+}
+
+export interface DashboardResponseDto {
+  nextLesson: NextLessonDto | null;
+  homework: HomeworkCountsDto;
+  subscription: SubscriptionSummaryDto | null;
+  skillProgress: SkillProgressDto;
+  generatedAt: string;
+}
+
 export interface EmptyRequest { [key: string]: unknown }
 
 export interface EnrollmentCreateRequest {
@@ -1017,6 +1060,8 @@ export interface TeacherPayrollResponse {
 }
 
 export interface TeachingAssignmentCreateRequest {
+  /** @pattern ^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$ */
+  googleMeetLink?: string;
   enrollmentId: string;
   teacherId: string;
   validFrom: string;
@@ -1025,6 +1070,8 @@ export interface TeachingAssignmentCreateRequest {
 }
 
 export interface TeachingAssignmentResponse {
+  /** @nullable */
+  google_meet_link: string | null;
   id: string;
   enrollment_id: string;
   teacher_id: string;
@@ -2598,6 +2645,31 @@ return schoolFetch<ScheduleChangeRequestResponse>(getRequestScheduleChangeUrl(),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(scheduleChangeRequestInput)
+  }
+);}
+
+
+
+export const getGetStudentDashboardUrl = () => {
+
+
+
+
+  return `/api/v1/student/dashboard`
+}
+
+/**
+ * Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.
+ * @summary Current student dashboard snapshot
+ */
+export const getStudentDashboard = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DashboardResponseDto>(getGetStudentDashboardUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 

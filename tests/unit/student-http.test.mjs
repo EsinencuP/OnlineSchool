@@ -38,7 +38,7 @@ class StudentProbe {
 Controller('api/v1/student')(StudentProbe);
 RequireRole('STUDENT')(StudentProbe);
 for (const [method, path, verb] of [
-  ['dashboard', 'dashboard', Get],
+  ['dashboard', 'guard-probe', Get],
   ['profile', 'profile', Get],
   ['mutate', 'profile/probe', Post],
   ['mutatePatch', 'profile/probe', Patch],
@@ -269,7 +269,7 @@ test('module global guards protect future controllers and exempt profile/me/secu
   state.mustChangePassword = false;
   state.active = false;
   const suspended = await request(app.getHttpServer())
-    .get('/api/v1/student/dashboard')
+    .get('/api/v1/student/guard-probe')
     .set('Cookie', cookie(issued));
   expect(suspended.status).toBe(402);
   expect(suspended.body).toMatchObject({
@@ -288,7 +288,7 @@ test('module global guards protect future controllers and exempt profile/me/secu
   expect(
     (
       await request(app.getHttpServer())
-        .get('/api/v1/student/dashboard')
+        .get('/api/v1/student/guard-probe')
         .set('Cookie', cookie(issued))
     ).status,
   ).toBe(200);
@@ -330,7 +330,7 @@ test('initial login -> change password -> cabinet opens, old sessions revoked an
     csrfToken: login.body.csrfToken,
   };
   const before = await request(app.getHttpServer())
-    .get('/api/v1/student/dashboard')
+    .get('/api/v1/student/guard-probe')
     .set('Cookie', cookie(issued));
   expect(before.status).toBe(403);
   expect(before.body.code).toBe('MUST_CHANGE_PASSWORD');
@@ -349,7 +349,7 @@ test('initial login -> change password -> cabinet opens, old sessions revoked an
   ).toBe(401);
   const fresh = response.headers['set-cookie'].map((c) => c.split(';')[0]).join('; ');
   expect(
-    (await request(app.getHttpServer()).get('/api/v1/student/dashboard').set('Cookie', fresh))
+    (await request(app.getHttpServer()).get('/api/v1/student/guard-probe').set('Cookie', fresh))
       .status,
   ).toBe(200);
   expect(state.audit.some((a) => a.action === 'student.password.change')).toBe(true);

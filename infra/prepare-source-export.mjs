@@ -46,7 +46,7 @@ async function walk(rel) {
       entry.isFile() &&
       (entry.name === 'Dockerfile' ||
         entry.name === '.env.example' ||
-        /\.(ts|tsx|js|mjs|cjs|json|yaml|yml|sql|toml|md|css|html|prisma|conf|template|sh)$/.test(
+        /\.(ts|tsx|js|mjs|cjs|json|yaml|yml|sql|toml|md|css|html|prisma|conf|template|sh|patch)$/.test(
           entry.name,
         )) &&
       !entry.name.startsWith('.env') &&
@@ -56,7 +56,7 @@ async function walk(rel) {
     else if (entry.name === '.env.example') files.push(path);
   }
 }
-for (const rel of ['api', 'apps', 'packages', 'infra', '.github', 'tests']) await walk(rel);
+for (const rel of ['api', 'apps', 'packages', 'infra', '.github', 'tests', 'patches']) await walk(rel);
 for (const file of await readdir(new URL('scripts/', root)))
   if (file.endsWith('.mjs')) files.push('scripts/' + file);
 const secrets = [];

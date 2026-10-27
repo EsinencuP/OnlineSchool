@@ -1582,6 +1582,10 @@ export class EnrollmentResponse {
 }
 
 export class TeachingAssignmentResponse {
+  @ApiProperty({ type: 'string', required: true, nullable: true } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'google_meet_link'!: string | null;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -1978,6 +1982,14 @@ export class EnrollmentCreateRequest {
 }
 
 export class TeachingAssignmentCreateRequest {
+  @ApiProperty({
+    type: 'string',
+    required: false,
+    pattern: '^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'googleMeetLink'?: string;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()

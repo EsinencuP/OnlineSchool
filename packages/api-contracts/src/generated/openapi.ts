@@ -789,6 +789,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current student dashboard snapshot
+         * @description Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.
+         */
+        get: operations["getStudentDashboard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/me": {
         parameters: {
             query?: never;
@@ -1084,6 +1104,14 @@ export interface components {
         CsrfResponse: {
             csrfToken: string;
         };
+        DashboardResponseDto: {
+            nextLesson: components["schemas"]["NextLessonDto"] | null;
+            homework: components["schemas"]["HomeworkCountsDto"];
+            subscription: components["schemas"]["SubscriptionSummaryDto"] | null;
+            skillProgress: components["schemas"]["SkillProgressDto"];
+            /** Format: date-time */
+            generatedAt: string;
+        };
         EmptyRequest: Record<string, never>;
         EnrollmentCreateRequest: {
             /** Format: uuid */
@@ -1204,6 +1232,12 @@ export interface components {
             status: "ok";
             /** @enum {string} */
             service: "api";
+        };
+        HomeworkCountsDto: {
+            notSubmitted: number;
+            submitted: number;
+            needsRevision: number;
+            total: number;
         };
         HouseholdCreatedResponse: {
             /** Format: uuid */
@@ -1398,6 +1432,17 @@ export interface components {
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
+        };
+        NextLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            meetLink: string | null;
+            canJoin: boolean;
         };
         PasskeyRegisteredResponse: {
             /** Format: uuid */
@@ -1630,6 +1675,12 @@ export interface components {
             roles: ("DIRECTOR" | "MANAGER" | "TEACHER" | "STUDENT" | "TECH_OPERATOR")[];
             role?: string;
         };
+        SkillProgressDto: {
+            familiarizing: number;
+            practicing: number;
+            applying: number;
+            notStudied: number;
+        };
         SlotGenerationResponse: {
             /** Format: uuid */
             id: string;
@@ -1706,6 +1757,14 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        SubscriptionSummaryDto: {
+            lessonsRemaining: number;
+            /** Format: date */
+            validUntil: string | null;
+            isFrozen: boolean;
+            /** Format: date-time */
+            frozenUntil: string | null;
+        };
         TeacherAccrualResponse: {
             /** Format: uuid */
             id: string;
@@ -1757,6 +1816,7 @@ export interface components {
             items: components["schemas"]["PayrollItem"][];
         };
         TeachingAssignmentCreateRequest: {
+            googleMeetLink?: string;
             /** Format: uuid */
             enrollmentId: string;
             /** Format: uuid */
@@ -1768,6 +1828,7 @@ export interface components {
             basis: string;
         };
         TeachingAssignmentResponse: {
+            google_meet_link: string | null;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -5060,6 +5121,57 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getStudentDashboard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
                 };
             };
         };
