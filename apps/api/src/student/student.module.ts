@@ -31,6 +31,9 @@ import { StudentHomeworkController } from './homework/homework.controller.js';
 import { StudentHomeworkService } from './homework/homework.service.js';
 import { StudentHomeworkScopeGuard } from './homework/homework-scope.guard.js';
 import { HomeworkQueryPipe } from './homework/homework.dto.js';
+import { StudentMaterialsController } from './materials/materials.controller.js';
+import { StudentMaterialsService } from './materials/materials.service.js';
+import { MaterialsQueryPipe } from './materials/materials.dto.js';
 
 // APP_GUARD is application-global in Nest, including when declared in a feature module.
 // These adapters enforce the student pipeline only inside its namespace and reuse core checks.
@@ -53,6 +56,7 @@ export class StudentCsrfGuard implements CanActivate {
 @Module({
   imports: [CoreModule, IdentityModule, StorageModule, CacheModule.register({ ttl: 30000 })],
   controllers: [
+    StudentMaterialsController,
     StudentHomeworkController,
     MeController,
     ChangeStudentPasswordController,
@@ -61,6 +65,8 @@ export class StudentCsrfGuard implements CanActivate {
     StudentHistoryController,
   ],
   providers: [
+    StudentMaterialsService,
+    MaterialsQueryPipe,
     StudentHomeworkService,
     StudentHomeworkScopeGuard,
     HomeworkQueryPipe,

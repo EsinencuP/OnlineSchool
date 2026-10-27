@@ -722,6 +722,7 @@ enum PayoutAttemptStatus {
 }
 
 model Subject {
+  material_permissions FilePermission[] @relation("MaterialSubject")
   id                                      String                     @id @default(uuid()) @db.Uuid
   code                                    String                     @unique
   name                                    String
@@ -836,6 +837,7 @@ model RecurringSlot {
 }
 
 model LessonOccurrence {
+  material_permissions FilePermission[] @relation("MaterialLesson")
   student_crm_tasks                               CrmTask[] @relation("StudentRescheduleTasks")
   confirmed_report_id                             String?                  @unique @db.Uuid
   confirmed_report_ref                            LessonOutcomeReport?     @relation("ResolvedLessonReport", fields: [confirmed_report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lesson_confirmed_report")
@@ -1715,6 +1717,12 @@ model HomeworkAssignmentAttachment {
 }
 
 model FilePermission {
+  // subject_id below is the recipient AuthAccount, not the educational subject.
+  educational_subject_id String? @db.Uuid
+  lesson_occurrence_id String? @db.Uuid
+  lesson_title String? // Optional teacher-supplied display title for the linked lesson
+  educational_subject Subject? @relation("MaterialSubject", fields: [educational_subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_stu06_material_subject")
+  lesson_occurrence LessonOccurrence? @relation("MaterialLesson", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_stu06_material_lesson")
   id                             String         @id @default(uuid()) @db.Uuid
   s3_object_id                   String         @db.Uuid
   subject_id                     String         @db.Uuid
@@ -1740,6 +1748,8 @@ model FilePermission {
   @@index([revoked_by])
   @@index([expires_at])
   @@index([subject_id, subject_type])
+  @@index([subject_id, subject_type, educational_subject_id, granted_at], map: "idx_stu06_student_materials")
+  @@index([lesson_occurrence_id])
   @@map("file_permissions")
 }
 

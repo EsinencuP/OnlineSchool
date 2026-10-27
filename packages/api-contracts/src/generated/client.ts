@@ -394,6 +394,13 @@ export interface FileAccessResponse {
   canDownload: boolean;
 }
 
+export interface FileSignedUrlResponseDto {
+  /** Private HTTPS presigned GET capability. Maximum lifetime 15 minutes; shorter if the explicit permission expires first. */
+  url: string;
+  expiresAt: string;
+  fileName: string;
+}
+
 /**
  * Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision.
  * @pattern ^(?:0|[1-9]\d{0,15})(?:\.\d{1,4})?$
@@ -822,6 +829,27 @@ export interface LogoutResponse {
 export interface ManagerContactsDto {
   whatsapp: string;
   telegram: string;
+}
+
+export interface MaterialItemDto {
+  fileId: string;
+  fileName: string;
+  fileSizeBytes: number;
+  mimeType: string;
+  /** Explicit educational context, or «Без предмета» for legacy/contextless grants */
+  subjectName: string;
+  uploadedAt: string;
+  sharedAt: string;
+  sharedByTeacherName: string;
+  /** @nullable */
+  lessonTitle: string | null;
+}
+
+export interface MaterialsResponseDto {
+  items: MaterialItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export interface PasskeyRegisteredResponse {
@@ -1448,6 +1476,22 @@ export const GetStudentLessonsPeriod = {
 } as const;
 
 export type GetStudentLessonHistoryParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentMaterialsParams = {
+/**
+ * Educational subject ID, not the permission recipient account
+ */
+subjectId?: string;
 /**
  * @minimum 1
  */
@@ -3309,6 +3353,63 @@ export const getGetStudentLessonHistoryUrl = (params?: GetStudentLessonHistoryPa
 export const getStudentLessonHistory = (params?: GetStudentLessonHistoryParams, options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<LessonHistoryResponseDto>(getGetStudentLessonHistoryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentMaterialsUrl = (params?: GetStudentMaterialsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/materials?${stringifiedParams}` : `/api/v1/student/materials`
+}
+
+/**
+ * Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».
+ * @summary Only materials explicitly shared with this student by a teacher
+ */
+export const getStudentMaterials = (params?: GetStudentMaterialsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<MaterialsResponseDto>(getGetStudentMaterialsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentMaterialUrlUrl = (fileId: string,) => {
+
+
+
+
+  return `/api/v1/student/materials/${fileId}/url`
+}
+
+/**
+ * Rechecks live session, student access, explicit permission and verified object under a row lock; appends FileAuditLog without the signed URL. Maximum TTL 900 seconds, capped by grant expiry. Revocation stops new URL issuance; an already issued S3 capability remains valid until its expiry. No CSRF/Idempotency-Key needed for this GET.
+ * @summary Authorize one private material and issue a temporary GET capability
+ */
+export const getStudentMaterialUrl = (fileId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<FileSignedUrlResponseDto>(getGetStudentMaterialUrlUrl(fileId),
   {
     ...options,
     method: 'GET'

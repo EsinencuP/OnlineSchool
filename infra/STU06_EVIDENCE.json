@@ -1,0 +1,96 @@
+{
+  "task": "STU-06",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "endpoints": [
+    "GET /api/v1/student/materials",
+    "GET /api/v1/student/materials/:fileId/url"
+  ],
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027140000_stu06_materials/migration.sql",
+      "sha256": "905bb7df260b220f2615756dcc21f22b759785c0a6651b28d78430c6cd23af64",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 78,
+    "columns": 846,
+    "foreignKeys": 175
+  },
+  "implementation": [
+    "Explicit current teacher-issued FilePermission matched to both student AuthAccount and registry Student; no implicit shares",
+    "One paginated newest-first query with optional educational subject filter, stable totals and metadata-only response",
+    "Verified object + effective, unexpired, unrevoked permission; foreign lesson/subject metadata excluded",
+    "Additive optional academic subject/lesson/title context on the immutable permission; legacy data retained without backfill",
+    "Revalidated current session, activation and permission under row locks before issuing a private HTTPS GetObject capability",
+    "900-second maximum lifetime capped by grant expiry, no-store and UTF-8 filename response overrides",
+    "FileAuditLog records the grant and VIEW/DOWNLOAD issuance; no URL/key in durable audit, outbox or idempotency results",
+    "READ-only grants use inline presentation; can_download enables attachment; inline is not DRM"
+  ],
+  "verification": {
+    "apiBuild": "PASS",
+    "clientBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 46,
+      "unitCases": 27,
+      "httpCases": 19,
+      "prismaStorage": "mock"
+    },
+    "postgres": {
+      "version": "18.6",
+      "role": "app_runtime",
+      "listProjections": 5,
+      "accessPredicateCases": 12,
+      "mode": "SELECT-only CTE fictional rows on existing working database; no persistent fixtures, no base-row locks exercised",
+      "evidence": "tests/evidence/stu06-readonly-projections.json"
+    },
+    "storage": {
+      "awsSdkGetSigner": "PASS with dummy credentials: HTTPS, TTL 900/capped TTL, inline/attachment, UTF-8 filename, no-store",
+      "existingPrivateBucket": "reused; no new bucket, credential or object created",
+      "liveObjectInventory": "empty on read-only listing",
+      "liveGetAndNetworkExpiry": "NOT RUN; no fresh working material/grant exists and student migrations remain unapplied",
+      "priorEvidence": "STU-05 real private-storage smoke is separate, not recounted as this increment live GET acceptance"
+    },
+    "openapi": {
+      "operations": 64,
+      "client": [
+        "getStudentMaterials",
+        "getStudentMaterialUrl"
+      ]
+    },
+    "ci": "student-module includes pnpm test:stu06; exact execution evidence in PR checks"
+  },
+  "assumptions": {
+    "readPermission": "Current FilePermission grants READ. can_download=false selects inline view rather than denying the requested READ endpoint; optional owner clarification remains available",
+    "legacyContext": "Explicit legacy teacher grants with no academic context show Без предмета, null lessonTitle; missing original filename shows Материал"
+  },
+  "pending": [
+    "Apply and retest prepared migration only with authorized working deployment after FND-GATE",
+    "Actual PostgreSQL row-lock/revocation/quarantine races and context trigger enforcement",
+    "Working session + real material download and physical network expiry acceptance",
+    "Full foundation gate and manual QA remain open"
+  ],
+  "boundaries": {
+    "additionalDatabases": 0,
+    "neonBranchesCreated": 0,
+    "postgresContainersStarted": 0,
+    "newStorageBuckets": 0,
+    "newStorageCredentials": 0,
+    "newStorageObjects": 0,
+    "workingFinancialWrites": 0,
+    "workingCrmTasksCreated": 0,
+    "workingMaterialGrantsCreated": 0,
+    "workingDdlApplied": false,
+    "deploymentPerformed": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduction": {
+    "readme": "apps/api/src/student/materials/README.md",
+    "readonlyTest": "tests/integration/student-materials-readonly.test.mjs",
+    "fixture": "tests/support/materials-readonly-fixture.mjs",
+    "readonlyReceipt": "tests/evidence/stu06-readonly-projections.json"
+  }
+}
