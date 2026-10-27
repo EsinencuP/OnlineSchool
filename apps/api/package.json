@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./homework-drafts": {
+      "types": "./dist/student/homework/draft-expiry.module.d.ts",
+      "import": "./dist/student/homework/draft-expiry.module.js"
+    },
     "./serverless": {
       "types": "./dist/serverless.d.ts",
       "import": "./dist/serverless.js"
@@ -33,6 +37,8 @@
     "export:openapi": "node scripts/export-openapi.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1157.0",
+    "@aws-sdk/s3-request-presigner": "3.1157.0",
     "@js-temporal/polyfill": "0.5.1",
     "@nestjs/cache-manager": "12.0.1",
     "@nestjs/common": "12.2.0",

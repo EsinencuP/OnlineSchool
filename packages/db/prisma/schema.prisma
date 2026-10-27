@@ -1452,21 +1452,22 @@ enum OutboxStatus {
 }
 
 model HomeworkAssignment {
-  id                                 String             @id @default(uuid()) @db.Uuid
-  subject_id                         String             @db.Uuid
-  issued_by                          String             @db.Uuid
+  attachments                        HomeworkAssignmentAttachment[]
+  id                                 String                         @id @default(uuid()) @db.Uuid
+  subject_id                         String                         @db.Uuid
+  issued_by                          String                         @db.Uuid
   title                              String // PII: restricted educational content
   content                            Json // PII
-  due_at                             DateTime?          @db.Timestamptz(3)
-  lesson_occurrence_id               String?            @db.Uuid
-  archived_at                        DateTime?          @db.Timestamptz(3)
-  source_operation_id                String             @unique @db.Uuid
-  created_at                         DateTime           @default(now()) @db.Timestamptz(3)
-  updated_at                         DateTime           @default(now()) @updatedAt @db.Timestamptz(3)
-  subject_ref                        Subject            @relation("HomeworkAssignment_subject_id", fields: [subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_subject")
-  issued_by_ref                      TeacherAccount     @relation("HomeworkAssignment_issued_by", fields: [issued_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_issued_by")
-  lesson_occurrence_ref              LessonOccurrence?  @relation("HomeworkAssignment_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_lesson_occurrence")
-  t04_homeworkdelivery_assignment_id HomeworkDelivery[] @relation("HomeworkDelivery_assignment_id")
+  due_at                             DateTime?                      @db.Timestamptz(3)
+  lesson_occurrence_id               String?                        @db.Uuid
+  archived_at                        DateTime?                      @db.Timestamptz(3)
+  source_operation_id                String                         @unique @db.Uuid
+  created_at                         DateTime                       @default(now()) @db.Timestamptz(3)
+  updated_at                         DateTime                       @default(now()) @updatedAt @db.Timestamptz(3)
+  subject_ref                        Subject                        @relation("HomeworkAssignment_subject_id", fields: [subject_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_subject")
+  issued_by_ref                      TeacherAccount                 @relation("HomeworkAssignment_issued_by", fields: [issued_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_issued_by")
+  lesson_occurrence_ref              LessonOccurrence?              @relation("HomeworkAssignment_lesson_occurrence_id", fields: [lesson_occurrence_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_assignment_lesson_occurrence")
+  t04_homeworkdelivery_assignment_id HomeworkDelivery[]             @relation("HomeworkDelivery_assignment_id")
 
   @@index([subject_id])
   @@index([issued_by])
@@ -1475,12 +1476,14 @@ model HomeworkAssignment {
 }
 
 model HomeworkDelivery {
+  draft                              HomeworkDraft?
+  uploads                            HomeworkUpload[]
   id                                 String                   @id @default(uuid()) @db.Uuid
   assignment_id                      String                   @db.Uuid
   enrollment_id                      String                   @db.Uuid
   issued_by                          String                   @db.Uuid
   issued_at                          DateTime                 @db.Timestamptz(3)
-  due_at                             DateTime                 @db.Timestamptz(3)
+  due_at                             DateTime?                @db.Timestamptz(3)
   cancelled_at                       DateTime?                @db.Timestamptz(3)
   source_operation_id                String                   @unique @db.Uuid
   created_at                         DateTime                 @default(now()) @db.Timestamptz(3)
@@ -1498,21 +1501,22 @@ model HomeworkDelivery {
 }
 
 model HomeworkSubmission {
-  id                                              String              @id @default(uuid()) @db.Uuid
-  delivery_id                                     String              @db.Uuid
-  student_id                                      String              @db.Uuid
-  submitted_at                                    DateTime            @db.Timestamptz(3)
+  attachments                                     HomeworkSubmissionAttachment[]
+  id                                              String                         @id @default(uuid()) @db.Uuid
+  delivery_id                                     String                         @db.Uuid
+  student_id                                      String                         @db.Uuid
+  submitted_at                                    DateTime                       @db.Timestamptz(3)
   version                                         Int
   content                                         Json // PII: student work, private
-  supersedes_submission_id                        String?             @unique @db.Uuid
-  source_operation_id                             String              @unique @db.Uuid
-  created_at                                      DateTime            @default(now()) @db.Timestamptz(3)
-  updated_at                                      DateTime            @default(now()) @updatedAt @db.Timestamptz(3)
-  delivery_ref                                    HomeworkDelivery    @relation("HomeworkSubmission_delivery_id", fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_delivery")
-  student_ref                                     Student             @relation("HomeworkSubmission_student_id", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_student")
-  supersedes_submission_ref                       HomeworkSubmission? @relation("HomeworkSubmission_supersedes_submission_id", fields: [supersedes_submission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_supersedes_submission")
-  t04_homeworksubmission_supersedes_submission_id HomeworkSubmission? @relation("HomeworkSubmission_supersedes_submission_id")
-  t04_submissionreview_submission_id              SubmissionReview[]  @relation("SubmissionReview_submission_id")
+  supersedes_submission_id                        String?                        @unique @db.Uuid
+  source_operation_id                             String                         @unique @db.Uuid
+  created_at                                      DateTime                       @default(now()) @db.Timestamptz(3)
+  updated_at                                      DateTime                       @default(now()) @updatedAt @db.Timestamptz(3)
+  delivery_ref                                    HomeworkDelivery               @relation("HomeworkSubmission_delivery_id", fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_delivery")
+  student_ref                                     Student                        @relation("HomeworkSubmission_student_id", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_student")
+  supersedes_submission_ref                       HomeworkSubmission?            @relation("HomeworkSubmission_supersedes_submission_id", fields: [supersedes_submission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_homework_submission_supersedes_submission")
+  t04_homeworksubmission_supersedes_submission_id HomeworkSubmission?            @relation("HomeworkSubmission_supersedes_submission_id")
+  t04_submissionreview_submission_id              SubmissionReview[]             @relation("SubmissionReview_submission_id")
 
   @@unique([delivery_id, version], map: "uq_submission_version")
   @@index([delivery_id])
@@ -1639,25 +1643,75 @@ model EducationReport {
 }
 
 model S3Object {
-  id                              String           @id @default(uuid()) @db.Uuid
+  file_name                       String? // Private display name; never used as the object key
+  homework_upload                 HomeworkUpload?
+  homework_submissions            HomeworkSubmissionAttachment[]
+  homework_assignments            HomeworkAssignmentAttachment[]
+  id                              String                         @id @default(uuid()) @db.Uuid
   bucket                          String
-  key                             String           @unique
+  key                             String                         @unique
   size                            BigInt
   content_type                    String
-  status                          S3ObjectStatus   @default(PENDING)
-  uploaded_at                     DateTime?        @db.Timestamptz(3)
-  verified_at                     DateTime?        @db.Timestamptz(3)
-  sha256                          String?          @db.Char(64)
-  uploaded_by                     String           @db.Uuid
-  source_operation_id             String           @unique @db.Uuid
-  created_at                      DateTime         @default(now()) @db.Timestamptz(3)
-  updated_at                      DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
-  uploaded_by_ref                 AuthAccount      @relation("S3Object_uploaded_by", fields: [uploaded_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_s3_object_uploaded_by")
-  t04_filepermission_s3_object_id FilePermission[] @relation("FilePermission_s3_object_id")
-  t04_fileauditlog_s3_object_id   FileAuditLog[]   @relation("FileAuditLog_s3_object_id")
+  status                          S3ObjectStatus                 @default(PENDING)
+  uploaded_at                     DateTime?                      @db.Timestamptz(3)
+  verified_at                     DateTime?                      @db.Timestamptz(3)
+  sha256                          String?                        @db.Char(64)
+  uploaded_by                     String                         @db.Uuid
+  source_operation_id             String                         @unique @db.Uuid
+  created_at                      DateTime                       @default(now()) @db.Timestamptz(3)
+  updated_at                      DateTime                       @default(now()) @updatedAt @db.Timestamptz(3)
+  uploaded_by_ref                 AuthAccount                    @relation("S3Object_uploaded_by", fields: [uploaded_by], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t04_s3_object_uploaded_by")
+  t04_filepermission_s3_object_id FilePermission[]               @relation("FilePermission_s3_object_id")
+  t04_fileauditlog_s3_object_id   FileAuditLog[]                 @relation("FileAuditLog_s3_object_id")
 
   @@index([uploaded_by])
   @@map("s3_objects")
+}
+
+model HomeworkDraft {
+  delivery_id String           @id @db.Uuid
+  content     String // PII, erased after TTL or submission
+  expires_at  DateTime         @db.Timestamptz(3)
+  updated_at  DateTime         @default(now()) @updatedAt @db.Timestamptz(3)
+  delivery    HomeworkDelivery @relation(fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([expires_at])
+  @@map("homework_drafts")
+}
+
+model HomeworkUpload {
+  file_id      String           @id @db.Uuid
+  delivery_id  String           @db.Uuid
+  staging_key  String           @unique
+  expires_at   DateTime         @db.Timestamptz(3)
+  confirmed_at DateTime?        @db.Timestamptz(3)
+  file         S3Object         @relation(fields: [file_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  delivery     HomeworkDelivery @relation(fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([delivery_id])
+  @@map("homework_uploads")
+}
+
+model HomeworkSubmissionAttachment {
+  submission_id String             @db.Uuid
+  file_id       String             @db.Uuid
+  submission    HomeworkSubmission @relation(fields: [submission_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  file          S3Object           @relation(fields: [file_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@id([submission_id, file_id])
+  @@index([file_id])
+  @@map("homework_submission_attachments")
+}
+
+model HomeworkAssignmentAttachment {
+  assignment_id String             @db.Uuid
+  file_id       String             @db.Uuid
+  assignment    HomeworkAssignment @relation(fields: [assignment_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  file          S3Object           @relation(fields: [file_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@id([assignment_id, file_id])
+  @@index([file_id])
+  @@map("homework_assignment_attachments")
 }
 
 model FilePermission {

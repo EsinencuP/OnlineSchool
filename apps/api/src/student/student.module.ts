@@ -26,6 +26,11 @@ import { StudentHistoryController } from './history/history.controller.js';
 import { StudentHistoryService } from './history/history.service.js';
 import { StudentDisputeService } from './history/dispute.service.js';
 import { HistoryQueryPipe } from './history/history.dto.js';
+import { StorageModule } from '../modules/storage/storage.module.js';
+import { StudentHomeworkController } from './homework/homework.controller.js';
+import { StudentHomeworkService } from './homework/homework.service.js';
+import { StudentHomeworkScopeGuard } from './homework/homework-scope.guard.js';
+import { HomeworkQueryPipe } from './homework/homework.dto.js';
 
 // APP_GUARD is application-global in Nest, including when declared in a feature module.
 // These adapters enforce the student pipeline only inside its namespace and reuse core checks.
@@ -46,8 +51,9 @@ export class StudentCsrfGuard implements CanActivate {
   }
 }
 @Module({
-  imports: [CoreModule, IdentityModule, CacheModule.register({ ttl: 30000 })],
+  imports: [CoreModule, IdentityModule, StorageModule, CacheModule.register({ ttl: 30000 })],
   controllers: [
+    StudentHomeworkController,
     MeController,
     ChangeStudentPasswordController,
     DashboardController,
@@ -55,6 +61,9 @@ export class StudentCsrfGuard implements CanActivate {
     StudentHistoryController,
   ],
   providers: [
+    StudentHomeworkService,
+    StudentHomeworkScopeGuard,
+    HomeworkQueryPipe,
     StudentHistoryService,
     StudentDisputeService,
     HistoryQueryPipe,

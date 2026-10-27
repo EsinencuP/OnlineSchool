@@ -1,3 +1,4 @@
 import { Module } from '@nestjs/common';
-@Module({})
+import { PrivateUploads } from './private-uploads.service.js';
+@Module({ providers: [PrivateUploads], exports: [PrivateUploads] })
 export class StorageModule {}

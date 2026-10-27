@@ -2561,6 +2561,64 @@
     ]
   },
   {
+    "name": "HomeworkAssignmentAttachment",
+    "table": "homework_assignment_attachments",
+    "fields": [
+      {
+        "name": "assignment_id",
+        "column": "assignment_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "file_id",
+        "column": "file_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "assignment",
+        "type": "HomeworkAssignment",
+        "from": [
+          "assignment_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "file",
+        "type": "S3Object",
+        "from": [
+          "file_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "assignment_id",
+        "file_id"
+      ]
+    ]
+  },
+  {
     "name": "HomeworkAssignment",
     "table": "homework_assignments",
     "fields": [
@@ -2795,7 +2853,7 @@
         "column": "due_at",
         "type": "DateTime",
         "list": false,
-        "nullable": false,
+        "nullable": true,
         "primary": false,
         "native": [
           "Timestamptz",
@@ -2895,6 +2953,132 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "HomeworkDraft",
+    "table": "homework_drafts",
+    "fields": [
+      {
+        "name": "delivery_id",
+        "column": "delivery_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "content",
+        "column": "content",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "expires_at",
+        "column": "expires_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "updated_at",
+        "column": "updated_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "delivery",
+        "type": "HomeworkDelivery",
+        "from": [
+          "delivery_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "delivery_id"
+      ]
+    ]
+  },
+  {
+    "name": "HomeworkSubmissionAttachment",
+    "table": "homework_submission_attachments",
+    "fields": [
+      {
+        "name": "submission_id",
+        "column": "submission_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "file_id",
+        "column": "file_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "submission",
+        "type": "HomeworkSubmission",
+        "from": [
+          "submission_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "file",
+        "type": "S3Object",
+        "from": [
+          "file_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "submission_id",
+        "file_id"
       ]
     ]
   },
@@ -3060,6 +3244,99 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "HomeworkUpload",
+    "table": "homework_uploads",
+    "fields": [
+      {
+        "name": "file_id",
+        "column": "file_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "delivery_id",
+        "column": "delivery_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "staging_key",
+        "column": "staging_key",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "expires_at",
+        "column": "expires_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "confirmed_at",
+        "column": "confirmed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "file",
+        "type": "S3Object",
+        "from": [
+          "file_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "delivery",
+        "type": "HomeworkDelivery",
+        "from": [
+          "delivery_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "file_id"
+      ],
+      [
+        "staging_key"
       ]
     ]
   },
@@ -8257,6 +8534,15 @@
     "name": "S3Object",
     "table": "s3_objects",
     "fields": [
+      {
+        "name": "file_name",
+        "column": "file_name",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
       {
         "name": "id",
         "column": "id",

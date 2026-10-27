@@ -31,6 +31,8 @@ export interface HttpRequest extends IncomingMessage {
   critical?: CriticalContext;
   idempotencyKey?: string;
   requestHash?: string;
+  // Server-installed response projection. Capability URLs must never enter durable command results.
+  afterCriticalCommit?: (body: unknown) => Promise<unknown>;
   resourceAuthorizer?: (
     tx: Prisma.TransactionClient,
     actor: AccountContext,

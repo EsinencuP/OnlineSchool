@@ -3,6 +3,7 @@ import type { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ok, SERVICE_NAMES } from '@online-school/shared';
 import { ScheduleDeadlineModule, ScheduleDeadlines } from '@online-school/api/schedule-deadlines';
 import { FinanceExpiryModule, TemporaryAccessExpiry } from '@online-school/api/finance-expiry';
+import { HomeworkDraftExpiryModule, HomeworkDraftExpiry } from '@online-school/api/homework-drafts';
 import { createPoolClient } from '@online-school/db';
 import type { PrismaClient } from '@online-school/db';
 import { readOptions, rollback } from './contracts.js';
@@ -27,6 +28,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
   constructor(
     private readonly expiry: TemporaryAccessExpiry,
     private readonly schedule: ScheduleDeadlines,
+    private readonly drafts: HomeworkDraftExpiry,
     @Inject(RECOVERY_PROVIDERS) private readonly providers: ReadonlyMap<string, RecoveryProvider>,
   ) {}
 
@@ -63,7 +65,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
   }
 
   private async process(): Promise<void> {
-    for (const processor of [this.expiry, this.schedule]) {
+    for (const processor of [this.expiry, this.schedule, this.drafts]) {
       if (this.stopped) return;
       const result = await processor.enabled();
       if (!result.ok) this.logger.error(result.error.code);
@@ -88,7 +90,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
 }
 
 @Module({
-  imports: [FinanceExpiryModule, ScheduleDeadlineModule],
+  imports: [FinanceExpiryModule, ScheduleDeadlineModule, HomeworkDraftExpiryModule],
   providers: [
     { provide: RECOVERY_PROVIDERS, useValue: new Map<string, RecoveryProvider>() },
     WorkerLifecycle,
