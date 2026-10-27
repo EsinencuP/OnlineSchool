@@ -1066,6 +1066,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read-only CRM subscription showcase
+         * @description Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.
+         */
+        get: operations["getStudentSubscription"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subscription/ledger": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Chronological paid lesson-right operations for the selected subscription
+         * @description Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.
+         */
+        get: operations["getStudentSubscriptionLedger"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subscription/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Confirmed payment allocations for the selected subscription
+         * @description Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.
+         */
+        get: operations["getStudentSubscriptionPayments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/students": {
         parameters: {
             query?: never;
@@ -1827,6 +1887,27 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        PaymentHistoryItemDto: {
+            /** Format: uuid */
+            paymentId: string;
+            /** Format: date-time */
+            confirmedAt: string;
+            /** @description Exact Decimal allocated to this subscription, at least two and up to four fraction digits */
+            amount: string;
+            /**
+             * @description Actual CRM currency, including MDL; no conversion
+             * @example MDL
+             */
+            currency: string;
+            description: string;
+            lessonsAdded: number | null;
+        };
+        PaymentHistoryResponseDto: {
+            items: components["schemas"]["PaymentHistoryItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
         PaymentReceiptResponse: {
             /** Format: uuid */
             id: string;
@@ -2099,6 +2180,29 @@ export interface components {
             /** @enum {boolean} */
             mustChangePassword: false;
         };
+        StudentSubscriptionLedgerEntryDto: {
+            /**
+             * Format: uuid
+             * @description Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs
+             */
+            entryId: string;
+            /** Format: date */
+            entryDate: string;
+            /** @enum {string} */
+            type: "DEDUCTION" | "CREDIT" | "FREEZE" | "UNFREEZE";
+            /** @description Lesson quantities, not monetary account totals */
+            balanceBefore: string;
+            balanceAfter: string;
+            description: string;
+            /** Format: uuid */
+            lessonId: string | null;
+        };
+        StudentSubscriptionLedgerResponseDto: {
+            items: components["schemas"]["StudentSubscriptionLedgerEntryDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
         SubjectCreateRequest: {
             code: string;
             name: string;
@@ -2128,6 +2232,25 @@ export interface components {
             enrollmentId: string;
             /** Format: uuid */
             saleConditionId: string;
+        };
+        SubscriptionDetailsDto: {
+            /** Format: uuid */
+            subscriptionId: string | null;
+            planName: string | null;
+            lessonsTotal: number | null;
+            /** @description Confirmed paid rights only, never future bookings or temporary admission limits */
+            lessonsRemaining: number | null;
+            /** Format: date */
+            validFrom: string | null;
+            /** Format: date */
+            validUntil: string | null;
+            isFrozen: boolean;
+            /** Format: date */
+            frozenFrom: string | null;
+            /** Format: date */
+            frozenUntil: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "EXPIRED" | "FROZEN" | "NONE";
         };
         SubscriptionResponse: {
             /** Format: uuid */
@@ -6511,6 +6634,172 @@ export interface operations {
                 };
             };
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscription: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubscriptionDetailsDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscriptionLedger: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentSubscriptionLedgerResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscriptionPayments: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentHistoryResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

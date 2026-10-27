@@ -1,0 +1,90 @@
+{
+  "task": "STU-07",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "ownerDecisions": {
+    "date": "2026-10-27",
+    "selection": "Optional subscriptionId, default current subscription; same context for history",
+    "currency": "Actual CRM currency including MDL, no conversion"
+  },
+  "endpoints": [
+    "GET /api/v1/student/subscription",
+    "GET /api/v1/student/subscription/payments",
+    "GET /api/v1/student/subscription/ledger"
+  ],
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027150000_stu07_subscription/migration.sql",
+      "sha256": "0d8613160967092e46b6bf45d78a4646b80d2b82b654417e5e29db351b66addd",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 79,
+    "columns": 853,
+    "foreignKeys": 176
+  },
+  "implementation": [
+    "Read-only three-route showcase; explicit owned plan selector with current/latest-expired default",
+    "Period status separate from paid entitlement; NONE nullable fields are null",
+    "Confirmed paid quantity grants and published actual deductions, adjustments and explicit cancellation credits; future reservations do not spend rights",
+    "Exact Decimal money and quantity strings, actual ISO currency including MDL, no conversion or precision loss",
+    "Confirmed approved currently published allocation amount only; combined receipt never reveals another subscription allocation",
+    "Preserves immutable deduction snapshots; other view balances replay known quantity facts without rewriting LedgerEntry",
+    "Append-only superseded freeze intervals captured by a restricted DB trigger; no invented lost historical backfill",
+    "Only these three exact GET routes exempt active learning access; session, STUDENT role, first password and other protected routes unchanged",
+    "No payment, checkout, card or write endpoint added"
+  ],
+  "verification": {
+    "apiBuild": "PASS",
+    "clientBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 48,
+      "unitCases": 26,
+      "httpCases": 22,
+      "database": "mock Prisma"
+    },
+    "postgres": {
+      "version": "18.6",
+      "role": "app_runtime",
+      "cases": 15,
+      "mode": "SELECT-only source-exact CTE fixtures on existing working DB; no persistent data, DML, DDL or extra databases",
+      "evidence": "tests/evidence/stu07-readonly-projections.json"
+    },
+    "openapi": {
+      "operations": 67,
+      "client": [
+        "getStudentSubscription",
+        "getStudentSubscriptionPayments",
+        "getStudentSubscriptionLedger"
+      ]
+    },
+    "ci": "student-module includes pnpm test:stu07; exact CI evidence in PR checks"
+  },
+  "pending": [
+    "Apply/retest the prepared freeze-history migration only during authorized working deployment after FND-GATE",
+    "Actual trigger capture, role restrictions and immutability enforcement",
+    "Manual working subscription and financial history acceptance",
+    "Earlier overwritten unrecorded freeze intervals cannot be reconstructed; not fabricated",
+    "Full foundation gate and manual QA remain open"
+  ],
+  "boundaries": {
+    "additionalDatabases": 0,
+    "neonBranchesCreated": 0,
+    "postgresContainersStarted": 0,
+    "workingFinancialWrites": 0,
+    "workingSubscriptionWrites": 0,
+    "workingDdlApplied": false,
+    "deploymentPerformed": false,
+    "ledgerSnapshotsBackfilled": false,
+    "paymentGatewayIntroduced": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduction": {
+    "readme": "apps/api/src/student/subscription/README.md",
+    "readonlyTest": "tests/integration/student-subscription-readonly.test.mjs",
+    "fixture": "tests/support/subscription-readonly-fixture.mjs"
+  }
+}

@@ -18,9 +18,14 @@ export class ActiveSubscriptionGuard implements CanActivate {
       return true;
     const student = req.studentCtx;
     if (!student) return fail(domainError(StudentErrors.PROFILE_NOT_FOUND, 403));
+    // STU-07: expired/no-access students must still read their plan and confirmed history.
+    // Password, session and role checks remain mandatory; this is no mutation exemption.
+    const subscriptionRead =
+      req.method === 'GET' &&
+      /^\/api\/v1\/student\/subscription(?:\/(payments|ledger))?$/.test(path);
     const code = student.mustChangePassword
       ? StudentErrors.MUST_CHANGE_PASSWORD
-      : !student.hasActiveAccess
+      : !student.hasActiveAccess && !subscriptionRead
         ? StudentErrors.ACCESS_SUSPENDED
         : undefined;
     if (!code) return true;

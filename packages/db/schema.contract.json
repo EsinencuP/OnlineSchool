@@ -10845,6 +10845,112 @@
     ]
   },
   {
+    "name": "SubscriptionFreezeHistory",
+    "table": "subscription_freeze_history",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "subscription_id",
+        "column": "subscription_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "frozen_from",
+        "column": "frozen_from",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "frozen_until",
+        "column": "frozen_until",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "replaced_at",
+        "column": "replaced_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "created_at",
+        "column": "created_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "updated_at",
+        "column": "updated_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "subscription",
+        "type": "Subscription",
+        "from": [
+          "subscription_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_stu07_freeze_subscription"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ]
+    ]
+  },
+  {
     "name": "Subscription",
     "table": "subscriptions",
     "fields": [

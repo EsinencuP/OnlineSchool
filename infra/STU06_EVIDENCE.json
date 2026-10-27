@@ -63,7 +63,6 @@
     "ci": "student-module includes pnpm test:stu06; exact execution evidence in PR checks"
   },
   "assumptions": {
-    "readPermission": "Current FilePermission grants READ. can_download=false selects inline view rather than denying the requested READ endpoint; optional owner clarification remains available",
     "legacyContext": "Explicit legacy teacher grants with no academic context show Без предмета, null lessonTitle; missing original filename shows Материал"
   },
   "pending": [
@@ -92,5 +91,13 @@
     "readonlyTest": "tests/integration/student-materials-readonly.test.mjs",
     "fixture": "tests/support/materials-readonly-fixture.mjs",
     "readonlyReceipt": "tests/evidence/stu06-readonly-projections.json"
+  },
+  "ownerDecisions": {
+    "readPermission": {
+      "date": "2026-10-27",
+      "source": "Direct owner reply in the current conversation",
+      "quote": "Разрешать просмотр через inline URL",
+      "readPermission": "FilePermission grants READ. can_download=false allows inline Signed GET and VIEW audit; true uses attachment and DOWNLOAD. Existing implementation already matches."
+    }
   }
 }
