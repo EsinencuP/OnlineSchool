@@ -5157,6 +5157,161 @@
         ]
       }
     },
+    "/api/v1/student/me": {
+      "get": {
+        "description": "Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.",
+        "operationId": "getStudentMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Current student profile and access stage",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/change-password": {
+      "post": {
+        "description": "Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.",
+        "operationId": "changeStudentPassword",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeStudentPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentPasswordChangedDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Replace temporary student password",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/students": {
       "post": {
         "description": "CRM-owned stable Student identity; no account/entitlements. A manager receives an explicit student assignment.",
@@ -6425,6 +6580,26 @@
         "properties": {},
         "additionalProperties": false
       },
+      "ChangeStudentPasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "writeOnly": true,
+            "maxLength": 256
+          },
+          "newPassword": {
+            "type": "string",
+            "writeOnly": true,
+            "minLength": 12,
+            "maxLength": 256
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      },
       "CloseFinancialPeriodRequest": {
         "type": "object",
         "properties": {},
@@ -7571,6 +7746,21 @@
         ],
         "additionalProperties": false
       },
+      "ManagerContactsDto": {
+        "type": "object",
+        "properties": {
+          "whatsapp": {
+            "type": "string"
+          },
+          "telegram": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "whatsapp",
+          "telegram"
+        ]
+      },
       "PasskeyRegisteredResponse": {
         "type": "object",
         "properties": {
@@ -7963,6 +8153,45 @@
           "confirmed_at"
         ],
         "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "managerContacts": {
+            "$ref": "#/components/schemas/ManagerContactsDto"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "instance",
+          "code",
+          "requestId"
+        ]
       },
       "RecoveryCompleteRequest": {
         "type": "object",
@@ -8360,6 +8589,65 @@
           "fullName"
         ],
         "additionalProperties": false
+      },
+      "StudentMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hasActiveAccess": {
+            "type": "boolean"
+          },
+          "mustChangePassword": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "displayName",
+          "email",
+          "avatarUrl",
+          "hasActiveAccess",
+          "mustChangePassword",
+          "createdAt"
+        ]
+      },
+      "StudentPasswordChangedDto": {
+        "type": "object",
+        "properties": {
+          "mustChangePassword": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "mustChangePassword"
+        ]
       },
       "SubjectCreateRequest": {
         "type": "object",

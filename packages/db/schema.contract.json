@@ -9544,6 +9544,15 @@
         "native": null
       },
       {
+        "name": "must_change_password",
+        "column": "must_change_password",
+        "type": "Boolean",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "activation_subscription_id",
         "column": "activation_subscription_id",
         "type": "String",

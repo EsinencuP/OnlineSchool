@@ -259,6 +259,7 @@ model StudentAccount {
   account_id                         String                 @db.Uuid
   account_kind                       AccountKind            @default(STUDENT)
   activation_basis                   StudentActivationBasis
+  must_change_password               Boolean                @default(true)
   // Payment and admission are now backed by financial FKs and SQL validation.
   activation_subscription_id         String                 @db.Uuid
   activation_payment_confirmation_id String                 @db.Uuid

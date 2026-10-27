@@ -789,6 +789,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current student profile and access stage
+         * @description Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+         */
+        get: operations["getStudentMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/security/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Replace temporary student password
+         * @description Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.
+         */
+        post: operations["changeStudentPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/students": {
         parameters: {
             query?: never;
@@ -992,6 +1032,10 @@ export interface components {
             timestamp: string;
         };
         ApproveDistributionRequest: Record<string, never>;
+        ChangeStudentPasswordDto: {
+            currentPassword: string;
+            newPassword: string;
+        };
         CloseFinancialPeriodRequest: Record<string, never>;
         ComponentStatusResponse: {
             /** @enum {string} */
@@ -1351,6 +1395,10 @@ export interface components {
             /** @enum {boolean} */
             loggedOut: true;
         };
+        ManagerContactsDto: {
+            whatsapp: string;
+            telegram: string;
+        };
         PasskeyRegisteredResponse: {
             /** Format: uuid */
             id: string;
@@ -1472,6 +1520,17 @@ export interface components {
             /** Format: date-time */
             confirmed_at: string;
         };
+        ProblemDetails: {
+            type: string;
+            title: string;
+            status: number;
+            detail: string;
+            instance: string;
+            code: string;
+            /** Format: uuid */
+            requestId: string;
+            managerContacts?: components["schemas"]["ManagerContactsDto"];
+        };
         RecoveryCompleteRequest: {
             /** Format: uuid */
             recoveryId: string;
@@ -1591,6 +1650,23 @@ export interface components {
             phone?: string;
             /** Format: date */
             birthDate?: string;
+        };
+        StudentMeResponseDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            userId: string;
+            displayName: string;
+            email: string;
+            avatarUrl: string | null;
+            hasActiveAccess: boolean;
+            mustChangePassword: boolean;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        StudentPasswordChangedDto: {
+            /** @enum {boolean} */
+            mustChangePassword: false;
         };
         SubjectCreateRequest: {
             code: string;
@@ -4984,6 +5060,114 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getStudentMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentMeResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    changeStudentPassword: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeStudentPasswordDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentPasswordChangedDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
                 };
             };
         };

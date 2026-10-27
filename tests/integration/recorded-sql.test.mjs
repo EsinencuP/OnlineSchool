@@ -4,12 +4,12 @@ const snapshot = JSON.parse(
   await readFile(new URL('../evidence/task15-live-schema.json', import.meta.url), 'utf8'),
 );
 const models = JSON.parse(
-  await readFile(new URL('../../packages/db/schema.contract.json', import.meta.url), 'utf8'),
+  await readFile(new URL('../evidence/task15-prisma-contract.json', import.meta.url), 'utf8'),
 );
 
 // This is a verification of the timestamped read-only Neon catalog capture.
 // It is deliberately not represented as a fresh PostgreSQL CI integration run.
-test('recorded real PostgreSQL 18 catalog matches ERD and Prisma tables/columns/FKs', () => {
+test('recorded real PostgreSQL 18 catalog matches its frozen TASK-15 Prisma contract', () => {
   expect(Math.floor(snapshot.serverVersion / 10000)).toBe(18);
   expect([...new Set(snapshot.columns.map((c) => c.table))].sort()).toEqual(
     models.map((m) => m.table).sort(),

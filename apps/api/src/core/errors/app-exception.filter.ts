@@ -4,9 +4,11 @@ import { AppException, domainError } from './domain-error.js';
 import type { ErrorResponseDto } from './domain-error.js';
 import type { HttpRequest, HttpResponse } from '../http.js';
 import { ensureRequestId } from '../request-id/request-id.middleware.js';
+import { ErrorMapper } from './error-mapper.js';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
+  constructor(private readonly mapper: ErrorMapper = new ErrorMapper()) {}
   catch(exception: unknown, host: ArgumentsHost): void {
     const req = host.switchToHttp().getRequest<HttpRequest>();
     const res = host.switchToHttp().getResponse<HttpResponse>();
@@ -23,6 +25,15 @@ export class AppExceptionFilter implements ExceptionFilter {
         } as Record<number, string>
       )[status] ?? (status < 500 ? 'REQUEST_REJECTED' : 'INTERNAL_ERROR');
     const error = exception instanceof AppException ? exception.domain : domainError(code, status);
+    if (/^\/api\/v1\/student(?:\/|$)/i.test(req.originalUrl.split('?')[0] ?? '')) {
+      if (!res.headersSent) {
+        res.setHeader('Content-Type', 'application/problem+json');
+        res
+          .status(error.status)
+          .json(this.mapper.toProblemDetails(error, req.originalUrl, ensureRequestId(req, res)));
+      }
+      return;
+    }
     const body: ErrorResponseDto = {
       requestId: ensureRequestId(req, res),
       code: error.code,
