@@ -1,0 +1,101 @@
+{
+  "task": "STU-03",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "endpoints": [
+    "GET /api/v1/student/lessons",
+    "POST /api/v1/student/lessons/:lessonId/reschedule-request"
+  ],
+  "implementation": [
+    "Student-zone today/ISO week/month and terminal-only descending archive",
+    "Bounded stable pagination; complete <=62 monthly calendar or explicit overflow error",
+    "Exact -10/+60 minute Meet window with per-enrollment rights and permanent assignment URL",
+    "Addressed RESCHEDULE_REQUEST CRM task; exact >=24h threshold checked after row lock",
+    "Session/CSRF/ownership/stage revalidation plus atomic audit/outbox/idempotency and 201 replay",
+    "Explicit teacher report absence flag; NO_SHOW only from staff-confirmed NOT_CONDUCTED report",
+    "Worker recognizes the committed event without creating another task"
+  ],
+  "defaults": {
+    "timezone": "Europe/Chisinau",
+    "period": "week",
+    "page": 1,
+    "pageSize": 20,
+    "calendarLimit": 62,
+    "unresolvedStatuses": ["STAR_PENDING", "DISPUTED"]
+  },
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261027110000_stu03_student_lessons/migration.sql",
+    "sha256": "0f494ed24b08a3bc4f1060ccc758234381827b7b3203178198c221f8f9b6c655",
+    "workingApplied": false,
+    "preservation": "Old tasks retain null lesson/payload; old reports default no-show=false; no financial/schedule history rewritten"
+  },
+  "schema": {
+    "models": 74,
+    "columns": 827,
+    "foreignKeys": 166
+  },
+  "verification": {
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 88,
+      "failed": 0,
+      "suites": 4,
+      "stu03Cases": 67,
+      "studentContextRegressionCases": 20,
+      "erdCases": 1,
+      "prismaStorage": "mock"
+    },
+    "postgresql": {
+      "version": "18.6",
+      "target": "Existing online_school/main",
+      "role": "app_runtime",
+      "readonly": true,
+      "cteCasesPassed": 5,
+      "cases": [
+        "Local today and cross-student isolation",
+        "Confirmed archive/status projection",
+        "Page 2",
+        "Empty page retains total",
+        "Complete month with unresolved statuses"
+      ],
+      "runtimePrivileges": {
+        "reportRead": true,
+        "taskInsert": true,
+        "taskRead": true,
+        "lessonLock": true
+      },
+      "limitation": "Exact SELECT semantics on CTE-only fixtures; not live task creation or migration/trigger execution"
+    },
+    "openapi": {
+      "businessOperations": 55,
+      "clientOperations": ["getStudentLessons", "requestStudentLessonReschedule"]
+    },
+    "ci": "student-module configured for STU-01/02/03; final job evidence in PR checks"
+  },
+  "pending": [
+    "Apply and verify stacked STU migrations on the working deployment",
+    "Real working-domain reschedule task/audit/outbox acceptance",
+    "Migration constraints/timezone validation exercised against a migrated working target",
+    "Existing FND-GATE acceptance remains unresolved"
+  ],
+  "boundaries": {
+    "newDatabases": 0,
+    "newNeonBranches": 0,
+    "postgresContainersStarted": 0,
+    "persistentCteFixtures": 0,
+    "workingFinancialWrites": 0,
+    "workingScheduleWrites": 0,
+    "workingTasksCreated": 0,
+    "workingDdlApplied": false,
+    "deploymentPerformed": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduction": {
+    "readme": "apps/api/src/student/lessons/README.md",
+    "readonlyTest": "tests/integration/student-lessons-readonly.test.mjs",
+    "fixtures": "tests/evidence/stu03-readonly-projections.json"
+  }
+}

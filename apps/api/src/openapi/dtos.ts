@@ -1826,6 +1826,9 @@ export class ScheduleChangeRequestResponse {
 }
 
 export class LessonOutcomeReportResponse {
+  @ApiProperty({ type: 'boolean', required: true } as ApiPropertyOptions)
+  @IsBoolean()
+  'student_no_show'!: boolean;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -2155,6 +2158,15 @@ export class LessonRescheduleRequest {
 }
 
 export class LessonOutcomeReportRequest {
+  @ApiProperty({
+    type: 'boolean',
+    required: false,
+    description:
+      'Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
+  'studentNoShow'?: boolean;
   @ApiProperty({
     type: 'string',
     enum: LessonOutcomeReportRequestResultEnum,

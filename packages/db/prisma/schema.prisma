@@ -75,6 +75,7 @@ enum ContactChannel {
 }
 
 enum CrmTaskType {
+  RESCHEDULE_REQUEST
   MANUAL
   FOLLOW_UP
   TRIAL_FOLLOW_UP
@@ -255,6 +256,7 @@ model AuthAccount {
 }
 
 model StudentAccount {
+  timezone                           String                 @default("Europe/Chisinau")
   id                                 String                 @id @default(uuid()) @db.Uuid
   student_id                         String                 @db.Uuid
   account_id                         String                 @db.Uuid
@@ -623,6 +625,9 @@ model ContactLog {
 }
 
 model CrmTask {
+  lesson_id            String?       @db.Uuid
+  payload              Json?
+  lesson               LessonOccurrence? @relation("StudentRescheduleTasks", fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_crm_task_lesson")
   id                   String        @id @default(uuid()) @db.Uuid
   lead_id              String?       @db.Uuid
   student_id           String?       @db.Uuid
@@ -649,6 +654,7 @@ model CrmTask {
   @@index([student_id])
   @@index([resolved_by_staff_id])
   @@index([source_event_id])
+  @@index([lesson_id])
   @@map("crm_tasks")
 }
 
@@ -827,6 +833,7 @@ model RecurringSlot {
 }
 
 model LessonOccurrence {
+  student_crm_tasks                               CrmTask[] @relation("StudentRescheduleTasks")
   confirmed_report_id                             String?                  @unique @db.Uuid
   confirmed_report_ref                            LessonOutcomeReport?     @relation("ResolvedLessonReport", fields: [confirmed_report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lesson_confirmed_report")
   occurrence_date                                 DateTime?                @db.Date
@@ -1928,6 +1935,7 @@ enum ScheduleRequestStatus {
 }
 
 model LessonOutcomeReport {
+  student_no_show     Boolean              @default(false)
   resolved_lesson      LessonOccurrence?    @relation("ResolvedLessonReport")
   id                   String               @id @default(uuid()) @db.Uuid
   lesson_occurrence_id String               @db.Uuid

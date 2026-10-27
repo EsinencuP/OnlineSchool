@@ -809,6 +809,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Student lesson list or monthly calendar
+         * @description Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+         */
+        get: operations["getStudentLessons"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/{lessonId}/reschedule-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask the assigned manager to reschedule a particular lesson
+         * @description Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.
+         */
+        post: operations["requestStudentLessonReschedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/me": {
         parameters: {
             query?: never;
@@ -1341,6 +1381,20 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        LessonCardDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            /** @enum {string} */
+            status: "SCHEDULED" | "COMPLETED" | "CANCELLED" | "NO_SHOW" | "STAR_PENDING" | "DISPUTED";
+            canJoin: boolean;
+            meetLink: string | null;
+            canRequestReschedule: boolean;
+        };
         LessonCreateRequest: {
             /** Format: uuid */
             teachingAssignmentId: string;
@@ -1353,6 +1407,8 @@ export interface components {
             basis: string;
         };
         LessonOutcomeReportRequest: {
+            /** @description Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation */
+            studentNoShow?: boolean;
             /** @enum {string} */
             result: "CONDUCTED" | "NOT_CONDUCTED" | "DISPUTED";
             /** Format: date-time */
@@ -1361,6 +1417,7 @@ export interface components {
             note: string;
         };
         LessonOutcomeReportResponse: {
+            student_no_show: boolean;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -1410,6 +1467,12 @@ export interface components {
             actual_start_at: string | null;
         } & {
             [key: string]: unknown;
+        };
+        LessonsResponseDto: {
+            items: components["schemas"]["LessonCardDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
         };
         LoginRequest: components["schemas"]["LoginRequestAlternative1"] | components["schemas"]["LoginRequestAlternative2"];
         LoginRequestAlternative1: {
@@ -1633,6 +1696,17 @@ export interface components {
             occurrences: components["schemas"]["LessonResponse"][];
         } & {
             [key: string]: unknown;
+        };
+        RescheduleRequestDto: {
+            reason: string;
+            /** Format: date */
+            preferredDate: string;
+        };
+        RescheduleRequestResponseDto: {
+            /** Format: uuid */
+            crmTaskId: string;
+            /** @enum {string} */
+            status: "CREATED";
         };
         ScheduleChangeRequestInput: {
             /** Format: uuid */
@@ -5159,6 +5233,154 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentLessons: {
+        parameters: {
+            query?: {
+                period?: "today" | "week" | "month" | "archive";
+                page?: number;
+                pageSize?: number;
+                month?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentLessonReschedule: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RescheduleRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RescheduleRequestResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

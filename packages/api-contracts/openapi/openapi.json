@@ -5225,6 +5225,266 @@
         ]
       }
     },
+    "/api/v1/student/lessons": {
+      "get": {
+        "description": "Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.",
+        "operationId": "getStudentLessons",
+        "parameters": [
+          {
+            "name": "period",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "week",
+              "type": "string",
+              "enum": [
+                "today",
+                "week",
+                "month",
+                "archive"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "pattern": "^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$",
+              "example": "2025-09",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Student lesson list or monthly calendar",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/{lessonId}/reschedule-request": {
+      "post": {
+        "description": "Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.",
+        "operationId": "requestStudentLessonReschedule",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RescheduleRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RescheduleRequestResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Ask the assigned manager to reschedule a particular lesson",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/me": {
       "get": {
         "description": "Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.",
@@ -7594,6 +7854,62 @@
         ],
         "additionalProperties": true
       },
+      "LessonCardDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "number"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "COMPLETED",
+              "CANCELLED",
+              "NO_SHOW",
+              "STAR_PENDING",
+              "DISPUTED"
+            ]
+          },
+          "canJoin": {
+            "type": "boolean"
+          },
+          "meetLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canRequestReschedule": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "status",
+          "canJoin",
+          "meetLink",
+          "canRequestReschedule"
+        ]
+      },
       "LessonCreateRequest": {
         "type": "object",
         "properties": {
@@ -7631,6 +7947,10 @@
       "LessonOutcomeReportRequest": {
         "type": "object",
         "properties": {
+          "studentNoShow": {
+            "type": "boolean",
+            "description": "Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation"
+          },
           "result": {
             "type": "string",
             "enum": [
@@ -7663,6 +7983,9 @@
       "LessonOutcomeReportResponse": {
         "type": "object",
         "properties": {
+          "student_no_show": {
+            "type": "boolean"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -7698,6 +8021,7 @@
           }
         },
         "required": [
+          "student_no_show",
           "id",
           "lesson_occurrence_id",
           "reported_by_id",
@@ -7808,6 +8132,32 @@
           "actual_start_at"
         ],
         "additionalProperties": true
+      },
+      "LessonsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LessonCardDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
       },
       "LoginRequest": {
         "oneOf": [
@@ -8555,6 +8905,44 @@
           "occurrences"
         ],
         "additionalProperties": true
+      },
+      "RescheduleRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "preferredDate": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          }
+        },
+        "required": [
+          "reason",
+          "preferredDate"
+        ]
+      },
+      "RescheduleRequestResponseDto": {
+        "type": "object",
+        "properties": {
+          "crmTaskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED"
+            ]
+          }
+        },
+        "required": [
+          "crmTaskId",
+          "status"
+        ]
       },
       "ScheduleChangeRequestInput": {
         "type": "object",

@@ -7,14 +7,19 @@ import type { DomainError } from '../../core/errors/domain-error.js';
 import { StudentErrors } from '../student-context.interface.js';
 import type { IStudentContext, StudentRequest } from '../student-context.interface.js';
 import type { StudentMeResponseDto } from './me.dto.js';
+import type { Prisma } from '@online-school/db';
 
 export type LoadedStudent = { context: IStudentContext; me: StudentMeResponseDto };
 @Injectable()
 export class MeService {
   constructor(private readonly database: DatabaseService) {}
-  async load(userId: string): Promise<Result<LoadedStudent, DomainError>> {
+  async load(
+    userId: string,
+    connection?: Pick<Prisma.TransactionClient, 'studentAccount' | '$queryRaw'>,
+  ): Promise<Result<LoadedStudent, DomainError>> {
     try {
-      const profile = await this.database.client.studentAccount.findFirst({
+      const client = connection ?? this.database.client;
+      const profile = await client.studentAccount.findFirst({
         where: {
           account_id: userId,
           deactivated_at: null,
@@ -26,13 +31,14 @@ export class MeService {
           id: true,
           student_id: true,
           must_change_password: true,
+          timezone: true,
           created_at: true,
           student: { select: { full_name: true } },
           account: { select: { login_id: true } },
         },
       });
       if (!profile) return err(domainError(StudentErrors.PROFILE_NOT_FOUND, 403));
-      const [access] = await this.database.client.$queryRaw<
+      const [access] = await client.$queryRaw<
         { subject_ids: string[]; has_active_access: boolean }[]
       >`
         WITH time AS (SELECT statement_timestamp() AS now), enrollments AS (
@@ -59,6 +65,7 @@ export class MeService {
           ) AS has_active_access`;
       if (!access) return err(domainError('STUDENT_CONTEXT_UNAVAILABLE', 503));
       const context: IStudentContext = {
+        timeZone: profile.timezone ?? 'Europe/Chisinau',
         userId,
         studentProfileId: profile.student_id,
         hasActiveAccess: access.has_active_access,

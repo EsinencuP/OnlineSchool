@@ -100,6 +100,8 @@ erDiagram
   representatives o|--o{ contact_logs : "fk_contact_representative"
   staff_accounts ||--o{ contact_logs : "fk_contact_staff"
   crm_tasks {
+    String lesson_id
+    Json payload
     String id PK
     String lead_id
     String student_id
@@ -115,6 +117,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  lesson_occurrences o|--o{ crm_tasks : "fk_crm_task_lesson"
   leads o|--o{ crm_tasks : "fk_task_lead"
   students o|--o{ crm_tasks : "fk_task_student"
   staff_accounts o|--o{ crm_tasks : "fk_task_assigned_staff"
@@ -510,6 +513,7 @@ erDiagram
   recurring_slots o|--o{ lesson_occurrences : "fk_t03_lesson_occurrence_recurring_slot"
   teacher_accounts ||--o{ lesson_occurrences : "fk_t03_lesson_occurrence_scheduled_teacher"
   lesson_outcome_reports {
+    Boolean student_no_show
     String id PK
     String lesson_occurrence_id
     String reported_by_id
@@ -894,6 +898,7 @@ erDiagram
   }
   auth_accounts ||--o| staff_accounts : "fk_staff_account_auth"
   student_accounts {
+    String timezone
     String id PK
     String student_id
     String account_id
