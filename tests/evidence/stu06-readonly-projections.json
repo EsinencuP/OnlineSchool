@@ -1,0 +1,207 @@
+{
+  "task": "STU-06",
+  "checkedAt": "2026-10-27T17:17:04.030Z",
+  "database": "existing working online_school, app_runtime",
+  "version": "18.6 (fd34222)",
+  "mode": "SELECT-only CTE fixtures; no DML/DDL/new DBs/branches; row lock clauses omitted for non-lockable CTE predicate checks",
+  "listCases": [
+    {
+      "name": "only explicit teacher permissions, current/verified/context scoped, newest first",
+      "expected": {
+        "ids": [
+          "20000000-0000-4000-8000-000000000003",
+          "20000000-0000-4000-8000-000000000002",
+          "20000000-0000-4000-8000-000000000001"
+        ],
+        "total": 3
+      },
+      "actual": {
+        "items": [
+          {
+            "fileId": "20000000-0000-4000-8000-000000000003",
+            "fileName": "Материал",
+            "mimeType": "application/msword",
+            "sharedAt": "2026-10-26T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": null,
+            "subjectName": "Без предмета",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          },
+          {
+            "fileId": "20000000-0000-4000-8000-000000000002",
+            "fileName": "Material 2",
+            "mimeType": "video/mp4",
+            "sharedAt": "2026-10-25T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": null,
+            "subjectName": "Language",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          },
+          {
+            "fileId": "20000000-0000-4000-8000-000000000001",
+            "fileName": "Material 1",
+            "mimeType": "application/pdf",
+            "sharedAt": "2026-10-24T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": "Fractions",
+            "subjectName": "Math",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          }
+        ],
+        "total": 3
+      }
+    },
+    {
+      "name": "educational subject filter",
+      "expected": {
+        "ids": [
+          "20000000-0000-4000-8000-000000000001"
+        ],
+        "total": 1
+      },
+      "actual": {
+        "items": [
+          {
+            "fileId": "20000000-0000-4000-8000-000000000001",
+            "fileName": "Material 1",
+            "mimeType": "application/pdf",
+            "sharedAt": "2026-10-24T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": "Fractions",
+            "subjectName": "Math",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "name": "second page",
+      "expected": {
+        "ids": [
+          "20000000-0000-4000-8000-000000000001"
+        ],
+        "total": 3
+      },
+      "actual": {
+        "items": [
+          {
+            "fileId": "20000000-0000-4000-8000-000000000001",
+            "fileName": "Material 1",
+            "mimeType": "application/pdf",
+            "sharedAt": "2026-10-24T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": "Fractions",
+            "subjectName": "Math",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          }
+        ],
+        "total": 3
+      }
+    },
+    {
+      "name": "foreign account isolation",
+      "expected": {
+        "ids": [
+          "20000000-0000-4000-8000-000000000010"
+        ],
+        "total": 1
+      },
+      "actual": {
+        "items": [
+          {
+            "fileId": "20000000-0000-4000-8000-000000000010",
+            "fileName": "Material 10",
+            "mimeType": "application/pdf",
+            "sharedAt": "2026-10-26T12:00:00+00:00",
+            "uploadedAt": "2026-10-01T12:00:00+00:00",
+            "lessonTitle": null,
+            "subjectName": "Math",
+            "fileSizeBytes": 8,
+            "sharedByTeacherName": "Teacher"
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "name": "empty page retains total",
+      "expected": {
+        "ids": [],
+        "total": 3
+      },
+      "actual": {
+        "items": [],
+        "total": 3
+      }
+    }
+  ],
+  "accessCases": [
+    {
+      "name": "file-1 READ allowed",
+      "expectedAllowed": true,
+      "matches": 1
+    },
+    {
+      "name": "file-4 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-5 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-6 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-7 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-8 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-9 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-10 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-11 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-12 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-13 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    },
+    {
+      "name": "file-14 denied",
+      "expectedAllowed": false,
+      "matches": 0
+    }
+  ],
+  "passed": true
+}

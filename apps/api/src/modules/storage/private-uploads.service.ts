@@ -3,6 +3,7 @@ import type { OnModuleDestroy } from '@nestjs/common';
 import {
   CopyObjectCommand,
   HeadObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -10,6 +11,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { AppException, domainError, fail } from '../../core/errors/domain-error.js';
 
 export const UPLOAD_TTL_SECONDS = 900;
+export const READ_TTL_SECONDS = 900;
 export const MAX_HOMEWORK_FILE_BYTES = 52428800;
 export interface PrivateUpload {
   bucket: string;
@@ -18,6 +20,14 @@ export interface PrivateUpload {
   size: number;
   mimeType: string;
   expiresAt: Date;
+}
+export interface PrivateRead {
+  bucket: string;
+  key: string;
+  fileName: string;
+  canDownload: boolean;
+  signingDate: Date;
+  expiresIn: number;
 }
 
 @Injectable()
@@ -81,6 +91,34 @@ export class PrivateUploads implements OnModuleDestroy {
           signingDate: new Date(+input.expiresAt - UPLOAD_TTL_SECONDS * 1000),
           signableHeaders: new Set(['content-type', 'content-length']),
         },
+      );
+    } catch (error) {
+      return this.unavailable(error);
+    }
+  }
+  async signRead(input: PrivateRead): Promise<string> {
+    if (
+      !Number.isInteger(input.expiresIn) ||
+      input.expiresIn < 1 ||
+      input.expiresIn > READ_TTL_SECONDS
+    )
+      return fail(domainError('FILE_ACCESS_DENIED', 403));
+    // Only presentation changes with can_download. A readable browser response is never DRM.
+    const name = input.fileName.replace(/[\\/]/g, '_');
+    const encoded = encodeURIComponent(name).replace(
+      /['()*]/g,
+      (c) => '%' + c.charCodeAt(0).toString(16).toUpperCase(),
+    );
+    try {
+      return await getSignedUrl(
+        this.client(),
+        new GetObjectCommand({
+          Bucket: input.bucket,
+          Key: input.key,
+          ResponseContentDisposition: `${input.canDownload ? 'attachment' : 'inline'}; filename="material"; filename*=UTF-8''${encoded}`,
+          ResponseCacheControl: 'private, no-store',
+        }),
+        { expiresIn: input.expiresIn, signingDate: input.signingDate },
       );
     } catch (error) {
       return this.unavailable(error);

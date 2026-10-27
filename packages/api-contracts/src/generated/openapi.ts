@@ -986,6 +986,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Only materials explicitly shared with this student by a teacher
+         * @description Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».
+         */
+        get: operations["getStudentMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/materials/{fileId}/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Authorize one private material and issue a temporary GET capability
+         * @description Rechecks live session, student access, explicit permission and verified object under a row lock; appends FileAuditLog without the signed URL. Maximum TTL 900 seconds, capped by grant expiry. Revocation stops new URL issuance; an already issued S3 capability remains valid until its expiry. No CSRF/Idempotency-Key needed for this GET.
+         */
+        get: operations["getStudentMaterialUrl"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/me": {
         parameters: {
             query?: never;
@@ -1398,6 +1438,13 @@ export interface components {
             accessible: true;
             canDownload: boolean;
         };
+        FileSignedUrlResponseDto: {
+            /** @description Private HTTPS presigned GET capability. Maximum lifetime 15 minutes; shorter if the explicit permission expires first. */
+            url: string;
+            /** Format: date-time */
+            expiresAt: string;
+            fileName: string;
+        };
         /** @description Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision. */
         FinanceMoney: string;
         FinancialPeriodResponse: {
@@ -1717,6 +1764,27 @@ export interface components {
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
+        };
+        MaterialItemDto: {
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            fileSizeBytes: number;
+            mimeType: string;
+            /** @description Explicit educational context, or «Без предмета» for legacy/contextless grants */
+            subjectName: string;
+            /** Format: date-time */
+            uploadedAt: string;
+            /** Format: date-time */
+            sharedAt: string;
+            sharedByTeacherName: string;
+            lessonTitle: string | null;
+        };
+        MaterialsResponseDto: {
+            items: components["schemas"]["MaterialItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
         };
         NextLessonDto: {
             /** Format: uuid */
@@ -6210,6 +6278,131 @@ export interface operations {
                 };
             };
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentMaterials: {
+        parameters: {
+            query?: {
+                /** @description Educational subject ID, not the permission recipient account */
+                subjectId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentMaterialUrl: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileSignedUrlResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

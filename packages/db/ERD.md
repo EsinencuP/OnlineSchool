@@ -215,6 +215,9 @@ erDiagram
   file_permissions o|--o{ file_audit_logs : "fk_t04_file_audit_log_permission"
   auth_accounts ||--o{ file_audit_logs : "fk_t04_file_audit_log_actor"
   file_permissions {
+    String educational_subject_id
+    String lesson_occurrence_id
+    String lesson_title
     String id PK
     String s3_object_id
     String subject_id
@@ -229,6 +232,8 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  subjects o|--o{ file_permissions : "fk_stu06_material_subject"
+  lesson_occurrences o|--o{ file_permissions : "fk_stu06_material_lesson"
   s3_objects ||--o{ file_permissions : "fk_t04_file_permission_s3_object"
   auth_accounts ||--o{ file_permissions : "fk_t04_file_permission_granted_by"
   auth_accounts o|--o{ file_permissions : "fk_t04_file_permission_revoked_by"
