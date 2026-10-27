@@ -252,4 +252,10 @@ docker compose up -d --build --wait
 
 Карта фиксирует происхождение и статус требований. Черновики, рекомендации и демонстрационные данные макетов не становятся утверждёнными правилами.
 
+**TASK-14:** единый рабочий MVP опубликован на https://onlineschool-xi.vercel.app
+с настоящим Vercel worker Daemon и существующей Neon main. PR #1 объединён;
+Git-публикация применяет миграции до выхода новой версии. Дополнительные QA/staging/test
+БД не создаются; integration-test явно skipped по уточнению владельца, а FND-GATE остаётся
+открытым. [Runbook](infra/vercel/README.md), [протокол](infra/TASK14_EVIDENCE.json).
+
 Graphify 0.9.76 и скилл для Codex установлены. Поиск: `graphify query "ваш вопрос"`. Повторная сборка из сохранённых смысловых фрагментов: `python scripts/build_project_map.py`, затем `graphify export html` и `graphify tree --root . --label OnlineSchool`. Для изменённых документов требуется повторный смысловой анализ; признак устаревания — `graphify-out/freshness.json`.

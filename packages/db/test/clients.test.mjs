@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import test from 'node:test';
+import { test } from '../../../tests/support/test-harness.mjs';
 import { createDirectClient, createPoolClient, PrismaClient } from '../dist/index.js';
 
 test('runtime and direct clients never fall back to the other connection', () => {

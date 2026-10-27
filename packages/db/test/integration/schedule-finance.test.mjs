@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { after, before, test } from 'node:test';
+import { after, before, test } from '../../../../tests/support/test-harness.mjs';
 import pg from 'pg';
 import { createDirectClient } from '../../dist/index.js';
 import {

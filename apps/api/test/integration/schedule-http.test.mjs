@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import { http as fetch } from '../../../../tests/support/http.mjs';
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
-import { before, after, test } from 'node:test';
+import { before, after, test } from '../../../../tests/support/test-harness.mjs';
 import pg from '../../../../packages/db/node_modules/pg/lib/index.js';
 import { NestFactory } from '@nestjs/core';
 import { createDirectClient } from '@online-school/db';

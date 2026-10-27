@@ -86,6 +86,19 @@ jobs:
         env:
           BUILD_COMMIT_SHA: ${{ github.sha }}
 
+  foundation-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      FND_WORKING_ORIGIN: https://onlineschool-xi.vercel.app
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @online-school/api build && pnpm --filter @online-school/worker build
+      # No PostgreSQL service or working database credentials. Missing acceptance groups fail visibly.
+      - run: pnpm test:fnd:ci
+
   docker-build:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
