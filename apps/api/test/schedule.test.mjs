@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
+import { test } from '../../../tests/support/test-harness.mjs';
 import { occurrences } from '../dist/modules/schedule/recurrence.js';
 
 test('weekly wall time keeps local time across DST, producing distinct stable local dates', () => {

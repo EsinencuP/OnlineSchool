@@ -1,7 +1,8 @@
 import 'reflect-metadata';
+import { http as fetch } from '../../../../tests/support/http.mjs';
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
-import { after, before, test } from 'node:test';
+import { after, before, test } from '../../../../tests/support/test-harness.mjs';
 import { Controller, Delete, Get, Module, Patch, Post, Put, Req } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { createDirectClient } from '@online-school/db';

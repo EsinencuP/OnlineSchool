@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
+import { test } from '../../../tests/support/test-harness.mjs';
 import { webAuthnSettings } from '../dist/modules/identity/webauthn.config.js';
 
 test('WebAuthn config pins one exact HTTPS QA hostname, including a permanent Vercel alias', () => {

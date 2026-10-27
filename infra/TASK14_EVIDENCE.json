@@ -1,0 +1,136 @@
+{
+  "task": "TASK-14",
+  "status": "IMPLEMENTED_SINGLE_WORKING_ENVIRONMENT_VERIFIED",
+  "environment": {
+    "url": "https://onlineschool-xi.vercel.app",
+    "vercelProject": "onlineschool",
+    "neonProject": "wispy-sun-30279484",
+    "branch": "main",
+    "database": "online_school",
+    "postgresql": "18.6",
+    "region": "Frankfurt / fra1",
+    "newProjectsBranchesOrDatabasesCreated": 0,
+    "previewDeploymentsDisabled": true
+  },
+  "release": {
+    "pullRequest": "https://github.com/EsinencuP/OnlineSchool/pull/1",
+    "merged": true,
+    "initialVerifiedCommit": "9e8c04602b3c784fa61b91fb195fc21f6bbaec15",
+    "initialDeployment": "dpl_514RhrXNGfwk5u12EqWDrFq3rWpj",
+    "automaticMainCommit": "a0dd8a43ace5cf4088b1273441e0646d3e666c29",
+    "automaticMainDeployment": "dpl_4yMBQCKUzqGXehoiMBWTGY7TzfiH",
+    "automaticMainDeploymentReady": true,
+    "finalCommit": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+    "finalDeployment": "dpl_E9UJuKff3G24LVsNQ7VxzCaB51Wf",
+    "finalDeploymentReady": true
+  },
+  "worker": {
+    "runtime": "Vercel Daemon",
+    "instances": {
+      "fra1": 1
+    },
+    "memory": "1Gi",
+    "terminationGracePeriodSeconds": 45,
+    "initialDaemonImage": "sha256:6d60cf705ad059c006b25a949bef62a0fe84c5859cfef17d13cbe6d07711dd2a",
+    "startupLog": "worker started; PostgreSQL outbox and reconciliation enabled=true",
+    "freshHeartbeatConfirmedInNeon": true,
+    "rolloutEvidence": {
+      "gracefullyStoppedInstances": 2,
+      "currentLiveInstances": 1
+    }
+  },
+  "migration": {
+    "appliedCount": 7,
+    "latest": "20261026080000_task12_qa_runtime",
+    "method": "Protected Vercel Git build: compile API/SPA, then direct prisma migrate deploy before publication",
+    "buildEvidence": "Working database migrations applied; deployment may be published",
+    "newSchemaMigrationAdded": false,
+    "githubHasDatabaseCredentials": false,
+    "credentialsOrRawPrismaMigrationOutputLogged": false,
+    "checksumsMatchWorkingDatabase": true,
+    "checksums": [
+      {
+        "name": "20261026020000_init",
+        "sha256": "497a39872d0cc3edcc3983be942e26a91c1efaf303a5fb783de9435a1fe83772"
+      },
+      {
+        "name": "20261026030000_task05_guards",
+        "sha256": "fd93c2c7e67ed00e6d299d87c03edf547d91b96029b53e572f376fa1c046daf5"
+      },
+      {
+        "name": "20261026040000_task07_identity",
+        "sha256": "6626875ff91826483abd1dbe03581bebc0e9180a068a1f8c31c11734811dc251"
+      },
+      {
+        "name": "20261026050000_task08_finance",
+        "sha256": "1e706af47eec286e648e83d1aa4775653616db458fb21a9ca44574fd944c8ff4"
+      },
+      {
+        "name": "20261026060000_task09_schedule",
+        "sha256": "ed61ee96236261f1935165297f3ae0dfc1dbce96ba7d20eb6e80d17bbe5fe9f5"
+      },
+      {
+        "name": "20261026070000_task11_worker",
+        "sha256": "026a795b899e0aca1a9dbfab70ab9699cb12ab63412095fe32d6592856669387"
+      },
+      {
+        "name": "20261026080000_task12_qa_runtime",
+        "sha256": "9a9702ecfbe9ab8212f959c53c24bf6618ea63e7b5bf7a9ff8f50103963d108c"
+      }
+    ]
+  },
+  "checks": {
+    "targetedApiCompilation": "passed",
+    "targetedSpaBuild": "passed",
+    "openApiAndClientGeneration": "passed",
+    "changedFileEslint": "passed",
+    "initialPermanentDomain": {
+      "/": 200,
+      "/api/health": 200,
+      "/api/health/worker": 200,
+      "/api/docs": 200,
+      "/api/docs-json": 200,
+      "/api/v1/auth/sessionWithoutLogin": 401,
+      "/api/v1/auth/csrf": 200,
+      "csrfCookieSecureHostPrefix": true,
+      "workerHealthCacheControl": "no-store",
+      "exactBuildShaInBrowser": true,
+      "browserSecureContext": true,
+      "browserWebAuthnAvailable": true
+    },
+    "ciFeature": "https://github.com/EsinencuP/OnlineSchool/actions/runs/40409958836",
+    "ciMainMerge": "https://github.com/EsinencuP/OnlineSchool/actions/runs/40410660207",
+    "enabledJobs": [
+      "typecheck",
+      "lint",
+      "unit-test",
+      "build",
+      "docker-build"
+    ],
+    "enabledJobsFeatureAndMerge": "all passed",
+    "integrationTest": "explicitly skipped by current owner instruction; no test DB created",
+    "publicWebAuthnEnrollmentAndAuthentication": "Reused TASK-12 evidence on the same permanent origin; unchanged authentication implementation. No new QA account or virtual owner passkey created during TASK-14.",
+    "ciFinal": "https://github.com/EsinencuP/OnlineSchool/actions/runs/40411140033",
+    "enabledJobsFinal": "all passed",
+    "finalPermanentDomain": {
+      "root": 200,
+      "apiHealth": 200,
+      "workerHealth": 200,
+      "openApiJson": 200,
+      "exactFinalBuildShaInBrowser": true,
+      "workerResponseSchema": "#/components/schemas/HealthProbeResponse",
+      "healthCacheControl": "no-store"
+    }
+  },
+  "limits": [
+    "One working environment by owner decision; additional QA/staging/shadow/test DBs prohibited.",
+    "Existing synthetic integration suites are not safe to redirect to the working DB; compatible TASK-15 strategy remains open.",
+    "Vercel Daemons Hobby beta quotas apply; stopped daemon yields stale heartbeat/503 while PostgreSQL data persists.",
+    "Vercel injects project env into daemons, including the direct migration variable; API/worker database clients use only pooled app_runtime.",
+    "Owner enrolls their own physical passkey. S3/Meet provider credentials/adapters are not fabricated."
+  ],
+  "fndGate": "NOT_EVALUATED",
+  "manualQaAcceptance": "OPEN",
+  "productionGo": "NOT_GRANTED",
+  "checkedAt": "2026-10-26T22:23:03.099Z"
+}

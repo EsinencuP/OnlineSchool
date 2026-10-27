@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import test from 'node:test';
+import { test } from '../../../tests/support/test-harness.mjs';
 import { readOptions, retryDelay, safeCode, WorkerFailure } from '../dist/contracts.js';
 
 test('bounded retry schedule and strict environment config', () => {

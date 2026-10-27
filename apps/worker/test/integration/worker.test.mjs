@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { fork } from 'node:child_process';
 import { once } from 'node:events';
 import { createRequire } from 'node:module';
-import { after, before, beforeEach, test } from 'node:test';
+import { after, before, beforeEach, test } from '../../../../tests/support/test-harness.mjs';
 import { createPoolClient } from '@online-school/db';
 import { ok, err } from '@online-school/shared';
 import { OutboxWorker } from '../../dist/outbox.js';

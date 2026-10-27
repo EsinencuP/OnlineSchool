@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { test } from 'node:test';
+import { test } from '../../../tests/support/test-harness.mjs';
 import { Prisma } from '@online-school/db';
 import { TransactionService } from '../dist/core/transaction/transaction.service.js';
 import { payloadHash } from '../dist/core/idempotency/idempotency.module.js';

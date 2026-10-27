@@ -1,0 +1,56 @@
+{
+  "task": "TASK-15",
+  "status": "BLOCKED_BY_ACCEPTANCE_ENVIRONMENT_CONSTRAINT",
+  "ownerPolicy": "One existing Vercel/Neon working environment. No extra or disposable PostgreSQL/test databases.",
+  "groups": [
+    {
+      "id": 1,
+      "status": "PARTIAL",
+      "verified": "73 models, 818 columns, 164 FKs, SQL guards and seven migration checksums compared to a read-only Neon catalog capture",
+      "blocked": "Clean-DB migration and previous-version rehearsal cannot run on the populated working database without reset or another database."
+    },
+    {
+      "id": 2,
+      "status": "IMPLEMENTED_NOT_EXECUTED",
+      "tests": "tests/concurrent/commands.test.mjs",
+      "blocked": "5/5/3 command fixtures require isolated committed data. Do not redirect the historical synthetic suites to working Neon."
+    },
+    {
+      "id": 3,
+      "status": "HISTORICAL_TESTS_NOT_RERUN",
+      "tests": "tests/api/core.test.mjs; tests/integration/worker.test.mjs"
+    },
+    {
+      "id": 4,
+      "status": "PARTIAL",
+      "verified": "Exhaustive ordinary rate boundaries and calendar-month rehire boundary unit tests",
+      "blocked": "Ledger mutation and closed-period suites require isolation from working financial history."
+    },
+    {
+      "id": 5,
+      "status": "PARTIAL",
+      "verified": "Anonymous endpoint rejection and real Chromium WebAuthn registration/authentication/limited-stage tests",
+      "blocked": "Complete signed replay/recovery/cross-student/assignment suites have not been rerun on a permissible target."
+    },
+    {
+      "id": 6,
+      "status": "IMPLEMENTED_NOT_EXECUTED",
+      "tests": "tests/api/file-permissions.test.mjs",
+      "blocked": "No real private S3 fixture/provider is configured for a working grant/download test. Synthetic verified metadata is restricted to the non-working legacy test target."
+    },
+    {
+      "id": 7,
+      "status": "HISTORICAL_TESTS_NOT_RERUN",
+      "tests": "tests/integration/worker.test.mjs",
+      "blocked": "A crash/reclaim suite must not alter shared pending jobs or interfere with the live daemon."
+    },
+    {
+      "id": 8,
+      "status": "HISTORICAL_TESTS_NOT_RERUN",
+      "tests": "tests/api/finance.test.mjs; tests/api/schedule.test.mjs; tests/integration/education-files.test.mjs"
+    }
+  ],
+  "ciRealPostgres18Regression": "NOT_RUN_NO_PERMITTED_TARGET",
+  "criticalHighDefectClearance": "NOT_ESTABLISHED_WITHOUT_COMPLETE_REGRESSION",
+  "fndGate": "NOT_PASSED"
+}
