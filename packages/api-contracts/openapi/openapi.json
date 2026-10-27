@@ -5360,6 +5360,141 @@
         ]
       }
     },
+    "/api/v1/student/lessons/{lessonId}/dispute": {
+      "post": {
+        "description": "Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.",
+        "operationId": "disputeStudentLessonDeduction",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisputeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputeResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Dispute one published lesson deduction",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/lessons/{lessonId}/reschedule-request": {
       "post": {
         "description": "Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.",
@@ -5480,6 +5615,126 @@
           }
         ],
         "summary": "Ask the assigned manager to reschedule a particular lesson",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/history": {
+      "get": {
+        "description": "Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.",
+        "operationId": "getStudentLessonHistory",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonHistoryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirmed student attendance and quantitative deduction history",
         "tags": [
           "Student"
         ]
@@ -7141,6 +7396,38 @@
           "generatedAt"
         ]
       },
+      "DisputeRequestDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "description"
+        ]
+      },
+      "DisputeResponseDto": {
+        "type": "object",
+        "properties": {
+          "crmTaskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED"
+            ]
+          }
+        },
+        "required": [
+          "crmTaskId",
+          "status"
+        ]
+      },
       "EmptyRequest": {
         "type": "object",
         "properties": {},
@@ -7663,6 +7950,20 @@
       "LedgerEntryResponse": {
         "type": "object",
         "properties": {
+          "entitlement_balance_before": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons remaining immediately before consumption; quantitative, not money"
+          },
+          "entitlement_balance_after": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons remaining immediately after consumption; quantitative, not money"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -7695,6 +7996,8 @@
           }
         },
         "required": [
+          "entitlement_balance_before",
+          "entitlement_balance_after",
           "id",
           "document_id",
           "financial_period_id",
@@ -7943,6 +8246,94 @@
           "basis"
         ],
         "additionalProperties": false
+      },
+      "LessonHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "number"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "attendanceStatus": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "NO_SHOW"
+            ]
+          },
+          "lessonDeducted": {
+            "type": "boolean",
+            "description": "Current uncancelled quantitative consumption backed by a published ledger entry"
+          },
+          "balanceBefore": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots"
+          },
+          "balanceAfter": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons after deduction, immutable Decimal string"
+          },
+          "canDispute": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "attendanceStatus",
+          "lessonDeducted",
+          "balanceBefore",
+          "balanceAfter",
+          "canDispute"
+        ]
+      },
+      "LessonHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LessonHistoryItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
       },
       "LessonOutcomeReportRequest": {
         "type": "object",

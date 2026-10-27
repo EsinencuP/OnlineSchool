@@ -98,6 +98,7 @@ jobs:
       - run: pnpm test:stu01
       - run: pnpm test:stu02
       - run: pnpm test:stu03
+      - run: pnpm test:stu04
 
   foundation-gate:
     runs-on: ubuntu-24.04

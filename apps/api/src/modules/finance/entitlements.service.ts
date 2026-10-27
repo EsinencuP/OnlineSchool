@@ -45,6 +45,16 @@ export class EntitlementsService {
     await this.ledger.period(ctx.tx, lesson.scheduled_at);
     if ((await this.remaining(ctx, grantId)) < 1)
       return fail(domainError('INSUFFICIENT_PAID_RIGHTS', 422));
+    const [balance] = await ctx.tx.$queryRaw<{ balance: string }[]>`
+      SELECT coalesce(sum(g.quantity
+        +coalesce((SELECT sum(a.delta_quantity) FROM entitlement_adjustments a WHERE a.grant_id=g.id AND a.effective_at<=${now}),0)
+        -coalesce((SELECT sum(c.quantity) FROM entitlement_consumptions c WHERE c.grant_id=g.id AND c.consumed_at<=${now}
+          AND (c.cancelled_at IS NULL OR c.cancelled_at>${now})),0)),0)::numeric::text AS balance
+      FROM entitlement_grants g WHERE g.subscription_id=${sub.id}::uuid AND g.granted_at<=${now}`;
+    if (!balance) return fail(domainError('ENTITLEMENT_BALANCE_UNAVAILABLE', 503));
+    const before = new Prisma.Decimal(balance.balance),
+      after = before.minus(1);
+    if (after.lt(0)) return fail(domainError('INSUFFICIENT_PAID_RIGHTS', 422));
     let consumed;
     try {
       consumed = await ctx.tx.entitlementConsumption.create({
@@ -83,11 +93,15 @@ export class EntitlementsService {
       }
       return Promise.reject(error);
     }
-    const entry = await this.ledger.event(ctx, {
-      consumption_id: consumed.id,
-      basis: 'Revenue recognized for confirmed paid lesson',
-      ...operation(randomUUID()),
-    });
+    const entry = await this.ledger.event(
+      ctx,
+      {
+        consumption_id: consumed.id,
+        basis: 'Revenue recognized for confirmed paid lesson',
+        ...operation(randomUUID()),
+      },
+      { before, after },
+    );
     return {
       ...consumed,
       remaining_count: await this.remaining(ctx, grantId),

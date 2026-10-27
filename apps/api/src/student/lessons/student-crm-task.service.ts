@@ -6,11 +6,19 @@ import type { RescheduleRequestResponseDto } from './lessons.dto.js';
 export class StudentCrmTaskService {
   async create(
     ctx: CriticalContext,
-    input: {
-      lessonId: string;
-      studentProfileId: string;
-      payload: { reason: string; preferredDate: string };
-    },
+    input:
+      | {
+          lessonId: string;
+          studentProfileId: string;
+          type?: 'RESCHEDULE_REQUEST';
+          payload: { reason: string; preferredDate: string };
+        }
+      | {
+          lessonId: string;
+          studentProfileId: string;
+          type: 'ATTENDANCE_DISPUTE';
+          payload: { description: string };
+        },
     time: Date,
   ): Promise<RescheduleRequestResponseDto> {
     const manager = await ctx.tx.assignedManager.findFirst({
@@ -24,14 +32,17 @@ export class StudentCrmTaskService {
     });
     const task = await ctx.tx.crmTask.create({
       data: {
-        type: 'RESCHEDULE_REQUEST',
+        type: input.type ?? 'RESCHEDULE_REQUEST',
         student_id: input.studentProfileId,
         lesson_id: input.lessonId,
         payload: input.payload,
-        title: 'Запрос ученика на перенос конкретного урока',
+        title:
+          input.type === 'ATTENDANCE_DISPUTE'
+            ? 'Оспаривание списания за конкретный урок'
+            : 'Запрос ученика на перенос конкретного урока',
         due_at: time,
         assigned_manager_id: manager?.manager_id ?? null,
-        idempotency_key: `student-reschedule:${ctx.actor.accountId}:${ctx.operationId}`,
+        idempotency_key: `student-${input.type === 'ATTENDANCE_DISPUTE' ? 'dispute' : 'reschedule'}:${ctx.actor.accountId}:${ctx.operationId}`,
       },
     });
     return { crmTaskId: task.id, status: 'CREATED' };

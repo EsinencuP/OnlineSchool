@@ -267,4 +267,5 @@ test('explicit absence is stored as a report classification without changing the
 test('worker recognizes the committed reschedule event instead of dead-lettering an unknown topic', () => {
   expect(createHandlers().has('student.lesson.reschedule-requested.v1')).toBe(true);
   expect(createHandlers().has('student.password.change.v1')).toBe(true);
+  expect(createHandlers().has('student.lesson.dispute-requested.v1')).toBe(true);
 });

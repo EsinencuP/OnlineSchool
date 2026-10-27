@@ -4326,6 +4326,30 @@
     "table": "ledger_entries",
     "fields": [
       {
+        "name": "entitlement_balance_before",
+        "column": "entitlement_balance_before",
+        "type": "Decimal",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Decimal",
+          "20, 0"
+        ]
+      },
+      {
+        "name": "entitlement_balance_after",
+        "column": "entitlement_balance_after",
+        "type": "Decimal",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Decimal",
+          "20, 0"
+        ]
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",

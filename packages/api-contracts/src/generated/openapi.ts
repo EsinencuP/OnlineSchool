@@ -829,6 +829,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/lessons/{lessonId}/dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dispute one published lesson deduction
+         * @description Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.
+         */
+        post: operations["disputeStudentLessonDeduction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/lessons/{lessonId}/reschedule-request": {
         parameters: {
             query?: never;
@@ -843,6 +863,26 @@ export interface paths {
          * @description Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.
          */
         post: operations["requestStudentLessonReschedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Confirmed student attendance and quantitative deduction history
+         * @description Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+         */
+        get: operations["getStudentLessonHistory"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1152,6 +1192,15 @@ export interface components {
             /** Format: date-time */
             generatedAt: string;
         };
+        DisputeRequestDto: {
+            description: string;
+        };
+        DisputeResponseDto: {
+            /** Format: uuid */
+            crmTaskId: string;
+            /** @enum {string} */
+            status: "CREATED";
+        };
         EmptyRequest: Record<string, never>;
         EnrollmentCreateRequest: {
             /** Format: uuid */
@@ -1318,6 +1367,10 @@ export interface components {
             replacementLines?: components["schemas"]["LedgerLineInput"][];
         };
         LedgerEntryResponse: {
+            /** @description Subscription lessons remaining immediately before consumption; quantitative, not money */
+            entitlement_balance_before: string | null;
+            /** @description Subscription lessons remaining immediately after consumption; quantitative, not money */
+            entitlement_balance_after: string | null;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -1405,6 +1458,30 @@ export interface components {
             /** @enum {string} */
             status?: "SCHEDULED" | "STAR_PENDING";
             basis: string;
+        };
+        LessonHistoryItemDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            /** @enum {string} */
+            attendanceStatus: "COMPLETED" | "NO_SHOW";
+            /** @description Current uncancelled quantitative consumption backed by a published ledger entry */
+            lessonDeducted: boolean;
+            /** @description Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots */
+            balanceBefore: string | null;
+            /** @description Subscription lessons after deduction, immutable Decimal string */
+            balanceAfter: string | null;
+            canDispute: boolean;
+        };
+        LessonHistoryResponseDto: {
+            items: components["schemas"]["LessonHistoryItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
         };
         LessonOutcomeReportRequest: {
             /** @description Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation */
@@ -5322,6 +5399,90 @@ export interface operations {
             };
         };
     };
+    disputeStudentLessonDeduction: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisputeRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
     requestStudentLessonReschedule: {
         parameters: {
             query?: never;
@@ -5373,6 +5534,84 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentLessonHistory: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonHistoryResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };

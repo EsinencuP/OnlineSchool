@@ -839,6 +839,26 @@ export class TemporaryAccessResponse {
 }
 
 export class LedgerEntryResponse {
+  @ApiProperty({
+    type: 'string',
+    nullable: true,
+    required: true,
+    description:
+      'Subscription lessons remaining immediately before consumption; quantitative, not money',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'entitlement_balance_before'!: string | null;
+  @ApiProperty({
+    type: 'string',
+    nullable: true,
+    required: true,
+    description:
+      'Subscription lessons remaining immediately after consumption; quantitative, not money',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'entitlement_balance_after'!: string | null;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()

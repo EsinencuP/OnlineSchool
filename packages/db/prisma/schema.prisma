@@ -75,6 +75,7 @@ enum ContactChannel {
 }
 
 enum CrmTaskType {
+  ATTENDANCE_DISPUTE
   RESCHEDULE_REQUEST
   MANUAL
   FOLLOW_UP
@@ -83,6 +84,7 @@ enum CrmTaskType {
 }
 
 enum CrmTaskStatus {
+  IN_PROGRESS
   OPEN
   RESOLVED
   CANCELLED
@@ -655,6 +657,7 @@ model CrmTask {
   @@index([resolved_by_staff_id])
   @@index([source_event_id])
   @@index([lesson_id])
+  @@unique([student_id, lesson_id], map: "uq_open_attendance_dispute", where: raw("type = 'ATTENDANCE_DISPUTE' AND status IN ('OPEN','IN_PROGRESS')"))
   @@map("crm_tasks")
 }
 
@@ -1309,6 +1312,9 @@ model LedgerDocument {
 }
 
 model LedgerEntry {
+  // Quantitative subscription rights, not monetary account balances. Immutable once captured.
+  entitlement_balance_before                 Decimal?           @db.Decimal(20, 0)
+  entitlement_balance_after                  Decimal?           @db.Decimal(20, 0)
   id                                         String             @id @default(uuid()) @db.Uuid
   document_id                                String             @unique @db.Uuid
   financial_period_id                        String             @db.Uuid

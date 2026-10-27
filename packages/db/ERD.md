@@ -412,6 +412,8 @@ erDiagram
   confirmed_payouts o|--o| ledger_documents : "fk_t03_ledger_document_payout"
   ledger_documents o|--o{ ledger_documents : "fk_t03_ledger_document_correction_of_document"
   ledger_entries {
+    Decimal entitlement_balance_before
+    Decimal entitlement_balance_after
     String id PK
     String document_id
     String financial_period_id
