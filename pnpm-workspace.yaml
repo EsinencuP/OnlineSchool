@@ -16,6 +16,14 @@ onlyBuiltDependencies:
   - '@prisma/engines'
   - esbuild
   - prisma
+patchedDependencies:
+  '@nestjs/cache-manager@12.0.1': patches/@nestjs__cache-manager@12.0.1.patch
+
+# Upstream declaration imports Cacheable but lists it only as a dev dependency.
+packageExtensions:
+  '@nestjs/cache-manager@12.0.1':
+    dependencies:
+      cacheable: 2.5.0
 
 # openapi-typescript 7.13.0 still declares TS ^5.x; generated output is checked with TS 6.0.3.
 # Keep strict peer validation for every other dependency.

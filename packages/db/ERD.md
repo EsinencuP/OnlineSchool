@@ -915,6 +915,12 @@ erDiagram
   subscriptions ||--o{ student_accounts : "fk_t03_activation_subscription"
   payment_receipts ||--o{ student_accounts : "fk_t03_activation_payment"
   temporary_access_permissions o|--o{ student_accounts : "fk_t03_activation_director"
+  student_dashboard_revisions {
+    String student_id PK
+    BigInt revision
+    DateTime updated_at
+  }
+  students ||--o| student_dashboard_revisions : "fk_dashboard_revision_student"
   student_representative_links {
     String id PK
     String student_id
@@ -1087,6 +1093,7 @@ erDiagram
   teacher_engagements ||--o{ teacher_tenure_credits : "fk_tenure_engagement"
   staff_accounts ||--o{ teacher_tenure_credits : "fk_tenure_recorder"
   teaching_assignments {
+    String google_meet_link
     String id PK
     String enrollment_id
     String teacher_id

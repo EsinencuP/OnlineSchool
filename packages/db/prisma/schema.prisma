@@ -89,6 +89,7 @@ enum CrmTaskStatus {
 
 // Owner: Student registry / Relations. Contacts never identify/deduplicate a person.
 model Student {
+  dashboard_revision StudentDashboardRevision?
   payment_contacts PaymentReceipt[] @relation("PaymentContactStudent")
   id               String           @id @default(uuid()) @db.Uuid
   full_name        String // PII
@@ -752,6 +753,7 @@ model StudentSubjectEnrollment {
 }
 
 model TeachingAssignment {
+  google_meet_link                            String?
   id                                          String                   @id @default(uuid()) @db.Uuid
   enrollment_id                               String                   @db.Uuid
   teacher_id                                  String                   @db.Uuid
@@ -772,6 +774,16 @@ model TeachingAssignment {
   @@index([teacher_id])
   @@index([assigned_by_id])
   @@map("teaching_assignments")
+}
+
+// Transactional invalidation token; runtime reads it, only DB triggers advance it.
+model StudentDashboardRevision {
+  student_id String @id @db.Uuid
+  revision BigInt @default(0)
+  updated_at DateTime @default(now()) @db.Timestamptz(3)
+  student Student @relation(fields: [student_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "fk_dashboard_revision_student")
+
+  @@map("student_dashboard_revisions")
 }
 
 model TeacherAvailability {
