@@ -21,6 +21,7 @@ export interface CriticalContext {
   requestId: string;
 }
 export interface HttpRequest extends IncomingMessage {
+  csrfValidated?: boolean;
   body?: unknown;
   params: Record<string, string | undefined>;
   query: unknown;

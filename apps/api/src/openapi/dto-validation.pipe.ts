@@ -4,9 +4,6 @@ import { plainToInstance } from 'class-transformer';
 import { getMetadataStorage, validateSync } from 'class-validator';
 import type { ValidationError } from 'class-validator';
 import { domainError, fail } from '../core/errors/domain-error.js';
-import { DTO_CLASSES } from './dtos.js';
-
-const constructors = new Set<unknown>(DTO_CLASSES);
 const fields = (errors: ValidationError[]): string[] =>
   errors.flatMap((e) => [e.property, ...fields(e.children ?? [])]);
 
@@ -14,7 +11,7 @@ const fields = (errors: ValidationError[]): string[] =>
 export class DtoValidationPipe implements PipeTransform {
   transform(value: unknown, metadata: ArgumentMetadata): unknown {
     const type = metadata.metatype;
-    if (metadata.type !== 'body' || !type || !constructors.has(type)) return value;
+    if (metadata.type !== 'body' || !type) return value;
     // Empty command bodies and conditional business rules are also checked by
     // their command handlers; no conversion or stripping changes the hashed body.
     if (!getMetadataStorage().getTargetValidationMetadatas(type, '', false, false).length)

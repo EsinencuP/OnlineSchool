@@ -266,6 +266,7 @@ export class IdentityService {
     return this.execute(req, 'auth.webauthn.register.start', async (tx) => {
       const actor = await this.actor(req, tx);
       const account = await this.account(tx, actor.accountId, true);
+      if (account.kind === 'STUDENT') return fail(domainError('STUDENT_PASSKEYS_NOT_ALLOWED', 403));
       const credentials = await tx.webAuthnCredential.findMany({
         where: { account_id: actor.accountId, revoked_at: null },
       });
@@ -373,6 +374,7 @@ export class IdentityService {
     return this.execute(req, 'auth.webauthn.register.finish', async (tx) => {
       const actor = await this.actor(req, tx);
       const account = await this.account(tx, actor.accountId, true);
+      if (account.kind === 'STUDENT') return fail(domainError('STUDENT_PASSKEYS_NOT_ALLOWED', 403));
       const { input, response } = this.clientData(req.body, 'webauthn.create');
       const challenge = await this.challenge(tx, req, 'REGISTRATION', input);
       if (
@@ -450,7 +452,14 @@ export class IdentityService {
         }
         // Public account discovery is deliberately identical for absent/disabled/recovery accounts.
         let id: string = randomUUID();
-        if (account && !account.disabled_at && !account.recovery_registration_required) {
+        if (actor && account?.kind === 'STUDENT')
+          return fail(domainError('STUDENT_PASSKEYS_NOT_ALLOWED', 403));
+        if (
+          account &&
+          account.kind !== 'STUDENT' &&
+          !account.disabled_at &&
+          !account.recovery_registration_required
+        ) {
           const at = await now(tx);
           const row = await tx.mfaChallenge.create({
             data: {
@@ -509,6 +518,7 @@ export class IdentityService {
         return Promise.reject(error);
       }
       const credentialId = Buffer.from(response.id, 'base64url');
+      if (account.kind === 'STUDENT') return fail(domainError('WEBAUTHN_VERIFICATION_FAILED', 400));
       const key = await tx.webAuthnCredential.findUnique({
         where: { credential_id: credentialId },
       });

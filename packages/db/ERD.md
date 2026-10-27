@@ -899,6 +899,7 @@ erDiagram
     String account_id
     AccountKind account_kind
     StudentActivationBasis activation_basis
+    Boolean must_change_password
     String activation_subscription_id
     String activation_payment_confirmation_id
     String activation_director_admission_id

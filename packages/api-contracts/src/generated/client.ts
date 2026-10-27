@@ -29,6 +29,16 @@ export interface ApiError {
 
 export interface ApproveDistributionRequest { [key: string]: unknown }
 
+export interface ChangeStudentPasswordDto {
+  /** @maxLength 256 */
+  currentPassword: string;
+  /**
+     * @minLength 12
+     * @maxLength 256
+     */
+  newPassword: string;
+}
+
 export interface CloseFinancialPeriodRequest { [key: string]: unknown }
 
 export type ComponentStatusResponseApi = typeof ComponentStatusResponseApi[keyof typeof ComponentStatusResponseApi];
@@ -587,6 +597,11 @@ export interface LogoutResponse {
   loggedOut: true;
 }
 
+export interface ManagerContactsDto {
+  whatsapp: string;
+  telegram: string;
+}
+
 export interface PasskeyRegisteredResponse {
   id: string;
   registered: true;
@@ -757,6 +772,17 @@ export interface PayrollItem {
   payouts: PayrollItemPayoutsItem[];
 }
 
+export interface ProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+  code: string;
+  requestId: string;
+  managerContacts?: ManagerContactsDto;
+}
+
 export interface RecoveryCompleteRequest {
   recoveryId: string;
   /**
@@ -881,6 +907,22 @@ export interface StudentCreateRequest {
      */
   phone?: string;
   birthDate?: string;
+}
+
+export interface StudentMeResponseDto {
+  id: string;
+  userId: string;
+  displayName: string;
+  email: string;
+  /** @nullable */
+  avatarUrl: string | null;
+  hasActiveAccess: boolean;
+  mustChangePassword: boolean;
+  createdAt: string;
+}
+
+export interface StudentPasswordChangedDto {
+  mustChangePassword: false;
 }
 
 export interface SubjectCreateRequest {
@@ -2556,6 +2598,70 @@ return schoolFetch<ScheduleChangeRequestResponse>(getRequestScheduleChangeUrl(),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(scheduleChangeRequestInput)
+  }
+);}
+
+
+
+export const getGetStudentMeUrl = () => {
+
+
+
+
+  return `/api/v1/student/me`
+}
+
+/**
+ * Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+ * @summary Current student profile and access stage
+ */
+export const getStudentMe = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentMeResponseDto>(getGetStudentMeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getChangeStudentPasswordUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/change-password`
+}
+
+/**
+ * Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.
+ * @summary Replace temporary student password
+ */
+export const changeStudentPassword = (changeStudentPasswordDto: ChangeStudentPasswordDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentPasswordChangedDto>(getChangeStudentPasswordUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(changeStudentPasswordDto)
   }
 );}
 

@@ -1,0 +1,70 @@
+{
+  "task": "STU-01",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_ACCEPTANCE_PENDING",
+  "implementation": [
+    "StudentModule and ordered namespace-scoped session/CSRF/context/access APP_GUARD providers",
+    "Cached Student context, GET /me, Result/ErrorMapper RFC 7807 responses",
+    "Current paid rights or explicit limited director admission; shared pupil/family identity",
+    "Minimal initial password change with atomic audit/outbox and session rotation",
+    "Student passkeys disallowed without changing staff MFA; generated API client updated"
+  ],
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261027090000_stu01_student_context/migration.sql",
+    "sha256": "a464af1cf5363f89dd1c3683ac72770cd8828cb6f25ebdc11df908e6d89b715a",
+    "workingDatabaseApplied": false,
+    "existingStudentImpact": "Existing students default to must_change_password=true; staff unaffected"
+  },
+  "verification": {
+    "apiBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 42,
+      "failed": 0,
+      "suites": 5,
+      "studentContractCases": 38,
+      "schemaAndHistoricalCaptureCases": 4,
+      "database": "mock Prisma for student HTTP/unit; immutable historical SQL capture for 3 schema cases"
+    },
+    "existingCoreAndIdentityUnit": {
+      "passed": 5,
+      "failed": 0
+    },
+    "readOnlyAccessQuery": {
+      "result": "PASS",
+      "postgres": "18.6",
+      "role": "app_runtime",
+      "target": "Existing working Neon online_school/main",
+      "case": "Absent student UUID -> subject_ids=[], has_active_access=false",
+      "writes": false,
+      "limitation": "Syntax/runtime grants only; positive paid-access behavior not verified on live finance"
+    },
+    "generatedContract": {
+      "operations": 52,
+      "includes": ["getStudentMe", "changeStudentPassword"]
+    },
+    "ciStudentJob": "Configured; execution evidence recorded in PR checks"
+  },
+  "historicalSchemaCapture": {
+    "note": "Task-15 catalog remains tied to its frozen Prisma contract; current ERD includes the unapplied STU-01 column",
+    "capturedColumns": 818,
+    "currentPrismaColumns": 819,
+    "capturedMigrationCount": 7,
+    "frozenContract": "tests/evidence/task15-prisma-contract.json"
+  },
+  "pendingAcceptance": [
+    "Apply and verify the new migration during an authorized working deployment",
+    "Real CRM confirmed-payment provisioning -> first student login -> password change -> cabinet E2E",
+    "Configure actual manager contacts; avatarUrl remains null pending profile/file feature",
+    "Phase 0 FND-GATE remains open; mock-backed checks do not replace real DB/concurrency acceptance"
+  ],
+  "boundaries": {
+    "extraDatabases": 0,
+    "neonBranchesCreated": 0,
+    "postgresContainersStarted": 0,
+    "workingFinancialWrites": 0,
+    "deploymentPerformed": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  }
+}
