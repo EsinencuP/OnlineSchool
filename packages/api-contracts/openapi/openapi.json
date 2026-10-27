@@ -5225,6 +5225,678 @@
         ]
       }
     },
+    "/api/v1/student/homework": {
+      "get": {
+        "operationId": "getStudentHomework",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NOT_SUBMITTED",
+                "SUBMITTED",
+                "REVIEWED",
+                "NEEDS_REVISION"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeworkResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Chronological homework with immutable submission versions",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/draft": {
+      "patch": {
+        "description": "CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.",
+        "operationId": "saveStudentHomeworkDraft",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveDraftDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedDraftDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Overwrite one draft; server TTL 30 days",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/files/{fileId}/confirm": {
+      "post": {
+        "description": "HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.",
+        "operationId": "confirmStudentHomeworkUpload",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmUploadResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify S3 upload and seal a server-only final object",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/submit": {
+      "post": {
+        "description": "Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.",
+        "operationId": "submitStudentHomework",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitHomeworkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Submit a version, preserve history and clear the draft",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/upload-url": {
+      "post": {
+        "description": "PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.",
+        "operationId": "requestStudentHomeworkUpload",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUploadUrlDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadUrlResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Create PENDING file and 15-minute private S3 PUT capability",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/lessons": {
       "get": {
         "description": "Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.",
@@ -7332,6 +8004,25 @@
         "properties": {},
         "additionalProperties": false
       },
+      "ConfirmUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED"
+            ]
+          }
+        },
+        "required": [
+          "fileId",
+          "status"
+        ]
+      },
       "CreateSessionResponse": {
         "oneOf": [
           {
@@ -7788,6 +8479,31 @@
         ],
         "additionalProperties": false
       },
+      "HomeworkAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "maximum": 52428800
+          },
+          "mimeType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileId",
+          "fileName",
+          "fileSizeBytes",
+          "mimeType"
+        ]
+      },
       "HomeworkCountsDto": {
         "type": "object",
         "properties": {
@@ -7809,6 +8525,165 @@
           "submitted",
           "needsRevision",
           "total"
+        ]
+      },
+      "HomeworkItemDto": {
+        "type": "object",
+        "properties": {
+          "homeworkId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_SUBMITTED",
+              "SUBMITTED",
+              "REVIEWED",
+              "NEEDS_REVISION"
+            ]
+          },
+          "isLate": {
+            "type": "boolean"
+          },
+          "draftContent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "latestVersion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HomeworkVersionDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkVersionDto"
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkAttachmentDto"
+            }
+          }
+        },
+        "required": [
+          "homeworkId",
+          "assignedAt",
+          "dueAt",
+          "subjectName",
+          "teacherName",
+          "title",
+          "description",
+          "status",
+          "isLate",
+          "draftContent",
+          "latestVersion",
+          "versions",
+          "attachments"
+        ]
+      },
+      "HomeworkResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "HomeworkVersionDto": {
+        "type": "object",
+        "properties": {
+          "versionNumber": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "teacherComment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "teacherStatus": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "REVIEWED",
+              "NEEDS_REVISION",
+              null
+            ]
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkAttachmentDto"
+            }
+          }
+        },
+        "required": [
+          "versionNumber",
+          "content",
+          "submittedAt",
+          "teacherComment",
+          "teacherStatus",
+          "attachments"
         ]
       },
       "HouseholdCreatedResponse": {
@@ -9297,6 +10172,29 @@
         ],
         "additionalProperties": true
       },
+      "RequestUploadUrlDto": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 127
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 52428800
+          }
+        },
+        "required": [
+          "fileName",
+          "mimeType",
+          "fileSizeBytes"
+        ]
+      },
       "RescheduleRequestDto": {
         "type": "object",
         "properties": {
@@ -9333,6 +10231,42 @@
         "required": [
           "crmTaskId",
           "status"
+        ]
+      },
+      "SavedDraftDto": {
+        "type": "object",
+        "properties": {
+          "homeworkId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SAVED"
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "homeworkId",
+          "status",
+          "expiresAt"
+        ]
+      },
+      "SaveDraftDto": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 10000
+          }
+        },
+        "required": [
+          "content"
         ]
       },
       "ScheduleChangeRequestInput": {
@@ -9661,6 +10595,54 @@
           "name"
         ],
         "additionalProperties": true
+      },
+      "SubmitHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10000
+          },
+          "fileIds": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "SubmitResponseDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUBMITTED"
+            ]
+          },
+          "isLate": {
+            "type": "boolean"
+          },
+          "versionNumber": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "submissionId",
+          "status",
+          "isLate",
+          "versionNumber"
+        ]
       },
       "SubscriptionCreateRequest": {
         "type": "object",
@@ -10055,6 +11037,22 @@
           "director_id"
         ],
         "additionalProperties": true
+      },
+      "UploadUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "uploadUrl": {
+            "type": "string"
+          },
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "uploadUrl",
+          "fileId"
+        ]
       },
       "WebAuthnFinishRequest": {
         "type": "object",

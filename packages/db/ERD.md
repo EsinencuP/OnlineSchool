@@ -245,6 +245,12 @@ erDiagram
     DateTime updated_at
   }
   staff_accounts o|--o{ financial_periods : "fk_t03_financial_period_closed_by"
+  homework_assignment_attachments {
+    String assignment_id
+    String file_id
+  }
+  homework_assignments ||--o{ homework_assignment_attachments : "assignment"
+  s3_objects ||--o{ homework_assignment_attachments : "file"
   homework_assignments {
     String id PK
     String subject_id
@@ -276,6 +282,19 @@ erDiagram
   homework_assignments ||--o{ homework_deliveries : "fk_t04_homework_delivery_assignment"
   student_subject_enrollments ||--o{ homework_deliveries : "fk_t04_homework_delivery_enrollment"
   teacher_accounts ||--o{ homework_deliveries : "fk_t04_homework_delivery_issued_by"
+  homework_drafts {
+    String delivery_id PK
+    String content
+    DateTime expires_at
+    DateTime updated_at
+  }
+  homework_deliveries ||--o| homework_drafts : "delivery"
+  homework_submission_attachments {
+    String submission_id
+    String file_id
+  }
+  homework_submissions ||--o{ homework_submission_attachments : "submission"
+  s3_objects ||--o{ homework_submission_attachments : "file"
   homework_submissions {
     String id PK
     String delivery_id
@@ -291,6 +310,15 @@ erDiagram
   homework_deliveries ||--o{ homework_submissions : "fk_t04_homework_submission_delivery"
   students ||--o{ homework_submissions : "fk_t04_homework_submission_student"
   homework_submissions o|--o| homework_submissions : "fk_t04_homework_submission_supersedes_submission"
+  homework_uploads {
+    String file_id PK
+    String delivery_id
+    String staging_key
+    DateTime expires_at
+    DateTime confirmed_at
+  }
+  s3_objects ||--o| homework_uploads : "file"
+  homework_deliveries ||--o{ homework_uploads : "delivery"
   household_memberships {
     String id PK
     String household_id
@@ -779,6 +807,7 @@ erDiagram
     DateTime stopped_at
   }
   s3_objects {
+    String file_name
     String id PK
     String bucket
     String key

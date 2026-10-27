@@ -809,6 +809,103 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/homework": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Chronological homework with immutable submission versions */
+        get: operations["getStudentHomework"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Overwrite one draft; server TTL 30 days
+         * @description CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.
+         */
+        patch: operations["saveStudentHomeworkDraft"];
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/files/{fileId}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verify S3 upload and seal a server-only final object
+         * @description HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+         */
+        post: operations["confirmStudentHomeworkUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit a version, preserve history and clear the draft
+         * @description Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.
+         */
+        post: operations["submitStudentHomework"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/upload-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create PENDING file and 15-minute private S3 PUT capability
+         * @description PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+         */
+        post: operations["requestStudentHomeworkUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/lessons": {
         parameters: {
             query?: never;
@@ -1180,6 +1277,12 @@ export interface components {
             temporaryAccessPermissionId?: string;
         };
         ConfirmPaymentRequest: Record<string, never>;
+        ConfirmUploadResponseDto: {
+            /** Format: uuid */
+            fileId: string;
+            /** @enum {string} */
+            status: "VERIFIED";
+        };
         CreateSessionResponse: components["schemas"]["SessionResponse"] | components["schemas"]["WebAuthnStartResponse"];
         CsrfResponse: {
             csrfToken: string;
@@ -1322,11 +1425,53 @@ export interface components {
             /** @enum {string} */
             service: "api";
         };
+        HomeworkAttachmentDto: {
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            fileSizeBytes: number;
+            mimeType: string;
+        };
         HomeworkCountsDto: {
             notSubmitted: number;
             submitted: number;
             needsRevision: number;
             total: number;
+        };
+        HomeworkItemDto: {
+            /** Format: uuid */
+            homeworkId: string;
+            /** Format: date-time */
+            assignedAt: string;
+            /** Format: date-time */
+            dueAt: string | null;
+            subjectName: string;
+            teacherName: string;
+            title: string;
+            description: string;
+            /** @enum {string} */
+            status: "NOT_SUBMITTED" | "SUBMITTED" | "REVIEWED" | "NEEDS_REVISION";
+            isLate: boolean;
+            draftContent: string | null;
+            latestVersion: components["schemas"]["HomeworkVersionDto"] | null;
+            versions: components["schemas"]["HomeworkVersionDto"][];
+            attachments: components["schemas"]["HomeworkAttachmentDto"][];
+        };
+        HomeworkResponseDto: {
+            items: components["schemas"]["HomeworkItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        HomeworkVersionDto: {
+            versionNumber: number;
+            content: string;
+            /** Format: date-time */
+            submittedAt: string;
+            teacherComment: string | null;
+            /** @enum {string|null} */
+            teacherStatus: "REVIEWED" | "NEEDS_REVISION" | null;
+            attachments: components["schemas"]["HomeworkAttachmentDto"][];
         };
         HouseholdCreatedResponse: {
             /** Format: uuid */
@@ -1774,6 +1919,11 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        RequestUploadUrlDto: {
+            fileName: string;
+            mimeType: string;
+            fileSizeBytes: number;
+        };
         RescheduleRequestDto: {
             reason: string;
             /** Format: date */
@@ -1784,6 +1934,17 @@ export interface components {
             crmTaskId: string;
             /** @enum {string} */
             status: "CREATED";
+        };
+        SavedDraftDto: {
+            /** Format: uuid */
+            homeworkId: string;
+            /** @enum {string} */
+            status: "SAVED";
+            /** Format: date-time */
+            expiresAt: string;
+        };
+        SaveDraftDto: {
+            content: string;
         };
         ScheduleChangeRequestInput: {
             /** Format: uuid */
@@ -1881,6 +2042,18 @@ export interface components {
             name: string;
         } & {
             [key: string]: unknown;
+        };
+        SubmitHomeworkDto: {
+            content: string;
+            fileIds?: string[];
+        };
+        SubmitResponseDto: {
+            /** Format: uuid */
+            submissionId: string;
+            /** @enum {string} */
+            status: "SUBMITTED";
+            isLate: boolean;
+            versionNumber: number;
         };
         SubscriptionCreateRequest: {
             /** Format: uuid */
@@ -2015,6 +2188,11 @@ export interface components {
             director_id: string;
         } & {
             [key: string]: unknown;
+        };
+        UploadUrlResponseDto: {
+            uploadUrl: string;
+            /** Format: uuid */
+            fileId: string;
         };
         WebAuthnFinishRequest: {
             /** Format: uuid */
@@ -5310,6 +5488,418 @@ export interface operations {
                 };
             };
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentHomework: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                status?: "NOT_SUBMITTED" | "SUBMITTED" | "REVIEWED" | "NEEDS_REVISION";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    saveStudentHomeworkDraft: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveDraftDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedDraftDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    confirmStudentHomeworkUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConfirmUploadResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    submitStudentHomework: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmitHomeworkDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubmitResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentHomeworkUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RequestUploadUrlDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadUrlResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

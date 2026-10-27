@@ -1,0 +1,134 @@
+{
+  "task": "STU-05",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "endpoints": [
+    "GET /api/v1/student/homework",
+    "PATCH /api/v1/student/homework/:hwId/draft",
+    "POST /api/v1/student/homework/:hwId/upload-url",
+    "POST /api/v1/student/homework/:hwId/files/:fileId/confirm",
+    "POST /api/v1/student/homework/:hwId/submit"
+  ],
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027130000_stu05_homework/migration.sql",
+      "sha256": "1a059fea68645f21f51c89a27a358f239e74df3d220462524ae455bd92b50a66",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 78,
+    "columns": 843,
+    "foreignKeys": 173
+  },
+  "implementation": [
+    "Single chronological status-filtered student-owned list; immutable answer versions/comments, no numeric grades",
+    "Soft deadlines, exact Decimal-independent educational content",
+    "One transactional draft per delivery, 30-day server TTL, worker plaintext expiry",
+    "S3 PENDING intent committed before signing; no capability in durable idempotency/audit/outbox",
+    "900-second signed PUT binds size/type, HEAD verification and conditional server-side COPY seal a final key",
+    "At most 20 owned confirmed files per submission, file links belong to versions",
+    "SERIALIZABLE critical commands, delivery locks, append-only version chain and DB ownership guards",
+    "Same-key replay, CSRF/session/role/active access and transactional ownership revalidation",
+    "Existing textual legacy grade column retained, new grade values rejected; no grading data returned"
+  ],
+  "verification": {
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "clientBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 53,
+      "unitCases": 36,
+      "httpCases": 17,
+      "prismaStorage": "mock",
+      "parallelCase": "Simulated serialized storage only; not an actual PostgreSQL lock/index race"
+    },
+    "postgres": {
+      "version": "18.6",
+      "role": "app_runtime",
+      "cases": 5,
+      "mode": "SELECT-only CTE fictional rows on the existing working database; no persistent fixtures",
+      "evidence": "tests/evidence/stu05-readonly-projections.json"
+    },
+    "storage": {
+      "checkedAt": "2026-10-27T16:50:58.916Z",
+      "bucket": "online-school-files",
+      "branch": "br-sweet-feather-b9m2vjd9",
+      "origin": "https://onlineschool-xi.vercel.app",
+      "steps": {
+        "corsConfigured": true,
+        "expiresSeconds": 900,
+        "preflightStatus": 200,
+        "allowOrigin": "https://onlineschool-xi.vercel.app",
+        "putStatus": 200,
+        "actualBytes": 8,
+        "confirmed": true,
+        "stagingReusedStatus": 200,
+        "finalUnchanged": true,
+        "unsignedFinalStatus": 403,
+        "wrongTypeStatus": 403,
+        "wrongSizeStatus": 403
+      },
+      "passed": true,
+      "cleanup": [
+        true,
+        true
+      ],
+      "credentialsStoredInEvidence": false
+    },
+    "openapi": {
+      "operations": 62,
+      "client": [
+        "getStudentHomework",
+        "saveStudentHomeworkDraft",
+        "requestStudentHomeworkUpload",
+        "confirmStudentHomeworkUpload",
+        "submitStudentHomework"
+      ]
+    },
+    "ci": "student-module includes pnpm test:stu05; final CI evidence in PR checks"
+  },
+  "workingConfiguration": {
+    "project": "onlineschool",
+    "origin": "https://onlineschool-xi.vercel.app",
+    "bucket": "online-school-files",
+    "bucketAccess": "private",
+    "neonBranch": "existing main",
+    "newServerEnvironmentKeys": [
+      "S3_ENDPOINT",
+      "S3_REGION",
+      "S3_BUCKET",
+      "S3_ACCESS_KEY",
+      "S3_SECRET_KEY"
+    ],
+    "credentialsType": "sensitive",
+    "deploymentTriggered": false
+  },
+  "pending": [
+    "Apply and retest the prepared migration only with the authorized working deployment after FND-GATE",
+    "Real PostgreSQL write concurrency, trigger enforcement and recovery acceptance",
+    "End-to-end working-session submission/upload acceptance after migration",
+    "Client debounce and student homework UI belong to a future frontend increment",
+    "Unconfirmed staging-object retention/garbage collection remains a separate feature",
+    "Full foundation gate and manual QA remain open"
+  ],
+  "boundaries": {
+    "additionalDatabases": 0,
+    "neonBranchesCreated": 0,
+    "postgresContainersStarted": 0,
+    "workingFinancialWrites": 0,
+    "workingCrmTasksCreated": 0,
+    "workingHomeworkWrites": 0,
+    "workingDdlApplied": false,
+    "deploymentPerformed": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduction": {
+    "readme": "apps/api/src/student/homework/README.md",
+    "readonlyTest": "tests/integration/student-homework-readonly.test.mjs",
+    "fixture": "tests/support/homework-readonly-fixture.mjs",
+    "readonlyReceipt": "tests/evidence/stu05-readonly-projections.json"
+  }
+}

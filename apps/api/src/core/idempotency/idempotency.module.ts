@@ -276,7 +276,7 @@ export class CriticalCommandInterceptor implements NestInterceptor {
       return fail(result.error);
     }
     res.status(command.successStatus ?? 200);
-    return result.value;
+    return req.afterCriticalCommit ? req.afterCriticalCommit(result.value) : result.value;
   }
 }
 @Module({

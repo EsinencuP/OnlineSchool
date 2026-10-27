@@ -163,6 +163,18 @@ export interface ConfirmLessonOutcomeRequest {
 
 export interface ConfirmPaymentRequest { [key: string]: unknown }
 
+export type ConfirmUploadResponseDtoStatus = typeof ConfirmUploadResponseDtoStatus[keyof typeof ConfirmUploadResponseDtoStatus];
+
+
+export const ConfirmUploadResponseDtoStatus = {
+  VERIFIED: 'VERIFIED',
+} as const;
+
+export interface ConfirmUploadResponseDto {
+  fileId: string;
+  status: ConfirmUploadResponseDtoStatus;
+}
+
 export type SessionResponseAccountKind = typeof SessionResponseAccountKind[keyof typeof SessionResponseAccountKind];
 
 
@@ -437,6 +449,71 @@ export const HealthResponseService = {
 export interface HealthResponse {
   status: HealthResponseStatus;
   service: HealthResponseService;
+}
+
+export interface HomeworkAttachmentDto {
+  fileId: string;
+  fileName: string;
+  /** @maximum 52428800 */
+  fileSizeBytes: number;
+  mimeType: string;
+}
+
+export type HomeworkItemDtoStatus = typeof HomeworkItemDtoStatus[keyof typeof HomeworkItemDtoStatus];
+
+
+export const HomeworkItemDtoStatus = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  SUBMITTED: 'SUBMITTED',
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+/**
+ * @nullable
+ */
+export type HomeworkVersionDtoTeacherStatus = typeof HomeworkVersionDtoTeacherStatus[keyof typeof HomeworkVersionDtoTeacherStatus] | null;
+
+
+export const HomeworkVersionDtoTeacherStatus = {
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export interface HomeworkVersionDto {
+  versionNumber: number;
+  content: string;
+  submittedAt: string;
+  /** @nullable */
+  teacherComment: string | null;
+  /** @nullable */
+  teacherStatus: HomeworkVersionDtoTeacherStatus;
+  attachments: HomeworkAttachmentDto[];
+}
+
+export interface HomeworkItemDto {
+  homeworkId: string;
+  assignedAt: string;
+  /** @nullable */
+  dueAt: string | null;
+  subjectName: string;
+  teacherName: string;
+  title: string;
+  description: string;
+  status: HomeworkItemDtoStatus;
+  isLate: boolean;
+  /** @nullable */
+  draftContent: string | null;
+  latestVersion: HomeworkVersionDto | null;
+  versions: HomeworkVersionDto[];
+  attachments: HomeworkAttachmentDto[];
+}
+
+export interface HomeworkResponseDto {
+  items: HomeworkItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export interface HouseholdCreatedResponse {
@@ -994,6 +1071,18 @@ export interface RecurringSlotResponse {
   [key: string]: unknown;
  }
 
+export interface RequestUploadUrlDto {
+  /** @maxLength 255 */
+  fileName: string;
+  /** @maxLength 127 */
+  mimeType: string;
+  /**
+     * @minimum 1
+     * @maximum 52428800
+     */
+  fileSizeBytes: number;
+}
+
 export interface RescheduleRequestDto {
   /**
      * @minLength 1
@@ -1014,6 +1103,24 @@ export const RescheduleRequestResponseDtoStatus = {
 export interface RescheduleRequestResponseDto {
   crmTaskId: string;
   status: RescheduleRequestResponseDtoStatus;
+}
+
+export type SavedDraftDtoStatus = typeof SavedDraftDtoStatus[keyof typeof SavedDraftDtoStatus];
+
+
+export const SavedDraftDtoStatus = {
+  SAVED: 'SAVED',
+} as const;
+
+export interface SavedDraftDto {
+  homeworkId: string;
+  status: SavedDraftDtoStatus;
+  expiresAt: string;
+}
+
+export interface SaveDraftDto {
+  /** @maxLength 10000 */
+  content: string;
 }
 
 export interface ScheduleChangeRequestInput {
@@ -1103,6 +1210,30 @@ export interface SubjectResponse {
   name: string;
   [key: string]: unknown;
  }
+
+export interface SubmitHomeworkDto {
+  /**
+     * @minLength 1
+     * @maxLength 10000
+     */
+  content: string;
+  /** @maxItems 20 */
+  fileIds?: string[];
+}
+
+export type SubmitResponseDtoStatus = typeof SubmitResponseDtoStatus[keyof typeof SubmitResponseDtoStatus];
+
+
+export const SubmitResponseDtoStatus = {
+  SUBMITTED: 'SUBMITTED',
+} as const;
+
+export interface SubmitResponseDto {
+  submissionId: string;
+  status: SubmitResponseDtoStatus;
+  isLate: boolean;
+  versionNumber: number;
+}
 
 export interface SubscriptionCreateRequest {
   enrollmentId: string;
@@ -1229,6 +1360,11 @@ export interface TemporaryAccessResponse {
   [key: string]: unknown;
  }
 
+export interface UploadUrlResponseDto {
+  uploadUrl: string;
+  fileId: string;
+}
+
 export type WebAuthnFinishRequestResponseType = typeof WebAuthnFinishRequestResponseType[keyof typeof WebAuthnFinishRequestResponseType];
 
 
@@ -1260,6 +1396,29 @@ export interface WebAuthnFinishRequest {
 export interface WebAuthnStartRequest {
   email?: string;
 }
+
+export type GetStudentHomeworkParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+status?: GetStudentHomeworkStatus;
+};
+
+export type GetStudentHomeworkStatus = typeof GetStudentHomeworkStatus[keyof typeof GetStudentHomeworkStatus];
+
+
+export const GetStudentHomeworkStatus = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  SUBMITTED: 'SUBMITTED',
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
 
 export type GetStudentLessonsParams = {
 period?: GetStudentLessonsPeriod;
@@ -2833,6 +2992,184 @@ export const getStudentDashboard = ( options?: Parameters<typeof schoolFetch>[1]
     method: 'GET'
 
 
+  }
+);}
+
+
+
+export const getGetStudentHomeworkUrl = (params?: GetStudentHomeworkParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/homework?${stringifiedParams}` : `/api/v1/student/homework`
+}
+
+/**
+ * @summary Chronological homework with immutable submission versions
+ */
+export const getStudentHomework = (params?: GetStudentHomeworkParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<HomeworkResponseDto>(getGetStudentHomeworkUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getSaveStudentHomeworkDraftUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/draft`
+}
+
+/**
+ * CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.
+ * @summary Overwrite one draft; server TTL 30 days
+ */
+export const saveStudentHomeworkDraft = (hwId: string,
+    saveDraftDto: SaveDraftDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SavedDraftDto>(getSaveStudentHomeworkDraftUrl(hwId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(saveDraftDto)
+  }
+);}
+
+
+
+export const getConfirmStudentHomeworkUploadUrl = (hwId: string,
+    fileId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/files/${fileId}/confirm`
+}
+
+/**
+ * HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+ * @summary Verify S3 upload and seal a server-only final object
+ */
+export const confirmStudentHomeworkUpload = (hwId: string,
+    fileId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ConfirmUploadResponseDto>(getConfirmStudentHomeworkUploadUrl(hwId,fileId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getSubmitStudentHomeworkUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/submit`
+}
+
+/**
+ * Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.
+ * @summary Submit a version, preserve history and clear the draft
+ */
+export const submitStudentHomework = (hwId: string,
+    submitHomeworkDto: SubmitHomeworkDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SubmitResponseDto>(getSubmitStudentHomeworkUrl(hwId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(submitHomeworkDto)
+  }
+);}
+
+
+
+export const getRequestStudentHomeworkUploadUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/upload-url`
+}
+
+/**
+ * PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+ * @summary Create PENDING file and 15-minute private S3 PUT capability
+ */
+export const requestStudentHomeworkUpload = (hwId: string,
+    requestUploadUrlDto: RequestUploadUrlDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<UploadUrlResponseDto>(getRequestStudentHomeworkUploadUrl(hwId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(requestUploadUrlDto)
   }
 );}
 
