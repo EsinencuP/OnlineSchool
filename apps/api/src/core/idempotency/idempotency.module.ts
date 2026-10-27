@@ -17,7 +17,13 @@ import { AccessService, RbacModule } from '../rbac/rbac.guard.js';
 import { ACCESS } from '../rbac/decorators.js';
 import { TransactionModule, TransactionService } from '../transaction/transaction.service.js';
 
-export type CommandMetadata = { type: string; resourceType: string; topic: string };
+export type CommandMetadata = {
+  type: string;
+  resourceType: string;
+  topic: string;
+  successStatus?: 200 | 201;
+  resultIdField?: string;
+};
 const COMMAND = 'core.criticalCommand';
 export const CriticalCommand = (metadata: CommandMetadata) => SetMetadata(COMMAND, metadata);
 export const CurrentTransaction = createParamDecorator(
@@ -160,13 +166,14 @@ export class IdempotencyService {
       const result = asJson({ body: await handler(tx) });
       const response = result as { body?: unknown };
       const body = response.body;
+      const resultIdField = input.command.resultIdField ?? 'id';
       const resourceId =
         body &&
         typeof body === 'object' &&
-        'id' in body &&
-        typeof body.id === 'string' &&
-        UUID.test(body.id)
-          ? body.id
+        resultIdField in body &&
+        typeof (body as Record<string, unknown>)[resultIdField] === 'string' &&
+        UUID.test((body as Record<string, string>)[resultIdField]!)
+          ? (body as Record<string, string>)[resultIdField]!
           : actorId;
       const auditId = randomUUID();
       await this.audit.record(
@@ -268,7 +275,7 @@ export class CriticalCommandInterceptor implements NestInterceptor {
         );
       return fail(result.error);
     }
-    res.status(200);
+    res.status(command.successStatus ?? 200);
     return result.value;
   }
 }

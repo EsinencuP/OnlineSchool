@@ -21,6 +21,7 @@
     "test:fnd:unit": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit --runInBand",
     "test:stu01": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-context.test.mjs tests/unit/student-http.test.mjs tests/unit/student-transport.test.mjs --runInBand",
     "test:stu02": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-dashboard.test.mjs tests/unit/student-dashboard-http.test.mjs --runInBand",
+    "test:stu03": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-lessons.test.mjs tests/unit/student-lessons-http.test.mjs --runInBand",
     "test:fnd:ci": "node tests/support/run-foundation.mjs",
     "test:fnd:safe": "node tests/support/run-foundation.mjs --safe-only",
     "test:fnd:e2e": "playwright test --config playwright.config.mjs",

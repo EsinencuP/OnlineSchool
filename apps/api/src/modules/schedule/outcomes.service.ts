@@ -49,7 +49,7 @@ export class OutcomesService {
     return updated;
   }
   async report(ctx: CriticalContext, id: string, body: unknown) {
-    const i = object(body, ['result', 'actualStartedAt', 'durationMin', 'note']);
+    const i = object(body, ['result', 'actualStartedAt', 'durationMin', 'note', 'studentNoShow']);
     id = uuid(id);
     await ctx.tx.$queryRaw`SELECT id FROM lesson_occurrences WHERE id=${id}::uuid FOR UPDATE`;
     const lesson = await this.access.lesson(ctx, id, true),
@@ -64,6 +64,11 @@ export class OutcomesService {
     if (!['CONDUCTED', 'NOT_CONDUCTED', 'DISPUTED'].includes(i.result as string))
       return fail(domainError('INVALID_OUTCOME_RESULT', 422));
     const conducted = i.result === 'CONDUCTED';
+    if (
+      (i.studentNoShow !== undefined && typeof i.studentNoShow !== 'boolean') ||
+      (i.studentNoShow === true && i.result !== 'NOT_CONDUCTED')
+    )
+      return fail(domainError('INVALID_NO_SHOW_RESULT', 422));
     const start = conducted ? date(i.actualStartedAt) : null,
       duration = conducted ? count(i.durationMin, 1, 480) : null;
     if (!conducted && (i.actualStartedAt !== undefined || i.durationMin !== undefined))
@@ -83,6 +88,7 @@ export class OutcomesService {
         version: (prior?.version ?? 0) + 1,
         lesson_version: lesson.version,
         result: i.result as 'CONDUCTED' | 'NOT_CONDUCTED' | 'DISPUTED',
+        student_no_show: i.studentNoShow === true,
         actual_started_at: start,
         duration_min: duration,
         note: string(i.note, 5, 2000),

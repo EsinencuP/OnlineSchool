@@ -537,6 +537,31 @@ export interface LedgerPublishRequest {
   lines?: LedgerLineInput[];
 }
 
+export type LessonCardDtoStatus = typeof LessonCardDtoStatus[keyof typeof LessonCardDtoStatus];
+
+
+export const LessonCardDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  NO_SHOW: 'NO_SHOW',
+  STAR_PENDING: 'STAR_PENDING',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface LessonCardDto {
+  lessonId: string;
+  scheduledAt: string;
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  status: LessonCardDtoStatus;
+  canJoin: boolean;
+  /** @nullable */
+  meetLink: string | null;
+  canRequestReschedule: boolean;
+}
+
 export type LessonCreateRequestStatus = typeof LessonCreateRequestStatus[keyof typeof LessonCreateRequestStatus];
 
 
@@ -563,6 +588,8 @@ export const LessonOutcomeReportRequestResult = {
 } as const;
 
 export interface LessonOutcomeReportRequest {
+  /** Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation */
+  studentNoShow?: boolean;
   result: LessonOutcomeReportRequestResult;
   actualStartedAt?: string;
   /**
@@ -587,6 +614,7 @@ export const LessonOutcomeReportResponseResult = {
 } as const;
 
 export interface LessonOutcomeReportResponse {
+  student_no_show: boolean;
   id: string;
   lesson_occurrence_id: string;
   reported_by_id: string;
@@ -603,6 +631,13 @@ export interface LessonRescheduleRequest {
   endsAt: string;
   teachingAssignmentId?: string;
   reason: string;
+}
+
+export interface LessonsResponseDto {
+  items: LessonCardDto[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export type LoginRequestAlternative1Method = typeof LoginRequestAlternative1Method[keyof typeof LoginRequestAlternative1Method];
@@ -892,6 +927,28 @@ export interface RecurringSlotResponse {
   [key: string]: unknown;
  }
 
+export interface RescheduleRequestDto {
+  /**
+     * @minLength 1
+     * @maxLength 500
+     */
+  reason: string;
+  /** @pattern ^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}$ */
+  preferredDate: string;
+}
+
+export type RescheduleRequestResponseDtoStatus = typeof RescheduleRequestResponseDtoStatus[keyof typeof RescheduleRequestResponseDtoStatus];
+
+
+export const RescheduleRequestResponseDtoStatus = {
+  CREATED: 'CREATED',
+} as const;
+
+export interface RescheduleRequestResponseDto {
+  crmTaskId: string;
+  status: RescheduleRequestResponseDtoStatus;
+}
+
 export interface ScheduleChangeRequestInput {
   lessonId?: string;
   slotId?: string;
@@ -1136,6 +1193,33 @@ export interface WebAuthnFinishRequest {
 export interface WebAuthnStartRequest {
   email?: string;
 }
+
+export type GetStudentLessonsParams = {
+period?: GetStudentLessonsPeriod;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+/**
+ * @pattern ^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$
+ */
+month?: string;
+};
+
+export type GetStudentLessonsPeriod = typeof GetStudentLessonsPeriod[keyof typeof GetStudentLessonsPeriod];
+
+
+export const GetStudentLessonsPeriod = {
+  today: 'today',
+  week: 'week',
+  month: 'month',
+  archive: 'archive',
+} as const;
 
 export const getGetApiHealthUrl = () => {
 
@@ -2670,6 +2754,78 @@ export const getStudentDashboard = ( options?: Parameters<typeof schoolFetch>[1]
     method: 'GET'
 
 
+  }
+);}
+
+
+
+export const getGetStudentLessonsUrl = (params?: GetStudentLessonsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/lessons?${stringifiedParams}` : `/api/v1/student/lessons`
+}
+
+/**
+ * Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+ * @summary Student lesson list or monthly calendar
+ */
+export const getStudentLessons = (params?: GetStudentLessonsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonsResponseDto>(getGetStudentLessonsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getRequestStudentLessonRescheduleUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/student/lessons/${lessonId}/reschedule-request`
+}
+
+/**
+ * Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.
+ * @summary Ask the assigned manager to reschedule a particular lesson
+ */
+export const requestStudentLessonReschedule = (lessonId: string,
+    rescheduleRequestDto: RescheduleRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RescheduleRequestResponseDto>(getRequestStudentLessonRescheduleUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(rescheduleRequestDto)
   }
 );}
 

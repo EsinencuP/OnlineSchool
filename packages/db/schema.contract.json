@@ -997,6 +997,26 @@
     "table": "crm_tasks",
     "fields": [
       {
+        "name": "lesson_id",
+        "column": "lesson_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "payload",
+        "column": "payload",
+        "type": "Json",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -1148,6 +1168,17 @@
       }
     ],
     "relations": [
+      {
+        "field": "lesson",
+        "type": "LessonOccurrence",
+        "from": [
+          "lesson_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_crm_task_lesson"
+      },
       {
         "field": "lead",
         "type": "Lead",
@@ -5396,6 +5427,15 @@
     "table": "lesson_outcome_reports",
     "fields": [
       {
+        "name": "student_no_show",
+        "column": "student_no_show",
+        "type": "Boolean",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -9492,6 +9532,15 @@
     "name": "StudentAccount",
     "table": "student_accounts",
     "fields": [
+      {
+        "name": "timezone",
+        "column": "timezone",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
       {
         "name": "id",
         "column": "id",

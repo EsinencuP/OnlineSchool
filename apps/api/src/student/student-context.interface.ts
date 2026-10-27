@@ -2,6 +2,7 @@ import type { HttpRequest } from '../core/http.js';
 import type { StudentMeResponseDto } from './me/me.dto.js';
 
 export interface IStudentContext {
+  timeZone?: string;
   userId: string;
   /** Stable registry Student.id; StudentAccount is the login/activation link, not another person. */
   studentProfileId: string;
