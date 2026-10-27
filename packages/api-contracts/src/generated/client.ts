@@ -257,6 +257,26 @@ export interface DashboardResponseDto {
   generatedAt: string;
 }
 
+export interface DisputeRequestDto {
+  /**
+     * @minLength 10
+     * @maxLength 1000
+     */
+  description: string;
+}
+
+export type DisputeResponseDtoStatus = typeof DisputeResponseDtoStatus[keyof typeof DisputeResponseDtoStatus];
+
+
+export const DisputeResponseDtoStatus = {
+  CREATED: 'CREATED',
+} as const;
+
+export interface DisputeResponseDto {
+  crmTaskId: string;
+  status: DisputeResponseDtoStatus;
+}
+
 export interface EmptyRequest { [key: string]: unknown }
 
 export interface EnrollmentCreateRequest {
@@ -519,6 +539,16 @@ export interface LedgerEntryResponseBalanceSnapshotValue {
 export type LedgerEntryResponseBalanceSnapshot = {[key: string]: LedgerEntryResponseBalanceSnapshotValue};
 
 export interface LedgerEntryResponse {
+  /**
+     * Subscription lessons remaining immediately before consumption; quantitative, not money
+     * @nullable
+     */
+  entitlement_balance_before: string | null;
+  /**
+     * Subscription lessons remaining immediately after consumption; quantitative, not money
+     * @nullable
+     */
+  entitlement_balance_after: string | null;
   id: string;
   document_id: string;
   financial_period_id: string;
@@ -576,6 +606,43 @@ export interface LessonCreateRequest {
   endsAt: string;
   status?: LessonCreateRequestStatus;
   basis: string;
+}
+
+export type LessonHistoryItemDtoAttendanceStatus = typeof LessonHistoryItemDtoAttendanceStatus[keyof typeof LessonHistoryItemDtoAttendanceStatus];
+
+
+export const LessonHistoryItemDtoAttendanceStatus = {
+  COMPLETED: 'COMPLETED',
+  NO_SHOW: 'NO_SHOW',
+} as const;
+
+export interface LessonHistoryItemDto {
+  lessonId: string;
+  scheduledAt: string;
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  attendanceStatus: LessonHistoryItemDtoAttendanceStatus;
+  /** Current uncancelled quantitative consumption backed by a published ledger entry */
+  lessonDeducted: boolean;
+  /**
+     * Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots
+     * @nullable
+     */
+  balanceBefore: string | null;
+  /**
+     * Subscription lessons after deduction, immutable Decimal string
+     * @nullable
+     */
+  balanceAfter: string | null;
+  canDispute: boolean;
+}
+
+export interface LessonHistoryResponseDto {
+  items: LessonHistoryItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export type LessonOutcomeReportRequestResult = typeof LessonOutcomeReportRequestResult[keyof typeof LessonOutcomeReportRequestResult];
@@ -1220,6 +1287,18 @@ export const GetStudentLessonsPeriod = {
   month: 'month',
   archive: 'archive',
 } as const;
+
+export type GetStudentLessonHistoryParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
 
 export const getGetApiHealthUrl = () => {
 
@@ -2791,6 +2870,46 @@ export const getStudentLessons = (params?: GetStudentLessonsParams, options?: Pa
 
 
 
+export const getDisputeStudentLessonDeductionUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/student/lessons/${lessonId}/dispute`
+}
+
+/**
+ * Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.
+ * @summary Dispute one published lesson deduction
+ */
+export const disputeStudentLessonDeduction = (lessonId: string,
+    disputeRequestDto: DisputeRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DisputeResponseDto>(getDisputeStudentLessonDeductionUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(disputeRequestDto)
+  }
+);}
+
+
+
 export const getRequestStudentLessonRescheduleUrl = (lessonId: string,) => {
 
 
@@ -2826,6 +2945,38 @@ return schoolFetch<RescheduleRequestResponseDto>(getRequestStudentLessonReschedu
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(rescheduleRequestDto)
+  }
+);}
+
+
+
+export const getGetStudentLessonHistoryUrl = (params?: GetStudentLessonHistoryParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/lessons/history?${stringifiedParams}` : `/api/v1/student/lessons/history`
+}
+
+/**
+ * Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+ * @summary Confirmed student attendance and quantitative deduction history
+ */
+export const getStudentLessonHistory = (params?: GetStudentLessonHistoryParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonHistoryResponseDto>(getGetStudentLessonHistoryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 

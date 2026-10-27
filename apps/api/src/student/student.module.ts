@@ -22,6 +22,10 @@ import { StudentLessonsService } from './lessons/lessons.service.js';
 import { StudentCrmTaskService } from './lessons/student-crm-task.service.js';
 import { StudentLessonScopeGuard } from './lessons/student-lesson-scope.guard.js';
 import { LessonsQueryPipe } from './lessons/lesson-period.js';
+import { StudentHistoryController } from './history/history.controller.js';
+import { StudentHistoryService } from './history/history.service.js';
+import { StudentDisputeService } from './history/dispute.service.js';
+import { HistoryQueryPipe } from './history/history.dto.js';
 
 // APP_GUARD is application-global in Nest, including when declared in a feature module.
 // These adapters enforce the student pipeline only inside its namespace and reuse core checks.
@@ -48,8 +52,12 @@ export class StudentCsrfGuard implements CanActivate {
     ChangeStudentPasswordController,
     DashboardController,
     StudentLessonsController,
+    StudentHistoryController,
   ],
   providers: [
+    StudentHistoryService,
+    StudentDisputeService,
+    HistoryQueryPipe,
     StudentLessonsService,
     StudentCrmTaskService,
     StudentLessonScopeGuard,

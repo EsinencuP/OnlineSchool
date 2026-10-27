@@ -161,6 +161,7 @@ export function createHandlers(): ReadonlyMap<string, Handler> {
 }
 
 const OBSERVED_TOPICS = [
+  'student.lesson.dispute-requested.v1',
   'student.password.change.v1',
   'student.lesson.reschedule-requested.v1',
   'student.created.v1',

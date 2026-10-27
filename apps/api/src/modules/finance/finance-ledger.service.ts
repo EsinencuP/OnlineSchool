@@ -134,6 +134,7 @@ export class FinanceLedger {
     lines: JournalLine[],
     periodId?: string,
     reversesId?: string,
+    entitlementSnapshot?: { before: Prisma.Decimal; after: Prisma.Decimal },
   ) {
     const staff = await this.access.staff(ctx);
     const now = await at(ctx.tx);
@@ -150,6 +151,12 @@ export class FinanceLedger {
           currency: lines[0]!.currency,
           reverses_entry_id: reversesId ?? null,
           source_operation_id: randomUUID(),
+          ...(entitlementSnapshot
+            ? {
+                entitlement_balance_before: entitlementSnapshot.before,
+                entitlement_balance_after: entitlementSnapshot.after,
+              }
+            : {}),
         },
       }));
     if (existing) {
@@ -196,9 +203,20 @@ export class FinanceLedger {
     });
     return published.value;
   }
-  async event(ctx: CriticalContext, source: Prisma.LedgerDocumentUncheckedCreateInput) {
+  async event(
+    ctx: CriticalContext,
+    source: Prisma.LedgerDocumentUncheckedCreateInput,
+    entitlementSnapshot?: { before: Prisma.Decimal; after: Prisma.Decimal },
+  ) {
     const doc = await ctx.tx.ledgerDocument.create({ data: source });
-    return this.post(ctx, doc, await this.expected(ctx.tx, doc));
+    return this.post(
+      ctx,
+      doc,
+      await this.expected(ctx.tx, doc),
+      undefined,
+      undefined,
+      entitlementSnapshot,
+    );
   }
   async publish(ctx: CriticalContext, body: unknown) {
     await this.access.staff(ctx, true);
