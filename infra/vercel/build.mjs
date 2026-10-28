@@ -55,6 +55,12 @@ run(
   true,
 );
 console.log('Working database migrations applied; deployment may be published');
+if (process.env.STUDENT_TEST_PROVISION_UNTIL) {
+  run(['exec', 'node', 'scripts/student-cabinet-provision.mjs'], {
+    ...buildEnv,
+    DIRECT_URL: direct,
+  });
+}
 if (process.env.STUDENT_CABINET_INSPECT_UNTIL) {
   run(['exec', 'node', 'scripts/student-cabinet-inspect.mjs'], { ...buildEnv, DIRECT_URL: direct });
 }
