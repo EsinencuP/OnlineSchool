@@ -17,7 +17,7 @@
   },
   "rewrites": [
     { "source": "/api/health", "destination": "/api/handler" },
-    { "source": "/api/:path*", "destination": "/api/handler" },
+    { "source": "/api/:__vercel_api_path*", "destination": "/api/handler" },
     { "source": "/health", "destination": "/api/handler" },
     { "source": "/student", "destination": "/student/index.html" },
     { "source": "/student/:path*", "destination": "/student/index.html" },

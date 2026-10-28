@@ -4,6 +4,7 @@ import type { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { setupSwagger } from './openapi/swagger.js';
+import { normalizeVercelRequest } from './vercel-request.js';
 
 let application: Promise<INestApplication> | undefined;
 async function initialize(): Promise<INestApplication> {
@@ -16,6 +17,7 @@ async function initialize(): Promise<INestApplication> {
 // One cached HTTP application per Function instance. Never imports/starts the polling worker.
 export async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
   try {
+    normalizeVercelRequest(req);
     application ??= initialize().catch((error) => {
       application = undefined;
       return Promise.reject(error);
