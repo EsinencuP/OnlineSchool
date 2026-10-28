@@ -7,6 +7,8 @@ import { DatabaseService } from '../database/database.module.js';
 import { domainError } from '../errors/domain-error.js';
 import type { DomainError } from '../errors/domain-error.js';
 import type { AccountContext, HttpResponse } from '../http.js';
+import type { HttpRequest } from '../http.js';
+import { isIP } from 'node:net';
 
 export const SESSION_COOKIE = '__Host-school_session';
 export const CSRF_COOKIE = '__Host-school_csrf';
@@ -16,6 +18,18 @@ export const tokenHash = (value: string): string =>
 export const randomToken = (): string => randomBytes(32).toString('base64url');
 export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 export const SESSION_IDLE_MS = 30 * 60 * 1000;
+export function sessionMetadata(req?: Pick<HttpRequest, 'headers' | 'socket'>) {
+  const agent = req?.headers?.['user-agent'];
+  const user_agent =
+    typeof agent === 'string'
+      ? Array.from(agent)
+          .filter((c) => c.charCodeAt(0) >= 32 && (c.charCodeAt(0) < 127 || c.charCodeAt(0) > 159))
+          .join('')
+          .slice(0, 512)
+      : null;
+  const ip = req?.socket?.remoteAddress;
+  return { user_agent, ip_address: ip && isIP(ip) ? ip : null };
+}
 type Connection = Prisma.TransactionClient | PrismaClient;
 export type IssuedSession = {
   token: string;
@@ -125,6 +139,7 @@ export class SessionStore {
     accountId: string,
     mfaVerifiedAt: Date | null = null,
     recoveryOnly = false,
+    req?: Pick<HttpRequest, 'headers' | 'socket'>,
   ): Promise<IssuedSession> {
     const token = randomToken();
     const csrfToken = randomToken();
@@ -135,6 +150,7 @@ export class SessionStore {
     const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);
     const session = await tx.session.create({
       data: {
+        ...sessionMetadata(req),
         account_id: accountId,
         token_hash: tokenHash(token),
         csrf_token_hash: tokenHash(csrfToken),

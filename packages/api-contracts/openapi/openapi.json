@@ -5157,6 +5157,3794 @@
         ]
       }
     },
+    "/api/v1/student/dashboard": {
+      "get": {
+        "description": "Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.",
+        "operationId": "getStudentDashboard",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DashboardResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Current student dashboard snapshot",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework": {
+      "get": {
+        "operationId": "getStudentHomework",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NOT_SUBMITTED",
+                "SUBMITTED",
+                "REVIEWED",
+                "NEEDS_REVISION"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeworkResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Chronological homework with immutable submission versions",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}": {
+      "get": {
+        "operationId": "getStudentHomeworkDetail",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HomeworkItemDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read one owned visible homework delivery and its versions",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/draft": {
+      "patch": {
+        "description": "CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.",
+        "operationId": "saveStudentHomeworkDraft",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveDraftDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedDraftDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Overwrite one draft; server TTL 30 days",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/files/{fileId}/confirm": {
+      "post": {
+        "description": "HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.",
+        "operationId": "confirmStudentHomeworkUpload",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmUploadResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify S3 upload and seal a server-only final object",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/submit": {
+      "post": {
+        "description": "Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.",
+        "operationId": "submitStudentHomework",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitHomeworkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmitResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Submit a version, preserve history and clear the draft",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/homework/{hwId}/upload-url": {
+      "post": {
+        "description": "PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.",
+        "operationId": "requestStudentHomeworkUpload",
+        "parameters": [
+          {
+            "name": "hwId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUploadUrlDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadUrlResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Create PENDING file and 15-minute private S3 PUT capability",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons": {
+      "get": {
+        "description": "Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.",
+        "operationId": "getStudentLessons",
+        "parameters": [
+          {
+            "name": "period",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "week",
+              "type": "string",
+              "enum": [
+                "today",
+                "week",
+                "month",
+                "archive"
+              ]
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "pattern": "^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$",
+              "example": "2025-09",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Student lesson list or monthly calendar",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/{lessonId}": {
+      "get": {
+        "operationId": "getStudentLesson",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonCardDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read one owned lesson independently of its month",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/{lessonId}/dispute": {
+      "post": {
+        "description": "Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.",
+        "operationId": "disputeStudentLessonDeduction",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisputeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisputeResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Dispute one published lesson deduction",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/{lessonId}/reschedule-request": {
+      "post": {
+        "description": "Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.",
+        "operationId": "requestStudentLessonReschedule",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RescheduleRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RescheduleRequestResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Ask the assigned manager to reschedule a particular lesson",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/history": {
+      "get": {
+        "description": "Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.",
+        "operationId": "getStudentLessonHistory",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonHistoryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirmed student attendance and quantitative deduction history",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/lessons/upcoming": {
+      "get": {
+        "operationId": "getStudentUpcomingLessons",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Next five owned scheduled lessons, including across month boundaries",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/materials": {
+      "get": {
+        "description": "Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».",
+        "operationId": "getStudentMaterials",
+        "parameters": [
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "description": "Educational subject ID, not the permission recipient account",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Only materials explicitly shared with this student by a teacher",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/materials/{fileId}/url": {
+      "get": {
+        "description": "Rechecks live session, student access, explicit permission and verified object under a row lock; appends FileAuditLog without the signed URL. Maximum TTL 900 seconds, capped by grant expiry. Revocation stops new URL issuance; an already issued S3 capability remains valid until its expiry. No CSRF/Idempotency-Key needed for this GET.",
+        "operationId": "getStudentMaterialUrl",
+        "parameters": [
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FileSignedUrlResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Authorize one private material and issue a temporary GET capability",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/me": {
+      "get": {
+        "description": "Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.",
+        "operationId": "getStudentMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Current student profile and access stage",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/notifications": {
+      "get": {
+        "description": "Newest first; default30, max100. Last500 active items,90-day TTL, one shared read status. Group by returned type in the client.",
+        "operationId": "getStudentNotifications",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 30,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read own recent internal notifications",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/notifications/{id}/read": {
+      "patch": {
+        "description": "Idempotent204, nonexistent/foreign/archived id404. CSRF and UUID Idempotency-Key required.",
+        "operationId": "markStudentNotificationRead",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notification marked read"
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Mark one own notification read",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/notifications/count": {
+      "get": {
+        "operationId": "getStudentUnreadNotificationCount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnreadCountDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Count own unread notifications without loading bodies",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/notifications/read-all": {
+      "post": {
+        "description": "Empty response204 including replay. CSRF and UUID Idempotency-Key required. Notifications arriving after this operation remain unread.",
+        "operationId": "markAllStudentNotificationsRead",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Current notifications marked read"
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Mark all currently visible notifications read",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/profile": {
+      "patch": {
+        "description": "Does not change registry full_name, email or phone. CSRF and UUID Idempotency-Key required. Avatar is private and available through an authenticated endpoint.",
+        "operationId": "updateStudentProfile",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentProfileDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Update own display name and owned verified avatar",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/profile/avatar": {
+      "get": {
+        "description": "Private no-store binary response, no signed capability URL. Deleted/quarantined/foreign files are not served.",
+        "operationId": "getStudentAvatar",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "content": {
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/webp": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            },
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read own selected private raster avatar",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/reports": {
+      "get": {
+        "description": "Newest creation date first; latest published version per checkpoint, only confirmed eight-lesson reports. Draft corrections never suppress a published version. Public content only.",
+        "operationId": "getStudentReports",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read latest published teacher educational reports",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/reports/{reportId}/read": {
+      "post": {
+        "description": "CSRF and UUID Idempotency-Key required. First successful mark is 204; every repeat (including cached command replay) is 200. No response body and no teacher report mutation.",
+        "operationId": "markStudentReportRead",
+        "parameters": [
+          {
+            "name": "reportId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Already read; no response body"
+          },
+          "204": {
+            "description": "First read recorded"
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Mark one published report version read",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/reports/export-pdf": {
+      "post": {
+        "description": "CSRF and UUID Idempotency-Key required. Optional subject and inclusive date selection; omitted body exports all history. Estimated 30s is not a completion guarantee. Poll every 2s for at most 60s, then retry later. No report creation or external family message.",
+        "operationId": "requestStudentEducationPdf",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportPdfRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportPdfResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Queue a private educational history PDF",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/reports/export-pdf/{jobId}": {
+      "get": {
+        "description": "Every poll rechecks student access. READY signatures expire exactly one hour after ready_at; polling never extends the expiry. After expiry returns FAILED/PDF_EXPORT_EXPIRED without a URL. Foreign/nonexistent jobs return the same 403.",
+        "operationId": "getStudentEducationPdfStatus",
+        "parameters": [
+          {
+            "name": "jobId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PdfJobStatusDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read own PDF job state and a fixed-expiry signed download",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/change-email/confirm": {
+      "post": {
+        "description": "OTP lifetime10min, max5 attempts, single use.Updates AuthAccount login only, records audit, revokes old sessions and rotates cookies. No change to CRM contacts or other pupil identities.",
+        "operationId": "confirmStudentEmailChange",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeEmailConfirmDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailChangedDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirm a six-digit OTP and replace the student login email",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/change-email/request": {
+      "post": {
+        "description": "Every request invalidates previous OTPs.200 only after mail provider accepts; no cached secret body/hash.5 requests per15min/account; configured sender and OTP HMAC secret required.",
+        "operationId": "requestStudentEmailChange",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeEmailRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailOtpRequestedDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify current password and send a new-email OTP",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/change-password": {
+      "patch": {
+        "description": "Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.",
+        "operationId": "changeStudentPassword",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeStudentPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentPasswordChangedDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Replace temporary student password",
+        "tags": [
+          "Student"
+        ]
+      },
+      "post": {
+        "deprecated": true,
+        "operationId": "changeStudentPasswordLegacy",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeStudentPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentPasswordChangedDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Compatible POST alias for student password change",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/sessions": {
+      "get": {
+        "operationId": "getStudentSessions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionInfoDto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "List own active sessions without cookie/CSRF secrets",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/security/sessions/{sessionId}": {
+      "delete": {
+        "description": "Current session409, foreign/unknown404, repeated revocation204. CSRF required.",
+        "operationId": "revokeStudentSession",
+        "parameters": [
+          {
+            "name": "sessionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Other own session revoked"
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Revoke another session belonging to the same student login",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/skills": {
+      "get": {
+        "description": "Returns an array for all owned subjects; optional subjectId filters to one. Four qualitative statuses, no ratings. Counts confirmed conducted lessons across enrollments; no reset on subscription or teacher change.",
+        "operationId": "getStudentSkillMaps",
+        "parameters": [
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectSkillMapDto"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read subject skill maps",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/skills/audit": {
+      "get": {
+        "description": "Newest first, public comments only. Foreign and nonexistent skills produce the same 403. No internal pedagogical basis is exposed.",
+        "operationId": "getStudentSkillAudit",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "skillId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillAuditResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read own skill changes",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/skills/snapshots": {
+      "get": {
+        "description": "Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.",
+        "operationId": "getStudentSkillSnapshots",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkillSnapshotResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read confirmed immutable skill snapshots",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subscription": {
+      "get": {
+        "description": "Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.",
+        "operationId": "getStudentSubscription",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionDetailsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read-only CRM subscription showcase",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subscription/ledger": {
+      "get": {
+        "description": "Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.",
+        "operationId": "getStudentSubscriptionLedger",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentSubscriptionLedgerResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Chronological paid lesson-right operations for the selected subscription",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subscription/payments": {
+      "get": {
+        "description": "Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.",
+        "operationId": "getStudentSubscriptionPayments",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "required": false,
+            "in": "query",
+            "description": "Owned subscription. Defaults to the most recent current plan, then latest expired plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentHistoryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirmed payment allocations for the selected subscription",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/students": {
       "post": {
         "description": "CRM-owned stable Student identity; no account/entitlements. A manager receives an explicit student assignment.",
@@ -6425,6 +10213,64 @@
         "properties": {},
         "additionalProperties": false
       },
+      "ChangeEmailConfirmDto": {
+        "type": "object",
+        "properties": {
+          "otp": {
+            "type": "string",
+            "writeOnly": true,
+            "minLength": 6,
+            "maxLength": 6,
+            "pattern": "^\\d{6}$"
+          },
+          "newEmail": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "otp",
+          "newEmail"
+        ]
+      },
+      "ChangeEmailRequestDto": {
+        "type": "object",
+        "properties": {
+          "newEmail": {
+            "type": "string",
+            "format": "email"
+          },
+          "currentPassword": {
+            "type": "string",
+            "writeOnly": true
+          }
+        },
+        "required": [
+          "newEmail",
+          "currentPassword"
+        ]
+      },
+      "ChangeStudentPasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "writeOnly": true,
+            "maxLength": 256
+          },
+          "newPassword": {
+            "type": "string",
+            "writeOnly": true,
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^(?=.*[A-Za-z])(?=.*\\d).+$"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      },
       "CloseFinancialPeriodRequest": {
         "type": "object",
         "properties": {},
@@ -6574,6 +10420,25 @@
         "properties": {},
         "additionalProperties": false
       },
+      "ConfirmUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED"
+            ]
+          }
+        },
+        "required": [
+          "fileId",
+          "status"
+        ]
+      },
       "CreateSessionResponse": {
         "oneOf": [
           {
@@ -6595,6 +10460,176 @@
           "csrfToken"
         ],
         "additionalProperties": false
+      },
+      "DashboardResponseDto": {
+        "type": "object",
+        "properties": {
+          "nextLesson": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NextLessonDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "homework": {
+            "$ref": "#/components/schemas/HomeworkCountsDto"
+          },
+          "subscription": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SubscriptionSummaryDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "skillProgress": {
+            "$ref": "#/components/schemas/SkillProgressDto"
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "nextLesson",
+          "homework",
+          "subscription",
+          "skillProgress",
+          "generatedAt"
+        ]
+      },
+      "DisputeRequestDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "description"
+        ]
+      },
+      "DisputeResponseDto": {
+        "type": "object",
+        "properties": {
+          "crmTaskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED"
+            ]
+          }
+        },
+        "required": [
+          "crmTaskId",
+          "status"
+        ]
+      },
+      "EducationalReportContentDto": {
+        "type": "object",
+        "properties": {
+          "achievements": {
+            "type": "string"
+          },
+          "growthAreas": {
+            "type": "string"
+          },
+          "recommendations": {
+            "type": "string"
+          },
+          "teacherSignature": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "achievements",
+          "growthAreas",
+          "recommendations",
+          "teacherSignature"
+        ]
+      },
+      "EducationalReportDto": {
+        "type": "object",
+        "properties": {
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "periodTo": {
+            "type": "string",
+            "format": "date"
+          },
+          "lessonCount": {
+            "type": "integer",
+            "enum": [
+              8
+            ]
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "content": {
+            "$ref": "#/components/schemas/EducationalReportContentDto"
+          },
+          "isNew": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "reportId",
+          "subjectName",
+          "createdAt",
+          "periodFrom",
+          "periodTo",
+          "lessonCount",
+          "teacherName",
+          "content",
+          "isNew"
+        ]
+      },
+      "EmailChangedDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "EmailOtpRequestedDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ]
       },
       "EmptyRequest": {
         "type": "object",
@@ -6847,6 +10882,48 @@
         ],
         "additionalProperties": true
       },
+      "ExportPdfRequestDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "periodFrom": {
+            "type": "string",
+            "format": "date"
+          },
+          "periodTo": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ExportPdfResponseDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED"
+            ]
+          },
+          "estimatedReadyAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Estimate only; poll every 2s for at most 60s, then retry later"
+          }
+        },
+        "required": [
+          "jobId",
+          "status",
+          "estimatedReadyAt"
+        ]
+      },
       "FileAccessResponse": {
         "type": "object",
         "properties": {
@@ -6868,6 +10945,27 @@
           "objectId",
           "accessible",
           "canDownload"
+        ]
+      },
+      "FileSignedUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Private HTTPS presigned GET capability. Maximum lifetime 15 minutes; shorter if the explicit permission expires first."
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fileName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "expiresAt",
+          "fileName"
         ]
       },
       "FinanceMoney": {
@@ -6955,6 +11053,213 @@
           "service"
         ],
         "additionalProperties": false
+      },
+      "HomeworkAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "maximum": 52428800
+          },
+          "mimeType": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "fileId",
+          "fileName",
+          "fileSizeBytes",
+          "mimeType"
+        ]
+      },
+      "HomeworkCountsDto": {
+        "type": "object",
+        "properties": {
+          "notSubmitted": {
+            "type": "integer"
+          },
+          "submitted": {
+            "type": "integer"
+          },
+          "needsRevision": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "notSubmitted",
+          "submitted",
+          "needsRevision",
+          "total"
+        ]
+      },
+      "HomeworkItemDto": {
+        "type": "object",
+        "properties": {
+          "homeworkId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assignedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_SUBMITTED",
+              "SUBMITTED",
+              "REVIEWED",
+              "NEEDS_REVISION"
+            ]
+          },
+          "isLate": {
+            "type": "boolean"
+          },
+          "draftContent": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "latestVersion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HomeworkVersionDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkVersionDto"
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkAttachmentDto"
+            }
+          }
+        },
+        "required": [
+          "homeworkId",
+          "assignedAt",
+          "dueAt",
+          "subjectName",
+          "teacherName",
+          "title",
+          "description",
+          "status",
+          "isLate",
+          "draftContent",
+          "latestVersion",
+          "versions",
+          "attachments"
+        ]
+      },
+      "HomeworkResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "HomeworkVersionDto": {
+        "type": "object",
+        "properties": {
+          "versionNumber": {
+            "type": "integer"
+          },
+          "content": {
+            "type": "string"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "teacherComment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "teacherStatus": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "REVIEWED",
+              "NEEDS_REVISION",
+              null
+            ]
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HomeworkAttachmentDto"
+            }
+          }
+        },
+        "required": [
+          "versionNumber",
+          "content",
+          "submittedAt",
+          "teacherComment",
+          "teacherStatus",
+          "attachments"
+        ]
       },
       "HouseholdCreatedResponse": {
         "type": "object",
@@ -7046,6 +11351,34 @@
         ],
         "additionalProperties": false
       },
+      "LearningGoalDto": {
+        "type": "object",
+        "properties": {
+          "goalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "targetDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "isAchieved": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "goalId",
+          "text",
+          "targetDate",
+          "isAchieved"
+        ]
+      },
       "LedgerAdjustmentResponse": {
         "type": "object",
         "properties": {
@@ -7095,6 +11428,20 @@
       "LedgerEntryResponse": {
         "type": "object",
         "properties": {
+          "entitlement_balance_before": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons remaining immediately before consumption; quantitative, not money"
+          },
+          "entitlement_balance_after": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons remaining immediately after consumption; quantitative, not money"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -7127,6 +11474,8 @@
           }
         },
         "required": [
+          "entitlement_balance_before",
+          "entitlement_balance_after",
           "id",
           "document_id",
           "financial_period_id",
@@ -7286,6 +11635,62 @@
         ],
         "additionalProperties": true
       },
+      "LessonCardDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "number"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "COMPLETED",
+              "CANCELLED",
+              "NO_SHOW",
+              "STAR_PENDING",
+              "DISPUTED"
+            ]
+          },
+          "canJoin": {
+            "type": "boolean"
+          },
+          "meetLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canRequestReschedule": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "status",
+          "canJoin",
+          "meetLink",
+          "canRequestReschedule"
+        ]
+      },
       "LessonCreateRequest": {
         "type": "object",
         "properties": {
@@ -7320,9 +11725,101 @@
         ],
         "additionalProperties": false
       },
+      "LessonHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "number"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "attendanceStatus": {
+            "type": "string",
+            "enum": [
+              "COMPLETED",
+              "NO_SHOW"
+            ]
+          },
+          "lessonDeducted": {
+            "type": "boolean",
+            "description": "Current uncancelled quantitative consumption backed by a published ledger entry"
+          },
+          "balanceBefore": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots"
+          },
+          "balanceAfter": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Subscription lessons after deduction, immutable Decimal string"
+          },
+          "canDispute": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "attendanceStatus",
+          "lessonDeducted",
+          "balanceBefore",
+          "balanceAfter",
+          "canDispute"
+        ]
+      },
+      "LessonHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LessonHistoryItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "LessonOutcomeReportRequest": {
         "type": "object",
         "properties": {
+          "studentNoShow": {
+            "type": "boolean",
+            "description": "Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation"
+          },
           "result": {
             "type": "string",
             "enum": [
@@ -7355,6 +11852,9 @@
       "LessonOutcomeReportResponse": {
         "type": "object",
         "properties": {
+          "student_no_show": {
+            "type": "boolean"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -7390,6 +11890,7 @@
           }
         },
         "required": [
+          "student_no_show",
           "id",
           "lesson_occurrence_id",
           "reported_by_id",
@@ -7501,6 +12002,32 @@
         ],
         "additionalProperties": true
       },
+      "LessonsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LessonCardDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "LoginRequest": {
         "oneOf": [
           {
@@ -7570,6 +12097,216 @@
           "loggedOut"
         ],
         "additionalProperties": false
+      },
+      "ManagerContactsDto": {
+        "type": "object",
+        "properties": {
+          "whatsapp": {
+            "type": "string"
+          },
+          "telegram": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "whatsapp",
+          "telegram"
+        ]
+      },
+      "MaterialItemDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "fileSizeBytes": {
+            "type": "integer"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string",
+            "description": "Explicit educational context, or «Без предмета» for legacy/contextless grants"
+          },
+          "uploadedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sharedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sharedByTeacherName": {
+            "type": "string"
+          },
+          "lessonTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "fileId",
+          "fileName",
+          "fileSizeBytes",
+          "mimeType",
+          "subjectName",
+          "uploadedAt",
+          "sharedAt",
+          "sharedByTeacherName",
+          "lessonTitle"
+        ]
+      },
+      "MaterialsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaterialItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "NextLessonDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMinutes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "meetLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "canJoin": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "lessonId",
+          "scheduledAt",
+          "durationMinutes",
+          "teacherName",
+          "subjectName",
+          "meetLink",
+          "canJoin"
+        ]
+      },
+      "NotificationItemDto": {
+        "type": "object",
+        "properties": {
+          "notificationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "HOMEWORK_REVIEWED",
+              "HOMEWORK_NEEDS_REVISION",
+              "LESSON_RESCHEDULED",
+              "LESSON_CANCELLED",
+              "REPORT_READY",
+              "SUBSCRIPTION_EXPIRING",
+              "PAYMENT_CONFIRMED"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Public entity identifiers only; never capability URLs or private notes"
+          }
+        },
+        "required": [
+          "notificationId",
+          "type",
+          "title",
+          "body",
+          "isRead",
+          "createdAt",
+          "payload"
+        ]
+      },
+      "NotificationsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NotificationItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "unreadCount": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "unreadCount",
+          "page",
+          "pageSize"
+        ]
       },
       "PasskeyRegisteredResponse": {
         "type": "object",
@@ -7659,6 +12396,72 @@
           "approved_at"
         ],
         "additionalProperties": true
+      },
+      "PaymentHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Exact Decimal allocated to this subscription, at least two and up to four fraction digits"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "example": "MDL",
+            "description": "Actual CRM currency, including MDL; no conversion"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lessonsAdded": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "paymentId",
+          "confirmedAt",
+          "amount",
+          "currency",
+          "description",
+          "lessonsAdded"
+        ]
+      },
+      "PaymentHistoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentHistoryItemDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
       },
       "PaymentReceiptResponse": {
         "type": "object",
@@ -7964,6 +12767,89 @@
         ],
         "additionalProperties": false
       },
+      "PdfJobStatusDto": {
+        "type": "object",
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "PROCESSING",
+              "READY",
+              "FAILED"
+            ]
+          },
+          "downloadUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "expiresAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "failureReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "jobId",
+          "status",
+          "downloadUrl",
+          "expiresAt",
+          "failureReason"
+        ]
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "number"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "managerContacts": {
+            "$ref": "#/components/schemas/ManagerContactsDto"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "instance",
+          "code",
+          "requestId"
+        ]
+      },
       "RecoveryCompleteRequest": {
         "type": "object",
         "properties": {
@@ -8153,6 +13039,129 @@
         ],
         "additionalProperties": true
       },
+      "ReportsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EducationalReportDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "RequestUploadUrlDto": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "mimeType": {
+            "type": "string",
+            "maxLength": 127
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 52428800
+          }
+        },
+        "required": [
+          "fileName",
+          "mimeType",
+          "fileSizeBytes"
+        ]
+      },
+      "RescheduleRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "preferredDate": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          }
+        },
+        "required": [
+          "reason",
+          "preferredDate"
+        ]
+      },
+      "RescheduleRequestResponseDto": {
+        "type": "object",
+        "properties": {
+          "crmTaskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED"
+            ]
+          }
+        },
+        "required": [
+          "crmTaskId",
+          "status"
+        ]
+      },
+      "SavedDraftDto": {
+        "type": "object",
+        "properties": {
+          "homeworkId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SAVED"
+            ]
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "homeworkId",
+          "status",
+          "expiresAt"
+        ]
+      },
+      "SaveDraftDto": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "maxLength": 10000
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
       "ScheduleChangeRequestInput": {
         "type": "object",
         "properties": {
@@ -8225,6 +13234,42 @@
         ],
         "additionalProperties": false
       },
+      "SessionInfoDto": {
+        "type": "object",
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastActiveAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userAgent": {
+            "type": "string",
+            "description": "Empty for legacy sessions without captured metadata"
+          },
+          "ipAddress": {
+            "type": "string",
+            "description": "Observed socket peer address, never an untrusted forwarded header; empty for legacy sessions"
+          },
+          "isCurrent": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "sessionId",
+          "createdAt",
+          "lastActiveAt",
+          "userAgent",
+          "ipAddress",
+          "isCurrent"
+        ]
+      },
       "SessionResponse": {
         "type": "object",
         "properties": {
@@ -8291,6 +13336,247 @@
           "roles"
         ],
         "additionalProperties": false
+      },
+      "SkillAuditEntryDto": {
+        "type": "object",
+        "properties": {
+          "auditId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "skillId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "skillName": {
+            "type": "string"
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fromStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "toStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "comment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "auditId",
+          "skillId",
+          "skillName",
+          "changedAt",
+          "fromStatus",
+          "toStatus",
+          "teacherName",
+          "comment"
+        ]
+      },
+      "SkillAuditResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillAuditEntryDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
+      "SkillDto": {
+        "type": "object",
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Assessment time, or catalog creation for an unstudied skill"
+          },
+          "lastUpdatedByTeacherName": {
+            "type": "string",
+            "description": "Empty when no teacher assessment exists"
+          }
+        },
+        "required": [
+          "skillId",
+          "name",
+          "category",
+          "status",
+          "lastUpdatedAt",
+          "lastUpdatedByTeacherName"
+        ]
+      },
+      "SkillProgressDto": {
+        "type": "object",
+        "properties": {
+          "familiarizing": {
+            "type": "integer"
+          },
+          "practicing": {
+            "type": "integer"
+          },
+          "applying": {
+            "type": "integer"
+          },
+          "notStudied": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "familiarizing",
+          "practicing",
+          "applying",
+          "notStudied"
+        ]
+      },
+      "SkillSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "snapshotId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lessonNumber": {
+            "type": "integer",
+            "minimum": 4
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillSnapshotItemDto"
+            }
+          },
+          "teacherSummary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "snapshotId",
+          "subjectName",
+          "createdAt",
+          "lessonNumber",
+          "skills",
+          "teacherSummary"
+        ]
+      },
+      "SkillSnapshotItemDto": {
+        "type": "object",
+        "properties": {
+          "skillName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "teacherComment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "skillName",
+          "status",
+          "teacherComment"
+        ]
+      },
+      "SkillSnapshotResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillSnapshotDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
       },
       "SlotGenerationResponse": {
         "type": "object",
@@ -8361,6 +13647,209 @@
         ],
         "additionalProperties": false
       },
+      "StudentMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "managerContacts": {
+            "$ref": "#/components/schemas/ManagerContactsDto"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "IANA timezone used by the student schedule"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hasActiveAccess": {
+            "type": "boolean"
+          },
+          "mustChangePassword": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "displayName",
+          "timeZone",
+          "email",
+          "avatarUrl",
+          "hasActiveAccess",
+          "mustChangePassword",
+          "createdAt"
+        ]
+      },
+      "StudentPasswordChangedDto": {
+        "type": "object",
+        "properties": {
+          "mustChangePassword": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "mustChangePassword"
+        ]
+      },
+      "StudentProfileDto": {
+        "type": "object",
+        "properties": {
+          "managerContacts": {
+            "$ref": "#/components/schemas/ManagerContactsDto"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "timeZone": {
+            "type": "string",
+            "description": "IANA timezone used by the student schedule"
+          },
+          "email": {
+            "type": "string"
+          },
+          "avatarUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "hasActiveAccess": {
+            "type": "boolean"
+          },
+          "mustChangePassword": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "avatarFileId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "userId",
+          "displayName",
+          "timeZone",
+          "email",
+          "avatarUrl",
+          "hasActiveAccess",
+          "mustChangePassword",
+          "createdAt",
+          "avatarFileId"
+        ]
+      },
+      "StudentSubscriptionLedgerEntryDto": {
+        "type": "object",
+        "properties": {
+          "entryId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs"
+          },
+          "entryDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "DEDUCTION",
+              "CREDIT",
+              "FREEZE",
+              "UNFREEZE"
+            ]
+          },
+          "balanceBefore": {
+            "type": "string",
+            "description": "Lesson quantities, not monetary account totals"
+          },
+          "balanceAfter": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lessonId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "entryId",
+          "entryDate",
+          "type",
+          "balanceBefore",
+          "balanceAfter",
+          "description",
+          "lessonId"
+        ]
+      },
+      "StudentSubscriptionLedgerResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSubscriptionLedgerEntryDto"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "pageSize"
+        ]
+      },
       "SubjectCreateRequest": {
         "type": "object",
         "properties": {
@@ -8398,6 +13887,105 @@
         ],
         "additionalProperties": true
       },
+      "SubjectSkillMapDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "totalSkills": {
+            "type": "integer"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SkillDto"
+            }
+          },
+          "learningGoals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LearningGoalDto"
+            }
+          },
+          "lastSnapshotAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "nextSnapshotIn": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 4
+          }
+        },
+        "required": [
+          "subjectId",
+          "subjectName",
+          "totalSkills",
+          "skills",
+          "learningGoals",
+          "lastSnapshotAt",
+          "nextSnapshotIn"
+        ]
+      },
+      "SubmitHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 10000
+          },
+          "fileIds": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "content"
+        ]
+      },
+      "SubmitResponseDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUBMITTED"
+            ]
+          },
+          "isLate": {
+            "type": "boolean"
+          },
+          "versionNumber": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "submissionId",
+          "status",
+          "isLate",
+          "versionNumber"
+        ]
+      },
       "SubscriptionCreateRequest": {
         "type": "object",
         "properties": {
@@ -8415,6 +14003,89 @@
           "saleConditionId"
         ],
         "additionalProperties": false
+      },
+      "SubscriptionDetailsDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "planName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lessonsTotal": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "lessonsRemaining": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Confirmed paid rights only, never future bookings or temporary admission limits"
+          },
+          "validFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "validUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "isFrozen": {
+            "type": "boolean"
+          },
+          "frozenFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "frozenUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "EXPIRED",
+              "FROZEN",
+              "NONE"
+            ]
+          }
+        },
+        "required": [
+          "subscriptionId",
+          "planName",
+          "lessonsTotal",
+          "lessonsRemaining",
+          "validFrom",
+          "validUntil",
+          "isFrozen",
+          "frozenFrom",
+          "frozenUntil",
+          "status"
+        ]
       },
       "SubscriptionResponse": {
         "type": "object",
@@ -8470,6 +14141,37 @@
           "valid_from"
         ],
         "additionalProperties": true
+      },
+      "SubscriptionSummaryDto": {
+        "type": "object",
+        "properties": {
+          "lessonsRemaining": {
+            "type": "integer"
+          },
+          "validUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "isFrozen": {
+            "type": "boolean"
+          },
+          "frozenUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "lessonsRemaining",
+          "validUntil",
+          "isFrozen",
+          "frozenUntil"
+        ]
       },
       "TeacherAccrualResponse": {
         "type": "object",
@@ -8616,6 +14318,10 @@
       "TeachingAssignmentCreateRequest": {
         "type": "object",
         "properties": {
+          "googleMeetLink": {
+            "type": "string",
+            "pattern": "^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$"
+          },
           "enrollmentId": {
             "type": "string",
             "format": "uuid"
@@ -8647,6 +14353,12 @@
       "TeachingAssignmentResponse": {
         "type": "object",
         "properties": {
+          "google_meet_link": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -8675,6 +14387,7 @@
           }
         },
         "required": [
+          "google_meet_link",
           "id",
           "enrollment_id",
           "teacher_id",
@@ -8749,6 +14462,48 @@
           "director_id"
         ],
         "additionalProperties": true
+      },
+      "UnreadCountDto": {
+        "type": "object",
+        "properties": {
+          "unreadCount": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "unreadCount"
+        ]
+      },
+      "UpdateProfileDto": {
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "avatarFileId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Pre-uploaded verified owned JPEG/PNG/WebP, up to2MiB"
+          }
+        }
+      },
+      "UploadUrlResponseDto": {
+        "type": "object",
+        "properties": {
+          "uploadUrl": {
+            "type": "string"
+          },
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "uploadUrl",
+          "fileId"
+        ]
       },
       "WebAuthnFinishRequest": {
         "type": "object",

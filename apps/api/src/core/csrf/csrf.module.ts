@@ -137,7 +137,11 @@ export class CsrfGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest<HttpRequest>();
-    if (!isMutation(req.method) || (await this.csrf.valid(req))) return true;
+    if (!isMutation(req.method)) return true;
+    if (await this.csrf.valid(req)) {
+      req.csrfValidated = true;
+      return true;
+    }
     unwrap(
       await this.audit.denial({
         requestId: req.requestId!,

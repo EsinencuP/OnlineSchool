@@ -12,6 +12,7 @@ import {
 import type { ClientError, ComponentStatusResponse, SessionResponse } from './api.js';
 import type { Result } from '@online-school/shared';
 import { passkey } from './auth.js';
+import { StudentAccess } from './StudentAccess.js';
 import { canRun, scenarios } from './scenarios.js';
 import type { Action, Field, Values } from './scenarios.js';
 
@@ -326,6 +327,19 @@ export function App() {
   const mfa = !!session?.mfa_completed && !session.recovery_only;
   const canRegister = !!session && ['STAFF', 'TEACHER'].includes(session.account.kind);
 
+  if (session?.account.kind === 'STUDENT')
+    return (
+      <StudentAccess
+        session={session}
+        onRefresh={async () => {
+          await refresh();
+        }}
+        onLogout={() =>
+          authWork(() => mutation((options) => deleteSession({}, options)), 'Вы вышли из аккаунта.')
+        }
+      />
+    );
+
   return (
     <>
       <a className="skip-link" href="#workspace">
@@ -451,9 +465,7 @@ export function App() {
                 </button>
                 <button
                   className="secondary"
-                  disabled={
-                    busy || !session || session.recovery_only || session.account.kind === 'STUDENT'
-                  }
+                  disabled={busy || !session || session.recovery_only}
                   onClick={() =>
                     void authWork(
                       () => passkey('authenticate'),

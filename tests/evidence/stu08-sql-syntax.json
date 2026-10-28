@@ -1,0 +1,28 @@
+{
+  "parser": "v8.7",
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027160000_stu08_skill_level/migration.sql",
+      "sha256": "27b592ec58f2bf6ebefc442580931c8fa92c4efe31b298896c6b6cd72678b554",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "newTablesMatchPrismaColumns": [],
+      "syntax": "PASS"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "sha256": "1abdfccbc964c2569f0c26df742f8d030e42c77d4be1bc363b587e41f68ec3a1",
+      "statements": 39,
+      "plpgsqlFunctions": 6,
+      "newTablesMatchPrismaColumns": [
+        "skill_audit_logs",
+        "skill_snapshots",
+        "learning_goals",
+        "learning_goal_history"
+      ],
+      "syntax": "PASS"
+    }
+  ],
+  "sourceExactSelectProjectionsParsed": 21,
+  "postgresExecution": "DEFERRED_BY_OWNER: no SQL binding, trigger execution, isolation or migration enforcement claim"
+}

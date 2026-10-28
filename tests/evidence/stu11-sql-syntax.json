@@ -1,0 +1,28 @@
+{
+  "parser": "v8.7",
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261028110000_stu11_profile_security/migration.sql",
+    "sha256": "164e03faf37da470a0d76fc24cf5ae82ce70137b272a6bf025b8b2a277d1b8fb",
+    "statements": 24,
+    "plpgsqlFunctions": 6,
+    "newTablesMatchPrismaColumns": ["student_email_changes"],
+    "addedColumnsPresentInPrisma": {
+      "students": ["display_name", "avatar_file_id"],
+      "staff_accounts": ["student_whatsapp_url", "student_telegram_url"],
+      "sessions": ["user_agent", "ip_address"],
+      "auth_accounts": ["email_verified_at"]
+    },
+    "identifierLength": "PASS <=63 bytes",
+    "syntax": "PASS"
+  },
+  "sourceExactReadOnlyFixtureQueriesParsed": 6,
+  "queryNames": [
+    "personal manager for owned pupil",
+    "another pupil receives only its own manager",
+    "unassigned pupil never receives another manager",
+    "disabled manager login excluded",
+    "ended assignment excluded",
+    "staff without current manager/director role excluded"
+  ],
+  "postgresExecution": "DEFERRED_BY_OWNER: syntax/column names/parameter continuity only; no typed binding, trigger enforcement, commit invariants, isolation or migration execution claim"
+}

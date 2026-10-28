@@ -1,0 +1,30 @@
+{
+  "parser": "v8.7",
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261028100000_stu10_notifications/migration.sql",
+    "sha256": "29764f80aeabcc3d0d5b8b6278e08ffc832649ab1ddf1bb4acf6c975aa4a0683",
+    "statements": 28,
+    "plpgsqlFunctions": 5,
+    "sqlFunctions": 1,
+    "newTablesMatchPrismaColumns": ["student_notification_sources", "student_notifications"],
+    "syntax": "PASS"
+  },
+  "queriesParsed": 13,
+  "readOnlyFixtureCasesPrepared": 10,
+  "queryNames": [
+    "owned newest-first shared status, TTL, archive and future exclusion",
+    "paging retains total and global unread",
+    "page beyond end",
+    "foreign pupil sees only own record",
+    "empty pupil has zero total and unread",
+    "501 recent entries archive exactly the oldest",
+    "500 recent entries remain active",
+    "90-day boundary archived, existing archive unchanged and foreign excluded",
+    "equal timestamps retain500 deterministically by UUID descending",
+    "7 and3 pupil-calendar days only; finite validity, account and duplicate filtering",
+    "source-exact fast unread COUNT",
+    "source-exact archive UPDATE",
+    "source-exact expiry intent INSERT"
+  ],
+  "postgresExecution": "DEFERRED_BY_OWNER: syntax and parameter continuity only; no binding, trigger/constraint, concurrency, archive or expiry execution claim"
+}

@@ -14,6 +14,7 @@ ESLint 9 (flat config), Prettier и Turbo настроены на весь works
 apps/api                 @online-school/api           NestJS HTTP, GET /health
 apps/worker              @online-school/worker        NestJS standalone process
 apps/qa-shell            @online-school/qa-shell      React/Vite QA-оболочка
+apps/student-cabinet     @online-school/student-cabinet React/Vite кабинет ученика (STU-12)
 packages/db              @online-school/db            Prisma, фабрики клиентов
 packages/api-contracts   @online-school/api-contracts OpenAPI → TypeScript
 packages/shared          @online-school/shared        Result<T, E>, константы
@@ -251,5 +252,11 @@ docker compose up -d --build --wait
 [Галерея видеореференсов](graphify-out/video/gallery.html) содержит таймкоды, фильтры и описания. [Разбор](graphify-out/video/VIDEO_REFERENCES.md) связывает показанные экраны с областями разработки.
 
 Карта фиксирует происхождение и статус требований. Черновики, рекомендации и демонстрационные данные макетов не становятся утверждёнными правилами.
+
+**TASK-14:** единый рабочий MVP опубликован на https://onlineschool-xi.vercel.app
+с настоящим Vercel worker Daemon и существующей Neon main. PR #1 объединён;
+Git-публикация применяет миграции до выхода новой версии. Дополнительные QA/staging/test
+БД не создаются; integration-test явно skipped по уточнению владельца, а FND-GATE остаётся
+открытым. [Runbook](infra/vercel/README.md), [протокол](infra/TASK14_EVIDENCE.json).
 
 Graphify 0.9.76 и скилл для Codex установлены. Поиск: `graphify query "ваш вопрос"`. Повторная сборка из сохранённых смысловых фрагментов: `python scripts/build_project_map.py`, затем `graphify export html` и `graphify tree --root . --label OnlineSchool`. Для изменённых документов требуется повторный смысловой анализ; признак устаревания — `graphify-out/freshness.json`.

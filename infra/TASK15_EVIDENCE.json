@@ -1,0 +1,82 @@
+{
+  "task": "TASK-15",
+  "status": "PARTIAL_VERIFIED_FND_GATE_BLOCKED",
+  "workingOrigin": "https://onlineschool-xi.vercel.app",
+  "workingApplicationCommit": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+  "ownerPolicy": "No disposable PostgreSQL, extra QA spaces, branches or test databases",
+  "newDatabasesBranchesContainers": 0,
+  "jest": {
+    "passed": 29,
+    "failed": 0,
+    "suitesPassed": 7,
+    "scope": "Unit; real NestJS/Supertest transport with no DB; working HTTPS probes; timestamped read-only PostgreSQL catalog capture validation",
+    "fullDatabaseRegression": false
+  },
+  "playwright": {
+    "passed": 2,
+    "failed": 0,
+    "headless": true,
+    "browser": "Chromium",
+    "authenticator": "native CDP virtual CTAP2 with UV",
+    "origin": "https://onlineschool-xi.vercel.app",
+    "realApiAndDatabase": true,
+    "roleMfaBypasses": false,
+    "financialDataChanged": false
+  },
+  "identityCleanup": {
+    "temporaryNormalManagerAccounts": 2,
+    "activeAccountsAfterRun": 0,
+    "activeSessionsAfterRun": 0,
+    "activePasskeysAfterRun": 0,
+    "roleIntervalsEnded": true,
+    "auditRecorded": true,
+    "privateCredentialFileRemoved": true
+  },
+  "schema": {
+    "postgresql": "18.6",
+    "models": 73,
+    "columns": 818,
+    "foreignKeys": 164,
+    "migrationChecksumsMatched": 7,
+    "capture": "tests/evidence/task15-live-schema.json",
+    "readonly": true,
+    "resetOrSchemaMigrationPerformed": false
+  },
+  "targetedLint": "passed",
+  "preparedButNotRun": [
+    "Historical 90 DB/API/worker cases under Jest",
+    "Five concurrent identical bookings",
+    "Five distinct lessons spending one entitlement",
+    "Three concurrent allocation approvals",
+    "Private-file grant/revocation API cases"
+  ],
+  "blockedAcceptance": [
+    "Migration on clean database",
+    "Upgrade of previous schema with data-preservation proof",
+    "Complete real PostgreSQL/API/financial/concurrency/crash regression on a permitted target",
+    "Automatic real PostgreSQL 18 integration execution in CI",
+    "Complete critical/high-defect clearance"
+  ],
+  "gateCommandExit": 1,
+  "gateCommandReason": "All 29 permitted checks passed, but mandatory unexecuted groups must fail acceptance instead of turning skipped tests into a green gate",
+  "fndGate": "NOT_PASSED",
+  "manualQaAcceptance": "OPEN",
+  "productionGo": "NOT_GRANTED",
+  "checkedAt": "2026-10-27T04:50:09.299Z",
+  "testSourceCommit": "db3aba9bc86b9d337acc6bf26f246fbd7917f097",
+  "pullRequest": "https://github.com/EsinencuP/OnlineSchool/pull/2",
+  "ci": {
+    "url": "https://github.com/EsinencuP/OnlineSchool/actions/runs/40451674062",
+    "head": "db3aba9bc86b9d337acc6bf26f246fbd7917f097",
+    "typecheck": "success",
+    "lint": "success",
+    "unitTest": "success",
+    "build": "success",
+    "dockerBuild": "success",
+    "foundationSafeJestPassed": 29,
+    "foundationGate": "failure: required groups lack a permitted target",
+    "integrationTest": "skipped: explicit owner instruction",
+    "databaseServiceCreated": false,
+    "workingDatabaseCredentialsSupplied": false
+  }
+}

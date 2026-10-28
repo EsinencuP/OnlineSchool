@@ -3,6 +3,8 @@
 !package.json
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
+!patches/
+!patches/**
 !.npmrc
 !tsconfig.base.json
 !apps/
@@ -16,6 +18,12 @@
 !apps/worker/tsconfig.json
 !apps/worker/src/
 !apps/worker/src/**
+!apps/worker/assets/
+!apps/worker/assets/fonts/
+!apps/worker/assets/fonts/NotoSans-Regular.ttf
+!apps/worker/assets/fonts/NotoSans-Bold.ttf
+!apps/worker/assets/fonts/OFL.txt
+!apps/worker/assets/fonts/README.md
 !apps/qa-shell/
 !apps/qa-shell/package.json
 !packages/

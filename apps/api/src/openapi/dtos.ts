@@ -839,6 +839,26 @@ export class TemporaryAccessResponse {
 }
 
 export class LedgerEntryResponse {
+  @ApiProperty({
+    type: 'string',
+    nullable: true,
+    required: true,
+    description:
+      'Subscription lessons remaining immediately before consumption; quantitative, not money',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'entitlement_balance_before'!: string | null;
+  @ApiProperty({
+    type: 'string',
+    nullable: true,
+    required: true,
+    description:
+      'Subscription lessons remaining immediately after consumption; quantitative, not money',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'entitlement_balance_after'!: string | null;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -1582,6 +1602,10 @@ export class EnrollmentResponse {
 }
 
 export class TeachingAssignmentResponse {
+  @ApiProperty({ type: 'string', required: true, nullable: true } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'google_meet_link'!: string | null;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -1822,6 +1846,9 @@ export class ScheduleChangeRequestResponse {
 }
 
 export class LessonOutcomeReportResponse {
+  @ApiProperty({ type: 'boolean', required: true } as ApiPropertyOptions)
+  @IsBoolean()
+  'student_no_show'!: boolean;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -1978,6 +2005,14 @@ export class EnrollmentCreateRequest {
 }
 
 export class TeachingAssignmentCreateRequest {
+  @ApiProperty({
+    type: 'string',
+    required: false,
+    pattern: '^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsString()
+  'googleMeetLink'?: string;
   @ApiProperty({ type: 'string', format: 'uuid', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
@@ -2143,6 +2178,15 @@ export class LessonRescheduleRequest {
 }
 
 export class LessonOutcomeReportRequest {
+  @ApiProperty({
+    type: 'boolean',
+    required: false,
+    description:
+      'Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
+  'studentNoShow'?: boolean;
   @ApiProperty({
     type: 'string',
     enum: LessonOutcomeReportRequestResultEnum,

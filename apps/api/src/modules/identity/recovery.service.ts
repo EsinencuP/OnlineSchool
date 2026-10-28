@@ -139,7 +139,7 @@ export class RecoveryService {
           true,
         );
         await tx.recoveryRequest.update({ where: { id: request.id }, data: { completed_at: at } });
-        const issued = await this.sessions.issue(tx, subject.id, null, true);
+        const issued = await this.sessions.issue(tx, subject.id, null, true, req);
         return {
           actorId: subject.id,
           resourceType: 'Session',

@@ -23,6 +23,7 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     proxy: {
+      '/student': { target: 'http://127.0.0.1:5174' },
       '/api': { target: 'http://127.0.0.1:3000' },
       '/health': { target: 'http://127.0.0.1:3000' },
     },

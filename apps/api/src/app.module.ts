@@ -13,6 +13,7 @@ import { IntegrationsModule } from './modules/integrations/integrations.module.j
 import { CoreModule } from './core/core.module.js';
 import { Public } from './core/rbac/decorators.js';
 import { QaModule } from './modules/qa/qa.module.js';
+import { StudentModule } from './student/student.module.js';
 
 @Controller('health')
 export class HealthController {
@@ -60,6 +61,7 @@ export class HealthController {
     StorageModule,
     IntegrationsModule,
     QaModule,
+    StudentModule,
   ],
   controllers: [HealthController],
 })

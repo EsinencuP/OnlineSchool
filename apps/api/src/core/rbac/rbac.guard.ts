@@ -46,6 +46,8 @@ export class AccessService {
       path !== '/api/v1/auth/csrf'
     )
       return err(domainError('RECOVERY_REGISTRATION_ONLY', 403));
+    if (actor?.kind === 'STUDENT' && path?.startsWith('/api/v1/auth/webauthn/'))
+      return err(domainError('STUDENT_PASSKEYS_NOT_ALLOWED', 403));
     if (publicRoute) {
       if (
         roles ||

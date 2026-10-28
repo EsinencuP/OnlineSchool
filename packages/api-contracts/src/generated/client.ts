@@ -6,6 +6,8 @@
  * OpenAPI spec version: v1
  */
 import { schoolFetch } from '../transport.js';
+import { schoolEmptyFetch } from '../transport.js';
+import { schoolBlobFetch } from '../transport.js';
 export interface AccrualCreateRequest {
   outcomeId: string;
   /** @minLength 1 */
@@ -28,6 +30,32 @@ export interface ApiError {
 }
 
 export interface ApproveDistributionRequest { [key: string]: unknown }
+
+export interface ChangeEmailConfirmDto {
+  /**
+     * @minLength 6
+     * @maxLength 6
+     * @pattern ^\d{6}$
+     */
+  otp: string;
+  newEmail: string;
+}
+
+export interface ChangeEmailRequestDto {
+  newEmail: string;
+  currentPassword: string;
+}
+
+export interface ChangeStudentPasswordDto {
+  /** @maxLength 256 */
+  currentPassword: string;
+  /**
+     * @minLength 8
+     * @maxLength 128
+     * @pattern ^(?=.*[A-Za-z])(?=.*\d).+$
+     */
+  newPassword: string;
+}
 
 export interface CloseFinancialPeriodRequest { [key: string]: unknown }
 
@@ -153,6 +181,18 @@ export interface ConfirmLessonOutcomeRequest {
 
 export interface ConfirmPaymentRequest { [key: string]: unknown }
 
+export type ConfirmUploadResponseDtoStatus = typeof ConfirmUploadResponseDtoStatus[keyof typeof ConfirmUploadResponseDtoStatus];
+
+
+export const ConfirmUploadResponseDtoStatus = {
+  VERIFIED: 'VERIFIED',
+} as const;
+
+export interface ConfirmUploadResponseDto {
+  fileId: string;
+  status: ConfirmUploadResponseDtoStatus;
+}
+
 export type SessionResponseAccountKind = typeof SessionResponseAccountKind[keyof typeof SessionResponseAccountKind];
 
 
@@ -202,6 +242,103 @@ export type CreateSessionResponse = SessionResponse | WebAuthnStartResponse;
 
 export interface CsrfResponse {
   csrfToken: string;
+}
+
+export interface NextLessonDto {
+  lessonId: string;
+  scheduledAt: string;
+  /** @minimum 1 */
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  /** @nullable */
+  meetLink: string | null;
+  canJoin: boolean;
+}
+
+export interface HomeworkCountsDto {
+  notSubmitted: number;
+  submitted: number;
+  needsRevision: number;
+  total: number;
+}
+
+export interface SubscriptionSummaryDto {
+  lessonsRemaining: number;
+  /** @nullable */
+  validUntil: string | null;
+  isFrozen: boolean;
+  /** @nullable */
+  frozenUntil: string | null;
+}
+
+export interface SkillProgressDto {
+  familiarizing: number;
+  practicing: number;
+  applying: number;
+  notStudied: number;
+}
+
+export interface DashboardResponseDto {
+  nextLesson: NextLessonDto | null;
+  homework: HomeworkCountsDto;
+  subscription: SubscriptionSummaryDto | null;
+  skillProgress: SkillProgressDto;
+  generatedAt: string;
+}
+
+export interface DisputeRequestDto {
+  /**
+     * @minLength 10
+     * @maxLength 1000
+     */
+  description: string;
+}
+
+export type DisputeResponseDtoStatus = typeof DisputeResponseDtoStatus[keyof typeof DisputeResponseDtoStatus];
+
+
+export const DisputeResponseDtoStatus = {
+  CREATED: 'CREATED',
+} as const;
+
+export interface DisputeResponseDto {
+  crmTaskId: string;
+  status: DisputeResponseDtoStatus;
+}
+
+export interface EducationalReportContentDto {
+  achievements: string;
+  growthAreas: string;
+  recommendations: string;
+  teacherSignature: string;
+}
+
+export type EducationalReportDtoLessonCount = typeof EducationalReportDtoLessonCount[keyof typeof EducationalReportDtoLessonCount];
+
+
+export const EducationalReportDtoLessonCount = {
+  NUMBER_8: 8,
+} as const;
+
+export interface EducationalReportDto {
+  reportId: string;
+  subjectName: string;
+  createdAt: string;
+  periodFrom: string;
+  periodTo: string;
+  lessonCount: EducationalReportDtoLessonCount;
+  teacherName: string;
+  content: EducationalReportContentDto;
+  isNew: boolean;
+}
+
+export interface EmailChangedDto {
+  email: string;
+}
+
+export interface EmailOtpRequestedDto {
+  message: string;
 }
 
 export interface EmptyRequest { [key: string]: unknown }
@@ -303,10 +440,37 @@ export interface EntitlementGrantResponse {
   [key: string]: unknown;
  }
 
+export interface ExportPdfRequestDto {
+  subjectId?: string;
+  periodFrom?: string;
+  periodTo?: string;
+}
+
+export type ExportPdfResponseDtoStatus = typeof ExportPdfResponseDtoStatus[keyof typeof ExportPdfResponseDtoStatus];
+
+
+export const ExportPdfResponseDtoStatus = {
+  QUEUED: 'QUEUED',
+} as const;
+
+export interface ExportPdfResponseDto {
+  jobId: string;
+  status: ExportPdfResponseDtoStatus;
+  /** Estimate only; poll every 2s for at most 60s, then retry later */
+  estimatedReadyAt: string;
+}
+
 export interface FileAccessResponse {
   objectId: string;
   accessible: true;
   canDownload: boolean;
+}
+
+export interface FileSignedUrlResponseDto {
+  /** Private HTTPS presigned GET capability. Maximum lifetime 15 minutes; shorter if the explicit permission expires first. */
+  url: string;
+  expiresAt: string;
+  fileName: string;
 }
 
 /**
@@ -366,6 +530,71 @@ export interface HealthResponse {
   service: HealthResponseService;
 }
 
+export interface HomeworkAttachmentDto {
+  fileId: string;
+  fileName: string;
+  /** @maximum 52428800 */
+  fileSizeBytes: number;
+  mimeType: string;
+}
+
+export type HomeworkItemDtoStatus = typeof HomeworkItemDtoStatus[keyof typeof HomeworkItemDtoStatus];
+
+
+export const HomeworkItemDtoStatus = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  SUBMITTED: 'SUBMITTED',
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+/**
+ * @nullable
+ */
+export type HomeworkVersionDtoTeacherStatus = typeof HomeworkVersionDtoTeacherStatus[keyof typeof HomeworkVersionDtoTeacherStatus] | null;
+
+
+export const HomeworkVersionDtoTeacherStatus = {
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export interface HomeworkVersionDto {
+  versionNumber: number;
+  content: string;
+  submittedAt: string;
+  /** @nullable */
+  teacherComment: string | null;
+  /** @nullable */
+  teacherStatus: HomeworkVersionDtoTeacherStatus;
+  attachments: HomeworkAttachmentDto[];
+}
+
+export interface HomeworkItemDto {
+  homeworkId: string;
+  assignedAt: string;
+  /** @nullable */
+  dueAt: string | null;
+  subjectName: string;
+  teacherName: string;
+  title: string;
+  description: string;
+  status: HomeworkItemDtoStatus;
+  isLate: boolean;
+  /** @nullable */
+  draftContent: string | null;
+  latestVersion: HomeworkVersionDto | null;
+  versions: HomeworkVersionDto[];
+  attachments: HomeworkAttachmentDto[];
+}
+
+export interface HomeworkResponseDto {
+  items: HomeworkItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface HouseholdCreatedResponse {
   id: string;
 }
@@ -401,6 +630,14 @@ export type HouseholdMemberRequest = HouseholdMemberRequestAlternative1 | Househ
 export interface HouseholdMemberResponse {
   id: string;
   householdId: string;
+}
+
+export interface LearningGoalDto {
+  goalId: string;
+  text: string;
+  /** @nullable */
+  targetDate: string | null;
+  isAchieved: boolean;
 }
 
 export interface LedgerAdjustmentResponse {
@@ -466,6 +703,16 @@ export interface LedgerEntryResponseBalanceSnapshotValue {
 export type LedgerEntryResponseBalanceSnapshot = {[key: string]: LedgerEntryResponseBalanceSnapshotValue};
 
 export interface LedgerEntryResponse {
+  /**
+     * Subscription lessons remaining immediately before consumption; quantitative, not money
+     * @nullable
+     */
+  entitlement_balance_before: string | null;
+  /**
+     * Subscription lessons remaining immediately after consumption; quantitative, not money
+     * @nullable
+     */
+  entitlement_balance_after: string | null;
   id: string;
   document_id: string;
   financial_period_id: string;
@@ -484,6 +731,31 @@ export interface LedgerPublishRequest {
   lines?: LedgerLineInput[];
 }
 
+export type LessonCardDtoStatus = typeof LessonCardDtoStatus[keyof typeof LessonCardDtoStatus];
+
+
+export const LessonCardDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  NO_SHOW: 'NO_SHOW',
+  STAR_PENDING: 'STAR_PENDING',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface LessonCardDto {
+  lessonId: string;
+  scheduledAt: string;
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  status: LessonCardDtoStatus;
+  canJoin: boolean;
+  /** @nullable */
+  meetLink: string | null;
+  canRequestReschedule: boolean;
+}
+
 export type LessonCreateRequestStatus = typeof LessonCreateRequestStatus[keyof typeof LessonCreateRequestStatus];
 
 
@@ -500,6 +772,43 @@ export interface LessonCreateRequest {
   basis: string;
 }
 
+export type LessonHistoryItemDtoAttendanceStatus = typeof LessonHistoryItemDtoAttendanceStatus[keyof typeof LessonHistoryItemDtoAttendanceStatus];
+
+
+export const LessonHistoryItemDtoAttendanceStatus = {
+  COMPLETED: 'COMPLETED',
+  NO_SHOW: 'NO_SHOW',
+} as const;
+
+export interface LessonHistoryItemDto {
+  lessonId: string;
+  scheduledAt: string;
+  durationMinutes: number;
+  teacherName: string;
+  subjectName: string;
+  attendanceStatus: LessonHistoryItemDtoAttendanceStatus;
+  /** Current uncancelled quantitative consumption backed by a published ledger entry */
+  lessonDeducted: boolean;
+  /**
+     * Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots
+     * @nullable
+     */
+  balanceBefore: string | null;
+  /**
+     * Subscription lessons after deduction, immutable Decimal string
+     * @nullable
+     */
+  balanceAfter: string | null;
+  canDispute: boolean;
+}
+
+export interface LessonHistoryResponseDto {
+  items: LessonHistoryItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export type LessonOutcomeReportRequestResult = typeof LessonOutcomeReportRequestResult[keyof typeof LessonOutcomeReportRequestResult];
 
 
@@ -510,6 +819,8 @@ export const LessonOutcomeReportRequestResult = {
 } as const;
 
 export interface LessonOutcomeReportRequest {
+  /** Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation */
+  studentNoShow?: boolean;
   result: LessonOutcomeReportRequestResult;
   actualStartedAt?: string;
   /**
@@ -534,6 +845,7 @@ export const LessonOutcomeReportResponseResult = {
 } as const;
 
 export interface LessonOutcomeReportResponse {
+  student_no_show: boolean;
   id: string;
   lesson_occurrence_id: string;
   reported_by_id: string;
@@ -550,6 +862,13 @@ export interface LessonRescheduleRequest {
   endsAt: string;
   teachingAssignmentId?: string;
   reason: string;
+}
+
+export interface LessonsResponseDto {
+  items: LessonCardDto[];
+  total: number;
+  page: number;
+  pageSize: number;
 }
 
 export type LoginRequestAlternative1Method = typeof LoginRequestAlternative1Method[keyof typeof LoginRequestAlternative1Method];
@@ -587,6 +906,69 @@ export interface LogoutResponse {
   loggedOut: true;
 }
 
+export interface ManagerContactsDto {
+  whatsapp: string;
+  telegram: string;
+}
+
+export interface MaterialItemDto {
+  fileId: string;
+  fileName: string;
+  fileSizeBytes: number;
+  mimeType: string;
+  /** Explicit educational context, or «Без предмета» for legacy/contextless grants */
+  subjectName: string;
+  uploadedAt: string;
+  sharedAt: string;
+  sharedByTeacherName: string;
+  /** @nullable */
+  lessonTitle: string | null;
+}
+
+export interface MaterialsResponseDto {
+  items: MaterialItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export type NotificationItemDtoType = typeof NotificationItemDtoType[keyof typeof NotificationItemDtoType];
+
+
+export const NotificationItemDtoType = {
+  HOMEWORK_REVIEWED: 'HOMEWORK_REVIEWED',
+  HOMEWORK_NEEDS_REVISION: 'HOMEWORK_NEEDS_REVISION',
+  LESSON_RESCHEDULED: 'LESSON_RESCHEDULED',
+  LESSON_CANCELLED: 'LESSON_CANCELLED',
+  REPORT_READY: 'REPORT_READY',
+  SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
+  PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
+} as const;
+
+/**
+ * Public entity identifiers only; never capability URLs or private notes
+ */
+export type NotificationItemDtoPayload = { [key: string]: unknown };
+
+export interface NotificationItemDto {
+  notificationId: string;
+  type: NotificationItemDtoType;
+  title: string;
+  body: string;
+  isRead: boolean;
+  createdAt: string;
+  /** Public entity identifiers only; never capability URLs or private notes */
+  payload: NotificationItemDtoPayload;
+}
+
+export interface NotificationsResponseDto {
+  items: NotificationItemDto[];
+  total: number;
+  unreadCount: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface PasskeyRegisteredResponse {
   id: string;
   registered: true;
@@ -618,6 +1000,28 @@ export interface PaymentDistributionResponse {
   ledgerEntryId?: string;
   [key: string]: unknown;
  }
+
+export interface PaymentHistoryItemDto {
+  paymentId: string;
+  confirmedAt: string;
+  /** Exact Decimal allocated to this subscription, at least two and up to four fraction digits */
+  amount: string;
+  /**
+     * Actual CRM currency, including MDL; no conversion
+     * @pattern ^[A-Z]{3}$
+     */
+  currency: string;
+  description: string;
+  /** @nullable */
+  lessonsAdded: number | null;
+}
+
+export interface PaymentHistoryResponseDto {
+  items: PaymentHistoryItemDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
 
 export type PaymentReceiptResponseStatus = typeof PaymentReceiptResponseStatus[keyof typeof PaymentReceiptResponseStatus];
 
@@ -757,6 +1161,38 @@ export interface PayrollItem {
   payouts: PayrollItemPayoutsItem[];
 }
 
+export type PdfJobStatusDtoStatus = typeof PdfJobStatusDtoStatus[keyof typeof PdfJobStatusDtoStatus];
+
+
+export const PdfJobStatusDtoStatus = {
+  QUEUED: 'QUEUED',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED',
+} as const;
+
+export interface PdfJobStatusDto {
+  jobId: string;
+  status: PdfJobStatusDtoStatus;
+  /** @nullable */
+  downloadUrl: string | null;
+  /** @nullable */
+  expiresAt: string | null;
+  /** @nullable */
+  failureReason: string | null;
+}
+
+export interface ProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+  code: string;
+  requestId: string;
+  managerContacts?: ManagerContactsDto;
+}
+
 export interface RecoveryCompleteRequest {
   recoveryId: string;
   /**
@@ -823,6 +1259,65 @@ export interface RecurringSlotResponse {
   [key: string]: unknown;
  }
 
+export interface ReportsResponseDto {
+  items: EducationalReportDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface RequestUploadUrlDto {
+  /** @maxLength 255 */
+  fileName: string;
+  /** @maxLength 127 */
+  mimeType: string;
+  /**
+     * @minimum 1
+     * @maximum 52428800
+     */
+  fileSizeBytes: number;
+}
+
+export interface RescheduleRequestDto {
+  /**
+     * @minLength 1
+     * @maxLength 500
+     */
+  reason: string;
+  /** @pattern ^(?!0000)[0-9]{4}-[0-9]{2}-[0-9]{2}$ */
+  preferredDate: string;
+}
+
+export type RescheduleRequestResponseDtoStatus = typeof RescheduleRequestResponseDtoStatus[keyof typeof RescheduleRequestResponseDtoStatus];
+
+
+export const RescheduleRequestResponseDtoStatus = {
+  CREATED: 'CREATED',
+} as const;
+
+export interface RescheduleRequestResponseDto {
+  crmTaskId: string;
+  status: RescheduleRequestResponseDtoStatus;
+}
+
+export type SavedDraftDtoStatus = typeof SavedDraftDtoStatus[keyof typeof SavedDraftDtoStatus];
+
+
+export const SavedDraftDtoStatus = {
+  SAVED: 'SAVED',
+} as const;
+
+export interface SavedDraftDto {
+  homeworkId: string;
+  status: SavedDraftDtoStatus;
+  expiresAt: string;
+}
+
+export interface SaveDraftDto {
+  /** @maxLength 10000 */
+  content: string;
+}
+
 export interface ScheduleChangeRequestInput {
   lessonId?: string;
   slotId?: string;
@@ -855,6 +1350,112 @@ export interface ScheduleReasonRequest {
   reason: string;
 }
 
+export interface SessionInfoDto {
+  sessionId: string;
+  createdAt: string;
+  lastActiveAt: string;
+  /** Empty for legacy sessions without captured metadata */
+  userAgent: string;
+  /** Observed socket peer address, never an untrusted forwarded header; empty for legacy sessions */
+  ipAddress: string;
+  isCurrent: boolean;
+}
+
+export type SkillAuditEntryDtoFromStatus = typeof SkillAuditEntryDtoFromStatus[keyof typeof SkillAuditEntryDtoFromStatus];
+
+
+export const SkillAuditEntryDtoFromStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export type SkillAuditEntryDtoToStatus = typeof SkillAuditEntryDtoToStatus[keyof typeof SkillAuditEntryDtoToStatus];
+
+
+export const SkillAuditEntryDtoToStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface SkillAuditEntryDto {
+  auditId: string;
+  skillId: string;
+  skillName: string;
+  changedAt: string;
+  fromStatus: SkillAuditEntryDtoFromStatus;
+  toStatus: SkillAuditEntryDtoToStatus;
+  teacherName: string;
+  /** @nullable */
+  comment: string | null;
+}
+
+export interface SkillAuditResponseDto {
+  items: SkillAuditEntryDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export type SkillDtoStatus = typeof SkillDtoStatus[keyof typeof SkillDtoStatus];
+
+
+export const SkillDtoStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface SkillDto {
+  skillId: string;
+  name: string;
+  category: string;
+  status: SkillDtoStatus;
+  /** Assessment time, or catalog creation for an unstudied skill */
+  lastUpdatedAt: string;
+  /** Empty when no teacher assessment exists */
+  lastUpdatedByTeacherName: string;
+}
+
+export type SkillSnapshotItemDtoStatus = typeof SkillSnapshotItemDtoStatus[keyof typeof SkillSnapshotItemDtoStatus];
+
+
+export const SkillSnapshotItemDtoStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface SkillSnapshotItemDto {
+  skillName: string;
+  status: SkillSnapshotItemDtoStatus;
+  /** @nullable */
+  teacherComment: string | null;
+}
+
+export interface SkillSnapshotDto {
+  snapshotId: string;
+  subjectName: string;
+  createdAt: string;
+  /** @minimum 4 */
+  lessonNumber: number;
+  skills: SkillSnapshotItemDto[];
+  /** @nullable */
+  teacherSummary: string | null;
+}
+
+export interface SkillSnapshotResponseDto {
+  items: SkillSnapshotDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface SlotGenerationResponse {
   id: string;
   occurrences: LessonResponse[];
@@ -883,6 +1484,72 @@ export interface StudentCreateRequest {
   birthDate?: string;
 }
 
+export interface StudentMeResponseDto {
+  managerContacts?: ManagerContactsDto;
+  id: string;
+  userId: string;
+  displayName: string;
+  /** IANA timezone used by the student schedule */
+  timeZone: string;
+  email: string;
+  /** @nullable */
+  avatarUrl: string | null;
+  hasActiveAccess: boolean;
+  mustChangePassword: boolean;
+  createdAt: string;
+}
+
+export interface StudentPasswordChangedDto {
+  mustChangePassword: false;
+}
+
+export interface StudentProfileDto {
+  managerContacts?: ManagerContactsDto;
+  id: string;
+  userId: string;
+  displayName: string;
+  /** IANA timezone used by the student schedule */
+  timeZone: string;
+  email: string;
+  /** @nullable */
+  avatarUrl: string | null;
+  hasActiveAccess: boolean;
+  mustChangePassword: boolean;
+  createdAt: string;
+  /** @nullable */
+  avatarFileId: string | null;
+}
+
+export type StudentSubscriptionLedgerEntryDtoType = typeof StudentSubscriptionLedgerEntryDtoType[keyof typeof StudentSubscriptionLedgerEntryDtoType];
+
+
+export const StudentSubscriptionLedgerEntryDtoType = {
+  DEDUCTION: 'DEDUCTION',
+  CREDIT: 'CREDIT',
+  FREEZE: 'FREEZE',
+  UNFREEZE: 'UNFREEZE',
+} as const;
+
+export interface StudentSubscriptionLedgerEntryDto {
+  /** Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs */
+  entryId: string;
+  entryDate: string;
+  type: StudentSubscriptionLedgerEntryDtoType;
+  /** Lesson quantities, not monetary account totals */
+  balanceBefore: string;
+  balanceAfter: string;
+  description: string;
+  /** @nullable */
+  lessonId: string | null;
+}
+
+export interface StudentSubscriptionLedgerResponseDto {
+  items: StudentSubscriptionLedgerEntryDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface SubjectCreateRequest {
   code: string;
   name: string;
@@ -895,9 +1562,83 @@ export interface SubjectResponse {
   [key: string]: unknown;
  }
 
+export interface SubjectSkillMapDto {
+  subjectId: string;
+  subjectName: string;
+  totalSkills: number;
+  skills: SkillDto[];
+  learningGoals: LearningGoalDto[];
+  /** @nullable */
+  lastSnapshotAt: string | null;
+  /**
+     * @minimum 1
+     * @maximum 4
+     * @nullable
+     */
+  nextSnapshotIn: number | null;
+}
+
+export interface SubmitHomeworkDto {
+  /**
+     * @minLength 1
+     * @maxLength 10000
+     */
+  content: string;
+  /** @maxItems 20 */
+  fileIds?: string[];
+}
+
+export type SubmitResponseDtoStatus = typeof SubmitResponseDtoStatus[keyof typeof SubmitResponseDtoStatus];
+
+
+export const SubmitResponseDtoStatus = {
+  SUBMITTED: 'SUBMITTED',
+} as const;
+
+export interface SubmitResponseDto {
+  submissionId: string;
+  status: SubmitResponseDtoStatus;
+  isLate: boolean;
+  versionNumber: number;
+}
+
 export interface SubscriptionCreateRequest {
   enrollmentId: string;
   saleConditionId: string;
+}
+
+export type SubscriptionDetailsDtoStatus = typeof SubscriptionDetailsDtoStatus[keyof typeof SubscriptionDetailsDtoStatus];
+
+
+export const SubscriptionDetailsDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  FROZEN: 'FROZEN',
+  NONE: 'NONE',
+} as const;
+
+export interface SubscriptionDetailsDto {
+  /** @nullable */
+  subscriptionId: string | null;
+  /** @nullable */
+  planName: string | null;
+  /** @nullable */
+  lessonsTotal: number | null;
+  /**
+     * Confirmed paid rights only, never future bookings or temporary admission limits
+     * @nullable
+     */
+  lessonsRemaining: number | null;
+  /** @nullable */
+  validFrom: string | null;
+  /** @nullable */
+  validUntil: string | null;
+  isFrozen: boolean;
+  /** @nullable */
+  frozenFrom: string | null;
+  /** @nullable */
+  frozenUntil: string | null;
+  status: SubscriptionDetailsDtoStatus;
 }
 
 export interface SubscriptionResponse {
@@ -975,6 +1716,8 @@ export interface TeacherPayrollResponse {
 }
 
 export interface TeachingAssignmentCreateRequest {
+  /** @pattern ^https://meet[.]google[.]com/[a-z]{3}-[a-z]{4}-[a-z]{3}$ */
+  googleMeetLink?: string;
   enrollmentId: string;
   teacherId: string;
   validFrom: string;
@@ -983,6 +1726,8 @@ export interface TeachingAssignmentCreateRequest {
 }
 
 export interface TeachingAssignmentResponse {
+  /** @nullable */
+  google_meet_link: string | null;
   id: string;
   enrollment_id: string;
   teacher_id: string;
@@ -1016,6 +1761,25 @@ export interface TemporaryAccessResponse {
   [key: string]: unknown;
  }
 
+export interface UnreadCountDto {
+  unreadCount: number;
+}
+
+export interface UpdateProfileDto {
+  /**
+     * @minLength 1
+     * @maxLength 100
+     */
+  displayName?: string;
+  /** Pre-uploaded verified owned JPEG/PNG/WebP, up to2MiB */
+  avatarFileId?: string;
+}
+
+export interface UploadUrlResponseDto {
+  uploadUrl: string;
+  fileId: string;
+}
+
 export type WebAuthnFinishRequestResponseType = typeof WebAuthnFinishRequestResponseType[keyof typeof WebAuthnFinishRequestResponseType];
 
 
@@ -1047,6 +1811,176 @@ export interface WebAuthnFinishRequest {
 export interface WebAuthnStartRequest {
   email?: string;
 }
+
+export type GetStudentHomeworkParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+status?: GetStudentHomeworkStatus;
+};
+
+export type GetStudentHomeworkStatus = typeof GetStudentHomeworkStatus[keyof typeof GetStudentHomeworkStatus];
+
+
+export const GetStudentHomeworkStatus = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  SUBMITTED: 'SUBMITTED',
+  REVIEWED: 'REVIEWED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export type GetStudentLessonsParams = {
+period?: GetStudentLessonsPeriod;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+/**
+ * @pattern ^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$
+ */
+month?: string;
+};
+
+export type GetStudentLessonsPeriod = typeof GetStudentLessonsPeriod[keyof typeof GetStudentLessonsPeriod];
+
+
+export const GetStudentLessonsPeriod = {
+  today: 'today',
+  week: 'week',
+  month: 'month',
+  archive: 'archive',
+} as const;
+
+export type GetStudentLessonHistoryParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentMaterialsParams = {
+/**
+ * Educational subject ID, not the permission recipient account
+ */
+subjectId?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentNotificationsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentReportsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentSkillMapsParams = {
+subjectId?: string;
+};
+
+export type GetStudentSkillAuditParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+skillId: string;
+};
+
+export type GetStudentSkillSnapshotsParams = {
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentSubscriptionParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
+};
+
+export type GetStudentSubscriptionLedgerParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
+
+export type GetStudentSubscriptionPaymentsParams = {
+/**
+ * Owned subscription. Defaults to the most recent current plan, then latest expired plan.
+ */
+subscriptionId?: string;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+};
 
 export const getGetApiHealthUrl = () => {
 
@@ -2556,6 +3490,1195 @@ return schoolFetch<ScheduleChangeRequestResponse>(getRequestScheduleChangeUrl(),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(scheduleChangeRequestInput)
+  }
+);}
+
+
+
+export const getGetStudentDashboardUrl = () => {
+
+
+
+
+  return `/api/v1/student/dashboard`
+}
+
+/**
+ * Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.
+ * @summary Current student dashboard snapshot
+ */
+export const getStudentDashboard = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DashboardResponseDto>(getGetStudentDashboardUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentHomeworkUrl = (params?: GetStudentHomeworkParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/homework?${stringifiedParams}` : `/api/v1/student/homework`
+}
+
+/**
+ * @summary Chronological homework with immutable submission versions
+ */
+export const getStudentHomework = (params?: GetStudentHomeworkParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<HomeworkResponseDto>(getGetStudentHomeworkUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentHomeworkDetailUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}`
+}
+
+/**
+ * @summary Read one owned visible homework delivery and its versions
+ */
+export const getStudentHomeworkDetail = (hwId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<HomeworkItemDto>(getGetStudentHomeworkDetailUrl(hwId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getSaveStudentHomeworkDraftUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/draft`
+}
+
+/**
+ * CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.
+ * @summary Overwrite one draft; server TTL 30 days
+ */
+export const saveStudentHomeworkDraft = (hwId: string,
+    saveDraftDto: SaveDraftDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SavedDraftDto>(getSaveStudentHomeworkDraftUrl(hwId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(saveDraftDto)
+  }
+);}
+
+
+
+export const getConfirmStudentHomeworkUploadUrl = (hwId: string,
+    fileId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/files/${fileId}/confirm`
+}
+
+/**
+ * HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+ * @summary Verify S3 upload and seal a server-only final object
+ */
+export const confirmStudentHomeworkUpload = (hwId: string,
+    fileId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ConfirmUploadResponseDto>(getConfirmStudentHomeworkUploadUrl(hwId,fileId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getSubmitStudentHomeworkUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/submit`
+}
+
+/**
+ * Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.
+ * @summary Submit a version, preserve history and clear the draft
+ */
+export const submitStudentHomework = (hwId: string,
+    submitHomeworkDto: SubmitHomeworkDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SubmitResponseDto>(getSubmitStudentHomeworkUrl(hwId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(submitHomeworkDto)
+  }
+);}
+
+
+
+export const getRequestStudentHomeworkUploadUrl = (hwId: string,) => {
+
+
+
+
+  return `/api/v1/student/homework/${hwId}/upload-url`
+}
+
+/**
+ * PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+ * @summary Create PENDING file and 15-minute private S3 PUT capability
+ */
+export const requestStudentHomeworkUpload = (hwId: string,
+    requestUploadUrlDto: RequestUploadUrlDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<UploadUrlResponseDto>(getRequestStudentHomeworkUploadUrl(hwId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(requestUploadUrlDto)
+  }
+);}
+
+
+
+export const getGetStudentLessonsUrl = (params?: GetStudentLessonsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/lessons?${stringifiedParams}` : `/api/v1/student/lessons`
+}
+
+/**
+ * Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+ * @summary Student lesson list or monthly calendar
+ */
+export const getStudentLessons = (params?: GetStudentLessonsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonsResponseDto>(getGetStudentLessonsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentLessonUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/student/lessons/${lessonId}`
+}
+
+/**
+ * @summary Read one owned lesson independently of its month
+ */
+export const getStudentLesson = (lessonId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonCardDto>(getGetStudentLessonUrl(lessonId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getDisputeStudentLessonDeductionUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/student/lessons/${lessonId}/dispute`
+}
+
+/**
+ * Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.
+ * @summary Dispute one published lesson deduction
+ */
+export const disputeStudentLessonDeduction = (lessonId: string,
+    disputeRequestDto: DisputeRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DisputeResponseDto>(getDisputeStudentLessonDeductionUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(disputeRequestDto)
+  }
+);}
+
+
+
+export const getRequestStudentLessonRescheduleUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/student/lessons/${lessonId}/reschedule-request`
+}
+
+/**
+ * Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.
+ * @summary Ask the assigned manager to reschedule a particular lesson
+ */
+export const requestStudentLessonReschedule = (lessonId: string,
+    rescheduleRequestDto: RescheduleRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RescheduleRequestResponseDto>(getRequestStudentLessonRescheduleUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(rescheduleRequestDto)
+  }
+);}
+
+
+
+export const getGetStudentLessonHistoryUrl = (params?: GetStudentLessonHistoryParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/lessons/history?${stringifiedParams}` : `/api/v1/student/lessons/history`
+}
+
+/**
+ * Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+ * @summary Confirmed student attendance and quantitative deduction history
+ */
+export const getStudentLessonHistory = (params?: GetStudentLessonHistoryParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonHistoryResponseDto>(getGetStudentLessonHistoryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentUpcomingLessonsUrl = () => {
+
+
+
+
+  return `/api/v1/student/lessons/upcoming`
+}
+
+/**
+ * @summary Next five owned scheduled lessons, including across month boundaries
+ */
+export const getStudentUpcomingLessons = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonsResponseDto>(getGetStudentUpcomingLessonsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentMaterialsUrl = (params?: GetStudentMaterialsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/materials?${stringifiedParams}` : `/api/v1/student/materials`
+}
+
+/**
+ * Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».
+ * @summary Only materials explicitly shared with this student by a teacher
+ */
+export const getStudentMaterials = (params?: GetStudentMaterialsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<MaterialsResponseDto>(getGetStudentMaterialsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentMaterialUrlUrl = (fileId: string,) => {
+
+
+
+
+  return `/api/v1/student/materials/${fileId}/url`
+}
+
+/**
+ * Rechecks live session, student access, explicit permission and verified object under a row lock; appends FileAuditLog without the signed URL. Maximum TTL 900 seconds, capped by grant expiry. Revocation stops new URL issuance; an already issued S3 capability remains valid until its expiry. No CSRF/Idempotency-Key needed for this GET.
+ * @summary Authorize one private material and issue a temporary GET capability
+ */
+export const getStudentMaterialUrl = (fileId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<FileSignedUrlResponseDto>(getGetStudentMaterialUrlUrl(fileId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentMeUrl = () => {
+
+
+
+
+  return `/api/v1/student/me`
+}
+
+/**
+ * Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+ * @summary Current student profile and access stage
+ */
+export const getStudentMe = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentMeResponseDto>(getGetStudentMeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentNotificationsUrl = (params?: GetStudentNotificationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/notifications?${stringifiedParams}` : `/api/v1/student/notifications`
+}
+
+/**
+ * Newest first; default30, max100. Last500 active items,90-day TTL, one shared read status. Group by returned type in the client.
+ * @summary Read own recent internal notifications
+ */
+export const getStudentNotifications = (params?: GetStudentNotificationsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<NotificationsResponseDto>(getGetStudentNotificationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getMarkStudentNotificationReadUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/student/notifications/${id}/read`
+}
+
+/**
+ * Idempotent204, nonexistent/foreign/archived id404. CSRF and UUID Idempotency-Key required.
+ * @summary Mark one own notification read
+ */
+export const markStudentNotificationRead = (id: string, options?: Parameters<typeof schoolEmptyFetch>[1]) => {
+
+  return schoolEmptyFetch<void>(getMarkStudentNotificationReadUrl(id),
+  {
+    ...options,
+    method: 'PATCH'
+
+
+  }
+);}
+
+
+
+export const getGetStudentUnreadNotificationCountUrl = () => {
+
+
+
+
+  return `/api/v1/student/notifications/count`
+}
+
+/**
+ * @summary Count own unread notifications without loading bodies
+ */
+export const getStudentUnreadNotificationCount = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<UnreadCountDto>(getGetStudentUnreadNotificationCountUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getMarkAllStudentNotificationsReadUrl = () => {
+
+
+
+
+  return `/api/v1/student/notifications/read-all`
+}
+
+/**
+ * Empty response204 including replay. CSRF and UUID Idempotency-Key required. Notifications arriving after this operation remain unread.
+ * @summary Mark all currently visible notifications read
+ */
+export const markAllStudentNotificationsRead = ( options?: Parameters<typeof schoolEmptyFetch>[1]) => {
+
+  return schoolEmptyFetch<void>(getMarkAllStudentNotificationsReadUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getUpdateStudentProfileUrl = () => {
+
+
+
+
+  return `/api/v1/student/profile`
+}
+
+/**
+ * Does not change registry full_name, email or phone. CSRF and UUID Idempotency-Key required. Avatar is private and available through an authenticated endpoint.
+ * @summary Update own display name and owned verified avatar
+ */
+export const updateStudentProfile = (updateProfileDto: UpdateProfileDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentProfileDto>(getUpdateStudentProfileUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateProfileDto)
+  }
+);}
+
+
+
+export const getGetStudentAvatarUrl = () => {
+
+
+
+
+  return `/api/v1/student/profile/avatar`
+}
+
+/**
+ * Private no-store binary response, no signed capability URL. Deleted/quarantined/foreign files are not served.
+ * @summary Read own selected private raster avatar
+ */
+export const getStudentAvatar = ( options?: Parameters<typeof schoolBlobFetch>[1]) => {
+
+  return schoolBlobFetch<Blob>(getGetStudentAvatarUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentReportsUrl = (params?: GetStudentReportsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/reports?${stringifiedParams}` : `/api/v1/student/reports`
+}
+
+/**
+ * Newest creation date first; latest published version per checkpoint, only confirmed eight-lesson reports. Draft corrections never suppress a published version. Public content only.
+ * @summary Read latest published teacher educational reports
+ */
+export const getStudentReports = (params?: GetStudentReportsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ReportsResponseDto>(getGetStudentReportsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getMarkStudentReportReadUrl = (reportId: string,) => {
+
+
+
+
+  return `/api/v1/student/reports/${reportId}/read`
+}
+
+/**
+ * CSRF and UUID Idempotency-Key required. First successful mark is 204; every repeat (including cached command replay) is 200. No response body and no teacher report mutation.
+ * @summary Mark one published report version read
+ */
+export const markStudentReportRead = (reportId: string, options?: Parameters<typeof schoolEmptyFetch>[1]) => {
+
+  return schoolEmptyFetch<void>(getMarkStudentReportReadUrl(reportId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getRequestStudentEducationPdfUrl = () => {
+
+
+
+
+  return `/api/v1/student/reports/export-pdf`
+}
+
+/**
+ * CSRF and UUID Idempotency-Key required. Optional subject and inclusive date selection; omitted body exports all history. Estimated 30s is not a completion guarantee. Poll every 2s for at most 60s, then retry later. No report creation or external family message.
+ * @summary Queue a private educational history PDF
+ */
+export const requestStudentEducationPdf = (exportPdfRequestDto?: ExportPdfRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ExportPdfResponseDto>(getRequestStudentEducationPdfUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(exportPdfRequestDto)
+  }
+);}
+
+
+
+export const getGetStudentEducationPdfStatusUrl = (jobId: string,) => {
+
+
+
+
+  return `/api/v1/student/reports/export-pdf/${jobId}`
+}
+
+/**
+ * Every poll rechecks student access. READY signatures expire exactly one hour after ready_at; polling never extends the expiry. After expiry returns FAILED/PDF_EXPORT_EXPIRED without a URL. Foreign/nonexistent jobs return the same 403.
+ * @summary Read own PDF job state and a fixed-expiry signed download
+ */
+export const getStudentEducationPdfStatus = (jobId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PdfJobStatusDto>(getGetStudentEducationPdfStatusUrl(jobId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getConfirmStudentEmailChangeUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/change-email/confirm`
+}
+
+/**
+ * OTP lifetime10min, max5 attempts, single use.Updates AuthAccount login only, records audit, revokes old sessions and rotates cookies. No change to CRM contacts or other pupil identities.
+ * @summary Confirm a six-digit OTP and replace the student login email
+ */
+export const confirmStudentEmailChange = (changeEmailConfirmDto: ChangeEmailConfirmDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<EmailChangedDto>(getConfirmStudentEmailChangeUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(changeEmailConfirmDto)
+  }
+);}
+
+
+
+export const getRequestStudentEmailChangeUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/change-email/request`
+}
+
+/**
+ * Every request invalidates previous OTPs.200 only after mail provider accepts; no cached secret body/hash.5 requests per15min/account; configured sender and OTP HMAC secret required.
+ * @summary Verify current password and send a new-email OTP
+ */
+export const requestStudentEmailChange = (changeEmailRequestDto: ChangeEmailRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<EmailOtpRequestedDto>(getRequestStudentEmailChangeUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(changeEmailRequestDto)
+  }
+);}
+
+
+
+export const getChangeStudentPasswordUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/change-password`
+}
+
+/**
+ * Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.
+ * @summary Replace temporary student password
+ */
+export const changeStudentPassword = (changeStudentPasswordDto: ChangeStudentPasswordDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentPasswordChangedDto>(getChangeStudentPasswordUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(changeStudentPasswordDto)
+  }
+);}
+
+
+
+export const getChangeStudentPasswordLegacyUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/change-password`
+}
+
+/**
+ * @deprecated
+ * @summary Compatible POST alias for student password change
+ */
+export const changeStudentPasswordLegacy = (changeStudentPasswordDto: ChangeStudentPasswordDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentPasswordChangedDto>(getChangeStudentPasswordLegacyUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(changeStudentPasswordDto)
+  }
+);}
+
+
+
+export const getGetStudentSessionsUrl = () => {
+
+
+
+
+  return `/api/v1/student/security/sessions`
+}
+
+/**
+ * @summary List own active sessions without cookie/CSRF secrets
+ */
+export const getStudentSessions = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SessionInfoDto[]>(getGetStudentSessionsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getRevokeStudentSessionUrl = (sessionId: string,) => {
+
+
+
+
+  return `/api/v1/student/security/sessions/${sessionId}`
+}
+
+/**
+ * Current session409, foreign/unknown404, repeated revocation204. CSRF required.
+ * @summary Revoke another session belonging to the same student login
+ */
+export const revokeStudentSession = (sessionId: string, options?: Parameters<typeof schoolEmptyFetch>[1]) => {
+
+  return schoolEmptyFetch<void>(getRevokeStudentSessionUrl(sessionId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSkillMapsUrl = (params?: GetStudentSkillMapsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/skills?${stringifiedParams}` : `/api/v1/student/skills`
+}
+
+/**
+ * Returns an array for all owned subjects; optional subjectId filters to one. Four qualitative statuses, no ratings. Counts confirmed conducted lessons across enrollments; no reset on subscription or teacher change.
+ * @summary Read subject skill maps
+ */
+export const getStudentSkillMaps = (params?: GetStudentSkillMapsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SubjectSkillMapDto[]>(getGetStudentSkillMapsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSkillAuditUrl = (params: GetStudentSkillAuditParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/skills/audit?${stringifiedParams}` : `/api/v1/student/skills/audit`
+}
+
+/**
+ * Newest first, public comments only. Foreign and nonexistent skills produce the same 403. No internal pedagogical basis is exposed.
+ * @summary Read own skill changes
+ */
+export const getStudentSkillAudit = (params: GetStudentSkillAuditParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SkillAuditResponseDto>(getGetStudentSkillAuditUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSkillSnapshotsUrl = (params?: GetStudentSkillSnapshotsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/skills/snapshots?${stringifiedParams}` : `/api/v1/student/skills/snapshots`
+}
+
+/**
+ * Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
+ * @summary Read confirmed immutable skill snapshots
+ */
+export const getStudentSkillSnapshots = (params?: GetStudentSkillSnapshotsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SkillSnapshotResponseDto>(getGetStudentSkillSnapshotsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionUrl = (params?: GetStudentSubscriptionParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription?${stringifiedParams}` : `/api/v1/student/subscription`
+}
+
+/**
+ * Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.
+ * @summary Read-only CRM subscription showcase
+ */
+export const getStudentSubscription = (params?: GetStudentSubscriptionParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SubscriptionDetailsDto>(getGetStudentSubscriptionUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionLedgerUrl = (params?: GetStudentSubscriptionLedgerParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription/ledger?${stringifiedParams}` : `/api/v1/student/subscription/ledger`
+}
+
+/**
+ * Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.
+ * @summary Chronological paid lesson-right operations for the selected subscription
+ */
+export const getStudentSubscriptionLedger = (params?: GetStudentSubscriptionLedgerParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentSubscriptionLedgerResponseDto>(getGetStudentSubscriptionLedgerUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubscriptionPaymentsUrl = (params?: GetStudentSubscriptionPaymentsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/subscription/payments?${stringifiedParams}` : `/api/v1/student/subscription/payments`
+}
+
+/**
+ * Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.
+ * @summary Confirmed payment allocations for the selected subscription
+ */
+export const getStudentSubscriptionPayments = (params?: GetStudentSubscriptionPaymentsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PaymentHistoryResponseDto>(getGetStudentSubscriptionPaymentsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 

@@ -1,0 +1,838 @@
+{
+  "task": "STU-11",
+  "date": "2026-10-28",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_PROVIDER_S3_ACCEPTANCE_DEFERRED",
+  "ownerDecision": {
+    "postgresVerification": "DEFERRED",
+    "statement": "Завершить с отложенной PostgreSQL-проверкой",
+    "inheritedFrom": "STU-08/09/10; no credential bypass or substitute database"
+  },
+  "scope": {
+    "profile": "PATCH alias/avatar only; no change to registry full_name, email or phone",
+    "password": "PATCH canonical, deprecated POST retained;8–128 Latin-letter/digit; wrong current401; actual scrypt format retained; working-account default12–256 unchanged",
+    "email": "Current password + six-digit OTP, HMAC account/challenge/address binding,10min exact TTL,5 attempts, resend invalidation incl live-code random collision, single use; no secret request hash/cache",
+    "sessions": "Own active sessions only; observed bounded device metadata/socket IP; other own revoke204, current409, foreign/unknown404",
+    "blocking": "Only GET /student/me and POST/PATCH /student/security/change-password bootstrap exceptions; strict403 initial flag then402 no-access, including former STU-07 subscription read exception",
+    "managerContacts": "Current authorized AssignedManager public wa.me/t.me fields scoped to Student.id; no global fallback or publication of private staff phone",
+    "ui": "Minimal StudentAccess in QA shell: initial-password form, suspended contacts, active state, no student passkey/staff workspace; refresh on focus and after password rotation"
+  },
+  "routes": [
+    "PATCH /api/v1/student/profile",
+    "GET /api/v1/student/profile/avatar",
+    "PATCH /api/v1/student/security/change-password",
+    "POST /api/v1/student/security/change-password (compatible deprecated alias)",
+    "POST /api/v1/student/security/change-email/request",
+    "POST /api/v1/student/security/change-email/confirm",
+    "GET /api/v1/student/security/sessions",
+    "DELETE /api/v1/student/security/sessions/:sessionId"
+  ],
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261028110000_stu11_profile_security/migration.sql",
+    "sha256": "164e03faf37da470a0d76fc24cf5ae82ce70137b272a6bf025b8b2a277d1b8fb",
+    "statements": 24,
+    "plpgsqlFunctions": 6,
+    "newTablesMatchPrismaColumns": ["student_email_changes"],
+    "addedColumnsPresentInPrisma": {
+      "students": ["display_name", "avatar_file_id"],
+      "staff_accounts": ["student_whatsapp_url", "student_telegram_url"],
+      "sessions": ["user_agent", "ip_address"],
+      "auth_accounts": ["email_verified_at"]
+    },
+    "identifierLength": "PASS <=63 bytes",
+    "syntax": "PASS",
+    "workingApplied": false
+  },
+  "schema": {
+    "models": 88,
+    "columns": 946,
+    "foreignKeys": 201
+  },
+  "mail": {
+    "adapter": "Resend HTTPS POST /emails; fixed host, text-only OTP,5s timeout, no redirect, provider idempotency key by challenge UUID",
+    "requiredServerSecrets": ["RESEND_API_KEY", "STUDENT_EMAIL_FROM", "STUDENT_EMAIL_OTP_SECRET"],
+    "connected": false,
+    "realMessagesSent": 0,
+    "boundary": "HTTP200 only after provider acceptance and active challenge acknowledgement; unconfigured503. Network outside transaction. Unknown timeout may still deliver; code valid until expiry/superseded. No plaintext persistence/background resend.",
+    "providerChoice": "Resend recommended in optional async question; proceeded with announced assumption, no provider/account configuration performed",
+    "documentation": [
+      "https://github.com/resend/resend-openapi/blob/main/resend.yaml",
+      "https://resend.com/docs/dashboard/emails/idempotency-keys"
+    ]
+  },
+  "privacy": {
+    "audit": "actor_id/action/recorded_at and resource id only; success or committed DENIED, no passwords/OTP/login-email values/cookies",
+    "avatar": "Owned VERIFIED JPEG/PNG/WebP<=2MiB, bounded authenticated S3 read, MIME+signature checks, no-store/nosniff/CSP, relative endpoint rather than signed capability",
+    "metadata": "Legacy sessions return empty strings; socket IP may be proxy address, untrusted forwarded header ignored",
+    "phone": "No student phone mutation/verification API added"
+  },
+  "verification": {
+    "prismaValidate": "PASS",
+    "prismaGenerate": "PASS",
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "sdkGenerateBuild": "PASS",
+    "frontendBuild": "PASS",
+    "targetedLint": "PASS",
+    "openapiOperations": 85,
+    "newTargetedTestsPassed": 66,
+    "relatedRegressionTestsPassed": 61,
+    "totalDistinctJestTestsPassed": 127,
+    "runs": [
+      {
+        "path": ".codex/stu11-regression.json",
+        "passed": 53,
+        "failed": 1,
+        "skipped": 0
+      },
+      {
+        "path": ".codex/stu11-http.json",
+        "passed": 40,
+        "failed": 1,
+        "skipped": 0
+      },
+      {
+        "path": ".codex/stu11-unit-sdk.json",
+        "passed": 31,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "path": ".codex/stu11-http-fix.json",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 54
+      },
+      {
+        "path": ".codex/stu11-email-final.json",
+        "passed": 12,
+        "failed": 0,
+        "skipped": 30
+      }
+    ],
+    "runNote": "Initial existing /me fixture expected no managerContacts; updated bootstrap shape. Initial new HTTP test used unregistered GET profile; corrected to protected PATCH. Affected tests rechecked; no unresolved failures. Later email availability checks rerun after case-insensitive legacy reservation fix; no full repeated regression.",
+    "tests": [
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "GET student/me is 200 with initial flag and no passkey requirement, including suspended access",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "no session is 401 Problem Details; teacher is 403 and cannot read student profile",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "STU-11 global guards protect profile and future controllers without paid access",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "all mutation verbs require CSRF before a student handler (post)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "all mutation verbs require CSRF before a student handler (patch)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "all mutation verbs require CSRF before a student handler (put)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "all mutation verbs require CSRF before a student handler (delete)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "password-change route remains available while access is suspended, but missing CSRF is 403",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "initial login -> change password -> cabinet opens, old sessions revoked and mandatory audit/outbox contain no credentials (mock Prisma HTTP contract)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "wrong current password and failed mandatory audit leave flag and hash unchanged",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "password DTO and service reject malformed input before writes: {\"currentPassword\":\"Temporary-student-password-2026!\",\"newPassword\":\"short\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "password DTO and service reject malformed input before writes: {\"currentPassword\":\"Temporary-student-password-2026!\",\"newPassword\":\"Replaced-student-password-2026!\",\"mustChangePassword\":false}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "password DTO and service reject malformed input before writes: {\"newPassword\":\"Replaced-student-password-2026!\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "password DTO and service reject malformed input before writes: null",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "student WebAuthn registration and authentication are denied by the existing auth boundary",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-http.test.mjs",
+        "name": "student guards and RFC errors do not change non-student API behavior",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "authenticated active student can read own subscription with date-only DTO and no-store",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "STU-11 expired access blocks the previously exempt subscription read",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "NONE has null plan and quantity fields",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "active student can read confirmed history without CSRF: /payments",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "active student can read confirmed history without CSRF: /ledger",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "money remains exact Decimal string with actual MDL currency",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "lesson balance history returns quantities as strings",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "selected foreign subscription is 403: ",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "selected foreign subscription is 403: /payments",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "selected foreign subscription is 403: /ledger",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "two accounts select their own plans and histories",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "nonexistent subscription ID also returns 403 without enumerating records",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "no session is 401, teacher is 403, initial password change still required",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "invalid query rejected: ?subscriptionId=bad",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "invalid query rejected: ?studentProfileId=36d019de-23ff-4c9f-925e-b5a6a9d133d7",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "invalid query rejected: /payments?pageSize=101",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "invalid query rejected: /ledger?page=0",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "invalid query rejected: ?page=1",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "STU-11 blocks subscription, materials and dashboard without paid access",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "no post payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "no patch payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-subscription-http.test.mjs",
+        "name": "no delete payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "student context uses only verified session identity, maps existing Student, and returns initial flag",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "repeated and concurrent guard calls share one profile load inside the same request",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "context cache does not survive into a different HTTP request",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "cache cannot reuse another authenticated account",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "missing session is 401 and teacher or mixed-kind account is 403 before any profile query",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "profile missing or archived/deactivated is denied and query requires active profile/person/account",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "database failure is a sanitized 503 and failed audit denies access",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "student global guards ignore other API modules",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "inactive access and initial password do not block bootstrap route /me",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "inactive access and initial password do not block bootstrap route /security/change-password",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "protected path /dashboard returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "protected path /profile-other returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "protected path /security-other returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "protected path /me/foreign returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "protected routes require initial password change, while paid access is accepted afterwards",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-context.test.mjs",
+        "name": "scoped session and CSRF adapters reuse successful core checks and call core when necessary",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile updates only own display alias, leaves registry name, email and other pupil intact",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile selects an owned verified raster and returns a private avatar endpoint",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index1",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index2",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index3",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index4",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"email\":\"unverified@example.invalid\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"phone\":\"+123456789\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"displayName\":\"\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"displayName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"avatarFileId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {\"studentProfileId\":\"b461f274-a01a-45d4-9417-813a05006316\"}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile rejects unsupported/invalid fields {}",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "profile replay does not duplicate audit/outbox or lose scope",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password blocks profile, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password blocks profile/avatar, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password blocks security/sessions, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password blocks subscription, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password blocks notifications/count, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "initial password takes priority over inactive access; bootstrap me remains200",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "inactive protected profile/avatar is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "inactive protected security/sessions is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "inactive protected subscription/payments is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "inactive protected notifications/count is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "PATCH password accepts8 chars while initially locked/inactive, clears flag and rotates sessions",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "wrong current password401 and composition/length invalid400 without writes",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "email request verifies exact current password and does not change login before OTP",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "wrong password never sends an email or allocates an OTP",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "valid OTP changes AuthAccount login with audit, preserves CRM name/contact identity and rotates cookies",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "OTP is single-use even from another still-valid own-session reference",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "OTP expires exactly at10 minutes with a mocked database clock",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "resend invalidates prior code and refuses a random collision with a live prior OTP",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "wrong-code attempts persist despite400; after5 the right code is invalid",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "OTP belongs to requesting login and exact new email",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "existing email is unavailable after password verification, no mail or merge",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "mail failure does not return sent200 and leaves login unchanged",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "password change revokes pending email OTP",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "confirmation audit/outbox failure rolls back login, used state and revocation",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "sessions list has only own active sessions and no token/hash fields",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "revoke other own session204 and repeated204; current409, foreign or missing404",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "teacher403, no session401, CSRF required for every sensitive mutation",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "OTP random six digits, HMAC bound to challenge/account/email and constant-size comparison",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "OTP and mail fail closed without configured independent secret/sender",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "Resend request uses fixed HTTPS endpoint, text-only OTP and provider idempotency key",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "mail provider failure400 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "mail provider failure429 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "mail provider failure500 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "student8-char letter/digit password uses actual scrypt and verifies; standard policy stays12",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "session device metadata is bounded and takes socket IP instead of forwarded spoof",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: javascript:alert(1)",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: https://wa.me.evil.invalid/37360000123",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: http://wa.me/37360000123",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: https://wa.me/0000000",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: https://t.me/valid_user?url=evil",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "untrusted manager link rejected: https://evil.invalid/manager",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "manager query is scoped to pupil and authorized active staff, never global env fallback",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "email request rate is capped at5 per identity; persisted sixth attempt429",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "private avatar read checks expected size/type and raster signature, no signing URL",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "avatar forbidden active MIMEimage/svg+xml",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "avatar forbidden active MIMEtext/html",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security.test.mjs",
+        "name": "spoofed PNG signature rejected and provider details sanitized",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-sdk.test.mjs",
+        "name": "generated change-password uses PATCH and preserves password whitespace",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-sdk.test.mjs",
+        "name": "generated revoke-session consumes empty204",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-sdk.test.mjs",
+        "name": "generated avatar uses Blob without leaking binary transport flag into fetch",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-sdk.test.mjs",
+        "name": "avatar error retains402 manager contacts instead of a successful Blob",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "name": "generated read-receipt SDK accepts empty HTTP 204",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "name": "generated read-receipt SDK accepts empty HTTP 200",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "name": "JSON operations still reject an unexpected empty response",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "name": "bodyless operation still preserves JSON errors and never treats 403 as success",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "name": "no-content SDK rejects a successful but unexpected JSON response body",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-transport.test.mjs",
+        "name": "client preserves RFC Problem Details message and manager contacts for suspended access",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-transport.test.mjs",
+        "name": "client keeps legacy errors compatible and discards malformed contacts",
+        "status": "passed"
+      },
+      {
+        "file": "tests/unit/student-security-http.test.mjs",
+        "name": "legacy mixed-case login also reserves its email without account merging",
+        "status": "passed"
+      }
+    ],
+    "boundary": "Actual Nest/session/CSRF/critical-command pipeline with mock Prisma/S3/mail; actual scrypt/HMAC exercised separately. No PostgreSQL or real provider/S3 claims",
+    "browser": {
+      "status": "PASS",
+      "fixture": "SYNTHETIC browser API mocks only; no real session/DB/provider",
+      "checks": [
+        "Suspended student sees own manager WhatsApp/Telegram and no passkey controls",
+        "390px suspended view has no horizontal overflow",
+        "Forced password takes priority over inactive access",
+        "401 stays on password form and clears both password inputs",
+        "PATCH success reloads bootstrap and displays suspension rather than privileged workspace",
+        "Unsafe/missing manager links are not rendered",
+        "Active student stays outside staff MFA and QA command workspace",
+        "Returning focus refreshes the session and server access state"
+      ],
+      "screenshots": [
+        ".codex/stu11-ui/suspended-desktop.png",
+        ".codex/stu11-ui/suspended-mobile.png",
+        ".codex/stu11-ui/initial-password-mobile.png"
+      ],
+      "pageErrors": [],
+      "backgroundHealth": "Local API/health was not started; initial preview logged ECONNREFUSED for the unmocked public health probe. Student UI flow used API mocks; no real backend/health acceptance claim."
+    },
+    "sql": {
+      "path": "tests/evidence/stu11-sql-syntax.json",
+      "readOnlyCasesPrepared": 6,
+      "postgresExecution": "DEFERRED_BY_OWNER: syntax/column names/parameter continuity only; no typed binding, trigger enforcement, commit invariants, isolation or migration execution claim"
+    },
+    "ci": "student-module job includes pnpm test:stu11"
+  },
+  "notPerformed": [
+    "Working PostgreSQL queries, migration application, runtime trigger/grant/typed-binding checks",
+    "Read-only fixture integration suite execution",
+    "Real OTP delivery, sender verification or secret provisioning",
+    "Real S3 avatar retrieval/revocation acceptance",
+    "Concurrent email/session/profile operations on PostgreSQL",
+    "Production writes/deployment or extra DB/Neon branch/container",
+    "Whole-project regression and FND-GATE"
+  ],
+  "remaining": [
+    "Verify migration chain, constraints, consumed OTP/login commit invariants, wrong-attempt persistence and concurrency on authorized PostgreSQL",
+    "Configure server mail secrets/verified sender and test delivery/failure without logging codes",
+    "Verify S3 verified-avatar path and current assigned-manager link data",
+    "Exercise full browser→API→DB/provider session rotation, then phase gate",
+    "Full profile/email/session management UI and a phone-verification flow are separate from the minimal access screen"
+  ],
+  "sourceHashes": {
+    "apps/api/src/student/me/me.service.ts": "fe556f71875c1b191cb4f96e63ef0b2858634eac5e894de9d20e8d1fef34198c",
+    "apps/api/src/student/me/me.dto.ts": "2f8ea8f2a77e05c3942ea2021e691e7196eac0362710458efc390ea45a4cb15d",
+    "apps/api/src/student/student-context.guard.ts": "211bbb5aa980fd4c0733c90040b48476adf1991371c0fb6ebbc7ae9a4e09a3e9",
+    "apps/api/src/student/active-subscription.guard.ts": "6ad5578557080b623135290ca7b024f5063b12a547967be0565a62fc2b00c488",
+    "apps/api/src/student/access-policy.ts": "2ca8130d2db6abf7601896efac4d0854499533e846cfe6ff3f296b091af6d4a1",
+    "apps/api/src/student/manager-contacts.ts": "91b4766ae66cd2d21133504b79e4b17d82b439fe0dacee4b0e2b5c3b66bc0772",
+    "apps/api/src/student/student-context.interface.ts": "50f6d8f7017b96f186413ad063851be96e3a5adad8745299cd0cf0e1471d720d",
+    "apps/api/src/student/student.module.ts": "887ea28c739d9751aabf2415e4ec97b033c2035832e68f8b1cf889380408f70f",
+    "apps/api/src/core/session/session.store.ts": "13bb8d741fd41b2b2bf7826314f88762ccda3ffbf01fb2abd31c2af2e127fb33",
+    "apps/api/src/modules/identity/passwords.ts": "ee3314953275062793eb69d5b5852cf58c28fea8ad277a47ea8512444e373c24",
+    "apps/api/src/modules/identity/identity.service.ts": "664b1df8ae42f950ad24c3cca3cd711f07d92b5c09cd5178181d3c84c5b9da67",
+    "apps/api/src/modules/identity/identity.module.ts": "bd4480d3d98b5961b1887884ac81b40e0e73fd6e83c05c14ed782b56ecf23e54",
+    "apps/api/src/modules/identity/auth-rate-limit.service.ts": "92a99bac54fad8f6d854b349a64b488c8c2c9388d6ab673ba4d93db19467e661",
+    "apps/api/src/modules/identity/recovery.service.ts": "02e9c993de2fd724fe5827d182ca188fa4056e763b87429086fc72d57870e0f3",
+    "apps/api/src/modules/storage/private-uploads.service.ts": "7fe57565d1afccfdeaf9c1e263ec27de397fc12ea7bfa9e116200910712bcda6",
+    "apps/worker/src/handlers.ts": "c6fea8fdbd61eac0f7416ae68f8c27841dc50ca145ece59fb34114fc1eb34676",
+    "apps/qa-shell/src/App.tsx": "f5b326f49b46f7940242a9d381fd07ad963027d2ce5b3e68860a627854f3a246",
+    "apps/qa-shell/src/StudentAccess.tsx": "6bf94e4c15f975d6c3b43f14b9a8ceb99305a70d1b567d5ea201d67935d28181",
+    "apps/qa-shell/src/style.css": "3c5fd7ed47056a78c6e79eba3d1f683319841aa0ea60838e937733b4ad70a215",
+    "packages/api-contracts/src/transport.ts": "79c9b1e2b4236b944603965209bcd11517bbfaad5f3deb24f56229b68768494e",
+    "packages/api-contracts/orval.config.mjs": "fa6bb179b55bdb56d8f05094a9ba728be33bed976c39a5929cec278e2ddb6479",
+    "packages/api-contracts/openapi/openapi.json": "73c0ee318c3c23cfff186652c95b7fabe7b3ef9eb3aa694b730265bfbc933731",
+    "packages/db/prisma/schema.prisma": "bee740a76540ae8140d3b837e1b7ba0874246499d381db98ed2228a2e81e5f56",
+    "packages/db/schema.contract.json": "6ef2014978e0b1cdac11771a046b96480a4756490042787c285fd9b91e8b3559",
+    "packages/db/ERD.md": "c0350cc974f0ab162428208692cbb09f82160d36cf2342de2e3ab2d435c104de",
+    ".env.example": "5d493fec75f73f52121bddb20f4a88e7979ade5a896351208dab0edfa7d38cdb",
+    "package.json": "8d8b9402b02b06caad1d66ca2b63dffcbd6af753aa00601dd1dc81c570fbc245",
+    ".github/workflows/ci.yml": "8a037d97a433efb8be3920a49763e157112aa86704bcbc20b9a5fdb7dedb2bbf",
+    "apps/api/src/student/security/change-password.controller.ts": "31be3ed2fc76eb11b3e23816081c2598bfa90eaad5ceec60c58f256014607385",
+    "apps/api/src/student/security/change-password.dto.ts": "c603da6357d47d9d6355adb9525edf88a1e8ed85f76f33c8e435f03267198629",
+    "apps/api/src/student/security/change-password.service.ts": "95a28f50762a27c5d946e6b2c55ed23c691148145b843f753deee081d9860f3f",
+    "apps/api/src/student/security/email-otp.ts": "b7a5b77eec26ef87410d275455aa9eeed6c3b76662c9fd0b2025438b6a517861",
+    "apps/api/src/student/security/email.service.ts": "0ef10ec4836753ef13abce5356cb05ae266e0ecfe1cae20fb2ce886a02550fa1",
+    "apps/api/src/student/security/README.md": "4aeb3aea105f46fbc9c438c8955ce96999d039779c358135792e256688ae48cd",
+    "apps/api/src/student/security/security-commands.ts": "abd16e38b9f302ef91827ccf8655ff360590241acf829592e66f0b7d6e5f2b08",
+    "apps/api/src/student/security/security.controller.ts": "2c7c3dc818710132e7b8ae36d2df5a76d47c64ba2264f25ac10f2f0b13e0f4d9",
+    "apps/api/src/student/security/security.dto.ts": "f887e97d49a74502c439dca4963ff752bce64caa60ddb1fd4fd7e7b1c9295887",
+    "apps/api/src/student/security/sessions.service.ts": "765fffca96d656a4bb633b3997eb285a81298ed6a62167f58d35c9d05c4712b6",
+    "apps/api/src/student/profile/profile.controller.ts": "1360d7a325be16692300d80ca018f31583f1f3a2c25c818d216c8c77ac6aadd4",
+    "apps/api/src/student/profile/profile.dto.ts": "1e8e94907921c9f31d0b186b8f84619cfc5c0c5eba5b6a55cae10f1bf96b8735",
+    "apps/api/src/student/profile/profile.service.ts": "d5830b8dcffe1d3af57a7869182cca8f58c2f6ccbff25a3b3a17c62379886e87"
+  }
+}

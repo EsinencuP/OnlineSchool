@@ -1,0 +1,160 @@
+{
+  "task": "STU-12",
+  "recorded_at": "2026-10-28T16:36:40.922946+00:00",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "boundary": "Production SPA with local synthetic HTTP API; actual Nest HTTP tests use mock Prisma. No working DB writes, migrations, deployment or real S3/email actions. No additional DB or environment. FND-GATE and STUDENT-GATE remain open.",
+  "checks": {
+    "student_build": "PASS",
+    "qa_shell_build": "PASS",
+    "scoped_eslint": "PASS",
+    "targeted_unit_http": {
+      "passed": 157,
+      "suites": [
+        "student-context",
+        "student-http",
+        "student-lessons",
+        "student-lessons-http",
+        "student-homework",
+        "student-homework-http"
+      ],
+      "note": "Executed in scoped runs; overlapping reruns are not added to total."
+    },
+    "playwright": {
+      "startTime": "2026-10-28T16:32:20.588Z",
+      "duration": 20849.01,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "lighthouse_accessibility": {
+      "testedAt": "2026-10-28T16:35:41.180Z",
+      "lighthouseVersion": "13.6.0",
+      "boundary": "Production bundle, local synthetic API only; no working DB or S3 writes",
+      "results": [
+        {
+          "route": "/student",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/lessons",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/lessons/10000000-0000-4000-8000-000000000001",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/homework",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/skills",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/materials",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/subscription",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/notifications",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/profile",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/security",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/security/change-password",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/suspended",
+          "score": 100,
+          "failures": []
+        },
+        {
+          "route": "/student/login",
+          "score": 100,
+          "failures": []
+        }
+      ]
+    },
+    "static_package_smoke": "PASS: nested student index, JS/CSS and deep-link rewrite; no migrate/deploy execution",
+    "final_browser_smoke": {
+      "cards": 4,
+      "unreadBadge": "2",
+      "browserErrors": [],
+      "runner": "installed Playwright Chromium; system Chrome MCP launch unavailable"
+    },
+    "fixture_contracts": "PASS: no missing fixture routes in any of the 12 tests; asserts both unread badges start at2 and clear after read-all"
+  },
+  "reports": [
+    "output/stu12/playwright.json",
+    "output/stu12/accessibility.json",
+    "output/stu12/desktop.png",
+    "output/stu12/mobile.png"
+  ],
+  "source_sha256": {
+    "apps/student-cabinet/src/api.ts": "3c7aababad3b7ffb325fec72c51df6d98d88e537f28b494da82b57c997cabc02",
+    "apps/student-cabinet/src/components.tsx": "53a0bcfa3fe2720fa731a117b991262ed518fbe5f813333a0d25ad84ba35c646",
+    "apps/student-cabinet/src/Layout.tsx": "209918e1be44f2004c49aa66e0435c99f849682c9f298c98e4eeb240262b7db5",
+    "apps/student-cabinet/src/main.tsx": "c115c9b3e4012e3c60e54e2dfae26707d42e3e9fdb7ea6491f58cd7e16c5bbe2",
+    "apps/student-cabinet/src/router.tsx": "e8d32fd17670a36f089e2722f7e09ec8a2e0f25a65293b2e19a6dd78bac7ee84",
+    "apps/student-cabinet/src/style.css": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf",
+    "apps/student-cabinet/src/ui-store.ts": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86",
+    "apps/student-cabinet/src/pages/Account.tsx": "2dededddd0f7028aae6f9d4103352aab989b6f6802ee971b7a8d532602eb64aa",
+    "apps/student-cabinet/src/pages/Dashboard.tsx": "d264c3aff4b894c1677b68d0c4b767616f60673d6b2d5dc9f02020f4a170bac4",
+    "apps/student-cabinet/src/pages/Homework.tsx": "f5976e83afedb74db2ace7b74986829ef6a705a9d2d7e1d2e9b24b3953ba15db",
+    "apps/student-cabinet/src/pages/Learning.tsx": "65c246411e702d8b1a23d04955d390c21f7cdb551a18f3b26f69cda0507b61da",
+    "apps/student-cabinet/src/pages/Lessons.tsx": "c3c29153cd6072e84ffb4124ca6688f6318c1398ab61e5208ec416d6b0bfed5a",
+    "apps/student-cabinet/tests/accessibility.mjs": "e5a87bcaf87791bd7af1470167f05ff693dd4cf73e5232b500d26ce81c8bcccb",
+    "apps/student-cabinet/tests/fixture-server.mjs": "dce0e52e4a9b952b8f678495ed01478863941b0e05bbe68f9282b336a3f0c0d7",
+    "apps/student-cabinet/tests/student.spec.mjs": "cdbb1ff006d9988e2016b4942f6eb8881c5f6f9383dac7ce1b6437017b18d871",
+    "apps/student-cabinet/package.json": "1a80fd4d3d724bef2c0d6cef6f5a5260311e47bcd14f38ebafa5fcb795661675",
+    "apps/student-cabinet/README.md": "8cf2c3c8e9e11bfdcb73856d69a5cd19ce539f0abc7ac9a2595b10b83b0ea46d",
+    "apps/student-cabinet/PR_DESCRIPTION.md": "fac05b79f69b896dd177481dc23626229a46f821435cbcce4f3758a4dc04cf40",
+    "apps/student-cabinet/vite.config.ts": "f2e8e3fe5776dd0ffd82ff362422b50fd3d2deaca655da3a642477580e427053",
+    "apps/student-cabinet/playwright.config.mjs": "80df829729096f83f868cb96278a2fcdb7a961399b73876077b478020c074444",
+    "apps/api/src/student/me/me.dto.ts": "a77b145604e9235d2479a48581fa85476bcfb9c32e4938fcf92a784678c6a55c",
+    "apps/api/src/student/me/me.service.ts": "b925b2b4054e9d8e51d595fe0b4809cad2d263e22447d15e1f8e6e16f8cefb1e",
+    "apps/api/src/student/lessons/lessons.controller.ts": "ad7316d2d1989611e1d50dd2d2761cd38ada48e4449918125658d7eb74f85f19",
+    "apps/api/src/student/lessons/lessons.service.ts": "44c4440a6d19dd7ed508d3aff55cbd81fedbf0702a5c390442535c41445d2db9",
+    "apps/api/src/student/homework/homework.controller.ts": "4a782875c3611965d6fca8a6603f89057d8fd229357cd3f09432814067f62747",
+    "apps/api/src/student/homework/homework.service.ts": "d750fba093b2f27831265b40cf0f7a761215db73d3cf5e95ca58a5ce4c7aff8d",
+    "infra/vercel/build.mjs": "dbd411e04324338d121fd0a0096c0a3e8c8458b4a09ac442120608003d0b74a0",
+    "vercel.json": "ef24b2b128f59fc569ccd1f095dddf2d8c25addb90a4a1fb3273aff63e0d165c",
+    "packages/api-contracts/openapi/openapi.json": "1075b9333e2a57ddb1c1149937b92d73c3040c85bfa3d01e7327fccc6e63e199",
+    "packages/api-contracts/src/generated/client.ts": "46d7d2b85a3e1dbe354cf6b06a5cce376f6b4fe83cb5674449018a7afb93afdb"
+  },
+  "deferred": [
+    "Working authenticated session -> actual API -> Neon writes -> S3 upload/confirm/submit",
+    "Actual email OTP delivery",
+    "Manual acceptance and global regression gate",
+    "Separate authorized download contract for all homework attachments; profile avatar pre-upload contract"
+  ]
+}

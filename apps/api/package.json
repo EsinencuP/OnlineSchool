@@ -4,6 +4,14 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./notifications": {
+      "types": "./dist/modules/notifications/notification.service.d.ts",
+      "import": "./dist/modules/notifications/notification.service.js"
+    },
+    "./homework-drafts": {
+      "types": "./dist/student/homework/draft-expiry.module.d.ts",
+      "import": "./dist/student/homework/draft-expiry.module.js"
+    },
     "./serverless": {
       "types": "./dist/serverless.d.ts",
       "import": "./dist/serverless.js"
@@ -15,6 +23,10 @@
     "./schedule-deadlines": {
       "types": "./dist/modules/schedule/deadline.module.d.ts",
       "import": "./dist/modules/schedule/deadline.module.js"
+    },
+    "./education-export": {
+      "types": "./dist/student/reports/export-data.d.ts",
+      "import": "./dist/student/reports/export-data.js"
     }
   },
   "engines": {
@@ -33,7 +45,10 @@
     "export:openapi": "node scripts/export-openapi.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "3.1157.0",
+    "@aws-sdk/s3-request-presigner": "3.1157.0",
     "@js-temporal/polyfill": "0.5.1",
+    "@nestjs/cache-manager": "12.0.1",
     "@nestjs/common": "12.2.0",
     "@nestjs/core": "12.2.0",
     "@nestjs/platform-express": "12.2.0",
@@ -42,9 +57,14 @@
     "@online-school/db": "workspace:*",
     "@online-school/shared": "workspace:*",
     "@simplewebauthn/server": "14.0.3",
+    "cache-manager": "7.2.9",
     "class-transformer": "0.5.1",
     "class-validator": "0.15.1",
+    "keyv": "5.6.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "12.2.0"
   }
 }

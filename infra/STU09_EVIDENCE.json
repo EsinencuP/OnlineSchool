@@ -1,0 +1,140 @@
+{
+  "task": "STU-09",
+  "date": "2026-10-28",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+  "ownerDecision": {
+    "postgresVerification": "DEFERRED",
+    "statement": "Завершить с отложенной PostgreSQL-проверкой",
+    "inheritedFrom": "STU-08; working Neon not authorized, runtime credential file unreadable; no credential bypass or substitute database"
+  },
+  "endpoints": [
+    "GET /api/v1/student/reports",
+    "POST /api/v1/student/reports/:reportId/read",
+    "POST /api/v1/student/reports/export-pdf",
+    "GET /api/v1/student/reports/export-pdf/:jobId"
+  ],
+  "contracts": {
+    "read": "First 204, all repeats 200, empty body; exact-version isNew=false",
+    "export": "202 QUEUED, estimate +30s; durable JobRecord and owned PdfExportJob",
+    "status": ["QUEUED", "PROCESSING", "READY", "FAILED"],
+    "expiry": "Fixed ready_at +3600 seconds, no renewal on polling; expired becomes FAILED/PDF_EXPORT_EXPIRED; foreign job 403",
+    "scope": "Session-derived student id and requester; current public skill map, all published reports and attendance; no student report creation"
+  },
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+      "sha256": "1188311805a449aed5c0db19a52b6c2760817d181f612c3feaaf5a92c779eefe",
+      "statements": 24,
+      "plpgsqlFunctions": 4,
+      "newTablesMatchPrismaColumns": ["education_report_reads", "pdf_export_jobs"],
+      "syntax": "PASS",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 85,
+    "columns": 912,
+    "foreignKeys": 195
+  },
+  "implementation": [
+    "Only latest published LESSON_8 revision with proven/snapshotted eight confirmed lessons; draft corrections do not hide earlier publication",
+    "Whitelist four public report fields, no private JSON/lesson notes; current map is dated as of frozen source",
+    "Same-transaction receipts/jobs/idempotency/audit/outbox; active access and owner checked before enqueue/freeze/publication",
+    "Committed SKIP LOCKED claim, 120s lease, fresh DB clock after row lock, fenced attempt key, three safe retry attempts and frozen public source",
+    "PDFKit private create-only S3 object, SHA256/HEAD ambiguity resolution, safe lost-commit cleanup, deferred SUCCEEDED/READY consistency constraints",
+    "Worker PDF runs beside normal poll and drains on shutdown; render60s/20MiB/1000pages limits fail explicitly",
+    "Noto Sans Regular/Bold bundled with OFL license and Docker allowlist entries; actual synthetic PDF reviewed",
+    "No external family notifications; teacher create/checkpoint/deadline workflow remains separate"
+  ],
+  "verification": {
+    "prismaValidate": "PASS",
+    "prismaGenerate": "PASS",
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "sdkGenerateBuild": "PASS",
+    "targetedLint": "PASS",
+    "openapiBusinessOperations": 74,
+    "distinctStu09TestsPassed": 81,
+    "existingTransportRegressionPassed": 2,
+    "runs": [
+      {
+        "file": "tests/unit/student-reports.test.mjs",
+        "passed": 37,
+        "skipped": 0
+      },
+      {
+        "file": "tests/unit/student-reports-worker.test.mjs",
+        "passed": 15,
+        "skipped": 0
+      },
+      {
+        "file": "tests/unit/student-reports-sdk.test.mjs",
+        "passed": 5,
+        "skipped": 0
+      },
+      {
+        "file": "tests/unit/student-transport.test.mjs",
+        "passed": 2,
+        "skipped": 0
+      },
+      {
+        "file": "tests/unit/student-reports-http.test.mjs",
+        "passed": 3,
+        "skipped": 21
+      }
+    ],
+    "httpEvidence": "All 24 HTTP tests passed before final additions; three affected read/queue/status flows rechecked after final service change (remaining21 not rerun)",
+    "mockBoundary": "API/worker tests use mock Prisma and S3; AWS SDK presign tests use fake credentials and mocked time, no network",
+    "sqlSyntax": {
+      "path": "tests/evidence/stu09-sql-syntax.json",
+      "sourceExactSelectProjectionsParsed": 10,
+      "postgresExecution": "DEFERRED_BY_OWNER: no SQL binding, trigger execution, isolation or migration enforcement claim"
+    },
+    "pdfReview": {
+      "artifact": "output/pdf/stu09-sample-history.pdf",
+      "sha256": "ac6f7263dacd54dcc48130fcb08468b1c27efdbc396bb517a9e2f23e0e20430e",
+      "bytes": 25994,
+      "pages": 3,
+      "fixture": "SYNTHETIC ONLY; no actual student records",
+      "renderer": "apps/worker/src/education-pdf.ts via built dist",
+      "content": "PASS: four skill statuses, goals, two eight-lesson reports, 24 attendance rows, Cyrillic and Romanian diacritics, signature/footer",
+      "privacy": "PASS: injected internal-note marker excluded",
+      "embeddedFonts": ["/CZZZZZ+NotoSans-Bold", "/DZZZZZ+NotoSans-Regular"],
+      "textBounds": "PASS",
+      "pageHeaders": "PASS on all pages",
+      "visualReview": "PASS: three rasterized A4 pages inspected",
+      "limitations": "Local PDF rendering only; actual database, worker queue and S3 delivery are not verified"
+    },
+    "ci": "student-module job now runs pnpm test:stu09"
+  },
+  "notPerformed": [
+    "Working PostgreSQL queries, migrations and constraint/trigger execution",
+    "Read-only PostgreSQL fixture integration suite (prepared, deferred by owner)",
+    "Real S3 upload/download and service-side expiry/revocation acceptance",
+    "Docker image build, whole-project regression and FND-GATE",
+    "Additional databases, Neon branches or containers; production writes/deployments"
+  ],
+  "remaining": [
+    "Verify migration chain and grants on authorized working PostgreSQL, including concurrency/fencing and publication invariants",
+    "Configure real private S3 provider/credentials/lifecycle; verify valid download and rejection after one hour",
+    "Exercise browser/API/worker/S3 end-to-end before release",
+    "Implement teacher commands, automatic eight-lesson checkpoints and three-business-day report deadlines in teacher workflow"
+  ],
+  "sourceHashes": {
+    "apps/api/src/student/reports/reports.controller.ts": "008f2d52ea884c3a85e55ac327e159e36dd447fc59036f08763eea7677d853b2",
+    "apps/api/src/student/reports/reports.dto.ts": "1d913a0cba41e7201c0b30817401203e7979bbd15f98928b157878cdbf9d546a",
+    "apps/api/src/student/reports/reports.service.ts": "4fdeebda19c866eb0993f1844fddc70077a26e010598023ab64feae9bb6d7826",
+    "apps/api/src/student/reports/reports.sql.ts": "6cd05fe59f8e514b9aabe140917ae73d079a478a37a8937d9baba340f00a0f34",
+    "apps/api/src/student/reports/export-data.ts": "4a901bf7e4e8b062f1ecc53689743f18b93dd40fe71025097ca7898284fd5195",
+    "apps/api/src/student/reports/README.md": "d9c0b871db3d319d88faed8ae0129341664f217629f06b68dd7326d80457d3b9",
+    "apps/worker/src/pdf-exports.ts": "6e483026308b84c03b9d82b0e4a69f492c5c51024801ab5564a56f72beda5006",
+    "apps/worker/src/education-pdf.ts": "865caa48fad8aa01b850df5d96bda92f10ff5c10f79f8b04ee943829bc3087d7",
+    "apps/worker/src/worker.module.ts": "158d2ce33018e2d47c5c9157358bb40c153e139d1b2cfd89fed250a0cc44d7d7",
+    "apps/api/src/modules/storage/private-uploads.service.ts": "f91bab73188f0dbe9d0928caf7261275cc067227dd0fc492be586013adaaa26f",
+    "packages/db/prisma/schema.prisma": "2d1f10c07f6889594fae2979492dbdcbcb95187d514eb8fe69c693c642f1ba85",
+    "packages/api-contracts/src/transport.ts": "8f9ceda2fa6650aeb14817e4f0d320553ce64b69bb5692e670a3b0d5024cf7c5",
+    "packages/api-contracts/orval.config.mjs": "beb1572ccc3b40ff2433da7091b4d341b95a7a285ceeb0f101168786fc130b35",
+    ".dockerignore": "34cfec10a3265256165037cfeb59e818a31b761ccae11adef0cfa5a32dbb8114",
+    "pnpm-lock.yaml": "faa9c2c943ad31ae3343d121324077326d1669be449ada174514155832e06897"
+  }
+}

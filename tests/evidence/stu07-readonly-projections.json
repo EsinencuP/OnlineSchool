@@ -1,0 +1,512 @@
+{
+  "task": "STU-07",
+  "checkedAt": "2026-10-27T19:44:46.796Z",
+  "version": "18.6 (fd34222)",
+  "database": "existing working online_school, app_runtime",
+  "mode": "15 source-exact SELECT projections on CTE-only fictional rows; no persistent fixtures, DML, DDL or extra databases",
+  "passed": true,
+  "cases": [
+    {
+      "name": "default latest current frozen plan",
+      "mode": "details",
+      "query": {},
+      "expected": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000002",
+        "status": "FROZEN",
+        "lessonsRemaining": 4
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "status": "FROZEN",
+          "isFrozen": true,
+          "planName": "PLAN-LESSONS",
+          "validFrom": "2026-10-10T10:00:00+00:00",
+          "frozenFrom": "2026-10-26T10:00:00+00:00",
+          "validUntil": "2026-11-10T10:00:00+00:00",
+          "frozenUntil": "2026-10-28T10:00:00+00:00",
+          "lessonsTotal": 4,
+          "subscriptionId": "00000002-0000-4000-8000-000000000002",
+          "lessonsRemaining": 4
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "selected plan exact remaining ignores future lesson, restores cancellation and applies adjustments",
+      "mode": "details",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000001"
+      },
+      "expected": {
+        "status": "ACTIVE",
+        "lessonsRemaining": 7
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "status": "ACTIVE",
+          "isFrozen": false,
+          "planName": "PLAN-LESSONS",
+          "validFrom": "2026-10-01T10:00:00+00:00",
+          "frozenFrom": "2026-10-20T10:00:00+00:00",
+          "validUntil": "2026-11-01T10:00:00+00:00",
+          "frozenUntil": "2026-10-22T10:00:00+00:00",
+          "lessonsTotal": 8,
+          "subscriptionId": "00000002-0000-4000-8000-000000000001",
+          "lessonsRemaining": 7
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "expired plan retained",
+      "mode": "details",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000003"
+      },
+      "expected": {
+        "status": "EXPIRED",
+        "lessonsRemaining": 6
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "status": "EXPIRED",
+          "isFrozen": false,
+          "planName": "PLAN-LESSONS",
+          "validFrom": "2026-09-01T10:00:00+00:00",
+          "frozenFrom": null,
+          "validUntil": "2026-09-30T10:00:00+00:00",
+          "frozenUntil": null,
+          "lessonsTotal": 6,
+          "subscriptionId": "00000002-0000-4000-8000-000000000003",
+          "lessonsRemaining": 6
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "partial payment does not create paid rights",
+      "mode": "details",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000004"
+      },
+      "expected": {
+        "lessonsRemaining": 0
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "status": "ACTIVE",
+          "isFrozen": false,
+          "planName": "PLAN-LESSONS",
+          "validFrom": "2026-10-05T10:00:00+00:00",
+          "frozenFrom": null,
+          "validUntil": "2026-11-05T10:00:00+00:00",
+          "frozenUntil": null,
+          "lessonsTotal": 10,
+          "subscriptionId": "00000002-0000-4000-8000-000000000004",
+          "lessonsRemaining": 0
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "none",
+      "mode": "details",
+      "query": {},
+      "expected": null,
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": null,
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "foreign subscription",
+      "mode": "details",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000005"
+      },
+      "expected": null,
+      "forbidden": true,
+      "actual": {
+        "forbidden": true,
+        "data": null,
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "confirmed owned allocation only, no full shared receipt amount",
+      "mode": "payments",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000001",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 1,
+        "amount": "1500",
+        "currency": "MDL",
+        "lessonsAdded": 8
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "amount": "1500",
+              "currency": "MDL",
+              "paymentId": "00000006-0000-4000-8000-000000000001",
+              "confirmedAt": "2026-10-02T10:00:00+00:00",
+              "description": "Подтверждённая оплата: PLAN-LESSONS",
+              "lessonsAdded": 8
+            }
+          ],
+          "total": 1
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "corrected published receipt remains visible",
+      "mode": "payments",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000002",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 1,
+        "currency": "USD",
+        "lessonsAdded": 4
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "amount": "800",
+              "currency": "USD",
+              "paymentId": "00000006-0000-4000-8000-000000000002",
+              "confirmedAt": "2026-10-10T10:00:00+00:00",
+              "description": "Подтверждённая оплата: PLAN-LESSONS",
+              "lessonsAdded": 4
+            }
+          ],
+          "total": 1
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "exact four decimal EUR",
+      "mode": "payments",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000003",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 1,
+        "amount": "600.1234",
+        "currency": "EUR"
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "amount": "600.1234",
+              "currency": "EUR",
+              "paymentId": "00000006-0000-4000-8000-000000000003",
+              "confirmedAt": "2026-09-02T10:00:00+00:00",
+              "description": "Подтверждённая оплата: PLAN-LESSONS",
+              "lessonsAdded": 6
+            }
+          ],
+          "total": 1
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "partial payment history without granted lessons",
+      "mode": "payments",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000004",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 1,
+        "amount": "500",
+        "currency": "UAH",
+        "lessonsAdded": null
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "amount": "500",
+              "currency": "UAH",
+              "paymentId": "00000006-0000-4000-8000-000000000004",
+              "confirmedAt": "2026-10-05T10:00:00+00:00",
+              "description": "Подтверждённая оплата: PLAN-LESSONS",
+              "lessonsAdded": null
+            }
+          ],
+          "total": 1
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "all rights operations and retained freeze history",
+      "mode": "ledger",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000001",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 10,
+        "latestBalance": "7"
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "type": "UNFREEZE",
+              "entryId": "ae2e7915-b24c-6650-fc23-def19c7b53ff",
+              "lessonId": null,
+              "entryDate": "2026-10-22T10:00:00+00:00",
+              "description": "Разморозка абонемента",
+              "balanceAfter": "7",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "FREEZE",
+              "entryId": "2e236505-6358-bcc7-0c40-78926dda0872",
+              "lessonId": null,
+              "entryDate": "2026-10-20T10:00:00+00:00",
+              "description": "Заморозка абонемента",
+              "balanceAfter": "7",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "UNFREEZE",
+              "entryId": "74f9f7be-4af5-8b45-9d5a-d16acb2d71be",
+              "lessonId": null,
+              "entryDate": "2026-10-14T10:00:00+00:00",
+              "description": "Разморозка абонемента",
+              "balanceAfter": "7",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "FREEZE",
+              "entryId": "c632dbd1-5ecb-8976-c7b8-9dd1b177d7b1",
+              "lessonId": null,
+              "entryDate": "2026-10-12T10:00:00+00:00",
+              "description": "Заморозка абонемента",
+              "balanceAfter": "7",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "CREDIT",
+              "entryId": "00000012-0000-4000-8000-000000000003",
+              "lessonId": "00000013-0000-4000-8000-000000000001",
+              "entryDate": "2026-10-11T10:00:00+00:00",
+              "description": "Корректировка остатка занятий",
+              "balanceAfter": "7",
+              "balanceBefore": "6"
+            },
+            {
+              "type": "DEDUCTION",
+              "entryId": "00000012-0000-4000-8000-000000000002",
+              "lessonId": null,
+              "entryDate": "2026-10-10T10:00:00+00:00",
+              "description": "Корректировка остатка занятий",
+              "balanceAfter": "6",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "CREDIT",
+              "entryId": "00000012-0000-4000-8000-000000000001",
+              "lessonId": "00000013-0000-4000-8000-000000000002",
+              "entryDate": "2026-10-08T10:00:00+00:00",
+              "description": "Отмена списания занятия",
+              "balanceAfter": "7",
+              "balanceBefore": "6"
+            },
+            {
+              "type": "DEDUCTION",
+              "entryId": "00000011-0000-4000-8000-000000000018",
+              "lessonId": "00000013-0000-4000-8000-000000000002",
+              "entryDate": "2026-10-07T10:00:00+00:00",
+              "description": "Списание занятия",
+              "balanceAfter": "6",
+              "balanceBefore": "7"
+            },
+            {
+              "type": "DEDUCTION",
+              "entryId": "00000011-0000-4000-8000-000000000017",
+              "lessonId": "00000013-0000-4000-8000-000000000001",
+              "entryDate": "2026-10-06T10:00:00+00:00",
+              "description": "Списание занятия",
+              "balanceAfter": "7",
+              "balanceBefore": "8"
+            },
+            {
+              "type": "CREDIT",
+              "entryId": "00000008-0000-4000-8000-000000000001",
+              "lessonId": null,
+              "entryDate": "2026-10-05T10:00:00+00:00",
+              "description": "Начисление оплаченных занятий",
+              "balanceAfter": "8",
+              "balanceBefore": "0"
+            }
+          ],
+          "total": 10
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "ledger page retains total",
+      "mode": "ledger",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000001",
+        "page": 3,
+        "pageSize": 4
+      },
+      "expected": {
+        "total": 10,
+        "items": 2
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "type": "DEDUCTION",
+              "entryId": "00000011-0000-4000-8000-000000000017",
+              "lessonId": "00000013-0000-4000-8000-000000000001",
+              "entryDate": "2026-10-06T10:00:00+00:00",
+              "description": "Списание занятия",
+              "balanceAfter": "7",
+              "balanceBefore": "8"
+            },
+            {
+              "type": "CREDIT",
+              "entryId": "00000008-0000-4000-8000-000000000001",
+              "lessonId": null,
+              "entryDate": "2026-10-05T10:00:00+00:00",
+              "description": "Начисление оплаченных занятий",
+              "balanceAfter": "8",
+              "balanceBefore": "0"
+            }
+          ],
+          "total": 10
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "no future unfreeze event",
+      "mode": "ledger",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000002",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": {
+        "total": 2,
+        "types": [
+          "FREEZE",
+          "CREDIT"
+        ]
+      },
+      "forbidden": false,
+      "actual": {
+        "forbidden": false,
+        "data": {
+          "items": [
+            {
+              "type": "FREEZE",
+              "entryId": "5b3c5662-0490-2a45-6d75-054cb63c0ed6",
+              "lessonId": null,
+              "entryDate": "2026-10-26T10:00:00+00:00",
+              "description": "Заморозка абонемента",
+              "balanceAfter": "4",
+              "balanceBefore": "4"
+            },
+            {
+              "type": "CREDIT",
+              "entryId": "00000008-0000-4000-8000-000000000002",
+              "lessonId": null,
+              "entryDate": "2026-10-16T10:00:00+00:00",
+              "description": "Начисление оплаченных занятий",
+              "balanceAfter": "4",
+              "balanceBefore": "0"
+            }
+          ],
+          "total": 2
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "foreign payment query forbidden",
+      "mode": "payments",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000005",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": null,
+      "forbidden": true,
+      "actual": {
+        "forbidden": true,
+        "data": {
+          "items": [],
+          "total": 0
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    },
+    {
+      "name": "foreign ledger query forbidden",
+      "mode": "ledger",
+      "query": {
+        "subscriptionId": "00000002-0000-4000-8000-000000000005",
+        "page": 1,
+        "pageSize": 20
+      },
+      "expected": null,
+      "forbidden": true,
+      "actual": {
+        "forbidden": true,
+        "data": {
+          "items": [],
+          "total": 0
+        },
+        "server_version": "18.6 (fd34222)"
+      }
+    }
+  ]
+}

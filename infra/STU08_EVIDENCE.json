@@ -1,0 +1,124 @@
+{
+  "task": "STU-08",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+  "ownerDecision": {
+    "postgresVerification": "DEFERRED",
+    "statement": "Завершить с отложенной PostgreSQL-проверкой",
+    "reason": "Working Neon project is not authorized in the connected session; existing runtime env is unreadable by Node (EPERM). No credential bypass or substitute DB."
+  },
+  "endpoints": [
+    "GET /api/v1/student/skills",
+    "GET /api/v1/student/skills/audit",
+    "GET /api/v1/student/skills/snapshots"
+  ],
+  "contracts": {
+    "maps": "SubjectSkillMapDto[]; optional owned subjectId filter",
+    "snapshots": "SkillSnapshotResponseDto: items/total/page/pageSize",
+    "statuses": [
+      "NOT_STUDIED",
+      "FAMILIARIZING",
+      "PRACTICING",
+      "APPLYING"
+    ],
+    "legacyLevelMapping": {
+      "INTRODUCING": "FAMILIARIZING"
+    },
+    "unassessedMetadata": "Actual catalog creation timestamp; empty teacher name; no invented author"
+  },
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027160000_stu08_skill_level/migration.sql",
+      "sha256": "27b592ec58f2bf6ebefc442580931c8fa92c4efe31b298896c6b6cd72678b554",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "newTablesMatchPrismaColumns": [],
+      "syntax": "PASS",
+      "workingApplied": false
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "sha256": "1abdfccbc964c2569f0c26df742f8d030e42c77d4be1bc363b587e41f68ec3a1",
+      "statements": 39,
+      "plpgsqlFunctions": 6,
+      "newTablesMatchPrismaColumns": [
+        "skill_audit_logs",
+        "skill_snapshots",
+        "learning_goals",
+        "learning_goal_history"
+      ],
+      "syntax": "PASS",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 83,
+    "columns": 892,
+    "foreignKeys": 189
+  },
+  "implementation": [
+    "Three student GETs under existing session/STUDENT/context/initial-password/active-access guards",
+    "Owned pupil/subject across re-enrollments; custom skills scoped by student_id; dashboard excludes foreign custom entries",
+    "Counter joins confirmed outcome to CONDUCTED lesson; every subject, no subscription or teacher reset",
+    "Only public_comment exposed; internal assessment basis never selected into student comments",
+    "Same-transaction immutable audit for every new assessment; assigned teacher and current revision required; downgrades and reset supported",
+    "Snapshot generated atomically only on teacher-confirmed LESSON_4 checkpoint, frozen names/statuses/comments; LESSON_8 educational report remains separate",
+    "Teacher-authored textual goals with immutable before/after history, calendar target date and no badges"
+  ],
+  "verification": {
+    "prismaValidate": "PASS",
+    "prismaGenerate": "PASS",
+    "targetedApiBuild": "PASS",
+    "sdkBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "suites": 2,
+      "passed": 45,
+      "mode": "unit and actual Nest HTTP with mock Prisma; no working DB"
+    },
+    "sqlSyntax": {
+      "parser": "v8.7",
+      "sourceExactSelectFixtures": 21,
+      "plpgsqlFunctions": 6,
+      "preparedTableColumnSetsMatchPrisma": true,
+      "evidence": "tests/evidence/stu08-sql-syntax.json",
+      "notProofOfPostgresExecution": true
+    },
+    "openapi": {
+      "operations": 70,
+      "skillGetRoutes": 3,
+      "sdkExports": [
+        "getStudentSkillMaps",
+        "getStudentSkillAudit",
+        "getStudentSkillSnapshots"
+      ]
+    },
+    "postgresReadOnlySuite": "PREPARED_NOT_EXECUTED_OWNER_DEFERRED"
+  },
+  "pending": [
+    "Actual PostgreSQL binding and results for 21 source-exact CTE cases",
+    "Authorized application/rehearsal of prepared migrations and role grants",
+    "Actual trigger rollback, immutability, stale/concurrent changes and teacher assignment enforcement",
+    "Teacher HTTP commands, automatic checkpoint creation, working-day calendar, 2/3-day deadlines, reminders and manager escalation belong to teacher/report workflow",
+    "Manual working student skill map/audit/snapshot acceptance and full foundation gate"
+  ],
+  "boundaries": {
+    "newDatabases": 0,
+    "newNeonBranches": 0,
+    "postgresContainersStarted": 0,
+    "workingDml": false,
+    "workingDdl": false,
+    "deploymentPerformed": false,
+    "teacherWriteEndpointAdded": false,
+    "studentWriteEndpointAdded": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduce": {
+    "readme": "apps/api/src/student/skills/README.md",
+    "unitHttp": "pnpm test:stu08",
+    "readonlySuite": "tests/integration/student-skills-readonly.test.mjs",
+    "readonlyFixture": "tests/support/skills-readonly-fixture.mjs"
+  },
+  "chronology": "Source labels TECH-05/TR-009/AT-20 differ between documents; current canonical TECH-11 education model and CON-07/B applied. No closed source documents rewritten."
+}

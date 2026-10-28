@@ -1,0 +1,100 @@
+{
+  "task": "STU-04",
+  "date": "2026-10-27",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+  "endpoints": [
+    "GET /api/v1/student/lessons/history",
+    "POST /api/v1/student/lessons/:lessonId/dispute"
+  ],
+  "ownerClarification": "balanceBefore/balanceAfter are subscription lessons remaining before/after deduction, Decimal strings; not monetary balances",
+  "implementation": [
+    "Confirmed COMPLETED/NO_SHOW history, actual teacher/duration, descending stable pagination and student isolation",
+    "Current uncancelled consumption backed by published LedgerEntry; drafts/cancellations do not qualify",
+    "Immutable nullable quantitative snapshots on LedgerEntry, captured in the same existing consumption/publication transaction",
+    "Private addressed ATTENDANCE_DISPUTE task with atomic audit/outbox and current access/ownership revalidation",
+    "Exact inclusive 30-day/720-hour window; OPEN or IN_PROGRESS blocks a new command with 409",
+    "Unique partial index and DB guards for one open case, immutable address/type, creation/reopening eligibility",
+    "Same-key replay stays 201 without another write; worker observes the committed event"
+  ],
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027120000_stu04_dispute_enums/migration.sql",
+      "sha256": "7d0cba9e172373c9eaf448405e0cfcc069f7722c90529a50f0faacd40c90dec9",
+      "workingApplied": false
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027120100_stu04_history_disputes/migration.sql",
+      "sha256": "6b0e29fc9047a46adb156c34a7b8f0c4735246380648c7212a538511ca5f8772",
+      "workingApplied": false
+    }
+  ],
+  "schema": {
+    "models": 74,
+    "columns": 829,
+    "foreignKeys": 166
+  },
+  "verification": {
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "targetedEslint": "PASS",
+    "jest": {
+      "passed": 41,
+      "failed": 0,
+      "suites": 2,
+      "unitCases": 25,
+      "httpCases": 16,
+      "prismaStorage": "mock",
+      "parallelCase": "Simulated serialized storage only, not an actual PostgreSQL index race"
+    },
+    "postgres": {
+      "version": "18.6",
+      "target": "Existing online_school/main",
+      "role": "app_runtime",
+      "readonly": true,
+      "exactSourceCteCasesPassed": 4,
+      "cases": [
+        "Full confirmed history and deduction/Decimal/window/open-state semantics",
+        "Second page",
+        "Empty page keeps total",
+        "Another student isolation"
+      ],
+      "validates": [
+        "Published vs draft deduction",
+        "Cancelled quantity consumption excluded",
+        "Legacy unknown snapshots remain null",
+        "Money JSON is not substituted for lesson quantities",
+        "OPEN and IN_PROGRESS disable disputes; RESOLVED does not",
+        "Exactly 30 days allowed, 30 days + 1ms excluded"
+      ],
+      "persistentFixtures": false
+    },
+    "openapi": {
+      "operations": 57,
+      "client": ["getStudentLessonHistory", "disputeStudentLessonDeduction"]
+    },
+    "ci": "student-module includes pnpm test:stu04; exact execution evidence in PR checks"
+  },
+  "pending": [
+    "Apply/retest enum and history/dispute migrations on the authorized working deployment",
+    "Actual snapshot/eligibility trigger and unique-index race enforcement",
+    "Working-domain history/dispute/consumption acceptance",
+    "Existing FND-GATE required acceptance remains unexecuted"
+  ],
+  "boundaries": {
+    "additionalDatabases": 0,
+    "neonBranchesCreated": 0,
+    "postgresContainersStarted": 0,
+    "workingFinancialWrites": 0,
+    "workingCrmTasksCreated": 0,
+    "workingDdlApplied": false,
+    "deploymentPerformed": false,
+    "historyBackfilled": false,
+    "fndGatePassed": false,
+    "productionGo": false
+  },
+  "reproduction": {
+    "readme": "apps/api/src/student/history/README.md",
+    "readonlyTest": "tests/integration/student-history-readonly.test.mjs",
+    "fixtures": "tests/evidence/stu04-readonly-projections.json"
+  }
+}

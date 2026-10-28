@@ -12,7 +12,10 @@ export class AuthRateLimitService {
       [`ip:${req.socket.remoteAddress ?? 'unknown'}:${realm}`, 100],
     ];
     if (identity)
-      buckets.push([`identity:${realm}:${identity}`, realm === 'auth.password' ? 10 : 30]);
+      buckets.push([
+        `identity:${realm}:${identity}`,
+        realm === 'auth.password' ? 10 : realm === 'student.email.request' ? 5 : 30,
+      ]);
     for (const [key, limit] of buckets) {
       const rows = await this.db.client.$queryRaw<{ attempts: number }[]>`
         INSERT INTO auth_rate_limits(id,bucket_key,attempts,window_started_at,expires_at,created_at,updated_at)

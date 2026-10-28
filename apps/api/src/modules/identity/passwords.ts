@@ -13,8 +13,15 @@ const derive = (password: string, salt: Buffer): Promise<Buffer> =>
   );
 @Injectable()
 export class Passwords {
-  async hash(password: string): Promise<Result<string, DomainError>> {
-    if (password.length < 12 || password.length > 256)
+  async hash(
+    password: string,
+    policy: 'standard' | 'student' = 'standard',
+  ): Promise<Result<string, DomainError>> {
+    if (
+      password.length < (policy === 'student' ? 8 : 12) ||
+      password.length > (policy === 'student' ? 128 : 256) ||
+      (policy === 'student' && !/^(?=.*[A-Za-z])(?=.*\d).+$/.test(password))
+    )
       return err(domainError('PASSWORD_LENGTH_INVALID', 400));
     try {
       const salt = randomBytes(16);

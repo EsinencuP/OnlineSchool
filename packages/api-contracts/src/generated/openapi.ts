@@ -789,6 +789,732 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current student dashboard snapshot
+         * @description Four parallel confirmed-data projections. Private per-student cache up to 30s, transactionally invalidated after source changes. Meet link only within the join window. Quantity fields are integers; no monetary amounts are exposed.
+         */
+        get: operations["getStudentDashboard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Chronological homework with immutable submission versions */
+        get: operations["getStudentHomework"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one owned visible homework delivery and its versions */
+        get: operations["getStudentHomeworkDetail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Overwrite one draft; server TTL 30 days
+         * @description CSRF and a new UUID Idempotency-Key per autosave required. Empty content is accepted. Client debounce: 2 seconds.
+         */
+        patch: operations["saveStudentHomeworkDraft"];
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/files/{fileId}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verify S3 upload and seal a server-only final object
+         * @description HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+         */
+        post: operations["confirmStudentHomeworkUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Submit a version, preserve history and clear the draft
+         * @description Late submissions are accepted. A new version is allowed only when NOT_SUBMITTED or NEEDS_REVISION. At most 20 confirmed files from this homework and account. Numeric grades are not exposed.
+         */
+        post: operations["submitStudentHomework"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/homework/{hwId}/upload-url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Create PENDING file and 15-minute private S3 PUT capability
+         * @description PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+         */
+        post: operations["requestStudentHomeworkUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Student lesson list or monthly calendar
+         * @description Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+         */
+        get: operations["getStudentLessons"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/{lessonId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read one owned lesson independently of its month */
+        get: operations["getStudentLesson"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/{lessonId}/dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dispute one published lesson deduction
+         * @description Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.
+         */
+        post: operations["disputeStudentLessonDeduction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/{lessonId}/reschedule-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask the assigned manager to reschedule a particular lesson
+         * @description Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.
+         */
+        post: operations["requestStudentLessonReschedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Confirmed student attendance and quantitative deduction history
+         * @description Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+         */
+        get: operations["getStudentLessonHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Next five owned scheduled lessons, including across month boundaries */
+        get: operations["getStudentUpcomingLessons"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Only materials explicitly shared with this student by a teacher
+         * @description Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».
+         */
+        get: operations["getStudentMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/materials/{fileId}/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Authorize one private material and issue a temporary GET capability
+         * @description Rechecks live session, student access, explicit permission and verified object under a row lock; appends FileAuditLog without the signed URL. Maximum TTL 900 seconds, capped by grant expiry. Revocation stops new URL issuance; an already issued S3 capability remains valid until its expiry. No CSRF/Idempotency-Key needed for this GET.
+         */
+        get: operations["getStudentMaterialUrl"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Current student profile and access stage
+         * @description Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+         */
+        get: operations["getStudentMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read own recent internal notifications
+         * @description Newest first; default30, max100. Last500 active items,90-day TTL, one shared read status. Group by returned type in the client.
+         */
+        get: operations["getStudentNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Mark one own notification read
+         * @description Idempotent204, nonexistent/foreign/archived id404. CSRF and UUID Idempotency-Key required.
+         */
+        patch: operations["markStudentNotificationRead"];
+        trace?: never;
+    };
+    "/api/v1/student/notifications/count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Count own unread notifications without loading bodies */
+        get: operations["getStudentUnreadNotificationCount"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark all currently visible notifications read
+         * @description Empty response204 including replay. CSRF and UUID Idempotency-Key required. Notifications arriving after this operation remain unread.
+         */
+        post: operations["markAllStudentNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Update own display name and owned verified avatar
+         * @description Does not change registry full_name, email or phone. CSRF and UUID Idempotency-Key required. Avatar is private and available through an authenticated endpoint.
+         */
+        patch: operations["updateStudentProfile"];
+        trace?: never;
+    };
+    "/api/v1/student/profile/avatar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read own selected private raster avatar
+         * @description Private no-store binary response, no signed capability URL. Deleted/quarantined/foreign files are not served.
+         */
+        get: operations["getStudentAvatar"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read latest published teacher educational reports
+         * @description Newest creation date first; latest published version per checkpoint, only confirmed eight-lesson reports. Draft corrections never suppress a published version. Public content only.
+         */
+        get: operations["getStudentReports"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/reports/{reportId}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mark one published report version read
+         * @description CSRF and UUID Idempotency-Key required. First successful mark is 204; every repeat (including cached command replay) is 200. No response body and no teacher report mutation.
+         */
+        post: operations["markStudentReportRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/reports/export-pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Queue a private educational history PDF
+         * @description CSRF and UUID Idempotency-Key required. Optional subject and inclusive date selection; omitted body exports all history. Estimated 30s is not a completion guarantee. Poll every 2s for at most 60s, then retry later. No report creation or external family message.
+         */
+        post: operations["requestStudentEducationPdf"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/reports/export-pdf/{jobId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read own PDF job state and a fixed-expiry signed download
+         * @description Every poll rechecks student access. READY signatures expire exactly one hour after ready_at; polling never extends the expiry. After expiry returns FAILED/PDF_EXPORT_EXPIRED without a URL. Foreign/nonexistent jobs return the same 403.
+         */
+        get: operations["getStudentEducationPdfStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/security/change-email/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirm a six-digit OTP and replace the student login email
+         * @description OTP lifetime10min, max5 attempts, single use.Updates AuthAccount login only, records audit, revokes old sessions and rotates cookies. No change to CRM contacts or other pupil identities.
+         */
+        post: operations["confirmStudentEmailChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/security/change-email/request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verify current password and send a new-email OTP
+         * @description Every request invalidates previous OTPs.200 only after mail provider accepts; no cached secret body/hash.5 requests per15min/account; configured sender and OTP HMAC secret required.
+         */
+        post: operations["requestStudentEmailChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/security/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Compatible POST alias for student password change
+         * @deprecated
+         */
+        post: operations["changeStudentPasswordLegacy"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * Replace temporary student password
+         * @description Session and CSRF required; valid without active paid access. Atomically changes the hash, clears the initial flag, revokes all old sessions, rotates cookies and records audit/outbox. No MFA or passkey.
+         */
+        patch: operations["changeStudentPassword"];
+        trace?: never;
+    };
+    "/api/v1/student/security/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List own active sessions without cookie/CSRF secrets */
+        get: operations["getStudentSessions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/security/sessions/{sessionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Revoke another session belonging to the same student login
+         * @description Current session409, foreign/unknown404, repeated revocation204. CSRF required.
+         */
+        delete: operations["revokeStudentSession"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read subject skill maps
+         * @description Returns an array for all owned subjects; optional subjectId filters to one. Four qualitative statuses, no ratings. Counts confirmed conducted lessons across enrollments; no reset on subscription or teacher change.
+         */
+        get: operations["getStudentSkillMaps"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/skills/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read own skill changes
+         * @description Newest first, public comments only. Foreign and nonexistent skills produce the same 403. No internal pedagogical basis is exposed.
+         */
+        get: operations["getStudentSkillAudit"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/skills/snapshots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read confirmed immutable skill snapshots
+         * @description Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
+         */
+        get: operations["getStudentSkillSnapshots"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read-only CRM subscription showcase
+         * @description Optional owned subscriptionId; defaults to latest current plan, then most recent expired plan. Period status is separate from paid lesson rights. Temporary admission and future bookings never create paid balance. Available without active learning access; first password change remains mandatory.
+         */
+        get: operations["getStudentSubscription"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subscription/ledger": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Chronological paid lesson-right operations for the selected subscription
+         * @description Read model of grants, published deductions, explicit adjustments/cancellations and recorded freeze intervals. Balances are Decimal lesson quantities, not money. Published deduction snapshots retained; other balances replay canonical quantity events. Newest first. Missing pre-migration freeze history is not invented; no accounting entries are written.
+         */
+        get: operations["getStudentSubscriptionLedger"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subscription/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Confirmed payment allocations for the selected subscription
+         * @description Only director-confirmed receipts and approved, currently published allocations. Amount is the share allocated to this subscription, not another student’s share of a combined receipt. Actual ISO currency (including MDL), exact Decimal strings. No payment command or gateway.
+         */
+        get: operations["getStudentSubscriptionPayments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/students": {
         parameters: {
             query?: never;
@@ -992,6 +1718,20 @@ export interface components {
             timestamp: string;
         };
         ApproveDistributionRequest: Record<string, never>;
+        ChangeEmailConfirmDto: {
+            otp: string;
+            /** Format: email */
+            newEmail: string;
+        };
+        ChangeEmailRequestDto: {
+            /** Format: email */
+            newEmail: string;
+            currentPassword: string;
+        };
+        ChangeStudentPasswordDto: {
+            currentPassword: string;
+            newPassword: string;
+        };
         CloseFinancialPeriodRequest: Record<string, never>;
         ComponentStatusResponse: {
             /** @enum {string} */
@@ -1036,9 +1776,61 @@ export interface components {
             temporaryAccessPermissionId?: string;
         };
         ConfirmPaymentRequest: Record<string, never>;
+        ConfirmUploadResponseDto: {
+            /** Format: uuid */
+            fileId: string;
+            /** @enum {string} */
+            status: "VERIFIED";
+        };
         CreateSessionResponse: components["schemas"]["SessionResponse"] | components["schemas"]["WebAuthnStartResponse"];
         CsrfResponse: {
             csrfToken: string;
+        };
+        DashboardResponseDto: {
+            nextLesson: components["schemas"]["NextLessonDto"] | null;
+            homework: components["schemas"]["HomeworkCountsDto"];
+            subscription: components["schemas"]["SubscriptionSummaryDto"] | null;
+            skillProgress: components["schemas"]["SkillProgressDto"];
+            /** Format: date-time */
+            generatedAt: string;
+        };
+        DisputeRequestDto: {
+            description: string;
+        };
+        DisputeResponseDto: {
+            /** Format: uuid */
+            crmTaskId: string;
+            /** @enum {string} */
+            status: "CREATED";
+        };
+        EducationalReportContentDto: {
+            achievements: string;
+            growthAreas: string;
+            recommendations: string;
+            teacherSignature: string;
+        };
+        EducationalReportDto: {
+            /** Format: uuid */
+            reportId: string;
+            subjectName: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date */
+            periodFrom: string;
+            /** Format: date */
+            periodTo: string;
+            /** @enum {integer} */
+            lessonCount: 8;
+            teacherName: string;
+            content: components["schemas"]["EducationalReportContentDto"];
+            isNew: boolean;
+        };
+        EmailChangedDto: {
+            /** Format: email */
+            email: string;
+        };
+        EmailOtpRequestedDto: {
+            message: string;
         };
         EmptyRequest: Record<string, never>;
         EnrollmentCreateRequest: {
@@ -1127,12 +1919,38 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        ExportPdfRequestDto: {
+            /** Format: uuid */
+            subjectId?: string;
+            /** Format: date */
+            periodFrom?: string;
+            /** Format: date */
+            periodTo?: string;
+        };
+        ExportPdfResponseDto: {
+            /** Format: uuid */
+            jobId: string;
+            /** @enum {string} */
+            status: "QUEUED";
+            /**
+             * Format: date-time
+             * @description Estimate only; poll every 2s for at most 60s, then retry later
+             */
+            estimatedReadyAt: string;
+        };
         FileAccessResponse: {
             /** Format: uuid */
             objectId: string;
             /** @enum {boolean} */
             accessible: true;
             canDownload: boolean;
+        };
+        FileSignedUrlResponseDto: {
+            /** @description Private HTTPS presigned GET capability. Maximum lifetime 15 minutes; shorter if the explicit permission expires first. */
+            url: string;
+            /** Format: date-time */
+            expiresAt: string;
+            fileName: string;
         };
         /** @description Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision. */
         FinanceMoney: string;
@@ -1161,6 +1979,54 @@ export interface components {
             /** @enum {string} */
             service: "api";
         };
+        HomeworkAttachmentDto: {
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            fileSizeBytes: number;
+            mimeType: string;
+        };
+        HomeworkCountsDto: {
+            notSubmitted: number;
+            submitted: number;
+            needsRevision: number;
+            total: number;
+        };
+        HomeworkItemDto: {
+            /** Format: uuid */
+            homeworkId: string;
+            /** Format: date-time */
+            assignedAt: string;
+            /** Format: date-time */
+            dueAt: string | null;
+            subjectName: string;
+            teacherName: string;
+            title: string;
+            description: string;
+            /** @enum {string} */
+            status: "NOT_SUBMITTED" | "SUBMITTED" | "REVIEWED" | "NEEDS_REVISION";
+            isLate: boolean;
+            draftContent: string | null;
+            latestVersion: components["schemas"]["HomeworkVersionDto"] | null;
+            versions: components["schemas"]["HomeworkVersionDto"][];
+            attachments: components["schemas"]["HomeworkAttachmentDto"][];
+        };
+        HomeworkResponseDto: {
+            items: components["schemas"]["HomeworkItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        HomeworkVersionDto: {
+            versionNumber: number;
+            content: string;
+            /** Format: date-time */
+            submittedAt: string;
+            teacherComment: string | null;
+            /** @enum {string|null} */
+            teacherStatus: "REVIEWED" | "NEEDS_REVISION" | null;
+            attachments: components["schemas"]["HomeworkAttachmentDto"][];
+        };
         HouseholdCreatedResponse: {
             /** Format: uuid */
             id: string;
@@ -1185,6 +2051,14 @@ export interface components {
             /** Format: uuid */
             householdId: string;
         };
+        LearningGoalDto: {
+            /** Format: uuid */
+            goalId: string;
+            text: string;
+            /** Format: date */
+            targetDate: string | null;
+            isAchieved: boolean;
+        };
         LedgerAdjustmentResponse: {
             /** Format: uuid */
             id: string;
@@ -1200,6 +2074,10 @@ export interface components {
             replacementLines?: components["schemas"]["LedgerLineInput"][];
         };
         LedgerEntryResponse: {
+            /** @description Subscription lessons remaining immediately before consumption; quantitative, not money */
+            entitlement_balance_before: string | null;
+            /** @description Subscription lessons remaining immediately after consumption; quantitative, not money */
+            entitlement_balance_after: string | null;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -1263,6 +2141,20 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        LessonCardDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            /** @enum {string} */
+            status: "SCHEDULED" | "COMPLETED" | "CANCELLED" | "NO_SHOW" | "STAR_PENDING" | "DISPUTED";
+            canJoin: boolean;
+            meetLink: string | null;
+            canRequestReschedule: boolean;
+        };
         LessonCreateRequest: {
             /** Format: uuid */
             teachingAssignmentId: string;
@@ -1274,7 +2166,33 @@ export interface components {
             status?: "SCHEDULED" | "STAR_PENDING";
             basis: string;
         };
+        LessonHistoryItemDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            /** @enum {string} */
+            attendanceStatus: "COMPLETED" | "NO_SHOW";
+            /** @description Current uncancelled quantitative consumption backed by a published ledger entry */
+            lessonDeducted: boolean;
+            /** @description Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots */
+            balanceBefore: string | null;
+            /** @description Subscription lessons after deduction, immutable Decimal string */
+            balanceAfter: string | null;
+            canDispute: boolean;
+        };
+        LessonHistoryResponseDto: {
+            items: components["schemas"]["LessonHistoryItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
         LessonOutcomeReportRequest: {
+            /** @description Explicit student absence, only with NOT_CONDUCTED; student-facing NO_SHOW requires staff confirmation */
+            studentNoShow?: boolean;
             /** @enum {string} */
             result: "CONDUCTED" | "NOT_CONDUCTED" | "DISPUTED";
             /** Format: date-time */
@@ -1283,6 +2201,7 @@ export interface components {
             note: string;
         };
         LessonOutcomeReportResponse: {
+            student_no_show: boolean;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -1333,6 +2252,12 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        LessonsResponseDto: {
+            items: components["schemas"]["LessonCardDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
         LoginRequest: components["schemas"]["LoginRequestAlternative1"] | components["schemas"]["LoginRequestAlternative2"];
         LoginRequestAlternative1: {
             /** @enum {string} */
@@ -1350,6 +2275,64 @@ export interface components {
         LogoutResponse: {
             /** @enum {boolean} */
             loggedOut: true;
+        };
+        ManagerContactsDto: {
+            whatsapp: string;
+            telegram: string;
+        };
+        MaterialItemDto: {
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            fileSizeBytes: number;
+            mimeType: string;
+            /** @description Explicit educational context, or «Без предмета» for legacy/contextless grants */
+            subjectName: string;
+            /** Format: date-time */
+            uploadedAt: string;
+            /** Format: date-time */
+            sharedAt: string;
+            sharedByTeacherName: string;
+            lessonTitle: string | null;
+        };
+        MaterialsResponseDto: {
+            items: components["schemas"]["MaterialItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        NextLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            durationMinutes: number;
+            teacherName: string;
+            subjectName: string;
+            meetLink: string | null;
+            canJoin: boolean;
+        };
+        NotificationItemDto: {
+            /** Format: uuid */
+            notificationId: string;
+            /** @enum {string} */
+            type: "HOMEWORK_REVIEWED" | "HOMEWORK_NEEDS_REVISION" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "REPORT_READY" | "SUBSCRIPTION_EXPIRING" | "PAYMENT_CONFIRMED";
+            title: string;
+            body: string;
+            isRead: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** @description Public entity identifiers only; never capability URLs or private notes */
+            payload: {
+                [key: string]: unknown;
+            };
+        };
+        NotificationsResponseDto: {
+            items: components["schemas"]["NotificationItemDto"][];
+            total: number;
+            unreadCount: number;
+            page: number;
+            pageSize: number;
         };
         PasskeyRegisteredResponse: {
             /** Format: uuid */
@@ -1380,6 +2363,27 @@ export interface components {
             ledgerEntryId?: string;
         } & {
             [key: string]: unknown;
+        };
+        PaymentHistoryItemDto: {
+            /** Format: uuid */
+            paymentId: string;
+            /** Format: date-time */
+            confirmedAt: string;
+            /** @description Exact Decimal allocated to this subscription, at least two and up to four fraction digits */
+            amount: string;
+            /**
+             * @description Actual CRM currency, including MDL; no conversion
+             * @example MDL
+             */
+            currency: string;
+            description: string;
+            lessonsAdded: number | null;
+        };
+        PaymentHistoryResponseDto: {
+            items: components["schemas"]["PaymentHistoryItemDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
         };
         PaymentReceiptResponse: {
             /** Format: uuid */
@@ -1472,6 +2476,27 @@ export interface components {
             /** Format: date-time */
             confirmed_at: string;
         };
+        PdfJobStatusDto: {
+            /** Format: uuid */
+            jobId: string;
+            /** @enum {string} */
+            status: "QUEUED" | "PROCESSING" | "READY" | "FAILED";
+            downloadUrl: string | null;
+            /** Format: date-time */
+            expiresAt: string | null;
+            failureReason: string | null;
+        };
+        ProblemDetails: {
+            type: string;
+            title: string;
+            status: number;
+            detail: string;
+            instance: string;
+            code: string;
+            /** Format: uuid */
+            requestId: string;
+            managerContacts?: components["schemas"]["ManagerContactsDto"];
+        };
         RecoveryCompleteRequest: {
             /** Format: uuid */
             recoveryId: string;
@@ -1530,6 +2555,39 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        ReportsResponseDto: {
+            items: components["schemas"]["EducationalReportDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        RequestUploadUrlDto: {
+            fileName: string;
+            mimeType: string;
+            fileSizeBytes: number;
+        };
+        RescheduleRequestDto: {
+            reason: string;
+            /** Format: date */
+            preferredDate: string;
+        };
+        RescheduleRequestResponseDto: {
+            /** Format: uuid */
+            crmTaskId: string;
+            /** @enum {string} */
+            status: "CREATED";
+        };
+        SavedDraftDto: {
+            /** Format: uuid */
+            homeworkId: string;
+            /** @enum {string} */
+            status: "SAVED";
+            /** Format: date-time */
+            expiresAt: string;
+        };
+        SaveDraftDto: {
+            content: string;
+        };
         ScheduleChangeRequestInput: {
             /** Format: uuid */
             lessonId?: string;
@@ -1555,6 +2613,19 @@ export interface components {
         ScheduleReasonRequest: {
             reason: string;
         };
+        SessionInfoDto: {
+            /** Format: uuid */
+            sessionId: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            lastActiveAt: string;
+            /** @description Empty for legacy sessions without captured metadata */
+            userAgent: string;
+            /** @description Observed socket peer address, never an untrusted forwarded header; empty for legacy sessions */
+            ipAddress: string;
+            isCurrent: boolean;
+        };
         SessionResponse: {
             account: components["schemas"]["SessionResponseAccount"];
             mfa_completed: boolean;
@@ -1570,6 +2641,70 @@ export interface components {
             kind: "STAFF" | "TEACHER" | "STUDENT";
             roles: ("DIRECTOR" | "MANAGER" | "TEACHER" | "STUDENT" | "TECH_OPERATOR")[];
             role?: string;
+        };
+        SkillAuditEntryDto: {
+            /** Format: uuid */
+            auditId: string;
+            /** Format: uuid */
+            skillId: string;
+            skillName: string;
+            /** Format: date-time */
+            changedAt: string;
+            /** @enum {string} */
+            fromStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** @enum {string} */
+            toStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            teacherName: string;
+            comment: string | null;
+        };
+        SkillAuditResponseDto: {
+            items: components["schemas"]["SkillAuditEntryDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        SkillDto: {
+            /** Format: uuid */
+            skillId: string;
+            name: string;
+            category: string;
+            /** @enum {string} */
+            status: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /**
+             * Format: date-time
+             * @description Assessment time, or catalog creation for an unstudied skill
+             */
+            lastUpdatedAt: string;
+            /** @description Empty when no teacher assessment exists */
+            lastUpdatedByTeacherName: string;
+        };
+        SkillProgressDto: {
+            familiarizing: number;
+            practicing: number;
+            applying: number;
+            notStudied: number;
+        };
+        SkillSnapshotDto: {
+            /** Format: uuid */
+            snapshotId: string;
+            subjectName: string;
+            /** Format: date-time */
+            createdAt: string;
+            lessonNumber: number;
+            skills: components["schemas"]["SkillSnapshotItemDto"][];
+            teacherSummary: string | null;
+        };
+        SkillSnapshotItemDto: {
+            skillName: string;
+            /** @enum {string} */
+            status: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            teacherComment: string | null;
+        };
+        SkillSnapshotResponseDto: {
+            items: components["schemas"]["SkillSnapshotDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
         };
         SlotGenerationResponse: {
             /** Format: uuid */
@@ -1592,6 +2727,67 @@ export interface components {
             /** Format: date */
             birthDate?: string;
         };
+        StudentMeResponseDto: {
+            managerContacts?: components["schemas"]["ManagerContactsDto"];
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            userId: string;
+            displayName: string;
+            /** @description IANA timezone used by the student schedule */
+            timeZone: string;
+            email: string;
+            avatarUrl: string | null;
+            hasActiveAccess: boolean;
+            mustChangePassword: boolean;
+            /** Format: date-time */
+            createdAt: string;
+        };
+        StudentPasswordChangedDto: {
+            /** @enum {boolean} */
+            mustChangePassword: false;
+        };
+        StudentProfileDto: {
+            managerContacts?: components["schemas"]["ManagerContactsDto"];
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            userId: string;
+            displayName: string;
+            /** @description IANA timezone used by the student schedule */
+            timeZone: string;
+            email: string;
+            avatarUrl: string | null;
+            hasActiveAccess: boolean;
+            mustChangePassword: boolean;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: uuid */
+            avatarFileId: string | null;
+        };
+        StudentSubscriptionLedgerEntryDto: {
+            /**
+             * Format: uuid
+             * @description Source operation ID; deduction uses the published LedgerEntry ID; freeze IDs are deterministic view IDs
+             */
+            entryId: string;
+            /** Format: date */
+            entryDate: string;
+            /** @enum {string} */
+            type: "DEDUCTION" | "CREDIT" | "FREEZE" | "UNFREEZE";
+            /** @description Lesson quantities, not monetary account totals */
+            balanceBefore: string;
+            balanceAfter: string;
+            description: string;
+            /** Format: uuid */
+            lessonId: string | null;
+        };
+        StudentSubscriptionLedgerResponseDto: {
+            items: components["schemas"]["StudentSubscriptionLedgerEntryDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
         SubjectCreateRequest: {
             code: string;
             name: string;
@@ -1604,11 +2800,53 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        SubjectSkillMapDto: {
+            /** Format: uuid */
+            subjectId: string;
+            subjectName: string;
+            totalSkills: number;
+            skills: components["schemas"]["SkillDto"][];
+            learningGoals: components["schemas"]["LearningGoalDto"][];
+            /** Format: date-time */
+            lastSnapshotAt: string | null;
+            nextSnapshotIn: number | null;
+        };
+        SubmitHomeworkDto: {
+            content: string;
+            fileIds?: string[];
+        };
+        SubmitResponseDto: {
+            /** Format: uuid */
+            submissionId: string;
+            /** @enum {string} */
+            status: "SUBMITTED";
+            isLate: boolean;
+            versionNumber: number;
+        };
         SubscriptionCreateRequest: {
             /** Format: uuid */
             enrollmentId: string;
             /** Format: uuid */
             saleConditionId: string;
+        };
+        SubscriptionDetailsDto: {
+            /** Format: uuid */
+            subscriptionId: string | null;
+            planName: string | null;
+            lessonsTotal: number | null;
+            /** @description Confirmed paid rights only, never future bookings or temporary admission limits */
+            lessonsRemaining: number | null;
+            /** Format: date */
+            validFrom: string | null;
+            /** Format: date */
+            validUntil: string | null;
+            isFrozen: boolean;
+            /** Format: date */
+            frozenFrom: string | null;
+            /** Format: date */
+            frozenUntil: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "EXPIRED" | "FROZEN" | "NONE";
         };
         SubscriptionResponse: {
             /** Format: uuid */
@@ -1629,6 +2867,14 @@ export interface components {
             valid_from: string;
         } & {
             [key: string]: unknown;
+        };
+        SubscriptionSummaryDto: {
+            lessonsRemaining: number;
+            /** Format: date */
+            validUntil: string | null;
+            isFrozen: boolean;
+            /** Format: date-time */
+            frozenUntil: string | null;
         };
         TeacherAccrualResponse: {
             /** Format: uuid */
@@ -1681,6 +2927,7 @@ export interface components {
             items: components["schemas"]["PayrollItem"][];
         };
         TeachingAssignmentCreateRequest: {
+            googleMeetLink?: string;
             /** Format: uuid */
             enrollmentId: string;
             /** Format: uuid */
@@ -1692,6 +2939,7 @@ export interface components {
             basis: string;
         };
         TeachingAssignmentResponse: {
+            google_meet_link: string | null;
             /** Format: uuid */
             id: string;
             /** Format: uuid */
@@ -1727,6 +2975,22 @@ export interface components {
             director_id: string;
         } & {
             [key: string]: unknown;
+        };
+        UnreadCountDto: {
+            unreadCount: number;
+        };
+        UpdateProfileDto: {
+            displayName?: string;
+            /**
+             * Format: uuid
+             * @description Pre-uploaded verified owned JPEG/PNG/WebP, up to2MiB
+             */
+            avatarFileId?: string;
+        };
+        UploadUrlResponseDto: {
+            uploadUrl: string;
+            /** Format: uuid */
+            fileId: string;
         };
         WebAuthnFinishRequest: {
             /** Format: uuid */
@@ -4984,6 +6248,2444 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getStudentDashboard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DashboardResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentHomework: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                status?: "NOT_SUBMITTED" | "SUBMITTED" | "REVIEWED" | "NEEDS_REVISION";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentHomeworkDetail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HomeworkItemDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    saveStudentHomeworkDraft: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveDraftDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedDraftDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    confirmStudentHomeworkUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConfirmUploadResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    submitStudentHomework: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmitHomeworkDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubmitResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentHomeworkUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                hwId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RequestUploadUrlDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UploadUrlResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentLessons: {
+        parameters: {
+            query?: {
+                period?: "today" | "week" | "month" | "archive";
+                page?: number;
+                pageSize?: number;
+                month?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentLesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonCardDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    disputeStudentLessonDeduction: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisputeRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DisputeResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentLessonReschedule: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RescheduleRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RescheduleRequestResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentLessonHistory: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonHistoryResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentUpcomingLessons: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentMaterials: {
+        parameters: {
+            query?: {
+                /** @description Educational subject ID, not the permission recipient account */
+                subjectId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentMaterialUrl: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FileSignedUrlResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentMeResponseDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentNotifications: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["NotificationsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    markStudentNotificationRead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Notification marked read */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentUnreadNotificationCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnreadCountDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    markAllStudentNotificationsRead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Current notifications marked read */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    updateStudentProfile: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentProfileDto"];
+                };
+            };
+        };
+    };
+    getStudentAvatar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "image/png": string;
+                    "image/jpeg": string;
+                    "image/webp": string;
+                };
+            };
+        };
+    };
+    getStudentReports: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportsResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    markStudentReportRead: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                reportId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Already read; no response body */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description First read recorded */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentEducationPdf: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ExportPdfRequestDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportPdfResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentEducationPdfStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                jobId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PdfJobStatusDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    confirmStudentEmailChange: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeEmailConfirmDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailChangedDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    requestStudentEmailChange: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeEmailRequestDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailOtpRequestedDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    changeStudentPasswordLegacy: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeStudentPasswordDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentPasswordChangedDto"];
+                };
+            };
+        };
+    };
+    changeStudentPassword: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangeStudentPasswordDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentPasswordChangedDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSessions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SessionInfoDto"][];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    revokeStudentSession: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path: {
+                sessionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Other own session revoked */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSkillMaps: {
+        parameters: {
+            query?: {
+                subjectId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectSkillMapDto"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSkillAudit: {
+        parameters: {
+            query: {
+                page?: number;
+                pageSize?: number;
+                skillId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillAuditResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSkillSnapshots: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SkillSnapshotResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscription: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubscriptionDetailsDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscriptionLedger: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentSubscriptionLedgerResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubscriptionPayments: {
+        parameters: {
+            query?: {
+                /** @description Owned subscription. Defaults to the most recent current plan, then latest expired plan. */
+                subscriptionId?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentHistoryResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
                 };
             };
         };

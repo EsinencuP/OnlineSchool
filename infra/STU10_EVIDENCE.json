@@ -1,0 +1,421 @@
+{
+  "task": "STU-10",
+  "date": "2026-10-28",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+  "ownerDecision": {
+    "postgresVerification": "DEFERRED",
+    "statement": "Завершить с отложенной PostgreSQL-проверкой",
+    "inheritedFrom": "STU-08/STU-09; no credential bypass or substitute DB"
+  },
+  "endpoints": [
+    "GET /api/v1/student/notifications",
+    "GET /api/v1/student/notifications/count",
+    "POST /api/v1/student/notifications/read-all",
+    "PATCH /api/v1/student/notifications/:id/read"
+  ],
+  "contracts": {
+    "types": [
+      "HOMEWORK_REVIEWED",
+      "HOMEWORK_NEEDS_REVISION",
+      "LESSON_RESCHEDULED",
+      "LESSON_CANCELLED",
+      "REPORT_READY",
+      "SUBSCRIPTION_EXPIRING",
+      "PAYMENT_CONFIRMED"
+    ],
+    "defaultPageSize": 30,
+    "maxPageSize": 100,
+    "ordering": "created_at DESC,id DESC",
+    "ownership": "Server-derived studentProfileId, shared immutable first read_at across accounts/devices",
+    "mutation": "CSRF + UUID Idempotency-Key + empty body,204 including replay; missing/foreign/archived/expired item404",
+    "count": "One COUNT on notification table; no JOIN or body/title/payload loading",
+    "retention": "500 active entries,90x24h TTL. Overflow/expired archived, never resurrected; archive/source retained for dedupe, no physical purge"
+  },
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261028100000_stu10_notifications/migration.sql",
+    "sha256": "29764f80aeabcc3d0d5b8b6278e08ffc832649ab1ddf1bb4acf6c975aa4a0683",
+    "statements": 28,
+    "plpgsqlFunctions": 5,
+    "sqlFunctions": 1,
+    "newTablesMatchPrismaColumns": ["student_notification_sources", "student_notifications"],
+    "syntax": "PASS",
+    "workingApplied": false
+  },
+  "schema": {
+    "models": 87,
+    "columns": 928,
+    "foreignKeys": 198
+  },
+  "creation": {
+    "service": "NotificationService.create(tx, canonicalSourceId), never arbitrary controller input",
+    "producer": "Transaction-local business triggers enqueue StudentNotificationSource; worker projector calls service; inbox+source receipt commit together",
+    "events": [
+      "New teacher submission review ACCEPTED/NEEDS_REVISION",
+      "Existing lesson time change or transition to CANCELLED",
+      "Teacher publication of confirmed eight-lesson report",
+      "Director-confirmed receipt plus approved distribution, scoped through recipient subscription (not payer/contact)",
+      "7/3 calendar-day expiry, pupil timezone, finite valid_to and enabled profile"
+    ],
+    "deduplication": "Source event_key unique; inbox id=source id; same per-student lock as read-all",
+    "privacy": "Public fixed text and minimal owned entity ids; no internal notes, amounts, grades, report/homework contents or capability URLs",
+    "externalFamilyMessages": false,
+    "historicalBackfill": false
+  },
+  "worker": {
+    "delivery": "Up to20 events per poll, FOR UPDATE SKIP LOCKED, one DB-only transaction per event; safe retry after rollback",
+    "maintenance": "Every60s, up to50 expiry sources and50 pupils for expired archive; list/count enforceTTL even if worker stopped",
+    "lifecycle": "Independent background task, single task per process, no finance/PDF poll blocking, stop/drain",
+    "missedDay": "No retrospective7/3-day notice after a whole threshold day was missed"
+  },
+  "verification": {
+    "prismaValidate": "PASS",
+    "prismaGenerate": "PASS",
+    "apiBuild": "PASS",
+    "workerBuild": "PASS",
+    "sdkGenerateBuild": "PASS",
+    "targetedLint": "PASS",
+    "openapiOperations": 78,
+    "distinctTargetedTestsPassed": 54,
+    "runs": [
+      {
+        "file": ".codex/stu10-tests.json",
+        "passed": 47,
+        "failed": 1,
+        "skipped": 0
+      },
+      {
+        "file": ".codex/stu10-http-fix.json",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 22
+      },
+      {
+        "file": ".codex/stu10-sdk-worker.json",
+        "passed": 5,
+        "failed": 0,
+        "skipped": 25
+      },
+      {
+        "file": ".codex/stu10-provenance.json",
+        "passed": 3,
+        "failed": 0,
+        "skipped": 24
+      }
+    ],
+    "runNote": "Initial run47 passed/1 assertion failed: outbox failure expected500, actual core503. Corrected expectation and affected test passed; subsequent runs only new/affected checks, skipped tests not counted twice.",
+    "tests": [
+      {
+        "name": "list defaults30, newest first, private no-store and server pupil ownership",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "count is global unread, one COUNT query without JOIN or body load",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "pagination keeps total and unreadCount across pages",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "single read is204 on first, cached replay and new-key repeat; first timestamp preserved",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "read-all204, idempotent, and new arrivals survive same-key replay",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "foreign archived expired future item index3 is indistinguishable404",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "foreign archived expired future item index4 is indistinguishable404",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "foreign archived expired future item index5 is indistinguishable404",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "foreign archived expired future item index6 is indistinguishable404",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "unknown item404 and malformed UUID400",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query page=0",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query page=1.5",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query pageSize=101",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query pageSize=0",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query studentProfileId=ef4d7d64-d0df-4098-ad42-ac82eba900c6",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject invalid or unsupported query type=REPORT_READY",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "unauthenticated401 and teacher403",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "expired session401",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "CSRF and UUID idempotency key required",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "reject nonempty mutation body before any read",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "atomic rollback when outbox fails",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "password change and access checks also apply to cached replay",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "student cannot create, delete, or edit notification content",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-http.test.mjs"
+      },
+      {
+        "name": "HOMEWORK_REVIEWED uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "HOMEWORK_NEEDS_REVISION uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "LESSON_RESCHEDULED uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "LESSON_CANCELLED uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "REPORT_READY uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "SUBSCRIPTION_EXPIRING uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "PAYMENT_CONFIRMED uses fixed public copy and expected entity references only",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry3 has correct Russian text and preserves canonical source timestamp",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 0",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 1",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 8",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 7",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry rejects noncontract threshold null",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "producer cannot put private text or links into payload",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "query defaults30 and caps100 with strict ownership-query rejection",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "projection scope and TTL are server parameters; paging is stable",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "service creates once from canonical source and serializes before pruning",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "service rejects nonexistent source and never inserts supplied user data",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "future source cannot enter inbox",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "worker delivery, inbox row and delivery receipt commit together; replay is empty",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "receipt failure rolls back inbox row; next attempt succeeds",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "worker stop prevents new claims and maintenance",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "expiry uses pupil calendar day, finite validity and versioned idempotency key",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "read-all rechecks current owner before any update",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "no read status mutation from malformed body",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "generated one read accepts bodyless204 and sends CSRF/key",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-sdk.test.mjs"
+      },
+      {
+        "name": "generated all read accepts bodyless204 and sends CSRF/key",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-sdk.test.mjs"
+      },
+      {
+        "name": "badge SDK preserves numeric count",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-sdk.test.mjs"
+      },
+      {
+        "name": "read SDK preserves404 instead of treating missing item as successful void",
+        "status": "passed",
+        "file": "tests/unit/student-notifications-sdk.test.mjs"
+      },
+      {
+        "name": "notification backlog does not block finance or PDF polling; shutdown drains current delivery",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      },
+      {
+        "name": "validated source identifiers retain exact JSON for database provenance equality",
+        "status": "passed",
+        "file": "tests/unit/student-notifications.test.mjs"
+      }
+    ],
+    "sqlSyntax": {
+      "path": "tests/evidence/stu10-sql-syntax.json",
+      "queriesParsed": 13,
+      "readOnlyFixtureCasesPrepared": 10,
+      "postgresExecution": "DEFERRED_BY_OWNER: syntax and parameter continuity only; no binding, trigger/constraint, concurrency, archive or expiry execution claim"
+    },
+    "boundary": "Jest units/actual Nest HTTP/worker/SDK use mock Prisma. Fixture SQL was parsed offline, not executed; no real concurrency/retention/trigger acceptance claim",
+    "ci": "student-module job includes pnpm test:stu10"
+  },
+  "notPerformed": [
+    "Working PostgreSQL connection, queries or migrations",
+    "Read-only fixture integration suite execution",
+    "Runtime trigger/constraint/grant checks; concurrent create/read-all/worker delivery on PostgreSQL",
+    "Real500/90-day/7/3-day execution and browser/API/worker acceptance",
+    "Deployment, production writes, extra databases/Neon branches/containers",
+    "Whole-project regression and FND-GATE"
+  ],
+  "remaining": [
+    "Verify actual migration chain, typed SQL binding and runtime grants",
+    "Exercise source triggers, rollback, concurrent delivery/read-all,500/TTL/expiry at timezone boundaries on authorized PostgreSQL",
+    "Run real student bell end-to-end before release; teacher commands remain separate workflow"
+  ],
+  "sourceHashes": {
+    "apps/api/src/student/notifications/notifications.controller.ts": "5150338619fe71b80690000c06b1ea9bacfde5a886f85c18d4a12e03026031c8",
+    "apps/api/src/student/notifications/notifications.dto.ts": "ffbc392fb5b199325667a885b9080d6c577b950e2ce0568550f94aefaf8e3cee",
+    "apps/api/src/student/notifications/notifications.service.ts": "942d22ba7f627ef00acb6d99ce44a4cddea6d17157d9c0dd4a78ce87fddc7e88",
+    "apps/api/src/student/notifications/README.md": "6f4276cf1cc431c53892fbb8cb94ac5813d9f18a40e5a8453c2d754308ffe6c6",
+    "apps/api/src/modules/notifications/notification.service.ts": "3adce753085197aa1e0b7adda657c7c085e6aa172ea75e5b4a0d757ca160dac2",
+    "apps/api/src/student/student.module.ts": "e0e90fecdcd70f72058d426ac030b3dec9a70314132396bf31d49f121d576c4e",
+    "apps/api/package.json": "ebde94e33d31c3d36ae188312572e236845efc2ad39ae191a7f7f0944f11274b",
+    "apps/worker/src/notifications.ts": "043e12eef49610fff72d26d6f215a2d887a3a3320c26941697b830a049e1dcce",
+    "apps/worker/src/worker.module.ts": "5e6171dd5242b16f25c8fe6c0c91613faaf77ecef8fab3823870decd078e83c1",
+    "apps/worker/src/handlers.ts": "217c17f877684ebb8840837d9db8bbf23cfc36f98c0a10adb0a5141a396e8e8e",
+    "packages/db/prisma/schema.prisma": "2af998bb54e441cf065e239c7347adf253de9510699243ca5a713a6ade6679fb",
+    "packages/db/schema.contract.json": "7dc77cd148c6886073c99c860488d808324cba22090a7dc09a3a6eb1723a6faa",
+    "packages/db/ERD.md": "2fd8438138b376c9204288c56c071fa3658442f9e697090c3d206f16dc2baebe",
+    "packages/api-contracts/orval.config.mjs": "e122e263d051a827e4af6ab80bffd45c75153670ab7986ede5d145bdda1aa1be",
+    "packages/api-contracts/openapi/openapi.json": "234a0e805f315c6053c6182c924fae973b20e9c3aad52cbb1f14c8f51acb62d7",
+    "package.json": "425a1f6cb93e0cf48116ddae9e4495542ebf30f5e25cfd2a56e01b59be32e488",
+    ".github/workflows/ci.yml": "5bcf318c40771b27ab866d3b4e781832be10e37bfe161d179b98b40ae783fc3c",
+    "tests/support/notifications-readonly-fixture.mjs": "97c9a03353f90778470ea7cf0d39c1a7436569bd355f3956bbb85d42e268f9db",
+    "tests/integration/student-notifications-readonly.test.mjs": "8752ac0e35a51badbbab8b2c8f930f8f474b001cc9b02765547b2c640f1b4744"
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "checkedAt": "2026-10-27T16:53:01.501Z",
+  "database": "existing working PostgreSQL 18.6, app_runtime",
+  "mode": "SELECT-only CTE fixtures; no DML/DDL/new DBs/branches",
+  "cases": [
+    {
+      "name": "all statuses, immutable history, expiry and attachments",
+      "expected": {
+        "total": 4,
+        "ids": [
+          "20000000-0000-4000-8000-000000000004",
+          "20000000-0000-4000-8000-000000000003",
+          "20000000-0000-4000-8000-000000000002",
+          "20000000-0000-4000-8000-000000000001"
+        ],
+        "statuses": [
+          "NEEDS_REVISION",
+          "REVIEWED",
+          "SUBMITTED",
+          "NOT_SUBMITTED"
+        ]
+      },
+      "actual": {
+        "items": [
+          {
+            "dueAt": null,
+            "title": "Task",
+            "isLate": false,
+            "status": "NEEDS_REVISION",
+            "versions": [
+              {
+                "content": "Needs work",
+                "attachments": [],
+                "submittedAt": "2026-10-27T11:00:00+00:00",
+                "teacherStatus": "NEEDS_REVISION",
+                "versionNumber": 1,
+                "teacherComment": "Explain why"
+              }
+            ],
+            "assignedAt": "2026-10-27T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000004",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": "current draft",
+            "latestVersion": {
+              "content": "Needs work",
+              "attachments": [],
+              "submittedAt": "2026-10-27T11:00:00+00:00",
+              "teacherStatus": "NEEDS_REVISION",
+              "versionNumber": 1,
+              "teacherComment": "Explain why"
+            }
+          },
+          {
+            "dueAt": "2026-10-28T10:00:00+00:00",
+            "title": "Task",
+            "isLate": false,
+            "status": "REVIEWED",
+            "versions": [
+              {
+                "content": "Revised answer",
+                "attachments": [
+                  {
+                    "fileId": "80000000-0000-4000-8000-000000000001",
+                    "fileName": "revised.txt",
+                    "mimeType": "text/plain",
+                    "fileSizeBytes": 8
+                  }
+                ],
+                "submittedAt": "2026-10-26T12:00:00+00:00",
+                "teacherStatus": "REVIEWED",
+                "versionNumber": 2,
+                "teacherComment": "Looks good"
+              },
+              {
+                "content": "Old answer",
+                "attachments": [],
+                "submittedAt": "2026-10-26T11:00:00+00:00",
+                "teacherStatus": "NEEDS_REVISION",
+                "versionNumber": 1,
+                "teacherComment": "Keep this comment"
+              }
+            ],
+            "assignedAt": "2026-10-26T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000003",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": {
+              "content": "Revised answer",
+              "attachments": [
+                {
+                  "fileId": "80000000-0000-4000-8000-000000000001",
+                  "fileName": "revised.txt",
+                  "mimeType": "text/plain",
+                  "fileSizeBytes": 8
+                }
+              ],
+              "submittedAt": "2026-10-26T12:00:00+00:00",
+              "teacherStatus": "REVIEWED",
+              "versionNumber": 2,
+              "teacherComment": "Looks good"
+            }
+          },
+          {
+            "dueAt": "2026-10-26T10:00:00+00:00",
+            "title": "Task",
+            "isLate": true,
+            "status": "SUBMITTED",
+            "versions": [
+              {
+                "content": "Late answer",
+                "attachments": [],
+                "submittedAt": "2026-10-27T10:00:00+00:00",
+                "teacherStatus": null,
+                "versionNumber": 1,
+                "teacherComment": null
+              }
+            ],
+            "assignedAt": "2026-10-25T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000002",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": {
+              "content": "Late answer",
+              "attachments": [],
+              "submittedAt": "2026-10-27T10:00:00+00:00",
+              "teacherStatus": null,
+              "versionNumber": 1,
+              "teacherComment": null
+            }
+          },
+          {
+            "dueAt": null,
+            "title": "Task",
+            "isLate": false,
+            "status": "NOT_SUBMITTED",
+            "versions": [],
+            "assignedAt": "2026-10-24T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000001",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": null
+          }
+        ],
+        "total": 4
+      }
+    },
+    {
+      "name": "status filter",
+      "expected": {
+        "total": 1,
+        "ids": [
+          "20000000-0000-4000-8000-000000000003"
+        ],
+        "statuses": [
+          "REVIEWED"
+        ]
+      },
+      "actual": {
+        "items": [
+          {
+            "dueAt": "2026-10-28T10:00:00+00:00",
+            "title": "Task",
+            "isLate": false,
+            "status": "REVIEWED",
+            "versions": [
+              {
+                "content": "Revised answer",
+                "attachments": [
+                  {
+                    "fileId": "80000000-0000-4000-8000-000000000001",
+                    "fileName": "revised.txt",
+                    "mimeType": "text/plain",
+                    "fileSizeBytes": 8
+                  }
+                ],
+                "submittedAt": "2026-10-26T12:00:00+00:00",
+                "teacherStatus": "REVIEWED",
+                "versionNumber": 2,
+                "teacherComment": "Looks good"
+              },
+              {
+                "content": "Old answer",
+                "attachments": [],
+                "submittedAt": "2026-10-26T11:00:00+00:00",
+                "teacherStatus": "NEEDS_REVISION",
+                "versionNumber": 1,
+                "teacherComment": "Keep this comment"
+              }
+            ],
+            "assignedAt": "2026-10-26T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000003",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": {
+              "content": "Revised answer",
+              "attachments": [
+                {
+                  "fileId": "80000000-0000-4000-8000-000000000001",
+                  "fileName": "revised.txt",
+                  "mimeType": "text/plain",
+                  "fileSizeBytes": 8
+                }
+              ],
+              "submittedAt": "2026-10-26T12:00:00+00:00",
+              "teacherStatus": "REVIEWED",
+              "versionNumber": 2,
+              "teacherComment": "Looks good"
+            }
+          }
+        ],
+        "total": 1
+      }
+    },
+    {
+      "name": "second page",
+      "expected": {
+        "total": 4,
+        "ids": [
+          "20000000-0000-4000-8000-000000000002",
+          "20000000-0000-4000-8000-000000000001"
+        ],
+        "statuses": [
+          "SUBMITTED",
+          "NOT_SUBMITTED"
+        ]
+      },
+      "actual": {
+        "items": [
+          {
+            "dueAt": "2026-10-26T10:00:00+00:00",
+            "title": "Task",
+            "isLate": true,
+            "status": "SUBMITTED",
+            "versions": [
+              {
+                "content": "Late answer",
+                "attachments": [],
+                "submittedAt": "2026-10-27T10:00:00+00:00",
+                "teacherStatus": null,
+                "versionNumber": 1,
+                "teacherComment": null
+              }
+            ],
+            "assignedAt": "2026-10-25T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000002",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": {
+              "content": "Late answer",
+              "attachments": [],
+              "submittedAt": "2026-10-27T10:00:00+00:00",
+              "teacherStatus": null,
+              "versionNumber": 1,
+              "teacherComment": null
+            }
+          },
+          {
+            "dueAt": null,
+            "title": "Task",
+            "isLate": false,
+            "status": "NOT_SUBMITTED",
+            "versions": [],
+            "assignedAt": "2026-10-24T10:00:00+00:00",
+            "homeworkId": "20000000-0000-4000-8000-000000000001",
+            "attachments": [],
+            "description": "Description",
+            "subjectName": "Math",
+            "teacherName": "Teacher",
+            "draftContent": null,
+            "latestVersion": null
+          }
+        ],
+        "total": 4
+      }
+    },
+    {
+      "name": "foreign account isolation",
+      "expected": {
+        "total": 0,
+        "ids": [],
+        "statuses": []
+      },
+      "actual": {
+        "items": [],
+        "total": 0
+      }
+    },
+    {
+      "name": "empty page keeps total",
+      "expected": {
+        "total": 4,
+        "ids": [],
+        "statuses": []
+      },
+      "actual": {
+        "items": [],
+        "total": 4
+      }
+    }
+  ],
+  "passed": true
+}

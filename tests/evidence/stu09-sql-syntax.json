@@ -1,0 +1,27 @@
+{
+  "parser": "v8.7",
+  "migrations": [
+    {
+      "path": "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+      "sha256": "1188311805a449aed5c0db19a52b6c2760817d181f612c3feaaf5a92c779eefe",
+      "statements": 24,
+      "plpgsqlFunctions": 4,
+      "newTablesMatchPrismaColumns": ["education_report_reads", "pdf_export_jobs"],
+      "syntax": "PASS"
+    }
+  ],
+  "sourceExactSelectProjectionsParsed": 10,
+  "cases": [
+    "latest published version and proven legacy eight-lesson report",
+    "draft correction does not hide prior publication",
+    "read receipt applies to exact published version",
+    "corrected legacy lesson count is not fabricated",
+    "pagination has deterministic totals past the last page",
+    "empty pupil reports",
+    "whole history includes skills goals reports and known attendance facts only",
+    "one-day inclusive filter keeps current map but selects attendance period",
+    "foreign subject cannot be exported",
+    "empty pupil export projection"
+  ],
+  "postgresExecution": "DEFERRED_BY_OWNER: no SQL binding, trigger execution, isolation or migration enforcement claim"
+}

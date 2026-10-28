@@ -1,0 +1,15 @@
+{
+  "artifact": "output/pdf/stu09-sample-history.pdf",
+  "sha256": "ac6f7263dacd54dcc48130fcb08468b1c27efdbc396bb517a9e2f23e0e20430e",
+  "bytes": 25994,
+  "pages": 3,
+  "fixture": "SYNTHETIC ONLY; no actual student records",
+  "renderer": "apps/worker/src/education-pdf.ts via built dist",
+  "content": "PASS: four skill statuses, goals, two eight-lesson reports, 24 attendance rows, Cyrillic and Romanian diacritics, signature/footer",
+  "privacy": "PASS: injected internal-note marker excluded",
+  "embeddedFonts": ["/CZZZZZ+NotoSans-Bold", "/DZZZZZ+NotoSans-Regular"],
+  "textBounds": "PASS",
+  "pageHeaders": "PASS on all pages",
+  "visualReview": "PASS: three rasterized A4 pages inspected",
+  "limitations": "Local PDF rendering only; actual database, worker queue and S3 delivery are not verified"
+}

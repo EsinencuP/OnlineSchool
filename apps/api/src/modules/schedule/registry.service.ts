@@ -6,6 +6,7 @@ import { at, date } from '../finance/finance-common.js';
 import { ScheduleAccess } from './schedule-access.service.js';
 import { ScheduleEvents } from './schedule-events.service.js';
 import { timezone } from './recurrence.js';
+import { meetLink } from './meet-link.js';
 
 @Injectable()
 export class ScheduleRegistry {
@@ -36,7 +37,14 @@ export class ScheduleRegistry {
     });
   }
   async assignment(ctx: CriticalContext, body: unknown) {
-    const i = object(body, ['enrollmentId', 'teacherId', 'validFrom', 'validTo', 'basis']);
+    const i = object(body, [
+      'enrollmentId',
+      'teacherId',
+      'validFrom',
+      'validTo',
+      'basis',
+      'googleMeetLink',
+    ]);
     const staff = await this.access.staff(ctx),
       en = await this.access.enrollment(ctx, uuid(i.enrollmentId));
     const start = date(i.validFrom),
@@ -51,6 +59,7 @@ export class ScheduleRegistry {
         valid_from: start,
         valid_to: end,
         basis: string(i.basis, 5, 500),
+        google_meet_link: meetLink(i.googleMeetLink),
         assigned_by_id: staff,
         source_operation_id: ctx.operationId,
       },

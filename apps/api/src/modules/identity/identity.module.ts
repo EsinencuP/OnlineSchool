@@ -8,6 +8,6 @@ import { WebAuthnConfig } from './webauthn.config.js';
 @Module({
   controllers: [IdentityController],
   providers: [IdentityService, RecoveryService, Passwords, AuthRateLimitService, WebAuthnConfig],
-  exports: [Passwords],
+  exports: [Passwords, IdentityService, AuthRateLimitService],
 })
 export class IdentityModule {}

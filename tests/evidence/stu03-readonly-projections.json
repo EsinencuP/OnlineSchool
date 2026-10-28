@@ -1,0 +1,88 @@
+{
+  "fixtureCte": "WITH student_subject_enrollments(id,student_id,subject_id,status,valid_from,valid_to) AS (VALUES ('00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000001'::uuid,'00000000-0000-4000-8000-000000000021'::uuid,'ACTIVE','2026-01-01Z'::timestamptz,NULL::timestamptz),('00000000-0000-4000-8000-000000000012'::uuid,'00000000-0000-4000-8000-000000000002'::uuid,'00000000-0000-4000-8000-000000000021'::uuid,'ACTIVE','2026-01-01Z'::timestamptz,NULL::timestamptz)),subjects(id,name,archived_at) AS (VALUES ('00000000-0000-4000-8000-000000000021'::uuid,'Fixture subject',NULL::timestamptz)),teacher_accounts(id,full_name,deactivated_at) AS (VALUES ('00000000-0000-4000-8000-000000000031'::uuid,'Fixture teacher',NULL::timestamptz)),teaching_assignments(id,teacher_id,enrollment_id,valid_from,valid_to,google_meet_link) AS (VALUES ('00000000-0000-4000-8000-000000000041'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'2026-01-01Z'::timestamptz,NULL::timestamptz,NULL::text),('00000000-0000-4000-8000-000000000042'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000012'::uuid,'2026-01-01Z'::timestamptz,NULL::timestamptz,NULL::text)),lesson_outcome_reports(id,lesson_occurrence_id,result,student_no_show,reported_at) AS (VALUES ('00000000-0000-4000-8000-000000000504'::uuid,'00000000-0000-4000-8000-000000000104'::uuid,'NOT_CONDUCTED',true,'2026-01-01Z'::timestamptz)),lesson_actual_outcomes(lesson_occurrence_id,confirmed_at,temporary_access_permission_id) AS (VALUES ('00000000-0000-4000-8000-000000000103'::uuid,'2026-01-01Z'::timestamptz,NULL::uuid)),subscriptions AS (SELECT NULL::uuid AS id,NULL::uuid AS enrollment_id,NULL::timestamptz AS valid_from,NULL::timestamptz AS valid_to,NULL::timestamptz AS frozen_from,NULL::timestamptz AS frozen_until,0::numeric AS full_price WHERE false),lesson_occurrences(id,enrollment_id,scheduled_teacher_id,teaching_assignment_id,confirmed_report_id,scheduled_at,scheduled_end_at,status) AS (VALUES ('00000000-0000-4000-8000-000000000101'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-27T08:00Z'::timestamptz,'2026-10-27T09:00:00.000Z'::timestamptz,'SCHEDULED'),('00000000-0000-4000-8000-000000000102'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-27T13:00Z'::timestamptz,'2026-10-27T14:00:00.000Z'::timestamptz,'SCHEDULED'),('00000000-0000-4000-8000-000000000103'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-26T13:00Z'::timestamptz,'2026-10-26T14:00:00.000Z'::timestamptz,'CONDUCTED'),('00000000-0000-4000-8000-000000000104'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,'00000000-0000-4000-8000-000000000504'::uuid,'2026-10-25T13:00Z'::timestamptz,'2026-10-25T14:00:00.000Z'::timestamptz,'CANCELLED'),('00000000-0000-4000-8000-000000000105'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-24T13:00Z'::timestamptz,'2026-10-24T14:00:00.000Z'::timestamptz,'CANCELLED'),('00000000-0000-4000-8000-000000000106'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-27T10:00Z'::timestamptz,'2026-10-27T11:00:00.000Z'::timestamptz,'DISPUTED'),('00000000-0000-4000-8000-000000000107'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-27T11:00Z'::timestamptz,'2026-10-27T12:00:00.000Z'::timestamptz,'STAR_PENDING'),('00000000-0000-4000-8000-000000000108'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-26T13:00Z'::timestamptz,'2026-10-26T14:00:00.000Z'::timestamptz,'CONDUCTED'),('00000000-0000-4000-8000-000000000109'::uuid,'00000000-0000-4000-8000-000000000011'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000041'::uuid,NULL::uuid,'2026-10-28T00:00Z'::timestamptz,'2026-10-28T01:00:00.000Z'::timestamptz,'SCHEDULED'),('00000000-0000-4000-8000-000000000201'::uuid,'00000000-0000-4000-8000-000000000012'::uuid,'00000000-0000-4000-8000-000000000031'::uuid,'00000000-0000-4000-8000-000000000042'::uuid,NULL::uuid,'2026-10-27T12:00Z'::timestamptz,'2026-10-27T13:00:00.000Z'::timestamptz,'SCHEDULED'))",
+  "asOf": "2026-10-27T12:00:00Z",
+  "timeZone": "Europe/Chisinau",
+  "studentId": "00000000-0000-4000-8000-000000000001",
+  "cases": [
+    {
+      "query": {
+        "period": "today",
+        "page": 1,
+        "pageSize": 20
+      },
+      "ids": [
+        "00000000-0000-4000-8000-000000000101",
+        "00000000-0000-4000-8000-000000000106",
+        "00000000-0000-4000-8000-000000000107",
+        "00000000-0000-4000-8000-000000000102"
+      ],
+      "statuses": ["SCHEDULED", "DISPUTED", "STAR_PENDING", "SCHEDULED"],
+      "total": 4
+    },
+    {
+      "query": {
+        "period": "archive",
+        "page": 1,
+        "pageSize": 20
+      },
+      "ids": [
+        "00000000-0000-4000-8000-000000000103",
+        "00000000-0000-4000-8000-000000000104",
+        "00000000-0000-4000-8000-000000000105"
+      ],
+      "statuses": ["COMPLETED", "NO_SHOW", "CANCELLED"],
+      "total": 3
+    },
+    {
+      "query": {
+        "period": "archive",
+        "page": 2,
+        "pageSize": 2
+      },
+      "ids": ["00000000-0000-4000-8000-000000000105"],
+      "statuses": ["CANCELLED"],
+      "total": 3
+    },
+    {
+      "query": {
+        "period": "archive",
+        "page": 100,
+        "pageSize": 20
+      },
+      "ids": [],
+      "statuses": [],
+      "total": 3
+    },
+    {
+      "query": {
+        "period": "month",
+        "month": "2026-10",
+        "page": 1,
+        "pageSize": 62
+      },
+      "ids": [
+        "00000000-0000-4000-8000-000000000105",
+        "00000000-0000-4000-8000-000000000104",
+        "00000000-0000-4000-8000-000000000103",
+        "00000000-0000-4000-8000-000000000108",
+        "00000000-0000-4000-8000-000000000101",
+        "00000000-0000-4000-8000-000000000106",
+        "00000000-0000-4000-8000-000000000107",
+        "00000000-0000-4000-8000-000000000102",
+        "00000000-0000-4000-8000-000000000109"
+      ],
+      "statuses": [
+        "CANCELLED",
+        "NO_SHOW",
+        "COMPLETED",
+        "DISPUTED",
+        "SCHEDULED",
+        "DISPUTED",
+        "STAR_PENDING",
+        "SCHEDULED",
+        "SCHEDULED"
+      ],
+      "total": 9
+    }
+  ]
+}

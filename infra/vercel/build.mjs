@@ -1,6 +1,7 @@
 // Runs inside the existing Vercel project's protected production build environment.
 // No credentials are sent to GitHub, command arguments, generated files or build logs.
 import { spawnSync } from 'node:child_process';
+import { cpSync } from 'node:fs';
 
 function run(args, env = process.env, quiet = false) {
   const result = spawnSync('pnpm', args, {
@@ -43,6 +44,8 @@ delete buildEnv.DIRECT_DATABASE_URL;
 delete buildEnv.DIRECT_URL;
 run(['--filter', '@online-school/api', 'build'], buildEnv);
 run(['--filter', '@online-school/qa-shell', 'build'], buildEnv);
+run(['--filter', '@online-school/student-cabinet', 'build'], buildEnv);
+cpSync('apps/student-cabinet/dist', 'apps/qa-shell/dist/student', { recursive: true });
 run(
   ['--filter', '@online-school/db', 'exec', 'prisma', 'migrate', 'deploy'],
   {

@@ -19,6 +19,7 @@ import {
   IdempotencyModule,
 } from './idempotency/idempotency.module.js';
 import { AppExceptionFilter } from './errors/app-exception.filter.js';
+import { ErrorMapper } from './errors/error-mapper.js';
 import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
 
 @Global()
@@ -35,6 +36,7 @@ import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
     IdempotencyModule,
   ],
   providers: [
+    ErrorMapper,
     { provide: APP_PIPE, useClass: DtoValidationPipe },
     RequestIdMiddleware,
     { provide: APP_FILTER, useClass: AppExceptionFilter },
@@ -46,6 +48,7 @@ import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
     { provide: APP_INTERCEPTOR, useExisting: CriticalCommandInterceptor },
   ],
   exports: [
+    ErrorMapper,
     DatabaseModule,
     AuditModule,
     TransactionModule,

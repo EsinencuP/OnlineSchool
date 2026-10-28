@@ -25,7 +25,7 @@ export default tseslint.config(
     rules: { 'no-throw-literal': 'error' },
   },
   {
-    files: ['apps/qa-shell/src/**/*.{ts,tsx}'],
+    files: ['apps/qa-shell/src/**/*.{ts,tsx}', 'apps/student-cabinet/src/**/*.{ts,tsx}'],
     languageOptions: { globals: globals.browser },
   },
   {

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "fixture": "SYNTHETIC browser API mocks only; no real session/DB/provider",
+  "checks": [
+    "Suspended student sees own manager WhatsApp/Telegram and no passkey controls",
+    "390px suspended view has no horizontal overflow",
+    "Forced password takes priority over inactive access",
+    "401 stays on password form and clears both password inputs",
+    "PATCH success reloads bootstrap and displays suspension rather than privileged workspace",
+    "Unsafe/missing manager links are not rendered",
+    "Active student stays outside staff MFA and QA command workspace",
+    "Returning focus refreshes the session and server access state"
+  ],
+  "screenshots": [
+    ".codex/stu11-ui/suspended-desktop.png",
+    ".codex/stu11-ui/suspended-mobile.png",
+    ".codex/stu11-ui/initial-password-mobile.png"
+  ],
+  "pageErrors": [],
+  "backgroundHealth": "Local API/health was not started; initial preview logged ECONNREFUSED for the unmocked public health probe. Student UI flow used API mocks; no real backend/health acceptance claim."
+}
