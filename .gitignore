@@ -14,3 +14,6 @@ coverage/
 !.env.example
 packages/db/src/generated/
 *.log
+
+.vercel
+.env*
