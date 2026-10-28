@@ -55,6 +55,7 @@ run(
   true,
 );
 console.log('Working database migrations applied; deployment may be published');
+run(['exec', 'node', 'scripts/student-cabinet-runtime-check.mjs'], buildEnv);
 if (process.env.STUDENT_TEST_PROVISION_UNTIL) {
   run(['exec', 'node', 'scripts/student-cabinet-provision.mjs'], {
     ...buildEnv,
