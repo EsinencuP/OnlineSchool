@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-28",
+  "origin": "https://onlineschool-xi.vercel.app",
+  "deploymentId": "dpl_8U3ovooz1op13BbfhfLH4xZg2sU4",
+  "commit": "59df29136cb798fb620e17dd340c8d2a7196f9a0",
+  "sourceBranch": "codex/stu12-working-cabinet",
+  "target": "production",
+  "database": "existing Neon onlineschool / main / online_school",
+  "checks": {
+    "login": true,
+    "initialPasswordChanged": true,
+    "directRoutes": 11,
+    "profileUpdate": true,
+    "notifications": true,
+    "draftAutosave": true,
+    "realBrowserS3UploadAndServerConfirmation": true,
+    "homeworkSubmit": true,
+    "persistedSubmission": true,
+    "balanceUnchanged": true,
+    "mobileNoHorizontalOverflow": true,
+    "pageErrors": 0,
+    "failedApiRequests": 0
+  },
+  "testData": {
+    "ownerApproved": true,
+    "demoAmount": "120 MDL",
+    "noRealPayment": true,
+    "lessonsRemaining": 6,
+    "scheduledLessons": 3,
+    "homework": 1,
+    "skills": 4,
+    "goal": 1
+  },
+  "temporarySetupVariables": "removed",
+  "secrets": "Vercel sensitive variables; private credentials file excluded from Git",
+  "deferred": [
+    "Resend email delivery",
+    "real Google Meet meeting",
+    "manual owner acceptance",
+    "FND-GATE / whole-project regression"
+  ]
+}
