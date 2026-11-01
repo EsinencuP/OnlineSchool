@@ -1,0 +1,13 @@
+Scope: 6 of 7 workspace projects
+packages/shared lint$ eslint . --max-warnings 0
+packages/shared lint: Done
+packages/api-contracts lint$ eslint . --max-warnings 0
+packages/db lint$ eslint . --max-warnings 0
+packages/api-contracts lint: Done
+packages/db lint: Done
+apps/api lint$ eslint . --max-warnings 0
+apps/api lint: Done
+apps/qa-shell lint$ eslint . --max-warnings 0
+apps/worker lint$ eslint . --max-warnings 0
+apps/qa-shell lint: Done
+apps/worker lint: Done
