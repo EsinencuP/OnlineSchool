@@ -1,0 +1,66 @@
+{
+  "checkedAt": "2026-11-01T19:13:56.276Z",
+  "sourceSnapshot": "3e7e83f",
+  "ownerVideoDeletion": "51de859",
+  "releaseParent": "49bac15",
+  "validatedSourceCommit": "26be347c1dc315b229feaf1bd30134b9a11a5028",
+  "frozenInstall": "PASS",
+  "postinstallGenerateGitDiff": "EMPTY",
+  "checks": [
+    {
+      "name": "api-build",
+      "exitCode": 0,
+      "durationMs": 27816
+    },
+    {
+      "name": "worker-build",
+      "exitCode": 0,
+      "durationMs": 7273
+    },
+    {
+      "name": "qa-build",
+      "exitCode": 0,
+      "durationMs": 9218
+    },
+    {
+      "name": "student-build",
+      "exitCode": 0,
+      "durationMs": 8231
+    },
+    {
+      "name": "manager-build",
+      "exitCode": 0,
+      "durationMs": 13029
+    },
+    {
+      "name": "lint",
+      "exitCode": 0,
+      "durationMs": 9595
+    },
+    {
+      "name": "targeted-tests",
+      "exitCode": 0,
+      "durationMs": 24810
+    },
+    {
+      "name": "demo-guard-tests",
+      "exitCode": 0,
+      "durationMs": 791
+    }
+  ],
+  "webp": {
+    "images": 65,
+    "beforeBytes": 15283451,
+    "afterBytes": 2631430,
+    "savedPercent": 82.78
+  },
+  "outgoingOversizedObjects": 0,
+  "sourceHistoriesIncluded": 10,
+  "productionSettings": {
+    "repository": "EsinencuP/OnlineSchool",
+    "branch": "main",
+    "autoAssignDomains": true,
+    "verifiedIn": "Vercel UI"
+  },
+  "productionVerification": "Deployment and role smoke are recorded externally in Vercel/GitHub and the release response after push; no pre-deployment success claim."
+}
