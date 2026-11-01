@@ -1,0 +1,10 @@
+{
+  "parser": "v8.7",
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261031130000_mgr05_receipts/migration.sql",
+    "sha256": "0f9ba7cff306da775d381bc02a36e2a4a3c17b7c2d3f97605f672b8a01230a0a",
+    "statements": 14,
+    "plpgsqlFunctions": 2
+  },
+  "scope": "Offline syntax only. No PostgreSQL execution, constraints or grants verified."
+}

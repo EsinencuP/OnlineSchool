@@ -1,0 +1,48 @@
+{
+  "parser": "v8.7",
+  "queries": [
+    {
+      "index": 0,
+      "statements": 1,
+      "sha256": "536900a16f8e0e3b41ae2b5e50b32be256a56180d59389694215738d971b0d56"
+    },
+    {
+      "index": 1,
+      "statements": 1,
+      "sha256": "74912c31cda54ce87c7395e3361b7bf4b2382e273afe0c1386dfc71debce18fd"
+    },
+    {
+      "index": 2,
+      "statements": 1,
+      "sha256": "892bd4bda57a4144320da2d0ca3aabc06069fd9147858490a86a1d8ab08548f9"
+    },
+    {
+      "index": 3,
+      "statements": 1,
+      "sha256": "b4ddd0e1a589bd280f25f0cbd7fd8668e39cb5ec3a3dbb7f32930ab16e14932c"
+    },
+    {
+      "index": 4,
+      "statements": 1,
+      "sha256": "dd6c5be76722bd0cc0547f170dd7911a0db2dbf0e3f4731ffe41d48aac38ee2f"
+    }
+  ],
+  "scope": "Offline syntax only: explicit isolation/read-only statement, transaction timestamp, combined overview, subscription and pending aggregates. ORM profile query typechecked. No live MVCC, protocol trace, query plan or p95 evidence.",
+  "affectedSharedQueries": [
+    {
+      "index": 0,
+      "statements": 1,
+      "sha256": "82c1af59feb7bacf94fa752b68d654126b2137d6b23fdeb70138fb7ea0a6983f"
+    },
+    {
+      "index": 1,
+      "statements": 1,
+      "sha256": "6780c34569d128579c6ed1dbbd38479c205df3a5ef4889781960ec72790bd22d"
+    },
+    {
+      "index": 2,
+      "statements": 1,
+      "sha256": "650f2f69d3037927abc0eb1840c95ee21a4ee42ca1c2b9bd7e7b02b554eef5d6"
+    }
+  ]
+}

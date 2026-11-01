@@ -55,6 +55,7 @@ export class StudentDisputeService {
       {
         type: 'ATTENDANCE_DISPUTE',
         lessonId,
+        originalConsumptionId: eligible.consumption_id,
         studentProfileId: student.studentProfileId,
         payload: { description },
       },

@@ -19,6 +19,11 @@ export interface AccrualCreateRequest {
   exceptionAmount?: string;
 }
 
+export interface AllocateManagerPaymentDto {
+  subscriptionId: string;
+  amount: string;
+}
+
 export type ApiErrorDetails = { [key: string]: unknown };
 
 export interface ApiError {
@@ -29,7 +34,34 @@ export interface ApiError {
   timestamp: string;
 }
 
+export interface ApproveCrmDisputeDto {
+  /** @minimum 1 */
+  version: number;
+}
+
 export interface ApproveDistributionRequest { [key: string]: unknown }
+
+export interface ApproveScheduleChangeDto { [key: string]: unknown }
+
+export type CancelManagerLessonDtoInitiator = typeof CancelManagerLessonDtoInitiator[keyof typeof CancelManagerLessonDtoInitiator];
+
+
+export const CancelManagerLessonDtoInitiator = {
+  STUDENT: 'STUDENT',
+  TEACHER: 'TEACHER',
+  ACADEMY: 'ACADEMY',
+} as const;
+
+export interface CancelManagerLessonDto {
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+  chargeable: boolean;
+  initiator?: CancelManagerLessonDtoInitiator;
+  overrideLateRule?: boolean;
+}
 
 export interface ChangeEmailConfirmDto {
   /**
@@ -55,6 +87,11 @@ export interface ChangeStudentPasswordDto {
      * @pattern ^(?=.*[A-Za-z])(?=.*\d).+$
      */
   newPassword: string;
+}
+
+export interface ClaimManagerTaskDto {
+  /** @minimum 1 */
+  version: number;
 }
 
 export interface CloseFinancialPeriodRequest { [key: string]: unknown }
@@ -193,6 +230,72 @@ export interface ConfirmUploadResponseDto {
   status: ConfirmUploadResponseDtoStatus;
 }
 
+export type CreateManagerLessonDtoDurationMinutes = typeof CreateManagerLessonDtoDurationMinutes[keyof typeof CreateManagerLessonDtoDurationMinutes];
+
+
+export const CreateManagerLessonDtoDurationMinutes = {
+  NUMBER_30: 30,
+  NUMBER_45: 45,
+  NUMBER_60: 60,
+  NUMBER_90: 90,
+} as const;
+
+export interface CreateManagerLessonDto {
+  teacherId: string;
+  startsAt: string;
+  durationMinutes: CreateManagerLessonDtoDurationMinutes;
+  /** Managed subscription (study direction). Required if multiple active subscriptions exist. */
+  subscriptionId?: string;
+  /** @pattern ^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$ */
+  meetLink?: string;
+}
+
+export type CreateManagerPaymentDtoCurrency = typeof CreateManagerPaymentDtoCurrency[keyof typeof CreateManagerPaymentDtoCurrency];
+
+
+export const CreateManagerPaymentDtoCurrency = {
+  MDL: 'MDL',
+} as const;
+
+export type CreateManagerPaymentDtoMethod = typeof CreateManagerPaymentDtoMethod[keyof typeof CreateManagerPaymentDtoMethod];
+
+
+export const CreateManagerPaymentDtoMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  ONLINE: 'ONLINE',
+} as const;
+
+export type CreateManagerPaymentDtoPurpose = typeof CreateManagerPaymentDtoPurpose[keyof typeof CreateManagerPaymentDtoPurpose];
+
+
+export const CreateManagerPaymentDtoPurpose = {
+  FIRST_PAYMENT: 'FIRST_PAYMENT',
+  RENEWAL: 'RENEWAL',
+  OTHER: 'OTHER',
+} as const;
+
+export interface CreateManagerPaymentDto {
+  /** @pattern ^(0|[1-9][0-9]{0,11})(\.[0-9]{1,4})?$ */
+  amount: string;
+  currency?: CreateManagerPaymentDtoCurrency;
+  method: CreateManagerPaymentDtoMethod;
+  purpose: CreateManagerPaymentDtoPurpose;
+  receivedAt: string;
+  /** @maxLength 100 */
+  externalRef?: string;
+  /** @maxLength 500 */
+  note?: string;
+}
+
+export interface CreateManagerSubscriptionDto {
+  planId: string;
+  distributionId: string;
+  /** Must match the prepared financial package start. */
+  startsAt?: string;
+}
+
 export type SessionResponseAccountKind = typeof SessionResponseAccountKind[keyof typeof SessionResponseAccountKind];
 
 
@@ -240,8 +343,160 @@ export interface WebAuthnStartResponse {
 
 export type CreateSessionResponse = SessionResponse | WebAuthnStartResponse;
 
+export interface CreateStudentAccountDto {
+  /** @maxLength 254 */
+  loginEmail: string;
+}
+
+export interface CreateStudentDto {
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  fullName: string;
+  /**
+     * @nullable
+     * @pattern ^\+?[0-9 ()-]{6,20}$
+     */
+  phone?: string | null;
+  /**
+     * @maxLength 254
+     * @nullable
+     */
+  email?: string | null;
+  /**
+     * @maxLength 120
+     * @nullable
+     */
+  guardianName?: string | null;
+  /**
+     * @maxLength 2000
+     * @nullable
+     */
+  managerNote?: string | null;
+}
+
+export type CrmDisputeResolutionDtoStatus = typeof CrmDisputeResolutionDtoStatus[keyof typeof CrmDisputeResolutionDtoStatus];
+
+
+export const CrmDisputeResolutionDtoStatus = {
+  RESOLVED: 'RESOLVED',
+} as const;
+
+export interface CrmDisputeResolutionDto {
+  taskId: string;
+  version: number;
+  status: CrmDisputeResolutionDtoStatus;
+  ledgerPublicationId: string;
+  refundAmount: string;
+  refundLessons: number;
+  currency: string;
+}
+
+export type CrmDisputeReviewDtoMode = typeof CrmDisputeReviewDtoMode[keyof typeof CrmDisputeReviewDtoMode];
+
+
+export const CrmDisputeReviewDtoMode = {
+  FULL_REVERSAL: 'FULL_REVERSAL',
+  MANUAL_REVIEW: 'MANUAL_REVIEW',
+} as const;
+
+export interface CrmDisputeReviewDto {
+  taskId: string;
+  studentId: string;
+  lessonId: string;
+  version: number;
+  status: string;
+  mode: CrmDisputeReviewDtoMode;
+  reason: string;
+  /** @nullable */
+  requestedAmount: string | null;
+  /** @nullable */
+  requestedLessons: number | null;
+  fullAmount: string;
+  fullLessons: number;
+  currency: string;
+}
+
+export interface CrmTaskBriefDto {
+  id: string;
+  type: string;
+  status: string;
+  title: string;
+  dueAt: string;
+}
+
 export interface CsrfResponse {
   csrfToken: string;
+}
+
+export interface CurrencyBalanceDto {
+  currency: string;
+  amount: string;
+}
+
+export interface DashboardCurrencyTotalDto {
+  currency: string;
+  amount: string;
+}
+
+export interface DashboardLessonDto {
+  lessonId: string;
+  studentId: string;
+  studentName: string;
+  startsAt: string;
+  teacherName: string;
+  hasMeetLink: boolean;
+}
+
+export type DashboardTaskDtoType = typeof DashboardTaskDtoType[keyof typeof DashboardTaskDtoType];
+
+
+export const DashboardTaskDtoType = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+  CHARGE_DISPUTE: 'CHARGE_DISPUTE',
+  SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
+  GENERAL: 'GENERAL',
+} as const;
+
+export interface DashboardTaskDto {
+  taskId: string;
+  type: DashboardTaskDtoType;
+  studentName: string;
+  dueAt: string;
+}
+
+export interface DashboardOverdueTasksDto {
+  count: number;
+  top: DashboardTaskDto[];
+}
+
+export interface DashboardPendingPaymentsDto {
+  count: number;
+  totalsByCurrency: DashboardCurrencyTotalDto[];
+}
+
+export type DashboardQueryDtoLessonsHorizonHours = typeof DashboardQueryDtoLessonsHorizonHours[keyof typeof DashboardQueryDtoLessonsHorizonHours];
+
+
+export const DashboardQueryDtoLessonsHorizonHours = {
+  NUMBER_24: 24,
+  NUMBER_48: 48,
+  NUMBER_168: 168,
+} as const;
+
+export type DashboardQueryDtoExpiringDays = typeof DashboardQueryDtoExpiringDays[keyof typeof DashboardQueryDtoExpiringDays];
+
+
+export const DashboardQueryDtoExpiringDays = {
+  NUMBER_3: 3,
+  NUMBER_7: 7,
+  NUMBER_14: 14,
+} as const;
+
+export interface DashboardQueryDto {
+  lessonsHorizonHours?: DashboardQueryDtoLessonsHorizonHours;
+  expiringDays?: DashboardQueryDtoExpiringDays;
 }
 
 export interface NextLessonDto {
@@ -285,6 +540,20 @@ export interface DashboardResponseDto {
   subscription: SubscriptionSummaryDto | null;
   skillProgress: SkillProgressDto;
   generatedAt: string;
+}
+
+export interface DashboardStudentCountsDto {
+  active: number;
+  frozen: number;
+  leads: number;
+}
+
+export interface DashboardSubscriptionDto {
+  subscriptionId: string;
+  studentId: string;
+  studentName: string;
+  endsAt: string;
+  remainingLessons: number;
 }
 
 export interface DisputeRequestDto {
@@ -488,6 +757,27 @@ export interface FinancialPeriodResponse {
   [key: string]: unknown;
  }
 
+export type FreezeManagerSubscriptionDtoReason = typeof FreezeManagerSubscriptionDtoReason[keyof typeof FreezeManagerSubscriptionDtoReason];
+
+
+export const FreezeManagerSubscriptionDtoReason = {
+  ILLNESS: 'ILLNESS',
+  TRAVEL: 'TRAVEL',
+  FAMILY: 'FAMILY',
+  OTHER: 'OTHER',
+} as const;
+
+export interface FreezeManagerSubscriptionDto {
+  /** Inclusive school-local start date. */
+  startsOn: string;
+  /** Exclusive school-local resume date. */
+  endsOn: string;
+  reason: FreezeManagerSubscriptionDtoReason;
+  /** @maxLength 500 */
+  comment?: string;
+  cancelConflictingLessons?: boolean;
+}
+
 export interface GenerateSlotOccurrencesRequest { [key: string]: unknown }
 
 export type HealthProbeResponseStatus = typeof HealthProbeResponseStatus[keyof typeof HealthProbeResponseStatus];
@@ -640,6 +930,18 @@ export interface LearningGoalDto {
   isAchieved: boolean;
 }
 
+export interface LearningSummaryDto {
+  skillsMastered: number;
+  skillsTotal: number;
+  homeworkSubmitted: number;
+  homeworkPending: number;
+  homeworkOverdue: number;
+  /** @nullable */
+  lastReportAt: string | null;
+  /** @nullable */
+  lastReportStatus: string | null;
+}
+
 export interface LedgerAdjustmentResponse {
   id: string;
   reversalEntryId: string;
@@ -731,6 +1033,13 @@ export interface LedgerPublishRequest {
   lines?: LedgerLineInput[];
 }
 
+export interface LessonBriefDto {
+  id: string;
+  startsAt: string;
+  subjectName: string;
+  teacherName: string;
+}
+
 export type LessonCardDtoStatus = typeof LessonCardDtoStatus[keyof typeof LessonCardDtoStatus];
 
 
@@ -778,6 +1087,7 @@ export type LessonHistoryItemDtoAttendanceStatus = typeof LessonHistoryItemDtoAt
 export const LessonHistoryItemDtoAttendanceStatus = {
   COMPLETED: 'COMPLETED',
   NO_SHOW: 'NO_SHOW',
+  CANCELLED: 'CANCELLED',
 } as const;
 
 export interface LessonHistoryItemDto {
@@ -871,6 +1181,26 @@ export interface LessonsResponseDto {
   pageSize: number;
 }
 
+export type ListManagerNotificationsDtoStatus = typeof ListManagerNotificationsDtoStatus[keyof typeof ListManagerNotificationsDtoStatus];
+
+
+export const ListManagerNotificationsDtoStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+} as const;
+
+export interface ListManagerNotificationsDto {
+  status?: ListManagerNotificationsDtoStatus;
+  /** @maxLength 200 */
+  cursor?: string;
+  /**
+     * @minimum 1
+     * @maximum 100
+     */
+  limit?: number;
+}
+
 export type LoginRequestAlternative1Method = typeof LoginRequestAlternative1Method[keyof typeof LoginRequestAlternative1Method];
 
 
@@ -911,6 +1241,482 @@ export interface ManagerContactsDto {
   telegram: string;
 }
 
+export interface ManagerDashboardDto {
+  generatedAt: string;
+  students: DashboardStudentCountsDto;
+  upcomingLessons: DashboardLessonDto[];
+  overdueTasks: DashboardOverdueTasksDto;
+  expiringSubscriptions: DashboardSubscriptionDto[];
+  pendingPayments: DashboardPendingPaymentsDto;
+}
+
+export type ManagerDistributionDtoStatus = typeof ManagerDistributionDtoStatus[keyof typeof ManagerDistributionDtoStatus];
+
+
+export const ManagerDistributionDtoStatus = {
+  PENDING: 'PENDING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export interface ManagerDistributionDto {
+  id: string;
+  paymentId: string;
+  studentId: string;
+  subscriptionId: string;
+  enrollmentId: string;
+  planId: string;
+  amount: string;
+  currency: string;
+  status: ManagerDistributionDtoStatus;
+  /** Only a subscription operation consumes an allocation; account activation does not. */
+  consumed: boolean;
+  /** @nullable */
+  ledgerPublicationId: string | null;
+}
+
+export interface ManagerDistributionPageDto {
+  items: ManagerDistributionDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface ManagerNamedOptionDto {
+  id: string;
+  label: string;
+}
+
+export interface ManagerEnrollmentOptionDto {
+  id: string;
+  label: string;
+  subjectId: string;
+  teachers: ManagerNamedOptionDto[];
+}
+
+export interface ManagerFinancialSubscriptionOptionDto {
+  id: string;
+  label: string;
+  enrollmentId: string;
+  currency: string;
+  startsAt: string;
+}
+
+export type ManagerLessonDtoStatus = typeof ManagerLessonDtoStatus[keyof typeof ManagerLessonDtoStatus];
+
+
+export const ManagerLessonDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  STAR_PENDING: 'STAR_PENDING',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface ManagerLessonDto {
+  lessonId: string;
+  studentId: string;
+  teacherId: string;
+  teacherName: string;
+  startsAt: string;
+  endsAt: string;
+  status: ManagerLessonDtoStatus;
+  /** @nullable */
+  meetLink: string | null;
+  /** @nullable */
+  subscriptionId: string | null;
+  chargedLessons: number;
+  /**
+     * Specific director exception request. Re-submit the same change with a new command key after approval.
+     * @nullable
+     */
+  pendingChangeId: string | null;
+  requiresApproval: boolean;
+}
+
+export type ManagerMeResponseDtoRole = typeof ManagerMeResponseDtoRole[keyof typeof ManagerMeResponseDtoRole];
+
+
+export const ManagerMeResponseDtoRole = {
+  MANAGER: 'MANAGER',
+} as const;
+
+export type ManagerMeResponseDtoCapabilitiesItem = typeof ManagerMeResponseDtoCapabilitiesItem[keyof typeof ManagerMeResponseDtoCapabilitiesItem];
+
+
+export const ManagerMeResponseDtoCapabilitiesItem = {
+  STUDENTS_VIEW: 'STUDENTS_VIEW',
+  ACCOUNTS_CREATE: 'ACCOUNTS_CREATE',
+  PAYMENTS_CONFIRM: 'PAYMENTS_CONFIRM',
+  SUBSCRIPTIONS_MANAGE: 'SUBSCRIPTIONS_MANAGE',
+  SCHEDULE_MANAGE: 'SCHEDULE_MANAGE',
+  TASKS_PROCESS: 'TASKS_PROCESS',
+  NOTIFICATIONS_SEND: 'NOTIFICATIONS_SEND',
+} as const;
+
+export interface ManagerMeResponseDto {
+  managerId: string;
+  displayName: string;
+  role: ManagerMeResponseDtoRole;
+  /** @minimum 0 */
+  portfolioSize: number;
+  timezone: string;
+  capabilities: ManagerMeResponseDtoCapabilitiesItem[];
+}
+
+export type ManagerNotificationDtoChannel = typeof ManagerNotificationDtoChannel[keyof typeof ManagerNotificationDtoChannel];
+
+
+export const ManagerNotificationDtoChannel = {
+  IN_APP: 'IN_APP',
+  EMAIL: 'EMAIL',
+} as const;
+
+export type ManagerNotificationDtoTemplateCode = typeof ManagerNotificationDtoTemplateCode[keyof typeof ManagerNotificationDtoTemplateCode];
+
+
+export const ManagerNotificationDtoTemplateCode = {
+  ACCOUNT_CREATED: 'ACCOUNT_CREATED',
+  PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
+  SUBSCRIPTION_CREATED: 'SUBSCRIPTION_CREATED',
+  SUBSCRIPTION_RENEWED: 'SUBSCRIPTION_RENEWED',
+  SUBSCRIPTION_FROZEN: 'SUBSCRIPTION_FROZEN',
+  SUBSCRIPTION_UNFROZEN: 'SUBSCRIPTION_UNFROZEN',
+  SUBSCRIPTION_EXPIRED: 'SUBSCRIPTION_EXPIRED',
+  LESSON_SCHEDULED: 'LESSON_SCHEDULED',
+  LESSON_RESCHEDULED: 'LESSON_RESCHEDULED',
+  LESSON_CANCELLED: 'LESSON_CANCELLED',
+  RESCHEDULE_DECLINED: 'RESCHEDULE_DECLINED',
+  DISPUTE_ACCEPTED: 'DISPUTE_ACCEPTED',
+  DISPUTE_REJECTED: 'DISPUTE_REJECTED',
+  MANUAL_MESSAGE: 'MANUAL_MESSAGE',
+} as const;
+
+export type ManagerNotificationDtoStatus = typeof ManagerNotificationDtoStatus[keyof typeof ManagerNotificationDtoStatus];
+
+
+export const ManagerNotificationDtoStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+} as const;
+
+export interface ManagerNotificationDto {
+  notificationId: string;
+  studentId: string;
+  channel: ManagerNotificationDtoChannel;
+  templateCode: ManagerNotificationDtoTemplateCode;
+  status: ManagerNotificationDtoStatus;
+  createdAt: string;
+  /** @nullable */
+  sentAt: string | null;
+  /** @nullable */
+  failureReason: string | null;
+}
+
+export interface ManagerNotificationPageDto {
+  items: ManagerNotificationDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface ManagerPlanOptionDto {
+  id: string;
+  label: string;
+  price: string;
+  currency: string;
+  lessonCount: number;
+}
+
+export interface ManagerOptionsDto {
+  students: ManagerNamedOptionDto[];
+  subjects: ManagerNamedOptionDto[];
+  plans: ManagerPlanOptionDto[];
+  enrollments: ManagerEnrollmentOptionDto[];
+  financialSubscriptions: ManagerFinancialSubscriptionOptionDto[];
+}
+
+/**
+ * @nullable
+ */
+export type ManagerPaymentDtoMethod = typeof ManagerPaymentDtoMethod[keyof typeof ManagerPaymentDtoMethod] | null;
+
+
+export const ManagerPaymentDtoMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  ONLINE: 'ONLINE',
+} as const;
+
+/**
+ * @nullable
+ */
+export type ManagerPaymentDtoPurpose = typeof ManagerPaymentDtoPurpose[keyof typeof ManagerPaymentDtoPurpose] | null;
+
+
+export const ManagerPaymentDtoPurpose = {
+  FIRST_PAYMENT: 'FIRST_PAYMENT',
+  RENEWAL: 'RENEWAL',
+  OTHER: 'OTHER',
+} as const;
+
+export type ManagerPaymentDtoStatus = typeof ManagerPaymentDtoStatus[keyof typeof ManagerPaymentDtoStatus];
+
+
+export const ManagerPaymentDtoStatus = {
+  PENDING: 'PENDING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export interface ManagerPaymentDto {
+  id: string;
+  /** CRM contact; does not establish ownership of funds. */
+  studentId: string;
+  amount: string;
+  /** Historical receipt currencies are preserved. New receipts support MDL. */
+  currency: string;
+  /** @nullable */
+  method: ManagerPaymentDtoMethod;
+  /** @nullable */
+  purpose: ManagerPaymentDtoPurpose;
+  status: ManagerPaymentDtoStatus;
+  receivedAt: string;
+  /** @nullable */
+  externalRef: string | null;
+  /** @nullable */
+  ledgerPublicationId: string | null;
+  createdAt: string;
+  /** @nullable */
+  rejectionReason: string | null;
+}
+
+export interface ManagerPaymentPageDto {
+  items: ManagerPaymentDto[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+export type ManagerSubscriptionDtoStatus = typeof ManagerSubscriptionDtoStatus[keyof typeof ManagerSubscriptionDtoStatus];
+
+
+export const ManagerSubscriptionDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export interface ManagerSubscriptionDto {
+  id: string;
+  studentId: string;
+  enrollmentId: string;
+  planId: string;
+  status: ManagerSubscriptionDtoStatus;
+  startsAt: string;
+  endsAt: string;
+  /** @nullable */
+  frozenUntil: string | null;
+  totalLessons: number;
+  remainingLessons: number;
+  freezeDaysUsed: number;
+  price: string;
+  currency: string;
+}
+
+export interface ManagerSubscriptionSummaryDto {
+  id: string;
+  /** @nullable */
+  endsAt: string | null;
+  remainingLessons: number;
+  currency: string;
+}
+
+export type ManagerTaskDetailDtoType = typeof ManagerTaskDetailDtoType[keyof typeof ManagerTaskDetailDtoType];
+
+
+export const ManagerTaskDetailDtoType = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+  CHARGE_DISPUTE: 'CHARGE_DISPUTE',
+  SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
+  GENERAL: 'GENERAL',
+} as const;
+
+export type ManagerTaskDetailDtoStatus = typeof ManagerTaskDetailDtoStatus[keyof typeof ManagerTaskDetailDtoStatus];
+
+
+export const ManagerTaskDetailDtoStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export type ManagerTaskDetailDtoApprovalStatus = typeof ManagerTaskDetailDtoApprovalStatus[keyof typeof ManagerTaskDetailDtoApprovalStatus];
+
+
+export const ManagerTaskDetailDtoApprovalStatus = {
+  NONE: 'NONE',
+  AWAITING_DIRECTOR: 'AWAITING_DIRECTOR',
+  MANUAL_FINANCE_REVIEW: 'MANUAL_FINANCE_REVIEW',
+  AWAITING_SCHEDULE_APPROVAL: 'AWAITING_SCHEDULE_APPROVAL',
+} as const;
+
+/**
+ * Whitelisted last decision; student comments are plain text, never HTML
+ * @nullable
+ */
+export type ManagerTaskDetailDtoResolution = { [key: string]: unknown } | null;
+
+export type TaskReschedulePayloadDtoKind = typeof TaskReschedulePayloadDtoKind[keyof typeof TaskReschedulePayloadDtoKind];
+
+
+export const TaskReschedulePayloadDtoKind = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+} as const;
+
+export interface TaskPreferredWindowDto {
+  from: string;
+  to: string;
+}
+
+export interface TaskReschedulePayloadDto {
+  kind: TaskReschedulePayloadDtoKind;
+  lessonId: string;
+  currentStartsAt: string;
+  /** @nullable */
+  studentComment: string | null;
+  preferredWindows: TaskPreferredWindowDto[];
+  /** @nullable */
+  preferredDate: string | null;
+}
+
+export type TaskDisputePayloadDtoKind = typeof TaskDisputePayloadDtoKind[keyof typeof TaskDisputePayloadDtoKind];
+
+
+export const TaskDisputePayloadDtoKind = {
+  CHARGE_DISPUTE: 'CHARGE_DISPUTE',
+} as const;
+
+export interface TaskDisputePayloadDto {
+  kind: TaskDisputePayloadDtoKind;
+  lessonId: string;
+  /** @nullable */
+  ledgerRef: string | null;
+  chargedLessons: number;
+  /** @nullable */
+  chargedAmount: string | null;
+  /** @nullable */
+  currency: string | null;
+  studentComment: string;
+}
+
+export type TaskExpiringPayloadDtoKind = typeof TaskExpiringPayloadDtoKind[keyof typeof TaskExpiringPayloadDtoKind];
+
+
+export const TaskExpiringPayloadDtoKind = {
+  SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
+} as const;
+
+export interface TaskExpiringPayloadDto {
+  kind: TaskExpiringPayloadDtoKind;
+  subscriptionId: string;
+  endsAt: string;
+}
+
+export type TaskGeneralPayloadDtoKind = typeof TaskGeneralPayloadDtoKind[keyof typeof TaskGeneralPayloadDtoKind];
+
+
+export const TaskGeneralPayloadDtoKind = {
+  GENERAL: 'GENERAL',
+} as const;
+
+export interface TaskGeneralPayloadDto {
+  kind: TaskGeneralPayloadDtoKind;
+  text: string;
+}
+
+export interface ManagerTaskDetailDto {
+  taskId: string;
+  type: ManagerTaskDetailDtoType;
+  status: ManagerTaskDetailDtoStatus;
+  version: number;
+  studentId: string;
+  studentName: string;
+  createdAt: string;
+  dueAt: string;
+  isOverdue: boolean;
+  /** @nullable */
+  escalatedAt: string | null;
+  approvalStatus: ManagerTaskDetailDtoApprovalStatus;
+  payload: TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
+  /** @nullable */
+  ledgerPublicationId: string | null;
+  /**
+     * Whitelisted last decision; student comments are plain text, never HTML
+     * @nullable
+     */
+  resolution: ManagerTaskDetailDtoResolution;
+}
+
+export type ManagerTaskDtoType = typeof ManagerTaskDtoType[keyof typeof ManagerTaskDtoType];
+
+
+export const ManagerTaskDtoType = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+  CHARGE_DISPUTE: 'CHARGE_DISPUTE',
+  SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
+  GENERAL: 'GENERAL',
+} as const;
+
+export type ManagerTaskDtoStatus = typeof ManagerTaskDtoStatus[keyof typeof ManagerTaskDtoStatus];
+
+
+export const ManagerTaskDtoStatus = {
+  OPEN: 'OPEN',
+  IN_PROGRESS: 'IN_PROGRESS',
+  RESOLVED: 'RESOLVED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export type ManagerTaskDtoApprovalStatus = typeof ManagerTaskDtoApprovalStatus[keyof typeof ManagerTaskDtoApprovalStatus];
+
+
+export const ManagerTaskDtoApprovalStatus = {
+  NONE: 'NONE',
+  AWAITING_DIRECTOR: 'AWAITING_DIRECTOR',
+  MANUAL_FINANCE_REVIEW: 'MANUAL_FINANCE_REVIEW',
+  AWAITING_SCHEDULE_APPROVAL: 'AWAITING_SCHEDULE_APPROVAL',
+} as const;
+
+export interface ManagerTaskDto {
+  taskId: string;
+  type: ManagerTaskDtoType;
+  status: ManagerTaskDtoStatus;
+  version: number;
+  studentId: string;
+  studentName: string;
+  createdAt: string;
+  dueAt: string;
+  isOverdue: boolean;
+  /** @nullable */
+  escalatedAt: string | null;
+  approvalStatus: ManagerTaskDtoApprovalStatus;
+  payload: TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
+  /** @nullable */
+  ledgerPublicationId: string | null;
+}
+
+export interface ManagerTaskPageDto {
+  items: ManagerTaskDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
 export interface MaterialItemDto {
   fileId: string;
   fileName: string;
@@ -936,6 +1742,17 @@ export type NotificationItemDtoType = typeof NotificationItemDtoType[keyof typeo
 
 
 export const NotificationItemDtoType = {
+  LESSON_SCHEDULED: 'LESSON_SCHEDULED',
+  RESCHEDULE_DECLINED: 'RESCHEDULE_DECLINED',
+  DISPUTE_ACCEPTED: 'DISPUTE_ACCEPTED',
+  DISPUTE_REJECTED: 'DISPUTE_REJECTED',
+  MANUAL_MESSAGE: 'MANUAL_MESSAGE',
+  SUBSCRIPTION_CREATED: 'SUBSCRIPTION_CREATED',
+  SUBSCRIPTION_RENEWED: 'SUBSCRIPTION_RENEWED',
+  SUBSCRIPTION_FROZEN: 'SUBSCRIPTION_FROZEN',
+  SUBSCRIPTION_UNFROZEN: 'SUBSCRIPTION_UNFROZEN',
+  SUBSCRIPTION_EXPIRED: 'SUBSCRIPTION_EXPIRED',
+  ACCOUNT_CREATED: 'ACCOUNT_CREATED',
   HOMEWORK_REVIEWED: 'HOMEWORK_REVIEWED',
   HOMEWORK_NEEDS_REVISION: 'HOMEWORK_NEEDS_REVISION',
   LESSON_RESCHEDULED: 'LESSON_RESCHEDULED',
@@ -973,6 +1790,27 @@ export interface PasskeyRegisteredResponse {
   id: string;
   registered: true;
   mfa_completed: boolean;
+}
+
+export type PaymentBriefDtoStatus = typeof PaymentBriefDtoStatus[keyof typeof PaymentBriefDtoStatus];
+
+
+export const PaymentBriefDtoStatus = {
+  PENDING: 'PENDING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  CONFIRMED: 'CONFIRMED',
+} as const;
+
+export interface PaymentBriefDto {
+  id: string;
+  distributionId: string;
+  paymentId: string;
+  amount: string;
+  currency: string;
+  status: PaymentBriefDtoStatus;
+  registeredAt: string;
+  /** @nullable */
+  confirmedAt: string | null;
 }
 
 export interface PaymentDistributionRequest {
@@ -1051,15 +1889,21 @@ export interface PaymentReceiptResponse {
   [key: string]: unknown;
  }
 
+export type PaymentRegisterRequestCurrency = typeof PaymentRegisterRequestCurrency[keyof typeof PaymentRegisterRequestCurrency];
+
+
+export const PaymentRegisterRequestCurrency = {
+  MDL: 'MDL',
+} as const;
+
 export interface PaymentRegisterRequest {
   studentId: string;
   /**
      * Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision.
-     * @pattern ^(?:0|[1-9]\d{0,15})(?:\.\d{1,4})?$
+     * @pattern ^(?:0|[1-9]\d{0,11})(?:\.\d{1,4})?$
      */
   amount: string;
-  /** @pattern ^[A-Z]{3}$ */
-  currency: string;
+  currency: PaymentRegisterRequestCurrency;
   /** @minLength 1 */
   provider?: string;
   /** @minLength 1 */
@@ -1182,6 +2026,13 @@ export interface PdfJobStatusDto {
   failureReason: string | null;
 }
 
+export interface PrepareManagerDistributionDto {
+  enrollmentId: string;
+  planId: string;
+  amount: string;
+  startsAt?: string;
+}
+
 export interface ProblemDetails {
   type: string;
   title: string;
@@ -1259,6 +2110,19 @@ export interface RecurringSlotResponse {
   [key: string]: unknown;
  }
 
+export interface RejectManagerPaymentDto {
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+}
+
+export interface RenewManagerSubscriptionDto {
+  distributionId: string;
+  planId?: string;
+}
+
 export interface ReportsResponseDto {
   items: EducationalReportDto[];
   total: number;
@@ -1276,6 +2140,27 @@ export interface RequestUploadUrlDto {
      * @maximum 52428800
      */
   fileSizeBytes: number;
+}
+
+export type RescheduleManagerLessonDtoInitiator = typeof RescheduleManagerLessonDtoInitiator[keyof typeof RescheduleManagerLessonDtoInitiator];
+
+
+export const RescheduleManagerLessonDtoInitiator = {
+  STUDENT: 'STUDENT',
+  TEACHER: 'TEACHER',
+  ACADEMY: 'ACADEMY',
+} as const;
+
+export interface RescheduleManagerLessonDto {
+  newStartsAt: string;
+  newTeacherId?: string;
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+  overrideLateRule?: boolean;
+  initiator?: RescheduleManagerLessonDtoInitiator;
 }
 
 export interface RescheduleRequestDto {
@@ -1300,6 +2185,57 @@ export interface RescheduleRequestResponseDto {
   status: RescheduleRequestResponseDtoStatus;
 }
 
+export type ResolveManagerDisputeDtoDecision = typeof ResolveManagerDisputeDtoDecision[keyof typeof ResolveManagerDisputeDtoDecision];
+
+
+export const ResolveManagerDisputeDtoDecision = {
+  ACCEPT: 'ACCEPT',
+  REJECT: 'REJECT',
+  ESCALATE: 'ESCALATE',
+} as const;
+
+export interface ResolveManagerDisputeDto {
+  decision: ResolveManagerDisputeDtoDecision;
+  /**
+     * @minLength 3
+     * @maxLength 1000
+     */
+  reason: string;
+  /** Exact positive monetary string; full reversal restores advance, never pays out cash */
+  refundAmount?: string;
+  /**
+     * @minimum 0
+     * @maximum 10
+     */
+  refundLessons?: number;
+  /** @minimum 1 */
+  version: number;
+}
+
+export type ResolveManagerRescheduleDtoDecision = typeof ResolveManagerRescheduleDtoDecision[keyof typeof ResolveManagerRescheduleDtoDecision];
+
+
+export const ResolveManagerRescheduleDtoDecision = {
+  APPROVE: 'APPROVE',
+  DECLINE: 'DECLINE',
+} as const;
+
+export interface ResolveManagerRescheduleDto {
+  decision: ResolveManagerRescheduleDtoDecision;
+  /** Required for APPROVE */
+  newStartsAt?: string;
+  newTeacherId?: string;
+  /**
+     * Required for DECLINE; default approval basis otherwise
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason?: string;
+  overrideLateRule?: boolean;
+  /** @minimum 1 */
+  version: number;
+}
+
 export type SavedDraftDtoStatus = typeof SavedDraftDtoStatus[keyof typeof SavedDraftDtoStatus];
 
 
@@ -1316,6 +2252,19 @@ export interface SavedDraftDto {
 export interface SaveDraftDto {
   /** @maxLength 10000 */
   content: string;
+}
+
+export type ScheduleChangeApprovalDtoStatus = typeof ScheduleChangeApprovalDtoStatus[keyof typeof ScheduleChangeApprovalDtoStatus];
+
+
+export const ScheduleChangeApprovalDtoStatus = {
+  APPROVED: 'APPROVED',
+} as const;
+
+export interface ScheduleChangeApprovalDto {
+  id: string;
+  lessonId: string;
+  status: ScheduleChangeApprovalDtoStatus;
 }
 
 export interface ScheduleChangeRequestInput {
@@ -1342,12 +2291,76 @@ export interface ScheduleChangeRequestResponse {
   [key: string]: unknown;
  }
 
+export type ScheduleChangeReviewDtoAction = typeof ScheduleChangeReviewDtoAction[keyof typeof ScheduleChangeReviewDtoAction];
+
+
+export const ScheduleChangeReviewDtoAction = {
+  RESCHEDULE: 'RESCHEDULE',
+  CANCEL: 'CANCEL',
+} as const;
+
+export type ScheduleChangeReviewDtoInitiator = typeof ScheduleChangeReviewDtoInitiator[keyof typeof ScheduleChangeReviewDtoInitiator];
+
+
+export const ScheduleChangeReviewDtoInitiator = {
+  STUDENT: 'STUDENT',
+  TEACHER: 'TEACHER',
+  ACADEMY: 'ACADEMY',
+} as const;
+
+export type ScheduleChangeReviewDtoStatus = typeof ScheduleChangeReviewDtoStatus[keyof typeof ScheduleChangeReviewDtoStatus];
+
+
+export const ScheduleChangeReviewDtoStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  APPLIED: 'APPLIED',
+  STALE: 'STALE',
+} as const;
+
+export interface ScheduleChangeReviewDto {
+  id: string;
+  lessonId: string;
+  studentId: string;
+  action: ScheduleChangeReviewDtoAction;
+  initiator: ScheduleChangeReviewDtoInitiator;
+  reason: string;
+  oldStartsAt: string;
+  /** @nullable */
+  newStartsAt: string | null;
+  oldTeacherId: string;
+  /** @nullable */
+  newTeacherId: string | null;
+  /** @nullable */
+  chargeable: boolean | null;
+  status: ScheduleChangeReviewDtoStatus;
+}
+
 export interface ScheduleReasonRequest {
   /**
      * @minLength 5
      * @maxLength 500
      */
   reason: string;
+}
+
+export type SendManagerNotificationDtoChannel = typeof SendManagerNotificationDtoChannel[keyof typeof SendManagerNotificationDtoChannel];
+
+
+export const SendManagerNotificationDtoChannel = {
+  IN_APP: 'IN_APP',
+  EMAIL: 'EMAIL',
+} as const;
+
+export interface SendManagerNotificationDto {
+  channel: SendManagerNotificationDtoChannel;
+  /** @maxLength 150 */
+  subject?: string;
+  /**
+     * @minLength 1
+     * @maxLength 2000
+     */
+  body: string;
 }
 
 export interface SessionInfoDto {
@@ -1359,6 +2372,11 @@ export interface SessionInfoDto {
   /** Observed socket peer address, never an untrusted forwarded header; empty for legacy sessions */
   ipAddress: string;
   isCurrent: boolean;
+}
+
+export interface SetManagerMeetDto {
+  /** @pattern ^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$ */
+  url: string;
 }
 
 export type SkillAuditEntryDtoFromStatus = typeof SkillAuditEntryDtoFromStatus[keyof typeof SkillAuditEntryDtoFromStatus];
@@ -1464,6 +2482,62 @@ export interface SlotGenerationResponse {
 
 export interface StartLessonRequest { [key: string]: unknown }
 
+export interface StudentAccountIssuedDto {
+  accountId: string;
+  loginEmail: string;
+  /**
+     * One-time secret in the first successful response only. Never cached.
+     * @nullable
+     */
+  temporaryPassword: string | null;
+  temporaryPasswordExpiresAt: string;
+  passwordAlreadyIssued: boolean;
+}
+
+export type StudentCardDtoStatus = typeof StudentCardDtoStatus[keyof typeof StudentCardDtoStatus];
+
+
+export const StudentCardDtoStatus = {
+  LEAD: 'LEAD',
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface StudentContactsDto {
+  /** @nullable */
+  phone: string | null;
+  /** @nullable */
+  email: string | null;
+  /** @nullable */
+  guardianName: string | null;
+  /** @nullable */
+  guardianPhone: string | null;
+}
+
+export interface StudentCardDto {
+  studentId: string;
+  version: number;
+  fullName: string;
+  status: StudentCardDtoStatus;
+  hasAccount: boolean;
+  contacts: StudentContactsDto;
+  /** @nullable */
+  managerNote: string | null;
+  subscription: ManagerSubscriptionSummaryDto | null;
+  balance: string;
+  balanceCurrency: string;
+  balances: CurrencyBalanceDto[];
+  upcomingLessons: LessonBriefDto[];
+  /** @maxItems 100 */
+  openTasks: CrmTaskBriefDto[];
+  openTasksTruncated: boolean;
+  /** @maxItems 10 */
+  recentPayments: PaymentBriefDto[];
+  learning: LearningSummaryDto;
+}
+
 export interface StudentCreatedResponse {
   id: string;
   fullName: string;
@@ -1482,6 +2556,41 @@ export interface StudentCreateRequest {
      */
   phone?: string;
   birthDate?: string;
+}
+
+export type StudentListItemDtoStatus = typeof StudentListItemDtoStatus[keyof typeof StudentListItemDtoStatus];
+
+
+export const StudentListItemDtoStatus = {
+  LEAD: 'LEAD',
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface StudentListItemDto {
+  studentId: string;
+  fullName: string;
+  status: StudentListItemDtoStatus;
+  hasAccount: boolean;
+  /** @nullable */
+  maskedPhone: string | null;
+  activeSubscription: ManagerSubscriptionSummaryDto | null;
+  /** Published monetary ledger balance in balanceCurrency: positive prepayment, negative debt. Pending payments excluded. */
+  balance: string;
+  balanceCurrency: string;
+  balances: CurrencyBalanceDto[];
+  /** @nullable */
+  nextLessonAt: string | null;
+  openTasksCount: number;
+  overdueTasksCount: number;
+}
+
+export interface StudentListPageDto {
+  items: StudentListItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
 }
 
 export interface StudentMeResponseDto {
@@ -1775,6 +2884,31 @@ export interface UpdateProfileDto {
   avatarFileId?: string;
 }
 
+export interface UpdateStudentContactsDto {
+  /**
+     * @nullable
+     * @pattern ^\+?[0-9 ()-]{6,20}$
+     */
+  phone?: string | null;
+  /**
+     * @maxLength 254
+     * @nullable
+     */
+  email?: string | null;
+  /**
+     * @maxLength 120
+     * @nullable
+     */
+  guardianName?: string | null;
+  /**
+     * @maxLength 2000
+     * @nullable
+     */
+  managerNote?: string | null;
+  /** @minimum 1 */
+  version: number;
+}
+
 export interface UploadUrlResponseDto {
   uploadUrl: string;
   fileId: string;
@@ -1811,6 +2945,194 @@ export interface WebAuthnFinishRequest {
 export interface WebAuthnStartRequest {
   email?: string;
 }
+
+export type GetManagerDashboardParams = {
+lessonsHorizonHours?: GetManagerDashboardLessonsHorizonHours;
+expiringDays?: GetManagerDashboardExpiringDays;
+};
+
+export type GetManagerDashboardLessonsHorizonHours = typeof GetManagerDashboardLessonsHorizonHours[keyof typeof GetManagerDashboardLessonsHorizonHours];
+
+
+export const GetManagerDashboardLessonsHorizonHours = {
+  NUMBER_24: 24,
+  NUMBER_48: 48,
+  NUMBER_168: 168,
+} as const;
+
+export type GetManagerDashboardExpiringDays = typeof GetManagerDashboardExpiringDays[keyof typeof GetManagerDashboardExpiringDays];
+
+
+export const GetManagerDashboardExpiringDays = {
+  NUMBER_3: 3,
+  NUMBER_7: 7,
+  NUMBER_14: 14,
+} as const;
+
+export type ClearManagerLessonMeetLinkBody = { [key: string]: unknown };
+
+export type GetManagerOptionsParams = {
+studentId?: string;
+};
+
+export type ConfirmManagerPaymentBody = { [key: string]: unknown };
+
+export type ListManagerScheduleParams = {
+from: string;
+to: string;
+studentId?: string;
+teacherId?: string;
+status?: ListManagerScheduleStatus;
+};
+
+export type ListManagerScheduleStatus = typeof ListManagerScheduleStatus[keyof typeof ListManagerScheduleStatus];
+
+
+export const ListManagerScheduleStatus = {
+  SCHEDULED: 'SCHEDULED',
+  STAR_PENDING: 'STAR_PENDING',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type ListManagerStudentsParams = {
+/**
+ * @minLength 2
+ * @maxLength 100
+ */
+search?: string;
+status?: ListManagerStudentsStatus;
+hasOverdueTask?: boolean;
+subscriptionExpiringSoon?: boolean;
+sort?: ListManagerStudentsSort;
+/**
+ * @maxLength 200
+ */
+cursor?: string;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
+
+export type ListManagerStudentsStatus = typeof ListManagerStudentsStatus[keyof typeof ListManagerStudentsStatus];
+
+
+export const ListManagerStudentsStatus = {
+  LEAD: 'LEAD',
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export type ListManagerStudentsSort = typeof ListManagerStudentsSort[keyof typeof ListManagerStudentsSort];
+
+
+export const ListManagerStudentsSort = {
+  name: 'name',
+  nextLesson: 'nextLesson',
+  subscriptionEnd: 'subscriptionEnd',
+} as const;
+
+export type ResetManagerStudentPasswordBody = { [key: string]: unknown };
+
+export type ListManagerDistributionsParams = {
+/**
+ * @minimum 1
+ * @maximum 10000
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+status?: ListManagerDistributionsStatus;
+};
+
+export type ListManagerDistributionsStatus = typeof ListManagerDistributionsStatus[keyof typeof ListManagerDistributionsStatus];
+
+
+export const ListManagerDistributionsStatus = {
+  PENDING: 'PENDING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export type ListManagerStudentNotificationsParams = {
+status?: ListManagerStudentNotificationsStatus;
+/**
+ * @maxLength 200
+ */
+cursor?: string;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
+
+export type ListManagerStudentNotificationsStatus = typeof ListManagerStudentNotificationsStatus[keyof typeof ListManagerStudentNotificationsStatus];
+
+
+export const ListManagerStudentNotificationsStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+} as const;
+
+export type ListManagerPaymentsParams = {
+/**
+ * @minimum 1
+ * @maximum 10000
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+pageSize?: number;
+status?: ListManagerPaymentsStatus;
+};
+
+export type ListManagerPaymentsStatus = typeof ListManagerPaymentsStatus[keyof typeof ListManagerPaymentsStatus];
+
+
+export const ListManagerPaymentsStatus = {
+  PENDING: 'PENDING',
+  AWAITING_APPROVAL: 'AWAITING_APPROVAL',
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export type UnfreezeManagerSubscriptionBody = { [key: string]: unknown };
+
+export type ListManagerTasksParams = {
+/**
+ * Comma-separated OPEN, IN_PROGRESS, RESOLVED, REJECTED
+ */
+status?: string;
+/**
+ * Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL
+ */
+type?: string;
+overdue?: boolean;
+studentId?: string;
+dueBefore?: string;
+/**
+ * @maxLength 200
+ */
+cursor?: string;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
 
 export type GetStudentHomeworkParams = {
 /**
@@ -2432,6 +3754,69 @@ return schoolFetch<WebAuthnStartResponse>(getRegisterPasskeyStartUrl(),
 
 
 
+export const getGetCrmDisputeResolutionUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/dispute-resolutions/${taskId}`
+}
+
+/**
+ * Director review; full reversal restores rights and subscription advance, never cash. Partial requests require separate Finance processing.
+ */
+export const getCrmDisputeResolution = (taskId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<CrmDisputeReviewDto>(getGetCrmDisputeResolutionUrl(taskId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getApproveCrmDisputeResolutionUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/dispute-resolutions/${taskId}/approve`
+}
+
+/**
+ * Director executes the exact full-reversal proposal and resolves the CRM task atomically. Partial/manual requests cannot be executed by this command.
+ */
+export const approveCrmDisputeResolution = (taskId: string,
+    approveCrmDisputeDto: ApproveCrmDisputeDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<CrmDisputeResolutionDto>(getApproveCrmDisputeResolutionUrl(taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(approveCrmDisputeDto)
+  }
+);}
+
+
+
 export const getApproveDistributionUrl = (id: string,) => {
 
 
@@ -2819,7 +4204,7 @@ export const getCreateLessonUrl = () => {
 }
 
 /**
- * MFA required. MANAGER/DIRECTOR; locks teacher availability and enforces SQL resource exclusion. Missing paid/director access produces held STAR_PENDING.
+ * MFA required. DIRECTOR administrative command; managers use createManagerLesson with preparation and subscription checks. Locks teacher availability and enforces SQL exclusion; missing paid/director access produces held STAR_PENDING.
  * @summary Create lesson
  */
 export const createLesson = (lessonCreateRequest: LessonCreateRequest, options?: Parameters<typeof schoolFetch>[1]) => {
@@ -2858,7 +4243,7 @@ export const getCancelLessonUrl = (id: string,) => {
 }
 
 /**
- * MFA required. MANAGER/DIRECTOR; explicit cancellation only before reported/started actual fact. No financial side effects.
+ * MFA required. DIRECTOR administrative command; managers use cancelManagerLesson for atomic cancellation/deduction and exception checks. No financial side effects on this legacy administrative route.
  * @summary Cancel lesson
  */
 export const cancelLesson = (id: string,
@@ -2978,7 +4363,7 @@ export const getRescheduleLessonUrl = (id: string,) => {
 }
 
 /**
- * MFA required. MANAGER/DIRECTOR; same lesson ID and original key, old/new event; conflicting booking returns 409.
+ * MFA required. DIRECTOR administrative command; managers use rescheduleManagerLesson with immutability and director-exception checks. Same lesson ID and original key; conflicting booking returns409.
  * @summary Reschedule lesson
  */
 export const rescheduleLesson = (id: string,
@@ -3044,6 +4429,1162 @@ return schoolFetch<LessonResponse>(getStartLessonUrl(id),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(startLessonRequest)
+  }
+);}
+
+
+
+export const getGetManagerDashboardUrl = (params?: GetManagerDashboardParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/dashboard?${stringifiedParams}` : `/api/v1/manager/dashboard`
+}
+
+/**
+ * One READ ONLY snapshot; no cache. Pending receipts include unpublished unallocated remainder under the owner decision; mixed-portfolio households are excluded from financial aggregates.
+ */
+export const getManagerDashboard = (params?: GetManagerDashboardParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerDashboardDto>(getGetManagerDashboardUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCancelManagerLessonUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/manager/lessons/${lessonId}/cancel`
+}
+
+export const cancelManagerLesson = (lessonId: string,
+    cancelManagerLessonDto: CancelManagerLessonDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerLessonDto>(getCancelManagerLessonUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(cancelManagerLessonDto)
+  }
+);}
+
+
+
+export const getSetManagerLessonMeetLinkUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/manager/lessons/${lessonId}/meet-link`
+}
+
+export const setManagerLessonMeetLink = (lessonId: string,
+    setManagerMeetDto: SetManagerMeetDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerLessonDto>(getSetManagerLessonMeetLinkUrl(lessonId),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(setManagerMeetDto)
+  }
+);}
+
+
+
+export const getClearManagerLessonMeetLinkUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/manager/lessons/${lessonId}/meet-link`
+}
+
+export const clearManagerLessonMeetLink = (lessonId: string,
+    clearManagerLessonMeetLinkBody?: ClearManagerLessonMeetLinkBody, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerLessonDto>(getClearManagerLessonMeetLinkUrl(lessonId),
+  {
+    ...options,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(clearManagerLessonMeetLinkBody)
+  }
+);}
+
+
+
+export const getRescheduleManagerLessonUrl = (lessonId: string,) => {
+
+
+
+
+  return `/api/v1/manager/lessons/${lessonId}/reschedule`
+}
+
+/**
+ * Late/student third changes request a specific director exception. Pending response leaves the lesson unchanged; re-submit after approval with a new command key.
+ */
+export const rescheduleManagerLesson = (lessonId: string,
+    rescheduleManagerLessonDto: RescheduleManagerLessonDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerLessonDto>(getRescheduleManagerLessonUrl(lessonId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(rescheduleManagerLessonDto)
+  }
+);}
+
+
+
+export const getGetManagerMeUrl = () => {
+
+
+
+
+  return `/api/v1/manager/me`
+}
+
+/**
+ * @summary Get the current manager profile and portfolio size
+ */
+export const getManagerMe = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerMeResponseDto>(getGetManagerMeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetManagerOptionsUrl = (params?: GetManagerOptionsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/options?${stringifiedParams}` : `/api/v1/manager/options`
+}
+
+/**
+ * @summary Named form options; student-specific values are portfolio-scoped
+ */
+export const getManagerOptions = (params?: GetManagerOptionsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerOptionsDto>(getGetManagerOptionsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetManagerPaymentUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}`
+}
+
+export const getManagerPayment = (paymentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerPaymentDto>(getGetManagerPaymentUrl(paymentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getConfirmManagerPaymentUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}/confirm`
+}
+
+/**
+ * Submits director approval under current Finance policy. Never grants the manager director publication authority.
+ */
+export const confirmManagerPayment = (paymentId: string,
+    confirmManagerPaymentBody?: ConfirmManagerPaymentBody, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerPaymentDto>(getConfirmManagerPaymentUrl(paymentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(confirmManagerPaymentBody)
+  }
+);}
+
+
+
+export const getAllocateManagerPaymentUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}/distributions`
+}
+
+/**
+ * Proposes another receipt allocation to an existing purchase, including installment top-ups. No automatic admission.
+ */
+export const allocateManagerPayment = (paymentId: string,
+    allocateManagerPaymentDto: AllocateManagerPaymentDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerDistributionDto>(getAllocateManagerPaymentUrl(paymentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(allocateManagerPaymentDto)
+  }
+);}
+
+
+
+export const getPrepareManagerPaymentSubscriptionUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}/prepare-subscription`
+}
+
+/**
+ * Creates a financial purchase and a proposed allocation. Director approval/publication is still required.
+ */
+export const prepareManagerPaymentSubscription = (paymentId: string,
+    prepareManagerDistributionDto: PrepareManagerDistributionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerDistributionDto>(getPrepareManagerPaymentSubscriptionUrl(paymentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(prepareManagerDistributionDto)
+  }
+);}
+
+
+
+export const getRejectManagerPaymentUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}/reject`
+}
+
+export const rejectManagerPayment = (paymentId: string,
+    rejectManagerPaymentDto: RejectManagerPaymentDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerPaymentDto>(getRejectManagerPaymentUrl(paymentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(rejectManagerPaymentDto)
+  }
+);}
+
+
+
+export const getListManagerScheduleUrl = (params: ListManagerScheduleParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/schedule?${stringifiedParams}` : `/api/v1/manager/schedule`
+}
+
+export const listManagerSchedule = (params: ListManagerScheduleParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerLessonDto[]>(getListManagerScheduleUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListManagerStudentsUrl = (params?: ListManagerStudentsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/students?${stringifiedParams}` : `/api/v1/manager/students`
+}
+
+export const listManagerStudents = (params?: ListManagerStudentsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentListPageDto>(getListManagerStudentsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateManagerStudentUrl = () => {
+
+
+
+
+  return `/api/v1/manager/students`
+}
+
+export const createManagerStudent = (createStudentDto: CreateStudentDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentCardDto>(getCreateManagerStudentUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createStudentDto)
+  }
+);}
+
+
+
+export const getGetManagerStudentCardUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}`
+}
+
+export const getManagerStudentCard = (studentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentCardDto>(getGetManagerStudentCardUrl(studentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateManagerStudentAccountUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/account`
+}
+
+export const createManagerStudentAccount = (studentId: string,
+    createStudentAccountDto: CreateStudentAccountDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentAccountIssuedDto>(getCreateManagerStudentAccountUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createStudentAccountDto)
+  }
+);}
+
+
+
+export const getResetManagerStudentPasswordUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/account/reset-password`
+}
+
+export const resetManagerStudentPassword = (studentId: string,
+    resetManagerStudentPasswordBody?: ResetManagerStudentPasswordBody, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentAccountIssuedDto>(getResetManagerStudentPasswordUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resetManagerStudentPasswordBody)
+  }
+);}
+
+
+
+export const getUpdateManagerStudentContactsUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/contacts`
+}
+
+export const updateManagerStudentContacts = (studentId: string,
+    updateStudentContactsDto: UpdateStudentContactsDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StudentCardDto>(getUpdateManagerStudentContactsUrl(studentId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateStudentContactsDto)
+  }
+);}
+
+
+
+export const getListManagerDistributionsUrl = (studentId: string,
+    params?: ListManagerDistributionsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/students/${studentId}/distributions?${stringifiedParams}` : `/api/v1/manager/students/${studentId}/distributions`
+}
+
+/**
+ * Recipient-owned allocations only; does not expose contact receipts or household totals.
+ */
+export const listManagerDistributions = (studentId: string,
+    params?: ListManagerDistributionsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerDistributionPageDto>(getListManagerDistributionsUrl(studentId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateManagerLessonUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/lessons`
+}
+
+export const createManagerLesson = (studentId: string,
+    createManagerLessonDto: CreateManagerLessonDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerLessonDto>(getCreateManagerLessonUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createManagerLessonDto)
+  }
+);}
+
+
+
+export const getListManagerStudentNotificationsUrl = (studentId: string,
+    params?: ListManagerStudentNotificationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/students/${studentId}/notifications?${stringifiedParams}` : `/api/v1/manager/students/${studentId}/notifications`
+}
+
+export const listManagerStudentNotifications = (studentId: string,
+    params?: ListManagerStudentNotificationsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerNotificationPageDto>(getListManagerStudentNotificationsUrl(studentId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getSendManagerStudentNotificationUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/notifications`
+}
+
+export const sendManagerStudentNotification = (studentId: string,
+    sendManagerNotificationDto: SendManagerNotificationDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerNotificationDto>(getSendManagerStudentNotificationUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(sendManagerNotificationDto)
+  }
+);}
+
+
+
+export const getCreateManagerPaymentUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/payments`
+}
+
+export const createManagerPayment = (studentId: string,
+    createManagerPaymentDto: CreateManagerPaymentDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerPaymentDto>(getCreateManagerPaymentUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createManagerPaymentDto)
+  }
+);}
+
+
+
+export const getListManagerPaymentsUrl = (studentId: string,
+    params?: ListManagerPaymentsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/students/${studentId}/payments?${stringifiedParams}` : `/api/v1/manager/students/${studentId}/payments`
+}
+
+export const listManagerPayments = (studentId: string,
+    params?: ListManagerPaymentsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerPaymentPageDto>(getListManagerPaymentsUrl(studentId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListManagerSubscriptionsUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/subscriptions`
+}
+
+export const listManagerSubscriptions = (studentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerSubscriptionDto[]>(getListManagerSubscriptionsUrl(studentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateManagerSubscriptionUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/subscriptions`
+}
+
+export const createManagerSubscription = (studentId: string,
+    createManagerSubscriptionDto: CreateManagerSubscriptionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerSubscriptionDto>(getCreateManagerSubscriptionUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createManagerSubscriptionDto)
+  }
+);}
+
+
+
+export const getFreezeManagerSubscriptionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/manager/subscriptions/${id}/freeze`
+}
+
+export const freezeManagerSubscription = (id: string,
+    freezeManagerSubscriptionDto: FreezeManagerSubscriptionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerSubscriptionDto>(getFreezeManagerSubscriptionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(freezeManagerSubscriptionDto)
+  }
+);}
+
+
+
+export const getRenewManagerSubscriptionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/manager/subscriptions/${id}/renew`
+}
+
+export const renewManagerSubscription = (id: string,
+    renewManagerSubscriptionDto: RenewManagerSubscriptionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerSubscriptionDto>(getRenewManagerSubscriptionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(renewManagerSubscriptionDto)
+  }
+);}
+
+
+
+export const getUnfreezeManagerSubscriptionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/manager/subscriptions/${id}/unfreeze`
+}
+
+export const unfreezeManagerSubscription = (id: string,
+    unfreezeManagerSubscriptionBody?: UnfreezeManagerSubscriptionBody, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerSubscriptionDto>(getUnfreezeManagerSubscriptionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(unfreezeManagerSubscriptionBody)
+  }
+);}
+
+
+
+export const getListManagerTasksUrl = (params?: ListManagerTasksParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/tasks?${stringifiedParams}` : `/api/v1/manager/tasks`
+}
+
+export const listManagerTasks = (params?: ListManagerTasksParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerTaskPageDto>(getListManagerTasksUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetManagerTaskUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/manager/tasks/${taskId}`
+}
+
+export const getManagerTask = (taskId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerTaskDetailDto>(getGetManagerTaskUrl(taskId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getClaimManagerTaskUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/manager/tasks/${taskId}/claim`
+}
+
+export const claimManagerTask = (taskId: string,
+    claimManagerTaskDto: ClaimManagerTaskDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerTaskDto>(getClaimManagerTaskUrl(taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(claimManagerTaskDto)
+  }
+);}
+
+
+
+export const getResolveManagerTaskDisputeUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/manager/tasks/${taskId}/resolve-dispute`
+}
+
+/**
+ * ACCEPT proposes a bounded Finance correction. Full reversal requires director execution; partial requests remain in manual review. No cash payout.
+ */
+export const resolveManagerTaskDispute = (taskId: string,
+    resolveManagerDisputeDto: ResolveManagerDisputeDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerTaskDto>(getResolveManagerTaskDisputeUrl(taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resolveManagerDisputeDto)
+  }
+);}
+
+
+
+export const getResolveManagerTaskRescheduleUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/manager/tasks/${taskId}/resolve-reschedule`
+}
+
+/**
+ * A pending director schedule exception keeps the task IN_PROGRESS. Retry after approval using current task version and a new command key.
+ */
+export const resolveManagerTaskReschedule = (taskId: string,
+    resolveManagerRescheduleDto: ResolveManagerRescheduleDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerTaskDto>(getResolveManagerTaskRescheduleUrl(taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resolveManagerRescheduleDto)
   }
 );}
 
@@ -3451,6 +5992,69 @@ return schoolFetch<SlotGenerationResponse>(getGenerateSlotOccurrencesUrl(id),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(generateSlotOccurrencesRequest)
+  }
+);}
+
+
+
+export const getGetScheduleChangeApprovalUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/schedule-change-approvals/${id}`
+}
+
+/**
+ * Director review of the exact requested change before approval.
+ */
+export const getScheduleChangeApproval = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ScheduleChangeReviewDto>(getGetScheduleChangeApprovalUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getApproveScheduleChangeUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/schedule-change-approvals/${id}/approve`
+}
+
+/**
+ * Director approval for one immutable lesson/version/change payload. Does not change the lesson or grant financial rights.
+ */
+export const approveScheduleChange = (id: string,
+    approveScheduleChangeDto?: ApproveScheduleChangeDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ScheduleChangeApprovalDto>(getApproveScheduleChangeUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(approveScheduleChangeDto)
   }
 );}
 
@@ -3874,7 +6478,7 @@ export const getGetStudentLessonHistoryUrl = (params?: GetStudentLessonHistoryPa
 }
 
 /**
- * Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+ * COMPLETED/confirmed NO_SHOW and CANCELLED lessons with a published approved-cancellation charge. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
  * @summary Confirmed student attendance and quantitative deduction history
  */
 export const getStudentLessonHistory = (params?: GetStudentLessonHistoryParams, options?: Parameters<typeof schoolFetch>[1]) => {
@@ -3980,7 +6584,7 @@ export const getGetStudentMeUrl = () => {
 }
 
 /**
- * Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+ * Cookie session only. Initial password change is required (PASSWORD_CHANGE_REQUIRED). Afterwards available without an active subscription; contains no parent identity or private file URL.
  * @summary Current student profile and access stage
  */
 export const getStudentMe = ( options?: Parameters<typeof schoolFetch>[1]) => {

@@ -13,6 +13,8 @@ export interface AccountContext {
   lastActiveAt: Date;
   expiresAt: Date;
   recoveryOnly?: boolean;
+  mustChangePassword?: boolean;
+  temporaryPasswordExpiresAt?: Date | null;
 }
 export interface CriticalContext {
   tx: Prisma.TransactionClient;

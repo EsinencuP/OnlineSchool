@@ -56,6 +56,28 @@ export class PolicyService {
   hasPermission(actor: AccountContext, permission: string): boolean {
     return actor.roles.some((role) => permissions[role].includes(permission));
   }
+  async managerPaymentPublication(
+    actor: AccountContext,
+    contactStudentId: string,
+    tx: Prisma.TransactionClient,
+  ): Promise<Result<void, DomainError>> {
+    if (
+      actor.kind !== 'STAFF' ||
+      actor.roles.length !== 1 ||
+      actor.roles[0] !== 'MANAGER' ||
+      !actor.mfaCompleted ||
+      actor.recoveryOnly
+    )
+      return err(domainError('FORBIDDEN_ROLE', 403));
+    const scoped = await this.canAccessStudent(actor, contactStudentId, tx);
+    if (!scoped.ok)
+      return err(
+        scoped.error.code === 'FORBIDDEN' ? domainError('PAYMENT_NOT_FOUND', 404) : scoped.error,
+      );
+    // Existing Finance requires DIRECTOR for every receipt confirmation. Own portfolio
+    // grants submission of an approval request, never an exception to that rule.
+    return err(domainError('APPROVAL_REQUIRED', 409));
+  }
   async canAccessStudent(
     actor: AccountContext,
     studentId: string,

@@ -18,7 +18,7 @@ export interface StudentRequest extends HttpRequest {
 export const StudentErrors = {
   PROFILE_NOT_FOUND: 'STUDENT_PROFILE_NOT_FOUND',
   ACCESS_SUSPENDED: 'ACCESS_SUSPENDED',
-  MUST_CHANGE_PASSWORD: 'MUST_CHANGE_PASSWORD',
+  MUST_CHANGE_PASSWORD: 'PASSWORD_CHANGE_REQUIRED',
 } as const;
 export function isStudentRequest(req: HttpRequest): boolean {
   return /^\/api\/v1\/student(?:\/|$)/i.test(req.originalUrl.split('?')[0] ?? '');

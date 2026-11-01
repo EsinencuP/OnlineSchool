@@ -167,7 +167,7 @@ test('ledger replays all facts before pagination, keeps stored deduction snapsho
   expect(q.values.filter((v) => typeof v === 'number')).toEqual([20, 20]);
 });
 test.each(['', '/payments', '/ledger'])(
-  'only authenticated GET subscription view is exempt from active access: %s',
+  'STU-11 requires active access for GET subscription view: %s',
   async (suffix) => {
     const guard = new ActiveSubscriptionGuard({
       denial: async () => ({ ok: true, value: undefined }),
@@ -178,12 +178,14 @@ test.each(['', '/payments', '/ledger'])(
       studentCtx: student,
     };
     const ctx = { switchToHttp: () => ({ getRequest: () => req }) };
-    expect(await guard.canActivate(ctx)).toBe(true);
+    await expect(guard.canActivate(ctx)).rejects.toMatchObject({
+      domain: { code: 'ACCESS_SUSPENDED', status: 402 },
+    });
     req.method = 'POST';
     await expect(guard.canActivate(ctx)).rejects.toMatchObject({ domain: { status: 402 } });
   },
 );
-test('subscription exemption never bypasses first password change or protects unrelated routes', async () => {
+test('subscription reads enforce first password change and do not exempt unrelated routes', async () => {
   const guard = new ActiveSubscriptionGuard({
     denial: async () => ({ ok: true, value: undefined }),
   });
@@ -194,7 +196,7 @@ test('subscription exemption never bypasses first password change or protects un
   };
   const ctx = { switchToHttp: () => ({ getRequest: () => req }) };
   await expect(guard.canActivate(ctx)).rejects.toMatchObject({
-    domain: { code: 'MUST_CHANGE_PASSWORD' },
+    domain: { code: 'PASSWORD_CHANGE_REQUIRED' },
   });
   req.studentCtx = student;
   req.originalUrl = '/api/v1/student/subscription/anything';

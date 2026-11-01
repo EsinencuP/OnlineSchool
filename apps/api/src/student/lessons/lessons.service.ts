@@ -133,7 +133,7 @@ export class StudentLessonsService {
                   OR (t03_paid_at(sub.id,${time})<sub.full_price AND EXISTS(SELECT 1 FROM temporary_access_permissions p WHERE p.subscription_id=sub.id
                     AND p.approved_at<=${time} AND p.valid_from<=${time} AND p.valid_to>${time} AND (p.revoked_at IS NULL OR p.revoked_at>${time})
                     AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${time})<p.max_lessons))))
-            THEN a.google_meet_link ELSE NULL END AS google_meet_link
+            THEN CASE WHEN l.meet_link_overridden THEN l.google_meet_link ELSE a.google_meet_link END ELSE NULL END AS google_meet_link
         FROM lesson_occurrences l JOIN student_subject_enrollments e ON e.id=l.enrollment_id
           JOIN teacher_accounts t ON t.id=l.scheduled_teacher_id JOIN subjects s ON s.id=e.subject_id
           JOIN teaching_assignments a ON a.id=l.teaching_assignment_id

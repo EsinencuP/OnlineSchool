@@ -1,24 +1,67 @@
 import { Prisma } from '@online-school/db';
 import type { SubscriptionPage, SubscriptionSelection } from './subscription.dto.js';
 
-export function subscriptionFacts(
-  studentId: string,
+export function subscriptionSelectionSql(
+  studentId: string | Prisma.Sql,
   query: SubscriptionSelection,
   now: Date,
+  options?: {
+    startedOnly?: boolean;
+    subscriptionIdExpression?: Prisma.Sql;
+    financialOnly?: boolean;
+  },
 ): Prisma.Sql {
-  const filter = query.subscriptionId
-    ? Prisma.sql`AND s.id=${query.subscriptionId}::uuid`
-    : Prisma.empty;
-  return Prisma.sql`WITH RECURSIVE selected AS (
+  const filter = options?.subscriptionIdExpression
+    ? Prisma.sql`AND s.id=${options.subscriptionIdExpression}::uuid`
+    : query.subscriptionId
+      ? Prisma.sql`AND s.id=${query.subscriptionId}::uuid`
+      : Prisma.empty;
+  return Prisma.sql`WITH RECURSIVE selected_anchor AS (
     SELECT s.*,sc.code AS plan_name FROM subscriptions s JOIN student_subject_enrollments e ON e.id=s.enrollment_id
     JOIN sale_conditions sc ON sc.id=s.sale_condition_id WHERE e.student_id=${studentId}::uuid ${filter}
+      ${options?.startedOnly ? Prisma.sql`AND s.valid_from<=${now}` : Prisma.empty}
     ORDER BY (s.valid_from<=${now} AND (s.valid_to IS NULL OR s.valid_to>${now})) DESC,s.valid_from DESC,s.id LIMIT 1
-  ), ledger_sources AS (
+  ), selected_periods AS (
+    SELECT period.* FROM selected_anchor anchor JOIN subscriptions period ON period.id=anchor.id
+      ${
+        options?.financialOnly
+          ? Prisma.empty
+          : Prisma.sql`OR EXISTS(SELECT 1 FROM manager_subscription_periods own
+        JOIN manager_subscription_periods sibling ON sibling.manager_subscription_id=own.manager_subscription_id
+        WHERE own.financial_subscription_id=anchor.id AND sibling.financial_subscription_id=period.id)`
+      }
+  ), selected AS (
+    SELECT coalesce(managed.id,s.id) AS id,s.enrollment_id,s.sale_condition_id,
+      (SELECT sum(p.lesson_count)::int FROM selected_periods p) AS lesson_count,s.full_price,s.currency,
+      coalesce(managed.starts_at,s.valid_from) AS valid_from,coalesce(managed.ends_at,s.valid_to) AS valid_to,
+      s.frozen_from,s.frozen_until,coalesce(plan.code,s.plan_name) AS plan_name
+    FROM selected_anchor s
+    ${
+      options?.financialOnly
+        ? Prisma.sql`LEFT JOIN manager_subscriptions managed ON false LEFT JOIN sale_conditions plan ON false`
+        : Prisma.sql`
+      LEFT JOIN manager_subscription_periods own ON own.financial_subscription_id=s.id
+      LEFT JOIN manager_subscriptions managed ON managed.id=own.manager_subscription_id
+      LEFT JOIN sale_conditions plan ON plan.id=managed.current_plan_id`
+    }
+  )`;
+}
+export function subscriptionFacts(
+  studentId: string | Prisma.Sql,
+  query: SubscriptionSelection,
+  now: Date,
+  options?: {
+    startedOnly?: boolean;
+    subscriptionIdExpression?: Prisma.Sql;
+    financialOnly?: boolean;
+  },
+): Prisma.Sql {
+  return Prisma.sql`${subscriptionSelectionSql(studentId, query, now, options)}, ledger_sources AS (
     SELECT d.id AS document_id,d.id AS root_id,d.payment_id,d.distribution_id,d.consumption_id
     FROM ledger_documents d WHERE d.correction_of_document_id IS NULL AND (
-      d.payment_id IN(SELECT p.payment_id FROM payment_distributions p JOIN selected s ON s.id=p.subscription_id)
-      OR d.distribution_id IN(SELECT p.id FROM payment_distributions p JOIN selected s ON s.id=p.subscription_id)
-      OR d.consumption_id IN(SELECT c.id FROM entitlement_consumptions c JOIN selected s ON s.id=c.subscription_id))
+      d.payment_id IN(SELECT p.payment_id FROM payment_distributions p JOIN selected_periods s ON s.id=p.subscription_id)
+      OR d.distribution_id IN(SELECT p.id FROM payment_distributions p JOIN selected_periods s ON s.id=p.subscription_id)
+      OR d.consumption_id IN(SELECT c.id FROM entitlement_consumptions c JOIN selected_periods s ON s.id=c.subscription_id))
     UNION ALL SELECT d.id,p.root_id,p.payment_id,p.distribution_id,p.consumption_id
       FROM ledger_documents d JOIN ledger_sources p ON p.document_id=d.correction_of_document_id
   ), published AS (
@@ -29,13 +72,13 @@ export function subscriptionFacts(
       SELECT 1 FROM ledger_entries rev WHERE rev.reverses_entry_id=p.entry_id AND rev.published_at<=${now})
   ), allocations AS (
     SELECT d.id,d.payment_id,d.amount,d.currency,d.approved_at,r.confirmed_by_director_at AS confirmed_at
-    FROM payment_distributions d JOIN selected s ON s.id=d.subscription_id JOIN payment_receipts r ON r.id=d.payment_id
+    FROM payment_distributions d JOIN selected_periods s ON s.id=d.subscription_id JOIN payment_receipts r ON r.id=d.payment_id
     WHERE d.approved_by_director_id IS NOT NULL AND d.approved_at<=${now}
       AND r.confirmed_by_director_id IS NOT NULL AND r.confirmed_by_director_at<=${now}
       AND EXISTS(SELECT 1 FROM current_posted p WHERE p.payment_id=r.id)
       AND EXISTS(SELECT 1 FROM current_posted p WHERE p.distribution_id=d.id)
   ), grants AS (
-    SELECT g.* FROM entitlement_grants g JOIN selected s ON s.id=g.subscription_id
+    SELECT g.* FROM entitlement_grants g JOIN selected_periods s ON s.id=g.subscription_id
     JOIN payment_distributions d ON d.id=g.payment_distribution_id AND d.subscription_id=s.id
     JOIN payment_receipts r ON r.id=d.payment_id
     WHERE g.granted_at<=${now} AND g.basis='CONFIRMED_PAYMENT' AND d.approved_at<=g.granted_at AND r.confirmed_by_director_at<=g.granted_at
@@ -44,7 +87,7 @@ export function subscriptionFacts(
   ), charges AS (
     SELECT c.*,posted.entry_id,posted.entitlement_balance_before,posted.entitlement_balance_after
     FROM entitlement_consumptions c JOIN grants g ON g.id=c.grant_id AND g.subscription_id=c.subscription_id
-    JOIN selected s ON s.id=c.subscription_id JOIN lesson_occurrences l ON l.id=c.lesson_occurrence_id AND l.enrollment_id=s.enrollment_id
+    JOIN selected_periods s ON s.id=c.subscription_id JOIN lesson_occurrences l ON l.id=c.lesson_occurrence_id AND l.enrollment_id=s.enrollment_id
     JOIN LATERAL(SELECT p.* FROM published p WHERE p.consumption_id=c.id AND p.reverses_entry_id IS NULL
       ORDER BY p.published_at,p.entry_id LIMIT 1) posted ON true
     WHERE c.consumed_at<=${now} AND ((c.basis='CONFIRMED_LESSON' AND l.scheduled_at<=${now}
@@ -59,8 +102,8 @@ export function subscriptionFacts(
         AND EXISTS(SELECT 1 FROM published reversal WHERE reversal.reverses_entry_id=c.entry_id)))
   ), freeze_sources AS (
     SELECT h.frozen_from,least(h.frozen_until,h.replaced_at) AS frozen_until,h.replaced_at AS observed_at,0 AS priority
-      FROM subscription_freeze_history h JOIN selected s ON s.id=h.subscription_id WHERE h.replaced_at<=${now}
-    UNION ALL SELECT s.frozen_from,s.frozen_until,${now}::timestamptz,1 FROM selected s WHERE s.frozen_from IS NOT NULL
+      FROM subscription_freeze_history h JOIN selected_periods s ON s.id=h.subscription_id WHERE h.replaced_at<=${now}
+    UNION ALL SELECT s.frozen_from,s.frozen_until,${now}::timestamptz,1 FROM selected_periods s WHERE s.frozen_from IS NOT NULL
   ), freezes AS (
     SELECT DISTINCT ON(frozen_from) frozen_from,frozen_until FROM freeze_sources
     ORDER BY frozen_from,observed_at DESC,priority DESC
@@ -113,8 +156,9 @@ export function subscriptionLedgerSql(
   now: Date,
 ): Prisma.Sql {
   return Prisma.sql`${subscriptionFacts(studentId, query, now)}, page AS(
-    SELECT id AS "entryId",at AS "entryDate",type,coalesce(stored_before,after-delta)::text AS "balanceBefore",
-      coalesce(stored_after,after)::text AS "balanceAfter",description,lesson_id AS "lessonId",priority
+    SELECT id AS "entryId",at AS "entryDate",type,
+      (CASE WHEN (SELECT count(*) FROM selected_periods)>1 THEN after-delta ELSE coalesce(stored_before,after-delta) END)::text AS "balanceBefore",
+      (CASE WHEN (SELECT count(*) FROM selected_periods)>1 THEN after ELSE coalesce(stored_after,after) END)::text AS "balanceAfter",description,lesson_id AS "lessonId",priority
     FROM balances ORDER BY at DESC,priority DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
     SELECT ${forbidden(query)} AS forbidden,jsonb_build_object('items',coalesce((SELECT jsonb_agg(to_jsonb(page)-'priority' ORDER BY "entryDate" DESC,priority DESC,"entryId" DESC) FROM page),'[]'::jsonb),'total',(SELECT count(*)::int FROM balances)) AS data`;
 }

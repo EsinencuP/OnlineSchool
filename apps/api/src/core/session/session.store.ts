@@ -45,6 +45,7 @@ export class SessionStore {
   async resolve(
     token: string | undefined,
     connection?: Connection,
+    options?: { managerProfileErrors?: boolean },
   ): Promise<Result<AccountContext, DomainError>> {
     if (!token || !/^[A-Za-z0-9_-]{43}$/.test(token))
       return err(domainError('UNAUTHENTICATED', 401));
@@ -76,6 +77,17 @@ export class SessionStore {
       if (account.recovery_registration_required && !session.recovery_only)
         return err(domainError('UNAUTHENTICATED', 401));
       // Load the one relevant profile sequentially; no parallel queries on a transaction connection.
+      const student =
+        account.kind === 'STUDENT'
+          ? await tx.studentAccount.findFirst({
+              where: { account_id: account.id },
+              select: {
+                deactivated_at: true,
+                must_change_password: true,
+                temporary_password_expires_at: true,
+              },
+            })
+          : null;
       const profile =
         account.kind === 'STAFF'
           ? await tx.staffAccount.findFirst({
@@ -87,11 +99,11 @@ export class SessionStore {
                 where: { account_id: account.id },
                 select: { deactivated_at: true },
               })
-            : await tx.studentAccount.findFirst({
-                where: { account_id: account.id },
-                select: { deactivated_at: true },
-              });
-      if (account.disabled_at || !profile || profile.deactivated_at)
+            : student;
+      if (
+        account.disabled_at ||
+        ((!profile || profile.deactivated_at) && !options?.managerProfileErrors)
+      )
         return err(domainError('UNAUTHENTICATED', 401));
       const revocation = await tx.accessRevocation.findFirst({
         where: {
@@ -112,6 +124,13 @@ export class SessionStore {
       const roles = roleOrder.filter((role) => active.has(role));
       const role = roles[0];
       if (!role) return err(domainError('FORBIDDEN', 403));
+      if (!profile || profile.deactivated_at) {
+        // Only trusted manager-route metadata enables these diagnostics. Never grant a session
+        // to an inactive/missing profile; revocation and account disabling still take precedence.
+        if (options?.managerProfileErrors && account.kind === 'STAFF' && roles.includes('MANAGER'))
+          return err(domainError(profile ? 'MANAGER_INACTIVE' : 'MANAGER_PROFILE_NOT_FOUND', 403));
+        return err(domainError('UNAUTHENTICATED', 401));
+      }
       const updated = await tx.session.updateMany({
         where: { id: session.id, revoked_at: null, expires_at: { gt: now } },
         data: { last_seen_at: now },
@@ -127,6 +146,12 @@ export class SessionStore {
         lastActiveAt: now,
         expiresAt: session.expires_at,
         recoveryOnly: session.recovery_only,
+        ...(student
+          ? {
+              mustChangePassword: student.must_change_password,
+              temporaryPasswordExpiresAt: student.temporary_password_expires_at ?? null,
+            }
+          : {}),
       });
     } catch (error: unknown) {
       if (connection) return Promise.reject(error);

@@ -113,7 +113,16 @@ test('two workers consume independent events; duplicate payment delivery creates
   assert.equal(await db.crmTask.count({ where: { idempotency_key: key } }), 1);
   await db.crmTask.update({
     where: { idempotency_key: key },
-    data: { status: 'RESOLVED', resolved_at: new Date(), resolved_by_staff_id: staff.id },
+    data: { status: 'IN_PROGRESS', version: { increment: 1 } },
+  });
+  await db.crmTask.update({
+    where: { idempotency_key: key },
+    data: {
+      status: 'RESOLVED',
+      version: { increment: 1 },
+      resolved_at: new Date(),
+      resolved_by_staff_id: staff.id,
+    },
   });
   await event('payment.confirmed.v1', { aggregate_id: payment.id });
   await new OutboxWorker(db, options).processDue();

@@ -17,6 +17,7 @@ export class StudentCrmTaskService {
           lessonId: string;
           studentProfileId: string;
           type: 'ATTENDANCE_DISPUTE';
+          originalConsumptionId?: string;
           payload: { description: string };
         },
     time: Date,
@@ -35,12 +36,14 @@ export class StudentCrmTaskService {
         type: input.type ?? 'RESCHEDULE_REQUEST',
         student_id: input.studentProfileId,
         lesson_id: input.lessonId,
+        original_consumption_id:
+          input.type === 'ATTENDANCE_DISPUTE' ? (input.originalConsumptionId ?? null) : null,
         payload: input.payload,
         title:
           input.type === 'ATTENDANCE_DISPUTE'
             ? 'Оспаривание списания за конкретный урок'
             : 'Запрос ученика на перенос конкретного урока',
-        due_at: time,
+        due_at: new Date(+time + 24 * 3600000),
         assigned_manager_id: manager?.manager_id ?? null,
         idempotency_key: `student-${input.type === 'ATTENDANCE_DISPUTE' ? 'dispute' : 'reschedule'}:${ctx.actor.accountId}:${ctx.operationId}`,
       },

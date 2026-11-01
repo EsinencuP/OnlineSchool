@@ -92,3 +92,16 @@ runtime-ролью, две проверки DST и upgrade заполненно�
 [план приёмки](../../PHASE0_CHECKS.md). Синтетические проверки не являются production GO.
 
 [Temporal: время и DST](https://tc39.es/proposal-temporal/docs/zoneddatetime.html).
+
+## Продолжение MGR-06, 31.10.2026
+
+Вводятся отдельные manager-маршруты, повторно использующие BookingService и EXCLUDE,
+с подготовкой60 минут, оплаченной активной подпиской, неизменяемостью прошлого и
+отдельным решением директора по исключениям. Старые HTTP one/reschedule/cancel
+теперь доступны DIRECTOR; MANAGER использует защищённый manager-контракт. Это
+переопределяет прежнюю роль MANAGER для этих трёх одиночных команд выше. Постоянные
+организационные слоты и teacher-report/manager-confirm ядра этим не заменяются.
+ScheduleInfrastructureModule экспортирует только доменные providers без контроллеров;
+его использует и порт отмены для заморозки. Meet override принадлежит экземпляру.
+Подробности: [MGR-06](src/modules/manager/schedule/MGR-06.md). Исторические результаты
+PostgreSQL TASK-09 выше не объявляются проверкой новой миграции или новых ACL.

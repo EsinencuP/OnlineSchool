@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "id": "mgr_finance_distribution_owner_20261031",
+      "label": "Owner approval: student money belongs to allocated subscriptions",
+      "file_type": "document",
+      "source_file": "D:\\OnlineSchool\\docs\\online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "source_location": "L1",
+      "source_sha256": "458b65d8466995e86573d22105456ab858bc375e5da2ad4e87dd37b7d257c354",
+      "review_status": "REVIEWED",
+      "review_scope": "Reviewed source and implementation sections",
+      "status": "OWNER_APPROVED_2026_10_31",
+      "summary": "Published CUSTOMER_ADVANCE per own subscriptions and currency, separate lessons; receipt.student_id is CRM contact. No household/unallocated totals in student card. MGR03 published distribution gate. MGR04/05 subscription operation uniqueness by distributionId, ManagerFinanceFacade allocation. MGR09 pending/undistributed receipt metrics, scoped by contact and household rule. Requirements approval is not implementation or migration evidence.",
+      "extraction_method": "host_review_of_authored_sources"
+    },
+    {
+      "id": "mgr03_task_contract",
+      "label": "MGR-03: one-time student credentials after allocated published payment",
+      "file_type": "document",
+      "source_file": "D:\\OnlineSchool\\docs\\AI Coder Tasks — Модуль 2 Кабинет менеджера.md",
+      "source_location": "L1",
+      "source_sha256": "db4360862799f0ce9b2b4d9ff9749eaac40b48e7c7a2746bdfacc3db168a0a0c",
+      "review_status": "REVIEWED",
+      "review_scope": "Finance clarification preamble and MGR-03 section only; remaining task sections not re-audited; reviewed MGR05 currency/director-policy preamble on2026-10-31; other sections not re-audited; reviewed MGR06 owner-decision preamble only on2026-10-31; unrelated sections not re-audited; reviewed MGR07 owner-decision preamble only on2026-11-01; unrelated sections not re-audited; reviewed MGR08 missing-channel owner-decision preamble only on2026-11-01; unrelated sections not re-audited; reviewed MGR09 pending-money owner-decision preamble only on2026-11-01; unrelated sections not re-audited",
+      "status": "REQUIREMENTS_WITH_LATER_OWNER_CLARIFICATION",
+      "summary": "Manager-only own-portfolio Identity provisioning, 16-character CSPRNG temporary password72h, mandatory change except password/logout. Atomic account/audit/outbox, redacted replay, max3 resets per24h, revocation, rate limits. Finance preamble overrides receipt ownership assumptions.",
+      "extraction_method": "host_review_of_authored_sources"
+    },
+    {
+      "id": "mgr03_implementation",
+      "label": "MGR-03: Identity provisioning, one-time replay projection and strict first-password gate",
+      "file_type": "document",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\accounts\\MGR-03.md",
+      "source_location": "L1",
+      "source_sha256": "77c97b42233bba03cee311522af3ddb8268061ef1fddecf46da6e3b42ae77c9e",
+      "review_status": "REVIEWED",
+      "review_scope": "Reviewed source and implementation sections",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "summary": "Existing Student/StudentAccount/AuthAccount/StaffAccount/AssignedManager and partial unique reused. New temporary timestamps and activation_distribution_id; financial director retained while manager audited. Read-only Finance gate; SERIALIZABLE max3, lock and atomic audit/outbox. Request-local postcommit secret, cache redacted and orphan projection cleared on retry. Reset rolling24h revokes sessions/keys/challenges. Worker canonical ACCOUNT_CREATED via NotificationService. Offline/mocked checks; migration not applied; no DB/GO claims. Targeted367 unique checks and one focused Playwright smoke passed. PostgreSQL migration/races and external delivery remain unverified.",
+      "extraction_method": "host_review_of_authored_sources"
+    },
+    {
+      "id": "mgr02_distribution_binding",
+      "label": "MGR-02: scoped monetary subledger and distribution history",
+      "file_type": "document",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\students\\MGR-02.md",
+      "source_location": "L1",
+      "source_sha256": "43018d073a2bc61de2ff8ca1a5368866433c6c2b9a069c85b9be8d5838acacab",
+      "review_status": "REVIEWED",
+      "review_scope": "Reviewed source and implementation sections",
+      "status": "IMPLEMENTED_ACCEPTANCE_PENDING",
+      "summary": "Only published CUSTOMER_ADVANCE attributed to student subscriptions. No family unallocated totals. recentPayments exposes own distribution amount and IDs only if receipt CRM contact also scoped. Money strings and remaining lessons separate. Distinct ManagerSubscriptionSummaryDto avoids collision with student dashboard OpenAPI schema.",
+      "extraction_method": "host_review_of_authored_sources"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mgr03_task_contract",
+      "target": "mgr_finance_distribution_owner_20261031",
+      "relation": "clarified_by",
+      "source_file": "D:\\OnlineSchool\\docs\\AI Coder Tasks — Модуль 2 Кабинет менеджера.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr03_implementation",
+      "target": "mgr03_task_contract",
+      "relation": "implements_with_acceptance_limits",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\accounts\\MGR-03.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr03_implementation",
+      "target": "mgr_finance_distribution_owner_20261031",
+      "relation": "uses_approved_distribution_gate",
+      "source_file": "D:\\OnlineSchool\\docs\\online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr02_distribution_binding",
+      "target": "mgr_finance_distribution_owner_20261031",
+      "relation": "implements_student_money_scope",
+      "source_file": "D:\\OnlineSchool\\docs\\online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr03_implementation",
+      "target": "stu11_security",
+      "relation": "supersedes_initial_me_bootstrap_exception_only",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\accounts\\MGR-03.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host semantic review; no external LLM API calls"
+}

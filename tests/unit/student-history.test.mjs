@@ -118,6 +118,7 @@ test('dispute creates only a typed, lesson-addressed CRM task', async () => {
       type: 'ATTENDANCE_DISPUTE',
       lessonId: row.id,
       studentProfileId: student.studentProfileId,
+      originalConsumptionId: row.consumption_id,
       payload: { description: 'I attended this particular lesson' },
     },
     fixed,

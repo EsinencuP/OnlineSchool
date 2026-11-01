@@ -111,7 +111,7 @@ export class DashboardService {
               WHERE p.subscription_id=sub.id AND p.approved_at<=${time} AND p.valid_from<=${time} AND p.valid_to>${time}
                 AND (p.revoked_at IS NULL OR p.revoked_at>${time})
                 AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${time})<p.max_lessons))))
-          THEN a.google_meet_link ELSE NULL END AS google_meet_link
+          THEN CASE WHEN l.meet_link_overridden THEN l.google_meet_link ELSE a.google_meet_link END ELSE NULL END AS google_meet_link
       FROM lesson_occurrences l JOIN student_subject_enrollments e ON e.id=l.enrollment_id
       JOIN subjects s ON s.id=e.subject_id JOIN teaching_assignments a ON a.id=l.teaching_assignment_id
       JOIN teacher_accounts t ON t.id=l.scheduled_teacher_id
@@ -153,7 +153,10 @@ export class DashboardService {
         +coalesce((SELECT sum(a.delta_quantity) FROM entitlement_adjustments a WHERE a.grant_id=g.id AND a.effective_at<=${time}),0)
         -coalesce((SELECT sum(c.quantity) FROM entitlement_consumptions c WHERE c.grant_id=g.id AND c.consumed_at<=${time}
           AND (c.cancelled_at IS NULL OR c.cancelled_at>${time})),0)),0)::int AS remaining
-        FROM entitlement_grants g WHERE g.subscription_id=s.id AND g.granted_at<=${time}) b
+        FROM entitlement_grants g WHERE (g.subscription_id=s.id OR g.subscription_id IN(
+          SELECT sibling.financial_subscription_id FROM manager_subscription_periods own
+          JOIN manager_subscription_periods sibling ON sibling.manager_subscription_id=own.manager_subscription_id
+          WHERE own.financial_subscription_id=s.id)) AND g.granted_at<=${time}) b
       LEFT JOIN LATERAL (SELECT (ta.max_lessons-(SELECT count(*) FROM lesson_actual_outcomes o
         WHERE o.temporary_access_permission_id=ta.id AND o.confirmed_at<=${time}))::int AS remaining
         FROM temporary_access_permissions ta WHERE ta.subscription_id=s.id AND ta.approved_at<=${time}

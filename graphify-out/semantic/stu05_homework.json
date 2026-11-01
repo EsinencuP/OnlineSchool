@@ -1,0 +1,120 @@
+{
+  "nodes": [
+    {
+      "id": "stu05_homework",
+      "label": "STU-05: student homework lifecycle, immutable versions and drafts",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "source_sha256": "14a4ceb8a2f796ef5f545edd198aefe5760f5fadbb54c98383e20729cda31225",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Existing per-student delivery is the resource. Newest-first status-filtered list, text comments, soft deadline, one 30-day draft and immutable submission versions. CSRF/session/role/current ownership and access are revalidated. No numeric grades; legacy textual column retained but new values rejected."
+    },
+    {
+      "id": "stu05_private_upload",
+      "label": "STU-05: confirmed private S3 upload with immutable final object",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/modules/storage/private-uploads.service.ts",
+      "source_location": "L1",
+      "source_sha256": "7fe57565d1afccfdeaf9c1e263ec27de397fc12ea7bfa9e116200910712bcda6",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "One private school bucket on the existing Neon main branch, permanent-origin CORS, sensitive Vercel server credentials. Real storage probe passed PUT/HEAD/COPY, final immutability and unsigned/type/size 403. No extra database or environment. Capability URL signed after DB commit, absent from durable idempotency result, fixed expiry. STU-06 extends this same adapter with authorized signed GetObject reads; prior upload behavior is retained. STU-09 adds separate PDF private create-only PUT, HEAD acknowledgment recovery, opaque fenced keys and fixed ready_at+3600s signature; existing900s upload reads remain unchanged. Real S3 acceptance pending.",
+      "current_status": "STU11_TARGETED_CODE_CHECKED_WORKING_ACCEPTANCE_PENDING",
+      "current_summary": "STU-11 adds bounded private raster avatar reads with signature/type/size checks; existing homework900s and fixed PDF3600s mechanisms retained. Real S3 remains pending."
+    },
+    {
+      "id": "stu05_invariants",
+      "label": "STU-05: prepared draft, upload and version invariants",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/packages/db/prisma/migrations/20261027130000_stu05_homework/migration.sql",
+      "source_location": "L1",
+      "source_sha256": "1a059fea68645f21f51c89a27a358f239e74df3d220462524ae455bd92b50a66",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Adds draft/upload/version attachment models, version chain and ownership guards, immutable attachment links, no new grade values. SQL migration remains unapplied; real write races/triggers and working acceptance pending FND-GATE."
+    },
+    {
+      "id": "stu05_evidence",
+      "label": "STU-05: targeted HTTP/unit, read-only PostgreSQL and actual private storage evidence",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/STU05_EVIDENCE.json",
+      "source_location": "L1",
+      "source_sha256": "3c580b003ba7fd12bc0edd7d028c78ba20e3daf74aa42b352cef1a3c5c61f47d",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "53 targeted cases, five exact-source read-only CTE projections on working PostgreSQL 18.6 and actual private S3 smoke. No working homework/financial/CRM writes, DDL or deployment. Full gate and manual QA are not established."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stu05_homework",
+      "target": "stu01_student_module",
+      "relation": "requires_current_session_and_student_access",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu05_homework",
+      "target": "stu05_private_upload",
+      "relation": "attaches_confirmed_files_to_versions",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu05_homework",
+      "target": "stu05_invariants",
+      "relation": "requires_prepared_database_invariants",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu05_evidence",
+      "target": "stu05_homework",
+      "relation": "records_targeted_verification",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu05_evidence",
+      "target": "task14_single_environment",
+      "relation": "preserves_single_working_environment",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu05_evidence",
+      "target": "task15_tests_document",
+      "relation": "does_not_replace_foundation_gate",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/homework/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST only; no external LLM API"
+}

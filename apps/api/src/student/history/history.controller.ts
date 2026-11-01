@@ -49,7 +49,7 @@ export class StudentHistoryController {
     operationId: 'getStudentLessonHistory',
     summary: 'Confirmed student attendance and quantitative deduction history',
     description:
-      'Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.',
+      'COMPLETED/confirmed NO_SHOW and CANCELLED lessons with a published approved-cancellation charge. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.',
   })
   @ApiResponse({ status: 200, type: LessonHistoryResponseDto })
   async list(

@@ -1,0 +1,120 @@
+{
+  "nodes": [
+    {
+      "id": "task13_infrastructure_document",
+      "label": "TASK-13: Docker Compose, split DB roles and PostgreSQL 18 PR CI",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/README.md",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "TASK13_VERIFIED_HISTORICALLY_TASK14_DB_CI_SKIPPED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Compose API/worker/PostgreSQL18/nginx startup, non-superuser migration owner and separate runtime grants, persistent PG18 volume, optional VPS TLS. PR1 run40407567011: all six jobs and 90 real PostgreSQL tests pass. Local SQL/health/TLS/container-recreation smoke passes. One stale outbox delivery fixture corrected without weakening SQL. FND-GATE/manual QA and published worker remain subsequent work. Later owner decision TASK-14: no additional QA/staging/test DBs; integration-test is explicitly skipped and not redirected to Neon main. Prior CI evidence is historical, not a current gate result.",
+      "source_sha256": "e4fc5a95a9f63a39fed8112ed1ce4ba12b0477e59d68104d55c7bdb52b39e99a"
+    },
+    {
+      "id": "task13_compose",
+      "label": "Docker Compose foundation services and migration dependency",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/docker-compose.yml",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_COMPOSE_AND_PR_CI_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Monorepo build context; PostgreSQL18 volume /var/lib/postgresql; healthy DB then one-shot migrate then API/worker/nginx; graceful shutdown; runtime credentials isolated from bootstrap.",
+      "source_sha256": "d8a2db991f56e96303f38e201990ce4f4a9eef39ce880eef205b6096ff5c4170"
+    },
+    {
+      "id": "task13_ci_workflow",
+      "label": "Foundation CI: six jobs, isolated real PostgreSQL 18",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/.github/workflows/ci.yml",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "TASK13_VERIFIED_HISTORICALLY_TASK14_DB_CI_SKIPPED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Pinned Actions commits, Node24/pnpm10 frozen install, contents-read token, no stored checkout credential or production secrets/artifacts. Typecheck/lint/unit/integration/build/docker-build green on 4016ca9cc2b6c31f2d6bff90fd653863c920414e; 90 integration tests across six local CI databases. Later owner decision TASK-14: no additional QA/staging/test DBs; integration-test is explicitly skipped and not redirected to Neon main. Prior CI evidence is historical, not a current gate result.",
+      "source_sha256": "36a6a5c42482bfab0e635ddc4900b006cd6339692421fff4edeb7984d9a11ec0"
+    },
+    {
+      "id": "task13_role_bootstrap",
+      "label": "Bootstrap app_migrate and app_runtime without runtime owner privilege",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/infra/postgres/00-roles.sql",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_COMPOSE_AND_PR_CI_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Admin initializes NOLOGIN runtime group; app_migrate is nonsuperuser database owner without CREATEROLE; app_runtime inherits only migration-maintained runtime grants. No row-filtered REVOKE or blanket table grants.",
+      "source_sha256": "2494ea2706811b0e3cd65530123b9ede614de2c35f73c4a6e5d7d1b6717eba48"
+    },
+    {
+      "id": "task13_evidence",
+      "label": "TASK-13 verification evidence: PR CI, Compose roles, TLS and persistence",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/TASK13_EVIDENCE.json",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_COMPOSE_AND_PR_CI_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Exact tested PR SHA/run, six green jobs, 90 PostgreSQL tests, local health/migration/role/TLS/recreated-container results and explicit FND-GATE boundary. No uploaded CI artifacts.",
+      "source_sha256": "48e1b1ffd25dbcfeefc26315e945b0fb3b0ee81d8d4706423d17fc461733f072"
+    }
+  ],
+  "edges": [
+    {
+      "source": "task13_infrastructure_document",
+      "target": "task13_compose",
+      "relation": "documents_implementation",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task13_infrastructure_document",
+      "target": "task13_ci_workflow",
+      "relation": "documents_implementation",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task13_compose",
+      "target": "task13_role_bootstrap",
+      "relation": "initializes_database_roles",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/docker-compose.yml",
+      "source_location": "L1"
+    },
+    {
+      "source": "task13_evidence",
+      "target": "task13_compose",
+      "relation": "verifies",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/TASK13_EVIDENCE.json",
+      "source_location": "L1"
+    },
+    {
+      "source": "task13_evidence",
+      "target": "task13_ci_workflow",
+      "relation": "verifies",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/TASK13_EVIDENCE.json",
+      "source_location": "L1"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "host review and AST; no external LLM API cost"
+}

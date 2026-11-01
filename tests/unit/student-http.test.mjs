@@ -12,6 +12,7 @@ import { RequireRole } from '../../apps/api/dist/core/rbac/decorators.js';
 const requireApi = createRequire(new URL('../../apps/api/package.json', import.meta.url));
 const { Test } = requireApi('@nestjs/testing');
 const { Controller, Get, Post, Patch, Put, Delete } = requireApi('@nestjs/common');
+const previousCsrf = process.env.CSRF_SIGNING_SECRET;
 
 // Real Nest controllers, guards, validation, password KDF, session/CSRF service and error filter.
 // Only Prisma storage and the independent rate-limit persistence are replaced; no database is created.
@@ -193,6 +194,7 @@ function fakeClient() {
 const cookie = (session) =>
   `__Host-school_session=${session.token}; __Host-school_csrf=${session.csrfToken}`;
 beforeAll(async () => {
+  process.env.CSRF_SIGNING_SECRET = previousCsrf ?? 'student-http-fixture-csrf-secret-32-bytes';
   passwordHash = (await new Passwords().hash(originalPassword)).value;
   state = {
     sessions: new Map(),
@@ -219,6 +221,8 @@ beforeAll(async () => {
 });
 afterAll(async () => {
   await app?.close();
+  if (previousCsrf === undefined) delete process.env.CSRF_SIGNING_SECRET;
+  else process.env.CSRF_SIGNING_SECRET = previousCsrf;
 });
 beforeEach(async () => {
   state = {
@@ -233,7 +237,8 @@ beforeEach(async () => {
   issued = await store.issue(db, userId);
   teacher = await store.issue(db, teacherId, new Date());
 });
-test('GET student/me is 200 with initial flag and no passkey requirement, including suspended access', async () => {
+test('GET student/me after password change is 200 without passkeys, including suspended access', async () => {
+  state.mustChangePassword = false;
   state.active = false;
   const response = await request(app.getHttpServer())
     .get('/api/v1/student/me')
@@ -248,7 +253,7 @@ test('GET student/me is 200 with initial flag and no passkey requirement, includ
     avatarUrl: null,
     hasActiveAccess: false,
     managerContacts: { whatsapp: '', telegram: '' },
-    mustChangePassword: true,
+    mustChangePassword: false,
     createdAt: '2026-10-01T00:00:00.000Z',
   });
   expect(response.headers['cache-control']).toBe('no-store');
@@ -299,6 +304,7 @@ test('STU-11 global guards protect profile and future controllers without paid a
 test.each(['post', 'patch', 'put', 'delete'])(
   'all mutation verbs require CSRF before a student handler (%s)',
   async (verb) => {
+    state.mustChangePassword = false;
     // The generic probe exposes all verbs solely in the test module.
     const response = await request(app.getHttpServer())
       [verb]('/api/v1/student/profile/probe')
@@ -317,10 +323,11 @@ test('password-change route remains available while access is suspended, but mis
   expect(denied.body.code).toBe('CSRF_INVALID');
 });
 test('initial login -> change password -> cabinet opens, old sessions revoked and mandatory audit/outbox contain no credentials (mock Prisma HTTP contract)', async () => {
+  const csrf = await request(app.getHttpServer()).get('/api/v1/auth/csrf');
   const login = await request(app.getHttpServer())
     .post('/api/v1/auth/session')
-    .set('Cookie', cookie(issued))
-    .set('X-CSRF-Token', issued.csrfToken)
+    .set('Cookie', csrf.headers['set-cookie'].map((c) => c.split(';')[0]).join('; '))
+    .set('X-CSRF-Token', csrf.body.csrfToken)
     .send({ email: 'student@example.invalid', password: originalPassword });
   expect(login.status).toBe(200);
   expect(login.body.mfa_completed).toBe(false);
@@ -336,7 +343,7 @@ test('initial login -> change password -> cabinet opens, old sessions revoked an
     .get('/api/v1/student/guard-probe')
     .set('Cookie', cookie(issued));
   expect(before.status).toBe(403);
-  expect(before.body.code).toBe('MUST_CHANGE_PASSWORD');
+  expect(before.body.code).toBe('PASSWORD_CHANGE_REQUIRED');
   const response = await request(app.getHttpServer())
     .post('/api/v1/student/security/change-password')
     .set('Cookie', cookie(issued))

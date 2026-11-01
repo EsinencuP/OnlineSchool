@@ -310,7 +310,7 @@ test('long PDF work does not block finance/schedule polling, and shutdown drains
   const processors = Array.from({ length: 3 }, () => ({
     enabled: jest.fn(async () => ({ ok: true, value: 0 })),
   }));
-  const lifecycle = new WorkerLifecycle(...processors, me, storage, new Map());
+  const lifecycle = new WorkerLifecycle(...processors, me, storage, new Map(), { enabled: async () => ({ ok: true, value: 0 }) });
   let finish;
   const pending = new Promise((resolve) => {
     finish = resolve;

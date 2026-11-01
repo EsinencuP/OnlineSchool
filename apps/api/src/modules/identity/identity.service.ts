@@ -32,6 +32,11 @@ import { TransactionService } from '../../core/transaction/transaction.service.j
 import { AuthRateLimitService } from './auth-rate-limit.service.js';
 import { email, object } from './input.js';
 import { Passwords } from './passwords.js';
+import { createStudentIdentity, resetStudentIdentity } from './student-account-provisioning.js';
+import type {
+  IssuedStudentIdentity,
+  StudentIdentityCommand,
+} from './student-account-provisioning.js';
 import { WebAuthnConfig } from './webauthn.config.js';
 
 type Tx = Prisma.TransactionClient;
@@ -61,6 +66,18 @@ export class IdentityService {
     private readonly passwords: Passwords,
     private readonly rate: AuthRateLimitService,
   ) {}
+  createStudentAccount(
+    tx: Tx,
+    input: StudentIdentityCommand,
+  ): Promise<Result<IssuedStudentIdentity, DomainError>> {
+    return createStudentIdentity(tx, input, this.passwords);
+  }
+  resetStudentPassword(
+    tx: Tx,
+    input: StudentIdentityCommand,
+  ): Promise<Result<IssuedStudentIdentity, DomainError>> {
+    return resetStudentIdentity(tx, input, this.passwords, (...args) => this.revoke(...args));
+  }
 
   async execute(
     req: HttpRequest,
@@ -216,6 +233,18 @@ export class IdentityService {
         const valid = await this.passwords.verify(password, found?.password_hash ?? null);
         if (!found || !valid) return fail(domainError('INVALID_CREDENTIALS', 401));
         const account = await this.account(tx, found.id);
+        if (account.kind === 'STUDENT') {
+          const profile = await tx.studentAccount.findFirst({
+            where: { account_id: account.id, deactivated_at: null },
+            select: { must_change_password: true, temporary_password_expires_at: true },
+          });
+          if (
+            profile?.must_change_password &&
+            profile.temporary_password_expires_at &&
+            profile.temporary_password_expires_at <= (await now(tx))
+          )
+            return fail(domainError('TEMPORARY_PASSWORD_EXPIRED', 403));
+        }
         if (cookie(req, SESSION_COOKIE)) {
           const existing = await this.sessions.resolve(cookie(req, SESSION_COOKIE), tx);
           if (existing.ok)

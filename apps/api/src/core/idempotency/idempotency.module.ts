@@ -23,6 +23,10 @@ export type CommandMetadata = {
   topic: string;
   successStatus?: 200 | 201 | 202;
   resultIdField?: string;
+  conflictOnPayloadMismatch?: boolean;
+  replaySuccessStatus?: 200;
+  redactResultFields?: readonly string[];
+  errorCodeMap?: Readonly<Record<string, string>>;
 };
 const COMMAND = 'core.criticalCommand';
 export const CriticalCommand = (metadata: CommandMetadata) => SetMetadata(COMMAND, metadata);
@@ -97,7 +101,9 @@ export class IdempotencyGuard implements CanActivate {
         },
       });
       if (existing && existing.expires_at > new Date() && existing.request_hash !== req.requestHash)
-        error = domainError('IDEMPOTENCY_PAYLOAD_MISMATCH', 422);
+        error = command.conflictOnPayloadMismatch
+          ? domainError('IDEMPOTENCY_KEY_REUSED', 409)
+          : domainError('IDEMPOTENCY_PAYLOAD_MISMATCH', 422);
     }
     if (!error) return true;
     unwrap(
@@ -127,8 +133,10 @@ export class IdempotencyService {
     },
     authorize: (tx: Prisma.TransactionClient) => Promise<string>,
     handler: (tx: Prisma.TransactionClient) => Promise<unknown>,
+    onReplay?: (replayed: boolean) => void,
   ): Promise<Result<unknown, DomainError>> {
     return this.transactions.runCritical(async (tx) => {
+      onReplay?.(false);
       const actorId = await authorize(tx);
       const lock = `${input.scope}:${input.command.type}:${input.key}`;
       await tx.$queryRaw`SELECT true AS locked FROM pg_advisory_xact_lock(hashtextextended(${lock},0))`;
@@ -144,12 +152,17 @@ export class IdempotencyService {
       }
       if (record) {
         if (record.request_hash !== input.hash)
-          return fail(domainError('IDEMPOTENCY_PAYLOAD_MISMATCH', 422));
+          return fail(
+            input.command.conflictOnPayloadMismatch
+              ? domainError('IDEMPOTENCY_KEY_REUSED', 409)
+              : domainError('IDEMPOTENCY_PAYLOAD_MISMATCH', 422),
+          );
         if (record.status !== 'COMPLETED' || !record.result)
           return fail(domainError('COMMAND_IN_PROGRESS', 409));
         const cached = record.result as { body?: unknown };
         if (record.result_hash !== payloadHash(record.result))
           return fail(domainError('CACHED_RESULT_INVALID', 503));
+        onReplay?.(true);
         return cached.body;
       }
       const recordId = randomUUID();
@@ -163,7 +176,17 @@ export class IdempotencyService {
           updated_at: now,
         },
       });
-      const result = asJson({ body: await handler(tx) });
+      const responseBody = await handler(tx);
+      const persistentBody =
+        responseBody && typeof responseBody === 'object' && !Array.isArray(responseBody)
+          ? {
+              ...responseBody,
+              ...Object.fromEntries(
+                (input.command.redactResultFields ?? []).map((field) => [field, null]),
+              ),
+            }
+          : responseBody;
+      const result = asJson({ body: persistentBody });
       const response = result as { body?: unknown };
       const body = response.body;
       const resultIdField = input.command.resultIdField ?? 'id';
@@ -240,6 +263,7 @@ export class CriticalCommandInterceptor implements NestInterceptor {
     if (!req.account || !req.idempotencyKey || !req.requestHash)
       return fail(domainError('COMMAND_CONTEXT_MISSING', 500));
     const scope = req.account.accountId;
+    let replayed = false;
     const result = await this.service.execute(
       { scope, key: req.idempotencyKey, hash: req.requestHash, command, requestId: req.requestId! },
       async (tx) => {
@@ -262,6 +286,11 @@ export class CriticalCommandInterceptor implements NestInterceptor {
           delete req.critical;
         }
       },
+      (cached) => {
+        replayed = cached;
+        // Reset at every attempt, including cached replay after a failed fresh attempt.
+        if (command.redactResultFields?.length) delete req.afterCriticalCommit;
+      },
     );
     if (!result.ok) {
       if ([401, 403, 422].includes(result.error.status))
@@ -273,9 +302,13 @@ export class CriticalCommandInterceptor implements NestInterceptor {
             code: result.error.code,
           }),
         );
-      return fail(result.error);
+      return fail({ ...result.error, code: command.errorCodeMap?.[result.error.code] ?? result.error.code });
     }
-    res.status(command.successStatus ?? 200);
+    res.status(
+      replayed
+        ? (command.replaySuccessStatus ?? command.successStatus ?? 200)
+        : (command.successStatus ?? 200),
+    );
     return req.afterCriticalCommit ? req.afterCriticalCommit(result.value) : result.value;
   }
 }

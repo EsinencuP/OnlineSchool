@@ -17,12 +17,13 @@ import type { NotificationsResponseDto, UnreadCountDto } from './notifications.d
 
 export function notificationsSql(studentId: string, query: HistoryPage, now: Date): Prisma.Sql {
   return Prisma.sql`WITH visible AS (
-    SELECT id,type,title,body,payload,created_at,read_at FROM student_notifications
+    SELECT id,type,title,body,payload,created_at,read_at,
+      (SELECT d.locale FROM notification_dispatches d WHERE d.source_id=student_notifications.id) AS delivery_locale FROM student_notifications
     WHERE student_id=${studentId}::uuid AND archived_at IS NULL AND created_at>${new Date(+now - NOTIFICATION_TTL_MS)} AND created_at<=${now}
   ), paged AS(SELECT * FROM visible ORDER BY created_at DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
   SELECT (SELECT count(*)::int FROM visible) AS total,(SELECT count(*)::int FROM visible WHERE read_at IS NULL) AS "unreadCount",
     coalesce((SELECT jsonb_agg(jsonb_build_object('notificationId',id,'type',type,'title',title,'body',body,
-      'payload',payload,'createdAt',created_at,'isRead',read_at IS NOT NULL) ORDER BY created_at DESC,id DESC) FROM paged),'[]'::jsonb) AS items`;
+      'payload',payload,'createdAt',created_at,'isRead',read_at IS NOT NULL,'deliveryLocale',delivery_locale) ORDER BY created_at DESC,id DESC) FROM paged),'[]'::jsonb) AS items`;
 }
 @Injectable()
 export class StudentNotificationsService {
@@ -38,11 +39,14 @@ export class StudentNotificationsService {
     if (!row) return fail(domainError('NOTIFICATIONS_UNAVAILABLE', 503));
     return {
       ...row,
-      items: row.items.map((n) => ({
-        ...n,
-        ...notificationContent(n.type, n.payload),
-        createdAt: new Date(n.createdAt).toISOString(),
-      })),
+      items: row.items.map((item) => {
+        const { deliveryLocale, ...n } = item as typeof item & { deliveryLocale?: string | null };
+        return {
+          ...n,
+          ...notificationContent(n.type, n.payload, deliveryLocale ?? undefined),
+          createdAt: new Date(n.createdAt).toISOString(),
+        };
+      }),
       ...query,
     };
   }

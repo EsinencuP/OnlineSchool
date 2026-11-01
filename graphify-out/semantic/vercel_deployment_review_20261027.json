@@ -1,0 +1,52 @@
+{
+  "nodes": [
+    {
+      "id": "vercel_deployment_review_20261027",
+      "label": "Vercel 27 Oct: unified onlineschool READY; duplicate projects disabled",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md",
+      "source_location": "L1",
+      "source_sha256": "757519124af3ac89fdc0df3cf8a6e3a8a1fc915679845e2d394abfb3fdfe13ad",
+      "review_status": "REVIEWED",
+      "status": "DEPLOYMENT_RUNTIME_VERIFIED_MFA_ACCEPTANCE_OPEN",
+      "extraction_method": "host_review_of_vercel_api_build_logs_and_browser",
+      "summary": "Owner retained one project when functional. api/worker imports failed because root build command ran inside apps subdirectories; all three duplicates had no env. Unified onlineschool root/Node24/Vite/fra1 build settings saved, previews disabled. Duplicate Git builds ignored and previews off; qa-shell paused, api/worker have no active production to pause. Exact main d6e5c6116dd79948ebad988d1852b7b65d37b1f1 redeployed as dpl_GqFxQSRDjNVE5DC3ZZ8971remQ3F READY. Post-release browser confirmed same build SHA, API/worker/CSRF/OpenAPI200, anonymous session401, no-store and request IDs. No new database, secret copying, local feature publication or FND-GATE claim. Physical passkey/MFA scenarios untested."
+    }
+  ],
+  "edges": [
+    {
+      "source": "vercel_deployment_review_20261027",
+      "target": "task14_single_environment",
+      "relation": "reconfirms_owner_topology",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "vercel_deployment_review_20261027",
+      "target": "task14_vercel_runtime",
+      "relation": "verifies_runtime",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "vercel_deployment_review_20261027",
+      "target": "task14_release_pipeline",
+      "relation": "verifies_redeployment",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md",
+      "source_location": "L1"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review; no external LLM API cost"
+}

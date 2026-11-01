@@ -20,7 +20,11 @@ export class EntitlementsService {
     >`SELECT (g.quantity+coalesce((SELECT sum(delta_quantity) FROM entitlement_adjustments WHERE grant_id=g.id),0)-coalesce((SELECT sum(quantity) FROM entitlement_consumptions WHERE grant_id=g.id AND cancelled_at IS NULL),0))::int AS remaining FROM entitlement_grants g WHERE g.id=${id}::uuid`;
     return rows[0]!.remaining;
   }
-  async consume(ctx: CriticalContext, body: unknown) {
+  async consume(
+    ctx: CriticalContext,
+    body: unknown,
+    basis: 'CONFIRMED_LESSON' | 'APPROVED_CANCELLATION' = 'CONFIRMED_LESSON',
+  ) {
     const input = object(body, ['grantId', 'studentId', 'lessonId', 'reason']);
     const grantId = uuid(input.grantId),
       studentId = uuid(input.studentId),
@@ -40,8 +44,17 @@ export class EntitlementsService {
     const now = await at(ctx.tx);
     if (!lesson || lesson.enrollment_id !== sub.enrollment_id)
       return fail(domainError('LESSON_SUBSCRIPTION_MISMATCH', 422));
-    if (lesson.status !== 'CONDUCTED' || !outcome || outcome.confirmed_at > now)
-      return fail(domainError('CONFIRMED_LESSON_REQUIRED', 422));
+    if (basis === 'CONFIRMED_LESSON') {
+      if (lesson.status !== 'CONDUCTED' || !outcome || outcome.confirmed_at > now)
+        return fail(domainError('CONFIRMED_LESSON_REQUIRED', 422));
+    } else if (
+      lesson.status !== 'CANCELLED' ||
+      lesson.scheduled_at <= now ||
+      outcome ||
+      lesson.actual_start_at
+    ) {
+      return fail(domainError('LESSON_IMMUTABLE_STATE', 409));
+    }
     await this.ledger.period(ctx.tx, lesson.scheduled_at);
     if ((await this.remaining(ctx, grantId)) < 1)
       return fail(domainError('INSUFFICIENT_PAID_RIGHTS', 422));
@@ -63,7 +76,7 @@ export class EntitlementsService {
           subscription_id: sub.id,
           lesson_occurrence_id: lessonId,
           quantity: 1,
-          basis: 'CONFIRMED_LESSON',
+          basis,
           reason:
             input.reason === undefined
               ? 'Confirmed conducted lesson'
@@ -97,7 +110,10 @@ export class EntitlementsService {
       ctx,
       {
         consumption_id: consumed.id,
-        basis: 'Revenue recognized for confirmed paid lesson',
+        basis:
+          basis === 'APPROVED_CANCELLATION'
+            ? 'Approved chargeable cancellation'
+            : 'Revenue recognized for confirmed paid lesson',
         ...operation(randomUUID()),
       },
       { before, after },
@@ -108,7 +124,7 @@ export class EntitlementsService {
       ledgerEntryId: entry.id,
     };
   }
-  async adjust(ctx: CriticalContext, body: unknown) {
+  async adjust(ctx: CriticalContext, body: unknown, onReversal?: (entryId: string) => void) {
     const input = object(body, [
       'grantId',
       'originalConsumptionId',
@@ -171,7 +187,11 @@ export class EntitlementsService {
         where: { id: original.id },
         data: { cancelled_at: now, cancellation_adjustment_id: adjustment.id },
       });
-      await this.ledger.reverseConsumption(ctx, original.id, reason);
+      const reversal = await this.ledger.reverseConsumption(ctx, original.id, reason);
+      if (onReversal) {
+        if (!reversal) return fail(domainError('PUBLISHED_SOURCE_REQUIRED', 422));
+        onReversal(reversal.id);
+      }
     }
     return { ...adjustment, remaining_count: await this.remaining(ctx, grantId) };
   }

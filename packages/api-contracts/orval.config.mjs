@@ -4,7 +4,7 @@ export default defineConfig({
   school: {
     input: './openapi/openapi.json',
     output: {
-      target: './src/generated/client.ts',
+      target: './src/generated/client.next.ts',
       client: 'fetch',
       mode: 'single',
       override: {

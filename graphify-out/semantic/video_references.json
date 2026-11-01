@@ -1,0 +1,2172 @@
+{
+  "nodes": [
+    {
+      "id": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "label": "Видео: обзор украинских школ и CRM — визуальные референсы",
+      "file_type": "document",
+      "media_type": "video",
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "00:00–13:50.903",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "analysis_scope": "selected_visual_frames",
+      "summary": "Запись 13:51; 17 просмотренных экранов. Устная часть не расшифровывалась.",
+      "user_context": "По описанию владельца записи: показ аналогов школ и CRM в Украине.",
+      "source_sha256": "b5434eeb1a11f6bf0678ffbaa42ff36e677d30ff8c50ce207c612406e2c3fbda"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "label": "01:32.500 — Боковая карточка профиля сотрудника",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Кадр видео 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Название бренда на этом кадре не раскрыто; сверху форму перекрывает окно звонка. Содержит персональные данные на исходном кадре, они не перенесены в аннотацию. Наличие поля изменения пароля не доказывает безопасность реализации; флаги чужого продукта не утверждены для проекта.",
+      "timestamp_seconds": 92.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "teacher",
+        "access"
+      ],
+      "source_evidence": "«Колектив (1)», вкладки «Люди», «Права ролей»; форма «Профіль»; «Обмежений автор матеріалів».",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_1",
+      "label": "Таблица коллектива и поиск",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Видимый блок кадра 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 92.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_2",
+      "label": "Боковая форма профиля",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Видимый блок кадра 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 92.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_3",
+      "label": "Статус сотрудника",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Видимый блок кадра 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 92.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_4",
+      "label": "Пустое поле нового пароля",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Видимый блок кадра 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 92.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_5",
+      "label": "Флаги ограниченного автора и общего аккаунта",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "Видимый блок кадра 01:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 92.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "label": "01:37.500 — Навигация административного кабинета и реестр коллектива",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Кадр видео 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Текст ANTISCHOOL виден в левом меню. Часть шапки и кнопки добавления перекрыта видеозвонком; видимость разделов не подтверждает их внутренние процессы или необходимость включения в наш MVP.",
+      "timestamp_seconds": 97.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "ANTISCHOOL",
+      "domains": [
+        "crm",
+        "teacher",
+        "access"
+      ],
+      "source_evidence": "Бренд «ANTISCHOOL»; меню «Матеріали», «Заявки», «Учні», «Колектив», «Уроки», «Клуби», «Викладачі», «Лабораторія»; колонки «Роль», «Особисті права», «Статус», «Активність».",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_1",
+      "label": "Раскрытая боковая навигация",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Видимый блок кадра 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 97.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_2",
+      "label": "Таблица сотрудников",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Видимый блок кадра 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 97.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_3",
+      "label": "Роль и персональные права",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Видимый блок кадра 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 97.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_4",
+      "label": "Статус и последняя активность",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Видимый блок кадра 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 97.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_5",
+      "label": "Построчные действия",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "Видимый блок кадра 01:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 97.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "label": "02:17.500 — Реестр сотрудников со статусами и активностью",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Кадр видео 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "На кадре читается большой реестр, но текст названия продукта не раскрыт; стилизованный знак сам по себе не используется для идентификации. Строки содержат персональные данные, не перенесённые в метаданные. Иконки действий не устанавливают точный бизнес-смысл без открытия.",
+      "timestamp_seconds": 137.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "teacher",
+        "access"
+      ],
+      "source_evidence": "«Колектив (2224)», «Люди», «Права ролей», «Пошта», «Роль», «Особисті права», «Статус», «Активність», «Дії»; «Активний»/«Неактивний».",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_1",
+      "label": "Поиск сотрудников",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Видимый блок кадра 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 137.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_2",
+      "label": "Табличный реестр",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Видимый блок кадра 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 137.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_3",
+      "label": "Активный и неактивный статусы",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Видимый блок кадра 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 137.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_4",
+      "label": "Дата последней активности",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Видимый блок кадра 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 137.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_5",
+      "label": "Пагинация и построчные действия",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "Видимый блок кадра 02:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 137.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "label": "03:17.500 — Дополнительные права сотрудника и вход в его кабинет",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Кадр видео 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Название бренда текстом на кадре не раскрыто. Чужой общий служебный аккаунт с подписью об овербукинге не тождествен общему аккаунту ученика/родителя нашего проекта. Кнопка входа в кабинет видима, но её модель аудита и полномочий по кадру неизвестна.",
+      "timestamp_seconds": 197.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "teacher",
+        "access"
+      ],
+      "source_evidence": "«Обмежений автор матеріалів», «Спільний акаунт (овербукінг, навчання)», «Увійти в кабінет», «Зберегти профіль», «Роль у школі», «Оберіть роль».",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_1",
+      "label": "Флаг ограниченного автора материалов",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Видимый блок кадра 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 197.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_2",
+      "label": "Флаг общего служебного аккаунта",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Видимый блок кадра 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 197.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_3",
+      "label": "Вход в кабинет сотрудника",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Видимый блок кадра 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 197.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_4",
+      "label": "Сохранение профиля",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Видимый блок кадра 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 197.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_5",
+      "label": "Выбор роли в школе",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "Видимый блок кадра 03:17.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 197.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "label": "03:32.500 — Рабочий день преподавателя: календарь и ближайшие уроки",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Кадр видео 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Текст бренда на этом кадре отсутствует. Виден пример пробного урока английского для взрослых: аудитория чужого экрана не меняет утверждённый запуск проекта для 7–12 классов. Карточка результата месяца и её числа — чужой UI-пример, не принятые KPI или бонусная политика; часть нижней области перекрыта звонком.",
+      "timestamp_seconds": 212.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "teacher",
+        "schedule",
+        "reports"
+      ],
+      "source_evidence": "«Розклад», «Мій день», «Календар», «Завтра», «Пробний урок — Англійська (Дорослі)», «Посилання для учня»; сводка «Проведено уроків», «11 пробних».",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_1",
+      "label": "Переключатель дня и календаря",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Видимый блок кадра 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 212.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_2",
+      "label": "Мини-календарь с маркерами событий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Видимый блок кадра 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 212.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_3",
+      "label": "Выделенная карточка ближайшего урока",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Видимый блок кадра 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 212.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_4",
+      "label": "Список последующих уроков и ссылка ученика",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Видимый блок кадра 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 212.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_5",
+      "label": "Сводка количества пробных уроков",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "Видимый блок кадра 03:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 212.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "label": "03:37.500 — Дневное расписание с раскрытым пробным уроком",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "Кадр видео 03:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Развёрнута первая карточка пробного урока, остальные свернуты. Виден только графический знак без текстового бренда, поэтому система unknown. Показанные 50-минутные интервалы и статистика — свойства внешнего экрана, не утверждённые параметры проекта. Оверлеи звонка перекрывают низ.",
+      "timestamp_seconds": 217.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "teacher",
+        "schedule"
+      ],
+      "source_evidence": "Розклад; Мій день; Календар; Пробний урок — Англійська (Дорослі); Посилання для учня",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_1",
+      "label": "Мини-календарь с цветными маркерами",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "Видимый блок кадра 03:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 217.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_2",
+      "label": "Раскрытая карточка ближайшего пробного урока",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "Видимый блок кадра 03:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 217.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_3",
+      "label": "Кнопка подробностей и ссылка для ученика",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "Видимый блок кадра 03:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 217.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_4",
+      "label": "Месячная карточка количества пробных уроков",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "Видимый блок кадра 03:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 217.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "label": "03:42.500 — Раскрытая карточка другого урока в списке дня",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "Кадр видео 03:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Показано другое состояние аккордеона: раскрыт урок 16:00–16:50. Текстового бренда нет; длительность и пробный статус не переносятся в требования OnlineSchool. Часть нижней области закрыта оверлеями.",
+      "timestamp_seconds": 222.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "teacher",
+        "schedule"
+      ],
+      "source_evidence": "Розклад; Мій день; Пробний урок — Англійська мова; Детальніше",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_1",
+      "label": "Аккордеон уроков с временем",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "Видимый блок кадра 03:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 222.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_2",
+      "label": "Карточка пробного урока",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "Видимый блок кадра 03:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 222.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_3",
+      "label": "Кнопка Детальніше",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "Видимый блок кадра 03:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 222.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_4",
+      "label": "Ссылка входа для ученика",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "Видимый блок кадра 03:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 222.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "label": "03:47.500 — Боковая панель подробностей пробного урока",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Кадр видео 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Справа открыта панель с брифом, темой, материалами и началом раздела фидбека. Часть полей и нижних кнопок перекрыта оверлеем; невидимая логика не восстановлена. Видимые личные данные не включены в названия. Названия разделов внешней системы не утверждают их реализацию в проекте.",
+      "timestamp_seconds": 227.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "teacher",
+        "student",
+        "schedule",
+        "materials",
+        "reports"
+      ],
+      "source_evidence": "Бриф заявки; Матеріал уроку; До уроку ще не прив’язано матеріалу; Прив’язати матеріал; Фідбек пробного",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_1",
+      "label": "Drawer подробностей поверх расписания",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Видимый блок кадра 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 227.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_2",
+      "label": "Бриф заявки",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Видимый блок кадра 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 227.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_3",
+      "label": "Пустое состояние материалов урока",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Видимый блок кадра 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 227.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_4",
+      "label": "Привязка материала",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Видимый блок кадра 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 227.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_5",
+      "label": "Раздел фидбека пробного урока",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "Видимый блок кадра 03:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 227.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "label": "04:12.500 — Trial CRM — редактирование профиля методиста",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Кадр видео 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Форма профиля видна достаточно для структуры интерфейса. Персональные значения не переписаны в метаданные. Подсказка о пароле и способ входа относятся к внешнему продукту и не становятся требованиями безопасности OnlineSchool. Низ формы обрезан и закрыт оверлеями.",
+      "timestamp_seconds": 252.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "Trial CRM",
+      "domains": [
+        "crm",
+        "teacher",
+        "access",
+        "schedule"
+      ],
+      "source_evidence": "Trial CRM; Редагування методиста; Дані методиста; Графік; Пароль для входу в CRM; Telegram-нік",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_1",
+      "label": "Вкладки данных и графика методиста",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Видимый блок кадра 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 252.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_2",
+      "label": "Поля имени и email",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Видимый блок кадра 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 252.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_3",
+      "label": "Поле нового пароля с подсказкой",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Видимый блок кадра 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 252.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_4",
+      "label": "Поле Telegram-ника",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Видимый блок кадра 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 252.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_5",
+      "label": "Административная навигация",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "Видимый блок кадра 04:12.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 252.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "label": "04:52.500 — Trial CRM — дневная сетка записей по методистам",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Кадр видео 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Чёткая сетка дня с жёлтыми карточками, незаполненными слотами и фильтром направления. Число записей, дата и 30-минутная сетка — данные референса, не норматив расписания проекта. Отдельная колонка имеет красную метку Овер, но её смысл по одному кадру не установлен.",
+      "timestamp_seconds": 292.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "Trial CRM",
+      "domains": [
+        "crm",
+        "teacher",
+        "student",
+        "schedule"
+      ],
+      "source_evidence": "Trial CRM; Графік; Час; 32 записів на день; New НМТ з англійською; 08.10.2026",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_1",
+      "label": "Колонки методистов и временные строки",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Видимый блок кадра 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 292.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_2",
+      "label": "Карточки записей на пробные уроки",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Видимый блок кадра 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 292.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_3",
+      "label": "Пустые ячейки с кнопкой добавления",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Видимый блок кадра 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 292.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_4",
+      "label": "Фильтр направления",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Видимый блок кадра 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 292.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_5",
+      "label": "Выбор даты и навигация по дням",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "Видимый блок кадра 04:52.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 292.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "label": "09:32.500 — Trial CRM — обзор аналитики пробных уроков",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "Кадр видео 09:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Читаемая обзорная аналитика с четырьмя KPI-карточками и вкладками. Значения метрик и смысл клиентского счётчика — наблюдения внешнего экрана, а не проверенные данные проекта. Содержимое невыбранных вкладок не показано; аудио не транскрибировалось.",
+      "timestamp_seconds": 572.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "Trial CRM",
+      "domains": [
+        "crm",
+        "teacher",
+        "reports"
+      ],
+      "source_evidence": "Trial CRM; Аналітика; Огляд; Завантаження методистів; Години по напрямах; Журнал дій; ПУ сьогодні; ПУ цього місяця",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_1",
+      "label": "Карточки количества пробных уроков за день и месяц",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "Видимый блок кадра 09:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 572.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_2",
+      "label": "Карточки клиентов и доступных методистов",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "Видимый блок кадра 09:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 572.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_3",
+      "label": "Вкладка загрузки методистов",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "Видимый блок кадра 09:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 572.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_4",
+      "label": "Вкладки часов по направлениям и журнала действий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "Видимый блок кадра 09:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 572.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "label": "10:57.500 — Панель CRM с этапами воронки и рабочими показателями",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Кадр видео 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Названия стадий, суммы, валюта, числа задач и состав аналитики принадлежат показанному продукту и не становятся нашими правилами или KPI. Ввод контакта в поиске не доказывает автоматическую идентификацию ребёнка. Персональное значение поиска не перенесено. Аудио не транскрибировано.",
+      "timestamp_seconds": 657.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "amoCRM / AntiSchool ONLINE",
+      "domains": [
+        "crm",
+        "finance"
+      ],
+      "source_evidence": "Логотип amoCRM и AntiSchool ONLINE; заголовки ПРОСРОЧЕННЫЕ ЗАДАЧИ, ВЫПОЛНЕННЫЕ ЗАДАЧИ, ИСТОЧНИКИ СДЕЛОК; видимы карточки стадий.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_1",
+      "label": "Карточки количества и сумм по стадиям воронки",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Видимый блок кадра 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 657.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_2",
+      "label": "Список выбираемых воронок",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Видимый блок кадра 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 657.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_3",
+      "label": "Показатели просроченных и выполненных задач",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Видимый блок кадра 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 657.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_4",
+      "label": "Фильтры периода и ответственного",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Видимый блок кадра 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 657.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_5",
+      "label": "Виджеты источников сделок и результатов менеджеров",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "Видимый блок кадра 10:57.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 657.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "label": "11:37.500 — Глобальный поиск CRM с группировкой результатов по сущностям",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Кадр видео 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Имена, почта и текст разговоров не включены в аннотацию. Поиск кандидатов не означает разрешения автоматически сливать учеников. Наличие группы Беседы не утверждает интеграции мессенджеров, внешнюю автоотправку семье либо межурочный чат. Аудио не транскрибировано.",
+      "timestamp_seconds": 697.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "amoCRM",
+      "domains": [
+        "crm"
+      ],
+      "source_evidence": "Виден логотип amoCRM. В раскрытом поиске читаются ВСЕ СДЕЛКИ, КОНТАКТЫ, ПОКУПАТЕЛИ, БЕСЕДЫ и метки состояний.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_1",
+      "label": "Поиск поверх текущей панели",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Видимый блок кадра 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 697.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_2",
+      "label": "Группы результатов сделок, контактов и покупателей",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Видимый блок кадра 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 697.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_3",
+      "label": "Результаты разговоров",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Видимый блок кадра 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 697.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_4",
+      "label": "Цветные метки состояний сделок",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Видимый блок кадра 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 697.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_5",
+      "label": "Кнопка закрытия результатов поиска",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "Видимый блок кадра 11:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 697.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "label": "12:32.500 — Групповая сводка результатов в табличном редакторе",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Кадр видео 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Виден табличный редактор и значок таблицы, но текстовый бренд CRM или редактора в кадре отсутствует, поэтому system=unknown. Показанные финансы и показатели не являются данными нашей академии; конверсия и бонусы не утверждают новую мотивационную формулу. В одном поле видна ошибка деления: содержимое не проверено как расчётная модель. Имена сотрудников не перенесены. Это коммерческая сводка, а не педагогический отчёт цикла 4/8. Аудио не транскрибировано.",
+      "timestamp_seconds": 752.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "finance",
+        "reports"
+      ],
+      "source_evidence": "Заголовок «Звітність 3 група- Вересень 2026»; видимы колонки Напрям/ставка, Дорослі, Діти, Оплат, Виручка, Конверсія, Середній чек, Очікувані результати, Прогрес.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_1",
+      "label": "Сводная таблица по сотрудникам",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Видимый блок кадра 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 752.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_2",
+      "label": "Колонки оплат, выручки, конверсии и среднего чека",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Видимый блок кадра 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 752.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_3",
+      "label": "Ожидаемые результаты и полосы прогресса",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Видимый блок кадра 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 752.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_4",
+      "label": "Цветовое форматирование значений",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Видимый блок кадра 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 752.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_5",
+      "label": "Вкладки общей сводки и отдельных листов",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "Видимый блок кадра 12:32.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 752.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "label": "12:37.500 — Персональный лист результатов и реестр оплат",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Кадр видео 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Название листа и персональные контакты не перенесены. Флажок Оплата в чужой таблице не заменяет нашу двухэтапную регистрацию и подтверждение денег исключительно руководителем. Суммы и бонус не принимаются за тарифы или утверждённые правила. По кадру нельзя определить права редактирования или надёжность расчётов. Текстовый бренд редактора отсутствует. Аудио не транскрибировано.",
+      "timestamp_seconds": 757.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "finance",
+        "reports"
+      ],
+      "source_evidence": "Заголовок «Звітність 3 група- Вересень 2026»; блоки Поточні результати и Очікувані результати; колонки Дата, ID, e-mail, Overbooking, Оплата, Сума, Kid, Групи, Преміум, Повторні, Урок.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_1",
+      "label": "Блок текущих и ожидаемых результатов",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Видимый блок кадра 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 757.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_2",
+      "label": "Сводка конверсии, среднего чека, выручки и бонуса",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Видимый блок кадра 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 757.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_3",
+      "label": "Строки реестра с датой и идентификатором",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Видимый блок кадра 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 757.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_4",
+      "label": "Флажки оплаты и категорий записи",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Видимый блок кадра 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 757.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_5",
+      "label": "Сумма и предметный контекст строки",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "Видимый блок кадра 12:37.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 757.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "label": "12:42.500 — Фильтрация реестра по отметке оплаты",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Кадр видео 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Полезен приём фильтрации по состоянию, но булево поле чужой таблицы не задаёт наш конечный автомат оплаты и полномочия подтверждения. Видимость флажка не доказывает достоверность банковского поступления. Числа, формулы и контакты не переносятся; текстовый бренд редактора не виден. Аудио не транскрибировано.",
+      "timestamp_seconds": 762.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "finance"
+      ],
+      "source_evidence": "Заголовок «Звітність 3 група- Вересень 2026»; открытый фильтр столбца Оплата содержит FALSE, TRUE, (Пустые), кнопки Отмена и OK.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_1",
+      "label": "Выпадающий фильтр колонки оплаты",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Видимый блок кадра 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 762.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_2",
+      "label": "Значения TRUE, FALSE и пустые",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Видимый блок кадра 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 762.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_3",
+      "label": "Подтверждение и отмена фильтра",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Видимый блок кадра 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 762.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_4",
+      "label": "Сводка результатов над реестром",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Видимый блок кадра 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 762.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_5",
+      "label": "Табличные флажки в строках",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "Видимый блок кадра 12:42.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 762.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "label": "13:47.500 — Реестр оплат с комментариями и отметками обратной связи",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Кадр видео 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "summary": "Комментарии и флажки показывают приём операционной фиксации контекста, но не подтверждают содержание устной беседы, автоматическую связь с семьёй, родительский кабинет или новые обязательные процессы обратной связи. Реальные тарифы, пакеты, скидки и имена из строк не приняты как наши правила. Цвет без текста не следует использовать как единственное обозначение состояния. Текстовый бренд редактора отсутствует. Аудио не транскрибировано.",
+      "timestamp_seconds": 827.5,
+      "source_video": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "system": "unknown",
+      "domains": [
+        "crm",
+        "finance",
+        "reports"
+      ],
+      "source_evidence": "Заголовок «Звітність 3 група- Вересень 2026»; после горизонтальной прокрутки читаются Коментар, Lesson Feedback, Parent Feedback рядом с Оплата, Сума и Урок.",
+      "extraction_method": "ffmpeg_seek_and_rotate_then_agent_vision"
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_1",
+      "label": "Горизонтальная прокрутка широкого реестра",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Видимый блок кадра 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 827.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_2",
+      "label": "Колонка свободного комментария",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Видимый блок кадра 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 827.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_3",
+      "label": "Флажки обратной связи об уроке",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Видимый блок кадра 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 827.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_4",
+      "label": "Флажки родительской обратной связи",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Видимый блок кадра 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 827.5
+    },
+    {
+      "id": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_5",
+      "label": "Связанный контекст оплаты, суммы и курса",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "Видимый блок кадра 13:47.500",
+      "status": "VISUAL_REFERENCE",
+      "review_status": "REVIEWED",
+      "timestamp_seconds": 827.5
+    }
+  ],
+  "edges": [
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_32_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_32_500.jpg",
+      "source_location": "01:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_01_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_01_37_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_01_37_500.jpg",
+      "source_location": "01:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_02_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_02_17_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_02_17_500.jpg",
+      "source_location": "02:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_17_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_17_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_17_500.jpg",
+      "source_location": "03:17.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_32_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_32_500.jpg",
+      "source_location": "03:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "03:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "03:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "03:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "03:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_37_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_37_500.jpg",
+      "source_location": "03:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "03:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "03:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "03:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "03:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_42_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_42_500.jpg",
+      "source_location": "03:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_03_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_03_47_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_03_47_500.jpg",
+      "source_location": "03:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_12_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_12_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_12_500.jpg",
+      "source_location": "04:12.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_04_52_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_04_52_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_04_52_500.jpg",
+      "source_location": "04:52.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "09:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "09:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "09:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "09:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_09_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_09_32_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_09_32_500.jpg",
+      "source_location": "09:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_10_57_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_10_57_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_10_57_500.jpg",
+      "source_location": "10:57.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_11_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_11_37_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_11_37_500.jpg",
+      "source_location": "11:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_32_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_32_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_32_500.jpg",
+      "source_location": "12:32.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_37_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_37_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_37_500.jpg",
+      "source_location": "12:37.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_12_42_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_12_42_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_12_42_500.jpg",
+      "source_location": "12:42.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_screenrecording_10_08_2026_15_42_16_1_document",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "relation": "has_frame",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\ScreenRecording_10-08-2026 15-42-16_1.mp4",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_1",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_2",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_3",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_4",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    },
+    {
+      "source": "ref_video_frames_ukraine_crm_review_frame_13_47_500_image",
+      "target": "ref_video_frames_ukraine_crm_review_frame_13_47_500_feature_5",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\ref\\video_frames\\ukraine_crm_review\\frame_13_47_500.jpg",
+      "source_location": "13:47.500",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": null,
+  "output_tokens": null,
+  "notes": "Host session token cost unavailable. Screens viewed; audio not analyzed."
+}

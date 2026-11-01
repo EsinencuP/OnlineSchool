@@ -1,0 +1,114 @@
+{
+  "nodes": [
+    {
+      "id": "stu01_student_module",
+      "label": "STU-01: StudentModule infrastructure; working acceptance pending",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Ordered namespace-scoped guards, session/CSRF, cached registry Student identity, current paid access, /me and minimal first-password-change endpoint. No student passkeys or parent account. Migration and real CRM E2E remain pending; no FND-GATE or production GO.",
+      "source_sha256": "73ff8e07cc509c6716bdaa9402404813f7f8da81045a1c920a3ab9b4168932cd",
+      "current_summary": "STU-11 current policy permits only GETme and POST/PATCH change-password bootstrap; broad initial profile/security exemptions superseded. Prior STU-01 evidence remains historical.",
+      "current_status": "STU11_POLICY_OVERRIDE_PRIOR_EVIDENCE_HISTORICAL"
+    },
+    {
+      "id": "stu01_context_guard",
+      "label": "StudentContextGuard: authenticated identity and request-local cache",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/student-context.guard.ts",
+      "source_location": "L1",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "STUDENT kind/role and activated profile required; context is resolved by session account ID and cached per request, including in-flight concurrency.",
+      "source_sha256": "211bbb5aa980fd4c0733c90040b48476adf1991371c0fb6ebbc7ae9a4e09a3e9",
+      "current_status": "STU11_TARGETED_CODE_CHECKED_WORKING_ACCEPTANCE_PENDING",
+      "current_summary": "STU-11 enforces must-change-password on cached/fresh context except GETme and POST/PATCH password. Authenticated stable Student.id context remains server-derived."
+    },
+    {
+      "id": "stu01_access_guard",
+      "label": "ActiveSubscriptionGuard: 402 with manager contacts and explicit exceptions",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/active-subscription.guard.ts",
+      "source_location": "L1",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "/me, /profile and /security remain accessible. Other student routes require changed initial password and current paid access or a limited director admission. STU-07 permits only three exact subscription GET views without active paid access, preserving first password, session and role checks.",
+      "source_sha256": "6ad5578557080b623135290ca7b024f5063b12a547967be0565a62fc2b00c488",
+      "current_status": "STU11_TARGETED_CODE_CHECKED_WORKING_ACCEPTANCE_PENDING",
+      "current_summary": "STU-11 only bootstrap exceptions; profile/security and all subscription reads now protected. Initial403 precedes inactive402; contacts from actual authorized assigned manager context, no global fallback."
+    },
+    {
+      "id": "stu01_evidence",
+      "label": "STU-01 targeted verification and remaining acceptance",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/STU01_EVIDENCE.json",
+      "source_location": "L1",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "42 targeted Jest checks plus 5 existing core/identity cases pass. Access query read-only smoke succeeds as runtime on existing PostgreSQL 18.6. No new databases, branch, finance writes or migration deployment. Real paid CRM onboarding E2E pending.",
+      "source_sha256": "0b1fe4e1c974b4df745bbb1e9409770c73a8ab85839c30a97bfc733d217aef72"
+    }
+  ],
+  "edges": [
+    {
+      "source": "stu01_student_module",
+      "target": "stu01_context_guard",
+      "relation": "enforces_student_context",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu01_student_module",
+      "target": "stu01_access_guard",
+      "relation": "enforces_paid_access",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu01_evidence",
+      "target": "stu01_student_module",
+      "relation": "records_targeted_verification",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu01_student_module",
+      "target": "task14_single_environment",
+      "relation": "preserves_single_working_environment",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu01_evidence",
+      "target": "task15_tests_document",
+      "relation": "does_not_replace_foundation_gate",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST; no external LLM API cost"
+}

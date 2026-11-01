@@ -4,6 +4,7 @@ import type { Prisma } from '@online-school/db';
 import type { CriticalContext } from '../../core/http.js';
 import { AuditService } from '../../core/audit/audit.service.js';
 import { at } from '../finance/finance-common.js';
+import { redactMeet } from './meet-link.js';
 
 @Injectable()
 export class ScheduleEvents {
@@ -70,7 +71,7 @@ export class ScheduleEvents {
     newValues: unknown,
     reason: string,
   ) {
-    const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as Prisma.InputJsonValue;
+    const json = (v: unknown) => redactMeet(JSON.parse(JSON.stringify(v))) as Prisma.InputJsonValue;
     await ctx.tx.lessonChangeEvent.create({
       data: {
         lesson_occurrence_id: id,

@@ -1,0 +1,118 @@
+{
+  "nodes": [
+    {
+      "id": "stu02_dashboard",
+      "label": "STU-02: parallel student dashboard; working acceptance pending",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "source_sha256": "15bcc4b8c3e88d6c36b90b94529e7e9c6cbc60468c280dc0631977d1d0bd5a36",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Four authenticated, student-scoped source projections, exact join window and per-enrollment rights, latest homework/skill versions, actual quantitative balance. Nullable expiry preserves unbounded subscriptions. No frontend release or production GO."
+    },
+    {
+      "id": "stu02_cache",
+      "label": "STU-02 CacheInterceptor: private 30s cache, transactional revisions",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+      "source_location": "L1",
+      "source_sha256": "9cbff94a4ee3938bfb1656234bdc1d2820eca8735ba8c95a3dce3b62dfe86d39",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Per-student cache key, guards before cache access, early expiry at join/start boundaries, revision validation before/after aggregation, in-flight coalescing. Migration triggers not yet applied to working DB."
+    },
+    {
+      "id": "stu02_migration",
+      "label": "STU-02: Meet assignment link and durable invalidation migration",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/packages/db/prisma/migrations/20261027100000_stu02_dashboard/migration.sql",
+      "source_location": "L1",
+      "source_sha256": "d8d233dfac8367634028ebca03d8392e581f083ea5b7dddec3a65a2236ad138c",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Adds reusable Meet link, revision table, 19 source-table invalidation triggers and missing runtime read grants on educational tables. Prepared only; not deployed or live-trigger-tested."
+    },
+    {
+      "id": "stu02_evidence",
+      "label": "STU-02: 49 targeted Jest checks and 2 actual PostgreSQL CTE checks",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/STU02_EVIDENCE.json",
+      "source_location": "L1",
+      "source_sha256": "5e4e72bbb1ee01c281918116cffb02ae34be751be4e2a0165e86fcc3e5a884f2",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "review_status": "REVIEWED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "49 targeted checks pass; two read-only PostgreSQL 18.6 CTE projections validate latest versions, isolation and confirmed assessments. Four base SELECTs syntax checked; educational runtime grants missing before planned migration. Actual working latency, live two-student E2E and FND-GATE pending."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stu02_dashboard",
+      "target": "stu01_student_module",
+      "relation": "requires_student_context_and_guards",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu02_dashboard",
+      "target": "stu02_cache",
+      "relation": "uses_private_revision_validated_cache",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu02_cache",
+      "target": "stu02_migration",
+      "relation": "requires_invalidation_triggers",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu02_evidence",
+      "target": "stu02_dashboard",
+      "relation": "records_targeted_verification",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu02_evidence",
+      "target": "task14_single_environment",
+      "relation": "preserves_one_working_database",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu02_evidence",
+      "target": "task15_tests_document",
+      "relation": "does_not_replace_foundation_gate",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/dashboard/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST; no external LLM API cost"
+}

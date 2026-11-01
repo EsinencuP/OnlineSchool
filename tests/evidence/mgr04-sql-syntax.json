@@ -1,0 +1,142 @@
+{
+  "parser": "v8.7",
+  "queries": [
+    {
+      "index": 0,
+      "statements": 1,
+      "sha256": "ba85a95ac990d3cb3a6c3a50ce9e42db55b727354a01a65c7df64f9771323fb5"
+    },
+    {
+      "index": 1,
+      "statements": 1,
+      "sha256": "71d500622c1da3687cc9a297e4116c26fc371b79346a3d5212d3ec8ddc4ede68"
+    },
+    {
+      "index": 2,
+      "statements": 1,
+      "sha256": "df4dd6cbb9897a1fabdd0fb068b23fd731afd9e58a876dcdd1ffe3363c307b75"
+    },
+    {
+      "index": 3,
+      "statements": 1,
+      "sha256": "b83fa8e7379f03e9cd92e2290a4a994caac6ff55563b2b2743c4f0a663933b54"
+    },
+    {
+      "index": 4,
+      "statements": 1,
+      "sha256": "dbdae6662d9ce3599770c142c34cf8db8015f0996eb1ce36af483479197e5abd"
+    },
+    {
+      "index": 5,
+      "statements": 1,
+      "sha256": "1c08e955ae6e9afd4534604aa63bef173ca9aec2bc35705596f54375c2c8065a"
+    },
+    {
+      "index": 6,
+      "statements": 1,
+      "sha256": "f643aae811f9cbce06c844d6cb1ee8162ef9e5944dfacbad7f1e2e96f3024daf"
+    },
+    {
+      "index": 7,
+      "statements": 1,
+      "sha256": "d9781d26b9945adeeea7d560ad95dba80a81215c7b116d6aaebeef1c84b59ce4"
+    },
+    {
+      "index": 8,
+      "statements": 1,
+      "sha256": "e5738ced759ec41aee384c45b37c75f93efa46292da86106aefac4145840739b"
+    },
+    {
+      "index": 9,
+      "statements": 1,
+      "sha256": "072113c2670466d7b4657cc949cb522f4224b24060372bf7eb5256af5344289c"
+    },
+    {
+      "index": 10,
+      "statements": 1,
+      "sha256": "92b4ceb5fdb2783808ed6d8befa3a12091b9b22a16a8315f14bea008d8ef0366"
+    },
+    {
+      "index": 11,
+      "statements": 1,
+      "sha256": "20ab3762e4245ae302321c76ccb8a8ebbf273446508c45859b9608905de4031f"
+    },
+    {
+      "index": 12,
+      "statements": 1,
+      "sha256": "d30d22ae733b85f4c6d78002c459f0a087c6676fb7404e61506b6bc51d4eeaf0"
+    },
+    {
+      "index": 13,
+      "statements": 1,
+      "sha256": "82c1af59feb7bacf94fa752b68d654126b2137d6b23fdeb70138fb7ea0a6983f"
+    },
+    {
+      "index": 14,
+      "statements": 1,
+      "sha256": "50253180574159ea8127d25f44cd96612d33f5c954dd7b49a5172fabb114620d"
+    },
+    {
+      "index": 15,
+      "statements": 1,
+      "sha256": "f25f31b172e8ddb18759e1d82b9797c4b45e45d909d93a10d06317efcce289b6"
+    },
+    {
+      "index": 16,
+      "statements": 1,
+      "sha256": "db351c7812fb8e35b6bf2d4ae02f9da3edb6274151edad4a9728d681a0b393aa"
+    },
+    {
+      "index": 17,
+      "statements": 1,
+      "sha256": "b8588268095710a3806514ddd34301f11f87455936fe377b8ae576d3fa0a9e0d"
+    },
+    {
+      "index": 18,
+      "statements": 1,
+      "sha256": "898ac74704e36a82f645daa575506380b82b541cba082ff2f11ec70824b871b0"
+    },
+    {
+      "index": 19,
+      "statements": 1,
+      "sha256": "c1e82294e12b524182bc8e4ad139495290e0bdab42fd8a61381929e8a2bb34c6"
+    },
+    {
+      "index": 20,
+      "statements": 1,
+      "sha256": "bd35dd6dbad7638caa55700bf6ad1a52cb86ecf180f4af00c9ee92cf0a99b6c8"
+    },
+    {
+      "index": 21,
+      "statements": 1,
+      "sha256": "8880981530b001b6937603d9c39bda1cc0d352cb02d2be95119acd20992453a5"
+    },
+    {
+      "index": 22,
+      "statements": 1,
+      "sha256": "2ebee9db3b52387f92d4df473059170b2f77987186266e3bf5c4b29f181e8100"
+    },
+    {
+      "index": 23,
+      "statements": 1,
+      "sha256": "107745d27c731304fda79f94323853e8faa8446dc9f4df44449b32b4136d7686"
+    },
+    {
+      "index": 24,
+      "statements": 1,
+      "sha256": "9cbe5690027380c54586e9975d21a14b14d4f4ba110b3b6c0bc281b7fb2c1dfb"
+    },
+    {
+      "index": 25,
+      "statements": 1,
+      "sha256": "0a28f3e34bce0577f5b54f33f453fbb6658d05583b4b49b4b282203235943a3e"
+    }
+  ],
+  "migration": {
+    "path": "packages\\db\\prisma\\migrations\\20261031120000_mgr04_managed_subscriptions\\migration.sql",
+    "sha256": "7b68c670471e2c6b6982249715ef9593a4adb5a7351e6135f575787c5e5c6b10",
+    "statements": 42,
+    "plpgsqlFunctions": 6
+  },
+  "scope": "Offline syntax only, no PostgreSQL execution."
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-31",
+  "scope": "MGR-05 targeted checks. No PostgreSQL or external mutations.",
+  "ownerDecision": "docs/online_academy_manager_payment_decisions_2026_10_31.md",
+  "checks": {
+    "mgr05": {
+      "suites": 3,
+      "passed": 71
+    },
+    "affectedRegression": {
+      "suites": 15,
+      "passed": 311,
+      "note": "Initial run310 passed plus one stale-object fixture failure; fixture re-read fixed and all41 subscription HTTP cases passed in the final112-case run. Remaining270 regression tests were not needlessly repeated."
+    },
+    "schemaContract": {
+      "passed": 1,
+      "models": 92,
+      "foreignKeys": 212
+    },
+    "financeUnit": {
+      "passed": 3
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "withoutHttpListener": true,
+      "withoutDatabaseUrl": true
+    },
+    "uniqueAssertions": 387,
+    "build": [
+      "api",
+      "worker",
+      "api-contracts"
+    ],
+    "typecheck": [
+      "student-cabinet",
+      "qa-shell"
+    ],
+    "prismaValidate": "PASS",
+    "generation": "pnpm generate:client and pnpm generate PASS",
+    "targetedEslint": "PASS",
+    "sqlSyntax": "mgr05-sql-syntax.json",
+    "openapiOperations": 108
+  },
+  "limitations": [
+    "Migration prepared but not applied. No migrate dev/deploy or database mutations.",
+    "Mock Prisma transactions and serialized competing requests do not verify PostgreSQL18 locks, grants, triggers or races.",
+    "Existing Finance requires DIRECTOR for every receipt confirmation and distribution approval. Manager confirm requests approval only.",
+    "Adjustment port enforces original charge bounds and returns APPROVAL_REQUIRED; MGR07 escalation processing is future work.",
+    "External notifications, working acceptance and FND-GATE not claimed."
+  ],
+  "sourceSha256": {
+    "apps/api/src/core/policy/policy.service.ts": "244b9807e92f9cb831fec6cdb46f71cd12c0548c9bbc08d2f6870f52fe6228ef",
+    "apps/api/src/modules/manager/finance/manager-finance.facade.ts": "e63ae5271d20a31e6460159bdf946393f4fbd6dfb7d659fe93b33a57371a817b",
+    "apps/api/src/modules/manager/payments/manager-payments.controller.ts": "7bc44c3b568cd19f83acbd24b7909b71002c515351ecb7a4b5ab57ad954b412b",
+    "apps/api/src/modules/manager/payments/manager-payments.guard.ts": "67894cf6f78f45497e521d95b7f8eff3eb15a43432d8365c3728d2df4d07900f",
+    "apps/api/src/modules/manager/payments/manager-payments.service.ts": "edc25b00e118a767d07ce1bfdd82b3c2f3ec8f82fc7df96b76a6dbc8a7358aa2",
+    "apps/api/src/modules/finance/manager-payments/workflow.service.ts": "35222aeafd3150c0fd7e3c3cd22b33c2da1813d8d8b09686518d91ea42b1a7b1",
+    "apps/api/src/modules/finance/payments.service.ts": "ebe72ea1b02c240ddb018c095f61d06b22f06affcd942dfc22d4b5bbdc88fd8b",
+    "apps/api/src/modules/finance/receipt-policy.ts": "4cdbf887d98277bcd7ea0f44e4b77c79521f828bce75fd389c82e9200ad53a43",
+    "apps/api/src/modules/finance/expiry.module.ts": "3cbe7a189c8c7a2c8802f78b0eee4171f29fd82b1b4f9c6ce1c4cf9649fc6fe9",
+    "apps/api/src/modules/finance/manager-subscriptions/finance-facade.ts": "c29fe87796083f63b99beccce893a2205edab0b7697f610262d687735312f879",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.service.ts": "5d3af9f5978c4a5cfba33a93725c626d0bdfc9873359c4486da15179b5298853",
+    "apps/api/src/modules/finance/finance-infrastructure.module.ts": "295db5b574808c582521df2e570b1c367f08f47d8f3c0dc97f2bede9c49cf904",
+    "packages/db/prisma/schema.prisma": "27e5d14a0903283add75689c648363bb0e13972f38de6435cd8dcdfcb077acd5",
+    "packages/db/prisma/migrations/20261031130000_mgr05_receipts/migration.sql": "0f9ba7cff306da775d381bc02a36e2a4a3c17b7c2d3f97605f672b8a01230a0a",
+    "packages/api-contracts/openapi/openapi.json": "2c6f214583057daaab4344a96e559f2c6578fa41b19dbbb5e27454916120109a",
+    "scripts/eslint-manager-rules.mjs": "e04a62d34b6ba91a073450e59c5c05621a55a439c0c7bfe3e8220c292ea29937",
+    "tests/unit/manager-payments.test.mjs": "79b12151ace3c385bd273bed9bbb6b1aed13076f2adfb18483b96970f3805cc5",
+    "tests/unit/manager-payments-http.test.mjs": "584d914c89ad17c26150c76fd8a21945ea231c4268a3e231b69bdceccc0a0ef0",
+    "tests/unit/manager-payments-sdk.test.mjs": "efe779368a34c76879c142e97e395f737dbe5148e8b6528897c3770f48ec1498",
+    "tests/support/manager-payments-fixture.mjs": "4e514811fe459733e8c175c300d9ad9547a74370ba987d5e569010064836b78f",
+    "apps/worker/src/handlers.ts": "f5be7c6b8ecfe9ef142b489b7020f9619694cd36e1438d4a8575d7feef4cd9a6",
+    "apps/qa-shell/src/scenarios.ts": "b75224fc4cee9a43b6433518c2f37e73b8a4171d8b48e3890b15bd9d856ccaa7"
+  }
+}

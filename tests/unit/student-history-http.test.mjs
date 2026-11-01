@@ -276,7 +276,10 @@ const get = (index = 0, path = '/api/v1/student/lessons/history') =>
 test('actual Nest history serializes Decimal balances as strings and isolates two authenticated students', async () => {
   const a = await get(0),
     b = await get(1);
-  expect(a.status).toBe(200);
+  expect({ status: a.status, error: a.status === 200 ? null : a.body }).toEqual({
+    status: 200,
+    error: null,
+  });
   expect(b.status).toBe(200);
   expect(a.body.items[0]).toMatchObject({
     lessonId: lessons[0],

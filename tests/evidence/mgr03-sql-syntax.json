@@ -1,0 +1,76 @@
+{
+  "parser": "v8.7",
+  "queries": [
+    {
+      "name": "activation",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "b1403102908ead3341b0d672becf0f327ebbe5a2fae4b1673cf956875b4c3a2e",
+      "syntax": "PASS"
+    },
+    {
+      "name": "balance",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "bee4b55de95ed832d10ec63ee67068ea015023b1dacf237c93b3cab2ad847a91",
+      "syntax": "PASS"
+    },
+    {
+      "name": "card",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "1b5b8a31a953e8ca761bca44c95c9dfd29f2b8a453100c644d26ae4682ea8268",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-name-false",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "eac0b731c9849f50e8ee251c1d1902672fa2f8192340bc8a1954beb16e1aa1b2",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-name-true",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "0ffaa1fbd9df2a9301483deb03e67fe1b3741f68bade31b48e80ef29b66d40e0",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-nextLesson-false",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "475f1455ef5d6839ba5681daa08128cd769505ef44287b7fb62aa62177ead06a",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-nextLesson-true",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "7f5daf3e6f4a24631d9e8730d6ab058fb0b44c25d211d8cab16f6d4899fb7a60",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-subscriptionEnd-false",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "e635303b32f759c60e2e26afc52ab2a8333f4a24071fb59221bc91909fca15fc",
+      "syntax": "PASS"
+    },
+    {
+      "name": "list-subscriptionEnd-true",
+      "statements": 1,
+      "plpgsqlFunctions": 0,
+      "sha256": "0e07e2d1c79c03781bb00eba1c96300819ee42949f89d4dd61be3b5d6cdfb041",
+      "syntax": "PASS"
+    },
+    {
+      "name": "migration",
+      "statements": 13,
+      "plpgsqlFunctions": 3,
+      "sha256": "771ad041c06e467ebb86b9140e8a730e4569fa14391c3d470c70acda5860e26c",
+      "syntax": "PASS"
+    }
+  ],
+  "scope": "offline syntax only; no PostgreSQL execution or migrations"
+}

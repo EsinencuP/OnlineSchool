@@ -12,6 +12,8 @@ export const ACCESS = {
   mfa: 'core.mfa',
   preMfa: 'core.preMfa',
   student: 'core.student',
+  roleErrorCode: 'core.roleErrorCode',
+  managerProfileErrors: 'core.managerProfileErrors',
 } as const;
 export const Public = () => SetMetadata(ACCESS.public, true);
 export const Authenticated = () => SetMetadata(ACCESS.authenticated, true);

@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-01",
+  "scope": "MGR-07 targeted code checks; no PostgreSQL or external mutations",
+  "ownerDecisions": "docs/online_academy_manager_task_decisions_2026_11_01.md",
+  "checks": {
+    "mgr07": {
+      "suites": 3,
+      "passed": 85,
+      "http": 72,
+      "unit": 7,
+      "sdk": 6
+    },
+    "affectedRegression": {
+      "suites": 14,
+      "passed": 348,
+      "includes": "MGR01 scope/HTTP/architecture; MGR05/06; student history/lessons; schema/ERD. Initially failing history route order and old zero-lesson expectation corrected, affected suites rerun; repeated checks counted once."
+    },
+    "coreFinanceScheduleUnit": {
+      "passed": 9
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "withoutHttpListener": true,
+      "withoutDatabaseUrl": true
+    },
+    "uniqueChecks": 443,
+    "build": [
+      "api",
+      "worker",
+      "api-contracts"
+    ],
+    "typecheck": [
+      "student-cabinet",
+      "qa-shell"
+    ],
+    "targetedEslint": "PASS",
+    "prismaValidate": "PASS",
+    "prismaGeneration": "PASS",
+    "openapiOrvalGeneration": "PASS",
+    "openapiOperations": 123,
+    "schemaModels": 93,
+    "foreignKeys": 218,
+    "sqlSyntax": "mgr07-sql-syntax.json"
+  },
+  "limitations": [
+    "Migration prepared but not applied. No migrate dev/deploy or database writes.",
+    "Mock Prisma and serialized competing HTTP requests do not verify PostgreSQL18 locks, constraints, grants, triggers or races.",
+    "Full reversal requires real DIRECTOR execution and restores original rights and subscription advance, never cash.",
+    "Partial requests remain IN_PROGRESS/MANUAL_FINANCE_REVIEW for a separate financial decision; no independent partial-adjustment executor implemented.",
+    "New student CRM requests have a 24-hour deadline; historical rows and hidden legacy producer deadlines preserved.",
+    "Outbox contracts emitted atomically; MGR08 notification content and external delivery pending. No manager CRM UI implemented.",
+    "Worker integration fixture updated for new CAS transitions, but destructive PostgreSQL integration suite not run.",
+    "Working acceptance and FND-GATE not claimed."
+  ],
+  "sourceSha256": {
+    "apps/api/src/modules/finance/entitlements.service.ts": "b4979956c72084a06a2b52c6e3d659cbf6517deba124ed8012238563a3309ac3",
+    "apps/api/src/modules/finance/finance-infrastructure.module.ts": "a6d4ed8be441cf033cddbb9e0a709f91fac55872f35f66e408fe9b89cb5f7e80",
+    "apps/api/src/modules/finance/finance.module.ts": "eebb3cbdc2af2dca1d4046ec8b312be8a0f90f8c631b698fb07f29b41d43c452",
+    "apps/api/src/modules/finance/manager-disputes/director.controller.ts": "f1dbb9811fc1d38a554efc1c0981bb21b33fbc02119a2eac0fc5aaf8c7c345ee",
+    "apps/api/src/modules/finance/manager-disputes/dispute.service.ts": "1295f95b4f318d475fc9edcdb7d6d8472021a20e981df40981b86259cf5fb670",
+    "apps/api/src/modules/finance/manager-payments/workflow.service.ts": "045380d42e1bfcbe59568b450192f7893f14f567b66122aba372e0de08d22ab9",
+    "apps/api/src/modules/manager/dto/manager-task.dto.ts": "ac955f9e18f48a917db56808b6f7035782ad9b16e0c9a9ae7a867a992d49ff06",
+    "apps/api/src/modules/manager/finance/manager-finance.facade.ts": "8cfbca58cce30f0ab0ad2a799f38a5bbc957894db949437a5b4d8c55ac6f616c",
+    "apps/api/src/modules/manager/manager.module.ts": "8eaa17b4224db70e9b1b4e3ea42cc83ec38b68f244f9893543cbe74a45960af8",
+    "apps/api/src/modules/manager/tasks/MGR-07.md": "e0e81ed4194ef51d8cad84128faabe9fe8cffb502e445556c568624cfd934078",
+    "apps/api/src/modules/manager/tasks/contracts.ts": "09f6c8b932de9a1298465e7615bc751436a4d0dc11a7f17a7c7199d251d820ec",
+    "apps/api/src/modules/manager/tasks/manager-tasks.controller.ts": "413690da607e60a0752cafc0a28e994f3f7c390f53b05d8a13e25174b0f39b03",
+    "apps/api/src/modules/manager/tasks/manager-tasks.guard.ts": "8e188eb84be62a62b565bd240fc9c560936695089df953c5c5e7bcfec4a65866",
+    "apps/api/src/modules/manager/tasks/manager-tasks.service.ts": "3334f8a73866fce709c8e758fba1bbfab974ae2612494739c2cc53f74be764e7",
+    "apps/api/src/modules/manager/tasks/task-cursor.ts": "bcf8e29b284382b310ad5e2ed78ad41a397a5c76f56e623fb25780b8dd11b51e",
+    "apps/api/src/openapi/dtos.ts": "ad50b50f5908ff6cab74dc823d385549d8251c74cab87d52f8a3750997244e94",
+    "apps/api/src/student/history/dispute.service.ts": "7b11cd33bdf94ccd85adfde2a8348451e6cf4a8cea93a9cb0c386abf6930eb62",
+    "apps/api/src/student/history/history.controller.ts": "bc3d3e8cc8b8adf33ee4ca930029861616d4eb8c0e84806c6440cd63fa59f241",
+    "apps/api/src/student/history/history.dto.ts": "09dab5eec780c6aca7cb4f6e9fa3d98c8ba5b6c8080c9e3e66e55a175293b56f",
+    "apps/api/src/student/history/history.service.ts": "e6ca8bffd74da3e3b44a36b738492b345eb49c9cfe216c9ab54860ee080d3233",
+    "apps/api/src/student/lessons/student-crm-task.service.ts": "837efa513af7005ea38cb9287d54eb6344ee3d80d223bdd7dce0268df5be6fae",
+    "apps/api/src/student/student.module.ts": "5cb269e77cf8fd68d888a3d9a0842c1f0c2a3020d6211e36d2f15205da5063db",
+    "apps/worker/src/handlers.ts": "87d94c3b9c5ef39dcd09bbdbcc343582aea96753c1aca6838657e22905f2b83c",
+    "apps/worker/test/integration/worker.test.mjs": "5e13ae6b98e5eb7d943b683b1c43063a16ad428a947c6432b1add64f1d35a248",
+    "docs/online_academy_manager_task_decisions_2026_11_01.md": "3998f7c715912c5519fd4e4aa9aa24d78c944f99ee6afef38acf426c230dd7ff",
+    "package.json": "a2c0b79857813fa3e262870c138827ba9913d2f1ef358f51aa0105c4a6a92050",
+    "packages/api-contracts/openapi/openapi.json": "7a4d780271a713cd41b1e8cf0cc4a6724bd7790dfa24d852751d1bdb59a050c1",
+    "packages/api-contracts/src/generated/client.ts": "9819a3e0dcbe7698b393802dfb77112387db03a85ad372bb397bbd2a0337e2d8",
+    "packages/api-contracts/src/generated/openapi.ts": "298a6418754befc52c9beca20b6d97f73a089e17927581f294a4945854973f18",
+    "packages/db/prisma/migrations/20261101090000_mgr07_crm_tasks/migration.sql": "99d33f5f7142d3413e09ee8abf2a1d55c9b7cbb5e1509ef5e614f873170545c3",
+    "packages/db/prisma/schema.prisma": "48dd2590e4acf1726d91b1cd834515d9458b80679c8407a18ffc2d099ab329b4",
+    "packages/db/schema.contract.json": "5e3940e9e6c53eda2a1b5b27eeac208958ca26e8c99a1959b2a937109b9fccdb",
+    "scripts/eslint-manager-rules.mjs": "b19874b0a0d6f8f5b9b5d74ca8b0c01483f9bf8d13a30ecae18a83af89dfad27",
+    "tests/support/manager-payments-fixture.mjs": "2a2ce7c9c04b4dcfb1e9317a97d30852f523596f3550cbe80ea2c6117f3fae28",
+    "tests/support/manager-schedule-fixture.mjs": "f272c84590d3a094cdb8761854bed51e04cc027a13c50f3727e718a9df0c314a",
+    "tests/support/manager-tasks-fixture.mjs": "e14114b35a8b87188cfc76aee7b5ce120ae4e2d67082b9456ecad14aa4c525b6",
+    "tests/unit/manager-payments.test.mjs": "c57febae32743cf3731694e2ef65a96604082fa6054862560cf635daf25b9369",
+    "tests/unit/manager-tasks-http.test.mjs": "f1cfef64ce23293fb3dbee916046f5b123d994aed85da4e75058d09171cc15f8",
+    "tests/unit/manager-tasks-sdk.test.mjs": "e5b52526fdecd888c80d5e5d8115912191a33d59289bc7134da2c01a6c7c66c2",
+    "tests/unit/manager-tasks.test.mjs": "3ea176d00ee216e18ae7095a7281428244304511a78a0297bf830ee6d46d6bd2",
+    "tests/unit/student-history-http.test.mjs": "d367777cfc04529d75df6b03f5a5e7ee53a7fd8990e714ddb8b64d9aa2ddf01f",
+    "tests/unit/student-history.test.mjs": "6d752f6c81b0259d92a98695e830882d13ea4c25c6117357e58268cbbb11113c"
+  }
+}

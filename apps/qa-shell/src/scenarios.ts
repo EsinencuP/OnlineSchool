@@ -49,16 +49,16 @@ export const scenarios: Scenario[] = [
   {
     id: 'payment',
     title: 'Зарегистрировать платёж',
-    description: 'Фиксирует поступление на проверку. Деньги подтверждает директор.',
+    description: 'Фиксирует поступление в MDL на проверку. Деньги подтверждает директор.',
     actions: [
       {
         id: 'registerPayment',
         title: 'Регистрация платежа',
         button: 'Зарегистрировать',
         roles: staff,
-        fields: [uuid('studentId', 'ID ученика'), amount, currency],
+        fields: [uuid('studentId', 'ID ученика'), amount],
         execute: (v, o) =>
-          registerPayment({ studentId: v.studentId!, amount: v.amount!, currency: v.currency! }, o),
+          registerPayment({ studentId: v.studentId!, amount: v.amount!, currency: 'MDL' }, o),
       },
     ],
   },
@@ -154,7 +154,7 @@ export const scenarios: Scenario[] = [
         id: 'createLesson',
         title: 'Бронирование урока',
         button: 'Забронировать',
-        roles: staff,
+        roles: ['DIRECTOR'],
         fields: [
           uuid('teachingAssignmentId', 'ID назначения преподавателя'),
           { name: 'startsAt', label: 'Начало (местное время)', kind: 'datetime' },

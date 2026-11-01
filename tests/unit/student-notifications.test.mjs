@@ -22,6 +22,21 @@ const now = new Date('2026-10-28T10:00:00Z'),
   student = randomUUID(),
   sourceId = randomUUID();
 const payloads = {
+  LESSON_SCHEDULED: { lessonId: randomUUID() },
+  RESCHEDULE_DECLINED: { taskId: randomUUID(), lessonId: randomUUID() },
+  DISPUTE_ACCEPTED: { taskId: randomUUID(), lessonId: randomUUID() },
+  DISPUTE_REJECTED: { taskId: randomUUID(), lessonId: randomUUID() },
+  MANUAL_MESSAGE: { body: 'Сообщение менеджера ученику' },
+  ...Object.fromEntries(
+    [
+      'SUBSCRIPTION_CREATED',
+      'SUBSCRIPTION_RENEWED',
+      'SUBSCRIPTION_FROZEN',
+      'SUBSCRIPTION_UNFROZEN',
+      'SUBSCRIPTION_EXPIRED',
+    ].map((type) => [type, { subscriptionId: randomUUID(), operationId: randomUUID() }]),
+  ),
+  ACCOUNT_CREATED: { accountId: randomUUID(), loginEmail: 'student@example.invalid' },
   HOMEWORK_REVIEWED: { homeworkId: randomUUID(), reviewId: randomUUID() },
   HOMEWORK_NEEDS_REVISION: { homeworkId: randomUUID(), reviewId: randomUUID() },
   LESSON_RESCHEDULED: { lessonId: randomUUID() },
@@ -248,7 +263,9 @@ test('notification backlog does not block finance or PDF polling; shutdown drain
   const processors = Array.from({ length: 3 }, () => ({
     enabled: jest.fn(async () => ({ ok: true, value: 0 })),
   }));
-  const lifecycle = new WorkerLifecycle(...processors, {}, {}, new Map());
+  const lifecycle = new WorkerLifecycle(...processors, {}, {}, new Map(), {
+    enabled: async () => ({ ok: true, value: 0 }),
+  });
   let finish;
   const pending = new Promise((resolve) => {
     finish = resolve;

@@ -46,6 +46,8 @@ run(['--filter', '@online-school/api', 'build'], buildEnv);
 run(['--filter', '@online-school/qa-shell', 'build'], buildEnv);
 run(['--filter', '@online-school/student-cabinet', 'build'], buildEnv);
 cpSync('apps/student-cabinet/dist', 'apps/qa-shell/dist/student', { recursive: true });
+run(['--filter', '@online-school/manager-web', 'build'], buildEnv);
+cpSync('apps/manager-web/dist', 'apps/qa-shell/dist/manager', { recursive: true });
 run(
   ['--filter', '@online-school/db', 'exec', 'prisma', 'migrate', 'deploy'],
   {

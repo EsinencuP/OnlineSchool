@@ -83,3 +83,9 @@ change → cabinet scenario is **not verified** by these mock-backed tests. Neit
 the migration deployment nor that acceptance scenario nor the Phase 0 FND-GATE
 is declared complete. Keep the change in a draft PR until its foundation and
 deployment acceptance are resolved; no student frontend is opened by this task.
+
+MGR-03 (2026-10-31) supersedes the earlier initial-password bootstrap exception:
+pending students also receive PASSWORD_CHANGE_REQUIRED on GET /student/me and
+GET /auth/csrf. Only the password-change command and DELETE /auth/session are
+allowed. See [MGR-03](../modules/manager/accounts/MGR-03.md) for the one-time
+credential, expiry, distribution-backed activation and verification limits.

@@ -75,6 +75,7 @@ enum ContactChannel {
 }
 
 enum CrmTaskType {
+  SUBSCRIPTION_EXPIRING
   ATTENDANCE_DISPUTE
   RESCHEDULE_REQUEST
   MANUAL
@@ -84,6 +85,7 @@ enum CrmTaskType {
 }
 
 enum CrmTaskStatus {
+  REJECTED
   IN_PROGRESS
   OPEN
   RESOLVED
@@ -92,6 +94,10 @@ enum CrmTaskStatus {
 
 // Owner: Student registry / Relations. Contacts never identify/deduplicate a person.
 model Student {
+  notification_locale String @default("ru")
+  notification_dispatches NotificationDispatch[]
+  version              Int     @default(1)
+  manager_note         String? // PII: private CRM note
   email_changes        StudentEmailChange[]
   display_name         String?
   avatar_file_id       String?                     @db.Uuid
@@ -124,10 +130,23 @@ model Student {
   t03_studentsubjectenrollment_student_id StudentSubjectEnrollment[]  @relation("StudentSubjectEnrollment_student_id")
   t04_homeworksubmission_student_id       HomeworkSubmission[]        @relation("HomeworkSubmission_student_id")
 
+  @@index([full_name, id], map: "idx_mgr02_student_name")
+  @@index([created_at, id], map: "idx_mgr02_student_created")
   @@map("students")
 }
 
 enum StudentNotificationType {
+  LESSON_SCHEDULED
+  RESCHEDULE_DECLINED
+  DISPUTE_ACCEPTED
+  DISPUTE_REJECTED
+  MANUAL_MESSAGE
+  SUBSCRIPTION_CREATED
+  SUBSCRIPTION_RENEWED
+  SUBSCRIPTION_FROZEN
+  SUBSCRIPTION_UNFROZEN
+  SUBSCRIPTION_EXPIRED
+  ACCOUNT_CREATED
   HOMEWORK_REVIEWED
   HOMEWORK_NEEDS_REVISION
   LESSON_RESCHEDULED
@@ -141,6 +160,7 @@ enum StudentNotificationType {
 
 // Durable internal event intent. Business triggers enqueue facts, never inbox rows.
 model StudentNotificationSource {
+  dispatch NotificationDispatch?
   id           String                  @id @default(uuid()) @db.Uuid
   student_id   String                  @db.Uuid
   type         StudentNotificationType
@@ -154,6 +174,45 @@ model StudentNotificationSource {
   @@unique([id, student_id])
   @@index([delivered_at, occurred_at, id])
   @@map("student_notification_sources")
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+enum NotificationDeliveryStatus {
+  QUEUED
+  SENT
+  FAILED
+}
+
+// Delivery intent/status are separate from the immutable inbox and its read receipt.
+model NotificationDispatch {
+  id String @id @default(uuid()) @db.Uuid
+  student_id String @db.Uuid
+  manager_id String? @db.Uuid
+  channel NotificationChannel
+  template_code StudentNotificationType
+  locale String @default("ru")
+  variables Json
+  dedupe_key String @unique
+  status NotificationDeliveryStatus @default(QUEUED)
+  recipient_email String?
+  subject String
+  body String
+  source_id String? @unique @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  sent_at DateTime? @db.Timestamptz(3)
+  first_attempt_at DateTime? @db.Timestamptz(3)
+  failure_reason String?
+  provider_reference String?
+  student Student @relation(fields:[student_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  manager StaffAccount? @relation(fields:[manager_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  source StudentNotificationSource? @relation(fields:[source_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  @@index([student_id,created_at,id],map:"idx_mgr08_dispatch_student")
+  @@index([manager_id,student_id,created_at],map:"idx_mgr08_manual_rate")
+  @@map("notification_dispatches")
 }
 
 model StudentNotification {
@@ -342,6 +401,10 @@ model StudentEmailChange {
 }
 
 model StudentAccount {
+  activation_distribution_id String? @db.Uuid
+  activation_distribution_ref PaymentDistribution? @relation("StudentActivationDistribution",fields:[activation_distribution_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  temporary_password_issued_at DateTime? @db.Timestamptz(3)
+  temporary_password_expires_at DateTime? @db.Timestamptz(3)
   timezone                           String                 @default("Europe/Chisinau")
   id                                 String                 @id @default(uuid()) @db.Uuid
   student_id                         String                 @db.Uuid
@@ -372,11 +435,17 @@ model StudentAccount {
   @@index([activation_confirmed_by_staff_id])
   @@index([activation_subscription_id])
   @@index([activation_payment_confirmation_id])
+  @@index([activation_distribution_id],map:"idx_mgr03_activation_distribution")
   @@index([activation_director_admission_id])
   @@map("student_accounts")
 }
 
 model StaffAccount {
+  notification_dispatches NotificationDispatch[]
+  requested_schedule_approvals ScheduleChangeApproval[] @relation("ScheduleApprovalRequester")
+  approved_schedule_approvals ScheduleChangeApproval[] @relation("ScheduleApprovalDirector")
+  rejected_receipts PaymentReceipt[] @relation("ReceiptRejectionManager")
+  managed_subscription_operations ManagerSubscriptionOperation[]
   student_whatsapp_url String?
   student_telegram_url String?
   exception_accruals   TeacherAccrual[]      @relation("AccrualExceptionDirector")
@@ -692,6 +761,7 @@ model AssignedManager {
   @@unique([lead_id], map: "uq_lead_current_manager", where: raw("ended_at IS NULL"))
   @@unique([student_id], map: "uq_student_current_manager", where: raw("ended_at IS NULL"))
   @@index([manager_id, ended_at])
+  @@index([manager_id, ended_at, assigned_at, student_id], map: "idx_mgr02_portfolio")
   @@map("assigned_managers")
 }
 
@@ -720,6 +790,14 @@ model ContactLog {
 }
 
 model CrmTask {
+  version Int @default(1)
+  escalated_at DateTime? @db.Timestamptz(3)
+  decision Json?
+  original_consumption_id String? @db.Uuid
+  original_consumption EntitlementConsumption? @relation("TaskOriginalConsumption",fields:[original_consumption_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  ledger_publication_id String? @unique @db.Uuid
+  ledger_publication LedgerEntry? @relation("TaskResolutionPublication",fields:[ledger_publication_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  dispute_resolution_key String? @unique
   lesson_id            String?           @db.Uuid
   payload              Json?
   lesson               LessonOccurrence? @relation("StudentRescheduleTasks", fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_crm_task_lesson")
@@ -746,11 +824,13 @@ model CrmTask {
 
   @@unique([student_id, lesson_id], map: "uq_open_attendance_dispute", where: raw("type = 'ATTENDANCE_DISPUTE' AND status IN ('OPEN','IN_PROGRESS')"))
   @@index([assigned_manager_id, status, due_at])
+  @@index([student_id, status, due_at, id], map: "idx_mgr02_student_tasks")
   @@index([lead_id])
   @@index([student_id])
   @@index([resolved_by_staff_id])
   @@index([source_event_id])
   @@index([lesson_id])
+  @@index([due_at,id],map:"idx_mgr07_task_queue")
   @@map("crm_tasks")
 }
 
@@ -830,6 +910,7 @@ model Subject {
 }
 
 model StudentSubjectEnrollment {
+  managed_subscriptions ManagerSubscription[]
   skill_audit_logs SkillAuditLog[]
   skill_snapshots  SkillSnapshot[]
   learning_goals   LearningGoal[]
@@ -934,6 +1015,13 @@ model RecurringSlot {
 }
 
 model LessonOccurrence {
+  manager_subscription_id String? @db.Uuid
+  manager_subscription ManagerSubscription? @relation(fields: [manager_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  google_meet_link String?
+  meet_link_overridden Boolean @default(false)
+  student_reschedule_count Int @default(0)
+  reschedule_history_verified Boolean @default(false)
+  change_approvals ScheduleChangeApproval[]
   material_permissions                            FilePermission[]         @relation("MaterialLesson")
   student_crm_tasks                               CrmTask[]                @relation("StudentRescheduleTasks")
   confirmed_report_id                             String?                  @unique @db.Uuid
@@ -976,6 +1064,7 @@ model LessonOccurrence {
   @@unique([recurring_slot_id, occurrence_date], map: "uq_slot_occurrence_day")
   @@unique([recurring_slot_id, original_scheduled_at], map: "uq_recurring_lesson_origin")
   @@index([enrollment_id])
+  @@index([manager_subscription_id])
   @@index([teaching_assignment_id])
   @@index([recurring_slot_id])
   @@index([scheduled_teacher_id])
@@ -1037,6 +1126,8 @@ model LessonActualOutcome {
 }
 
 model SaleCondition {
+  duration_days                      Int?
+  managed_subscriptions              ManagerSubscription[]
   id                                 String         @id @default(uuid()) @db.Uuid
   code                               String
   version                            Int
@@ -1058,6 +1149,7 @@ model SaleCondition {
 }
 
 model Subscription {
+  managed_period                                 ManagerSubscriptionPeriod?
   freeze_history                                 SubscriptionFreezeHistory[]
   id                                             String                      @id @default(uuid()) @db.Uuid
   enrollment_id                                  String                      @db.Uuid
@@ -1088,6 +1180,121 @@ model Subscription {
   @@map("subscriptions")
 }
 
+enum ManagerSubscriptionStatus {
+  ACTIVE
+  FROZEN
+  EXPIRED
+  CANCELLED
+  @@map("manager_subscription_status")
+}
+
+enum ManagerSubscriptionOperationType {
+  CREATE
+  RENEW
+  FREEZE
+  UNFREEZE
+  EXPIRE
+  @@map("manager_subscription_operation_type")
+}
+
+enum ManagerFreezeReason {
+  ILLNESS
+  TRAVEL
+  FAMILY
+  OTHER
+  @@map("manager_freeze_reason")
+}
+
+model ManagerSubscription {
+  lessons LessonOccurrence[]
+  id               String @id @default(uuid()) @db.Uuid
+  enrollment_id    String @db.Uuid
+  current_plan_id  String @db.Uuid
+  status           ManagerSubscriptionStatus @default(ACTIVE)
+  starts_at        DateTime @db.Timestamptz(3)
+  ends_at          DateTime @db.Timestamptz(3)
+  freeze_days_used Int @default(0)
+  timezone         String
+  created_at       DateTime @default(now()) @db.Timestamptz(3)
+  updated_at       DateTime @updatedAt @db.Timestamptz(3)
+  enrollment_ref   StudentSubjectEnrollment @relation(fields: [enrollment_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  current_plan     SaleCondition @relation(fields: [current_plan_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  periods          ManagerSubscriptionPeriod[]
+  operations       ManagerSubscriptionOperation[]
+  freezes          SubscriptionFreeze[]
+  @@unique([enrollment_id], map: "uq_mgr04_active_enrollment", where: raw("status IN ('ACTIVE', 'FROZEN')"))
+  @@index([enrollment_id])
+  @@index([status, ends_at, id], map: "idx_mgr04_subscription_expiry")
+  @@map("manager_subscriptions")
+}
+
+model ScheduleChangeApproval {
+  id String @id @default(uuid()) @db.Uuid
+  lesson_id String @db.Uuid
+  lesson_version Int
+  request_hash String @db.VarChar(64)
+  payload Json
+  requested_by_id String @db.Uuid
+  approved_by_id String? @db.Uuid
+  approved_at DateTime? @db.Timestamptz(3)
+  consumed_at DateTime? @db.Timestamptz(3)
+  source_operation_id String @unique @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  lesson LessonOccurrence @relation(fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  requester StaffAccount @relation("ScheduleApprovalRequester", fields: [requested_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  director StaffAccount? @relation("ScheduleApprovalDirector", fields: [approved_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@unique([lesson_id, lesson_version, request_hash], map: "uq_mgr06_change_request")
+  @@index([requested_by_id, created_at])
+  @@map("schedule_change_approvals")
+}
+
+model ManagerSubscriptionPeriod {
+  financial_subscription_id String @id @db.Uuid
+  manager_subscription_id   String @db.Uuid
+  created_at               DateTime @default(now()) @db.Timestamptz(3)
+  subscription             ManagerSubscription @relation(fields: [manager_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  financial_subscription   Subscription @relation(fields: [financial_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@index([manager_subscription_id])
+  @@map("manager_subscription_periods")
+}
+
+model ManagerSubscriptionOperation {
+  id                    String @id @default(uuid()) @db.Uuid
+  subscription_id       String @db.Uuid
+  type                  ManagerSubscriptionOperationType
+  distribution_id       String? @unique @db.Uuid
+  ledger_publication_id String? @db.Uuid
+  payload               Json
+  created_by_manager_id String? @db.Uuid
+  source_operation_id   String @db.Uuid
+  created_at            DateTime @default(now()) @db.Timestamptz(3)
+  subscription          ManagerSubscription @relation(fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  distribution          PaymentDistribution? @relation(fields: [distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  ledger_publication    LedgerEntry? @relation(fields: [ledger_publication_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  manager               StaffAccount? @relation(fields: [created_by_manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@index([subscription_id, created_at])
+  @@map("manager_subscription_operations")
+}
+
+model SubscriptionFreeze {
+  id              String @id @default(uuid()) @db.Uuid
+  subscription_id String @db.Uuid
+  starts_on       DateTime @db.Date
+  ends_on         DateTime @db.Date
+  actual_ends_on  DateTime? @db.Date
+  starts_at       DateTime @db.Timestamptz(3)
+  ends_at         DateTime @db.Timestamptz(3)
+  actual_ends_at  DateTime? @db.Timestamptz(3)
+  reason          ManagerFreezeReason
+  comment         String? // PII: staff-only freeze note; never copied to notifications or audit.
+  created_at      DateTime @default(now()) @db.Timestamptz(3)
+  subscription    ManagerSubscription @relation(fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@index([subscription_id, starts_on])
+  @@index([actual_ends_on, ends_on])
+  @@unique([subscription_id], map: "uq_mgr04_open_freeze", where: raw("actual_ends_on IS NULL"))
+  @@map("subscription_freezes")
+}
+
 model SubscriptionFreezeHistory {
   id              String       @id @default(uuid()) @db.Uuid
   subscription_id String       @db.Uuid
@@ -1102,7 +1309,31 @@ model SubscriptionFreezeHistory {
   @@map("subscription_freeze_history")
 }
 
+enum ManagerPaymentMethod {
+  CASH
+  CARD
+  BANK_TRANSFER
+  ONLINE
+  @@map("manager_payment_method")
+}
+
+enum ManagerPaymentPurpose {
+  FIRST_PAYMENT
+  RENEWAL
+  OTHER
+  @@map("manager_payment_purpose")
+}
+
 model PaymentReceipt {
+  method ManagerPaymentMethod?
+  purpose ManagerPaymentPurpose?
+  received_at DateTime? @db.Timestamptz(3)
+  manager_note String? // PII: private receipt note; never copied to ledger/outbox.
+  approval_requested_at DateTime? @db.Timestamptz(3)
+  rejected_at DateTime? @db.Timestamptz(3)
+  rejection_reason String? // PII: staff-only rejection reason; audit is required for this decision.
+  rejected_by_staff_id String? @db.Uuid
+  rejected_by_staff StaffAccount? @relation("ReceiptRejectionManager", fields: [rejected_by_staff_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   student_id                                             String?               @db.Uuid // PII: CRM payment contact; allocation still checks each recipient independently.
   student_contact                                        Student?              @relation("PaymentContactStudent", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_payment_contact_student")
   id                                                     String                @id @default(uuid()) @db.Uuid
@@ -1125,12 +1356,18 @@ model PaymentReceipt {
   t03_student_account_activation_payment_confirmation_id StudentAccount[]      @relation("StudentAccount_activation_payment_confirmation_id")
 
   @@unique([provider, external_reference], map: "uq_payment_provider_reference")
+  @@unique([method, external_reference], map: "uq_mgr05_method_reference")
+  @@index([student_id, created_at, id], map: "idx_mgr05_receipt_page")
   @@index([registered_by_manager_id])
+  @@index([student_id, registered_at, id], map: "idx_mgr02_student_payments")
   @@index([confirmed_by_director_id])
   @@map("payment_receipts")
 }
 
 model PaymentDistribution {
+  manager_prepared Boolean @default(false)
+  manager_operation ManagerSubscriptionOperation?
+  activated_accounts StudentAccount[] @relation("StudentActivationDistribution")
   ledger_document                              LedgerDocument?    @relation("DistributionLedgerDocument")
   id                                           String             @id @default(uuid()) @db.Uuid
   payment_id                                   String             @db.Uuid
@@ -1202,6 +1439,7 @@ model EntitlementGrant {
 }
 
 model EntitlementConsumption {
+  disputes CrmTask[] @relation("TaskOriginalConsumption")
   ledger_document                                   LedgerDocument?         @relation("ConsumptionLedgerDocument")
   id                                                String                  @id @default(uuid()) @db.Uuid
   grant_id                                          String                  @db.Uuid
@@ -1426,6 +1664,8 @@ model LedgerDocument {
 }
 
 model LedgerEntry {
+  resolved_dispute CrmTask? @relation("TaskResolutionPublication")
+  manager_operations ManagerSubscriptionOperation[]
   // Quantitative subscription rights, not monetary account balances. Immutable once captured.
   entitlement_balance_before                 Decimal?           @db.Decimal(20, 0)
   entitlement_balance_after                  Decimal?           @db.Decimal(20, 0)

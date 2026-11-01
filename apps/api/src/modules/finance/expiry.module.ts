@@ -106,7 +106,7 @@ export class TemporaryAccessExpiry {
         });
         const key = `temporary-access-expired:${permission.id}`,
           prior = await tx.crmTask.findUnique({ where: { idempotency_key: key } });
-        if (!prior) {
+        if (!prior && !permission.revoked_at) {
           const auditId = randomUUID();
           await this.audit.record(
             {

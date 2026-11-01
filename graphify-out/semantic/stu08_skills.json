@@ -1,0 +1,98 @@
+{
+  "nodes": [
+    {
+      "id": "stu08_skills",
+      "label": "STU-08: read-only subject skill maps, audit and frozen snapshots",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/README.md",
+      "source_location": "L1",
+      "source_sha256": "7a61eabace3d8fc6aff0c2d8d8be00abf64a94f6bb05e684093c4e7fb13d665b",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Three student GET routes under STU-01 session/context/role/password/active-access guards. Owned subjects across enrollments, four qualitative statuses, public comments only, personalized skill isolation, goals and frozen snapshots. 45 mock-backed unit/Nest HTTP checks pass. PostgreSQL execution explicitly deferred by owner; no migration or release."
+    },
+    {
+      "id": "stu08_projections",
+      "label": "STU-08: subject counter and isolated read projections",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/skills.sql.ts",
+      "source_location": "L1",
+      "source_sha256": "06df1eb973aee18a5bc2dfd783b86a810cdd0ae57413a2d2eb818ba19a027507",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Source-exact SQL scopes every projection to server studentProfileId. CONDUCTED plus confirmed outcome, across re-enrollments and subscriptions; zero and multiples of four give nextSnapshotIn=4. Draft/unconfirmed lesson evidence excluded; paging newest first and historical immutable names retained. 21 CTE cases prepared and parsed, not executed on PostgreSQL."
+    },
+    {
+      "id": "stu08_storage",
+      "label": "STU-08: prepared audit, confirmed snapshots and textual goal history",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "source_location": "L1",
+      "source_sha256": "1abdfccbc964c2569f0c26df742f8d030e42c77d4be1bc363b587e41f68ec3a1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Prepared additive schema/SQL: assigned teacher and chronological current revision required; SkillAuditLog in same assessment transaction, justified downgrade/reset, private basis excluded. Checkpoint counter across subject history; teacher completion of LESSON_4 freezes one immutable snapshot. Goal history append-only. SQL/6 PLpgSQL bodies parsed; actual constraints, concurrency, roles and teacher workflow remain unverified."
+    },
+    {
+      "id": "stu08_evidence",
+      "label": "STU-08: targeted checks passed; PostgreSQL acceptance deferred by owner",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/STU08_EVIDENCE.json",
+      "source_location": "L1",
+      "source_sha256": "a51362e47320a8891674128b4fe9e518b34c3fe67d9abca0dfef662b4080dfcd",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Prisma validate/generate, targeted API and SDK builds, lint and 45 unit/actual Nest HTTP mock cases pass. OpenAPI70 operations includes three skill GETs. Offline parser checks 21 SELECT projections and 39 migration statements with 6 PLpgSQL bodies; not actual PostgreSQL evidence. Owner chose to defer working DB execution after access failure. No databases/branches/containers or production writes/deployments. FND-GATE remains open."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stu08_skills",
+      "target": "stu01_student_module",
+      "relation": "requires_server_student_context",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu08_skills",
+      "target": "stu08_projections",
+      "relation": "reads_through",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu08_skills",
+      "target": "stu08_storage",
+      "relation": "requires_prepared_migration",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu08_evidence",
+      "target": "stu08_skills",
+      "relation": "verifies_targeted_code_not_working_acceptance",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/skills/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST, no external LLM API cost"
+}

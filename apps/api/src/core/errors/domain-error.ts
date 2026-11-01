@@ -7,6 +7,7 @@ export type DomainError = {
   message: string;
   status: number;
   details?: Record<string, unknown>;
+  retryable?: boolean;
 };
 export class AppException extends HttpException {
   constructor(readonly domain: DomainError) {

@@ -101,6 +101,12 @@ erDiagram
   representatives o|--o{ contact_logs : "fk_contact_representative"
   staff_accounts ||--o{ contact_logs : "fk_contact_staff"
   crm_tasks {
+    Int version
+    DateTime escalated_at
+    Json decision
+    String original_consumption_id
+    String ledger_publication_id
+    String dispute_resolution_key
     String lesson_id
     Json payload
     String id PK
@@ -118,6 +124,8 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  entitlement_consumptions o|--o{ crm_tasks : "original_consumption"
+  ledger_entries o|--o| crm_tasks : "ledger_publication"
   lesson_occurrences o|--o{ crm_tasks : "fk_crm_task_lesson"
   leads o|--o{ crm_tasks : "fk_task_lead"
   students o|--o{ crm_tasks : "fk_task_student"
@@ -554,6 +562,11 @@ erDiagram
   lesson_occurrences ||--o{ lesson_change_events : "fk_t03_lesson_change_event_lesson_occurrence"
   auth_accounts ||--o{ lesson_change_events : "fk_t03_lesson_change_event_author"
   lesson_occurrences {
+    String manager_subscription_id
+    String google_meet_link
+    Boolean meet_link_overridden
+    Int student_reschedule_count
+    Boolean reschedule_history_verified
     String confirmed_report_id
     DateTime occurrence_date
     Json rate_context_snapshot
@@ -577,6 +590,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  manager_subscriptions o|--o{ lesson_occurrences : "manager_subscription"
   lesson_outcome_reports o|--o| lesson_occurrences : "fk_lesson_confirmed_report"
   teacher_accounts o|--o{ lesson_occurrences : "fk_t03_lesson_start_teacher"
   student_subject_enrollments ||--o{ lesson_occurrences : "fk_t03_lesson_occurrence_enrollment"
@@ -601,6 +615,42 @@ erDiagram
   }
   lesson_occurrences ||--o{ lesson_outcome_reports : "fk_report_lesson"
   teacher_accounts ||--o{ lesson_outcome_reports : "fk_report_teacher"
+  manager_subscription_operations {
+    String id PK
+    String subscription_id
+    ManagerSubscriptionOperationType type
+    String distribution_id
+    String ledger_publication_id
+    Json payload
+    String created_by_manager_id
+    String source_operation_id
+    DateTime created_at
+  }
+  manager_subscriptions ||--o{ manager_subscription_operations : "subscription"
+  payment_distributions o|--o| manager_subscription_operations : "distribution"
+  ledger_entries o|--o{ manager_subscription_operations : "ledger_publication"
+  staff_accounts o|--o{ manager_subscription_operations : "manager"
+  manager_subscription_periods {
+    String financial_subscription_id PK
+    String manager_subscription_id
+    DateTime created_at
+  }
+  manager_subscriptions ||--o{ manager_subscription_periods : "subscription"
+  subscriptions ||--o| manager_subscription_periods : "financial_subscription"
+  manager_subscriptions {
+    String id PK
+    String enrollment_id
+    String current_plan_id
+    ManagerSubscriptionStatus status
+    DateTime starts_at
+    DateTime ends_at
+    Int freeze_days_used
+    String timezone
+    DateTime created_at
+    DateTime updated_at
+  }
+  student_subject_enrollments ||--o{ manager_subscriptions : "enrollment_ref"
+  sale_conditions ||--o{ manager_subscriptions : "current_plan"
   mfa_challenges {
     String id PK
     String account_id
@@ -615,6 +665,29 @@ erDiagram
   }
   auth_accounts ||--o{ mfa_challenges : "fk_challenge_account"
   sessions o|--o{ mfa_challenges : "fk_challenge_session_owner"
+  notification_dispatches {
+    String id PK
+    String student_id
+    String manager_id
+    NotificationChannel channel
+    StudentNotificationType template_code
+    String locale
+    Json variables
+    String dedupe_key
+    NotificationDeliveryStatus status
+    String recipient_email
+    String subject
+    String body
+    String source_id
+    DateTime created_at
+    DateTime sent_at
+    DateTime first_attempt_at
+    String failure_reason
+    String provider_reference
+  }
+  students ||--o{ notification_dispatches : "student"
+  staff_accounts o|--o{ notification_dispatches : "manager"
+  student_notification_sources o|--o| notification_dispatches : "source"
   outbox_events {
     String id PK
     OutboxStatus status
@@ -639,6 +712,7 @@ erDiagram
   }
   audit_events ||--o{ outbox_events : "fk_t04_outbox_event_audit_event"
   payment_distributions {
+    Boolean manager_prepared
     String id PK
     String payment_id
     String subscription_id
@@ -655,6 +729,14 @@ erDiagram
   subscriptions ||--o{ payment_distributions : "fk_t03_payment_distribution_subscription"
   staff_accounts o|--o{ payment_distributions : "fk_t03_payment_distribution_approved_by_director"
   payment_receipts {
+    ManagerPaymentMethod method
+    ManagerPaymentPurpose purpose
+    DateTime received_at
+    String manager_note
+    DateTime approval_requested_at
+    DateTime rejected_at
+    String rejection_reason
+    String rejected_by_staff_id
     String student_id
     String id PK
     Decimal amount
@@ -670,6 +752,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  staff_accounts o|--o{ payment_receipts : "rejected_by_staff"
   students o|--o{ payment_receipts : "fk_payment_contact_student"
   staff_accounts ||--o{ payment_receipts : "fk_t03_payment_receipt_registered_by_manager"
   staff_accounts o|--o{ payment_receipts : "fk_t03_payment_receipt_confirmed_by_director"
@@ -887,6 +970,7 @@ erDiagram
   }
   auth_accounts ||--o{ s3_objects : "fk_t04_s3_object_uploaded_by"
   sale_conditions {
+    Int duration_days
     String id PK
     String code
     Int version
@@ -902,6 +986,22 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  schedule_change_approvals {
+    String id PK
+    String lesson_id
+    Int lesson_version
+    String request_hash
+    Json payload
+    String requested_by_id
+    String approved_by_id
+    DateTime approved_at
+    DateTime consumed_at
+    String source_operation_id
+    DateTime created_at
+  }
+  lesson_occurrences ||--o{ schedule_change_approvals : "lesson"
+  staff_accounts ||--o{ schedule_change_approvals : "requester"
+  staff_accounts o|--o{ schedule_change_approvals : "director"
   schedule_change_requests {
     String id PK
     String lesson_occurrence_id
@@ -1029,6 +1129,9 @@ erDiagram
   }
   auth_accounts ||--o| staff_accounts : "fk_staff_account_auth"
   student_accounts {
+    String activation_distribution_id
+    DateTime temporary_password_issued_at
+    DateTime temporary_password_expires_at
     String timezone
     String id PK
     String student_id
@@ -1045,6 +1148,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  payment_distributions o|--o{ student_accounts : "activation_distribution_ref"
   students ||--o{ student_accounts : "fk_student_account_student"
   auth_accounts ||--o| student_accounts : "fk_student_account_auth"
   staff_accounts ||--o{ student_accounts : "fk_student_activation_staff"
@@ -1126,6 +1230,9 @@ erDiagram
   students ||--o{ student_subject_enrollments : "fk_t03_student_subject_enrollment_student"
   subjects ||--o{ student_subject_enrollments : "fk_t03_student_subject_enrollment_subject"
   students {
+    String notification_locale
+    Int version
+    String manager_note
     String display_name
     String avatar_file_id
     String id PK
@@ -1171,6 +1278,20 @@ erDiagram
     DateTime updated_at
   }
   subscriptions ||--o{ subscription_freeze_history : "fk_stu07_freeze_subscription"
+  subscription_freezes {
+    String id PK
+    String subscription_id
+    DateTime starts_on
+    DateTime ends_on
+    DateTime actual_ends_on
+    DateTime starts_at
+    DateTime ends_at
+    DateTime actual_ends_at
+    ManagerFreezeReason reason
+    String comment
+    DateTime created_at
+  }
+  manager_subscriptions ||--o{ subscription_freezes : "subscription"
   subscriptions {
     String id PK
     String enrollment_id

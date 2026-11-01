@@ -229,6 +229,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/dispute-resolutions/{taskId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Director review; full reversal restores rights and subscription advance, never cash. Partial requests require separate Finance processing. */
+        get: operations["getCrmDisputeResolution"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dispute-resolutions/{taskId}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Director executes the exact full-reversal proposal and resolves the CRM task atomically. Partial/manual requests cannot be executed by this command. */
+        post: operations["approveCrmDisputeResolution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/distributions/{id}/approve": {
         parameters: {
             query?: never;
@@ -440,7 +474,7 @@ export interface paths {
         put?: never;
         /**
          * Create lesson
-         * @description MFA required. MANAGER/DIRECTOR; locks teacher availability and enforces SQL resource exclusion. Missing paid/director access produces held STAR_PENDING.
+         * @description MFA required. DIRECTOR administrative command; managers use createManagerLesson with preparation and subscription checks. Locks teacher availability and enforces SQL exclusion; missing paid/director access produces held STAR_PENDING.
          */
         post: operations["createLesson"];
         delete?: never;
@@ -461,7 +495,7 @@ export interface paths {
         post?: never;
         /**
          * Cancel lesson
-         * @description MFA required. MANAGER/DIRECTOR; explicit cancellation only before reported/started actual fact. No financial side effects.
+         * @description MFA required. DIRECTOR administrative command; managers use cancelManagerLesson for atomic cancellation/deduction and exception checks. No financial side effects on this legacy administrative route.
          */
         delete: operations["cancelLesson"];
         options?: never;
@@ -524,7 +558,7 @@ export interface paths {
         head?: never;
         /**
          * Reschedule lesson
-         * @description MFA required. MANAGER/DIRECTOR; same lesson ID and original key, old/new event; conflicting booking returns 409.
+         * @description MFA required. DIRECTOR administrative command; managers use rescheduleManagerLesson with immutability and director-exception checks. Same lesson ID and original key; conflicting booking returns409.
          */
         patch: operations["rescheduleLesson"];
         trace?: never;
@@ -543,6 +577,496 @@ export interface paths {
          * @description MFA required. Assigned TEACHER; server clock in planned interval, paid rights or limited director permission required. Freezes rate at actual start without consumption.
          */
         post: operations["startLesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description One READ ONLY snapshot; no cache. Pending receipts include unpublished unallocated remainder under the owner decision; mixed-portfolio households are excluded from financial aggregates. */
+        get: operations["getManagerDashboard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/lessons/{lessonId}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["cancelManagerLesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/lessons/{lessonId}/meet-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["setManagerLessonMeetLink"];
+        post?: never;
+        delete: operations["clearManagerLessonMeetLink"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/lessons/{lessonId}/reschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Late/student third changes request a specific director exception. Pending response leaves the lesson unchanged; re-submit after approval with a new command key. */
+        post: operations["rescheduleManagerLesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get the current manager profile and portfolio size */
+        get: operations["getManagerMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Named form options; student-specific values are portfolio-scoped */
+        get: operations["getManagerOptions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/payments/{paymentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getManagerPayment"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/payments/{paymentId}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Submits director approval under current Finance policy. Never grants the manager director publication authority. */
+        post: operations["confirmManagerPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/payments/{paymentId}/distributions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Proposes another receipt allocation to an existing purchase, including installment top-ups. No automatic admission. */
+        post: operations["allocateManagerPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/payments/{paymentId}/prepare-subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Creates a financial purchase and a proposed allocation. Director approval/publication is still required. */
+        post: operations["prepareManagerPaymentSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/payments/{paymentId}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["rejectManagerPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerSchedule"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerStudents"];
+        put?: never;
+        post: operations["createManagerStudent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getManagerStudentCard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/account": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createManagerStudentAccount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/account/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["resetManagerStudentPassword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateManagerStudentContacts"];
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/distributions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Recipient-owned allocations only; does not expose contact receipts or household totals. */
+        get: operations["listManagerDistributions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/lessons": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createManagerLesson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerStudentNotifications"];
+        put?: never;
+        post: operations["sendManagerStudentNotification"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerPayments"];
+        put?: never;
+        post: operations["createManagerPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerSubscriptions"];
+        put?: never;
+        post: operations["createManagerSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/subscriptions/{id}/freeze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["freezeManagerSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/subscriptions/{id}/renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["renewManagerSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/subscriptions/{id}/unfreeze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["unfreezeManagerSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerTasks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/tasks/{taskId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getManagerTask"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/tasks/{taskId}/claim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["claimManagerTask"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/tasks/{taskId}/resolve-dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description ACCEPT proposes a bounded Finance correction. Full reversal requires director execution; partial requests remain in manual review. No cash payout. */
+        post: operations["resolveManagerTaskDispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/tasks/{taskId}/resolve-reschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description A pending director schedule exception keeps the task IN_PROGRESS. Retry after approval using current task version and a new command key. */
+        post: operations["resolveManagerTaskReschedule"];
         delete?: never;
         options?: never;
         head?: never;
@@ -763,6 +1287,40 @@ export interface paths {
          * @description MFA required. MANAGER/DIRECTOR; stable slot/local-calendar-day identity. Existing cancelled/rescheduled occurrences are never duplicated or resurrected.
          */
         post: operations["generateSlotOccurrences"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/schedule-change-approvals/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Director review of the exact requested change before approval. */
+        get: operations["getScheduleChangeApproval"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/schedule-change-approvals/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Director approval for one immutable lesson/version/change payload. Does not change the lesson or grant financial rights. */
+        post: operations["approveScheduleChange"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1009,7 +1567,7 @@ export interface paths {
         };
         /**
          * Confirmed student attendance and quantitative deduction history
-         * @description Only COMPLETED/confirmed NO_SHOW. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
+         * @description COMPLETED/confirmed NO_SHOW and CANCELLED lessons with a published approved-cancellation charge. Balances are immutable subscription lesson quantities from the published LedgerEntry, Decimal strings, never monetary account totals. Legacy unknown snapshots remain null.
          */
         get: operations["getStudentLessonHistory"];
         put?: never;
@@ -1086,7 +1644,7 @@ export interface paths {
         };
         /**
          * Current student profile and access stage
-         * @description Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.
+         * @description Cookie session only. Initial password change is required (PASSWORD_CHANGE_REQUIRED). Afterwards available without an active subscription; contains no parent identity or private file URL.
          */
         get: operations["getStudentMe"];
         put?: never;
@@ -1706,6 +2264,11 @@ export interface components {
             /** @description Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision. */
             exceptionAmount?: string;
         };
+        AllocateManagerPaymentDto: {
+            /** Format: uuid */
+            subscriptionId: string;
+            amount: string;
+        };
         ApiError: {
             code: string;
             message: string;
@@ -1717,7 +2280,21 @@ export interface components {
             /** Format: date-time */
             timestamp: string;
         };
+        ApproveCrmDisputeDto: {
+            version: number;
+        };
         ApproveDistributionRequest: Record<string, never>;
+        ApproveScheduleChangeDto: Record<string, never>;
+        CancelManagerLessonDto: {
+            reason: string;
+            chargeable: boolean;
+            /**
+             * @default STUDENT
+             * @enum {string}
+             */
+            initiator: "STUDENT" | "TEACHER" | "ACADEMY";
+            overrideLateRule?: boolean;
+        };
         ChangeEmailConfirmDto: {
             otp: string;
             /** Format: email */
@@ -1731,6 +2308,9 @@ export interface components {
         ChangeStudentPasswordDto: {
             currentPassword: string;
             newPassword: string;
+        };
+        ClaimManagerTaskDto: {
+            version: number;
         };
         CloseFinancialPeriodRequest: Record<string, never>;
         ComponentStatusResponse: {
@@ -1782,9 +2362,139 @@ export interface components {
             /** @enum {string} */
             status: "VERIFIED";
         };
+        CreateManagerLessonDto: {
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** @enum {number} */
+            durationMinutes: 30 | 45 | 60 | 90;
+            /**
+             * Format: uuid
+             * @description Managed subscription (study direction). Required if multiple active subscriptions exist.
+             */
+            subscriptionId?: string;
+            meetLink?: string;
+        };
+        CreateManagerPaymentDto: {
+            amount: string;
+            /**
+             * @default MDL
+             * @enum {string}
+             */
+            currency: "MDL";
+            /** @enum {string} */
+            method: "CASH" | "CARD" | "BANK_TRANSFER" | "ONLINE";
+            /** @enum {string} */
+            purpose: "FIRST_PAYMENT" | "RENEWAL" | "OTHER";
+            /** Format: date-time */
+            receivedAt: string;
+            externalRef?: string;
+            note?: string;
+        };
+        CreateManagerSubscriptionDto: {
+            /** Format: uuid */
+            planId: string;
+            /** Format: uuid */
+            distributionId: string;
+            /**
+             * Format: date-time
+             * @description Must match the prepared financial package start.
+             */
+            startsAt?: string;
+        };
         CreateSessionResponse: components["schemas"]["SessionResponse"] | components["schemas"]["WebAuthnStartResponse"];
+        CreateStudentAccountDto: {
+            loginEmail: string;
+        };
+        CreateStudentDto: {
+            fullName: string;
+            phone?: string | null;
+            email?: string | null;
+            guardianName?: string | null;
+            managerNote?: string | null;
+        };
+        CrmDisputeResolutionDto: {
+            /** Format: uuid */
+            taskId: string;
+            version: number;
+            /** @enum {string} */
+            status: "RESOLVED";
+            /** Format: uuid */
+            ledgerPublicationId: string;
+            refundAmount: string;
+            refundLessons: number;
+            currency: string;
+        };
+        CrmDisputeReviewDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            lessonId: string;
+            version: number;
+            status: string;
+            /** @enum {string} */
+            mode: "FULL_REVERSAL" | "MANUAL_REVIEW";
+            reason: string;
+            requestedAmount: string | null;
+            requestedLessons: number | null;
+            fullAmount: string;
+            fullLessons: number;
+            currency: string;
+        };
+        CrmTaskBriefDto: {
+            /** Format: uuid */
+            id: string;
+            type: string;
+            status: string;
+            title: string;
+            /** Format: date-time */
+            dueAt: string;
+        };
         CsrfResponse: {
             csrfToken: string;
+        };
+        CurrencyBalanceDto: {
+            currency: string;
+            amount: string;
+        };
+        DashboardCurrencyTotalDto: {
+            currency: string;
+            /** @example 1000.0001 */
+            amount: string;
+        };
+        DashboardLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            /** Format: date-time */
+            startsAt: string;
+            teacherName: string;
+            hasMeetLink: boolean;
+        };
+        DashboardOverdueTasksDto: {
+            count: number;
+            top: components["schemas"]["DashboardTaskDto"][];
+        };
+        DashboardPendingPaymentsDto: {
+            count: number;
+            totalsByCurrency: components["schemas"]["DashboardCurrencyTotalDto"][];
+        };
+        DashboardQueryDto: {
+            /**
+             * @default 48
+             * @enum {number}
+             */
+            lessonsHorizonHours: 24 | 48 | 168;
+            /**
+             * @default 7
+             * @enum {number}
+             */
+            expiringDays: 3 | 7 | 14;
         };
         DashboardResponseDto: {
             nextLesson: components["schemas"]["NextLessonDto"] | null;
@@ -1793,6 +2503,30 @@ export interface components {
             skillProgress: components["schemas"]["SkillProgressDto"];
             /** Format: date-time */
             generatedAt: string;
+        };
+        DashboardStudentCountsDto: {
+            active: number;
+            frozen: number;
+            leads: number;
+        };
+        DashboardSubscriptionDto: {
+            /** Format: uuid */
+            subscriptionId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            /** Format: date-time */
+            endsAt: string;
+            remainingLessons: number;
+        };
+        DashboardTaskDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** @enum {string} */
+            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            studentName: string;
+            /** Format: date-time */
+            dueAt: string;
         };
         DisputeRequestDto: {
             description: string;
@@ -1966,6 +2700,22 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        FreezeManagerSubscriptionDto: {
+            /**
+             * Format: date
+             * @description Inclusive school-local start date.
+             */
+            startsOn: string;
+            /**
+             * Format: date
+             * @description Exclusive school-local resume date.
+             */
+            endsOn: string;
+            /** @enum {string} */
+            reason: "ILLNESS" | "TRAVEL" | "FAMILY" | "OTHER";
+            comment?: string;
+            cancelConflictingLessons?: boolean;
+        };
         GenerateSlotOccurrencesRequest: Record<string, never>;
         HealthProbeResponse: {
             /** @enum {string} */
@@ -2059,6 +2809,16 @@ export interface components {
             targetDate: string | null;
             isAchieved: boolean;
         };
+        LearningSummaryDto: {
+            skillsMastered: number;
+            skillsTotal: number;
+            homeworkSubmitted: number;
+            homeworkPending: number;
+            homeworkOverdue: number;
+            /** Format: date-time */
+            lastReportAt: string | null;
+            lastReportStatus: string | null;
+        };
         LedgerAdjustmentResponse: {
             /** Format: uuid */
             id: string;
@@ -2141,6 +2901,14 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        LessonBriefDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: date-time */
+            startsAt: string;
+            subjectName: string;
+            teacherName: string;
+        };
         LessonCardDto: {
             /** Format: uuid */
             lessonId: string;
@@ -2175,7 +2943,7 @@ export interface components {
             teacherName: string;
             subjectName: string;
             /** @enum {string} */
-            attendanceStatus: "COMPLETED" | "NO_SHOW";
+            attendanceStatus: "COMPLETED" | "NO_SHOW" | "CANCELLED";
             /** @description Current uncancelled quantitative consumption backed by a published ledger entry */
             lessonDeducted: boolean;
             /** @description Subscription lessons before deduction, immutable Decimal string; null for unknown legacy snapshots */
@@ -2258,6 +3026,13 @@ export interface components {
             page: number;
             pageSize: number;
         };
+        ListManagerNotificationsDto: {
+            /** @enum {string} */
+            status?: "QUEUED" | "SENT" | "FAILED";
+            cursor?: string;
+            /** @default 25 */
+            limit: number;
+        };
         LoginRequest: components["schemas"]["LoginRequestAlternative1"] | components["schemas"]["LoginRequestAlternative2"];
         LoginRequestAlternative1: {
             /** @enum {string} */
@@ -2279,6 +3054,249 @@ export interface components {
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
+        };
+        ManagerDashboardDto: {
+            /** Format: date-time */
+            generatedAt: string;
+            students: components["schemas"]["DashboardStudentCountsDto"];
+            upcomingLessons: components["schemas"]["DashboardLessonDto"][];
+            overdueTasks: components["schemas"]["DashboardOverdueTasksDto"];
+            expiringSubscriptions: components["schemas"]["DashboardSubscriptionDto"][];
+            pendingPayments: components["schemas"]["DashboardPendingPaymentsDto"];
+        };
+        ManagerDistributionDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            paymentId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            subscriptionId: string;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            planId: string;
+            amount: string;
+            currency: string;
+            /** @enum {string} */
+            status: "PENDING" | "AWAITING_APPROVAL" | "CONFIRMED" | "REJECTED";
+            /** @description Only a subscription operation consumes an allocation; account activation does not. */
+            consumed: boolean;
+            /** Format: uuid */
+            ledgerPublicationId: string | null;
+        };
+        ManagerDistributionPageDto: {
+            items: components["schemas"]["ManagerDistributionDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        ManagerEnrollmentOptionDto: {
+            id: string;
+            label: string;
+            subjectId: string;
+            teachers: components["schemas"]["ManagerNamedOptionDto"][];
+        };
+        ManagerFinancialSubscriptionOptionDto: {
+            id: string;
+            label: string;
+            enrollmentId: string;
+            currency: string;
+            /** Format: date-time */
+            startsAt: string;
+        };
+        ManagerLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            teacherId: string;
+            teacherName: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** @enum {string} */
+            status: "SCHEDULED" | "STAR_PENDING" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+            meetLink: string | null;
+            /** Format: uuid */
+            subscriptionId: string | null;
+            chargedLessons: number;
+            /**
+             * Format: uuid
+             * @description Specific director exception request. Re-submit the same change with a new command key after approval.
+             */
+            pendingChangeId: string | null;
+            requiresApproval: boolean;
+        };
+        ManagerMeResponseDto: {
+            /** Format: uuid */
+            managerId: string;
+            displayName: string;
+            /** @enum {string} */
+            role: "MANAGER";
+            portfolioSize: number;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            capabilities: ("STUDENTS_VIEW" | "ACCOUNTS_CREATE" | "PAYMENTS_CONFIRM" | "SUBSCRIPTIONS_MANAGE" | "SCHEDULE_MANAGE" | "TASKS_PROCESS" | "NOTIFICATIONS_SEND")[];
+        };
+        ManagerNamedOptionDto: {
+            id: string;
+            label: string;
+        };
+        ManagerNotificationDto: {
+            /** Format: uuid */
+            notificationId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** @enum {string} */
+            channel: "IN_APP" | "EMAIL";
+            /** @enum {string} */
+            templateCode: "ACCOUNT_CREATED" | "PAYMENT_CONFIRMED" | "SUBSCRIPTION_CREATED" | "SUBSCRIPTION_RENEWED" | "SUBSCRIPTION_FROZEN" | "SUBSCRIPTION_UNFROZEN" | "SUBSCRIPTION_EXPIRED" | "LESSON_SCHEDULED" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "RESCHEDULE_DECLINED" | "DISPUTE_ACCEPTED" | "DISPUTE_REJECTED" | "MANUAL_MESSAGE";
+            /** @enum {string} */
+            status: "QUEUED" | "SENT" | "FAILED";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            sentAt: string | null;
+            failureReason: string | null;
+        };
+        ManagerNotificationPageDto: {
+            items: components["schemas"]["ManagerNotificationDto"][];
+            nextCursor: string | null;
+        };
+        ManagerOptionsDto: {
+            students: components["schemas"]["ManagerNamedOptionDto"][];
+            subjects: components["schemas"]["ManagerNamedOptionDto"][];
+            plans: components["schemas"]["ManagerPlanOptionDto"][];
+            enrollments: components["schemas"]["ManagerEnrollmentOptionDto"][];
+            financialSubscriptions: components["schemas"]["ManagerFinancialSubscriptionOptionDto"][];
+        };
+        ManagerPaymentDto: {
+            /** Format: uuid */
+            id: string;
+            /**
+             * Format: uuid
+             * @description CRM contact; does not establish ownership of funds.
+             */
+            studentId: string;
+            amount: string;
+            /** @description Historical receipt currencies are preserved. New receipts support MDL. */
+            currency: string;
+            /** @enum {string|null} */
+            method: "CASH" | "CARD" | "BANK_TRANSFER" | "ONLINE" | null;
+            /** @enum {string|null} */
+            purpose: "FIRST_PAYMENT" | "RENEWAL" | "OTHER" | null;
+            /** @enum {string} */
+            status: "PENDING" | "AWAITING_APPROVAL" | "CONFIRMED" | "REJECTED";
+            /** Format: date-time */
+            receivedAt: string;
+            externalRef: string | null;
+            /** Format: uuid */
+            ledgerPublicationId: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            rejectionReason: string | null;
+        };
+        ManagerPaymentPageDto: {
+            items: components["schemas"]["ManagerPaymentDto"][];
+            total: number;
+            page: number;
+            pageSize: number;
+        };
+        ManagerPlanOptionDto: {
+            id: string;
+            label: string;
+            price: string;
+            currency: string;
+            lessonCount: number;
+        };
+        ManagerSubscriptionDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            planId: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "FROZEN" | "EXPIRED" | "CANCELLED";
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** Format: date-time */
+            frozenUntil: string | null;
+            totalLessons: number;
+            remainingLessons: number;
+            freezeDaysUsed: number;
+            price: string;
+            currency: string;
+        };
+        ManagerSubscriptionSummaryDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: date-time */
+            endsAt: string | null;
+            remainingLessons: number;
+            currency: string;
+        };
+        ManagerTaskDetailDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** @enum {string} */
+            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            /** @enum {string} */
+            status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "REJECTED";
+            version: number;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            dueAt: string;
+            isOverdue: boolean;
+            /** Format: date-time */
+            escalatedAt: string | null;
+            /** @enum {string} */
+            approvalStatus: "NONE" | "AWAITING_DIRECTOR" | "MANUAL_FINANCE_REVIEW" | "AWAITING_SCHEDULE_APPROVAL";
+            payload: components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
+            /** Format: uuid */
+            ledgerPublicationId: string | null;
+            /** @description Whitelisted last decision; student comments are plain text, never HTML */
+            resolution: Record<string, never> | null;
+        };
+        ManagerTaskDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** @enum {string} */
+            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            /** @enum {string} */
+            status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "REJECTED";
+            version: number;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            dueAt: string;
+            isOverdue: boolean;
+            /** Format: date-time */
+            escalatedAt: string | null;
+            /** @enum {string} */
+            approvalStatus: "NONE" | "AWAITING_DIRECTOR" | "MANUAL_FINANCE_REVIEW" | "AWAITING_SCHEDULE_APPROVAL";
+            payload: components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
+            /** Format: uuid */
+            ledgerPublicationId: string | null;
+        };
+        ManagerTaskPageDto: {
+            items: components["schemas"]["ManagerTaskDto"][];
+            nextCursor: string | null;
         };
         MaterialItemDto: {
             /** Format: uuid */
@@ -2316,7 +3334,7 @@ export interface components {
             /** Format: uuid */
             notificationId: string;
             /** @enum {string} */
-            type: "HOMEWORK_REVIEWED" | "HOMEWORK_NEEDS_REVISION" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "REPORT_READY" | "SUBSCRIPTION_EXPIRING" | "PAYMENT_CONFIRMED";
+            type: "LESSON_SCHEDULED" | "RESCHEDULE_DECLINED" | "DISPUTE_ACCEPTED" | "DISPUTE_REJECTED" | "MANUAL_MESSAGE" | "SUBSCRIPTION_CREATED" | "SUBSCRIPTION_RENEWED" | "SUBSCRIPTION_FROZEN" | "SUBSCRIPTION_UNFROZEN" | "SUBSCRIPTION_EXPIRED" | "ACCOUNT_CREATED" | "HOMEWORK_REVIEWED" | "HOMEWORK_NEEDS_REVISION" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "REPORT_READY" | "SUBSCRIPTION_EXPIRING" | "PAYMENT_CONFIRMED";
             title: string;
             body: string;
             isRead: boolean;
@@ -2340,6 +3358,22 @@ export interface components {
             /** @enum {boolean} */
             registered: true;
             mfa_completed: boolean;
+        };
+        PaymentBriefDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            distributionId: string;
+            /** Format: uuid */
+            paymentId: string;
+            amount: string;
+            currency: string;
+            /** @enum {string} */
+            status: "PENDING" | "AWAITING_APPROVAL" | "CONFIRMED";
+            /** Format: date-time */
+            registeredAt: string;
+            /** Format: date-time */
+            confirmedAt: string | null;
         };
         PaymentDistributionRequest: {
             /** Format: uuid */
@@ -2411,7 +3445,8 @@ export interface components {
             studentId: string;
             /** @description Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision. */
             amount: string;
-            currency: string;
+            /** @enum {string} */
+            currency: "MDL";
             provider?: string;
             externalReference?: string;
         };
@@ -2486,6 +3521,15 @@ export interface components {
             expiresAt: string | null;
             failureReason: string | null;
         };
+        PrepareManagerDistributionDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            planId: string;
+            amount: string;
+            /** Format: date-time */
+            startsAt?: string;
+        };
         ProblemDetails: {
             type: string;
             title: string;
@@ -2555,6 +3599,15 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        RejectManagerPaymentDto: {
+            reason: string;
+        };
+        RenewManagerSubscriptionDto: {
+            /** Format: uuid */
+            distributionId: string;
+            /** Format: uuid */
+            planId?: string;
+        };
         ReportsResponseDto: {
             items: components["schemas"]["EducationalReportDto"][];
             total: number;
@@ -2565,6 +3618,19 @@ export interface components {
             fileName: string;
             mimeType: string;
             fileSizeBytes: number;
+        };
+        RescheduleManagerLessonDto: {
+            /** Format: date-time */
+            newStartsAt: string;
+            /** Format: uuid */
+            newTeacherId?: string;
+            reason: string;
+            overrideLateRule?: boolean;
+            /**
+             * @default STUDENT
+             * @enum {string}
+             */
+            initiator: "STUDENT" | "TEACHER" | "ACADEMY";
         };
         RescheduleRequestDto: {
             reason: string;
@@ -2577,6 +3643,30 @@ export interface components {
             /** @enum {string} */
             status: "CREATED";
         };
+        ResolveManagerDisputeDto: {
+            /** @enum {string} */
+            decision: "ACCEPT" | "REJECT" | "ESCALATE";
+            reason: string;
+            /** @description Exact positive monetary string; full reversal restores advance, never pays out cash */
+            refundAmount?: string;
+            refundLessons?: number;
+            version: number;
+        };
+        ResolveManagerRescheduleDto: {
+            /** @enum {string} */
+            decision: "APPROVE" | "DECLINE";
+            /**
+             * Format: date-time
+             * @description Required for APPROVE
+             */
+            newStartsAt?: string;
+            /** Format: uuid */
+            newTeacherId?: string;
+            /** @description Required for DECLINE; default approval basis otherwise */
+            reason?: string;
+            overrideLateRule?: boolean;
+            version: number;
+        };
         SavedDraftDto: {
             /** Format: uuid */
             homeworkId: string;
@@ -2587,6 +3677,14 @@ export interface components {
         };
         SaveDraftDto: {
             content: string;
+        };
+        ScheduleChangeApprovalDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            lessonId: string;
+            /** @enum {string} */
+            status: "APPROVED";
         };
         ScheduleChangeRequestInput: {
             /** Format: uuid */
@@ -2610,8 +3708,38 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        ScheduleChangeReviewDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** @enum {string} */
+            action: "RESCHEDULE" | "CANCEL";
+            /** @enum {string} */
+            initiator: "STUDENT" | "TEACHER" | "ACADEMY";
+            reason: string;
+            /** Format: date-time */
+            oldStartsAt: string;
+            /** Format: date-time */
+            newStartsAt: string | null;
+            /** Format: uuid */
+            oldTeacherId: string;
+            /** Format: uuid */
+            newTeacherId: string | null;
+            chargeable: boolean | null;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "APPLIED" | "STALE";
+        };
         ScheduleReasonRequest: {
             reason: string;
+        };
+        SendManagerNotificationDto: {
+            /** @enum {string} */
+            channel: "IN_APP" | "EMAIL";
+            subject?: string;
+            body: string;
         };
         SessionInfoDto: {
             /** Format: uuid */
@@ -2641,6 +3769,9 @@ export interface components {
             kind: "STAFF" | "TEACHER" | "STUDENT";
             roles: ("DIRECTOR" | "MANAGER" | "TEACHER" | "STUDENT" | "TECH_OPERATOR")[];
             role?: string;
+        };
+        SetManagerMeetDto: {
+            url: string;
         };
         SkillAuditEntryDto: {
             /** Format: uuid */
@@ -2714,6 +3845,45 @@ export interface components {
             [key: string]: unknown;
         };
         StartLessonRequest: Record<string, never>;
+        StudentAccountIssuedDto: {
+            /** Format: uuid */
+            accountId: string;
+            loginEmail: string;
+            /**
+             * Format: password
+             * @description One-time secret in the first successful response only. Never cached.
+             */
+            temporaryPassword: string | null;
+            /** Format: date-time */
+            temporaryPasswordExpiresAt: string;
+            passwordAlreadyIssued: boolean;
+        };
+        StudentCardDto: {
+            /** Format: uuid */
+            studentId: string;
+            version: number;
+            fullName: string;
+            /** @enum {string} */
+            status: "LEAD" | "ACTIVE" | "FROZEN" | "EXPIRED" | "ARCHIVED";
+            hasAccount: boolean;
+            contacts: components["schemas"]["StudentContactsDto"];
+            managerNote: string | null;
+            subscription: components["schemas"]["ManagerSubscriptionSummaryDto"] | null;
+            balance: string;
+            balanceCurrency: string;
+            balances: components["schemas"]["CurrencyBalanceDto"][];
+            upcomingLessons: components["schemas"]["LessonBriefDto"][];
+            openTasks: components["schemas"]["CrmTaskBriefDto"][];
+            openTasksTruncated: boolean;
+            recentPayments: components["schemas"]["PaymentBriefDto"][];
+            learning: components["schemas"]["LearningSummaryDto"];
+        };
+        StudentContactsDto: {
+            phone: string | null;
+            email: string | null;
+            guardianName: string | null;
+            guardianPhone: string | null;
+        };
         StudentCreatedResponse: {
             /** Format: uuid */
             id: string;
@@ -2726,6 +3896,28 @@ export interface components {
             phone?: string;
             /** Format: date */
             birthDate?: string;
+        };
+        StudentListItemDto: {
+            /** Format: uuid */
+            studentId: string;
+            fullName: string;
+            /** @enum {string} */
+            status: "LEAD" | "ACTIVE" | "FROZEN" | "EXPIRED" | "ARCHIVED";
+            hasAccount: boolean;
+            maskedPhone: string | null;
+            activeSubscription: components["schemas"]["ManagerSubscriptionSummaryDto"] | null;
+            /** @description Published monetary ledger balance in balanceCurrency: positive prepayment, negative debt. Pending payments excluded. */
+            balance: string;
+            balanceCurrency: string;
+            balances: components["schemas"]["CurrencyBalanceDto"][];
+            /** Format: date-time */
+            nextLessonAt: string | null;
+            openTasksCount: number;
+            overdueTasksCount: number;
+        };
+        StudentListPageDto: {
+            items: components["schemas"]["StudentListItemDto"][];
+            nextCursor: string | null;
         };
         StudentMeResponseDto: {
             managerContacts?: components["schemas"]["ManagerContactsDto"];
@@ -2876,6 +4068,60 @@ export interface components {
             /** Format: date-time */
             frozenUntil: string | null;
         };
+        TaskDisputePayloadDto: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "TaskDisputePayloadDto";
+            /** Format: uuid */
+            lessonId: string;
+            ledgerRef: string | null;
+            chargedLessons: number;
+            chargedAmount: string | null;
+            currency: string | null;
+            studentComment: string;
+        };
+        TaskExpiringPayloadDto: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "TaskExpiringPayloadDto";
+            /** Format: uuid */
+            subscriptionId: string;
+            /** Format: date-time */
+            endsAt: string;
+        };
+        TaskGeneralPayloadDto: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "TaskGeneralPayloadDto";
+            text: string;
+        };
+        TaskPreferredWindowDto: {
+            /** Format: date-time */
+            from: string;
+            /** Format: date-time */
+            to: string;
+        };
+        TaskReschedulePayloadDto: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "TaskReschedulePayloadDto";
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            currentStartsAt: string;
+            studentComment: string | null;
+            preferredWindows: components["schemas"]["TaskPreferredWindowDto"][];
+            /** Format: date */
+            preferredDate: string | null;
+        };
         TeacherAccrualResponse: {
             /** Format: uuid */
             id: string;
@@ -2986,6 +4232,13 @@ export interface components {
              * @description Pre-uploaded verified owned JPEG/PNG/WebP, up to2MiB
              */
             avatarFileId?: string;
+        };
+        UpdateStudentContactsDto: {
+            phone?: string | null;
+            email?: string | null;
+            guardianName?: string | null;
+            managerNote?: string | null;
+            version: number;
         };
         UploadUrlResponseDto: {
             uploadUrl: string;
@@ -3990,6 +5243,151 @@ export interface operations {
                 };
             };
             /** @description Unified domain/security error */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getCrmDisputeResolution: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CrmDisputeReviewDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    approveCrmDisputeResolution: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApproveCrmDisputeDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CrmDisputeResolutionDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -5302,6 +6700,2970 @@ export interface operations {
             };
         };
     };
+    getManagerDashboard: {
+        parameters: {
+            query?: {
+                lessonsHorizonHours?: 24 | 48 | 168;
+                expiringDays?: 3 | 7 | 14;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerDashboardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    cancelManagerLesson: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CancelManagerLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    setManagerLessonMeetLink: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetManagerMeetDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    clearManagerLessonMeetLink: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    rescheduleManagerLesson: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                lessonId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RescheduleManagerLessonDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerMeResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerOptions: {
+        parameters: {
+            query?: {
+                studentId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerOptionsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerPaymentDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    confirmManagerPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerPaymentDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    allocateManagerPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocateManagerPaymentDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerDistributionDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    prepareManagerPaymentSubscription: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrepareManagerDistributionDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerDistributionDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    rejectManagerPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectManagerPaymentDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerPaymentDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerSchedule: {
+        parameters: {
+            query: {
+                from: string;
+                to: string;
+                studentId?: string;
+                teacherId?: string;
+                status?: "SCHEDULED" | "STAR_PENDING" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"][];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerStudents: {
+        parameters: {
+            query?: {
+                search?: string;
+                status?: "LEAD" | "ACTIVE" | "FROZEN" | "EXPIRED" | "ARCHIVED";
+                hasOverdueTask?: boolean;
+                subscriptionExpiringSoon?: boolean;
+                sort?: "name" | "nextLesson" | "subscriptionEnd";
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentListPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Database, audit, outbox or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerStudent: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStudentDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentCardDto"];
+                };
+            };
+            /** @description IDEMPOTENCY_KEY_REQUIRED (core guard) */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description IDEMPOTENCY_KEY_REUSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Database, audit, outbox or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerStudentCard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Database, audit, outbox or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerStudentAccount: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStudentAccountDto"];
+            };
+        };
+        responses: {
+            /** @description Idempotent replay; password already issued */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentAccountIssuedDto"];
+                };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentAccountIssuedDto"];
+                };
+            };
+            /** @description IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND or ACCOUNT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FIRST_PAYMENT_NOT_CONFIRMED, ACCOUNT_ALREADY_EXISTS, EMAIL_ALREADY_USED, IDEMPOTENCY_KEY_REUSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RESET_LIMIT_EXCEEDED or AUTH_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    resetManagerStudentPassword: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentAccountIssuedDto"];
+                };
+            };
+            /** @description IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND or ACCOUNT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FIRST_PAYMENT_NOT_CONFIRMED, ACCOUNT_ALREADY_EXISTS, EMAIL_ALREADY_USED, IDEMPOTENCY_KEY_REUSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RESET_LIMIT_EXCEEDED or AUTH_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    updateManagerStudentContacts: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateStudentContactsDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description VERSION_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Database, audit, outbox or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerDistributions: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                status?: "PENDING" | "AWAITING_APPROVAL" | "CONFIRMED" | "REJECTED";
+            };
+            header?: never;
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerDistributionPageDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerLesson: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateManagerLessonDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerLessonDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_NOT_FOUND, STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SLOT_CONFLICT, SUBSCRIPTION_NOT_ACTIVE, NO_LESSONS_REMAINING, LESSON_IMMUTABLE_STATE, LATE_RULE_OVERRIDE_REQUIRED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description RANGE_TOO_LARGE, LEAD_TIME_VIOLATION, INVALID_MEET_LINK, SUBSCRIPTION_REQUIRED */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerStudentNotifications: {
+        parameters: {
+            query?: {
+                status?: "QUEUED" | "SENT" | "FAILED";
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerNotificationPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    sendManagerStudentNotification: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendManagerNotificationDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerNotificationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerPayments: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+                status?: "PENDING" | "AWAITING_APPROVAL" | "CONFIRMED" | "REJECTED";
+            };
+            header?: never;
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerPaymentPageDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateManagerPaymentDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerPaymentDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerSubscriptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerSubscriptionDto"][];
+                };
+            };
+            /** @description INVALID_INPUT or IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND, DISTRIBUTION_NOT_FOUND, PLAN_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_STATE_TRANSITION, ACTIVE_SUBSCRIPTION_EXISTS, DISTRIBUTION_ALREADY_USED, FINANCIAL_PACKAGE_ALREADY_ATTACHED, PAYMENT_NOT_CONFIRMED, FREEZE_LIMIT_EXCEEDED, FREEZE_HAS_LESSONS (details.lessonIds) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerSubscription: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateManagerSubscriptionDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerSubscriptionDto"];
+                };
+            };
+            /** @description INVALID_INPUT or IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND, DISTRIBUTION_NOT_FOUND, PLAN_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_STATE_TRANSITION, ACTIVE_SUBSCRIPTION_EXISTS, DISTRIBUTION_ALREADY_USED, FINANCIAL_PACKAGE_ALREADY_ATTACHED, PAYMENT_NOT_CONFIRMED, FREEZE_LIMIT_EXCEEDED, FREEZE_HAS_LESSONS (details.lessonIds) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    freezeManagerSubscription: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FreezeManagerSubscriptionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerSubscriptionDto"];
+                };
+            };
+            /** @description INVALID_INPUT or IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND, DISTRIBUTION_NOT_FOUND, PLAN_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_STATE_TRANSITION, ACTIVE_SUBSCRIPTION_EXISTS, DISTRIBUTION_ALREADY_USED, FINANCIAL_PACKAGE_ALREADY_ATTACHED, PAYMENT_NOT_CONFIRMED, FREEZE_LIMIT_EXCEEDED, FREEZE_HAS_LESSONS (details.lessonIds) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    renewManagerSubscription: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RenewManagerSubscriptionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerSubscriptionDto"];
+                };
+            };
+            /** @description INVALID_INPUT or IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND, DISTRIBUTION_NOT_FOUND, PLAN_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_STATE_TRANSITION, ACTIVE_SUBSCRIPTION_EXISTS, DISTRIBUTION_ALREADY_USED, FINANCIAL_PACKAGE_ALREADY_ATTACHED, PAYMENT_NOT_CONFIRMED, FREEZE_LIMIT_EXCEEDED, FREEZE_HAS_LESSONS (details.lessonIds) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    unfreezeManagerSubscription: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": Record<string, never>;
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerSubscriptionDto"];
+                };
+            };
+            /** @description INVALID_INPUT or IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND, DISTRIBUTION_NOT_FOUND, PLAN_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_STATE_TRANSITION, ACTIVE_SUBSCRIPTION_EXISTS, DISTRIBUTION_ALREADY_USED, FINANCIAL_PACKAGE_ALREADY_ATTACHED, PAYMENT_NOT_CONFIRMED, FREEZE_LIMIT_EXCEEDED, FREEZE_HAS_LESSONS (details.lessonIds) */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerTasks: {
+        parameters: {
+            query?: {
+                /** @description Comma-separated OPEN, IN_PROGRESS, RESOLVED, REJECTED */
+                status?: string;
+                /** @description Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL */
+                type?: string;
+                overdue?: boolean;
+                studentId?: string;
+                dueBefore?: string;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskPageDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskDetailDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    claimManagerTask: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClaimManagerTaskDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    resolveManagerTaskDispute: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveManagerDisputeDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    resolveManagerTaskReschedule: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveManagerRescheduleDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     confirmPayment: {
         parameters: {
             query?: never;
@@ -6159,6 +10521,135 @@ export interface operations {
             };
             /** @description Unified domain/security error */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getScheduleChangeApproval: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScheduleChangeReviewDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    approveScheduleChange: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ApproveScheduleChangeDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScheduleChangeApprovalDto"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

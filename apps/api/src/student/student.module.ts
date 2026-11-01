@@ -92,8 +92,8 @@ export class StudentCsrfGuard implements CanActivate {
     MeController,
     ChangeStudentPasswordController,
     DashboardController,
-    StudentLessonsController,
     StudentHistoryController,
+    StudentLessonsController,
   ],
   providers: [
     StudentProfileService,

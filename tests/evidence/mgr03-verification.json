@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-31",
+  "scope": "MGR-03 targeted checks only",
+  "checks": {
+    "mgr03": {
+      "suites": 3,
+      "passed": 49
+    },
+    "affected_manager_crm_student_security_subscription_notifications": {
+      "suites": 12,
+      "passed": 262
+    },
+    "mgr01": {
+      "uniquePassed": 56,
+      "architectureRerunPassed": 27,
+      "architectureTimeoutMs": 120000,
+      "note": "Initial type-aware ESLint test exceeded30s; isolated27-test architecture rerun passed"
+    },
+    "uniqueUnitHttpSdkArchitecture": 367,
+    "browser": {
+      "passed": 1,
+      "test": "MGR-03 browser: temporary login, forced password change and cabinet bootstrap",
+      "fixture": "synthetic API, built student cabinet",
+      "note": "Earlier broad login/upload test timed out during page startup/render; complete broad scenario not claimed"
+    },
+    "build": [
+      "api",
+      "worker",
+      "api-contracts",
+      "student-cabinet"
+    ],
+    "targetedEslint": "PASS",
+    "prismaValidate": "PASS",
+    "generation": "Prisma7.10.1 and OpenAPI/Orval files regenerated; generated SDK tested",
+    "openapiOperations": 95,
+    "sqlSyntax": "mgr03-sql-syntax.json"
+  },
+  "limitations": [
+    "Persistence/financial eligibility mocked; concurrency assertions do not prove PostgreSQL races",
+    "Migration prepared, not applied; triggers/grants/plans not executed",
+    "No extra DB/branch/container or working DB writes",
+    "MGR-05 live allocation flow, MGR-08 external delivery, FND-GATE and production GO not claimed"
+  ],
+  "sourceSha256": {
+    "apps/api/src/modules/manager/accounts/manager-accounts.controller.ts": "44584055a1008c6c49b08106081eb83fd0026aec335376f2e526c9c4c3cc8665",
+    "apps/api/src/modules/manager/accounts/manager-accounts.service.ts": "f7b3d9c0cd21985a5c265c0adb3213382d489593957738aeb110cd1e65a4d7d1",
+    "apps/api/src/modules/identity/student-account-provisioning.ts": "a51ab5eb430100d338e66abad7b2d58210a30f2a9e9f23851bf40d4ad04069f1",
+    "apps/api/src/modules/finance/student-activation.sql.ts": "051fbc7b04bbaed7c0cc1c1687712cfecf5396a9300d92cb6007ec1ef9a0a54c",
+    "packages/db/prisma/migrations/20261031110000_mgr03_student_credentials/migration.sql": "771ad041c06e467ebb86b9140e8a730e4569fa14391c3d470c70acda5860e26c",
+    "packages/api-contracts/openapi/openapi.json": "7a5fee8fdc458077012f7a86f7024c4e898df91d9b7633e4f59f855783d86dec",
+    "apps/student-cabinet/src/api.ts": "48b3d483ef77446c23b06eab70791050cac47ea0fb2d978fc3b7a45cb114631c",
+    "apps/student-cabinet/tests/mgr03-password.spec.mjs": "04856c2d32e4c564dba5aa303b6f02d57f4a6e9e4e7915c4a3826575465689b9"
+  }
+}

@@ -26,6 +26,10 @@
 !apps/worker/assets/fonts/README.md
 !apps/qa-shell/
 !apps/qa-shell/package.json
+!apps/student-cabinet/
+!apps/student-cabinet/package.json
+!apps/manager-web/
+!apps/manager-web/package.json
 !packages/
 !packages/shared/
 !packages/shared/package.json
@@ -35,6 +39,8 @@
 !packages/api-contracts/
 !packages/api-contracts/package.json
 !packages/api-contracts/tsconfig.json
+!packages/api-contracts/scripts/
+!packages/api-contracts/scripts/**
 !packages/api-contracts/openapi/
 !packages/api-contracts/openapi/**
 !packages/api-contracts/src/
@@ -56,6 +62,9 @@
 !packages/db/prisma/migrations/**
 !infra/
 !infra/worker-health.mjs
+!scripts/
+!scripts/generate-manager-errors.mjs
+!scripts/write-generated.mjs
 packages/db/src/generated/
 **/.env
 **/.env.*

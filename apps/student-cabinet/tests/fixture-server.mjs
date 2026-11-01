@@ -149,11 +149,27 @@ export function startFixture(port = 4175) {
           path,
           query: url.search,
           method: req.method,
-          body,
+          body:
+            path === '/api/v1/auth/session' || path.endsWith('/security/change-password')
+              ? {}
+              : body,
           csrf: req.headers['x-csrf-token'],
           key: req.headers['idempotency-key'],
         });
-        if (path === '/api/v1/auth/csrf') return json({ csrfToken: 'fixture-csrf' });
+        if (
+          state.auth &&
+          state.mustChangePassword &&
+          !(path === '/api/v1/auth/session' && req.method === 'DELETE') &&
+          !path.endsWith('/security/change-password')
+        )
+          return json({ code: 'PASSWORD_CHANGE_REQUIRED' }, 403);
+        if (path === '/api/v1/auth/csrf') {
+          res.setHeader(
+            'Set-Cookie',
+            '__Host-school_csrf=fixture-csrf; Path=/; Secure; SameSite=Strict',
+          );
+          return json({ csrfToken: 'fixture-csrf' });
+        }
         if (!['GET', 'HEAD'].includes(req.method) && req.headers['x-csrf-token'] !== 'fixture-csrf')
           return json({ code: 'CSRF_INVALID' }, 403);
         if (path === '/api/v1/auth/session') {
@@ -189,7 +205,7 @@ export function startFixture(port = 4175) {
           state.mustChangePassword = false;
           return json({ changed: true });
         }
-        if (state.mustChangePassword) return json({ code: 'MUST_CHANGE_PASSWORD' }, 403);
+        if (state.mustChangePassword) return json({ code: 'PASSWORD_CHANGE_REQUIRED' }, 403);
         if (!state.active)
           return json({ code: 'ACCESS_SUSPENDED', managerContacts: contacts }, 402);
         if (path.endsWith('/student/dashboard')) {

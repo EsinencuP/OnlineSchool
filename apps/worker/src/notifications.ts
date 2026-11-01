@@ -60,7 +60,9 @@ export class StudentNotificationProjector {
           const [source] = await tx.$queryRaw<
             { id: string }[]
           >`SELECT id FROM student_notification_sources
-          WHERE delivered_at IS NULL AND occurred_at<=clock_timestamp() ORDER BY occurred_at,id FOR UPDATE SKIP LOCKED LIMIT 1`;
+          WHERE delivered_at IS NULL AND occurred_at<=clock_timestamp()
+            AND NOT EXISTS(SELECT 1 FROM notification_dispatches dispatch WHERE dispatch.source_id=student_notification_sources.id)
+          ORDER BY occurred_at,id FOR UPDATE SKIP LOCKED LIMIT 1`;
           if (!source) return false;
           await this.notifications.create(tx, source.id);
           await tx.studentNotificationSource.update({

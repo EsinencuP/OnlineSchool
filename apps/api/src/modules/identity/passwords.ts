@@ -1,4 +1,4 @@
-import { randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
+import { randomBytes, randomInt, scrypt, timingSafeEqual } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
@@ -13,6 +13,19 @@ const derive = (password: string, salt: Buffer): Promise<Buffer> =>
   );
 @Injectable()
 export class Passwords {
+  async temporary(): Promise<Result<{ plaintext: string; hash: string }, DomainError>> {
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
+    for (let attempt = 0; attempt < 64; attempt++) {
+      const plaintext = Array.from(
+        { length: 16 },
+        () => alphabet[randomInt(alphabet.length)]!,
+      ).join('');
+      if (!/^(?=.*[A-Za-z])(?=.*\d)/.test(plaintext)) continue;
+      const hash = await this.hash(plaintext, 'student');
+      return hash.ok ? ok({ plaintext, hash: hash.value }) : hash;
+    }
+    return err(domainError('PASSWORD_SERVICE_UNAVAILABLE', 503));
+  }
   async hash(
     password: string,
     policy: 'standard' | 'student' = 'standard',

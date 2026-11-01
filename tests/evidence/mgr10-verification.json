@@ -1,0 +1,219 @@
+{
+  "date": "2026-11-01",
+  "scope": "MGR10 S1-S6 frontend; named options endpoint; no database operations or deployment",
+  "status": "IMPLEMENTED_TARGETED_MOCK_CHECKS_PASS_REAL_ACCEPTANCE_PENDING",
+  "checks": {
+    "vitest": {
+      "passed": 14,
+      "failed": 0,
+      "files": 2
+    },
+    "playwright": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "fixture": "OpenAPI-derived MSW",
+      "scenarios": [
+        "SC-M-01",
+        "SC-M-02",
+        "SC-M-03",
+        "SC-M-04",
+        "SC-M-05"
+      ],
+      "viewportWidths": [
+        360,
+        768,
+        1280
+      ],
+      "axe": "WCAG2A/AA + WCAG2.1AA, all routes/student tabs and create dialog"
+    },
+    "backendAndArchitecture": {
+      "passed": 76,
+      "failed": 0,
+      "suites": {
+        "manager-architecture.test.mjs": 27,
+        "manager-options.test.mjs": 12,
+        "manager-http.test.mjs": 17,
+        "manager-web-architecture.test.mjs": 7,
+        "manager-students-sdk.test.mjs": 5,
+        "manager-payments-sdk.test.mjs": 8
+      }
+    },
+    "uniqueChecks": 103,
+    "build": [
+      "api",
+      "api-contracts",
+      "manager-web"
+    ],
+    "typecheck": "manager-web strict tsc -b PASS",
+    "targetedLint": "PASS",
+    "targetedFormat": "PASS",
+    "openapiOrvalGeneration": {
+      "status": "PASS",
+      "sha256": {
+        "packages/api-contracts/src/generated/client.ts": "D5FC1279B3476814B66047BC2AFC9ECC2C3F7708885C38D4DE1BFF4CC3CC14F2",
+        "packages/api-contracts/src/generated/openapi.ts": "1CE562ECA74BF595D2677E73E46EDBB71D3BB1DAB770C3551615DCFBEAA7715F",
+        "packages/api-contracts/openapi/openapi.json": "52EEC3136CB4E730366D5201637BC7F230DCF3455D195D82CE8800443E02D1D6",
+        "packages/api-contracts/src/generated/manager-error-codes.ts": "60FF36BF83ED6E157A08F00F6F0F94FC83F11558992A07FC02FE4577B3DCE485"
+      },
+      "commands": [
+        "pnpm generate",
+        "API export:openapi",
+        "api-contracts generate:client"
+      ],
+      "changedFiles": []
+    },
+    "openapiOperations": 127,
+    "managerErrorCodes": 221,
+    "schemaMigrationRequired": false,
+    "productionBundle": {
+      "measuredAt": "2026-11-01T09:04:44.864Z",
+      "mode": "production",
+      "entry": {
+        "gzipBytes": 86521,
+        "budgetBytes": 256000,
+        "passed": true,
+        "files": [
+          "assets/index-G6MXT-PG.js",
+          "assets/preload-helper-BjPlTtXg.js",
+          "assets/ui-DOeeyBvz.js",
+          "assets/useQuery-CCctluLJ.js",
+          "assets/session-CuFzTsXK.js"
+        ]
+      },
+      "routes": {
+        "src/pages/Dashboard.tsx": {
+          "gzipBytes": 145656,
+          "budgetBytes": 256000,
+          "passed": true,
+          "files": [
+            "assets/index-G6MXT-PG.js",
+            "assets/preload-helper-BjPlTtXg.js",
+            "assets/ui-DOeeyBvz.js",
+            "assets/useQuery-CCctluLJ.js",
+            "assets/session-CuFzTsXK.js",
+            "assets/Dashboard-BYj4yE7Y.js",
+            "assets/money-Bp_Elg0h.js",
+            "assets/time-JQrI4bT-.js"
+          ]
+        },
+        "src/pages/Login.tsx": {
+          "gzipBytes": 88062,
+          "budgetBytes": 256000,
+          "passed": true,
+          "files": [
+            "assets/index-G6MXT-PG.js",
+            "assets/preload-helper-BjPlTtXg.js",
+            "assets/ui-DOeeyBvz.js",
+            "assets/useQuery-CCctluLJ.js",
+            "assets/session-CuFzTsXK.js",
+            "assets/Login-D63zbuyX.js",
+            "assets/use-command-DVSIKn1h.js"
+          ]
+        },
+        "src/pages/Students.tsx": {
+          "gzipBytes": 146695,
+          "budgetBytes": 256000,
+          "passed": true,
+          "files": [
+            "assets/index-G6MXT-PG.js",
+            "assets/preload-helper-BjPlTtXg.js",
+            "assets/ui-DOeeyBvz.js",
+            "assets/useQuery-CCctluLJ.js",
+            "assets/session-CuFzTsXK.js",
+            "assets/Students-CSjNS7-7.js",
+            "assets/use-command-DVSIKn1h.js",
+            "assets/money-Bp_Elg0h.js",
+            "assets/time-JQrI4bT-.js"
+          ]
+        }
+      }
+    },
+    "productionMockCode": "excluded",
+    "inlineScripts": false
+  },
+  "limitations": [
+    "No clean/previous database E2E, migrated PostgreSQL, fixture seeding, working Neon writes, external delivery or deployment; owner single-environment policy preserved.",
+    "Browser scenarios simulate separate director publication/decisions via test fixture state; they do not prove real Finance/Identity/Schedule transactions.",
+    "Live staff MFA authenticator was not exercised here. Password-to-MFA UI and existing core role/session guards are source/mock tested.",
+    "Full pnpm -r typecheck/lint/test/format gate intentionally not run per PHASE0_CHECKS.md; targeted builds, formatting and checks only.",
+    "MGR09 p95 acceptance, prior migration acceptance, FND-GATE and production readiness remain open.",
+    "Vercel build/rewrite integration prepared, deployment build not executed because it also deploys working migrations.",
+    "Windows mapped-file generation failure corrected with atomic publication and unchanged-content no-op; repeat generation hashes match."
+  ],
+  "sourceSha256": {
+    ".github/workflows/ci.yml": "d380397cfa29fc9735dd42c941cbfb86ee626dfa2d5baceb4a44e039b495b7ec",
+    ".graphifyignore": "c8ee23e2f63781f9c5c740a16f52ddf5250ece1686d6ed70d119ce95f05c94be",
+    ".prettierignore": "76f172c0ee2e1f599b0f72501005d42c692339c0d9d28b981303040ece221ba9",
+    "apps/api/scripts/export-openapi.mjs": "a0a26bdc887fb5e200bc8e4db425f77c40405f865576a35a7de9bd36c497475c",
+    "apps/api/src/modules/manager/MANAGER.md": "f2a0c9ddac400f2c8953e701d0825f52660c948def1be92a1cd07f3bcc741177",
+    "apps/api/src/modules/manager/dto/manager-payment.dto.ts": "eba480e724cdc5fb0228137d5c93472f50dcd480cd2cf4cfdd521d4378c4ac6b",
+    "apps/api/src/modules/manager/dto/student-crm.dto.ts": "52a24b60a5e9d6f62707caaff9f7c110fe0e3e8f3547c51c3b0459e81ccf5b25",
+    "apps/api/src/modules/manager/manager.module.ts": "e35980a573258b118a05981a911f42b617146f7c6a4a05a8bd9fc0e672445eeb",
+    "apps/api/src/modules/manager/options/manager-options.controller.ts": "acf96dc1bb365965c5cf8052e558f6c9b42a2094acd391029b867af36be3da09",
+    "apps/api/src/modules/manager/options/manager-options.dto.ts": "0a92b931e1ead834fa9d9809f415d1bd8473b0769fdb92603867c4443cf1ecca",
+    "apps/api/src/modules/manager/options/manager-options.service.ts": "87077930ea2d0b937277d9cf8732e1723ff6370dd2b84613738d430d324c183b",
+    "apps/manager-web/README.md": "00b502da7c349d2ea07ed57531cc8a7efe0607ff8fb9b70fea24db1d9797ea1f",
+    "apps/manager-web/index.html": "9111f52b08786b7f1c4692318a17609eaaeb15459aadeb26193a32e64b327afa",
+    "apps/manager-web/package.json": "3d0d625bdeb352ce100f3c9d8a3106d1badb49de2efc44e0defeb426f13991e4",
+    "apps/manager-web/playwright.config.mjs": "b5e8fccb8cfa5db640d629da92fd08518beaded3db6259ed14faedf346664803",
+    "apps/manager-web/src/api/client.ts": "5b83d0b1c917a0786fefbac25d5046e8d122f41c09f2d07454123fc40836e11c",
+    "apps/manager-web/src/api/error-view.ts": "e6fc9f608fce5638fd592604fc17588c92af700b384c1ba4af901f0d26e9943c",
+    "apps/manager-web/src/components/business-forms.tsx": "107197323aeb8fba96ffe7827247149ff07a9b91b88de9c35c57a47c9cf5b239",
+    "apps/manager-web/src/components/error-boundary.tsx": "c6e5116a53fdfaacac822238ab7f585b9002e17e2ad36c6e2b66e688955c0c68",
+    "apps/manager-web/src/components/layout.tsx": "06f9cb9704612923c6a96f1354f202c678e420850214cfc090d4851eb9e3e5ad",
+    "apps/manager-web/src/components/ui.tsx": "9cd7e53e6527364e2189cffcf57da3c9da6d026f22d4b27e0e1c4a76ec6240f9",
+    "apps/manager-web/src/hooks/use-command.ts": "821d43cb6ce600dd0522774be9e0a2816f39df09186cb6845b77ab249e256636",
+    "apps/manager-web/src/hooks/use-idempotency-key.ts": "069b96dbac3f99ee2fa247adbc774366f688a591ddf6b3a83b9e8799518b2452",
+    "apps/manager-web/src/hooks/use-options.ts": "7e13821c30792dc73d327751270a2d37f88e96f4810ad0cf42828a6e50b9ab72",
+    "apps/manager-web/src/i18n/error-messages.ts": "8dbd6315f5b35dcd1bcfbef3e9247c4326557dc0351074227947b60102fca809",
+    "apps/manager-web/src/i18n/ru.ts": "f60f5562223a2ed416921cc83dd631dee6d7793e684e1223df080cbfb3340259",
+    "apps/manager-web/src/lib/money.ts": "ddfcfec9368352fa9c9b82aaf0106cd1a89680df0d77694cd36517d595f7af80",
+    "apps/manager-web/src/lib/time.ts": "702533a69b29c038b3e3eb9c407383c3de27951b2a97b71da642e3cd2028b7ef",
+    "apps/manager-web/src/main.tsx": "1a699118f98c3492a50afad873dd8cb68ac9652c5a2e8585ab2151a7ea23ba27",
+    "apps/manager-web/src/pages/Account.tsx": "29e66b882ec04258f93232031b31a86bbcf4f205c03a4f9562e7cd39c4762d9b",
+    "apps/manager-web/src/pages/Dashboard.tsx": "adb5af6f8a49b5b71e42132f4ff962ccf63a54a64da33f1f1a3786630af98502",
+    "apps/manager-web/src/pages/Login.tsx": "10a88ab5c33e11b2d5d1eb568067b3b8f0e999ba00fe25cd31e030cc33ab3525",
+    "apps/manager-web/src/pages/Schedule.tsx": "03e874d755486e1685e1f6740bb45e4e676cfdc8a8831f426f0ffd6fbc8e58f1",
+    "apps/manager-web/src/pages/Student.tsx": "44b99127225f438fc613c56c964586458f9395027b591d99e253710c0973e17e",
+    "apps/manager-web/src/pages/Students.tsx": "a1be534a1c86035c33fad26c414298238c029081d89dacdd5a8cce1a8871978e",
+    "apps/manager-web/src/pages/Task.tsx": "00265fa58df4197c9008e8e2c81dbe835183c0dccc937fd1919cb0f6b65564c7",
+    "apps/manager-web/src/pages/Tasks.tsx": "ecad68aa60061e6beee7f2cdf66e1d4e34cad91d7a813231eaae939b62fd5584",
+    "apps/manager-web/src/pages/student/Notifications.tsx": "08840f32bb3df7d54ce1de3336cde1bb92cf77af7433d76978ba3f35d6209cc8",
+    "apps/manager-web/src/pages/student/Payments.tsx": "e4b75d4ce7aae5707be37b1a5f3dfea38026788cb4249ff6c5f359d5f7e5b058",
+    "apps/manager-web/src/pages/student/Subscriptions.tsx": "5b3a4142e43eedf183bcc19bf337c151833458d6ed6183c68c35a063dbd9e55a",
+    "apps/manager-web/src/routes.ts": "e5aecc221270779b80b04a281a15f393b7c985cad7217a2d9e7e22400f914cd9",
+    "apps/manager-web/src/session.tsx": "8a970dc7252a051902656a4f281d6ffff91a8359efc5af6eeb5b2e2c3c7cf01c",
+    "apps/manager-web/src/style.css": "57e28834606b291b8f6baa9c3e9a49be8dcabbcbdecb2887ff9890faeb0d6e6c",
+    "apps/manager-web/src/test/browser.ts": "b863c4a91754e396de8c65622ed0ae4e974cede882e622d43c8b9b9ba3c0cac0",
+    "apps/manager-web/src/test/fixtures.ts": "00d5562c65461d60324145a57d24bdb40a5aed4ebb75188bba25692ff148ff91",
+    "apps/manager-web/src/test/forms.test.tsx": "2c4aa2acd011ae033b79d9f90354513f5c29923106188f36eb28aabcd4710cf0",
+    "apps/manager-web/src/test/handlers.ts": "56505305845e4992025b1b327933838f824ceec797b57b92dab25ed1af015fc8",
+    "apps/manager-web/src/test/session.test.tsx": "cf1a4d9bb93e4e47864a185ef64f55e03175014b29130f7de6a45fa95e01059d",
+    "apps/manager-web/src/test/setup.ts": "c19656644ed3a5a2f82838b66418a8bfa294e0e263e1da665ae756d6347d7b92",
+    "apps/manager-web/test/manager.spec.mjs": "113f4c4a1c5e03f038db48d2c9edc0477a5bda3b374b002279a46f2e8fd9a824",
+    "apps/manager-web/test/public/mockServiceWorker.js": "26171599d94d5445297303f3a1f1cedec26835ea3d0057dcfa92ec520cb35cca",
+    "apps/manager-web/tsconfig.json": "34c8008f494ceac6c6636bc6c56404bbf3fc5a95a79c7b57aa608869c0cbab18",
+    "apps/manager-web/vite.config.ts": "903d015c7a4c089de8809ed963a0a819a53832eacd2ae2accb421eddffd1d453",
+    "apps/manager-web/vitest.config.ts": "f79c28cf77f7b961ccf68add88b8e52e3ad3bc03e2245d7f66d018e99b6b9086",
+    "docs/online_academy_manager_frontend_implementation_2026_11_01.md": "0d1c3689137bfb6db75c3e5e2db39b7464f3c02544cd94d11af73e95d86c700f",
+    "eslint.config.mjs": "cf4b665d45043c14903f71e0f45b0fbf97f8ad942089365b1c2a49c6b45c5272",
+    "infra/vercel/build.mjs": "8db6a12ef516b324376d6849dd51c538c87f8fe669bc841dddf6edc075bf5e77",
+    "packages/api-contracts/openapi/openapi.json": "52eec3136cb4e730366d5201637bc7f230dcf3455d195d82ce8800443e02d1d6",
+    "packages/api-contracts/orval.config.mjs": "7bdabf6eefac64cb61c9848c8ed434ea8e221ccb0023a924a50d90cef33ab783",
+    "packages/api-contracts/package.json": "d0260ec24a024ebc883f5a56d3be6a49030736958aaa3cff0c448bccf8d0d512",
+    "packages/api-contracts/scripts/generate-openapi.mjs": "884a66de12a0a0dde6cfb106703823f1b7f284b0250a4bf6870b5636a5d380d9",
+    "packages/api-contracts/scripts/publish-client.mjs": "2b90ce94e50c81621716acde15cfca8e1fc8fb94e02fda8c7ec888845ae58583",
+    "packages/api-contracts/src/generated/client.ts": "d5fc1279b3476814b66047bc2afc9ecc2c3f7708885c38d4de1bff4cc3cc14f2",
+    "packages/api-contracts/src/generated/manager-error-codes.ts": "60ff36bf83ed6e157a08f00f6f0f94fc83f11558992a07fc02fe4577b3dce485",
+    "packages/api-contracts/src/generated/openapi.ts": "1ce562eca74bf595d2677e73e46edbb71d3bb1dab770c3551615dcfbeaa7715f",
+    "packages/api-contracts/src/index.ts": "97337bd5d11e5b0dd817d666deb62fd8ba70812e94a6743c1fb310592f63283f",
+    "pnpm-lock.yaml": "b812c8275a90334ebd885ade0a62a3a5f6f5a51ed81b136117d4aefdef5e24e9",
+    "scripts/generate-manager-errors.mjs": "b2435473fb28ceed03d315778671e4128ac4a281f0df6f07fb8b10d2b1c5c834",
+    "scripts/mgr10-bundle-budget.mjs": "6896818e9b4d9024032d40d7fd1d3575827986bfb0fa733e0b25672ade875c2a",
+    "scripts/write-generated.mjs": "66ef9c5f900d1b4a22e7c2d1d787880c2437038d0317de028abd55be3d55c8ca",
+    "tests/unit/manager-options.test.mjs": "52d1e99b2ddbcb2bfe7fc1f68ce239d89cf69f1221d973a1a3da2876677d53cf",
+    "tests/unit/manager-web-architecture.test.mjs": "c5496a5a567fe2f4abfc693745c560b45e3639934edd87ccadd81cea52054a2e",
+    "vercel.json": "3e7e671bd7085ac751e923b15ccbb88919d0975c1f4e0fee13d161aee063c16b"
+  }
+}

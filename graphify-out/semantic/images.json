@@ -1,0 +1,584 @@
+{
+  "nodes": [
+    {
+      "id": "template_student_image",
+      "label": "Кабинет ученика — главная",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "Показан 6 класс; исходная образовательная модель рассчитана на 7–12 классы. Данные календаря и примеры учеников — демонстрационные.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_student_lessons",
+      "label": "Ближайшие уроки и Google Meet",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_student_homework",
+      "label": "Домашние задания",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_student_skills",
+      "label": "Мой путь знаний: Знакомлюсь / Практикую / Применяю",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_student_subscription",
+      "label": "Информационный абонемент и остаток занятий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_student_materials",
+      "label": "Материалы, уведомления и контакты менеджера",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_image",
+      "label": "CRM менеджера — главная",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "Кнопку подтверждения оплаты нужно сверить с DEV-16/C: факт денег подтверждает руководитель. Визуальные сообщения не утверждают встроенный чат или автоматическую внешнюю отправку.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_manager_leads",
+      "label": "Заявки, пробные уроки и воронка",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_tasks",
+      "label": "Очередь задач менеджера",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_calendar",
+      "label": "Расписание и календарь",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_payments",
+      "label": "Оплаты и абонементы",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_communications",
+      "label": "История коммуникаций и контакты семьи",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_manager_teachers",
+      "label": "Операционные карточки преподавателей",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers_image",
+      "label": "Кабинет преподавателя — главная",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "Раздел Сообщения нужно трактовать через утверждённые организационные обращения, а не межурочный чат с учеником. Проценты прогресса требуют сверки с педагогической моделью.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_techers_today",
+      "label": "Панель Сегодня и ближайшие занятия",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers_calendar",
+      "label": "Календарь преподавателя",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers_homework",
+      "label": "Очередь проверки домашних заданий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers_students",
+      "label": "Закреплённые ученики",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers_notifications",
+      "label": "Рабочие уведомления и материалы",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers2_image",
+      "label": "Три экрана преподавателя — обзорный референс",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "В таблице встречаются 350 MDL как начисление за урок; это не подтверждает ставку преподавателя. Проценты, отзывы и самостоятельное планирование не становятся требованиями только из-за изображения.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_techers2_earnings",
+      "label": "Начисления, детализация и выплаты",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers2_progress",
+      "label": "Прогресс ученика, цели и учебная история",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_techers2_lessons",
+      "label": "Недельное расписание и история занятий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_lessons_mockup_image",
+      "label": "Преподаватель — занятия",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "Кнопка Запланировать занятие требует маршрута запроса менеджеру: самостоятельное бронирование преподавателем не следует из макета.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_teacher_lessons_mockup_filters",
+      "label": "Сегодня / неделя / месяц / архив",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_lessons_mockup_lesson",
+      "label": "Карточки уроков, статус и переход в Meet",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_lessons_mockup_statistics",
+      "label": "Сводка проведённых, отменённых и перенесённых занятий",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_progress_mockup_image",
+      "label": "Преподаватель — прогресс учеников",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "Процентные шкалы и агрегаты Достигли цели — визуальные идеи. Не подменяют карту навыков и проверки 4 / отчёты 8 уроков.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_teacher_progress_mockup_filters",
+      "label": "Поиск, фильтры предмета и статуса",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_progress_mockup_goals",
+      "label": "Цели и карточки прогресса учеников",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_progress_mockup_recommendations",
+      "label": "Достижения и рекомендации",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_earnings_mockup_image",
+      "label": "Преподаватель — начисления",
+      "file_type": "image",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Изображение целиком",
+      "status": "VISUAL_REFERENCE",
+      "summary": "В макете бонус +30 MDL за высокий рейтинг и выплата 5-го числа. Это не утверждённые правила: сверить со шкалой 200/220/250 MDL, стажем/активными учениками и закрытием финансового периода.",
+      "extraction_method": "host_agent_vision"
+    },
+    {
+      "id": "template_teacher_earnings_mockup_rate",
+      "label": "Базовая ставка, бонус и итог месяца",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_earnings_mockup_ledger",
+      "label": "Детализация начислений и история выплат",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    },
+    {
+      "id": "template_teacher_earnings_mockup_statistics",
+      "label": "Статистика занятий и начислений",
+      "file_type": "concept",
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "status": "VISUAL_REFERENCE"
+    }
+  ],
+  "edges": [
+    {
+      "source": "template_student_image",
+      "target": "template_student_lessons",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_student_image",
+      "target": "template_student_homework",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_student_image",
+      "target": "template_student_skills",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_student_image",
+      "target": "template_student_subscription",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_student_image",
+      "target": "template_student_materials",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\student.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_leads",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_tasks",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_calendar",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_payments",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_communications",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_manager_image",
+      "target": "template_manager_teachers",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\manager.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers_image",
+      "target": "template_techers_today",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers_image",
+      "target": "template_techers_calendar",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers_image",
+      "target": "template_techers_homework",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers_image",
+      "target": "template_techers_students",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers_image",
+      "target": "template_techers_notifications",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers2_image",
+      "target": "template_techers2_earnings",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers2_image",
+      "target": "template_techers2_progress",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_techers2_image",
+      "target": "template_techers2_lessons",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\techers2.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_lessons_mockup_image",
+      "target": "template_teacher_lessons_mockup_filters",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_lessons_mockup_image",
+      "target": "template_teacher_lessons_mockup_lesson",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_lessons_mockup_image",
+      "target": "template_teacher_lessons_mockup_statistics",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_lessons_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_progress_mockup_image",
+      "target": "template_teacher_progress_mockup_filters",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_progress_mockup_image",
+      "target": "template_teacher_progress_mockup_goals",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_progress_mockup_image",
+      "target": "template_teacher_progress_mockup_recommendations",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_progress_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_earnings_mockup_image",
+      "target": "template_teacher_earnings_mockup_rate",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_earnings_mockup_image",
+      "target": "template_teacher_earnings_mockup_ledger",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    },
+    {
+      "source": "template_teacher_earnings_mockup_image",
+      "target": "template_teacher_earnings_mockup_statistics",
+      "relation": "depicts",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "D:\\OnlineSchool\\template\\teacher_earnings_mockup.png",
+      "source_location": "Видимый блок интерфейса",
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "unavailable_in_host_session"
+}

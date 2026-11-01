@@ -1,0 +1,97 @@
+{
+  "parser": "v8.7",
+  "queries": [
+    {
+      "index": 0,
+      "statements": 1,
+      "sha256": "ba85a95ac990d3cb3a6c3a50ce9e42db55b727354a01a65c7df64f9771323fb5"
+    },
+    {
+      "index": 1,
+      "statements": 1,
+      "sha256": "71d500622c1da3687cc9a297e4116c26fc371b79346a3d5212d3ec8ddc4ede68"
+    },
+    {
+      "index": 2,
+      "statements": 1,
+      "sha256": "df4dd6cbb9897a1fabdd0fb068b23fd731afd9e58a876dcdd1ffe3363c307b75"
+    },
+    {
+      "index": 3,
+      "statements": 1,
+      "sha256": "b83fa8e7379f03e9cd92e2290a4a994caac6ff55563b2b2743c4f0a663933b54"
+    },
+    {
+      "index": 4,
+      "statements": 1,
+      "sha256": "d30d22ae733b85f4c6d78002c459f0a087c6676fb7404e61506b6bc51d4eeaf0"
+    },
+    {
+      "index": 5,
+      "statements": 1,
+      "sha256": "2b819dfbc0e1d53007602d3592f9393f0718626189ac1ea0bbc6ac5df4ce45d4"
+    },
+    {
+      "index": 6,
+      "statements": 1,
+      "sha256": "941c901b5506502c270926ce183c47bc9c8fa486cd5fe8f86deac9117f0bf8d6"
+    },
+    {
+      "index": 7,
+      "statements": 1,
+      "sha256": "6b236239151b41d3697a4bcb00408cf29a3a3ff428b35df9bc07fcbed8d8866a"
+    },
+    {
+      "index": 8,
+      "statements": 1,
+      "sha256": "f91b9bcbbaef96ef153a8784443fc0ebdc67747fb8008c44b4775cfbe74f7757"
+    },
+    {
+      "index": 9,
+      "statements": 1,
+      "sha256": "38d67e277db64e16a2e3a2d85b774236dbcac05d8026166884a6a2e0479fdcb8"
+    },
+    {
+      "index": 10,
+      "statements": 1,
+      "sha256": "2cf2f7ddf272169f305c40382f77825d86ad13813b871b7f2faf21fe5fd67f42"
+    },
+    {
+      "index": 11,
+      "statements": 1,
+      "sha256": "8fd4c12c8b0ea51c556707103b054eac3302d88e06d0fe743b711170e0a9adf6"
+    },
+    {
+      "index": 12,
+      "statements": 1,
+      "sha256": "8d35e592ee1775066b7e71508df6077fe3fd7038e1bf315dd707aabf5e53cb3f"
+    },
+    {
+      "index": 13,
+      "statements": 1,
+      "sha256": "324d880a458fa145f65dc9c1ab0c1cac2b9708ab8e96e628f0bdcc7ed9214f5c"
+    },
+    {
+      "index": 14,
+      "statements": 1,
+      "sha256": "a33bfd0b6e4e0855c4c205847ce68e6d8d50166246c418c694b6e08f0bc8e396"
+    },
+    {
+      "index": 15,
+      "statements": 1,
+      "sha256": "04f767e5082aba0f6f9d372db43274b4a6b9022e043180bcab78e0bdb5caf283"
+    },
+    {
+      "index": 16,
+      "statements": 1,
+      "sha256": "92b4ceb5fdb2783808ed6d8befa3a12091b9b22a16a8315f14bea008d8ef0366"
+    }
+  ],
+  "migration": {
+    "path": "packages/db/prisma/migrations/20261031140000_mgr06_schedule/migration.sql",
+    "sha256": "5062d7b7031ecb336aab01caa3004fc3d7cc4e1e9760385f7328df59efed02fc",
+    "statements": 13,
+    "plpgsqlFunctions": 2
+  },
+  "scope": "Offline syntax only. No PostgreSQL execution, constraint/race/grant validation or migration application."
+}

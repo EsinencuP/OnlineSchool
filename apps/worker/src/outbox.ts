@@ -108,6 +108,16 @@ export class OutboxWorker {
           locked_until: until,
         },
       });
+      if (event.topic === 'notification.deliver.v1')
+        await tx.notificationDispatch.updateMany({
+          where: {
+            id: event.aggregate_id,
+            channel: 'EMAIL',
+            status: 'QUEUED',
+            first_attempt_at: null,
+          },
+          data: { first_attempt_at: now },
+        });
       return { event: reservedEvent, job: reserved, token };
     }, transactionOptions);
   }
@@ -178,6 +188,11 @@ export class OutboxWorker {
   }
 
   private async dead(tx: Tx, event: OutboxEvent, job: JobRecord, now: Date, code: string) {
+    if (event.topic === 'notification.deliver.v1')
+      await tx.notificationDispatch.updateMany({
+        where: { id: event.aggregate_id, status: 'QUEUED' },
+        data: { status: 'FAILED', failure_reason: 'DELIVERY_FAILED' },
+      });
     await tx.jobRecord.update({
       where: { id: job.id },
       data: {

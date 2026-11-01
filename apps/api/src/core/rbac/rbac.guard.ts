@@ -13,6 +13,10 @@ import type { DomainError } from '../errors/domain-error.js';
 import { cookie } from '../http.js';
 import type { AccountContext, HttpRequest } from '../http.js';
 import { ACCESS } from './decorators.js';
+import {
+  studentPasswordChangeRoute,
+  studentLogoutRoute,
+} from '../session/student-password-policy.js';
 
 @Injectable()
 export class AccessService {
@@ -33,6 +37,7 @@ export class AccessService {
     const permissions = this.metadata<string[]>(ACCESS.permissions, context);
     const authenticated = this.metadata<boolean>(ACCESS.authenticated, context);
     const student = this.metadata<string>(ACCESS.student, context);
+    const request = context.switchToHttp().getRequest<HttpRequest>();
     const path = context
       .switchToHttp()
       .getRequest<HttpRequest>()
@@ -48,6 +53,15 @@ export class AccessService {
       return err(domainError('RECOVERY_REGISTRATION_ONLY', 403));
     if (actor?.kind === 'STUDENT' && path?.startsWith('/api/v1/auth/webauthn/'))
       return err(domainError('STUDENT_PASSKEYS_NOT_ALLOWED', 403));
+    if (actor?.kind === 'STUDENT' && actor.mustChangePassword && !studentLogoutRoute(request)) {
+      if (
+        actor.temporaryPasswordExpiresAt &&
+        actor.temporaryPasswordExpiresAt <= actor.lastActiveAt
+      )
+        return err(domainError('TEMPORARY_PASSWORD_EXPIRED', 403));
+      if (!studentPasswordChangeRoute(request))
+        return err(domainError('PASSWORD_CHANGE_REQUIRED', 403));
+    }
     if (publicRoute) {
       if (
         roles ||
@@ -60,6 +74,10 @@ export class AccessService {
       return ok(undefined);
     }
     if (!actor) return err(domainError('UNAUTHENTICATED', 401));
+    // Feature routes can use a stable role-denial code without bypassing core RBAC/MFA.
+    const roleErrorCode = this.metadata<string>(ACCESS.roleErrorCode, context);
+    if (roleErrorCode && roles?.length && !roles.some((role) => actor.roles.includes(role)))
+      return err(domainError(roleErrorCode, 403));
     if (!roles?.length && !permissions?.length && !authenticated)
       return err(domainError('FORBIDDEN', 403));
     const req = context.switchToHttp().getRequest<HttpRequest>();
@@ -96,7 +114,10 @@ export class SessionGuard implements CanActivate {
     const token = cookie(req, SESSION_COOKIE);
     const publicRoute = this.access.metadata<boolean>(ACCESS.public, context);
     if (publicRoute && !token) return true;
-    const result = await this.store.resolve(token);
+    const result = await this.store.resolve(token, undefined, {
+      managerProfileErrors:
+        this.access.metadata<boolean>(ACCESS.managerProfileErrors, context) === true,
+    });
     if (result.ok) {
       req.account = result.value;
       return true;

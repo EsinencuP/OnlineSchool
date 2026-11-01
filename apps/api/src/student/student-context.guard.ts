@@ -5,7 +5,7 @@ import { domainError, fail, unwrap } from '../core/errors/domain-error.js';
 import { MeService } from './me/me.service.js';
 import { isStudentRequest } from './student-context.interface.js';
 import type { StudentRequest } from './student-context.interface.js';
-import { studentBootstrapRoute } from './access-policy.js';
+import { studentPasswordChangeRoute } from '../core/session/student-password-policy.js';
 @Injectable()
 export class StudentContextGuard implements CanActivate {
   private readonly pending = new WeakMap<
@@ -64,15 +64,15 @@ export class StudentContextGuard implements CanActivate {
     return this.initialPassword(req);
   }
   private async initialPassword(req: StudentRequest): Promise<boolean> {
-    if (!req.studentCtx?.mustChangePassword || studentBootstrapRoute(req)) return true;
+    if (!req.studentCtx?.mustChangePassword || studentPasswordChangeRoute(req)) return true;
     unwrap(
       await this.audit.denial({
         requestId: req.requestId!,
         actor: req.account!,
         action: 'student.initial-password.denied',
-        code: 'MUST_CHANGE_PASSWORD',
+        code: 'PASSWORD_CHANGE_REQUIRED',
       }),
     );
-    return fail(domainError('MUST_CHANGE_PASSWORD', 403));
+    return fail(domainError('PASSWORD_CHANGE_REQUIRED', 403));
   }
 }

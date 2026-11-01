@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-01",
+  "scope": "MGR-08 targeted code checks; no PostgreSQL or external message mutations",
+  "ownerDecisions": "docs/online_academy_manager_notification_decisions_2026_11_01.md",
+  "checks": {
+    "mgr08": {
+      "suites": 3,
+      "passed": 59,
+      "http": 36,
+      "unit": 20,
+      "sdk": 3
+    },
+    "affectedRegression": {
+      "suites": 13,
+      "passed": 408,
+      "includes": "MGR03 accounts; MGR04 subscriptions; MGR05 payments; MGR06 schedule; MGR07 tasks; STU10 notifications. Updated legacy worker fixtures for enqueue then delivery; required schedule lookup mock compatibility corrected and failed suites rerun. Repeated suites counted once."
+    },
+    "architectureAndSchema": {
+      "suites": 2,
+      "passed": 28
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "withoutHttpListener": true,
+      "withoutDatabaseUrl": true
+    },
+    "uniqueChecks": 496,
+    "build": [
+      "api",
+      "worker",
+      "api-contracts"
+    ],
+    "typecheck": [
+      "student-cabinet",
+      "qa-shell"
+    ],
+    "targetedEslint": "PASS (unused legacy handler time arguments removed; affected file rerun)",
+    "noDirectManagerProvider": "PASS",
+    "prismaValidate": "PASS",
+    "prismaGeneration": "PASS",
+    "openapiOrvalGeneration": "PASS",
+    "openapiOperations": 125,
+    "schemaModels": 94,
+    "foreignKeys": 221,
+    "sqlSyntax": "mgr08-sql-syntax.json"
+  },
+  "limitations": [
+    "Migration prepared but not applied; no database writes, migrate dev/deploy or migration-chain validation.",
+    "Mock Prisma and serialized competing HTTP requests do not verify PostgreSQL18 races, locks, constraints, grants or triggers.",
+    "All external-provider calls were mocked; no real email sent. Verified Resend sender/key and working delivery acceptance remain required.",
+    "SENT for EMAIL means provider API acceptance, not mailbox delivery or read. Bounce webhook handling not implemented.",
+    "Provider deduplication window is24h; after23h from first committed claim the uncertain delivery is marked FAILED without automatic resend.",
+    "Manual text rejects common credential markers; arbitrary secret recognition cannot be guaranteed. No generated credentials enter template variables, delivery Outbox or Audit.",
+    "System no-channel intent is FAILED while source business succeeds per owner decision; manual selected-channel absence remains422.",
+    "FND-GATE and working acceptance not claimed."
+  ],
+  "sourceSha256": {
+    ".env.example": "9225f32e4603a527f9c1768ab2cd566be40ede31f76359938e03c4b3f7d2e702",
+    "apps/api/src/modules/finance/manager-disputes/dispute.service.ts": "4cfbde4753866410c0a018c7bdefcd970bfc5c9bfdbbf6d721174fd915fe5bf9",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.service.ts": "5f11220235ce39afd4ab6dbf3d913068507b87506303e425bf955b812b45bb00",
+    "apps/api/src/modules/finance/payments.service.ts": "379b6ad895c3ee097ff9b91c3717381dc83a0da211aff2a30deff1eb432832df",
+    "apps/api/src/modules/manager/accounts/manager-accounts.service.ts": "5c862ce84bbbf5a3b9a338238303b21d892cebf74ce15c8424a02259d3df4738",
+    "apps/api/src/modules/manager/dto/manager-notification.dto.ts": "d49e85770048d3a707952ebf8a133ea8b6cc314e83170d782391ec2b5b008e35",
+    "apps/api/src/modules/manager/manager.module.ts": "7f7613b0f99f2716f7068c76e0b83552112027eb0c6d51cce999de4f5ed0f870",
+    "apps/api/src/modules/manager/notifications/MGR-08.md": "732a5e4ede772d88d3a5e481440daf8bc0b70729f579af033164025250e048ed",
+    "apps/api/src/modules/manager/notifications/manager-notifications.controller.ts": "9a5b6eab8e1b32266bd9d3ef98f58307ef3d2c7fab560ec7416598c9b9a44162",
+    "apps/api/src/modules/manager/notifications/manager-notifications.guard.ts": "df44cf15799fe4b661b7653a3eafea5ede0febec91a1e60a662bdaca0e93db20",
+    "apps/api/src/modules/manager/notifications/manager-notifications.service.ts": "c38ccbdbf6735901d83df2b29ecd81f9028c492c8a6f426ca345ce597c2ae1b6",
+    "apps/api/src/modules/manager/tasks/manager-tasks.service.ts": "41cd4a8ea01400a36800790a9c8b94f0475c41056c538e4daa03d830f3140085",
+    "apps/api/src/modules/notifications/notification-outbox.publisher.ts": "353dc9087f36cedae1294ee6c25057e06243b09af1e8ef5938979a047a7d9947",
+    "apps/api/src/modules/notifications/notification.service.ts": "f18261ea0e282c944dcbe9fbb059d3a2c3b705561c139cd604f9654c02abf48c",
+    "apps/api/src/modules/notifications/templates.ts": "381b22b5211a499a6339b13ee5656dce717bb0a83efb36a67d8b7f2c9cf33a2c",
+    "apps/api/src/modules/schedule/manager/workflow.service.ts": "01dcdf5247939ff239cfda5462565c07c06dc952ef8099870c9e656888213e70",
+    "apps/api/src/openapi/dtos.ts": "60b7915e0d06b0922b9c6ad3fa5b55965a0c0c16ca4a9ed88904ce594264bc65",
+    "apps/api/src/student/notifications/notifications.dto.ts": "db190a21c037cabee964e0333109f6122e44a0f1e0af6e7347e26d332079af11",
+    "apps/api/src/student/notifications/notifications.service.ts": "41153050fc181964b03091c084ba2a5d0ef3340174adb4c5f1d6387b0adef3db",
+    "apps/worker/src/handlers.ts": "01dcd7cc4e5855fb6cb7a15328a0e141d348d99c041f49c21468a7695d84c94d",
+    "apps/worker/src/notification-delivery.ts": "193001d19e8d549902343381537b9e4f2203da3e7d45e684743298d61a131136",
+    "apps/worker/src/notifications.ts": "1ac9626bf05e91951bd7dd1e04b2ec2e1b53c02ea626905714bc645887e58d4c",
+    "apps/worker/src/outbox.ts": "ee6a6f085c22fc5026fe7688be3ac4d0962eb6f8f9c5b7338739684c87259ca4",
+    "docs/online_academy_manager_notification_decisions_2026_11_01.md": "bf9e9effb50ca6c1d0be9caedd4c41fcdbecb74cf4e79d39d40efc5596a3a51e",
+    "package.json": "e5b1fa2477d0df6b64013919694b7438ad2bb49ea9821723037c2169584d15f2",
+    "packages/api-contracts/openapi/openapi.json": "de3c26e21d5f5a30ec2ed303b3f5254618efab42d2b6fbd096c5655f9c4c636c",
+    "packages/api-contracts/src/generated/client.ts": "b3575d10e8fd066464ddd926859c90170099512e5743ca34b15d6252ce66fc07",
+    "packages/api-contracts/src/generated/openapi.ts": "2e2c93707a9999d6e9c2081765c13cdbe516fb2298c01d2ae357ed8827491e8f",
+    "packages/db/prisma/migrations/20261101100000_mgr08_notifications/migration.sql": "abda271dbe19e4ecf9a205f0b8352cff8d8c922a8681b0c29ad39a32edc42633",
+    "packages/db/prisma/schema.prisma": "483aa2a5cc6aebcfbc803b338318766a6739c566b2b3356f9cdd1412a5cec67f",
+    "packages/db/schema.contract.json": "8ebd2e16a724e9cb1bf408295ddb07e784ed5ba7748ecba172530baa1a6b199b",
+    "tests/support/manager-crm-fixture.mjs": "ed12be6b45faa4fccc15d7914234c71c523be847ba03974dbf1fd6fad8ff05ee",
+    "tests/support/notification-storage.mjs": "72ebe2fe1fc563aeb9278a3cea35ef9203b1eb38ee087d297891914a6fb2748e",
+    "tests/unit/manager-accounts-http.test.mjs": "fff4e8b7b9017575e08414ad99d1a125cd9e4da41588979c801ea34b9a30b9ab",
+    "tests/unit/manager-accounts-sdk.test.mjs": "a154896d8223cb2563315329e68913952a2c071497868c7f8cd6171e68573864",
+    "tests/unit/manager-notifications-http.test.mjs": "bda0cdf5747b5d837e7f613eb82c9c9bcb8dd298242dc1d068e5c4e11b94851a",
+    "tests/unit/manager-notifications-sdk.test.mjs": "ba8ff92f871f20ab3ad53e007cf44b1289b5b5892ed625994f149aa029e5a99d",
+    "tests/unit/manager-notifications.test.mjs": "7eae74ab8d288ec2c2c85828e6d53dc45d48b6e874cea24f453f4d1fdd1ad635",
+    "tests/unit/manager-payments-http.test.mjs": "845f1f985100cb6c8cc8ee985b4716b94190505a9c2bdbfcce667d5dec8307ca",
+    "tests/unit/manager-subscriptions-http.test.mjs": "5b6a6a9106f0d19d47b9712a6f1f9def590cadcf6b37b7a1733d3238698f7c7d",
+    "tests/unit/manager-subscriptions.test.mjs": "662237bb210e61c38a92e7303afa3efa38a2d8be346604becd20837bbef7ccb4",
+    "tests/unit/student-notifications.test.mjs": "55a3e0b0feb456763ada70c4bfa4a4adb17bef3ec6f64c643bde4ce4ca1bb2b9"
+  }
+}

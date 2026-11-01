@@ -1,0 +1,106 @@
+{
+  "nodes": [
+    {
+      "id": "mgr06_owner_20261031",
+      "label": "MGR06 owner:60-minute lead; specific director exception",
+      "source_file": "D:\\OnlineSchool\\docs\\online_academy_manager_schedule_decisions_2026_10_31.md",
+      "file_type": "document",
+      "source_location": "L1",
+      "source_sha256": "3f5fed19dc01e09228dc0f372cea54abf1378a14449a4b4db5a7334fac3854a2",
+      "review_status": "REVIEWED",
+      "status": "OWNER_APPROVED_2026_10_31",
+      "summary": "Owner explicitly answered60 for default lead and retained director decision for late transfer without lost right and third student transfer.24-hour timely boundary and two standard transfers per original lesson derive from existing TRF rules. Teacher/academy/freeze changes do not spend student transfer limit. No fabricated historical count or Meet API completion.",
+      "extraction_method": "host_review_of_authored_changes"
+    },
+    {
+      "id": "mgr06_implementation",
+      "label": "MGR06: scoped calendar commands, paid cancellations and director exceptions",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "file_type": "document",
+      "source_location": "L1",
+      "source_sha256": "2392e27ecab9eb354cfbf1bcd74d2725517a03e9f2dc6da5cc961e119c71d7f4",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "summary": "Six manager routes reuse canonical BookingService and EXCLUDE with scoped queries, CSRF/UUID-key, atomic audit/outbox and<=3 retry. Exact pending proposal can be reviewed/approved by director, then applied once with a new command key; no flag-only bypass. Legacy individual calendar aliases restricted to DIRECTOR. ManagerFinanceFacade publishes paid APPROVED_CANCELLATION atomically without conducted outcome or ordinary payroll. Real freeze cancellation port includes STAR_PENDING/overlap and full rollback. Per-lesson Meet override/clear reaches student reads; masked audit/outbox and postcommit capability projection keep URLs out of command cache. Meet auto generation remains explicit unavailable port.109 own+340 affected+9 kernel unit+1 worker smoke checks pass,459 unique.93 models,216FK,116 OpenAPI operations. Migration unapplied and live PostgreSQL/Meet/external notification acceptance pending.",
+      "extraction_method": "host_review_of_authored_changes"
+    },
+    {
+      "id": "mgr06_schema",
+      "label": "MGR06 schema: per-lesson metadata and immutable director exception",
+      "source_file": "D:\\OnlineSchool\\packages\\db\\prisma\\schema.prisma",
+      "file_type": "code",
+      "source_location": "L1",
+      "source_sha256": "399eb7309f0e9efadeac2f8f2bf6beaaa670cb39cd4a4d9c1aa31532671b5dfb",
+      "review_status": "REVIEWED",
+      "status": "PREPARED_MIGRATION_NOT_APPLIED",
+      "summary": "One new ScheduleChangeApproval model binds immutable proposal hash, original lesson/version, requester, director decision and one-time consumption. Lesson subscription FK/Meet override/new transfer counter plus unverified historical flag preserve original IDs/data. Existing SQL EXCLUDE and approved-cancellation basis reused;13 new migration statements and2 functions parsed offline,17 captured SQL variants parsed. No migration or PostgreSQL race/grant claim.",
+      "extraction_method": "host_review_of_authored_changes"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mgr06_implementation",
+      "target": "mgr06_owner_20261031",
+      "relation": "implements_approved_schedule_rules",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr06_implementation",
+      "target": "mgr04_implementation",
+      "relation": "implements_atomic_freeze_cancellation_port",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr06_implementation",
+      "target": "mgr05_implementation",
+      "relation": "reuses_canonical_finance_facade_and_ledger",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr06_implementation",
+      "target": "mgr06_schema",
+      "relation": "uses_prepared_schema",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr06_implementation",
+      "target": "stu02_dashboard",
+      "relation": "preserves_join_window_with_lesson_meet_override",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr06_implementation",
+      "target": "stu03_lessons",
+      "relation": "shares_instance_meet_source_without_changing_join_policy",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\schedule\\MGR-06.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review, no external LLM calls"
+}

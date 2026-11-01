@@ -15,7 +15,7 @@ export interface HistoryRow {
   duration_minutes: number;
   teacher_name: string;
   subject_name: string;
-  attendance_status: 'COMPLETED' | 'NO_SHOW';
+  attendance_status: 'COMPLETED' | 'NO_SHOW' | 'CANCELLED';
   consumption_id: string | null;
   balance_before: string | null;
   balance_after: string | null;
@@ -27,7 +27,7 @@ export function historyRecords(studentId: string, time: Date): Prisma.Sql {
   return Prisma.sql`
     SELECT l.id,l.scheduled_at,coalesce(o.duration_min,round(extract(epoch FROM(l.scheduled_end_at-l.scheduled_at))/60)::int) AS duration_minutes,
       t.full_name AS teacher_name,s.name AS subject_name,
-      CASE WHEN l.status='CONDUCTED' THEN 'COMPLETED' ELSE 'NO_SHOW' END AS attendance_status,
+      CASE WHEN l.status='CONDUCTED' THEN 'COMPLETED' WHEN charge.basis='APPROVED_CANCELLATION' THEN 'CANCELLED' ELSE 'NO_SHOW' END AS attendance_status,
       charge.id AS consumption_id,charge.entitlement_balance_before::text AS balance_before,charge.entitlement_balance_after::text AS balance_after,
       EXISTS(SELECT 1 FROM crm_tasks task WHERE task.lesson_id=l.id AND task.student_id=e.student_id AND task.type='ATTENDANCE_DISPUTE'
         AND task.status IN ('OPEN','IN_PROGRESS')) AS has_open_dispute,
@@ -39,14 +39,14 @@ export function historyRecords(studentId: string, time: Date): Prisma.Sql {
       LEFT JOIN lesson_outcome_reports r ON r.id=l.confirmed_report_id AND r.lesson_occurrence_id=l.id
       JOIN teacher_accounts t ON t.id=coalesce(o.actual_teacher_id,l.scheduled_teacher_id)
       JOIN subjects s ON s.id=e.subject_id
-      LEFT JOIN LATERAL(SELECT c.id,le.entitlement_balance_before,le.entitlement_balance_after
+      LEFT JOIN LATERAL(SELECT c.id,c.basis,le.entitlement_balance_before,le.entitlement_balance_after
         FROM entitlement_consumptions c JOIN subscriptions sub ON sub.id=c.subscription_id AND sub.enrollment_id=e.id
           JOIN ledger_documents d ON d.consumption_id=c.id JOIN ledger_entries le ON le.document_id=d.id
         WHERE c.lesson_occurrence_id=l.id AND c.consumed_at<=${time} AND (c.cancelled_at IS NULL OR c.cancelled_at>${time}) AND le.published_at<=${time}
         ORDER BY c.consumed_at DESC,c.id DESC LIMIT 1) charge ON true
     WHERE e.student_id=${studentId}::uuid AND l.scheduled_at<=${time}
       AND ((l.status='CONDUCTED' AND o.id IS NOT NULL) OR
-        (l.status='CANCELLED' AND r.result='NOT_CONDUCTED' AND r.student_no_show AND r.reported_at<=${time}))`;
+        (l.status='CANCELLED' AND ((r.result='NOT_CONDUCTED' AND r.student_no_show AND r.reported_at<=${time}) OR charge.basis='APPROVED_CANCELLATION')))`;
 }
 @Injectable()
 export class StudentHistoryService {

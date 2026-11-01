@@ -35,8 +35,8 @@ beforeEach(() => {
   audit = { denial: jest.fn(async () => ({ ok: true, value: undefined })) };
   guard = new StudentContextGuard(me, audit);
   req = {
-    method: 'GET',
-    originalUrl: '/api/v1/student/me',
+    method: 'PATCH',
+    originalUrl: '/api/v1/student/security/change-password',
     account: actor,
     requestId: randomUUID(),
   };
@@ -146,7 +146,7 @@ test('student global guards ignore other API modules', async () => {
   expect(client.studentAccount.findFirst).not.toHaveBeenCalled();
 });
 test.each(['/me', '/security/change-password'])(
-  'inactive access and initial password do not block bootstrap route %s',
+  'MGR-03 password change remains available; me requires the password already changed: %s',
   async (path) => {
     req.method = path.includes('password') ? 'PATCH' : 'GET';
     req.originalUrl = '/api/v1/student' + path + '?arbitrary=1';
@@ -157,8 +157,14 @@ test.each(['/me', '/security/change-password'])(
       mustChangePassword: true,
       subjectIds: [],
     };
-    await expect(new ActiveSubscriptionGuard(audit).canActivate(context(req))).resolves.toBe(true);
-    expect(audit.denial).not.toHaveBeenCalled();
+    const access = new ActiveSubscriptionGuard(audit);
+    if (path === '/me') {
+      await expect(access.canActivate(context(req))).rejects.toMatchObject({
+        domain: { status: 403, code: 'PASSWORD_CHANGE_REQUIRED' },
+      });
+      req.studentCtx.mustChangePassword = false;
+    }
+    await expect(access.canActivate(context(req))).resolves.toBe(true);
   },
 );
 test.each(['/dashboard', '/profile-other', '/security-other', '/me/foreign'])(
@@ -206,7 +212,7 @@ test('protected routes require initial password change, while paid access is acc
     subjectIds: [],
   };
   await expect(new ActiveSubscriptionGuard(audit).canActivate(context(req))).rejects.toMatchObject({
-    domain: { status: 403, code: 'MUST_CHANGE_PASSWORD' },
+    domain: { status: 403, code: 'PASSWORD_CHANGE_REQUIRED' },
   });
   req.studentCtx.mustChangePassword = false;
   await expect(new ActiveSubscriptionGuard(audit).canActivate(context(req))).resolves.toBe(true);

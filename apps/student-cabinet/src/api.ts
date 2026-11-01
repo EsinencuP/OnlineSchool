@@ -44,7 +44,7 @@ export function inspect<T>(result: Result<T, ClientError>, allow401 = false): Pr
   if (
     !blocked &&
     (error.status === 402 ||
-      error.code === 'MUST_CHANGE_PASSWORD' ||
+      ['MUST_CHANGE_PASSWORD', 'PASSWORD_CHANGE_REQUIRED'].includes(error.code) ||
       (error.status === 401 &&
         !(allow401 && ['CURRENT_PASSWORD_INVALID', 'INVALID_CREDENTIALS'].includes(error.code))))
   ) {
@@ -52,7 +52,7 @@ export function inspect<T>(result: Result<T, ClientError>, allow401 = false): Pr
     void queryClient.cancelQueries();
     queryClient.clear();
     redirect(
-      error.code === 'MUST_CHANGE_PASSWORD'
+      ['MUST_CHANGE_PASSWORD', 'PASSWORD_CHANGE_REQUIRED'].includes(error.code)
         ? '/student/security/change-password'
         : error.status === 402
           ? '/student/suspended'
@@ -65,7 +65,18 @@ export function read<T>(command: Command<T>, signal?: AbortSignal) {
   return command(options(signal)).then((result) => inspect(result));
 }
 export async function write<T>(command: Command<T>, key: string = crypto.randomUUID()) {
-  const csrf = await getCsrfToken(options());
+  const token =
+    window.location.pathname.toLowerCase().replace(/\/+$/, '') ===
+    '/student/security/change-password'
+      ? document.cookie
+          .split(';')
+          .map((s) => s.trim())
+          .find((s) => s.startsWith('__Host-school_csrf='))
+          ?.slice('__Host-school_csrf='.length)
+      : undefined;
+  const csrf = token
+    ? { ok: true as const, value: { csrfToken: token } }
+    : await getCsrfToken(options());
   if (!csrf.ok) return inspect<T>(csrf);
   return inspect(
     await command({
@@ -110,6 +121,9 @@ export function errorMessage(error: unknown) {
   const messages: Record<string, string> = {
     CURRENT_PASSWORD_INVALID: 'Текущий пароль указан неверно.',
     INVALID_CREDENTIALS: 'Проверьте email и пароль.',
+    PASSWORD_CHANGE_REQUIRED: 'Замените временный пароль на собственный.',
+    PASSWORD_UNCHANGED: 'Новый пароль должен отличаться от временного.',
+    TEMPORARY_PASSWORD_EXPIRED: 'Срок временного пароля истёк. Обратитесь к менеджеру за новым.',
     NETWORK_ERROR: 'Нет связи с сервером. Проверьте подключение и повторите попытку.',
     OTP_INVALID: 'Код не подошёл или истёк. Проверьте код либо запросите новый.',
     RESCHEDULE_TOO_LATE: 'Для переноса осталось меньше 24 часов. Свяжитесь с менеджером.',

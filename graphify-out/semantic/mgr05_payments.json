@@ -1,0 +1,97 @@
+{
+  "nodes": [
+    {
+      "id": "mgr05_owner_20261031",
+      "label": "MGR05 owner currency MDL; inherited director-only Finance policy",
+      "source_file": "D:\\OnlineSchool\\docs\\online_academy_manager_payment_decisions_2026_10_31.md",
+      "file_type": "document",
+      "source_location": "L1",
+      "source_sha256": "90e3393fda4569ead7a6af4cd4352c2a65a8abae3a2c850aa7074d54163f7a31",
+      "review_status": "REVIEWED",
+      "status": "OWNER_CURRENCY_APPROVED_INHERITED_POLICY_PRESERVED",
+      "summary": "Owner answered mdl for new receipt currencies. ISO code MDL, historical currencies preserved. Existing Finance requires director on every confirmation/allocation; no manager publication exception. Inherits contact vs recipient scope, distribution identity, separate partial-payment admission and full-payment normal rights.",
+      "extraction_method": "host_review_of_authored_changes"
+    },
+    {
+      "id": "mgr05_implementation",
+      "label": "MGR05 receipts, director approval and allocation preparation",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "file_type": "document",
+      "source_location": "L1",
+      "source_sha256": "a2de8aad9eadf73037833287eda4c36e2a98f95d785c3da0268cf03a1833ac24",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_WORKING_ACCEPTANCE_PENDING",
+      "summary": "Eight scoped manager routes via one ManagerFinanceFacade. MDL only new receipts, exact money, immutable receipt/rejection, DB pagination, CSRF/UUID-key and cached replay scope checks. Manager confirm requests director approval without Ledger mutation. Existing director flow publishes, revokes earlier active limited admissions and issues missing paid rights at cumulative full payment on manager-prepared allocations. Prepares purchase/allocation and installment top-ups; recipient view never exposes foreign receipt amount/note/household totals. Distribution identity allows one receipt to fund two children. MGR04 facade centralized; bounded MGR07 adjustment port requires approval.71 own tests,311 affected plus schema,Finance and worker checks;387 unique assertions. Migration unapplied; mocks do not prove live PostgreSQL races/grants.",
+      "extraction_method": "host_review_of_authored_changes",
+      "review_scope": "Historical MGR05 evidence preserved; reviewed appended MGR07 director/manual continuation on2026-11-01"
+    },
+    {
+      "id": "mgr05_schema",
+      "label": "MGR05 receipt metadata and immutable origin prepared migration",
+      "source_file": "D:\\OnlineSchool\\packages\\db\\prisma\\schema.prisma",
+      "file_type": "code",
+      "source_location": "L1",
+      "source_sha256": "27e5d14a0903283add75689c648363bb0e13972f38de6435cd8dcdfcb077acd5",
+      "review_status": "REVIEWED",
+      "status": "PREPARED_MIGRATION_NOT_APPLIED",
+      "summary": "Receipt metadata nullable for legacy history. Unique method/reference, contact pagination, separate approval/rejection facts and immutable manager-prepared allocation origin.92 models/212 foreign keys; prepared migration preserves director trigger, immutable receipt creation/confirmed/rejected state and narrow grants. Offline SQL14 statements and2 PLpgSQL functions only.",
+      "extraction_method": "host_review_of_authored_changes"
+    }
+  ],
+  "edges": [
+    {
+      "source": "mgr05_implementation",
+      "target": "mgr05_owner_20261031",
+      "relation": "implements_currency_and_preserves_finance_policy",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr05_owner_20261031",
+      "target": "mgr_finance_distribution_owner_20261031",
+      "relation": "preserves_contact_vs_recipient_decision",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr05_implementation",
+      "target": "mgr04_implementation",
+      "relation": "prepares_director_published_allocations_for",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr05_implementation",
+      "target": "mgr03_implementation",
+      "relation": "preserves_published_distribution_activation_gate",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    },
+    {
+      "source": "mgr05_implementation",
+      "target": "mgr05_schema",
+      "relation": "uses_prepared_schema",
+      "source_file": "D:\\OnlineSchool\\apps\\api\\src\\modules\\manager\\payments\\MGR-05.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review; no external LLM calls"
+}

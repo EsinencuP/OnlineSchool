@@ -18,7 +18,7 @@ export class MeController {
     operationId: 'getStudentMe',
     summary: 'Current student profile and access stage',
     description:
-      'Cookie session only. Available without active subscription and before initial password change; contains no parent identity or private file URL.',
+      'Cookie session only. Initial password change is required (PASSWORD_CHANGE_REQUIRED). Afterwards available without an active subscription; contains no parent identity or private file URL.',
   })
   @ApiResponse({ status: 200, type: StudentMeResponseDto })
   @ApiResponse({ status: 401, type: ProblemDetails })

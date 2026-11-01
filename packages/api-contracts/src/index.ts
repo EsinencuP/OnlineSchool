@@ -70,5 +70,6 @@ export type ConfirmedLessonOutcomeResponse =
   components['schemas']['ConfirmedLessonOutcomeResponse'];
 
 export * from './generated/client.js';
+export * from './generated/manager-error-codes.js';
 export { schoolFetch } from './transport.js';
 export type { ClientError, SchoolRequestOptions } from './transport.js';

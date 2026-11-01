@@ -163,7 +163,7 @@ test('suspended, initial-password and revoked sessions cannot read a previously 
   expect((await get()).status).toBe(402);
   active = true;
   mustChange = true;
-  expect((await get()).body.code).toBe('MUST_CHANGE_PASSWORD');
+  expect((await get()).body.code).toBe('PASSWORD_CHANGE_REQUIRED');
   mustChange = false;
   rows.get(issued[0].sessionId).revoked_at = new Date();
   expect((await get()).status).toBe(401);

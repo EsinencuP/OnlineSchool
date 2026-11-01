@@ -1,12 +1,19 @@
 import { randomUUID } from 'node:crypto';
+import { NotificationOutboxPublisher } from '../notifications/notification-outbox.publisher.js';
+import { unwrap } from '../../core/errors/domain-error.js';
+import { Prisma } from '@online-school/db';
 import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
-import { domainError, fail } from '../../core/errors/domain-error.js';
+import { AppException, domainError, fail } from '../../core/errors/domain-error.js';
+import { databaseError } from '../../core/errors/database-error.js';
 import { object, string, uuid } from '../identity/input.js';
-import { at, count, currency, date, Decimal, money, operation } from './finance-common.js';
+import { at, count, date, Decimal, money, operation } from './finance-common.js';
+import { subscriptionFacts } from '../../student/subscription/subscription.sql.js';
 import { FinanceAccess } from './finance-access.service.js';
 import { FinanceEvents } from './finance-events.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';
+import { positiveReceiptAmount, receiptCurrency } from './receipt-policy.js';
+import type { ReceiptMetadata } from './manager-payments/contracts.js';
 
 @Injectable()
 export class PaymentsService {
@@ -15,7 +22,7 @@ export class PaymentsService {
     private readonly ledger: FinanceLedger,
     private readonly events: FinanceEvents,
   ) {}
-  async register(ctx: CriticalContext, body: unknown) {
+  async register(ctx: CriticalContext, body: unknown, metadata?: ReceiptMetadata) {
     const input = object(body, [
       'studentId',
       'amount',
@@ -23,6 +30,7 @@ export class PaymentsService {
       'provider',
       'externalReference',
     ]);
+    if (!positiveReceiptAmount(input.amount)) return fail(domainError('INVALID_MONEY', 422));
     const studentId = uuid(input.studentId);
     await this.access.student(ctx, studentId);
     const staff = await this.access.staff(ctx);
@@ -33,10 +41,11 @@ export class PaymentsService {
       data: {
         student_id: studentId,
         amount: money(input.amount),
-        currency: currency(input.currency),
+        currency: receiptCurrency(input.currency),
         registered_by_manager_id: staff,
         registered_at: now,
         ...operation(ctx.operationId),
+        ...metadata,
         ...(input.provider === undefined
           ? {}
           : {
@@ -53,61 +62,82 @@ export class PaymentsService {
     id = uuid(id);
     await ctx.tx.$queryRaw`SELECT id FROM payment_receipts WHERE id=${id}::uuid FOR UPDATE`;
     const receipt = await this.access.payment(ctx, id);
+    if (receipt.rejected_at) return fail(domainError('PAYMENT_NOT_PENDING', 409));
     if (receipt.confirmed_by_director_at)
       return fail(domainError('PAYMENT_ALREADY_CONFIRMED', 409));
-    const now = await at(ctx.tx);
-    await this.ledger.period(ctx.tx, now);
-    const confirmed = await ctx.tx.paymentReceipt.update({
-      where: { id },
-      data: {
-        confirmed_by_director_id: staff,
-        confirmed_by_director_at: now,
-        confirmation_operation_id: ctx.operationId,
-      },
-    });
-    const entry = await this.ledger.event(ctx, {
-      payment_id: id,
-      basis: 'Director confirmed payment receipt',
-      ...operation(randomUUID()),
-    });
-    const event = await this.events.record(
-      ctx,
-      'finance.payment.confirmed',
-      'PaymentReceipt',
-      id,
-      receipt.student_id ? { studentId: receipt.student_id } : {},
-    );
-    if (receipt.student_id) {
-      const assignment = await ctx.tx.assignedManager.findFirst({
-        where: {
-          student_id: receipt.student_id,
-          assigned_at: { lte: now },
-          OR: [{ ended_at: null }, { ended_at: { gt: now } }],
-        },
-      });
-      await ctx.tx.crmTask.create({
+    try {
+      const now = await at(ctx.tx);
+      await this.ledger.period(ctx.tx, now);
+      const confirmed = await ctx.tx.paymentReceipt.update({
+        where: { id },
         data: {
-          student_id: receipt.student_id,
-          assigned_manager_id: assignment?.manager_id ?? null,
-          type: 'PAYMENT_FOLLOW_UP',
-          title: 'Поступление подтверждено: проверить распределение и доступ',
-          due_at: now,
-          source_event_id: event.id,
-          idempotency_key: `payment-confirmed:${id}`,
+          confirmed_by_director_id: staff,
+          confirmed_by_director_at: now,
+          confirmation_operation_id: ctx.operationId,
         },
       });
+      const entry = await this.ledger.event(ctx, {
+        payment_id: id,
+        basis: 'Director confirmed payment receipt',
+        ...operation(randomUUID()),
+      });
+      const event = await this.events.record(
+        ctx,
+        'finance.payment.confirmed',
+        'PaymentReceipt',
+        id,
+        receipt.student_id ? { studentId: receipt.student_id } : {},
+      );
+      if (receipt.student_id) {
+        unwrap(
+          await new NotificationOutboxPublisher().enqueue(ctx.tx, {
+            studentId: receipt.student_id,
+            templateCode: 'PAYMENT_CONFIRMED',
+            variables: { paymentId: id, receiptOnly: 'true' },
+            dedupeKey: `receipt-confirmed:${id}`,
+            operationId: ctx.operationId,
+            actorId: ctx.actor.accountId,
+            requestId: ctx.requestId,
+          }),
+        );
+        const assignment = await ctx.tx.assignedManager.findFirst({
+          where: {
+            student_id: receipt.student_id,
+            assigned_at: { lte: now },
+            OR: [{ ended_at: null }, { ended_at: { gt: now } }],
+          },
+        });
+        await ctx.tx.crmTask.create({
+          data: {
+            student_id: receipt.student_id,
+            assigned_manager_id: assignment?.manager_id ?? null,
+            type: 'PAYMENT_FOLLOW_UP',
+            title: 'Поступление подтверждено: проверить распределение и доступ',
+            due_at: now,
+            source_event_id: event.id,
+            idempotency_key: `payment-confirmed:${id}`,
+          },
+        });
+      }
+      return {
+        ...confirmed,
+        status: 'CONFIRMED' as const,
+        confirmed_at: confirmed.confirmed_by_director_at,
+        ledgerEntryId: entry.id,
+      };
+    } catch (error: unknown) {
+      if (!receipt.method) return Promise.reject(error);
+      const failure = error instanceof AppException ? error.domain : databaseError(error);
+      if (failure.retryable || ['RETRYABLE', 'TRANSACTION_CONFLICT'].includes(failure.code))
+        return fail({ ...failure, retryable: true });
+      return fail(domainError('LEDGER_PUBLICATION_FAILED', 503));
     }
-    return {
-      ...confirmed,
-      status: 'CONFIRMED' as const,
-      confirmed_at: confirmed.confirmed_by_director_at,
-      ledgerEntryId: entry.id,
-    };
   }
-  async propose(ctx: CriticalContext, id: string, body: unknown) {
+  async propose(ctx: CriticalContext, id: string, body: unknown, managerPrepared = false) {
     const input = object(body, ['subscriptionId', 'amount']);
     id = uuid(id);
     const receipt = await this.access.payment(ctx, id);
+    if (receipt.rejected_at) return fail(domainError('PAYMENT_NOT_PENDING', 409));
     const { sub } = await this.access.subscription(ctx, uuid(input.subscriptionId));
     const amount = money(input.amount);
     if (receipt.currency !== sub.currency || amount.gt(receipt.amount))
@@ -119,6 +149,7 @@ export class PaymentsService {
         subscription_id: sub.id,
         amount,
         currency: sub.currency,
+        manager_prepared: managerPrepared,
         ...operation(ctx.operationId),
       },
     });
@@ -135,6 +166,7 @@ export class PaymentsService {
     await ctx.tx
       .$queryRaw`SELECT id FROM subscriptions WHERE id=${distribution.subscription_id}::uuid FOR UPDATE`;
     const payment = await this.access.payment(ctx, distribution.payment_id);
+    if (payment.rejected_at) return fail(domainError('PAYMENT_NOT_PENDING', 409));
     const { sub } = await this.access.subscription(ctx, distribution.subscription_id);
     if (distribution.approved_at) return fail(domainError('DISTRIBUTION_ALREADY_APPROVED', 409));
     if (!payment.confirmed_by_director_at) return fail(domainError('PAYMENT_NOT_CONFIRMED', 422));
@@ -164,9 +196,54 @@ export class PaymentsService {
       basis: 'Director approved payment allocation',
       ...operation(randomUUID()),
     });
+    const { enrollment } = await this.access.subscription(ctx, sub.id);
+    // Each allocated payment supersedes earlier limited admissions, even at equal timestamps.
+    const permissions = await ctx.tx.temporaryAccessPermission.findMany({
+      where: { subscription_id: sub.id, revoked_at: null, valid_to: { gt: now } },
+      select: { id: true },
+    });
+    for (const permission of permissions) {
+      await ctx.tx.temporaryAccessPermission.update({
+        where: { id: permission.id },
+        data: { revoked_at: now },
+      });
+      await this.events.record(
+        ctx,
+        'finance.admission.superseded',
+        'TemporaryAccessPermission',
+        permission.id,
+        { studentId: enrollment.student_id, distributionId: id },
+      );
+    }
+    if (distribution.manager_prepared) {
+      const [facts] = await ctx.tx.$queryRaw<{ paid: string }[]>(
+        Prisma.sql`${subscriptionFacts(enrollment.student_id, { subscriptionId: sub.id }, now, { financialOnly: true })} SELECT coalesce(sum(amount),0)::text AS paid FROM allocations WHERE currency=${sub.currency}`,
+      );
+      const issued = await ctx.tx.entitlementGrant.aggregate({
+        where: { subscription_id: sub.id },
+        _sum: { quantity: true },
+      });
+      if (
+        facts &&
+        new Decimal(facts.paid).gte(sub.full_price) &&
+        (issued._sum.quantity ?? 0) < sub.lesson_count
+      ) {
+        const grant = await this.grant(
+          { ...ctx, operationId: randomUUID() },
+          { subscriptionId: sub.id, distributionId: id },
+        );
+        await this.events.record(
+          ctx,
+          'finance.manager-rights.issued',
+          'EntitlementGrant',
+          grant.id,
+          { studentId: enrollment.student_id, distributionId: id },
+        );
+      }
+    }
     return { ...approved, ledgerEntryId: entry.id };
   }
-  async subscription(ctx: CriticalContext, body: unknown) {
+  async subscription(ctx: CriticalContext, body: unknown, preparedStartsAt?: Date) {
     const input = object(body, ['enrollmentId', 'saleConditionId']);
     const enrollmentId = uuid(input.enrollmentId);
     const enrollment = await ctx.tx.studentSubjectEnrollment.findUnique({
@@ -175,6 +252,8 @@ export class PaymentsService {
     if (!enrollment) return fail(domainError('NOT_FOUND', 404));
     await this.access.student(ctx, enrollment.student_id);
     const now = await at(ctx.tx);
+    if (preparedStartsAt && (!Number.isFinite(+preparedStartsAt) || preparedStartsAt < now))
+      return fail(domainError('INVALID_STARTS_AT', 422));
     if (
       enrollment.status !== 'ACTIVE' ||
       enrollment.valid_from > now ||
@@ -197,7 +276,7 @@ export class PaymentsService {
         initial_discount_amount: sale.discount_amount,
         original_paid_unit_price: sale.lesson_unit_price,
         currency: sale.currency,
-        valid_from: now,
+        valid_from: preparedStartsAt ?? now,
         ...operation(ctx.operationId),
       },
     });

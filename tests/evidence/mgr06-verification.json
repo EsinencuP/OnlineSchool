@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-31",
+  "scope": "MGR-06 targeted code checks; no PostgreSQL or external mutations",
+  "ownerDecisions": "docs/online_academy_manager_schedule_decisions_2026_10_31.md",
+  "checks": {
+    "mgr06": {
+      "suites": 3,
+      "passed": 109,
+      "http": 87,
+      "unit": 14,
+      "sdk": 8
+    },
+    "affectedRegression": {
+      "suites": 16,
+      "passed": 340,
+      "includes": "MGR01 scope/HTTP/architecture, MGR04/05, student dashboard/lessons/subscription and schema/ERD"
+    },
+    "coreFinanceScheduleUnit": {
+      "passed": 9
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "withoutHttpListener": true,
+      "withoutDatabaseUrl": true
+    },
+    "uniqueChecks": 459,
+    "build": [
+      "api",
+      "worker",
+      "api-contracts"
+    ],
+    "typecheck": [
+      "student-cabinet",
+      "qa-shell"
+    ],
+    "targetedEslint": "PASS",
+    "prismaValidate": "PASS",
+    "prismaGeneration": "PASS",
+    "openapiOrvalGeneration": "PASS",
+    "openapiOperations": 116,
+    "schemaModels": 93,
+    "foreignKeys": 216,
+    "sqlSyntax": "mgr06-sql-syntax.json"
+  },
+  "limitations": [
+    "Migration prepared but not applied. No migrate dev/deploy or database writes.",
+    "Mock Prisma and serialized competing HTTP requests do not verify PostgreSQL18 EXCLUDE, locks, grants, triggers or races.",
+    "Meet generation is an explicit unavailable port behind a feature flag; real expanded Meet API/OAuth/POC acceptance is pending.",
+    "Outbox contracts for MGR08 and Schedule are emitted atomically; external delivery is not implemented by this task.",
+    "Teacher late-cancellation compensation is separate; a CRM review task is created, no conducted outcome or ordinary payroll accrual is fabricated.",
+    "Legacy student transfer history is unverified, requiring a specific director exception rather than a guessed count.",
+    "Working acceptance and FND-GATE not claimed."
+  ],
+  "sourceSha256": {
+    ".env.example": "28412eebb49341c2b36d08cb51fe8b6ed2c9a96067a286c702d2da388725bf2c",
+    "apps/api/src/core/idempotency/idempotency.module.ts": "31d8531ea855cbc2e831891a4f8e3bbe4493054187f7c0a74b350ee70261d513",
+    "apps/api/src/modules/manager/scope/manager-scope.service.ts": "45902f57446180dcb020f52ce71ca3f93feccc9dc41f86eb5961acc1468ba2da",
+    "apps/api/src/modules/manager/manager.module.ts": "030eaa5791aa4359d88b94ef47b98b1c319213c957583d14c4731dc2d292a44a",
+    "apps/api/src/modules/manager/finance/manager-finance.facade.ts": "24215fb0a99660dd2f383b87f25493d0d8ad4ebbc47e2b27146e7468d884c3d5",
+    "apps/api/src/modules/manager/schedule/manager-schedule.controller.ts": "6b9da9974e7ab6b1cc4f8dc3e37873113650c5cf1ea3df0edab3d25388362501",
+    "apps/api/src/modules/manager/schedule/manager-schedule.service.ts": "d28256d4995a27bac16a6445f2212ea56d7e0c07bbe4d2d872a2f3eafa241800",
+    "apps/api/src/modules/manager/schedule/manager-schedule.guard.ts": "771fc0d52d42a505fcdf7bd1ba7306f09c93a7945ec3940da7389545a7df234d",
+    "apps/api/src/modules/manager/dto/manager-schedule.dto.ts": "76cab87f90330e22e8736465a79a5c56caebb5400ad81f55fafe18bac4fb91c7",
+    "apps/api/src/modules/schedule/schedule-infrastructure.module.ts": "2a0b575b0c83710fd60eeb96b2cf4a01e928beb0c12f9fb0f3518ba96b65eb92",
+    "apps/api/src/modules/schedule/schedule.controller.ts": "dca3d7800e2a0c971754eeecff44ded498a94c16a7c23406391e762ffe68ad47",
+    "apps/api/src/modules/schedule/manager/workflow.service.ts": "c30f189921c4e6e6e95a4e63a8044b846c8090345369bf14359a87aea9599978",
+    "apps/api/src/modules/schedule/manager/freeze-cancellation.service.ts": "7ec101f691b13a37aa85bcc9104d40b9279b2ff7ab405a86976a879fd54ff7ed",
+    "apps/api/src/modules/schedule/manager/approval.controller.ts": "5229a89f4d24896ec3dafa6c188a9f9be7d5e711c9a60eefe2fd698bcd2d3e52",
+    "apps/api/src/modules/schedule/manager/meet-link.port.ts": "be4372fe6d23013d49e941e418098127c72af7d0c597705a893ddeb22ff1f311",
+    "apps/api/src/modules/schedule/meet-link.ts": "2ba06b3c8e4409d640d597d01d9a65516b5b4de09f5148720cd87d44e059264a",
+    "apps/api/src/modules/schedule/schedule-events.service.ts": "45fd35c97c97ec22d023201a43b5bee46217aba08fa417c414a74e7ee74d406a",
+    "apps/api/src/modules/finance/entitlements.service.ts": "3ed0a4d7946b6f9e85fdc0b17eaa956c66e95ef13b844d906f88fd600e58dfd0",
+    "apps/api/src/modules/finance/manager-payments/lesson-rights.service.ts": "a524a0fe6821ab9f72918fec1b08bfeedddf180ddb37ac868a0d160b40b97389",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.service.ts": "97cf2f8628d709426cbbf16a9272e66496c59eab5483e0805aff0795c29ff9fe",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.module.ts": "4100813a0a97a2f49c6f9a4f1b9005ba5389a2dd7cb22e6c8e30bd2642479433",
+    "apps/api/src/student/dashboard/dashboard.service.ts": "50ee1f4c5efd142416238a9c2dc7529390d107e59da213ea82611e7316cdd5ba",
+    "apps/api/src/student/lessons/lessons.service.ts": "1e8e388bf8222a7b023b1e6ad920317ef13ae41d62260e3636e2a2108729e98b",
+    "apps/worker/src/handlers.ts": "a032f4b48ba9c3b92ba6f6136bf6fff4523737825f489fa79d74b1969e621893",
+    "apps/qa-shell/src/scenarios.ts": "0adaa31ac1d8e2aea46189b13820554ae918b6ed6d84b061a001a0cdf76c6578",
+    "scripts/eslint-manager-rules.mjs": "53c269fe8cece3103b973c63a44a370048c31ab48e9dd364d7ba51cf3b0b412d",
+    "packages/db/prisma/schema.prisma": "399eb7309f0e9efadeac2f8f2bf6beaaa670cb39cd4a4d9c1aa31532671b5dfb",
+    "packages/db/prisma/migrations/20261031140000_mgr06_schedule/migration.sql": "5062d7b7031ecb336aab01caa3004fc3d7cc4e1e9760385f7328df59efed02fc",
+    "packages/api-contracts/openapi/openapi.json": "5631367fdf984f99bad8a4216f87059a096f15ea75f79203fb178b573b84fc78",
+    "tests/unit/manager-schedule.test.mjs": "146ade402dd9d0e3d7e61ba155abae2c65c2e6df2ccc2c1fed1c51ed4ad63d74",
+    "tests/unit/manager-schedule-http.test.mjs": "6f2998369e9f06de00934fc9b770c789b86e2f07ef87e931c48e2a73fb03e135",
+    "tests/unit/manager-schedule-sdk.test.mjs": "4f0209ec211548821c3025935e2f1c811fd4966416ef304c733b91bae262f450",
+    "tests/support/manager-schedule-fixture.mjs": "b065650345f995672f5c07a35dd355e59a0bf98bd1fb5abc8220b900e6fc9dfb"
+  }
+}

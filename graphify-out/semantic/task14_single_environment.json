@@ -1,0 +1,122 @@
+{
+  "nodes": [
+    {
+      "id": "task14_single_environment",
+      "label": "TASK-14: one working Vercel/Neon MVP, no QA duplicates",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_SINGLE_WORKING_ENVIRONMENT_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "One existing Vercel onlineschool project and Neon main online_school in Frankfurt. Owner forbids additional QA/staging/shadow/test databases; previews off. Worker is a separate Vercel Daemon, health confirmed. TASK-15/manual QA/FND-GATE remain open.",
+      "source_sha256": "f02a3541f9fe1a9f902619d0985dfb122768b473dfb221d5d661803e16d959a3"
+    },
+    {
+      "id": "task14_vercel_runtime",
+      "label": "Vercel SPA/API plus standalone fra1 worker Daemon",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/vercel.json",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_SINGLE_WORKING_ENVIRONMENT_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Root deployment configuration, Node24 real NestJS Function and React SPA, daemon image Dockerfile.worker, one fra1 instance at 1Gi and 45-second termination grace. Public worker health uses fresh PostgreSQL heartbeat and returns 503 when unavailable.",
+      "source_sha256": "ef24b2b128f59fc569ccd1f095dddf2d8c25addb90a4a1fb3273aff63e0d165c",
+      "current_status": "STU12_CODE_TARGETED_CHECKED_WORKING_ACCEPTANCE_PENDING",
+      "current_summary": "STU-12 extends the existing guarded contracts with owner-scoped detail and upcoming reads, active contacts and timeZone. Prior evidence and policy remain historical; see stu12_frontend."
+    },
+    {
+      "id": "task14_release_pipeline",
+      "label": "Protected migration-before-publication Vercel Git build",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/infra/vercel/build.mjs",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_SINGLE_WORKING_ENVIRONMENT_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "GitHub main changes trigger existing Vercel project build. Compile API/SPA before direct Prisma migrate deploy; fail publication on failure. No DB credentials in GitHub, no raw Prisma diagnostics logged. Runtime uses pooled app_runtime.",
+      "source_sha256": "dbd411e04324338d121fd0a0096c0a3e8c8458b4a09ac442120608003d0b74a0",
+      "current_status": "STU12_CODE_TARGETED_CHECKED_WORKING_ACCEPTANCE_PENDING",
+      "current_summary": "STU-12 extends the existing guarded contracts with owner-scoped detail and upcoming reads, active contacts and timeZone. Prior evidence and policy remain historical; see stu12_frontend."
+    },
+    {
+      "id": "task14_deployment_evidence",
+      "label": "TASK-14 deployment, health and Git release evidence",
+      "file_type": "code",
+      "source_file": "D:/OnlineSchool/infra/TASK14_EVIDENCE.json",
+      "source_location": "L1",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_SINGLE_WORKING_ENVIRONMENT_VERIFIED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Exact verified commits, production deployments, CI runs, HTTP/browser/DB heartbeat evidence and explicit limits. Prior WebAuthn evidence reused from TASK-12. No claim of TASK-15 FND-GATE or production GO. Final d6e5c6116dd79948ebad988d1852b7b65d37b1f1 published automatically from main; CI40411140033 success with integration explicitly skipped; 7 migration checksums match, health200, browser SHA and typed OpenAPI confirmed, two old workers stopped and one current heartbeat live.",
+      "source_sha256": "477e411ab08f8c8e73075fab4aa028316bde1c8031fface8a5584b339b506241"
+    }
+  ],
+  "edges": [
+    {
+      "source": "task14_single_environment",
+      "target": "task14_vercel_runtime",
+      "relation": "configured_by",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task14_single_environment",
+      "target": "task14_release_pipeline",
+      "relation": "published_by",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task14_single_environment",
+      "target": "task12_qa_shell_document",
+      "relation": "publishes_existing_shell",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task14_release_pipeline",
+      "target": "task13_infrastructure_document",
+      "relation": "extends_with_working_publication",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task14_deployment_evidence",
+      "target": "task14_vercel_runtime",
+      "relation": "verifies",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    },
+    {
+      "source": "task14_deployment_evidence",
+      "target": "task14_release_pipeline",
+      "relation": "verifies",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1,
+      "source_file": "D:/OnlineSchool/infra/vercel/README.md",
+      "source_location": "L1"
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST; no external LLM API cost"
+}

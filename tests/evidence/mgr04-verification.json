@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-31",
+  "scope": "MGR-04 targeted code checks; no PostgreSQL writes",
+  "ownerDecisions": "docs/online_academy_manager_subscription_decisions_2026_10_31.md",
+  "checks": {
+    "mgr04": {
+      "suites": 3,
+      "passed": 62
+    },
+    "affectedRegression": {
+      "suites": 15,
+      "passed": 296,
+      "note": "351-test run included55 MGR04 tests; seven new SDK tests passed subsequently. Unique unit/HTTP/SDK/architecture total358."
+    },
+    "schemaContract": {
+      "passed": 1,
+      "models": 92
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "note": "No DATABASE_URL and no HTTP listener; explicit Finance infrastructure dependencies verified"
+    },
+    "build": [
+      "api",
+      "worker",
+      "api-contracts",
+      "student-cabinet typecheck"
+    ],
+    "targetedEslint": "PASS",
+    "prismaValidate": "PASS",
+    "generation": "Prisma7.10.1 client and OpenAPI3.1/Orval regenerated",
+    "openapiOperations": 100,
+    "sqlSyntax": "mgr04-sql-syntax.json"
+  },
+  "limitations": [
+    "Migration prepared, not applied; SQL/PLpgSQL parsed offline only",
+    "Mock Prisma storage and serialized concurrency fixture do not prove PostgreSQL constraints, grants or races",
+    "MGR05 must prepare/director-approve/publish allocation before MGR04",
+    "MGR06 lesson cancellation is an explicit fail-closed stub; no scheduled lessons are silently changed",
+    "External notification delivery/MGR08, working acceptance and FND-GATE not claimed",
+    "Legacy tariff duration is not invented or backfilled"
+  ],
+  "sourceSha256": {
+    "apps/api/src/modules/manager/subscriptions/manager-subscriptions.controller.ts": "7256f0d2a3474673f61c3d49bec72cdccfccbe432c761203c7daf5825236e686",
+    "apps/api/src/modules/manager/subscriptions/manager-subscriptions.guard.ts": "952c07922c31fb2e0163d2fd8c18cffd234f24722557606a67d3c8ecc513d89c",
+    "apps/api/src/modules/finance/manager-subscriptions/finance-facade.ts": "eadc98cc1285e383e7e7efdae930b63787ca339579801724d30d25bf04b9c634",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.service.ts": "352abc3384cdd4f59d165e360d7583b3a6c596c90451d9fbe8e38ccb1079bee1",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.module.ts": "f764577e02814fbdb99a1c1ce76ceb9e29296e54533d4475767d2255e1e291d8",
+    "apps/api/src/modules/finance/finance-infrastructure.module.ts": "2cbad4f96844f17b215e33743a4cc2d4526980d67ecbc2f136a28e9aaae7dd12",
+    "apps/api/src/student/subscription/subscription.sql.ts": "870c903e09eb6faa2acf573023261c2c96497e599c2e95f815d99f59173889cc",
+    "apps/api/src/student/dashboard/dashboard.service.ts": "0e1b1fb4afb3a93ed8e8ba9a4e9b221aef4961d530bf7c0f54cfae828c89c9ac",
+    "apps/worker/src/handlers.ts": "c7c8a82a21a0af3b70f3b3c325a297b76b67db2943f6b9927876b1abe5e0f142",
+    "apps/worker/src/worker.module.ts": "a9fc53d857d2b4de881922ebd5abf03fe85823fd73f11771fd7bf1431e42c714",
+    "packages/db/prisma/schema.prisma": "1fc97f3724e0304edc5aa9a4fb02f5df49ce9b9d2b304f44d361b6cbace1db0f",
+    "packages/db/prisma/migrations/20261031120000_mgr04_managed_subscriptions/migration.sql": "7b68c670471e2c6b6982249715ef9593a4adb5a7351e6135f575787c5e5c6b10",
+    "packages/api-contracts/openapi/openapi.json": "572b9fa10c77d82527e6c4d2e12e0e6b3b896ebdf53e68c9d52a30e2658ef3c4"
+  }
+}

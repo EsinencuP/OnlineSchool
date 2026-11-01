@@ -5,15 +5,17 @@ import { AuditService } from '../core/audit/audit.service.js';
 import { isStudentRequest, StudentErrors } from './student-context.interface.js';
 import type { StudentRequest } from './student-context.interface.js';
 import { studentBootstrapRoute } from './access-policy.js';
+import { studentPasswordChangeRoute } from '../core/session/student-password-policy.js';
 @Injectable()
 export class ActiveSubscriptionGuard implements CanActivate {
   constructor(private readonly audit: AuditService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest<StudentRequest>();
     if (!isStudentRequest(req)) return true;
-    if (studentBootstrapRoute(req)) return true;
     const student = req.studentCtx;
     if (!student) return fail(domainError(StudentErrors.PROFILE_NOT_FOUND, 403));
+    if (student.mustChangePassword && studentPasswordChangeRoute(req)) return true;
+    if (!student.mustChangePassword && studentBootstrapRoute(req)) return true;
     const code = student.mustChangePassword
       ? StudentErrors.MUST_CHANGE_PASSWORD
       : !student.hasActiveAccess

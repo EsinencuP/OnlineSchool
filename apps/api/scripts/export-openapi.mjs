@@ -1,12 +1,12 @@
 import 'reflect-metadata';
-import { writeFile } from 'node:fs/promises';
+import { writeGenerated } from '../../../scripts/write-generated.mjs';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../dist/app.module.js';
 import { createOpenApiDocument } from '../dist/openapi/swagger.js';
 const app = await NestFactory.create(AppModule, { logger: false, abortOnError: false });
 try {
   const doc = createOpenApiDocument(app);
-  await writeFile(
+  await writeGenerated(
     new URL('../../../packages/api-contracts/openapi/openapi.json', import.meta.url),
     JSON.stringify(doc, null, 2) + '\n',
   );

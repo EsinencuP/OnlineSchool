@@ -5,6 +5,17 @@ import { IsInt, IsOptional, Min, Max } from 'class-validator';
 import { HistoryQueryPipe } from '../history/history.dto.js';
 import type { HistoryPage } from '../history/history.dto.js';
 export const NOTIFICATION_TYPES = [
+  'LESSON_SCHEDULED',
+  'RESCHEDULE_DECLINED',
+  'DISPUTE_ACCEPTED',
+  'DISPUTE_REJECTED',
+  'MANUAL_MESSAGE',
+  'SUBSCRIPTION_CREATED',
+  'SUBSCRIPTION_RENEWED',
+  'SUBSCRIPTION_FROZEN',
+  'SUBSCRIPTION_UNFROZEN',
+  'SUBSCRIPTION_EXPIRED',
+  'ACCOUNT_CREATED',
   'HOMEWORK_REVIEWED',
   'HOMEWORK_NEEDS_REVISION',
   'LESSON_RESCHEDULED',

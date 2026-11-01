@@ -21,6 +21,8 @@
     { "source": "/health", "destination": "/api/handler" },
     { "source": "/student", "destination": "/student/index.html" },
     { "source": "/student/:path*", "destination": "/student/index.html" },
+    { "source": "/manager", "destination": "/manager/index.html" },
+    { "source": "/manager/:path*", "destination": "/manager/index.html" },
     { "source": "/:path*", "destination": "/index.html" }
   ],
   "headers": [
@@ -33,6 +35,7 @@
       ]
     },
     { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
-    { "source": "/student/:path*", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }
+    { "source": "/student/:path*", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
+    { "source": "/manager/:path*", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }
   ]
 }

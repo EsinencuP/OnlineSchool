@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-01",
+  "scope": "MGR09 targeted implementation checks; no database writes or new PostgreSQL instance",
+  "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_LOAD_ACCEPTANCE_PENDING",
+  "ownerDecisions": "docs/online_academy_manager_dashboard_decisions_2026_11_01.md",
+  "checks": {
+    "mgr09": {
+      "suites": 3,
+      "passed": 47,
+      "http": 32,
+      "unit": 13,
+      "sdk": 2
+    },
+    "affectedUnitRegression": {
+      "suites": 6,
+      "passed": 95,
+      "includes": "MGR02/04/05/06/07 and student subscription"
+    },
+    "affectedHttpAndArchitecture": {
+      "suites": 7,
+      "passed": 338,
+      "includes": "MGR02/04/05/06/07 HTTP, student subscription HTTP, manager architecture"
+    },
+    "standaloneWorkerSmoke": {
+      "passed": 1,
+      "withoutDatabaseUrl": true,
+      "withoutHttpListener": true
+    },
+    "uniqueChecks": 481,
+    "reportingCommands": 6,
+    "transactionControlsIncludedExpected": 8,
+    "actualPostgresTrace": false,
+    "isolation": "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY as first callback command; no Prisma isolationLevel option",
+    "build": [
+      "api",
+      "worker",
+      "api-contracts"
+    ],
+    "typecheck": [
+      "student-cabinet",
+      "qa-shell"
+    ],
+    "targetedEslint": "PASS",
+    "openapiOrvalGeneration": "PASS",
+    "openapiOperations": 126,
+    "schemaMigrationRequired": false,
+    "sqlSyntax": "mgr09-sql-syntax.json",
+    "loadReport": "mgr09-load-report.json"
+  },
+  "limitations": [
+    "p95<=300ms with500 students NOT VERIFIED. Load runner returned NOT_RUN: existing origin and authorized manager session required; it also checks the500-student dataset before measuring.",
+    "No working DB writes, migration application, fixture seeding or additional/disposable PostgreSQL. Existing migration acceptance remains separate.",
+    "HTTP uses real Nest/core/domain services with mock Prisma and a relational evaluator. Snapshot/count tests do not prove actual PostgreSQL MVCC/query plans/protocol trace.",
+    "Read-only isolation and six explicit reporting commands are source/mock verified; BEGIN/COMMIT and middleware overhead have no live trace.",
+    "Pending receipt aggregates use confirmed unallocated published remainder and awaiting approval, per owner decision, excluding mixed-portfolio families and foreign recipients.",
+    "MGR02 task/expiry filters now use public MGR07 visibility and ACTIVE MGR04 expiry windows; prior task evidence stays historical.",
+    "No cache, no business Audit for successful dashboard; normal core session bookkeeping/access-denial Audit is unchanged.",
+    "FND-GATE and production readiness not claimed."
+  ],
+  "sourceSha256": {
+    "apps/api/src/core/transaction/transaction.service.ts": "93a46ccb43ab2f25e2a525519273effc68e300860013af696a5c50b4195f1b22",
+    "apps/api/src/modules/finance/manager-payments/pending-totals.sql.ts": "ee7fc26f7b72a72dfa60c81b34002d2238f9c43ff177cdf9e99303d8c3e476e4",
+    "apps/api/src/modules/finance/manager-payments/receipt-read.spec.ts": "646abd68c1519f9a0762fa60e3a7812bee7bec230401a383ab03a61228914d96",
+    "apps/api/src/modules/finance/manager-payments/workflow.service.ts": "77e9a0cea8e5bc8af6ba834cc8489330fe1763d942aedfbd662b4fe45d74279d",
+    "apps/api/src/modules/finance/manager-subscriptions/lifecycle.service.ts": "ecbe0d348835767bfaf56d02a36fa6b5cde57bd4944d031bd389177f968497c1",
+    "apps/api/src/modules/finance/manager-subscriptions/read-spec.ts": "98bc8fe7bd57e172be648c1ebc2ffc7aaace7b0b8ce1271954610ac533ee5451",
+    "apps/api/src/modules/manager/dashboard/MGR-09.md": "8dcf935aa4e946e432dfe47d76a800e288311fcb3b9c808b3885ec70979f72f5",
+    "apps/api/src/modules/manager/dashboard/dashboard.read.ts": "50ca84bfa43ab5e7bdff460b626b39aa39ea23677c2f410f880f17c25b681049",
+    "apps/api/src/modules/manager/dashboard/dashboard.sql.ts": "47436c5ffb776cfcd5ee0cb4f37a12d0d343ca68bed106d379c22640ccfa42bf",
+    "apps/api/src/modules/manager/dashboard/manager-dashboard.controller.ts": "35533aaf23c953eb33e7045d96cd3fc9bffa3ebac0a857bfc2f2f588f4477893",
+    "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts": "fb9848055b97b9240c1183ca5de325652b4ebe7543ff22721eeaf4f7e11490fa",
+    "apps/api/src/modules/manager/dto/manager-dashboard.dto.ts": "e6bce2a180284c7b0344b50402ff4fac0d8ecc229b857912bd1009e4f188a63f",
+    "apps/api/src/modules/manager/manager.module.ts": "c97295c940f5d30b90dbb7b6a240b79e6182e72955652c2fd6b1dc11131b7959",
+    "apps/api/src/modules/manager/schedule/manager-schedule.service.ts": "1c8ba9388e01e287ebccd8c887ae70710711e1c6093efa8680512c0ad2a47f93",
+    "apps/api/src/modules/manager/schedule/schedule-read.spec.ts": "db459d9832a5784a12cd1e4b2f8957efe5686ba18d783048a480bce80d0d805b",
+    "apps/api/src/modules/manager/students/student-status.sql.ts": "dda930deb09de815159b8673ed2f954cb3a87b34b365967c0e3a08f90ff68845",
+    "apps/api/src/modules/manager/students/students.read.ts": "759b3b7654373785956cda8ce7a8f4776e6db15583e3857e77f1c8f5a5d48848",
+    "apps/api/src/modules/manager/tasks/manager-tasks.service.ts": "11d5d4f2a9fe026a1059180733f9772313a8682e588519f92a781416ce586db7",
+    "apps/api/src/modules/manager/tasks/task-read.spec.ts": "97ddbabbbd41cc9ebee0f465f928b86bf675120f7b67e08e9daacfce3b39e785",
+    "apps/api/src/modules/schedule/manager/workflow.service.ts": "44cc11332dd4dd1bce0a39763d1f4662407b65b5d32cdf9fbbf68f9fbbe87aa9",
+    "apps/api/src/modules/schedule/meet-link.ts": "bbff2b777530de1d7b6877d07cd46f1965a338d8a972887e2cb41223f9cfe1b0",
+    "apps/api/src/openapi/dtos.ts": "78645f4fbec038f406e67e47f15c58de57276031dcd9b6e47882a9405dc21a21",
+    "apps/api/src/student/subscription/subscription.sql.ts": "f5228c8002f62d0aa37f66fc89505a5c986ce3ca6ca59e6e513ba01b88d32082",
+    "docs/online_academy_manager_dashboard_decisions_2026_11_01.md": "6e57468c8aefc7c2bffacc109a8ae14a63a670609568e70744ea7630f95bf708",
+    "package.json": "c9b9df381da9db2ecb28a182604b7ef94256c8e3ce380e6180e053ac2278924a",
+    "packages/api-contracts/openapi/openapi.json": "c7398b80e972701a72d5d9cb3ca264d4ae3a9268ee62bee9c2392eace5b30fab",
+    "packages/api-contracts/src/generated/client.ts": "99e027e9b7e163e0452c5bbc94ed29261571da2e8bffd23c0fa47e723e87be5f",
+    "packages/api-contracts/src/generated/openapi.ts": "12566fbe0d31f477e2f73309b512f1fc20ee430a756d5db32b030dc4cbc0fe2b",
+    "scripts/eslint-manager-rules.mjs": "2d742ec80475c9b05cddb495569db4384167eff035c520ea51f2b55c6ee14286",
+    "scripts/mgr09-load.mjs": "b028a8cde2fa8fd6339dbf509484e64888d2002ef6d7654ad11e714b26c83b38",
+    "tests/support/manager-dashboard-fixture.mjs": "afedd1894efb065c0ab1656ce4410e41602e707167e5d9715bf3c7d123a79a0f",
+    "tests/unit/manager-dashboard-http.test.mjs": "48235cdd287f345b40b0c23c9fd636629b77c5a99816de8cd849703d6a61b715",
+    "tests/unit/manager-dashboard-sdk.test.mjs": "2b3f0e1cfed85c25f6acfff24c1989f649c1a4245414085abb425104f5734c07",
+    "tests/unit/manager-dashboard.test.mjs": "f9ebca24096cc354101bf3bf96bd6f8e8dc825c3ed4ff20fe72b4f3e0ff05433"
+  }
+}

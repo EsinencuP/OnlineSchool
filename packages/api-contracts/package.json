@@ -17,11 +17,11 @@
     "node": ">=24 <25"
   },
   "scripts": {
-    "generate": "openapi-typescript openapi/openapi.json -o src/generated/openapi.ts",
+    "generate": "node scripts/generate-openapi.mjs && node ../../scripts/generate-manager-errors.mjs",
     "build": "pnpm run generate && tsc -b --pretty false",
     "typecheck": "pnpm run generate && tsc -b --pretty false",
     "lint": "eslint . --max-warnings 0",
-    "generate:client": "orval --config orval.config.mjs && pnpm run generate"
+    "generate:client": "orval --config orval.config.mjs && node scripts/publish-client.mjs && pnpm run generate"
   },
   "devDependencies": {
     "openapi-typescript": "7.13.0",

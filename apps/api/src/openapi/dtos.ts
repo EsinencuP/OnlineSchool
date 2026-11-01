@@ -2,6 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import type { ApiPropertyOptions } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { SUPPORTED_RECEIPT_CURRENCIES } from '../modules/finance/receipt-policy.js';
 import {
   IsDefined,
   IsOptional,
@@ -14,6 +15,7 @@ import {
   IsArray,
   IsObject,
   IsEnum,
+  IsIn,
   Min,
   Max,
   MinLength,
@@ -1268,19 +1270,19 @@ export class PaymentRegisterRequest {
   'studentId'!: string;
   @ApiProperty({
     type: 'string',
-    pattern: '^(?:0|[1-9]\\d{0,15})(?:\\.\\d{1,4})?$',
+    pattern: '^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,4})?$',
     description:
       'Exact NUMERIC(20,4) decimal string; JSON numbers and exponents are rejected. Positive for payments/lines; zero only for explicit director accrual decision.',
     required: true,
   } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
-  @Matches(new RegExp('^(?:0|[1-9]\\d{0,15})(?:\\.\\d{1,4})?$'))
+  @Matches(new RegExp('^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,4})?$'))
   'amount'!: string;
-  @ApiProperty({ type: 'string', pattern: '^[A-Z]{3}$', required: true } as ApiPropertyOptions)
+  @ApiProperty({ type: 'string', enum: SUPPORTED_RECEIPT_CURRENCIES, required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
-  @Matches(new RegExp('^[A-Z]{3}$'))
+  @IsIn(SUPPORTED_RECEIPT_CURRENCIES)
   'currency'!: string;
   @ApiProperty({ type: 'string', minLength: 1, required: false } as ApiPropertyOptions)
   @IsOptional()
@@ -2576,6 +2578,19 @@ export const SCHEMA_OVERRIDES = {
   },
 };
 export const SCHEMA_ADDITIONAL_PROPERTIES = {
+  DashboardQueryDto:false,ManagerDashboardDto:false,DashboardStudentCountsDto:false,DashboardLessonDto:false,DashboardTaskDto:false,DashboardOverdueTasksDto:false,DashboardSubscriptionDto:false,DashboardCurrencyTotalDto:false,DashboardPendingPaymentsDto:false,
+  SendManagerNotificationDto:false,ListManagerNotificationsDto:false,ManagerNotificationDto:false,ManagerNotificationPageDto:false,
+  ClaimManagerTaskDto:false,ResolveManagerRescheduleDto:false,ResolveManagerDisputeDto:false,ManagerTaskDto:false,ManagerTaskPageDto:false,ManagerTaskDetailDto:false,TaskPreferredWindowDto:false,TaskReschedulePayloadDto:false,TaskDisputePayloadDto:false,TaskExpiringPayloadDto:false,TaskGeneralPayloadDto:false,ApproveCrmDisputeDto:false,CrmDisputeResolutionDto:false,CrmDisputeReviewDto:false,
+  ScheduleChangeReviewDto:false,
+  ListManagerScheduleDto:false,CreateManagerLessonDto:false,RescheduleManagerLessonDto:false,CancelManagerLessonDto:false,SetManagerMeetDto:false,EmptyManagerScheduleDto:false,ManagerLessonDto:false,ApproveScheduleChangeDto:false,ScheduleChangeApprovalDto:false,
+  CreateManagerPaymentDto:false,ConfirmManagerPaymentDto:false,RejectManagerPaymentDto:false,
+  PrepareManagerDistributionDto:false,AllocateManagerPaymentDto:false,ListManagerPaymentsQueryDto:false,
+  ManagerPaymentDto:false,ManagerPaymentPageDto:false,ManagerDistributionDto:false,ManagerDistributionPageDto:false,
+  CreateManagerSubscriptionDto: false,
+  RenewManagerSubscriptionDto: false,
+  FreezeManagerSubscriptionDto: false,
+  UnfreezeManagerSubscriptionDto: false,
+  ManagerSubscriptionDto: false,
   HealthResponse: false,
   CsrfResponse: false,
   ApiError: false,

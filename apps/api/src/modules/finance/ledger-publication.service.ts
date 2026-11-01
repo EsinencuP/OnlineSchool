@@ -3,6 +3,7 @@ import { Prisma } from '@online-school/db';
 import type { LedgerEntry, PrismaClient } from '@online-school/db';
 import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
+import { databaseError } from '../../core/errors/database-error.js';
 
 export type LedgerPublishError = {
   code:
@@ -85,6 +86,28 @@ export type PublishLedgerCommand = {
 @Injectable()
 export class LedgerPublicationService {
   constructor(private readonly policy: LedgerPublicationPolicy) {}
+
+  // A manager consumes an already approved allocation, never republishes the money.
+  // Source ownership is checked by the Finance facade before this read-only proof.
+  async requirePublishedDistribution(
+    tx: Prisma.TransactionClient,
+    distributionId: string,
+    now: Date,
+  ): Promise<Result<string, LedgerPublishError>> {
+    try {
+      const rows = await tx.$queryRaw<{ id: string }[]>`
+        WITH RECURSIVE documents AS (
+          SELECT id FROM ledger_documents WHERE distribution_id=${distributionId}::uuid
+          UNION ALL SELECT d.id FROM ledger_documents d JOIN documents p ON d.correction_of_document_id=p.id
+        ) SELECT e.id FROM documents d JOIN ledger_entries e ON e.document_id=d.id
+        WHERE e.published_at<=${now} AND e.effective_at<=${now} AND e.reverses_entry_id IS NULL
+          AND NOT EXISTS(SELECT 1 FROM ledger_entries rev WHERE rev.reverses_entry_id=e.id AND rev.published_at<=${now})
+        ORDER BY e.published_at DESC,e.id LIMIT 1`;
+      return rows[0] ? ok(rows[0].id) : err({ code: 'NOT_FOUND' });
+    } catch (error: unknown) {
+      return err({ code: databaseError(error).retryable ? 'RETRYABLE' : 'DATABASE_ERROR' });
+    }
+  }
 
   // Finance commands already own their SERIALIZABLE transaction and atomic audit/outbox.
   async publishInTransaction(

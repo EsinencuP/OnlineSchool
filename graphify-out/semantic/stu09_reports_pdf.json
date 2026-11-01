@@ -1,0 +1,140 @@
+{
+  "nodes": [
+    {
+      "id": "stu09_reports",
+      "label": "STU-09: published educational reports and asynchronous PDF history",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "source_sha256": "d9c0b871db3d319d88faed8ae0129341664f217629f06b68dd7326d80457d3b9",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Four student routes under existing session/context/active-access guards. Latest published LESSON_8 report version, exact-version receipts first204/repeat200, owned durable PDF queue202 and fixed one-hour signed URL. Public fields only; no student creation or external family notification. PostgreSQL/S3 acceptance deferred, no deployment."
+    },
+    {
+      "id": "stu09_projections",
+      "label": "STU-09: isolated eight-lesson reports and whole educational history",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/export-data.ts",
+      "source_location": "L1",
+      "source_sha256": "4a901bf7e4e8b062f1ecc53689743f18b93dd40fe71025097ca7898284fd5195",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Server pupil scope across reenrollments; latest published version, draft correction retains prior publication, public four-field whitelist and current dated skill map. Confirmed CONDUCTED lessons and proven no-show attendance. Inclusive timezone/DST selection; overlapping reports kept whole. Ten source-exact SELECT fixtures parsed, not executed."
+    },
+    {
+      "id": "stu09_worker",
+      "label": "STU-09: leased fenced PDF worker and private S3 publication",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/apps/worker/src/pdf-exports.ts",
+      "source_location": "L1",
+      "source_sha256": "6e483026308b84c03b9d82b0e4a69f492c5c51024801ab5564a56f72beda5006",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Committed SKIP LOCKED claim, fresh DB clock after row lock, immutable public source, active-owner checks, max3 safe attempts and fenced object key. PDFKit font assets, create-only S3 PUT and HEAD ambiguity resolution. Lost commit acknowledgment never deletes advertised file; PDF work runs beside normal poll and drains on stop. Actual queue/S3 not verified."
+    },
+    {
+      "id": "stu09_storage",
+      "label": "STU-09: prepared report receipts, publication and PDF state guards",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+      "source_location": "L1",
+      "source_sha256": "1188311805a449aed5c0db19a52b6c2760817d181f612c3feaaf5a92c779eefe",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "Add EducationReportRead, PdfExportJob and confirmed eight-lesson snapshot. Assigned enabled teacher publishes four public fields with exactly8 confirmed conducted lessons; receipts immutable, PDF owner/source/result immutable and READY/SUCCEEDED commit together.24 SQL statements and4 PLpgSQL bodies parsed; actual PostgreSQL enforcement and grants deferred."
+    },
+    {
+      "id": "stu09_evidence",
+      "label": "STU-09: targeted checks pass; working PostgreSQL/S3 acceptance pending",
+      "file_type": "document",
+      "source_file": "D:/OnlineSchool/infra/STU09_EVIDENCE.json",
+      "source_location": "L1",
+      "source_sha256": "c698320ce01e76bf713d421ae580a727d5297f81170160ed2f7ae69ed147fa2a",
+      "review_status": "REVIEWED",
+      "status": "IMPLEMENTED_TARGETED_CHECKS_PASS_POSTGRES_S3_ACCEPTANCE_DEFERRED",
+      "extraction_method": "host_review_of_authored_sources",
+      "summary": "81 distinct STU-09 mock-backed unit/Nest HTTP/worker/SDK cases passed and2 existing transport regressions; API/worker/SDK builds, Prisma and targeted lint pass. OpenAPI74 operations. Actual synthetic PDF3 A4 pages visually reviewed with embedded Cyrillic/diacritic fonts and no injected private note. No working migration, S3 integration, image build, extra DB/branch/container or release; FND-GATE open."
+    }
+  ],
+  "edges": [
+    {
+      "source": "stu09_reports",
+      "target": "stu01_student_module",
+      "relation": "requires_server_student_context",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_reports",
+      "target": "stu08_skills",
+      "relation": "exports_current_public_skill_map",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_reports",
+      "target": "stu09_projections",
+      "relation": "reads_through",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_reports",
+      "target": "stu09_storage",
+      "relation": "requires_prepared_migration",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_worker",
+      "target": "task11_worker_document",
+      "relation": "extends_durable_worker",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_worker",
+      "target": "stu09_projections",
+      "relation": "freezes_public_source",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    },
+    {
+      "source": "stu09_evidence",
+      "target": "stu09_reports",
+      "relation": "verifies_targeted_code_not_working_acceptance",
+      "source_file": "D:/OnlineSchool/apps/api/src/student/reports/README.md",
+      "source_location": "L1",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1,
+      "weight": 1
+    }
+  ],
+  "hyperedges": [],
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "token_usage_status": "Host review and AST, no external LLM API cost"
+}

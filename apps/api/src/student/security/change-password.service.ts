@@ -58,6 +58,8 @@ export class ChangeStudentPasswordService {
         if (!profile) return fail(domainError('STUDENT_PROFILE_NOT_FOUND', 403));
         if (!(await this.passwords.verify(input.currentPassword, account.password_hash)))
           return fail(domainError('CURRENT_PASSWORD_INVALID', 401));
+        if (profile.must_change_password && input.newPassword === input.currentPassword)
+          return fail(domainError('PASSWORD_UNCHANGED', 422));
         if (input.currentPassword === input.newPassword)
           return fail(domainError('PASSWORD_MUST_DIFFER', 400));
         const hashed = await this.passwords.hash(input.newPassword, 'student');
@@ -68,7 +70,7 @@ export class ChangeStudentPasswordService {
         });
         await tx.studentAccount.update({
           where: { id: profile.id },
-          data: { must_change_password: false },
+          data: { must_change_password: false, temporary_password_expires_at: null },
         });
         await this.identity.revoke(tx, account.id, account.id, 'STUDENT_PASSWORD_CHANGED', true);
         await tx.studentEmailChange.updateMany({

@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./manager-subscription-lifecycle": {
+      "types": "./dist/modules/finance/manager-subscriptions/lifecycle.module.d.ts",
+      "import": "./dist/modules/finance/manager-subscriptions/lifecycle.module.js"
+    },
     "./notifications": {
       "types": "./dist/modules/notifications/notification.service.d.ts",
       "import": "./dist/modules/notifications/notification.service.js"

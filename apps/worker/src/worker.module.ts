@@ -4,6 +4,7 @@ import { ok, SERVICE_NAMES } from '@online-school/shared';
 import { ScheduleDeadlineModule, ScheduleDeadlines } from '@online-school/api/schedule-deadlines';
 import { FinanceExpiryModule, TemporaryAccessExpiry } from '@online-school/api/finance-expiry';
 import { HomeworkDraftExpiryModule, HomeworkDraftExpiry } from '@online-school/api/homework-drafts';
+import { ManagerSubscriptionLifecycleModule, ManagerSubscriptionExpiry } from '@online-school/api/manager-subscription-lifecycle';
 import { createPoolClient } from '@online-school/db';
 import type { PrismaClient } from '@online-school/db';
 import { readOptions, rollback } from './contracts.js';
@@ -44,6 +45,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
     private readonly me: MeService,
     private readonly pdfStorage: PrivateUploads,
     @Inject(RECOVERY_PROVIDERS) private readonly providers: ReadonlyMap<string, RecoveryProvider>,
+    private readonly subscriptions: ManagerSubscriptionExpiry,
   ) {}
 
   async onModuleInit(): Promise<void> {
@@ -81,7 +83,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
   }
 
   private async process(): Promise<void> {
-    for (const processor of [this.expiry, this.schedule, this.drafts]) {
+    for (const processor of [this.expiry, this.schedule, this.drafts, this.subscriptions]) {
       if (this.stopped) return;
       const result = await processor.enabled();
       if (!result.ok) this.logger.error(result.error.code);
@@ -136,6 +138,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
 @Module({
   imports: [
     FinanceExpiryModule,
+    ManagerSubscriptionLifecycleModule,
     ScheduleDeadlineModule,
     HomeworkDraftExpiryModule,
     EducationExportSupportModule,

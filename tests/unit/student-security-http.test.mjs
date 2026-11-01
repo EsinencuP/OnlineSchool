@@ -421,15 +421,15 @@ test.each([
     path === 'profile'
       ? await command('patch', 'profile', { displayName: 'Name' })
       : await get(path);
-  expect(response.body.code).toBe('MUST_CHANGE_PASSWORD');
+  expect(response.body.code).toBe('PASSWORD_CHANGE_REQUIRED');
 });
-test('initial password takes priority over inactive access; bootstrap me remains200', async () => {
+test('MGR-03 initial password also blocks me before inactive access is considered', async () => {
   state.mustChange = true;
   state.active = false;
   expect((await get('security/sessions')).status).toBe(403);
   expect((await get('me')).body).toMatchObject({
-    mustChangePassword: true,
-    hasActiveAccess: false,
+    code: 'PASSWORD_CHANGE_REQUIRED',
+    status: 403,
   });
 });
 test.each(['profile/avatar', 'security/sessions', 'subscription/payments', 'notifications/count'])(

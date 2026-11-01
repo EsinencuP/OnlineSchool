@@ -1,23 +1,16 @@
 import { Module } from '@nestjs/common';
+import { TransactionModule } from '../../core/transaction/transaction.service.js';
 import { FinanceModule } from '../finance/finance.module.js';
-import { ScheduleAccess } from './schedule-access.service.js';
-import { ScheduleEvents } from './schedule-events.service.js';
 import { ScheduleRegistry } from './registry.service.js';
-import { BookingService } from './booking.service.js';
+import { ScheduleInfrastructureModule } from './schedule-infrastructure.module.js';
 import { OutcomesService } from './outcomes.service.js';
 import { ScheduleScopeGuard } from './schedule-scope.guard.js';
 import { ScheduleController } from './schedule.controller.js';
 import { ScheduleDeadlineModule } from './deadline.module.js';
+import { ScheduleChangeApprovalController } from './manager/approval.controller.js';
 @Module({
-  imports: [FinanceModule, ScheduleDeadlineModule],
-  controllers: [ScheduleController],
-  providers: [
-    ScheduleAccess,
-    ScheduleEvents,
-    ScheduleRegistry,
-    BookingService,
-    OutcomesService,
-    ScheduleScopeGuard,
-  ],
+  imports: [FinanceModule, ScheduleDeadlineModule, ScheduleInfrastructureModule, TransactionModule],
+  controllers: [ScheduleController, ScheduleChangeApprovalController],
+  providers: [ScheduleRegistry, OutcomesService, ScheduleScopeGuard],
 })
 export class ScheduleModule {}

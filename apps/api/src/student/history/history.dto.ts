@@ -33,7 +33,8 @@ export class LessonHistoryItemDto {
   @ApiProperty() durationMinutes!: number;
   @ApiProperty() teacherName!: string;
   @ApiProperty() subjectName!: string;
-  @ApiProperty({ enum: ['COMPLETED', 'NO_SHOW'] }) attendanceStatus!: 'COMPLETED' | 'NO_SHOW';
+  @ApiProperty({ enum: ['COMPLETED', 'NO_SHOW', 'CANCELLED'] }) attendanceStatus!:
+    'COMPLETED' | 'NO_SHOW' | 'CANCELLED';
   @ApiProperty({
     description: 'Current uncancelled quantitative consumption backed by a published ledger entry',
   })

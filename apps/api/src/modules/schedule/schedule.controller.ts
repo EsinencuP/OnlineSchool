@@ -331,7 +331,7 @@ export class ScheduleController {
     operationId: 'createLesson',
     summary: 'Create lesson',
     description:
-      'MFA required. MANAGER/DIRECTOR; locks teacher availability and enforces SQL resource exclusion. Missing paid/director access produces held STAR_PENDING.',
+      'MFA required. DIRECTOR administrative command; managers use createManagerLesson with preparation and subscription checks. Locks teacher availability and enforces SQL exclusion; missing paid/director access produces held STAR_PENDING.',
   })
   @ApiResponse({
     status: 200,
@@ -357,6 +357,7 @@ export class ScheduleController {
   @ApiBody({ type: ApiDto.LessonCreateRequest, required: true })
   @ApiTags('Schedule')
   @Post('lessons')
+  @RequireRole('DIRECTOR')
   @RequirePermission('schedule:manage')
   @CriticalCommand({
     type: 'schedule.lesson.create',
@@ -370,7 +371,7 @@ export class ScheduleController {
     operationId: 'rescheduleLesson',
     summary: 'Reschedule lesson',
     description:
-      'MFA required. MANAGER/DIRECTOR; same lesson ID and original key, old/new event; conflicting booking returns 409.',
+      'MFA required. DIRECTOR administrative command; managers use rescheduleManagerLesson with immutability and director-exception checks. Same lesson ID and original key; conflicting booking returns409.',
   })
   @ApiResponse({
     status: 200,
@@ -397,6 +398,7 @@ export class ScheduleController {
   @ApiBody({ type: ApiDto.LessonRescheduleRequest, required: true })
   @ApiTags('Schedule')
   @Patch('lessons/:id/reschedule')
+  @RequireRole('DIRECTOR')
   @RequirePermission('schedule:manage')
   @CriticalCommand({
     type: 'schedule.lesson.reschedule',
@@ -414,7 +416,7 @@ export class ScheduleController {
     operationId: 'cancelLesson',
     summary: 'Cancel lesson',
     description:
-      'MFA required. MANAGER/DIRECTOR; explicit cancellation only before reported/started actual fact. No financial side effects.',
+      'MFA required. DIRECTOR administrative command; managers use cancelManagerLesson for atomic cancellation/deduction and exception checks. No financial side effects on this legacy administrative route.',
   })
   @ApiResponse({
     status: 200,
@@ -441,6 +443,7 @@ export class ScheduleController {
   @ApiBody({ type: ApiDto.ScheduleReasonRequest, required: true })
   @ApiTags('Schedule')
   @Delete('lessons/:id')
+  @RequireRole('DIRECTOR')
   @RequirePermission('schedule:manage')
   @CriticalCommand({
     type: 'schedule.lesson.cancel',

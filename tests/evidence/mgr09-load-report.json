@@ -1,0 +1,11 @@
+{
+  "task": "MGR-09",
+  "date": "2026-11-01T08:05:08.347Z",
+  "status": "NOT_RUN",
+  "target": {
+    "portfolioSize": 500,
+    "p95Milliseconds": 300
+  },
+  "method": "10 warmup requests, 100 measured GET requests, concurrency4; includes HTTP/JSON latency; nearest-rank p95. No fixture writes.",
+  "reason": "WORKING_ORIGIN_AND_MANAGER_SESSION_REQUIRED"
+}
