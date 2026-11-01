@@ -1,0 +1,710 @@
+{
+  "sourceFilesParsed": 128,
+  "comments": [],
+  "envReads": [
+    {
+      "file": "apps/api/src/core/csrf/csrf.module.ts",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 24
+    },
+    {
+      "file": "apps/api/src/main.ts",
+      "name": "PORT",
+      "line": 8
+    },
+    {
+      "file": "apps/api/src/main.ts",
+      "name": "HOST",
+      "line": 19
+    },
+    {
+      "file": "apps/api/src/modules/finance/expiry.module.ts",
+      "name": "DATABASE_URL",
+      "line": 192
+    },
+    {
+      "file": "apps/api/src/modules/schedule/deadline.module.ts",
+      "name": "DATABASE_URL",
+      "line": 190
+    },
+    {
+      "file": "apps/api/test/integration/core-http.test.mjs",
+      "name": "TEST_DATABASE_URL",
+      "line": 35
+    },
+    {
+      "file": "apps/api/test/integration/core-http.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 39
+    },
+    {
+      "file": "apps/api/test/integration/core-http.test.mjs",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 40
+    },
+    {
+      "file": "apps/api/test/integration/finance-http.test.mjs",
+      "name": "FINANCE_TEST_DATABASE_URL",
+      "line": 21
+    },
+    {
+      "file": "apps/api/test/integration/finance-http.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 49
+    },
+    {
+      "file": "apps/api/test/integration/finance-http.test.mjs",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 50
+    },
+    {
+      "file": "apps/api/test/integration/identity-http.test.mjs",
+      "name": "IDENTITY_TEST_DATABASE_URL",
+      "line": 13
+    },
+    {
+      "file": "apps/api/test/integration/identity-http.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 20
+    },
+    {
+      "file": "apps/api/test/integration/identity-http.test.mjs",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 21
+    },
+    {
+      "file": "apps/api/test/integration/identity-http.test.mjs",
+      "name": "WEBAUTHN_RP_ID",
+      "line": 22
+    },
+    {
+      "file": "apps/api/test/integration/identity-http.test.mjs",
+      "name": "WEBAUTHN_ALLOWED_ORIGIN",
+      "line": 23
+    },
+    {
+      "file": "apps/api/test/integration/schedule-http.test.mjs",
+      "name": "SCHEDULE_TEST_DATABASE_URL",
+      "line": 14
+    },
+    {
+      "file": "apps/api/test/integration/schedule-http.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 32
+    },
+    {
+      "file": "apps/api/test/integration/schedule-http.test.mjs",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 33
+    },
+    {
+      "file": "apps/qa-shell/test/public-passkey-account.mjs",
+      "name": "DIRECT_URL",
+      "line": 9
+    },
+    {
+      "file": "apps/qa-shell/test/release-evidence.mjs",
+      "name": "DIRECT_URL",
+      "line": 11
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "QA_SHELL_TEST_DATABASE_URL",
+      "line": 13
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "APP_ENV",
+      "line": 18
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "DATABASE_URL",
+      "line": 18
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "CSRF_SIGNING_SECRET",
+      "line": 19
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "WEBAUTHN_RP_ID",
+      "line": 20
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "name": "WEBAUTHN_ALLOWED_ORIGIN",
+      "line": 21
+    },
+    {
+      "file": "apps/qa-shell/vite.config.ts",
+      "name": "VERCEL_GIT_COMMIT_SHA",
+      "line": 18
+    },
+    {
+      "file": "apps/qa-shell/vite.config.ts",
+      "name": "BUILD_COMMIT_SHA",
+      "line": 18
+    },
+    {
+      "file": "apps/worker/src/worker.module.ts",
+      "name": "NODE_ENV",
+      "line": 36
+    },
+    {
+      "file": "apps/worker/src/worker.module.ts",
+      "name": "DATABASE_URL",
+      "line": 36
+    },
+    {
+      "file": "apps/worker/src/worker.module.ts",
+      "name": "DATABASE_URL",
+      "line": 38
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 28
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "NODE_ENV",
+      "line": 29
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 30
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "NODE_ENV",
+      "line": 30
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 39
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "DATABASE_URL",
+      "line": 40
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "NODE_ENV",
+      "line": 41
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "name": "NODE_ENV",
+      "line": 42
+    },
+    {
+      "file": "apps/worker/test/fixtures/crash-worker.mjs",
+      "name": "WORKER_TEST_DATABASE_URL",
+      "line": 5
+    },
+    {
+      "file": "apps/worker/test/integration/worker.test.mjs",
+      "name": "WORKER_TEST_DATABASE_URL",
+      "line": 19
+    },
+    {
+      "file": "apps/worker/test/integration/worker.test.mjs",
+      "name": "APP_ENV",
+      "line": 24
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "DATABASE_URL_CI",
+      "line": 15
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "DATABASE_URL_TEST",
+      "line": 15
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "CI",
+      "line": 51
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "APP_ENV",
+      "line": 52
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "DATABASE_URL_CI",
+      "line": 53
+    },
+    {
+      "file": "infra/ci/integration.mjs",
+      "name": "DATABASE_URL_TEST",
+      "line": 54
+    },
+    {
+      "file": "infra/vercel/build.mjs",
+      "name": "VERCEL_ENV",
+      "line": 19
+    },
+    {
+      "file": "infra/vercel/build.mjs",
+      "name": "DIRECT_DATABASE_URL",
+      "line": 22
+    },
+    {
+      "file": "infra/vercel/build.mjs",
+      "name": "DATABASE_URL",
+      "line": 23
+    },
+    {
+      "file": "infra/vercel/build.mjs",
+      "name": "DATABASE_URL",
+      "line": 26
+    },
+    {
+      "file": "packages/db/prisma.config.ts",
+      "name": "DIRECT_URL",
+      "line": 8
+    },
+    {
+      "file": "packages/db/prisma.config.ts",
+      "name": "DIRECT_URL",
+      "line": 8
+    },
+    {
+      "file": "packages/db/prisma.legacy.config.ts",
+      "name": "DIRECT_URL",
+      "line": 8
+    },
+    {
+      "file": "packages/db/prisma.legacy.config.ts",
+      "name": "DIRECT_URL",
+      "line": 8
+    },
+    {
+      "file": "packages/db/test/integration/education-files-infrastructure.test.mjs",
+      "name": "TEST_DATABASE_URL",
+      "line": 17
+    },
+    {
+      "file": "packages/db/test/integration/identity-access-crm.test.mjs",
+      "name": "TEST_DATABASE_URL",
+      "line": 8
+    },
+    {
+      "file": "packages/db/test/integration/schedule-finance.test.mjs",
+      "name": "TEST_DATABASE_URL",
+      "line": 19
+    },
+    {
+      "file": "scripts/provision-initial-project.mjs",
+      "name": "DIRECT_URL",
+      "line": 14
+    }
+  ],
+  "dynamicImportsAndRequires": [
+    {
+      "file": "apps/api/test/integration/finance-http.test.mjs",
+      "line": 737,
+      "expression": "import('../../../worker/dist/worker.module.js')"
+    },
+    {
+      "file": "apps/api/test/integration/schedule-http.test.mjs",
+      "line": 481,
+      "expression": "import('../../../worker/dist/worker.module.js')"
+    },
+    {
+      "file": "apps/qa-shell/test/serve-smoke.mjs",
+      "line": 112,
+      "expression": "import('../../api/dist/serverless.js')"
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "line": 23,
+      "expression": "import('node:module')"
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "line": 24,
+      "expression": "require('reflect-metadata')"
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "line": 26,
+      "expression": "require('@nestjs/core')"
+    },
+    {
+      "file": "apps/worker/test/config.test.mjs",
+      "line": 27,
+      "expression": "import('../dist/worker.module.js')"
+    },
+    {
+      "file": "scripts/monorepo-smoke.test.mjs",
+      "line": 8,
+      "expression": "import('../apps/api/dist/app.module.js')"
+    },
+    {
+      "file": "scripts/monorepo-smoke.test.mjs",
+      "line": 9,
+      "expression": "import('../apps/worker/dist/worker.module.js')"
+    }
+  ],
+  "scripts": [
+    {
+      "file": "apps/api/package.json",
+      "name": "build",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "typecheck",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "start",
+      "command": "node --env-file-if-exists=.env dist/main.js"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "dev",
+      "command": "node --env-file-if-exists=.env --watch dist/main.js"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "watch",
+      "command": "tsc -b --watch"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "test",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "test:unit",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "test:integration",
+      "command": "pnpm run build && node --test --test-concurrency=1 test/integration/*.test.mjs"
+    },
+    {
+      "file": "apps/api/package.json",
+      "name": "export:openapi",
+      "command": "node scripts/export-openapi.mjs"
+    },
+    {
+      "file": "apps/qa-shell/package.json",
+      "name": "build",
+      "command": "tsc -b --pretty false && vite build"
+    },
+    {
+      "file": "apps/qa-shell/package.json",
+      "name": "typecheck",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "apps/qa-shell/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "apps/qa-shell/package.json",
+      "name": "dev",
+      "command": "vite --host 127.0.0.1"
+    },
+    {
+      "file": "apps/qa-shell/package.json",
+      "name": "preview",
+      "command": "vite preview --host 127.0.0.1"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "build",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "typecheck",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "start",
+      "command": "node --env-file-if-exists=.env dist/main.js"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "dev",
+      "command": "node --env-file-if-exists=.env --watch dist/main.js"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "watch",
+      "command": "tsc -b --watch"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "test",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "test:unit",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "apps/worker/package.json",
+      "name": "test:integration",
+      "command": "node --test --test-concurrency=1 test/integration/*.test.mjs"
+    },
+    {
+      "file": "package.json",
+      "name": "postinstall",
+      "command": "pnpm run generate"
+    },
+    {
+      "file": "package.json",
+      "name": "generate",
+      "command": "pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate"
+    },
+    {
+      "file": "package.json",
+      "name": "build",
+      "command": "turbo run build"
+    },
+    {
+      "file": "package.json",
+      "name": "typecheck",
+      "command": "turbo run typecheck"
+    },
+    {
+      "file": "package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "package.json",
+      "name": "lint:packages",
+      "command": "turbo run lint"
+    },
+    {
+      "file": "package.json",
+      "name": "test",
+      "command": "turbo run test && node --test scripts/monorepo-smoke.test.mjs"
+    },
+    {
+      "file": "package.json",
+      "name": "test:unit",
+      "command": "pnpm -r --if-present test:unit && node --test scripts/monorepo-smoke.test.mjs"
+    },
+    {
+      "file": "package.json",
+      "name": "test:integration:ci",
+      "command": "node infra/ci/integration.mjs"
+    },
+    {
+      "file": "package.json",
+      "name": "format",
+      "command": "prettier --write ."
+    },
+    {
+      "file": "package.json",
+      "name": "format:check",
+      "command": "prettier --check ."
+    },
+    {
+      "file": "package.json",
+      "name": "db:seed",
+      "command": "pnpm --filter @online-school/db db:seed"
+    },
+    {
+      "file": "package.json",
+      "name": "db:reset-qa",
+      "command": "pnpm --filter @online-school/db db:reset-qa"
+    },
+    {
+      "file": "package.json",
+      "name": "db:migrate:dry-run",
+      "command": "pnpm --filter @online-school/db db:migrate:dry-run"
+    },
+    {
+      "file": "package.json",
+      "name": "db:migrate:up",
+      "command": "pnpm --filter @online-school/db db:migrate:up"
+    },
+    {
+      "file": "package.json",
+      "name": "generate:client",
+      "command": "pnpm --filter @online-school/api build && pnpm --filter @online-school/api export:openapi && pnpm --filter @online-school/api-contracts generate:client"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "generate",
+      "command": "node scripts/generate-openapi.mjs"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "build",
+      "command": "pnpm run generate && tsc -b --pretty false"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "typecheck",
+      "command": "pnpm run generate && tsc -b --pretty false"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "test",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "packages/api-contracts/package.json",
+      "name": "generate:client",
+      "command": "orval --config orval.config.mjs && pnpm run generate"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "generate",
+      "command": "prisma generate"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "build",
+      "command": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "typecheck",
+      "command": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "test",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "test:unit",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "test:integration",
+      "command": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/integration/*.test.mjs"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "test:qa",
+      "command": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/qa/*.test.mjs"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:validate",
+      "command": "prisma validate"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:migrate",
+      "command": "prisma migrate dev"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:deploy",
+      "command": "prisma migrate deploy"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:seed",
+      "command": "pnpm run build && node dist-tools/seed.js"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:seed:reference",
+      "command": "prisma db seed"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:reset-qa",
+      "command": "pnpm run build && node dist-tools/scripts/database-tools.js reset-qa"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:migrate:dry-run",
+      "command": "pnpm run build && node dist-tools/scripts/database-tools.js dry-run"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:migrate:up",
+      "command": "pnpm run build && node dist-tools/scripts/database-tools.js up"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "seed:run",
+      "command": "pnpm run build && node prisma/seed.mjs"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:migrate:legacy",
+      "command": "prisma migrate dev --config prisma.legacy.config.ts"
+    },
+    {
+      "file": "packages/db/package.json",
+      "name": "db:deploy:legacy",
+      "command": "prisma migrate deploy --config prisma.legacy.config.ts"
+    },
+    {
+      "file": "packages/shared/package.json",
+      "name": "build",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "packages/shared/package.json",
+      "name": "typecheck",
+      "command": "tsc -b --pretty false"
+    },
+    {
+      "file": "packages/shared/package.json",
+      "name": "lint",
+      "command": "eslint . --max-warnings 0"
+    },
+    {
+      "file": "packages/shared/package.json",
+      "name": "test",
+      "command": "node --test test/*.test.mjs"
+    },
+    {
+      "file": "packages/shared/package.json",
+      "name": "test:unit",
+      "command": "node --test test/*.test.mjs"
+    }
+  ]
+}

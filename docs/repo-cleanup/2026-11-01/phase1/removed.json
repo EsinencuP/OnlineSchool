@@ -1,0 +1,30 @@
+[
+  {
+    "file": "apps/api/src/core/session/session.store.ts",
+    "removed": "export modifier only",
+    "symbol": "SESSION_TTL_MS",
+    "astUnchangedExceptExport": true,
+    "codeAndLocalReferencesRetained": true
+  },
+  {
+    "file": "apps/api/src/modules/finance/finance-ledger.service.ts",
+    "removed": "export modifier only",
+    "symbol": "pair",
+    "astUnchangedExceptExport": true,
+    "codeAndLocalReferencesRetained": true
+  },
+  {
+    "file": "apps/api/src/modules/identity/identity.service.ts",
+    "removed": "export modifier only",
+    "symbol": "userHandle",
+    "astUnchangedExceptExport": true,
+    "codeAndLocalReferencesRetained": true
+  },
+  {
+    "file": "apps/qa-shell/src/scenarios.ts",
+    "removed": "export modifier only",
+    "symbol": "Role",
+    "astUnchangedExceptExport": true,
+    "codeAndLocalReferencesRetained": true
+  }
+]

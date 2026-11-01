@@ -1,0 +1,13 @@
+
+> @online-school/qa-shell@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\qa-shell
+> tsc -b --pretty false && vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 55 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.30 kB
+dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+dist/assets/index-BayZwo2g.js   183.04 kB │ gzip: 57.49 kB
+✓ built in 1.32s

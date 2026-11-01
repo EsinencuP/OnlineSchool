@@ -1,0 +1,314 @@
+{
+  "phase": 1,
+  "measuredAt": "2026-11-01T13:06:10.559Z",
+  "branch": "chore/repo-cleanup",
+  "baseCommit": "cad89fa08f289f1f867d067abb9a338a1a57f8df",
+  "codeCommit": "ebf777958bc0d099d3ec5c3c1bf5e8f89fc003a0",
+  "analysisTool": "pnpm dlx knip@6.44.1 --reporter json --no-progress",
+  "analysisExitCode": 1,
+  "analysisExitMeaning": "Findings remain by design; this is not a test/check failure",
+  "knipCounts": {
+    "before": {
+      "files": 12,
+      "dependencies": 2,
+      "unlisted": 3,
+      "exports": 18,
+      "types": 3
+    },
+    "after": {
+      "files": 12,
+      "dependencies": 2,
+      "unlisted": 3,
+      "exports": 15,
+      "types": 2
+    }
+  },
+  "scope": {
+    "trackedSourceFilesParsed": 128,
+    "envTemplateNames": 26,
+    "staticProcessEnvReferences": 61,
+    "npmScripts": 70,
+    "gitSearches": 60,
+    "refs": [
+      {
+        "ref": "HEAD",
+        "commit": "cad89fa08f289f1f867d067abb9a338a1a57f8df"
+      },
+      {
+        "ref": "origin/codex/stu07-subscription-showcase",
+        "commit": "837f82dfb4547eb499060ebce95cbd813c4c61a9"
+      },
+      {
+        "ref": "origin/codex/stu06-student-materials",
+        "commit": "396bc3a286a36546520f5bb31e8936fab286ece7"
+      },
+      {
+        "ref": "origin/codex/stu05-homework",
+        "commit": "9b9886dcd4cff8c8d48fbf57198ea5e7af3835b9"
+      },
+      {
+        "ref": "origin/codex/stu04-history-disputes",
+        "commit": "b5fb504bfed83d79e9c0c62cd9565cb5bed0f800"
+      },
+      {
+        "ref": "origin/codex/stu03-student-lessons",
+        "commit": "b18246ad21e5bad9aa2a44ce87d5679428e842b1"
+      },
+      {
+        "ref": "origin/codex/stu02-dashboard",
+        "commit": "5cf39f76a75e10548ceb335a37eec2303e74eaa2"
+      },
+      {
+        "ref": "origin/stu01/student-module",
+        "commit": "e61970ac59a6bb906e7583bce0b3d7a15fea3c68"
+      },
+      {
+        "ref": "origin/task15/foundation-tests",
+        "commit": "db3aba9bc86b9d337acc6bf26f246fbd7917f097"
+      },
+      {
+        "ref": "origin/codex/manager-vercel",
+        "commit": "f3f887db58de916ec2b04d39c5bc4ca2c3ac0a35"
+      }
+    ],
+    "openPRs": "Rechecked #2–#9; same heads as phase-0 appendix, manager branch checked separately; no manager PR open."
+  },
+  "removals": [
+    {
+      "path": "apps/api/src/core/session/session.store.ts",
+      "symbol": "SESSION_TTL_MS",
+      "kind": "Лишний export у локальной константы",
+      "proof": "Knip exports; git grep в HEAD и 9 проверенных ветках даёт только определение/локальный расчёт expiresAt. SESSION_IDLE_MS не тронут. Нет DI/Swagger metadata у этой константы.",
+      "commit": "ebf777958bc0d099d3ec5c3c1bf5e8f89fc003a0",
+      "removed": "Только модификатор export; само определение и поведение сохранены",
+      "publicPackageExport": false
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-ledger.service.ts",
+      "symbol": "pair",
+      "kind": "Лишний export у локальной функции",
+      "proof": "Knip exports; все вызовы находятся в том же finance-ledger.service.ts. Межмодульные импорты из файла используют FinanceLedger; другие pair в тестах — локальные переменные. Строковые/динамические/рефлексивные ссылки на этот helper не найдены.",
+      "commit": "ebf777958bc0d099d3ec5c3c1bf5e8f89fc003a0",
+      "removed": "Только модификатор export; само определение и поведение сохранены",
+      "publicPackageExport": false
+    },
+    {
+      "path": "apps/api/src/modules/identity/identity.service.ts",
+      "symbol": "userHandle",
+      "kind": "Лишний export у локальной функции",
+      "proof": "Knip exports; используется внутри IdentityService для WebAuthn, поэтому функция сохранена. Внешние одноимённые поля response.userHandle — протокольные данные, не импорт функции; string/module/DI searches не выявили потребителя export.",
+      "commit": "ebf777958bc0d099d3ec5c3c1bf5e8f89fc003a0",
+      "removed": "Только модификатор export; само определение и поведение сохранены",
+      "publicPackageExport": false
+    },
+    {
+      "path": "apps/qa-shell/src/scenarios.ts",
+      "symbol": "Role",
+      "kind": "Лишний export у локального type alias",
+      "proof": "Knip types; alias используется локально в Action.roles; App.tsx импортирует Action/Field/Values/canRun/scenarios. Все refs к scenarios-модулю проверены в текущей и активных ветках; external type Role import нет. Emitted JS до/после идентичен.",
+      "commit": "ebf777958bc0d099d3ec5c3c1bf5e8f89fc003a0",
+      "removed": "Только модификатор export; само определение и поведение сохранены",
+      "publicPackageExport": false
+    }
+  ],
+  "retainedCandidates": [
+    {
+      "candidate": "api/handler.ts; apps/qa-shell/api/handler.ts",
+      "status": "Оставлены",
+      "why": "Root vercel.json functions/rewrites и Vercel file convention; qa-shell adapter импортирует @online-school/api/serverless."
+    },
+    {
+      "candidate": "infra/compose-smoke.mjs",
+      "status": "Оставлен",
+      "why": "Инструкция запуска внутри самого файла; operational probe с внешним вызовом. Нет доказательства отказа от него."
+    },
+    {
+      "candidate": "infra/prepare-source-export.mjs",
+      "status": "Оставлен",
+      "why": "Документирован в infra/README.md:128."
+    },
+    {
+      "candidate": "infra/worker-health.mjs",
+      "status": "Оставлен",
+      "why": "docker-compose.yml:84 запускает его из healthcheck; включён .dockerignore."
+    },
+    {
+      "candidate": "infra/vercel/build.mjs",
+      "status": "Оставлен",
+      "why": "vercel.json buildCommand."
+    },
+    {
+      "candidate": "scripts/authorize-recovery.mjs; scripts/set-account-password.mjs",
+      "status": "Оставлены",
+      "why": "Документированные операторские CLI в apps/api/IDENTITY.md:99,133."
+    },
+    {
+      "candidate": "scripts/provision-initial-project.mjs",
+      "status": "Оставлен",
+      "why": "Maintenance entrypoint из apps/qa-shell/QA_SHELL.md:55."
+    },
+    {
+      "candidate": "packages/db/seed.ts; packages/db/scripts/database-tools.ts; database-targets.ts",
+      "status": "Оставлены",
+      "why": "Package scripts db:seed/db:migrate:*; tsconfig.tools.json; seed/database-tools imports и seed-guards test. Не выполнялись на БД."
+    },
+    {
+      "candidate": "apps/qa-shell/package.json → @online-school/api",
+      "status": "Оставлена зависимость",
+      "why": "apps/qa-shell/api/handler.ts импортирует @online-school/api/serverless; требуется также TS reference."
+    },
+    {
+      "candidate": "packages/db/package.json → @prisma/client",
+      "status": "Оставлена зависимость",
+      "why": "Generated Prisma client.ts/internal/*.ts импортируют @prisma/client/runtime/client и index-browser."
+    },
+    {
+      "candidate": "SESSION_IDLE_MS",
+      "status": "Оставлен export",
+      "why": "origin/codex/manager-vercel: apps/api/src/student/security/sessions.service.ts:5,25–26 импортирует и использует."
+    },
+    {
+      "candidate": "DirectorLedgerPublicationPolicy",
+      "status": "Оставлен export и класс",
+      "why": "Вызывается ContextualLedgerPublicationPolicy; в manager-ветке scripts/student-cabinet-provision.mjs:5,56 импортирует класс."
+    },
+    {
+      "candidate": "RECOVERY_PROVIDERS; Worker handlers; WorkerFailure",
+      "status": "Оставлены",
+      "why": "Nest Inject/provider token; createHandlers map; WorkerFailure импортируется apps/worker/test/config.test.mjs."
+    },
+    {
+      "candidate": "CsrfController; QaController; FileAccessController",
+      "status": "Оставлены",
+      "why": "Декораторы маршрутов и controllers массивы Nest; удаление ломает регистрацию."
+    },
+    {
+      "candidate": "LoginRequestAlternative*; HouseholdMemberRequestAlternative*; LedgerEntryResponseBalanceSnapshotValue",
+      "status": "Оставлены",
+      "why": "DTO_CLASSES, SCHEMA_OVERRIDES $ref и Swagger extraModels; class-validator metadata. Контракты не менялись."
+    },
+    {
+      "candidate": "webhooks; $defs (generated OpenAPI types)",
+      "status": "Оставлены",
+      "why": "Generated API surface защищён; ручное удаление запрещено."
+    },
+    {
+      "candidate": "IdentityService.private db",
+      "status": "Оставлен",
+      "why": "TS6138 из дополнительного диагностического noUnused прохода. Это constructor DI slot; его удаление меняет metadata/signature. Подозрительный кандидат, не удалять."
+    },
+    {
+      "candidate": "VITE_API_BASE_URL в turbo.json",
+      "status": "Оставлен",
+      "why": "Единственная найденная ссылка — явный Turbo env/cache input. Удаление меняет кэш-контракт; отсутствие frontend read недостаточно для этого шага."
+    },
+    {
+      "candidate": "npm scripts и env templates",
+      "status": "Оставлены",
+      "why": "CLI lifecycle/CI/операторские команды; env читаются напрямую либо через read(key)/environment/Compose interpolation. Нет доказательства отказа от внешних способов запуска."
+    },
+    {
+      "candidate": "TODO без владельца / закомментированный код",
+      "status": "Удалений нет",
+      "why": "Поиск TODO/FIXME/HACK/XXX в коде/конфигах и TS scanner comments: 0 кандидатов."
+    },
+    {
+      "candidate": "README: локальные ссылки на корпус требований и прежнюю graph tooling",
+      "status": "Оставлены в этой фазе",
+      "why": "Корпус намеренно исключён из source-only main; битая локальная ссылка не доказывает мёртвый runtime-код. Ранее удалённый инструмент не запускался."
+    }
+  ],
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/api typecheck",
+      "exitCode": 0,
+      "wallMs": 7143,
+      "log": ".codex/phase1/check-1.txt"
+    },
+    {
+      "command": "pnpm --filter @online-school/api lint",
+      "exitCode": 0,
+      "wallMs": 13729,
+      "log": ".codex/phase1/check-2.txt"
+    },
+    {
+      "command": "pnpm --filter @online-school/api test",
+      "exitCode": 0,
+      "wallMs": 16943,
+      "log": ".codex/phase1/check-3.txt"
+    },
+    {
+      "command": "pnpm --filter @online-school/qa-shell typecheck",
+      "exitCode": 0,
+      "wallMs": 5151,
+      "log": ".codex/phase1/check-4.txt"
+    },
+    {
+      "command": "pnpm --filter @online-school/qa-shell lint",
+      "exitCode": 0,
+      "wallMs": 1528,
+      "log": ".codex/phase1/check-5.txt"
+    },
+    {
+      "command": "pnpm --filter @online-school/qa-shell build",
+      "exitCode": 0,
+      "wallMs": 2604,
+      "log": ".codex/phase1/check-6.txt"
+    },
+    {
+      "command": "node --test scripts/monorepo-smoke.test.mjs",
+      "exitCode": 0,
+      "wallMs": 9914,
+      "log": ".codex/phase1/check-7.txt"
+    }
+  ],
+  "contract": {
+    "openapiMatchesCheckedDocument": true,
+    "openapiCheckMode": "In-memory Nest Swagger document comparison; no generated file write; no database connection",
+    "qaTypeExportEmittedJsIdentical": true,
+    "publicPackageExportsChanged": false
+  },
+  "invariants": {
+    "protectedFilesCompared": 28,
+    "protectedByteDifferences": [],
+    "knipBefore": {
+      "files": 12,
+      "dependencies": 2,
+      "unlisted": 3,
+      "exports": 18,
+      "types": 3
+    },
+    "knipAfter": {
+      "files": 12,
+      "dependencies": 2,
+      "unlisted": 3,
+      "exports": 15,
+      "types": 2
+    },
+    "removedCandidatesStillReported": [],
+    "dependencyAndPublicContractDiff": "",
+    "deletedTrackedFiles": ""
+  },
+  "additionalDiagnostic": {
+    "command": "tsc --noEmit --noUnusedLocals --noUnusedParameters (analysis only; tsconfig unchanged)",
+    "api": "TS6138 IdentityService.db, retained as DI slot",
+    "qa": "No unused-local diagnostics"
+  },
+  "fullRegression": "Not repeated per owner phase policy; targeted checks only. Earlier global format gate remains open. No failed verification step and no rollback required.",
+  "database": "No live database access, schema/SQL/seed untouched; owner-approved unchanged-vs-main check applies.",
+  "publicApi": "Package export manifests and HTTP/OpenAPI/SDK unchanged; only non-public deep module export modifiers removed.",
+  "openPRPathOverlap": [
+    {
+      "number": 3,
+      "paths": [
+        "apps/api/src/modules/identity/identity.service.ts"
+      ]
+    },
+    {
+      "number": 6,
+      "paths": [
+        "apps/api/src/modules/finance/finance-ledger.service.ts"
+      ]
+    }
+  ]
+}

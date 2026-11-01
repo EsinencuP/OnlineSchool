@@ -1,0 +1,2793 @@
+{
+  "base": "cad89fa08f289f1f867d067abb9a338a1a57f8df",
+  "refs": [
+    "HEAD",
+    "origin/codex/stu07-subscription-showcase",
+    "origin/codex/stu06-student-materials",
+    "origin/codex/stu05-homework",
+    "origin/codex/stu04-history-disputes",
+    "origin/codex/stu03-student-lessons",
+    "origin/codex/stu02-dashboard",
+    "origin/stu01/student-module",
+    "origin/task15/foundation-tests",
+    "origin/codex/manager-vercel"
+  ],
+  "searches": [
+    {
+      "ref": "HEAD",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "HEAD:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        }
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "HEAD:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        }
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/identity/identity.service.ts:279:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/identity/identity.service.ts:522:        auth.response.userHandle &&"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/identity/identity.service.ts:523:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/identity-http.test.mjs:321:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/identity-http.test.mjs:340:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        }
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/identity-http.test.mjs:79:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/identity-http.test.mjs:80:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "HEAD:apps/api/test/integration/identity-http.test.mjs:81:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        },
+        {
+          "text": "HEAD:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        }
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "HEAD:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "HEAD:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "HEAD:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/report.md:18:- Экспорт Role описан в CORE.md; RECOVERY_PROVIDERS — документированная точка расширения. Это не доказанные кандидаты на удаление."
+        },
+        {
+          "text": "HEAD:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/schema.prisma:369:model Role {"
+        },
+        {
+          "text": "HEAD:packages/db/prisma/schema.prisma:391:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        }
+      ]
+    },
+    {
+      "ref": "HEAD",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "HEAD:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "HEAD:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        },
+        {
+          "text": "HEAD:docs/repo-cleanup/2026-11-01/knip.json:1:{\"issues\":[{\"file\":\"api/handler.ts\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\":[],\"exports\":[],\"files\":[{\"name\":\"api/handler.ts\"}],\"namespaceMembers\":[],\"optionalPeerDependencies\":[],\"types\":[],\"unlisted\":[],\"unresolved\":[]},{\"file\":\"infra/compose-smoke.mjs\",\"binaries\":[],\"catalog\":[],\"catalogReferences\":[],\"dependencies\":[],\"devDependencies\":[],\"duplicates\":[],\"enumMembers\": [truncated evidence-only line]"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/student/history/README.md:35:SQL validates the snapshot pair, non-negative balance, consumption quantity and"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/student/subscription/README.md:25:The original subscription stores only the current freeze pair. The additive migration creates append-only `SubscriptionFreezeHistory` and a restricted trigger that preserves the old pair when it changes. The runtime can read this history but cannot insert/update/delete it directly. The trigger writes under its migration owner's restricted SECURITY DEFINER function with a pinned search path. No current working [truncated evidence-only line]"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/student/subscription/README.md:27:The read model combines preserved pairs with the current CRM pair, taking the most recent state for a given freeze start. A superseded interval ends no later than its replacement time; intervals replaced before they ever started do not appear as completed freezes. FREEZE/UNFREEZE are zero-quantity operations, and a future unfreeze is not presented as already completed. View event UUIDs derive deterministicall [truncated evidence-only line]"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/schema.prisma:375:model Role {"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/prisma/schema.prisma:397:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/schema.contract.json:8446:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:packages/db/schema.contract.json:8474:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu07-subscription-showcase",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu07-subscription-showcase",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu07-subscription-showcase:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/student/history/README.md:35:SQL validates the snapshot pair, non-negative balance, consumption quantity and"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/schema.prisma:375:model Role {"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/prisma/schema.prisma:397:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/schema.contract.json:8446:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:packages/db/schema.contract.json:8474:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu06-student-materials",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu06-student-materials",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu06-student-materials:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/student/history/README.md:35:SQL validates the snapshot pair, non-negative balance, consumption quantity and"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu05-homework:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu05-homework:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu05-homework:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/schema.prisma:375:model Role {"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/prisma/schema.prisma:397:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/schema.contract.json:8393:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu05-homework:packages/db/schema.contract.json:8421:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu05-homework:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu05-homework:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu05-homework",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu05-homework",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu05-homework:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/student/history/README.md:35:SQL validates the snapshot pair, non-negative balance, consumption quantity and"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/schema.prisma:375:model Role {"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/prisma/schema.prisma:397:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/schema.contract.json:8116:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:packages/db/schema.contract.json:8144:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu04-history-disputes",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu04-history-disputes",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu04-history-disputes:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/schema.prisma:373:model Role {"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/prisma/schema.prisma:395:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/schema.contract.json:8092:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:packages/db/schema.contract.json:8120:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu03-student-lessons",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu03-student-lessons",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu03-student-lessons:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/schema.prisma:371:model Role {"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/prisma/schema.prisma:393:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/schema.contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:packages/db/schema.contract.json:8080:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/stu02-dashboard",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/stu02-dashboard",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/stu02-dashboard:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/identity/identity.service.ts:280:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/identity/identity.service.ts:532:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/identity/identity.service.ts:533:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/student/README.md:56:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/student/security/change-password.service.ts:74:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/schema.prisma:370:model Role {"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/prisma/schema.prisma:392:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/schema.contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/stu01/student-module:packages/db/schema.contract.json:8080:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/stu01/student-module:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/stu01/student-module:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/stu01/student-module",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/stu01/student-module",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/stu01/student-module:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/core/session/session.store.ts:17:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/core/session/session.store.ts:135:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/core/session/session.store.ts:18:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/core/session/session.store.ts:58:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/identity/identity.service.ts:49:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/identity/identity.service.ts:279:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/identity/identity.service.ts:522:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/identity/identity.service.ts:523:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/schema.prisma:369:model Role {"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/prisma/schema.prisma:391:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/schema.contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/task15/foundation-tests:packages/db/schema.contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/task15/foundation-tests",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/task15/foundation-tests",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/ledger-publication.service.ts:38:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/task15/foundation-tests:apps/api/src/modules/finance/ledger-publication.service.ts:57:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "SESSION_TTL_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_TTL_MS",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/core/session/session.store.ts:19:export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/core/session/session.store.ts:175:    const expiresAt = new Date(now.getTime() + SESSION_TTL_MS);"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "SESSION_IDLE_MS",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "SESSION_IDLE_MS",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/core/session/session.store.ts:20:export const SESSION_IDLE_MS = 30 * 60 * 1000;"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/core/session/session.store.ts:73:        now.getTime() - (session.last_seen_at ?? session.created_at).getTime() > SESSION_IDLE_MS"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/security/sessions.service.ts:5:import { SESSION_IDLE_MS } from '../../core/session/session.store.js';"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/security/sessions.service.ts:25:          { last_seen_at: { gte: new Date(+time - SESSION_IDLE_MS) } },"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/security/sessions.service.ts:26:          { last_seen_at: null, created_at: { gte: new Date(+time - SESSION_IDLE_MS) } },"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "userHandle",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "userHandle",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/IDENTITY.md:65:origin/RP/type/UV/signature/userHandle, затем атомарно помечает used_at и сохраняет результат."
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/identity/identity.service.ts:55:export const userHandle = (id: string): Uint8Array<ArrayBuffer> =>"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/identity/identity.service.ts:313:        userID: userHandle(account.id),"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/identity/identity.service.ts:565:        auth.response.userHandle &&"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/identity/identity.service.ts:566:        auth.response.userHandle !== Buffer.from(userHandle(account.id)).toString('base64url')"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/identity-http.test.mjs:322:test('passkey-only login binds a public challenge to the issuing browser and checks userHandle', async () => {"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/identity-http.test.mjs:341:          userHandle: Buffer.from('wrong-user').toString('base64url'),"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/webauthn-authenticator.mjs:91:        userHandle,"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/webauthn-authenticator.mjs:114:            ...(userHandle ? { userHandle } : {}),"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "pair",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "pair",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:28:export const pair = ("
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:92:      return pair(r.amount, r.currency, 'CASH', 'UNALLOCATED_FUNDS');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:99:      return pair(r.amount, r.currency, 'UNALLOCATED_FUNDS', 'CUSTOMER_ADVANCE');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:107:      return pair("
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:117:      return pair(r.amount, r.currency, 'TEACHER_EXPENSE', 'TEACHER_PAYABLE');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:121:      return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/finance-ledger.service.ts:127:      return pair(r.executed_amount, r.currency, 'CUSTOMER_ADVANCE', 'CASH');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/README.md:61:session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failure"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/history/README.md:35:SQL validates the snapshot pair, non-negative balance, consumption quantity and"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/security/change-password.service.ts:81:        // execute() appends the mandatory audit/outbox pair in this same transaction."
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/subscription/README.md:30:The original subscription stores only the current freeze pair. The additive migration creates append-only `SubscriptionFreezeHistory` and a restricted trigger that preserves the old pair when it changes. The runtime can read this history but cannot insert/update/delete it directly. The trigger writes under its migration owner's restricted SECURITY DEFINER function with a pinned search path. No current working subscription [truncated evidence-only line]"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/student/subscription/README.md:32:The read model combines preserved pairs with the current CRM pair, taking the most recent state for a given freeze start. A superseded interval ends no later than its replacement time; intervals replaced before they ever started do not appear as completed freezes. FREEZE/UNFREEZE are zero-quantity operations, and a future unfreeze is not presented as already completed. View event UUIDs derive deterministically from subscr [truncated evidence-only line]"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/identity-http.test.mjs:80:          const [pair] = value.split(';');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/identity-http.test.mjs:81:          const at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/test/integration/identity-http.test.mjs:82:          jar.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/test/integration/education-files-infrastructure.test.mjs:661:test('ledger publication atomically emits one audit/outbox pair; an outbox collision rolls everything back', async () => {"
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/api/student-dashboard-live.test.mjs:30:        const pair = header.split(';')[0],"
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/api/student-dashboard-live.test.mjs:31:          at = pair.indexOf('=');"
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/api/student-dashboard-live.test.mjs:32:        client.cookies.set(pair.slice(0, at), pair.slice(at + 1));"
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/unit/manager-notifications-http.test.mjs:182:test('pair rate limit is atomic, retries do not consume it, and another pair is independent', async () => {"
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/unit/manager-notifications-http.test.mjs:192:test('simulated concurrent submissions honor the pair limit once; this does not prove PostgreSQL races', async () => {"
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "Role",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "Role",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/CORE.md:80:@RequireRole(Role.DIRECTOR)"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/core/rbac/decorators.ts:6:export const Role = RoleCode;"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/qa-shell/src/scenarios.ts:17:export type Role = SessionResponse['account']['roles'][number];"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/qa-shell/src/scenarios.ts:31:  roles: readonly Role[];"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/README.md:20:| Identity / Access            | AuthAccount, StudentAccount, StaffAccount, TeacherAccount, Role, RoleAssignment, Session, WebAuthnCredential, MfaChallenge, AccessRevocation |"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:75:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql:90:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/migrations/20261026020000_init/migration.sql:2387:    RAISE EXCEPTION 'Role is incompatible with account kind'"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/migrations/20261026020000_init/migration.sql:2402:    RAISE EXCEPTION 'Role code is immutable'"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/schema.prisma:540:model Role {"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/prisma/schema.prisma:562:  role        Role          @relation(\"RoleAssignments\", fields: [role_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: \"fk_role_assignment_role\")"
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/schema.contract.json:9894:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/manager-vercel:packages/db/schema.contract.json:9922:    \"name\": \"Role\","
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/evidence/task15-prisma-contract.json:8052:        \"type\": \"Role\","
+        },
+        {
+          "text": "origin/codex/manager-vercel:tests/evidence/task15-prisma-contract.json:8080:    \"name\": \"Role\","
+        }
+      ]
+    },
+    {
+      "ref": "origin/codex/manager-vercel",
+      "symbol": "DirectorLedgerPublicationPolicy",
+      "command": [
+        "git",
+        "grep",
+        "-n",
+        "-w",
+        "-F",
+        "DirectorLedgerPublicationPolicy",
+        "origin/codex/manager-vercel",
+        "--"
+      ],
+      "exitCode": 0,
+      "matches": [
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/ledger-publication.service.ts:39:export class DirectorLedgerPublicationPolicy extends LedgerPublicationPolicy {"
+        },
+        {
+          "text": "origin/codex/manager-vercel:apps/api/src/modules/finance/ledger-publication.service.ts:58:    const direct = await new DirectorLedgerPublicationPolicy().authorize(tx, actorStaffId);"
+        },
+        {
+          "text": "origin/codex/manager-vercel:scripts/student-cabinet-provision.mjs:5:  DirectorLedgerPublicationPolicy,"
+        },
+        {
+          "text": "origin/codex/manager-vercel:scripts/student-cabinet-provision.mjs:56:        const policy = new DirectorLedgerPublicationPolicy();"
+        }
+      ]
+    }
+  ],
+  "env": [
+    {
+      "name": "PG_USER",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "PG_PASSWORD",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "APP_RUNTIME_PASSWORD",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs",
+        "infra/postgres/00-roles.sql"
+      ]
+    },
+    {
+      "name": "APP_MIGRATE_PASSWORD",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs",
+        "infra/postgres/00-roles.sql"
+      ]
+    },
+    {
+      "name": "CSRF_SIGNING_SECRET",
+      "files": [
+        ".env.example",
+        "apps/api/.env.example",
+        "apps/api/CORE.md",
+        "apps/api/IDENTITY.md",
+        "apps/api/src/core/csrf/csrf.module.ts",
+        "apps/api/test/integration/core-http.test.mjs",
+        "apps/api/test/integration/finance-http.test.mjs",
+        "apps/api/test/integration/identity-http.test.mjs",
+        "apps/api/test/integration/schedule-http.test.mjs",
+        "apps/qa-shell/.env.example",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/test/serve-smoke.mjs",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs",
+        "infra/vercel/README.md",
+        "scripts/provision-initial-project.mjs"
+      ]
+    },
+    {
+      "name": "WEBAUTHN_RP_ID",
+      "files": [
+        ".env.example",
+        "apps/api/.env.example",
+        "apps/api/IDENTITY.md",
+        "apps/api/src/modules/identity/webauthn.config.ts",
+        "apps/api/test/identity.test.mjs",
+        "apps/api/test/integration/identity-http.test.mjs",
+        "apps/qa-shell/.env.example",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/test/serve-smoke.mjs",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/create-local-env.mjs",
+        "infra/vercel/README.md",
+        "scripts/provision-initial-project.mjs"
+      ]
+    },
+    {
+      "name": "WEBAUTHN_ALLOWED_ORIGIN",
+      "files": [
+        ".env.example",
+        "apps/api/.env.example",
+        "apps/api/IDENTITY.md",
+        "apps/api/src/modules/identity/webauthn.config.ts",
+        "apps/api/test/identity.test.mjs",
+        "apps/api/test/integration/identity-http.test.mjs",
+        "apps/qa-shell/.env.example",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/test/serve-smoke.mjs",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/create-local-env.mjs",
+        "infra/vercel/README.md",
+        "scripts/provision-initial-project.mjs"
+      ]
+    },
+    {
+      "name": "API_PORT",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "HTTP_PORT",
+      "files": [
+        ".env.example",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "WORKER_MAX_ATTEMPTS",
+      "files": [
+        ".env.example",
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts",
+        "apps/worker/test/config.test.mjs",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "WORKER_RECOVERY_MAX_ATTEMPTS",
+      "files": [
+        ".env.example",
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts",
+        "docker-compose.yml",
+        "infra/create-local-env.mjs"
+      ]
+    },
+    {
+      "name": "PUBLIC_HOST",
+      "files": [
+        ".env.example",
+        "docker-compose.vps.yml",
+        "infra/README.md",
+        "infra/nginx/tls.conf.template"
+      ]
+    },
+    {
+      "name": "TLS_CERT_DIR",
+      "files": [
+        ".env.example",
+        "docker-compose.vps.yml",
+        "infra/README.md"
+      ]
+    },
+    {
+      "name": "NODE_ENV",
+      "files": [
+        "Dockerfile.worker",
+        "apps/api/.env.example",
+        "apps/api/Dockerfile",
+        "apps/worker/.env.example",
+        "apps/worker/Dockerfile",
+        "apps/worker/src/worker.module.ts",
+        "apps/worker/test/config.test.mjs",
+        "docker-compose.yml",
+        "infra/ci/integration.mjs"
+      ]
+    },
+    {
+      "name": "HOST",
+      "files": [
+        "apps/api/.env.example",
+        "apps/api/Dockerfile",
+        "apps/api/src/main.ts",
+        "docker-compose.yml"
+      ]
+    },
+    {
+      "name": "PORT",
+      "files": [
+        "apps/api/.env.example",
+        "apps/api/Dockerfile",
+        "apps/api/src/main.ts",
+        "docker-compose.yml"
+      ]
+    },
+    {
+      "name": "DATABASE_URL",
+      "files": [
+        "README.md",
+        "apps/api/.env.example",
+        "apps/api/IDENTITY.md",
+        "apps/api/src/modules/finance/expiry.module.ts",
+        "apps/api/src/modules/schedule/deadline.module.ts",
+        "apps/api/test/integration/core-http.test.mjs",
+        "apps/api/test/integration/finance-http.test.mjs",
+        "apps/api/test/integration/identity-http.test.mjs",
+        "apps/api/test/integration/schedule-http.test.mjs",
+        "apps/qa-shell/.env.example",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/test/serve-smoke.mjs",
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/worker.module.ts",
+        "apps/worker/test/config.test.mjs",
+        "apps/worker/test/fixtures/crash-worker.mjs",
+        "apps/worker/test/integration/worker.test.mjs",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/ci/integration.mjs",
+        "infra/vercel/README.md",
+        "infra/vercel/build.mjs",
+        "packages/db/.env.example",
+        "packages/db/EDUCATION_INFRA.md",
+        "packages/db/README.md",
+        "packages/db/prisma.config.ts",
+        "packages/db/src/index.ts",
+        "packages/db/test/clients.test.mjs",
+        "scripts/provision-initial-project.mjs"
+      ]
+    },
+    {
+      "name": "BUILD_COMMIT_SHA",
+      "files": [
+        ".github/workflows/ci.yml",
+        "apps/qa-shell/.env.example",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/vite.config.ts"
+      ]
+    },
+    {
+      "name": "WORKER_POLL_MS",
+      "files": [
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts"
+      ]
+    },
+    {
+      "name": "WORKER_BATCH_SIZE",
+      "files": [
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts"
+      ]
+    },
+    {
+      "name": "WORKER_LEASE_MS",
+      "files": [
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts",
+        "apps/worker/test/config.test.mjs"
+      ]
+    },
+    {
+      "name": "WORKER_PROVIDER_TIMEOUT_MS",
+      "files": [
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "apps/worker/src/contracts.ts",
+        "apps/worker/test/config.test.mjs"
+      ]
+    },
+    {
+      "name": "DIRECT_URL",
+      "files": [
+        "README.md",
+        "apps/api/IDENTITY.md",
+        "apps/api/test/integration/core-http.test.mjs",
+        "apps/api/test/integration/finance-http.test.mjs",
+        "apps/api/test/integration/identity-http.test.mjs",
+        "apps/api/test/integration/schedule-http.test.mjs",
+        "apps/qa-shell/QA_SHELL.md",
+        "apps/qa-shell/test/public-passkey-account.mjs",
+        "apps/qa-shell/test/release-evidence.mjs",
+        "apps/worker/.env.example",
+        "apps/worker/WORKER.md",
+        "docker-compose.yml",
+        "infra/README.md",
+        "infra/ci/integration.mjs",
+        "infra/vercel/build.mjs",
+        "packages/db/.env.example",
+        "packages/db/EDUCATION_INFRA.md",
+        "packages/db/FINANCE.md",
+        "packages/db/MIGRATIONS_SEED.md",
+        "packages/db/README.md",
+        "packages/db/prisma.config.ts",
+        "packages/db/prisma.legacy.config.ts",
+        "packages/db/scripts/database-targets.ts",
+        "packages/db/scripts/database-tools.ts",
+        "packages/db/seed.ts",
+        "packages/db/src/index.ts",
+        "packages/db/test/clients.test.mjs",
+        "packages/db/test/integration/education-files-infrastructure.test.mjs",
+        "packages/db/test/integration/identity-access-crm.test.mjs",
+        "packages/db/test/integration/schedule-finance.test.mjs",
+        "packages/db/test/qa/seed-guards.test.mjs",
+        "scripts/provision-initial-project.mjs"
+      ]
+    },
+    {
+      "name": "QA_DATABASE_URL",
+      "files": [
+        "PHASE0_CHECKS.md",
+        "apps/api/FINANCE.md",
+        "infra/ci/integration.mjs",
+        "packages/db/.env.example",
+        "packages/db/MIGRATIONS_SEED.md",
+        "packages/db/scripts/database-targets.ts",
+        "packages/db/test/qa/seed-guards.test.mjs"
+      ]
+    },
+    {
+      "name": "MIGRATION_TEST_DATABASE_URL",
+      "files": [
+        "packages/db/.env.example",
+        "packages/db/MIGRATIONS_SEED.md",
+        "packages/db/scripts/database-tools.ts",
+        "packages/db/test/qa/seed-guards.test.mjs"
+      ]
+    },
+    {
+      "name": "STAGING_DATABASE_URL",
+      "files": [
+        "packages/db/.env.example",
+        "packages/db/MIGRATIONS_SEED.md",
+        "packages/db/scripts/database-tools.ts"
+      ]
+    }
+  ],
+  "todoSearch": {
+    "exitCode": 1,
+    "matches": ""
+  },
+  "protectedHashes": {
+    "packages/api-contracts/openapi/openapi.json": "5c7deefd2479228addfdb34d19e9ec74911664ab3e346011f94b94011a1444d5",
+    "packages/api-contracts/src/generated/client.ts": "e4a40d4ca2e5810c49f8c9ad36b45cf5a0c89df0fea5be6770dc16831ef83c41",
+    "packages/api-contracts/src/generated/openapi.ts": "6c0f28278dd99d3fc016b75c10784ddcf00fa76e3898ddb8a4f9fde02aba74f3",
+    "packages/db/prisma/baseline-parts/task04-invariants.sql": "15bf590fedd2fcdbaef1665386f1e273f6d53cbf87b3ca798417431bd4c05380",
+    "packages/db/prisma/migrations-history/20261025210404_task02_identity_access_crm/migration.sql": "efcec91f6fb12455b85fe0642e091ba198ba1f38c81721d23a36e970413967d7",
+    "packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql": "f558dd98c752bca9a6d363b1c31fd88b28cc4f188a193ee0857248341318eede",
+    "packages/db/prisma/migrations-history/20261026010000_task03_schedule_finance/migration.sql": "b7e426e704db97e019ef44875011b96c2b5eb99c6b0412ea06b27ddd3212502d",
+    "packages/db/prisma/migrations-history/20261026010100_task03_financial_invariants/migration.sql": "021a6d58d28127e0e9f96bf00cf07785997ef123b1ea19816e335c94249b8f82",
+    "packages/db/prisma/migrations-history/20261026020100_task04_education_files_infra/migration.sql": "b748f86a233d0f6023affbe665078034ee34106eabd8713524c452654c14b293",
+    "packages/db/prisma/migrations-history/20261026030000_task05_guards/migration.sql": "d77000e236ae34446e091963b5a86785c754b9b5ce41fbd945c8c3492b780d05",
+    "packages/db/prisma/migrations-history/20261026040000_task07_identity/migration.sql": "de8ce1d503f2a5a8e99df29d48e223bd144c8d507c76b1f7bf854bac59bbb457",
+    "packages/db/prisma/migrations-history/20261026050000_task08_finance/migration.sql": "1e706af47eec286e648e83d1aa4775653616db458fb21a9ca44574fd944c8ff4",
+    "packages/db/prisma/migrations-history/20261026060000_task09_schedule/migration.sql": "ed61ee96236261f1935165297f3ae0dfc1dbce96ba7d20eb6e80d17bbe5fe9f5",
+    "packages/db/prisma/migrations-history/20261026070000_task11_worker/migration.sql": "026a795b899e0aca1a9dbfab70ab9699cb12ab63412095fe32d6592856669387",
+    "packages/db/prisma/migrations-history/20261026080000_task12_qa_runtime/migration.sql": "abfef2c31bfb347408ed803edeb92e3b3be8bcedcbd92ff3c21476f1aacc264c",
+    "packages/db/prisma/migrations-history/migration_lock.toml": "bc487c02c71ad9cae8694647129e3ea7f32b1fe7007d0a6ced064e51022cd3fb",
+    "packages/db/prisma/migrations-history/task02-task03-sha256.json": "1fdbf2ab89a3afb1d335740858e30433ee7d3eb3c5a7fdc4984751892a4e4544",
+    "packages/db/prisma/migrations/20261026020000_init/migration.sql": "497a39872d0cc3edcc3983be942e26a91c1efaf303a5fb783de9435a1fe83772",
+    "packages/db/prisma/migrations/20261026030000_task05_guards/migration.sql": "d77000e236ae34446e091963b5a86785c754b9b5ce41fbd945c8c3492b780d05",
+    "packages/db/prisma/migrations/20261026040000_task07_identity/migration.sql": "de8ce1d503f2a5a8e99df29d48e223bd144c8d507c76b1f7bf854bac59bbb457",
+    "packages/db/prisma/migrations/20261026050000_task08_finance/migration.sql": "1e706af47eec286e648e83d1aa4775653616db458fb21a9ca44574fd944c8ff4",
+    "packages/db/prisma/migrations/20261026060000_task09_schedule/migration.sql": "ed61ee96236261f1935165297f3ae0dfc1dbce96ba7d20eb6e80d17bbe5fe9f5",
+    "packages/db/prisma/migrations/20261026070000_task11_worker/migration.sql": "026a795b899e0aca1a9dbfab70ab9699cb12ab63412095fe32d6592856669387",
+    "packages/db/prisma/migrations/20261026080000_task12_qa_runtime/migration.sql": "abfef2c31bfb347408ed803edeb92e3b3be8bcedcbd92ff3c21476f1aacc264c",
+    "packages/db/prisma/migrations/migration_lock.toml": "bc487c02c71ad9cae8694647129e3ea7f32b1fe7007d0a6ced064e51022cd3fb",
+    "packages/db/prisma/schema.prisma": "7cbd808d7ccbe466af2192614a5186eaee54b7d99d74252377d1cc6f06bd4eaa",
+    "packages/db/prisma/seed.mjs": "65c1cb4eeeccd5adb4568507e63e004dfdb4cab4c28c4de401f5572cf2582838",
+    "packages/db/seed.ts": "1773acc27d404d698f7b389e1e5648ee9d95809a1abb2fffa2813385a879fec7"
+  }
+}
