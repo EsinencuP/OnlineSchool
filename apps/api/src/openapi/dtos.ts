@@ -222,7 +222,7 @@ export class SessionResponse {
   @IsDefined()
   @IsBoolean()
   'mfa_completed'!: boolean;
-  @ApiProperty({ type: 'boolean', required: false } as ApiPropertyOptions)
+  @ApiProperty({ type: 'boolean', required: false, description: 'Temporary server-authorized password-only manager access; MFA remains unverified.' } as ApiPropertyOptions)
   @IsOptional()
   @IsBoolean()
   'manager_password_only'?: boolean;
