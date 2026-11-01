@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { AccountMenu } from '@online-school/account-ui';
+import '@online-school/account-ui/style.css';
 import { Link, NavLink, Navigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import {
   deleteSession,
@@ -296,13 +298,7 @@ export function StudentLayout() {
                 <span className="badge">{unread.data.unreadCount}</span>
               )}
             </Link>
-            <Link className="profile-link" to="/student/profile">
-              <span className="avatar">{profile.displayName.slice(0, 1)}</span>
-              <span>
-                {profile.displayName}
-                <small>Ученик</small>
-              </span>
-            </Link>
+            <AccountMenu name={profile.displayName} role="STUDENT" />
           </div>
         </header>
         <div className="content-grid">

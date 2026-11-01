@@ -2,6 +2,10 @@
   "area": "api",
   "files": [
     {
+      "path": "apps/api/src/modules/manager/errors/manager-errors.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/manager-errors.ts"
+    },
+    {
       "path": "apps/api/src/modules/manager/errors/manager-payment.errors.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/manager-payment.errors.ts"
     },
@@ -196,10 +200,6 @@
     {
       "path": "apps/api/src/modules/manager/tasks/contracts.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/contracts.ts"
-    },
-    {
-      "path": "apps/api/src/modules/manager/tasks/manager-tasks.controller.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.controller.ts"
     }
   ]
 }

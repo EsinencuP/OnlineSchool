@@ -2,6 +2,10 @@
   "area": "tests",
   "files": [
     {
+      "path": "tests/evidence/task15-prisma-contract.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/task15-prisma-contract.json"
+    },
+    {
       "path": "tests/integration/education-files.test.mjs",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/education-files.test.mjs"
     },
@@ -196,10 +200,6 @@
     {
       "path": "tests/unit/manager-dashboard-sdk.test.mjs",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-dashboard-sdk.test.mjs"
-    },
-    {
-      "path": "tests/unit/manager-dashboard.test.mjs",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-dashboard.test.mjs"
     }
   ]
 }

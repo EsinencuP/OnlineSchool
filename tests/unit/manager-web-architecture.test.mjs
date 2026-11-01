@@ -23,6 +23,6 @@ test('deployment mounts manager SPA before the root shell without embedding mock
     value: 'no-store',
   });
   expect(await readFile('infra/vercel/build.mjs', 'utf8')).toContain(
-    "cpSync('apps/manager-web/dist', 'apps/qa-shell/dist/manager'",
+    "cpSync('apps/manager-web/dist', 'apps/platform/dist/manager'",
   );
 });

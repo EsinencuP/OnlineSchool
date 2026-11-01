@@ -1,9 +1,9 @@
 {
   "repository": "EsinencuP/OnlineSchool",
   "branch": "main",
-  "generatedAt": "2026-11-01T20:21:11.692Z",
+  "generatedAt": "2026-11-01T20:56:43.803Z",
   "authenticationRequired": false,
-  "files": 900,
+  "files": 897,
   "catalogNote": "Generated catalog JSON files are listed here rather than recursively listing themselves.",
   "catalogs": [
     {
@@ -20,7 +20,7 @@
     },
     {
       "area": "repository",
-      "count": 26,
+      "count": 27,
       "file": "docs/public/repository-03.json",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/repository-03.json"
     },
@@ -56,7 +56,7 @@
     },
     {
       "area": "api",
-      "count": 17,
+      "count": 20,
       "file": "docs/public/api-06.json",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-06.json"
     },
@@ -67,10 +67,10 @@
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/manager-01.json"
     },
     {
-      "area": "qa",
-      "count": 20,
-      "file": "docs/public/qa-01.json",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/qa-01.json"
+      "area": "platform",
+      "count": 7,
+      "file": "docs/public/platform-01.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/platform-01.json"
     },
     {
       "area": "student",
@@ -92,13 +92,13 @@
     },
     {
       "area": "documents",
-      "count": 32,
+      "count": 33,
       "file": "docs/public/documents-02.json",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/documents-02.json"
     },
     {
       "area": "packages",
-      "count": 16,
+      "count": 20,
       "file": "docs/public/packages-01.json",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/packages-01.json"
     },
@@ -146,7 +146,7 @@
     },
     {
       "area": "tests",
-      "count": 8,
+      "count": 9,
       "file": "docs/public/tests-04.json",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-04.json"
     }

@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-01",
+  "scope": "QA app removal, in-cabinet synthetic user switching and populated demo school",
+  "checks": {
+    "apiBuild": "passed",
+    "platformBuild": "passed",
+    "studentBuild": "passed",
+    "managerBuild": "passed",
+    "focusedLint": "passed",
+    "demoGuardsAndSwitchingTests": { "passed": 10 },
+    "passwordAndMountRegressionTests": { "passed": 29 }
+  },
+  "seed": {
+    "status": "pending-retry",
+    "firstAttempt": {
+      "deployment": "dpl_2jJxXMM7rBtAnjNANnNtsueGqeq1",
+      "result": "rolled back at schedule-daniil after the original 120-second transaction deadline",
+      "fix": "allow 300 seconds for the same atomic, idempotent seed"
+    }
+  },
+  "liveBrowser": "pending",
+  "fullRegressionGate": "not-run; remains open"
+}

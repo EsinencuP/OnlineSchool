@@ -1,23 +1,17 @@
 {
-  "name": "@online-school/qa-shell",
+  "name": "@online-school/platform",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": ">=24 <25"
-  },
   "scripts": {
     "build": "tsc -b --pretty false && vite build",
     "typecheck": "tsc -b --pretty false",
-    "lint": "eslint . --max-warnings 0",
     "dev": "vite --host 127.0.0.1",
-    "preview": "vite preview --host 127.0.0.1"
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@online-school/api": "workspace:*",
+    "@online-school/account-ui": "workspace:*",
     "@online-school/api-contracts": "workspace:*",
-    "@online-school/shared": "workspace:*",
-    "@simplewebauthn/browser": "14.0.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

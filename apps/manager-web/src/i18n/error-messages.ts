@@ -2,6 +2,8 @@ import type { AnyManagerErrorCode } from '@online-school/api-contracts';
 import { ru } from './ru.js';
 export type { AnyManagerErrorCode } from '@online-school/api-contracts';
 export const ERROR_MESSAGES = {
+  DEMO_ACCOUNT_UNAVAILABLE: 'Тестовый аккаунт недоступен. Выберите другого пользователя.',
+  DEMO_SWITCH_FORBIDDEN: 'Смена тестовых пользователей недоступна для этого аккаунта.',
   CONTACT_REQUIRED: 'Укажите телефон или email.',
   GUARDIAN_REQUIRED: 'Для ребёнка укажите имя родителя или представителя.',
   INVALID_LESSON_KIND: 'Выберите вид урока.',

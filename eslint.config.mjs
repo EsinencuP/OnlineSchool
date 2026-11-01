@@ -27,7 +27,7 @@ export default tseslint.config(
   },
   {
     files: [
-      'apps/qa-shell/src/**/*.{ts,tsx}',
+      'apps/platform/src/**/*.{ts,tsx}',
       'apps/student-cabinet/src/**/*.{ts,tsx}',
       'apps/manager-web/src/**/*.{ts,tsx}',
     ],

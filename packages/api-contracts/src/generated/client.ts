@@ -625,6 +625,14 @@ export interface DashboardSubscriptionDto {
   remainingLessons: number;
 }
 
+export interface DemoAccountDto {
+  key: string;
+  name: string;
+  role: string;
+  login: string;
+  home: string;
+}
+
 export interface DisputeRequestDto {
   /**
      * @minLength 10
@@ -2426,6 +2434,56 @@ export interface PdfJobStatusDto {
   failureReason: string | null;
 }
 
+export interface PlatformAccountsDto {
+  enabled: boolean;
+  /** @nullable */
+  currentKey: string | null;
+  items: DemoAccountDto[];
+}
+
+export interface WorkspaceLessonDto {
+  id: string;
+  startsAt: string;
+  endsAt: string;
+  status: string;
+  subject: string;
+  student: string;
+  teacher: string;
+  /** @nullable */
+  meetUrl: string | null;
+}
+
+export interface WorkspaceStudentDto {
+  id: string;
+  name: string;
+  subject: string;
+}
+
+export interface WorkspaceHomeworkDto {
+  id: string;
+  title: string;
+  subject: string;
+  /** @nullable */
+  dueAt: string | null;
+}
+
+export interface WorkspaceTaskDto {
+  id: string;
+  title: string;
+  status: string;
+  dueAt: string;
+  manager: string;
+}
+
+export interface PlatformWorkspaceDto {
+  name: string;
+  role: string;
+  lessons: WorkspaceLessonDto[];
+  students: WorkspaceStudentDto[];
+  homework: WorkspaceHomeworkDto[];
+  tasks: WorkspaceTaskDto[];
+}
+
 export interface PrepareManagerDistributionDto {
   enrollmentId: string;
   planId: string;
@@ -3184,6 +3242,40 @@ export interface SubscriptionResponse {
   valid_from: string;
   [key: string]: unknown;
  }
+
+export type SwitchUserRequestKey = typeof SwitchUserRequestKey[keyof typeof SwitchUserRequestKey];
+
+
+export const SwitchUserRequestKey = {
+  anna: 'anna',
+  maksim: 'maksim',
+  sofia: 'sofia',
+  daniil: 'daniil',
+  andrei: 'andrei',
+  elena: 'elena',
+  tamara: 'tamara',
+  pasha: 'pasha',
+  tech: 'tech',
+} as const;
+
+export interface SwitchUserRequest {
+  key: SwitchUserRequestKey;
+}
+
+export type SwitchUserResponseHome = typeof SwitchUserResponseHome[keyof typeof SwitchUserResponseHome];
+
+
+export const SwitchUserResponseHome = {
+  '/student': '/student',
+  '/teacher': '/teacher',
+  '/manager': '/manager',
+  '/director': '/director',
+  '/operator': '/operator',
+} as const;
+
+export interface SwitchUserResponse {
+  home: SwitchUserResponseHome;
+}
 
 export interface TeacherAccrualResponse {
   id: string;
@@ -4116,6 +4208,44 @@ return schoolFetch<LogoutResponse>(getDeleteSessionUrl(),
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(emptyRequest)
+  }
+);}
+
+
+
+export const getSwitchDemoUserUrl = () => {
+
+
+
+
+  return `/api/v1/auth/switch-user`
+}
+
+/**
+ * @summary Replace the current synthetic demo session; never changes account roles
+ */
+export const switchDemoUser = (switchUserRequest: SwitchUserRequest, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SwitchUserResponse>(getSwitchDemoUserUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(switchUserRequest)
   }
 );}
 
@@ -6692,6 +6822,54 @@ return schoolFetch<FinancialPeriodResponse>(getCloseFinancialPeriodUrl(id),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(closeFinancialPeriodRequest)
+  }
+);}
+
+
+
+export const getGetPlatformAccountsUrl = () => {
+
+
+
+
+  return `/api/v1/platform/accounts`
+}
+
+/**
+ * @summary Public demo names and current switching eligibility; no credentials
+ */
+export const getPlatformAccounts = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PlatformAccountsDto>(getGetPlatformAccountsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetPlatformWorkspaceUrl = () => {
+
+
+
+
+  return `/api/v1/platform/workspace`
+}
+
+/**
+ * @summary Teacher own lessons and assignments, or director school overview
+ */
+export const getPlatformWorkspace = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PlatformWorkspaceDto>(getGetPlatformWorkspaceUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 

@@ -140,8 +140,8 @@ const category = (f) =>
     ? 'api'
     : f.startsWith('apps/worker/')
       ? 'worker'
-      : f.startsWith('apps/qa-shell/')
-        ? 'qa'
+      : f.startsWith('apps/platform/')
+        ? 'platform'
         : f.startsWith('apps/student-cabinet/')
           ? 'student'
           : f.startsWith('apps/manager-web/')

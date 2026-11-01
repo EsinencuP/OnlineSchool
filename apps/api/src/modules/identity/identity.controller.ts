@@ -23,6 +23,7 @@ import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 import { IdentityService } from './identity.service.js';
 import type { IdentityOutcome } from './identity.service.js';
 import { RecoveryService } from './recovery.service.js';
+import { SwitchUserRequest, SwitchUserResponse } from '../platform/platform.dto.js';
 import type { Result } from '@online-school/shared';
 import type { DomainError } from '../../core/errors/domain-error.js';
 
@@ -92,6 +93,23 @@ export class IdentityController {
     @Res({ passthrough: true }) res: HttpResponse,
   ): Promise<unknown> {
     return this.response(this.identity.login(req), res);
+  }
+  @Post('switch-user')
+  @Authenticated()
+  @HttpCode(200)
+  @ApiTags('Identity')
+  @ApiOperation({
+    operationId: 'switchDemoUser',
+    summary: 'Replace the current synthetic demo session; never changes account roles',
+  })
+  @ApiBody({ type: SwitchUserRequest })
+  @ApiResponse({ status: 200, type: SwitchUserResponse })
+  switchUser(
+    @Req() req: HttpRequest,
+    @Res({ passthrough: true }) res: HttpResponse,
+  ): Promise<unknown> {
+    res.setHeader('Cache-Control', 'no-store');
+    return this.response(this.identity.switchDemo(req), res);
   }
   @ApiOperation({
     operationId: 'currentSession',

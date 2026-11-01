@@ -121,6 +121,9 @@ importers:
       '@js-temporal/polyfill':
         specifier: 0.5.1
         version: 0.5.1
+      '@online-school/account-ui':
+        specifier: workspace:*
+        version: link:../../packages/account-ui
       '@online-school/api-contracts':
         specifier: workspace:*
         version: link:../../packages/api-contracts
@@ -186,20 +189,14 @@ importers:
         specifier: 4.1.12
         version: 4.1.12(@opentelemetry/api@1.10.0)(@types/node@24.19.2)(jsdom@30.1.3(@noble/hashes@1.8.0))(msw@2.15.0(@types/node@24.19.2)(typescript@6.0.3))(vite@7.3.7(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  apps/qa-shell:
+  apps/platform:
     dependencies:
-      '@online-school/api':
+      '@online-school/account-ui':
         specifier: workspace:*
-        version: link:../api
+        version: link:../../packages/account-ui
       '@online-school/api-contracts':
         specifier: workspace:*
         version: link:../../packages/api-contracts
-      '@online-school/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
-      '@simplewebauthn/browser':
-        specifier: 14.0.0
-        version: 14.0.0
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -222,6 +219,9 @@ importers:
 
   apps/student-cabinet:
     dependencies:
+      '@online-school/account-ui':
+        specifier: workspace:*
+        version: link:../../packages/account-ui
       '@online-school/api-contracts':
         specifier: workspace:*
         version: link:../../packages/api-contracts
@@ -290,6 +290,25 @@ importers:
       '@types/pdfkit':
         specifier: 0.17.5
         version: 0.17.5
+
+  packages/account-ui:
+    dependencies:
+      '@online-school/api-contracts':
+        specifier: workspace:*
+        version: link:../api-contracts
+      '@online-school/shared':
+        specifier: workspace:*
+        version: link:../shared
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+    devDependencies:
+      '@types/react':
+        specifier: 18.3.31
+        version: 18.3.31
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
 
   packages/api-contracts:
     dependencies:

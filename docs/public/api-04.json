@@ -2,6 +2,10 @@
   "area": "api",
   "files": [
     {
+      "path": "apps/api/src/modules/manager/tasks/manager-tasks.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.controller.ts"
+    },
+    {
       "path": "apps/api/src/modules/manager/tasks/manager-tasks.guard.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.guard.ts"
     },
@@ -32,6 +36,14 @@
     {
       "path": "apps/api/src/modules/notifications/templates.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/notifications/templates.ts"
+    },
+    {
+      "path": "apps/api/src/modules/platform/platform.dto.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/platform/platform.dto.ts"
+    },
+    {
+      "path": "apps/api/src/modules/platform/platform.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/platform/platform.module.ts"
     },
     {
       "path": "apps/api/src/modules/qa/qa.dto.ts",
@@ -188,18 +200,6 @@
     {
       "path": "apps/api/src/student/history/history.dto.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.dto.ts"
-    },
-    {
-      "path": "apps/api/src/student/history/history.service.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.service.ts"
-    },
-    {
-      "path": "apps/api/src/student/homework/README.md",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/README.md"
-    },
-    {
-      "path": "apps/api/src/student/homework/draft-expiry.module.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/draft-expiry.module.ts"
     }
   ]
 }

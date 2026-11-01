@@ -13,7 +13,8 @@ Original manager tasks and shared invariants: https://raw.githubusercontent.com/
 
 Student frontend: apps/student-cabinet/src/
 Manager frontend: apps/manager-web/src/
-QA frontend: apps/qa-shell/src/
+Platform login, teacher and director frontend: apps/platform/src/
+Shared in-cabinet account switching: packages/account-ui/src/
 Student backend: apps/api/src/student/
 Manager backend: apps/api/src/modules/manager/
 Public visual sources: ref/ and template/ (WebP).

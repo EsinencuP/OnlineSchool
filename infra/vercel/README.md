@@ -3,8 +3,8 @@
 Решение владельца: единственный проект `onlineschool`, постоянный адрес
 https://onlineschool-xi.vercel.app, существующая Neon `onlineschool` / main /
 `online_school` в Frankfurt, PostgreSQL 18. Дополнительных проектов, веток или БД
-QA/staging/shadow не создаётся. Название `qa-shell` описывает интерфейс проверки
-текущего MVP, а не отдельную среду. Preview deployments выключены.
+QA/staging/shadow не создаётся. QA app удалён по решению владельца 01.11.2026;
+общий вход и staff-кабинеты находятся в `apps/platform`. Preview deployments выключены.
 
 Корневой `vercel.json` собирает React SPA и настоящую NestJS Function. Worker —
 отдельный Daemon из `Dockerfile.worker`, 1 GiB, одна instance `fra1`, 45 секунд
@@ -38,8 +38,8 @@ integration выполняет `infra/vercel/build.mjs`: компиляция AP
 схемы должны быть совместимы с предыдущей версией. Rehearsal на копии не выполняется.
 
 Root Directory в Vercel — корень репозитория (иначе Daemons beta не поддерживается),
-Node 24, install `pnpm install --frozen-lockfile`, output `apps/qa-shell/dist`.
-Старый `apps/qa-shell/vercel.json` сохранён для истории TASK-12; активен корневой.
+Node 24, install `pnpm install --frozen-lockfile`, output `apps/platform/dist`. Активен корневой `vercel.json`.
+Общий аккаунт: `packages/account-ui`; переключение ограничено тестовыми логинами.
 
 План Hobby Daemons beta: 5 Active CPU-hours в месяц на команду; при исчерпании
 Vercel останавливает Daemons до следующего месяца UTC. Данные в Neon сохраняются,

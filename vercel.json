@@ -3,39 +3,151 @@
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "node infra/vercel/build.mjs",
-  "outputDirectory": "apps/qa-shell/dist",
+  "outputDirectory": "apps/platform/dist",
   "regions": ["fra1"],
-  "functions": { "api/handler.ts": { "maxDuration": 60 } },
+  "functions": {
+    "api/handler.ts": {
+      "maxDuration": 60
+    }
+  },
   "daemons": {
     "worker": {
       "root": ".",
       "entrypoint": "Dockerfile.worker",
-      "instances": { "fra1": 1 },
-      "resources": { "requests": { "memory": "1Gi" } },
+      "instances": {
+        "fra1": 1
+      },
+      "resources": {
+        "requests": {
+          "memory": "1Gi"
+        }
+      },
       "terminationGracePeriodSeconds": 45
     }
   },
   "rewrites": [
-    { "source": "/api/health", "destination": "/api/handler" },
-    { "source": "/api/:__vercel_api_path*", "destination": "/api/handler" },
-    { "source": "/health", "destination": "/api/handler" },
-    { "source": "/student", "destination": "/student/index.html" },
-    { "source": "/student/:path*", "destination": "/student/index.html" },
-    { "source": "/manager", "destination": "/manager/index.html" },
-    { "source": "/manager/:path*", "destination": "/manager/index.html" },
-    { "source": "/:path*", "destination": "/index.html" }
+    {
+      "source": "/api/health",
+      "destination": "/api/handler"
+    },
+    {
+      "source": "/api/:__vercel_api_path*",
+      "destination": "/api/handler"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/handler"
+    },
+    {
+      "source": "/student",
+      "destination": "/student/index.html"
+    },
+    {
+      "source": "/student/:path*",
+      "destination": "/student/index.html"
+    },
+    {
+      "source": "/manager",
+      "destination": "/manager/index.html"
+    },
+    {
+      "source": "/manager/:path*",
+      "destination": "/manager/index.html"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "same-origin" },
-        { "key": "X-Frame-Options", "value": "DENY" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        }
       ]
     },
-    { "source": "/index.html", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
-    { "source": "/student/:path*", "headers": [{ "key": "Cache-Control", "value": "no-store" }] },
-    { "source": "/manager/:path*", "headers": [{ "key": "Cache-Control", "value": "no-store" }] }
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/student/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/manager/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/account",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/teacher/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/director/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/operator/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
   ]
 }

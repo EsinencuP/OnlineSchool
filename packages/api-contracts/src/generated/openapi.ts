@@ -149,6 +149,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/switch-user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Replace the current synthetic demo session; never changes account roles */
+        post: operations["switchDemoUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/webauthn/authenticate/finish": {
         parameters: {
             query?: never;
@@ -1335,6 +1352,40 @@ export interface paths {
          * @description MFA required. DIRECTOR only; past completed period without draft/unresolved financial facts.
          */
         post: operations["closeFinancialPeriod"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public demo names and current switching eligibility; no credentials */
+        get: operations["getPlatformAccounts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/workspace": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Teacher own lessons and assignments, or director school overview */
+        get: operations["getPlatformWorkspace"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2678,6 +2729,13 @@ export interface components {
             /** Format: date-time */
             dueAt: string;
         };
+        DemoAccountDto: {
+            key: string;
+            name: string;
+            role: string;
+            login: string;
+            home: string;
+        };
         DisputeRequestDto: {
             description: string;
         };
@@ -3787,6 +3845,19 @@ export interface components {
             expiresAt: string | null;
             failureReason: string | null;
         };
+        PlatformAccountsDto: {
+            enabled: boolean;
+            currentKey: string | null;
+            items: components["schemas"]["DemoAccountDto"][];
+        };
+        PlatformWorkspaceDto: {
+            name: string;
+            role: string;
+            lessons: components["schemas"]["WorkspaceLessonDto"][];
+            students: components["schemas"]["WorkspaceStudentDto"][];
+            homework: components["schemas"]["WorkspaceHomeworkDto"][];
+            tasks: components["schemas"]["WorkspaceTaskDto"][];
+        };
         PrepareManagerDistributionDto: {
             /** Format: uuid */
             enrollmentId: string;
@@ -4347,6 +4418,14 @@ export interface components {
             /** Format: date-time */
             frozenUntil: string | null;
         };
+        SwitchUserRequest: {
+            /** @enum {string} */
+            key: "anna" | "maksim" | "sofia" | "daniil" | "andrei" | "elena" | "tamara" | "pasha" | "tech";
+        };
+        SwitchUserResponse: {
+            /** @enum {string} */
+            home: "/student" | "/teacher" | "/manager" | "/director" | "/operator";
+        };
         TaskDisputePayloadDto: {
             /**
              * @description discriminator enum property added by openapi-typescript
@@ -4616,6 +4695,34 @@ export interface components {
             /** Format: uuid */
             challengeId: string;
             options: components["schemas"]["WebAuthnOptions"];
+        };
+        WorkspaceHomeworkDto: {
+            id: string;
+            title: string;
+            subject: string;
+            dueAt: string | null;
+        };
+        WorkspaceLessonDto: {
+            id: string;
+            startsAt: string;
+            endsAt: string;
+            status: string;
+            subject: string;
+            student: string;
+            teacher: string;
+            meetUrl: string | null;
+        };
+        WorkspaceStudentDto: {
+            id: string;
+            name: string;
+            subject: string;
+        };
+        WorkspaceTaskDto: {
+            id: string;
+            title: string;
+            status: string;
+            dueAt: string;
+            manager: string;
         };
     };
     responses: never;
@@ -5249,6 +5356,29 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    switchDemoUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SwitchUserRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SwitchUserResponse"];
                 };
             };
         };
@@ -11540,6 +11670,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getPlatformAccounts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformAccountsDto"];
+                };
+            };
+        };
+    };
+    getPlatformWorkspace: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlatformWorkspaceDto"];
                 };
             };
         };

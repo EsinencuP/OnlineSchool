@@ -534,7 +534,7 @@ async function main() {
       const paid = await transaction(
         connection.value,
         (tx) => provisionPaid(tx, input.rows, services),
-        120000,
+        300000,
       );
       console.log(JSON.stringify({ platformDemo: { phase: 'paid', ...paid } }));
     }

@@ -2,6 +2,11 @@
 
 ## Источники проекта
 
+- Latest owner request, 2026-11-01: remove the QA app, use in-cabinet demo user switching,
+  complete the synthetic lesson/subscription dataset, and push to main. Current map:
+  `docs/platform_account_switching_2026_11_01.md`. Earlier QA UI and pending demo finance
+  approval statements are historical; general authorization and real-money rules remain.
+
 При анализе, проектировании и реализации опираться на материалы в папках `docs/`, `ref/` и `templates/` в корне проекта. В текущем репозитории папка шаблонов называется `template/`; использовать её как фактический аналог `templates/`.
 
 - `docs/` — требования, архитектура, регламенты и утверждённые решения.

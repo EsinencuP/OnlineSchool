@@ -946,6 +946,39 @@
         ]
       }
     },
+    "/api/v1/auth/switch-user": {
+      "post": {
+        "operationId": "switchDemoUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwitchUserResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Replace the current synthetic demo session; never changes account roles",
+        "tags": [
+          "Identity",
+          "Identity"
+        ]
+      }
+    },
     "/api/v1/auth/webauthn/authenticate/finish": {
       "post": {
         "description": "Verify exact RP/origin, UV, signature and single-use challenge. Authentication advances counter and rotates session. Replay returns 400.",
@@ -10666,6 +10699,50 @@
         ]
       }
     },
+    "/api/v1/platform/accounts": {
+      "get": {
+        "operationId": "getPlatformAccounts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformAccountsDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Public demo names and current switching eligibility; no credentials",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
+    "/api/v1/platform/workspace": {
+      "get": {
+        "operationId": "getPlatformWorkspace",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformWorkspaceDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Teacher own lessons and assignments, or director school overview",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
     "/api/v1/qa/components": {
       "get": {
         "description": "Requires an ordinary MFA staff/teacher session. Worker heartbeat is process liveness, not queue or release readiness.",
@@ -17472,6 +17549,33 @@
         ],
         "additionalProperties": false
       },
+      "DemoAccountDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "login": {
+            "type": "string"
+          },
+          "home": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "role",
+          "login",
+          "home"
+        ]
+      },
       "DisputeRequestDto": {
         "type": "object",
         "properties": {
@@ -21491,6 +21595,74 @@
           "failureReason"
         ]
       },
+      "PlatformAccountsDto": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean"
+          },
+          "currentKey": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DemoAccountDto"
+            }
+          }
+        },
+        "required": [
+          "enabled",
+          "currentKey",
+          "items"
+        ]
+      },
+      "PlatformWorkspaceDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "lessons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceLessonDto"
+            }
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceStudentDto"
+            }
+          },
+          "homework": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceHomeworkDto"
+            }
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WorkspaceTaskDto"
+            }
+          }
+        },
+        "required": [
+          "name",
+          "role",
+          "lessons",
+          "students",
+          "homework",
+          "tasks"
+        ]
+      },
       "PrepareManagerDistributionDto": {
         "type": "object",
         "properties": {
@@ -23484,6 +23656,46 @@
           "frozenUntil"
         ]
       },
+      "SwitchUserRequest": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "anna",
+              "maksim",
+              "sofia",
+              "daniil",
+              "andrei",
+              "elena",
+              "tamara",
+              "pasha",
+              "tech"
+            ]
+          }
+        },
+        "required": [
+          "key"
+        ]
+      },
+      "SwitchUserResponse": {
+        "type": "object",
+        "properties": {
+          "home": {
+            "type": "string",
+            "enum": [
+              "/student",
+              "/teacher",
+              "/manager",
+              "/director",
+              "/operator"
+            ]
+          }
+        },
+        "required": [
+          "home"
+        ]
+      },
       "TaskDisputePayloadDto": {
         "type": "object",
         "properties": {
@@ -24327,6 +24539,120 @@
           "options"
         ],
         "additionalProperties": false
+      },
+      "WorkspaceHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "dueAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "subject",
+          "dueAt"
+        ]
+      },
+      "WorkspaceLessonDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string"
+          },
+          "endsAt": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "student": {
+            "type": "string"
+          },
+          "teacher": {
+            "type": "string"
+          },
+          "meetUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "startsAt",
+          "endsAt",
+          "status",
+          "subject",
+          "student",
+          "teacher",
+          "meetUrl"
+        ]
+      },
+      "WorkspaceStudentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "subject"
+        ]
+      },
+      "WorkspaceTaskDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "dueAt": {
+            "type": "string"
+          },
+          "manager": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "dueAt",
+          "manager"
+        ]
       }
     }
   }

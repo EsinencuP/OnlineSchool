@@ -1,7 +1,6 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "strict": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
@@ -9,10 +8,9 @@
     "noEmit": true,
     "types": ["vite/client", "node"]
   },
-  "include": ["src", "api", "vite.config.ts"],
+  "include": ["src", "vite.config.ts"],
   "references": [
-    { "path": "../../packages/shared" },
     { "path": "../../packages/api-contracts" },
-    { "path": "../api" }
+    { "path": "../../packages/account-ui" }
   ]
 }

@@ -2,6 +2,18 @@
   "area": "api",
   "files": [
     {
+      "path": "apps/api/src/student/history/history.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.service.ts"
+    },
+    {
+      "path": "apps/api/src/student/homework/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/README.md"
+    },
+    {
+      "path": "apps/api/src/student/homework/draft-expiry.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/draft-expiry.module.ts"
+    },
+    {
       "path": "apps/api/src/student/homework/homework-scope.guard.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/homework-scope.guard.ts"
     },
@@ -188,18 +200,6 @@
     {
       "path": "apps/api/src/student/skills/skills.sql.ts",
       "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/skills/skills.sql.ts"
-    },
-    {
-      "path": "apps/api/src/student/student-context.decorator.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/student-context.decorator.ts"
-    },
-    {
-      "path": "apps/api/src/student/student-context.guard.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/student-context.guard.ts"
-    },
-    {
-      "path": "apps/api/src/student/student-context.interface.ts",
-      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/student-context.interface.ts"
     }
   ]
 }

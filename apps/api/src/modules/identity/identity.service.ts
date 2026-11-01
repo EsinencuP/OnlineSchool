@@ -40,6 +40,7 @@ import type {
   StudentIdentityCommand,
 } from './student-account-provisioning.js';
 import { WebAuthnConfig } from './webauthn.config.js';
+import { demoAccounts, demoAccountId, demoSwitchAllowed } from './demo-accounts.js';
 
 type Tx = Prisma.TransactionClient;
 export type IdentityOutcome = {
@@ -276,6 +277,50 @@ export class IdentityService {
       },
       login,
     );
+  }
+  switchDemo(req: HttpRequest): Promise<Result<IdentityOutcome, DomainError>> {
+    const input = object(req.body, ['key']);
+    const target = demoAccounts.find((a) => a.key === input.key);
+    if (!target) return Promise.resolve(err(domainError('INVALID_INPUT', 400)));
+    return this.execute(req, 'auth.demo.switch', async (tx) => {
+      const actor = await this.actor(req, tx);
+      const source = await this.account(tx, actor.accountId);
+      if (!demoSwitchAllowed(actor, source.login_id))
+        return fail(domainError('DEMO_SWITCH_FORBIDDEN', 403));
+      const targetId =
+        target.key === 'tech'
+          ? (await tx.authAccount.findUnique({ where: { login_id: target.login } }))?.id
+          : demoAccountId(target.key);
+      if (!targetId) return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
+      const account = await this.account(tx, targetId);
+      const roles = await this.roles(tx, account.id);
+      const kind =
+        target.role === 'STUDENT' ? 'STUDENT' : target.role === 'TEACHER' ? 'TEACHER' : 'STAFF';
+      if (
+        account.login_id !== target.login ||
+        account.kind !== kind ||
+        roles.length !== 1 ||
+        roles[0] !== target.role
+      )
+        return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
+      await this.revoke(
+        tx,
+        actor.accountId,
+        actor.accountId,
+        'DEMO_USER_SWITCH',
+        false,
+        actor.sessionId,
+      );
+      const issued = await this.sessions.issue(tx, account.id, null, false, req);
+      return {
+        actorId: actor.accountId,
+        resourceType: 'Session',
+        resourceId: issued.sessionId,
+        issued,
+        clearLoginBinding: true,
+        body: { home: target.home },
+      };
+    });
   }
   logout(req: HttpRequest): Promise<Result<IdentityOutcome, DomainError>> {
     object(req.body ?? {}, []);

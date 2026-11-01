@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { AccountMenu } from '@online-school/account-ui';
+import '@online-school/account-ui/style.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { deleteSession } from '@online-school/api-contracts';
 import { create } from 'zustand';
@@ -173,10 +175,8 @@ export function Layout() {
               }).format(new Date())}
               <small>{me.timezone}</small>
             </time>
-            <span className="topbar-avatar">
-              <Initials name={me.displayName} />
-            </span>
           </div>
+          <AccountMenu name={me.displayName} role="MANAGER" />
           <button
             className="mobile-logout icon-button"
             type="button"
