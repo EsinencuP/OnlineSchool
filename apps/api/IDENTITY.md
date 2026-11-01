@@ -135,7 +135,7 @@ node scripts/set-account-password.mjs --protected-input-file .identity-ops/passw
 
 Поля: accountId и password (12–256 символов). Инструмент отзывает прежние сессии и пишет
 audit, не выдаёт роли, не снимает MFA/recovery ограничения и не меняет credentials.
-`.identity-ops/` исключён из Git/Graphify/Prettier; секретные файлы следует удалять после
+`.identity-ops/` исключён из Git/Prettier; секретные файлы следует удалять после
 проведения операции. Seed по-прежнему не содержит рабочих паролей или passkeys.
 
 ## Student / Household

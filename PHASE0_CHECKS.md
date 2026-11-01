@@ -32,7 +32,7 @@ Chromium WebAuthn на рабочем origin выполняются отдель
 - [ ] Идемпотентный/конкурентный QA seed без дублей и изменения истории.
 - [ ] Чистое применение всей цепочки миграций и rehearsal предыдущей схемы с данными;
       status/diff/checksums, сохранность ID, значений и timestamps.
-- [ ] Семантическая сверка новых/изменённых регламентов: `docs/regul/online_academy_manager_regulations_v1.0.md` и `docs/regul/online_academy_teacher_regulations_v1.0.md`; Graphify пометил их как требующие обновления.
+- [ ] Семантическая сверка новых/изменённых регламентов: `docs/regul/online_academy_manager_regulations_v1.0.md` и `docs/regul/online_academy_teacher_regulations_v1.0.md`.
 - [ ] Повторная генерация OpenAPI/SDK без расхождений; Swagger UI/JSON, схемы DTO,
       соответствие фактических ответов, импорт клиента и работа ошибок/CSRF/idempotency.
 - [ ] Сквозные роли/MFA/контекст, расписание → подтверждённый факт → разрешённые

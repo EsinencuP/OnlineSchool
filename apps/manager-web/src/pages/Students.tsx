@@ -21,11 +21,12 @@ import {
   text,
   enumOptions,
 } from '../components/ui.js';
+import { Initials } from '../components/icon.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
 export default function Students() {
   const me = useManager();
   const [params, setParams] = useSearchParams();
-  const [creating, setCreating] = useState(false);
+  const [creating, setCreating] = useState(params.get('create') === 'true');
   const q: ListManagerStudentsParams = {
     limit: 25,
     ...(params.get('search') ? { search: params.get('search')! } : {}),
@@ -108,13 +109,16 @@ export default function Students() {
               </div>
               {d.items.map((s) => (
                 <article className="table-row" key={s.studentId}>
-                  <div>
-                    <Link className="record-title" to={routes.student(s.studentId)}>
-                      {s.fullName}
-                    </Link>
-                    <small>
-                      {s.maskedPhone ?? ru.dash} · {s.hasAccount ? ru.hasAccount : ru.noAccount}
-                    </small>
+                  <div className="student-name-cell">
+                    <Initials name={s.fullName} />
+                    <div>
+                      <Link className="record-title" to={routes.student(s.studentId)}>
+                        {s.fullName}
+                      </Link>
+                      <small>
+                        {s.maskedPhone ?? ru.dash} · {s.hasAccount ? ru.hasAccount : ru.noAccount}
+                      </small>
+                    </div>
                   </div>
                   <div>
                     <Badge value={s.status} />

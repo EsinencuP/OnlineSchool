@@ -137,10 +137,7 @@ GO или FND-GATE. Полная регрессия, миграционные re
 
 Итог адресной проверки: MGR-01 + существующие student-context/student-http —
 88/88 тестов; API `tsc -b`, компиляция api-contracts, адресный ESLint,
-`prisma validate`, `generate:client` и `generate` прошли. После изменений выполнен
-один `graphify update .`: 6060 узлов / 13064 рёбер; shrink guard не обходился.
-Graphify сохранил backup curated graph и сообщил о перестроении community labels.
-AST-обновление не объявляется новой семантической проверкой старых документов.
+`prisma validate`, `generate:client` и `generate` прошли.
 
 ## Продолжение MGR-02, 31.10.2026
 

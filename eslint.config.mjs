@@ -12,7 +12,6 @@ export default tseslint.config(
       '**/dist-tools/**',
       '**/.turbo/**',
       '**/src/generated/**',
-      'graphify-out/**',
       'ref/**',
       'template/**',
       '.codex/**',

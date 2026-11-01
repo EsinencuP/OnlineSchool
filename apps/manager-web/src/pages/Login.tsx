@@ -14,6 +14,7 @@ import type {
 import { useCommand } from '../hooks/use-command.js';
 import { clearSession } from '../api/client.js';
 import { ErrorBox, FormShell, Input, text } from '../components/ui.js';
+import { Icon } from '../components/icon.js';
 import { ru } from '../i18n/ru.js';
 import type { ApiErrorView } from '../api/error-view.js';
 export default function Login() {
@@ -94,59 +95,94 @@ export default function Login() {
     }
   }
   return (
-    <main className="auth-shell">
-      <div className="brand-mark" aria-hidden="true">
-        A
-      </div>
-      <p className="eyebrow">{ru.academy}</p>
-      <h1>{mfa ? ru.mfa : ru.login}</h1>
-      {sessionError && <ErrorBox error={sessionError} />}
-      {mfa ? (
-        <>
-          <p>{ru.mfaHelp}</p>
-          <ErrorBox error={command.error ?? passkeyError} />
-          <div className="stack">
-            <button
-              className="primary"
-              type="button"
-              disabled={keyBusy || command.busy}
-              onClick={() => {
-                void passkey(false);
-              }}
-            >
-              {ru.passkey}
-            </button>
-            <button
-              type="button"
-              disabled={keyBusy || command.busy}
-              onClick={() => {
-                void passkey(true);
-              }}
-            >
-              {ru.registerKey}
-            </button>
+    <main className="login-page">
+      <section className="login-story" aria-label={ru.academy}>
+        <div className="login-brand">
+          <Icon name="academy" size={38} />
+          <span>
+            {ru.brandShort}
+            <small>{ru.managerPanel}</small>
+          </span>
+        </div>
+        <div className="login-story-copy">
+          <p className="eyebrow">{ru.loginEyebrow}</p>
+          <h2>{ru.loginTagline}</h2>
+          <p>{ru.loginIntro}</p>
+          <div className="login-feature">
+            <Icon name="users" />
+            <span>{ru.myPortfolio}</span>
           </div>
-        </>
-      ) : (
-        <FormShell busy={command.busy} error={command.error} submit={login} button={ru.enter}>
-          <Input
-            name="email"
-            label={ru.email}
-            type="email"
-            autoComplete="username"
-            required
-            maxLength={254}
-          />
-          <Input
-            name="password"
-            label={ru.password}
-            type="password"
-            autoComplete="current-password"
-            required
-            maxLength={256}
-          />
-        </FormShell>
-      )}
+          <div className="login-feature">
+            <Icon name="calendar" />
+            <span>{ru.workingCalendar}</span>
+          </div>
+          <div className="login-feature">
+            <Icon name="tasks" />
+            <span>{ru.myTasks}</span>
+          </div>
+        </div>
+        <p className="login-security">
+          <Icon name="shield" size={18} />
+          {ru.loginSecurity}
+        </p>
+      </section>
+      <section className="login-form-side">
+        <div className="login-form-wrap">
+          <div className="brand-mark" aria-hidden="true">
+            <Icon name="academy" size={31} />
+          </div>
+          <p className="eyebrow">{ru.academy}</p>
+          <h1>{mfa ? ru.mfa : ru.login}</h1>
+          <p className="login-description">{mfa ? ru.firstKeyHelp : ru.loginFormHelp}</p>
+          {sessionError && <ErrorBox error={sessionError} />}
+          {mfa ? (
+            <>
+              <p>{ru.mfaHelp}</p>
+              <ErrorBox error={command.error ?? passkeyError} />
+              <div className="stack">
+                <button
+                  className="primary"
+                  type="button"
+                  disabled={keyBusy || command.busy}
+                  onClick={() => {
+                    void passkey(false);
+                  }}
+                >
+                  {ru.passkey}
+                </button>
+                <button
+                  type="button"
+                  disabled={keyBusy || command.busy}
+                  onClick={() => {
+                    void passkey(true);
+                  }}
+                >
+                  {ru.registerKey}
+                </button>
+              </div>
+            </>
+          ) : (
+            <FormShell busy={command.busy} error={command.error} submit={login} button={ru.enter}>
+              <Input
+                name="email"
+                label={ru.email}
+                type="email"
+                autoComplete="username"
+                required
+                maxLength={254}
+              />
+              <Input
+                name="password"
+                label={ru.password}
+                type="password"
+                autoComplete="current-password"
+                required
+                maxLength={256}
+              />
+            </FormShell>
+          )}
+        </div>
+      </section>
     </main>
   );
 }

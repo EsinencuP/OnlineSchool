@@ -208,7 +208,7 @@ test('no-access, error and empty states are explicit', async ({ page }) => {
   await mutate(page, () => {
     window.__managerMock.empty = true;
   });
-  await expect(page.getByText('Пока ничего нет').first()).toBeVisible();
+  await expect(page.getByText('Просроченных задач нет', { exact: true })).toBeVisible();
   await mutate(page, () => {
     window.__managerMock.fail = true;
   });

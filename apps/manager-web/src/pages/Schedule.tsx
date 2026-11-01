@@ -51,7 +51,7 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
   const [studentId, setStudentId] = useState(fixedStudent ?? params.get('studentId') ?? '');
   const [status, setStatus] = useState('SCHEDULED');
   const [action, setAction] = useState<Action | null>(null);
-  const [choosing, setChoosing] = useState(false);
+  const [choosing, setChoosing] = useState(params.get('create') === 'true');
   const options = useOptions(fixedStudent);
   const start = view === 'week' ? weekStart(date) : date;
   const length = view === 'day' ? 1 : 7;
