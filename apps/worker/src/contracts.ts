@@ -39,10 +39,7 @@ export function readOptions(
 export const retryDelay = (attempt: number): number =>
   [1000, 5000, 30000, 300000, 1800000][Math.min(Math.max(attempt - 1, 0), 4)]!;
 
-export async function dbNow(tx: Tx): Promise<Date> {
-  const rows = await tx.$queryRaw<{ now: Date }[]>`SELECT clock_timestamp() AS now`;
-  return rows[0]!.now;
-}
+export { databaseNow as dbNow } from '@online-school/server-kernel';
 
 // Only this boundary rejects to roll back an interactive transaction on a Result failure.
 export class WorkerFailure extends Error {

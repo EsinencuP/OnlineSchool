@@ -1,3 +1,4 @@
+import { jsonValue } from '@online-school/shared';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import type { Prisma, RecurringSlot } from '@online-school/db';
@@ -147,7 +148,7 @@ export class BookingService {
         slot_id: slot.id,
         author_id: ctx.actor.accountId,
         old_values: {},
-        new_values: JSON.parse(JSON.stringify(slot)) as Prisma.InputJsonValue,
+        new_values: jsonValue(slot) as Prisma.InputJsonValue,
         reason: string(input.basis, 5, 500),
         effective_at: await at(ctx.tx),
         source_operation_id: randomUUID(),
@@ -290,8 +291,8 @@ export class BookingService {
       data: {
         slot_id: id,
         author_id: ctx.actor.accountId,
-        old_values: JSON.parse(JSON.stringify(old)) as Prisma.InputJsonValue,
-        new_values: JSON.parse(JSON.stringify(updated)) as Prisma.InputJsonValue,
+        old_values: jsonValue(old) as Prisma.InputJsonValue,
+        new_values: jsonValue(updated) as Prisma.InputJsonValue,
         reason,
         effective_at: effective,
         source_operation_id: randomUUID(),

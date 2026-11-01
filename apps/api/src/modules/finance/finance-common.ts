@@ -25,9 +25,6 @@ export const date = (value: unknown): Date => {
     return fail(domainError('INVALID_DATE', 422));
   return new Date(value);
 };
-export const at = async (tx: Prisma.TransactionClient): Promise<Date> =>
-  (await tx.$queryRaw<{ now: Date }[]>`SELECT clock_timestamp() AS now`)[0]!.now;
+export { databaseNow as at } from '@online-school/server-kernel';
 export const operation = (id: string) => ({ source_operation_id: id });
-export function serialize<T>(value: T): unknown {
-  return JSON.parse(JSON.stringify(value)) as unknown;
-}
+export { jsonValue as serialize } from '@online-school/shared';

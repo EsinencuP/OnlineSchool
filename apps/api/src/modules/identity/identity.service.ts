@@ -44,8 +44,8 @@ export type IdentityOutcome = {
   loginBinding?: string;
   clearLoginBinding?: boolean;
 };
-export const now = async (tx: Tx): Promise<Date> =>
-  (await tx.$queryRaw<{ now: Date }[]>`SELECT clock_timestamp() AS now`)[0]!.now;
+import { databaseNow as now } from '@online-school/server-kernel';
+export { databaseNow as now } from '@online-school/server-kernel';
 const userHandle = (id: string): Uint8Array<ArrayBuffer> =>
   new Uint8Array(Buffer.from(id.replaceAll('-', ''), 'hex'));
 

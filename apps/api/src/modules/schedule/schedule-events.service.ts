@@ -1,3 +1,4 @@
+import { jsonValue } from '@online-school/shared';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@online-school/db';
@@ -70,7 +71,7 @@ export class ScheduleEvents {
     newValues: unknown,
     reason: string,
   ) {
-    const json = (v: unknown) => JSON.parse(JSON.stringify(v)) as Prisma.InputJsonValue;
+    const json = (v: unknown) => jsonValue(v) as Prisma.InputJsonValue;
     await ctx.tx.lessonChangeEvent.create({
       data: {
         lesson_occurrence_id: id,
