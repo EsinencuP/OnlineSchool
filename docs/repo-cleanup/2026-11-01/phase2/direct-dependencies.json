@@ -1,0 +1,372 @@
+{
+  "@eslint/js": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "9.39.5",
+      "version": "9.39.5"
+    }
+  ],
+  "@types/node": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "24.19.2",
+      "version": "24.19.2"
+    }
+  ],
+  "eslint": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "9.39.5",
+      "version": "9.39.5(jiti@2.7.0)"
+    }
+  ],
+  "eslint-config-prettier": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "10.1.8",
+      "version": "10.1.8(eslint@9.39.5(jiti@2.7.0))"
+    }
+  ],
+  "globals": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "17.13.0",
+      "version": "17.13.0"
+    }
+  ],
+  "prettier": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "3.9.10",
+      "version": "3.9.10"
+    }
+  ],
+  "turbo": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "2.11.10",
+      "version": "2.11.10"
+    }
+  ],
+  "typescript": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "6.0.3",
+      "version": "6.0.3"
+    }
+  ],
+  "typescript-eslint": [
+    {
+      "importer": ".",
+      "field": "devDependencies",
+      "specifier": "8.72.0",
+      "version": "8.72.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)"
+    }
+  ],
+  "@js-temporal/polyfill": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "0.5.1",
+      "version": "0.5.1"
+    }
+  ],
+  "@nestjs/common": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "12.2.0",
+      "version": "12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "12.2.0",
+      "version": "12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)"
+    }
+  ],
+  "@nestjs/core": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "12.2.0",
+      "version": "12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@12.2.0)(reflect-metadata@0.2.2)(rxjs@7.8.2)"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "12.2.0",
+      "version": "12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@12.2.0)(reflect-metadata@0.2.2)(rxjs@7.8.2)"
+    }
+  ],
+  "@nestjs/platform-express": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "12.2.0",
+      "version": "12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.2.0)"
+    }
+  ],
+  "@nestjs/swagger": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "12.0.4",
+      "version": "12.0.4(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.2.0)(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(typescript@6.0.3)"
+    }
+  ],
+  "@online-school/api-contracts": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/api-contracts"
+    },
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/api-contracts"
+    }
+  ],
+  "@online-school/db": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/db"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/db"
+    }
+  ],
+  "@online-school/shared": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/shared"
+    },
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/shared"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../../packages/shared"
+    },
+    {
+      "importer": "packages/api-contracts",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../shared"
+    },
+    {
+      "importer": "packages/db",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../shared"
+    }
+  ],
+  "@simplewebauthn/server": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "14.0.3",
+      "version": "14.0.3"
+    }
+  ],
+  "class-transformer": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "0.5.1",
+      "version": "0.5.1"
+    }
+  ],
+  "class-validator": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "0.15.1",
+      "version": "0.15.1"
+    }
+  ],
+  "reflect-metadata": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "0.2.2",
+      "version": "0.2.2"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "0.2.2",
+      "version": "0.2.2"
+    }
+  ],
+  "rxjs": [
+    {
+      "importer": "apps/api",
+      "field": "dependencies",
+      "specifier": "7.8.2",
+      "version": "7.8.2"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "7.8.2",
+      "version": "7.8.2"
+    }
+  ],
+  "@online-school/api": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../api"
+    },
+    {
+      "importer": "apps/worker",
+      "field": "dependencies",
+      "specifier": "workspace:*",
+      "version": "link:../api"
+    }
+  ],
+  "@simplewebauthn/browser": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "14.0.0",
+      "version": "14.0.0"
+    }
+  ],
+  "react": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "18.3.1",
+      "version": "18.3.1"
+    }
+  ],
+  "react-dom": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "dependencies",
+      "specifier": "18.3.1",
+      "version": "18.3.1(react@18.3.1)"
+    }
+  ],
+  "@types/react": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "devDependencies",
+      "specifier": "18.3.31",
+      "version": "18.3.31"
+    }
+  ],
+  "@types/react-dom": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "devDependencies",
+      "specifier": "18.3.7",
+      "version": "18.3.7(@types/react@18.3.31)"
+    }
+  ],
+  "@vitejs/plugin-react": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "devDependencies",
+      "specifier": "5.2.0",
+      "version": "5.2.0(vite@7.3.7(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1))"
+    }
+  ],
+  "vite": [
+    {
+      "importer": "apps/qa-shell",
+      "field": "devDependencies",
+      "specifier": "7.3.7",
+      "version": "7.3.7(@types/node@24.19.2)(jiti@2.7.0)(yaml@2.9.1)"
+    }
+  ],
+  "openapi-typescript": [
+    {
+      "importer": "packages/api-contracts",
+      "field": "devDependencies",
+      "specifier": "7.13.0",
+      "version": "7.13.0(typescript@6.0.3)"
+    }
+  ],
+  "orval": [
+    {
+      "importer": "packages/api-contracts",
+      "field": "devDependencies",
+      "specifier": "8.45.0",
+      "version": "8.45.0(effect@3.20.0)(prettier@3.9.10)(typescript@6.0.3)(zod@4.6.7)"
+    }
+  ],
+  "@prisma/adapter-pg": [
+    {
+      "importer": "packages/db",
+      "field": "dependencies",
+      "specifier": "7.10.1",
+      "version": "7.10.1"
+    }
+  ],
+  "@prisma/client": [
+    {
+      "importer": "packages/db",
+      "field": "dependencies",
+      "specifier": "7.10.1",
+      "version": "7.10.1(prisma@7.10.1(@types/node@24.19.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@6.0.3))(typescript@6.0.3)"
+    }
+  ],
+  "pg": [
+    {
+      "importer": "packages/db",
+      "field": "dependencies",
+      "specifier": "8.23.1",
+      "version": "8.23.1"
+    }
+  ],
+  "@types/pg": [
+    {
+      "importer": "packages/db",
+      "field": "devDependencies",
+      "specifier": "8.23.1",
+      "version": "8.23.1"
+    }
+  ],
+  "dotenv": [
+    {
+      "importer": "packages/db",
+      "field": "devDependencies",
+      "specifier": "18.0.9",
+      "version": "18.0.9"
+    }
+  ],
+  "prisma": [
+    {
+      "importer": "packages/db",
+      "field": "devDependencies",
+      "specifier": "7.10.1",
+      "version": "7.10.1(@types/node@24.19.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@6.0.3)"
+    }
+  ]
+}

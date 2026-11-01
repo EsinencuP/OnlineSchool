@@ -1,0 +1,1317 @@
+{
+  "phase": 2,
+  "checkedAt": "2026-11-01T13:12:30.658Z",
+  "baseCommit": "5567b50fdbc3922f3ced30f6481ebdcd3fe7850d",
+  "command": "pnpm install --frozen-lockfile",
+  "exitCode": 0,
+  "postinstall": "PASS: Prisma generation and unchanged OpenAPI TypeScript",
+  "graph": {
+    "packageKeys": 579,
+    "snapshotKeys": 579,
+    "directNames": 38,
+    "directEdges": 49,
+    "differentDirectVersions": [],
+    "reachableSnapshots": 579,
+    "unreachableSnapshots": [],
+    "unresolvedEdges": []
+  },
+  "duplicateGroups": [
+    {
+      "name": "@prisma/debug",
+      "versions": [
+        "7.10.1",
+        "7.2.0"
+      ],
+      "parents": [
+        {
+          "parent": "@prisma/driver-adapter-utils@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+adapter-pg@7.10.1/node_modules/@prisma/driver-adapter-utils/package.json"
+        },
+        {
+          "parent": "@prisma/engines@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/engines/package.json"
+        },
+        {
+          "parent": "@prisma/fetch-engine@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/fetch-engine/package.json"
+        },
+        {
+          "parent": "@prisma/get-platform@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/get-platform/package.json"
+        },
+        {
+          "parent": "@prisma/get-platform@7.2.0",
+          "resolved": "7.2.0",
+          "range": "7.2.0",
+          "manifestPath": "node_modules/.pnpm/@prisma+dev@0.24.17_typescript@6.0.3/node_modules/@prisma/get-platform/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@prisma/driver-adapter-utils@7.10.1",
+          "range": "7.10.1"
+        },
+        "second": {
+          "parent": "@prisma/get-platform@7.2.0",
+          "range": "7.2.0"
+        }
+      }
+    },
+    {
+      "name": "@prisma/get-platform",
+      "versions": [
+        "7.10.1",
+        "7.2.0"
+      ],
+      "parents": [
+        {
+          "parent": "@prisma/dev@0.24.17(typescript@6.0.3)",
+          "resolved": "7.2.0",
+          "range": "7.2.0",
+          "manifestPath": "node_modules/.pnpm/@prisma+dev@0.24.17_typescript@6.0.3/node_modules/@prisma/dev/package.json"
+        },
+        {
+          "parent": "@prisma/engines@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/engines/package.json"
+        },
+        {
+          "parent": "@prisma/fetch-engine@7.10.1",
+          "resolved": "7.10.1",
+          "range": "7.10.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/fetch-engine/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@prisma/dev@0.24.17(typescript@6.0.3)",
+          "range": "7.2.0"
+        },
+        "second": {
+          "parent": "@prisma/engines@7.10.1",
+          "range": "7.10.1"
+        }
+      }
+    },
+    {
+      "name": "@scalar/json-magic",
+      "versions": [
+        "0.16.1",
+        "0.17.0"
+      ],
+      "parents": [
+        {
+          "parent": "@scalar/openapi-parser@0.29.16",
+          "resolved": "0.17.0",
+          "range": "0.17.0",
+          "manifestPath": "node_modules/.pnpm/@scalar+openapi-parser@0.29.16/node_modules/@scalar/openapi-parser/package.json"
+        },
+        {
+          "parent": "orval@8.45.0(effect@3.20.0)(prettier@3.9.10)(typescript@6.0.3)(zod@4.6.7)",
+          "resolved": "0.16.1",
+          "range": "^0.16.1",
+          "manifestPath": "node_modules/.pnpm/orval@8.45.0_effect@3.20.0__3ca7bdc732c27e6cbf9a8351c6073a92/node_modules/orval/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@scalar/openapi-parser@0.29.16",
+          "range": "0.17.0"
+        },
+        "second": {
+          "parent": "orval@8.45.0(effect@3.20.0)(prettier@3.9.10)(typescript@6.0.3)(zod@4.6.7)",
+          "range": "^0.16.1"
+        }
+      }
+    },
+    {
+      "name": "ajv",
+      "versions": [
+        "6.15.0",
+        "8.20.0"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "resolved": "6.15.0",
+          "range": "^6.14.0",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/@eslint/eslintrc/package.json"
+        },
+        {
+          "parent": "@prisma/streams-local@0.1.11",
+          "resolved": "8.20.0",
+          "range": "^8.12.0",
+          "manifestPath": "node_modules/.pnpm/@prisma+dev@0.24.17_typescript@6.0.3/node_modules/@prisma/streams-local/package.json"
+        },
+        {
+          "parent": "@scalar/json-schema-validator@0.1.14",
+          "resolved": "8.20.0",
+          "range": "^8.20.0",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-schema-validator@0.1.14/node_modules/@scalar/json-schema-validator/package.json"
+        },
+        {
+          "parent": "ajv-draft-04@1.0.0(ajv@8.20.0)",
+          "resolved": "8.20.0",
+          "range": "^8.5.0",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-schema-validator@0.1.14/node_modules/ajv-draft-04/package.json"
+        },
+        {
+          "parent": "ajv-formats@3.0.1(ajv@8.20.0)",
+          "resolved": "8.20.0",
+          "range": "^8.0.0",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-schema-validator@0.1.14/node_modules/ajv-formats/package.json"
+        },
+        {
+          "parent": "eslint@9.39.5(jiti@2.7.0)",
+          "resolved": "6.15.0",
+          "range": "^6.14.0",
+          "manifestPath": "node_modules/.pnpm/@eslint-community+eslint-ut_cb2b009672771c4f207af6c7896b59dd/node_modules/eslint/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "range": "^6.14.0"
+        },
+        "second": {
+          "parent": "@prisma/streams-local@0.1.11",
+          "range": "^8.12.0"
+        }
+      }
+    },
+    {
+      "name": "argparse",
+      "versions": [
+        "2.0.1",
+        "3.0.4"
+      ],
+      "parents": [
+        {
+          "parent": "js-yaml@4.3.2",
+          "resolved": "2.0.1",
+          "range": "^2.0.1",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/js-yaml/package.json"
+        },
+        {
+          "parent": "js-yaml@5.5.0",
+          "resolved": "3.0.4",
+          "range": "^3.0.3",
+          "manifestPath": "node_modules/.pnpm/@nestjs+swagger@12.0.4_@nes_7824ad7b27c3c5ea71cba1368a10478c/node_modules/js-yaml/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "js-yaml@4.3.2",
+          "range": "^2.0.1"
+        },
+        "second": {
+          "parent": "js-yaml@5.5.0",
+          "range": "^3.0.3"
+        }
+      }
+    },
+    {
+      "name": "balanced-match",
+      "versions": [
+        "1.0.2",
+        "4.0.4"
+      ],
+      "parents": [
+        {
+          "parent": "brace-expansion@1.1.21",
+          "resolved": "1.0.2",
+          "range": "^1.0.0",
+          "manifestPath": "node_modules/.pnpm/brace-expansion@1.1.21/node_modules/brace-expansion/package.json"
+        },
+        {
+          "parent": "brace-expansion@2.1.7",
+          "resolved": "1.0.2",
+          "range": "^1.0.0",
+          "manifestPath": "node_modules/.pnpm/brace-expansion@2.1.7/node_modules/brace-expansion/package.json"
+        },
+        {
+          "parent": "brace-expansion@5.0.12",
+          "resolved": "4.0.4",
+          "range": "^4.0.2",
+          "manifestPath": "node_modules/.pnpm/brace-expansion@5.0.12/node_modules/brace-expansion/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "brace-expansion@1.1.21",
+          "range": "^1.0.0"
+        },
+        "second": {
+          "parent": "brace-expansion@5.0.12",
+          "range": "^4.0.2"
+        }
+      }
+    },
+    {
+      "name": "brace-expansion",
+      "versions": [
+        "1.1.21",
+        "2.1.7",
+        "5.0.12"
+      ],
+      "parents": [
+        {
+          "parent": "minimatch@10.2.6",
+          "resolved": "5.0.12",
+          "range": "^5.0.8",
+          "manifestPath": "node_modules/.pnpm/@typescript-eslint+typescript-estree@8.72.0_typescript@6.0.3/node_modules/minimatch/package.json"
+        },
+        {
+          "parent": "minimatch@3.1.5",
+          "resolved": "1.1.21",
+          "range": "^1.1.7",
+          "manifestPath": "node_modules/.pnpm/@eslint+config-array@0.21.2/node_modules/minimatch/package.json"
+        },
+        {
+          "parent": "minimatch@5.1.9",
+          "resolved": "2.1.7",
+          "range": "^2.0.1",
+          "manifestPath": "node_modules/.pnpm/@redocly+openapi-core@1.34.22_supports-color@10.2.2/node_modules/minimatch/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "minimatch@10.2.6",
+          "range": "^5.0.8"
+        },
+        "second": {
+          "parent": "minimatch@3.1.5",
+          "range": "^1.1.7"
+        }
+      }
+    },
+    {
+      "name": "confbox",
+      "versions": [
+        "0.2.4",
+        "0.3.1"
+      ],
+      "parents": [
+        {
+          "parent": "c12@3.3.4",
+          "resolved": "0.2.4",
+          "range": "^0.2.4",
+          "manifestPath": "node_modules/.pnpm/@prisma+config@7.10.1/node_modules/c12/package.json"
+        },
+        {
+          "parent": "pkg-types@2.4.0",
+          "resolved": "0.3.1",
+          "range": "^0.3.1",
+          "manifestPath": "node_modules/.pnpm/c12@3.3.4/node_modules/pkg-types/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "c12@3.3.4",
+          "range": "^0.2.4"
+        },
+        "second": {
+          "parent": "pkg-types@2.4.0",
+          "range": "^0.3.1"
+        }
+      }
+    },
+    {
+      "name": "d3-array",
+      "versions": [
+        "3.2.1",
+        "3.2.4"
+      ],
+      "parents": [
+        {
+          "parent": "@prisma/studio-core@0.33.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)",
+          "resolved": "3.2.4",
+          "range": "3.2.4",
+          "manifestPath": "node_modules/.pnpm/@prisma+studio-core@0.33.0__a099b48603057d6c5a97d60c234936e9/node_modules/@prisma/studio-core/package.json"
+        },
+        {
+          "parent": "@visx/vendor@4.0.0-alpha.0",
+          "resolved": "3.2.1",
+          "range": "3.2.1",
+          "manifestPath": "node_modules/.pnpm/@visx+curve@4.0.1-alpha.0/node_modules/@visx/vendor/package.json"
+        },
+        {
+          "parent": "d3-geo@3.1.0",
+          "resolved": "3.2.4",
+          "range": "2.5.0 - 3",
+          "manifestPath": "node_modules/.pnpm/@visx+vendor@4.0.0-alpha.0/node_modules/d3-geo/package.json"
+        },
+        {
+          "parent": "d3-scale@4.0.2",
+          "resolved": "3.2.4",
+          "range": "2.10.0 - 3",
+          "manifestPath": "node_modules/.pnpm/@visx+vendor@4.0.0-alpha.0/node_modules/d3-scale/package.json"
+        },
+        {
+          "parent": "d3-time@3.1.0",
+          "resolved": "3.2.4",
+          "range": "2 - 3",
+          "manifestPath": "node_modules/.pnpm/@visx+vendor@4.0.0-alpha.0/node_modules/d3-time/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@prisma/studio-core@0.33.0(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)",
+          "range": "3.2.4"
+        },
+        "second": {
+          "parent": "@visx/vendor@4.0.0-alpha.0",
+          "range": "3.2.1"
+        }
+      }
+    },
+    {
+      "name": "dotenv",
+      "versions": [
+        "17.4.2",
+        "18.0.9"
+      ],
+      "parents": [
+        {
+          "parent": "c12@3.3.4",
+          "resolved": "17.4.2",
+          "range": "^17.3.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+config@7.10.1/node_modules/c12/package.json"
+        },
+        {
+          "parent": "workspace:packages/db",
+          "resolved": "18.0.9",
+          "range": "18.0.9"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "c12@3.3.4",
+          "range": "^17.3.1"
+        },
+        "second": {
+          "parent": "workspace:packages/db",
+          "range": "18.0.9"
+        }
+      }
+    },
+    {
+      "name": "eslint-visitor-keys",
+      "versions": [
+        "3.4.3",
+        "4.2.1",
+        "5.0.1"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint-community/eslint-utils@4.10.1(eslint@9.39.5(jiti@2.7.0))",
+          "resolved": "3.4.3",
+          "range": "^3.4.3",
+          "manifestPath": "node_modules/.pnpm/@eslint-community+eslint-ut_cb2b009672771c4f207af6c7896b59dd/node_modules/@eslint-community/eslint-utils/package.json"
+        },
+        {
+          "parent": "@typescript-eslint/visitor-keys@8.72.0",
+          "resolved": "5.0.1",
+          "range": "^5.0.0",
+          "manifestPath": "node_modules/.pnpm/@typescript-eslint+eslint-p_3bcf0fbf377ebe13ec030417526a1b72/node_modules/@typescript-eslint/visitor-keys/package.json"
+        },
+        {
+          "parent": "eslint@9.39.5(jiti@2.7.0)",
+          "resolved": "4.2.1",
+          "range": "^4.2.1",
+          "manifestPath": "node_modules/.pnpm/@eslint-community+eslint-ut_cb2b009672771c4f207af6c7896b59dd/node_modules/eslint/package.json"
+        },
+        {
+          "parent": "espree@10.4.0",
+          "resolved": "4.2.1",
+          "range": "^4.2.1",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/espree/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint-community/eslint-utils@4.10.1(eslint@9.39.5(jiti@2.7.0))",
+          "range": "^3.4.3"
+        },
+        "second": {
+          "parent": "@typescript-eslint/visitor-keys@8.72.0",
+          "range": "^5.0.0"
+        }
+      }
+    },
+    {
+      "name": "globals",
+      "versions": [
+        "14.0.0",
+        "17.13.0"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "resolved": "14.0.0",
+          "range": "^14.0.0",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/@eslint/eslintrc/package.json"
+        },
+        {
+          "parent": "@orval/zod@8.45.0(zod@4.6.7)",
+          "resolved": "17.13.0",
+          "range": "^17.0.0",
+          "manifestPath": "node_modules/.pnpm/@orval+hono@8.45.0_typescript@6.0.3_zod@4.6.7/node_modules/@orval/zod/package.json"
+        },
+        {
+          "parent": "workspace:.",
+          "resolved": "17.13.0",
+          "range": "17.13.0"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "range": "^14.0.0"
+        },
+        "second": {
+          "parent": "@orval/zod@8.45.0(zod@4.6.7)",
+          "range": "^17.0.0"
+        }
+      }
+    },
+    {
+      "name": "ignore",
+      "versions": [
+        "5.3.2",
+        "7.0.14"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "resolved": "5.3.2",
+          "range": "^5.2.0",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/@eslint/eslintrc/package.json"
+        },
+        {
+          "parent": "@typescript-eslint/eslint-plugin@8.72.0(@typescript-eslint/parser@8.72.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)",
+          "resolved": "7.0.14",
+          "range": "^7.0.5",
+          "manifestPath": "node_modules/.pnpm/@typescript-eslint+eslint-p_3bcf0fbf377ebe13ec030417526a1b72/node_modules/@typescript-eslint/eslint-plugin/package.json"
+        },
+        {
+          "parent": "eslint@9.39.5(jiti@2.7.0)",
+          "resolved": "5.3.2",
+          "range": "^5.2.0",
+          "manifestPath": "node_modules/.pnpm/@eslint-community+eslint-ut_cb2b009672771c4f207af6c7896b59dd/node_modules/eslint/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "range": "^5.2.0"
+        },
+        "second": {
+          "parent": "@typescript-eslint/eslint-plugin@8.72.0(@typescript-eslint/parser@8.72.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3))(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)",
+          "range": "^7.0.5"
+        }
+      }
+    },
+    {
+      "name": "js-yaml",
+      "versions": [
+        "4.3.2",
+        "5.5.0"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "resolved": "4.3.2",
+          "range": "^4.3.2",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/@eslint/eslintrc/package.json"
+        },
+        {
+          "parent": "@nestjs/swagger@12.0.4(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.2.0)(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(typescript@6.0.3)",
+          "resolved": "5.5.0",
+          "range": "5.5.0",
+          "manifestPath": "node_modules/.pnpm/@nestjs+swagger@12.0.4_@nes_7824ad7b27c3c5ea71cba1368a10478c/node_modules/@nestjs/swagger/package.json"
+        },
+        {
+          "parent": "@redocly/openapi-core@1.34.22(supports-color@10.2.2)",
+          "resolved": "4.3.2",
+          "range": "4.3.2",
+          "manifestPath": "node_modules/.pnpm/@redocly+openapi-core@1.34.22_supports-color@10.2.2/node_modules/@redocly/openapi-core/package.json"
+        },
+        {
+          "parent": "orval@8.45.0(effect@3.20.0)(prettier@3.9.10)(typescript@6.0.3)(zod@4.6.7)",
+          "resolved": "4.3.2",
+          "range": "4.3.2",
+          "manifestPath": "node_modules/.pnpm/orval@8.45.0_effect@3.20.0__3ca7bdc732c27e6cbf9a8351c6073a92/node_modules/orval/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "range": "^4.3.2"
+        },
+        "second": {
+          "parent": "@nestjs/swagger@12.0.4(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.2.0)(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(typescript@6.0.3)",
+          "range": "5.5.0"
+        }
+      }
+    },
+    {
+      "name": "json-schema-traverse",
+      "versions": [
+        "0.4.1",
+        "1.0.0"
+      ],
+      "parents": [
+        {
+          "parent": "@redocly/ajv@8.11.2",
+          "resolved": "1.0.0",
+          "range": "^1.0.0",
+          "manifestPath": "node_modules/.pnpm/@redocly+ajv@8.11.2/node_modules/@redocly/ajv/package.json"
+        },
+        {
+          "parent": "ajv@6.15.0",
+          "resolved": "0.4.1",
+          "range": "^0.4.1",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/ajv/package.json"
+        },
+        {
+          "parent": "ajv@8.20.0",
+          "resolved": "1.0.0",
+          "range": "^1.0.0",
+          "manifestPath": "node_modules/.pnpm/@prisma+streams-local@0.1.11/node_modules/ajv/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@redocly/ajv@8.11.2",
+          "range": "^1.0.0"
+        },
+        "second": {
+          "parent": "ajv@6.15.0",
+          "range": "^0.4.1"
+        }
+      }
+    },
+    {
+      "name": "media-typer",
+      "versions": [
+        "0.3.0",
+        "1.1.1"
+      ],
+      "parents": [
+        {
+          "parent": "type-is@1.6.18",
+          "resolved": "0.3.0",
+          "range": "0.3.0",
+          "manifestPath": "node_modules/.pnpm/multer@2.4.0/node_modules/type-is/package.json"
+        },
+        {
+          "parent": "type-is@2.1.0",
+          "resolved": "1.1.1",
+          "range": "^1.1.0",
+          "manifestPath": "node_modules/.pnpm/body-parser@2.4.0/node_modules/type-is/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "type-is@1.6.18",
+          "range": "0.3.0"
+        },
+        "second": {
+          "parent": "type-is@2.1.0",
+          "range": "^1.1.0"
+        }
+      }
+    },
+    {
+      "name": "mime-db",
+      "versions": [
+        "1.52.0",
+        "1.54.0"
+      ],
+      "parents": [
+        {
+          "parent": "mime-types@2.1.35",
+          "resolved": "1.52.0",
+          "range": "1.52.0",
+          "manifestPath": "node_modules/.pnpm/mime-types@2.1.35/node_modules/mime-types/package.json"
+        },
+        {
+          "parent": "mime-types@3.0.2",
+          "resolved": "1.54.0",
+          "range": "^1.54.0",
+          "manifestPath": "node_modules/.pnpm/accepts@2.0.0/node_modules/mime-types/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "mime-types@2.1.35",
+          "range": "1.52.0"
+        },
+        "second": {
+          "parent": "mime-types@3.0.2",
+          "range": "^1.54.0"
+        }
+      }
+    },
+    {
+      "name": "mime-types",
+      "versions": [
+        "2.1.35",
+        "3.0.2"
+      ],
+      "parents": [
+        {
+          "parent": "accepts@2.0.0",
+          "resolved": "3.0.2",
+          "range": "^3.0.0",
+          "manifestPath": "node_modules/.pnpm/accepts@2.0.0/node_modules/accepts/package.json"
+        },
+        {
+          "parent": "express@5.3.0",
+          "resolved": "3.0.2",
+          "range": "^3.0.0",
+          "manifestPath": "node_modules/.pnpm/@nestjs+platform-express@12_699b9dc3bd81de27f8d620266d82c02d/node_modules/express/package.json"
+        },
+        {
+          "parent": "send@1.2.1",
+          "resolved": "3.0.2",
+          "range": "^3.0.2",
+          "manifestPath": "node_modules/.pnpm/express@5.3.0/node_modules/send/package.json"
+        },
+        {
+          "parent": "type-is@1.6.18",
+          "resolved": "2.1.35",
+          "range": "~2.1.24",
+          "manifestPath": "node_modules/.pnpm/multer@2.4.0/node_modules/type-is/package.json"
+        },
+        {
+          "parent": "type-is@2.1.0",
+          "resolved": "3.0.2",
+          "range": "^3.0.0",
+          "manifestPath": "node_modules/.pnpm/body-parser@2.4.0/node_modules/type-is/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "accepts@2.0.0",
+          "range": "^3.0.0"
+        },
+        "second": {
+          "parent": "type-is@1.6.18",
+          "range": "~2.1.24"
+        }
+      }
+    },
+    {
+      "name": "minimatch",
+      "versions": [
+        "10.2.6",
+        "3.1.5",
+        "5.1.9"
+      ],
+      "parents": [
+        {
+          "parent": "@eslint/config-array@0.21.2",
+          "resolved": "3.1.5",
+          "range": "^3.1.5",
+          "manifestPath": "node_modules/.pnpm/@eslint+config-array@0.21.2/node_modules/@eslint/config-array/package.json"
+        },
+        {
+          "parent": "@eslint/eslintrc@3.3.7",
+          "resolved": "3.1.5",
+          "range": "^3.1.5",
+          "manifestPath": "node_modules/.pnpm/@eslint+eslintrc@3.3.7/node_modules/@eslint/eslintrc/package.json"
+        },
+        {
+          "parent": "@redocly/openapi-core@1.34.22(supports-color@10.2.2)",
+          "resolved": "5.1.9",
+          "range": "5.1.9",
+          "manifestPath": "node_modules/.pnpm/@redocly+openapi-core@1.34.22_supports-color@10.2.2/node_modules/@redocly/openapi-core/package.json"
+        },
+        {
+          "parent": "@typescript-eslint/typescript-estree@8.72.0(typescript@6.0.3)",
+          "resolved": "10.2.6",
+          "range": "^10.2.2",
+          "manifestPath": "node_modules/.pnpm/@typescript-eslint+parser@8_f09a2e060b493276936cd22ab9086fbb/node_modules/@typescript-eslint/typescript-estree/package.json"
+        },
+        {
+          "parent": "eslint@9.39.5(jiti@2.7.0)",
+          "resolved": "3.1.5",
+          "range": "^3.1.5",
+          "manifestPath": "node_modules/.pnpm/@eslint-community+eslint-ut_cb2b009672771c4f207af6c7896b59dd/node_modules/eslint/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@eslint/config-array@0.21.2",
+          "range": "^3.1.5"
+        },
+        "second": {
+          "parent": "@redocly/openapi-core@1.34.22(supports-color@10.2.2)",
+          "range": "5.1.9"
+        }
+      }
+    },
+    {
+      "name": "nanoid",
+      "versions": [
+        "3.3.20",
+        "5.1.16"
+      ],
+      "parents": [
+        {
+          "parent": "@scalar/types@0.25.0",
+          "resolved": "5.1.16",
+          "range": "^5.1.16",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-schema-validator@0.1.14/node_modules/@scalar/types/package.json"
+        },
+        {
+          "parent": "postcss@8.5.31",
+          "resolved": "3.3.20",
+          "range": "^3.3.20",
+          "manifestPath": "node_modules/.pnpm/postcss@8.5.31/node_modules/postcss/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@scalar/types@0.25.0",
+          "range": "^5.1.16"
+        },
+        "second": {
+          "parent": "postcss@8.5.31",
+          "range": "^3.3.20"
+        }
+      }
+    },
+    {
+      "name": "path-key",
+      "versions": [
+        "3.1.1",
+        "4.0.0"
+      ],
+      "parents": [
+        {
+          "parent": "cross-spawn@7.0.6",
+          "resolved": "3.1.1",
+          "range": "^3.1.0",
+          "manifestPath": "node_modules/.pnpm/cross-spawn@7.0.6/node_modules/cross-spawn/package.json"
+        },
+        {
+          "parent": "npm-run-path@6.0.0",
+          "resolved": "4.0.0",
+          "range": "^4.0.0",
+          "manifestPath": "node_modules/.pnpm/execa@9.6.1/node_modules/npm-run-path/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "cross-spawn@7.0.6",
+          "range": "^3.1.0"
+        },
+        "second": {
+          "parent": "npm-run-path@6.0.0",
+          "range": "^4.0.0"
+        }
+      }
+    },
+    {
+      "name": "postgres-array",
+      "versions": [
+        "2.0.0",
+        "3.0.4"
+      ],
+      "parents": [
+        {
+          "parent": "@prisma/adapter-pg@7.10.1",
+          "resolved": "3.0.4",
+          "range": "3.0.4",
+          "manifestPath": "node_modules/.pnpm/@prisma+adapter-pg@7.10.1/node_modules/@prisma/adapter-pg/package.json"
+        },
+        {
+          "parent": "pg-types@2.2.0",
+          "resolved": "2.0.0",
+          "range": "~2.0.0",
+          "manifestPath": "node_modules/.pnpm/@types+pg@8.23.1/node_modules/pg-types/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@prisma/adapter-pg@7.10.1",
+          "range": "3.0.4"
+        },
+        "second": {
+          "parent": "pg-types@2.2.0",
+          "range": "~2.0.0"
+        }
+      }
+    },
+    {
+      "name": "semver",
+      "versions": [
+        "6.3.1",
+        "7.8.5"
+      ],
+      "parents": [
+        {
+          "parent": "@babel/core@7.29.7",
+          "resolved": "6.3.1",
+          "range": "^6.3.1",
+          "manifestPath": "node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/core/package.json"
+        },
+        {
+          "parent": "@babel/helper-compilation-targets@7.29.7",
+          "resolved": "6.3.1",
+          "range": "^6.3.1",
+          "manifestPath": "node_modules/.pnpm/@babel+core@7.29.7/node_modules/@babel/helper-compilation-targets/package.json"
+        },
+        {
+          "parent": "@typescript-eslint/typescript-estree@8.72.0(typescript@6.0.3)",
+          "resolved": "7.8.5",
+          "range": "^7.7.3",
+          "manifestPath": "node_modules/.pnpm/@typescript-eslint+parser@8_f09a2e060b493276936cd22ab9086fbb/node_modules/@typescript-eslint/typescript-estree/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@babel/core@7.29.7",
+          "range": "^6.3.1"
+        },
+        "second": {
+          "parent": "@typescript-eslint/typescript-estree@8.72.0(typescript@6.0.3)",
+          "range": "^7.7.3"
+        }
+      }
+    },
+    {
+      "name": "signal-exit",
+      "versions": [
+        "3.0.7",
+        "4.1.0"
+      ],
+      "parents": [
+        {
+          "parent": "execa@9.6.1",
+          "resolved": "4.1.0",
+          "range": "^4.1.0",
+          "manifestPath": "node_modules/.pnpm/execa@9.6.1/node_modules/execa/package.json"
+        },
+        {
+          "parent": "foreground-child@3.3.1",
+          "resolved": "4.1.0",
+          "range": "^4.0.1",
+          "manifestPath": "node_modules/.pnpm/@prisma+dev@0.24.17_typescript@6.0.3/node_modules/foreground-child/package.json"
+        },
+        {
+          "parent": "proper-lockfile@4.1.2",
+          "resolved": "3.0.7",
+          "range": "^3.0.2",
+          "manifestPath": "node_modules/.pnpm/@prisma+dev@0.24.17_typescript@6.0.3/node_modules/proper-lockfile/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "execa@9.6.1",
+          "range": "^4.1.0"
+        },
+        "second": {
+          "parent": "proper-lockfile@4.1.2",
+          "range": "^3.0.2"
+        }
+      }
+    },
+    {
+      "name": "supports-color",
+      "versions": [
+        "10.2.2",
+        "7.2.0"
+      ],
+      "parents": [
+        {
+          "parent": "chalk@4.1.2",
+          "resolved": "7.2.0",
+          "range": "^7.1.0",
+          "manifestPath": "node_modules/.pnpm/chalk@4.1.2/node_modules/chalk/package.json"
+        },
+        {
+          "parent": "debug@4.4.3(supports-color@10.2.2)",
+          "resolved": "10.2.2",
+          "range": "*",
+          "manifestPath": "node_modules/.pnpm/@babel+core@7.29.7/node_modules/debug/package.json"
+        },
+        {
+          "parent": "openapi-typescript@7.13.0(typescript@6.0.3)",
+          "resolved": "10.2.2",
+          "range": "^10.2.2",
+          "manifestPath": "node_modules/.pnpm/openapi-typescript@7.13.0_typescript@6.0.3/node_modules/openapi-typescript/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "chalk@4.1.2",
+          "range": "^7.1.0"
+        },
+        "second": {
+          "parent": "openapi-typescript@7.13.0(typescript@6.0.3)",
+          "range": "^10.2.2"
+        }
+      }
+    },
+    {
+      "name": "tslib",
+      "versions": [
+        "1.14.1",
+        "2.8.1"
+      ],
+      "parents": [
+        {
+          "parent": "@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)",
+          "resolved": "2.8.1",
+          "range": "2.8.1",
+          "manifestPath": "node_modules/.pnpm/@nestjs+common@12.2.0_class_c4e7f27a984b1d96744124a84a88dfad/node_modules/@nestjs/common/package.json"
+        },
+        {
+          "parent": "@nestjs/core@12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@12.2.0)(reflect-metadata@0.2.2)(rxjs@7.8.2)",
+          "resolved": "2.8.1",
+          "range": "2.8.1",
+          "manifestPath": "node_modules/.pnpm/@nestjs+core@12.2.0_@nestjs_76eddc31025dda8828603bd4c8b08644/node_modules/@nestjs/core/package.json"
+        },
+        {
+          "parent": "@nestjs/platform-express@12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@12.2.0)",
+          "resolved": "2.8.1",
+          "range": "2.8.1",
+          "manifestPath": "node_modules/.pnpm/@nestjs+core@12.2.0_@nestjs_76eddc31025dda8828603bd4c8b08644/node_modules/@nestjs/platform-express/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-android@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-android@2.11.1/node_modules/@peculiar/asn1-android/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-asym-key@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-asym-key@2.11.1/node_modules/@peculiar/asn1-asym-key/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-cms@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-cms@2.11.1/node_modules/@peculiar/asn1-cms/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-csr@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-csr@2.11.1/node_modules/@peculiar/asn1-csr/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-ecc@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-ecc@2.11.1/node_modules/@peculiar/asn1-ecc/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-pfx@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-pfx@2.11.1/node_modules/@peculiar/asn1-pfx/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-pkcs8@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-asym-key@2.11.1/node_modules/@peculiar/asn1-pkcs8/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-pkcs9@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-pkcs9@2.11.1/node_modules/@peculiar/asn1-pkcs9/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-rsa@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-pfx@2.11.1/node_modules/@peculiar/asn1-rsa/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-schema@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-android@2.11.1/node_modules/@peculiar/asn1-schema/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-x509-attr@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-cms@2.11.1/node_modules/@peculiar/asn1-x509-attr/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-x509-post-quantum@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-x509-post-quantum@2.11.1/node_modules/@peculiar/asn1-x509-post-quantum/package.json"
+        },
+        {
+          "parent": "@peculiar/asn1-x509@2.11.1",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-asym-key@2.11.1/node_modules/@peculiar/asn1-x509/package.json"
+        },
+        {
+          "parent": "@peculiar/utils@2.0.3",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-schema@2.11.1/node_modules/@peculiar/utils/package.json"
+        },
+        {
+          "parent": "@peculiar/x509@2.2.0",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+x509@2.2.0/node_modules/@peculiar/x509/package.json"
+        },
+        {
+          "parent": "asn1js@3.1.0",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+asn1-android@2.11.1/node_modules/asn1js/package.json"
+        },
+        {
+          "parent": "pvtsutils@1.3.6",
+          "resolved": "2.8.1",
+          "range": "^2.8.1",
+          "manifestPath": "node_modules/.pnpm/@peculiar+x509@2.2.0/node_modules/pvtsutils/package.json"
+        },
+        {
+          "parent": "rxjs@7.8.2",
+          "resolved": "2.8.1",
+          "range": "^2.1.0",
+          "manifestPath": "node_modules/.pnpm/@nestjs+common@12.2.0_class_c4e7f27a984b1d96744124a84a88dfad/node_modules/rxjs/package.json"
+        },
+        {
+          "parent": "tsyringe@4.10.0",
+          "resolved": "1.14.1",
+          "range": "^1.9.3",
+          "manifestPath": "node_modules/.pnpm/@peculiar+x509@2.2.0/node_modules/tsyringe/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)",
+          "range": "2.8.1"
+        },
+        "second": {
+          "parent": "tsyringe@4.10.0",
+          "range": "^1.9.3"
+        }
+      }
+    },
+    {
+      "name": "type-fest",
+      "versions": [
+        "4.41.0",
+        "5.10.0"
+      ],
+      "parents": [
+        {
+          "parent": "@scalar/types@0.25.0",
+          "resolved": "5.10.0",
+          "range": "^5.10.0",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-schema-validator@0.1.14/node_modules/@scalar/types/package.json"
+        },
+        {
+          "parent": "parse-json@8.3.0",
+          "resolved": "4.41.0",
+          "range": "^4.39.1",
+          "manifestPath": "node_modules/.pnpm/openapi-typescript@7.13.0_typescript@6.0.3/node_modules/parse-json/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@scalar/types@0.25.0",
+          "range": "^5.10.0"
+        },
+        "second": {
+          "parent": "parse-json@8.3.0",
+          "range": "^4.39.1"
+        }
+      }
+    },
+    {
+      "name": "type-is",
+      "versions": [
+        "1.6.18",
+        "2.1.0"
+      ],
+      "parents": [
+        {
+          "parent": "body-parser@2.4.0",
+          "resolved": "2.1.0",
+          "range": "^2.1.0",
+          "manifestPath": "node_modules/.pnpm/body-parser@2.4.0/node_modules/body-parser/package.json"
+        },
+        {
+          "parent": "express@5.3.0",
+          "resolved": "2.1.0",
+          "range": "^2.1.0",
+          "manifestPath": "node_modules/.pnpm/@nestjs+platform-express@12_699b9dc3bd81de27f8d620266d82c02d/node_modules/express/package.json"
+        },
+        {
+          "parent": "multer@2.4.0",
+          "resolved": "1.6.18",
+          "range": "^1.6.18",
+          "manifestPath": "node_modules/.pnpm/@nestjs+platform-express@12_699b9dc3bd81de27f8d620266d82c02d/node_modules/multer/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "body-parser@2.4.0",
+          "range": "^2.1.0"
+        },
+        "second": {
+          "parent": "multer@2.4.0",
+          "range": "^1.6.18"
+        }
+      }
+    },
+    {
+      "name": "undici",
+      "versions": [
+        "7.30.1",
+        "8.12.3"
+      ],
+      "parents": [
+        {
+          "parent": "@scalar/json-magic@0.16.1",
+          "resolved": "7.30.1",
+          "range": "7.30.1",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-magic@0.16.1/node_modules/@scalar/json-magic/package.json"
+        },
+        {
+          "parent": "@scalar/json-magic@0.17.0",
+          "resolved": "8.12.3",
+          "range": "8.12.3",
+          "manifestPath": "node_modules/.pnpm/@scalar+json-magic@0.17.0/node_modules/@scalar/json-magic/package.json"
+        }
+      ],
+      "allRangesKnown": true,
+      "compatibleExistingVersions": [],
+      "disjointWitness": {
+        "first": {
+          "parent": "@scalar/json-magic@0.16.1",
+          "range": "7.30.1"
+        },
+        "second": {
+          "parent": "@scalar/json-magic@0.17.0",
+          "range": "8.12.3"
+        }
+      }
+    }
+  ],
+  "peerRules": {
+    "allowedVersions": {
+      "openapi-typescript>typescript": "6.0.3"
+    }
+  },
+  "hashesBefore": {
+    ".npmrc": "6f01c62004ed7d10dd82a32b98744b094e600b7e0226ef282dfc4c25cb87e8e0",
+    "apps/api/package.json": "b278e6d899f112114e832b2360ad969d2714297af73bf8aa28703b1fa5effd24",
+    "apps/qa-shell/package.json": "ff1975056055dc818a2f2ca04943d69c3962f74b7f094988d9803a634b18d352",
+    "apps/worker/package.json": "6b509a0367c06dcc46c8e7f8081b55ce3c18f277f23fa599ef02eb1a2af9ae54",
+    "package.json": "852765707248b67adcdca8a7de4983c4e83696d75f9b6aae1f39dfa69da905b3",
+    "packages/api-contracts/package.json": "b6c0632df3f92bb2a4124c73720609124d720d825e2caff26f16925a7ca262ab",
+    "packages/db/package.json": "c657152dd9ebd4fb2755036604a2fa62d69b5639b7e7791cee27698389502706",
+    "packages/shared/package.json": "883943693c770084de36f06c8842ccfdaaf43d820b87fcaf942cc479dba15ec8",
+    "pnpm-lock.yaml": "a6d152cb65b09559c078eb136b23e5692140850298ba9822340ca87f1186c6f3",
+    "pnpm-workspace.yaml": "ab7767ab2c946a82d445a681d998c009b4a001834a358c4b1fb4257c9abd985e"
+  },
+  "hashesAfter": {
+    ".npmrc": "6f01c62004ed7d10dd82a32b98744b094e600b7e0226ef282dfc4c25cb87e8e0",
+    "apps/api/package.json": "b278e6d899f112114e832b2360ad969d2714297af73bf8aa28703b1fa5effd24",
+    "apps/qa-shell/package.json": "ff1975056055dc818a2f2ca04943d69c3962f74b7f094988d9803a634b18d352",
+    "apps/worker/package.json": "6b509a0367c06dcc46c8e7f8081b55ce3c18f277f23fa599ef02eb1a2af9ae54",
+    "package.json": "852765707248b67adcdca8a7de4983c4e83696d75f9b6aae1f39dfa69da905b3",
+    "packages/api-contracts/package.json": "b6c0632df3f92bb2a4124c73720609124d720d825e2caff26f16925a7ca262ab",
+    "packages/db/package.json": "c657152dd9ebd4fb2755036604a2fa62d69b5639b7e7791cee27698389502706",
+    "packages/shared/package.json": "883943693c770084de36f06c8842ccfdaaf43d820b87fcaf942cc479dba15ec8",
+    "pnpm-lock.yaml": "a6d152cb65b09559c078eb136b23e5692140850298ba9822340ca87f1186c6f3",
+    "pnpm-workspace.yaml": "ab7767ab2c946a82d445a681d998c009b4a001834a358c4b1fb4257c9abd985e"
+  },
+  "changedDependencyFiles": [],
+  "lockfileSha256": "a6d152cb65b09559c078eb136b23e5692140850298ba9822340ca87f1186c6f3",
+  "removals": [],
+  "updates": [],
+  "overridesAdded": [],
+  "dependenciesAdded": [],
+  "newDevDependencies": [],
+  "scope": "Dependency audit only. No source/manifest/lockfile modification or deployment.",
+  "decision": "No proven unused direct dependency; every duplicate group has disjoint consumer constraints. Keep existing pinned versions and owner-preserved TypeScript peer exception.",
+  "fullTests": "Not rerun: dependency graph and all manifests/lockfile byte-identical; owner phase policy requires targeted checks only."
+}
