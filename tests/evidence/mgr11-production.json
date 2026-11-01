@@ -1,0 +1,69 @@
+{
+  "task": "MGR-11",
+  "checkedAt": "2026-11-01T11:49:52.908Z",
+  "sourceCommit": "f1d99ed9227642399c59606c2803c4a282ec0883",
+  "deploymentId": "dpl_6aksFVq6B15Wid2gYc1rvtU8Zz5V",
+  "origin": "https://onlineschool-xi.vercel.app",
+  "checks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "body": {
+        "status": "ok",
+        "service": "api"
+      }
+    },
+    {
+      "path": "/api/health/worker",
+      "status": 200,
+      "expected": 200,
+      "passed": true,
+      "body": {
+        "status": "ok",
+        "service": "worker"
+      }
+    },
+    {
+      "path": "/manager/leads",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "path": "/manager/login",
+      "status": 200,
+      "expected": 200,
+      "passed": true
+    },
+    {
+      "path": "/api/v1/manager/leads",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "path": "/api/v1/manager/leads/summary",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    }
+  ],
+  "assets": {
+    "entry": "/manager/assets/index-aUnTTgAm.js",
+    "status": 200,
+    "leadChunks": [
+      {
+        "path": "/manager/assets/Leads-itJxHu8d.js",
+        "status": 200
+      },
+      {
+        "path": "/manager/assets/Lead-BgShDkvr.js",
+        "status": 200
+      }
+    ]
+  },
+  "realRoleAndMutationFlow": "Not exercised in production: owner MFA and no synthetic business data writes",
+  "migration": "Vercel production build logged Working database migrations applied at 2026-11-01T11:45:28.647Z"
+}
