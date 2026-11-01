@@ -132,3 +132,26 @@ workspace-зависимости. Новые FND-GATE/E2E наборы отно�
 
 Информация о выполненном smoke и CI находится в `TASK13_EVIDENCE.json` после завершения
 проверки. Это свидетельства TASK-13, а не протокол открытия кабинета ученика.
+
+## Docker после cleanup, 01.11.2026
+
+Общие base/dependencies/build/runtime стадии сохраняют Node 24, pnpm 10.34.9,
+пользователя node, рабочие каталоги, CMD, ENV и порт API 3000. Lockfile и настройки
+workspace копируются перед исходниками; `pnpm fetch` использует BuildKit cache,
+а install выполняется с `--offline --frozen-lockfile`. Store предназначен для
+сборок этого проекта в одной доверенной среде; его не следует разделять с
+недоверенными сторонними сборками.
+
+`package-runtime.mjs` копирует установленные pnpm package entries и их peer links
+без повторного разрешения версий. Сохраняются production-зависимости серверных
+workspace-пакетов, DB dev-зависимости (Prisma CLI, dotenv, PG types), TypeScript и
+Node types для DB build/seed. Инструменты ESLint/Orval/Vite остаются в build stage.
+Это упаковка образа; зависимости в package.json и pnpm-lock.yaml не удалялись.
+
+Операционные пути `packages/db/prisma`, prisma.config.ts и reference seed сохранены.
+Подтверждены Prisma CLI/validate, DB build и mock-вызов reference seed; реальные
+миграции и записи в БД в cleanup не выполнялись. API /health и worker Nest lifecycle
+проверены с network none. Оба worker Dockerfile остаются одинаковыми.
+
+Измерения, сравнение конфигурации/байтов артефактов и ограничения итогового gate —
+в [CLEANUP_REPORT.md](../CLEANUP_REPORT.md), раздел «Фаза 4».

@@ -1,0 +1,14 @@
+[
+  {
+    "command": "pnpm exec tsc -b --clean apps/api apps/worker apps/qa-shell packages/db/tsconfig.tools.json",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm exec turbo run build --cache-dir=.codex/phase4/turbo-after --summarize",
+    "exitCode": 0
+  },
+  {
+    "command": "node --test scripts/monorepo-smoke.test.mjs",
+    "exitCode": 0
+  }
+]

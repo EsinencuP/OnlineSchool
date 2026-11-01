@@ -1,0 +1,50 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["tsconfig.base.json", "scripts/write-generated.mjs"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "!**/*.md", "!test/**", "!Dockerfile*", "!.env.example"],
+      "outputs": ["dist/**", "dist-tools/**", "*.tsbuildinfo"],
+      "env": ["VITE_API_BASE_URL"]
+    },
+    "@online-school/db#build": {
+      "outputs": ["dist/**", "dist-tools/**", "*.tsbuildinfo", "src/generated/prisma/**"]
+    },
+    "@online-school/api-contracts#build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "!test/**",
+        "!Dockerfile*",
+        "!.env.example",
+        "!src/generated/openapi.ts"
+      ],
+      "outputs": ["dist/**", "*.tsbuildinfo", "src/generated/openapi.ts"]
+    },
+    "@online-school/qa-shell#build": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/*.md",
+        "!test/**",
+        "!Dockerfile*",
+        "!.env.example",
+        "$TURBO_ROOT$/packages/db/prisma/migrations/**"
+      ],
+      "env": ["VITE_API_BASE_URL", "BUILD_COMMIT_SHA", "VERCEL_GIT_COMMIT_SHA"]
+    },
+    "typecheck": { "dependsOn": ["^build"], "cache": false },
+    "lint": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/eslint.config.mjs",
+        "$TURBO_ROOT$/scripts/repo-boundary-rules.mjs",
+        "$TURBO_ROOT$/apps/*/package.json",
+        "$TURBO_ROOT$/packages/*/package.json"
+      ],
+      "outputs": []
+    },
+    "test": { "dependsOn": ["build"], "outputs": [] },
+    "dev": { "cache": false, "persistent": true }
+  }
+}

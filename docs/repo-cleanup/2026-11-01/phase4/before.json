@@ -1,0 +1,340 @@
+{
+  "label": "before",
+  "records": [
+    {
+      "command": "pnpm exec tsc -b --clean apps/api apps/worker apps/qa-shell packages/db/tsconfig.tools.json",
+      "ms": 828,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec turbo run build --cache-dir=.codex/phase4/turbo-before --summarize",
+      "ms": 64687,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec turbo run build --cache-dir=.codex/phase4/turbo-before --summarize",
+      "ms": 481,
+      "exitCode": 0
+    }
+  ],
+  "frontend": [
+    {
+      "file": "apps/qa-shell/dist/assets/index-C7dOYG32.css",
+      "bytes": 9592
+    },
+    {
+      "file": "apps/qa-shell/dist/assets/index-CzdPTbjM.js",
+      "bytes": 183042
+    },
+    {
+      "file": "apps/qa-shell/dist/index.html",
+      "bytes": 454
+    }
+  ],
+  "turbo": [
+    {
+      "id": "3LVZMTqVRbNLJ3l4uwrypqIysP5",
+      "execution": {
+        "command": "turbo run build",
+        "repoPath": "",
+        "success": 8,
+        "failed": 0,
+        "cached": 0,
+        "attempted": 8,
+        "startTime": 1793541084845,
+        "endTime": 1793541147934,
+        "exitCode": 0
+      },
+      "tasks": [
+        {
+          "taskId": "@online-school/api#build",
+          "hash": "2df90c2f9746002d",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/api-contracts#build",
+          "hash": "12d07e201005fbea",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/db#build",
+          "hash": "420e6459524a42f4",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/jobs#build",
+          "hash": "2fed0f9a4fc71bf2",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/qa-shell#build",
+          "hash": "9b7eff7cc06ff944",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/server-kernel#build",
+          "hash": "aa720f76b2def0af",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/shared#build",
+          "hash": "f03e93b2f6acfe40",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/worker#build",
+          "hash": "51dabad36f13411b",
+          "cache": {
+            "local": false,
+            "remote": false,
+            "status": "MISS",
+            "timeSaved": 0
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3LVZMgv7mGpTbJbPqECrjJ8CDfV",
+      "execution": {
+        "command": "turbo run build",
+        "repoPath": "",
+        "success": 0,
+        "failed": 0,
+        "cached": 8,
+        "attempted": 8,
+        "startTime": 1793541148535,
+        "endTime": 1793541148616,
+        "exitCode": 0
+      },
+      "tasks": [
+        {
+          "taskId": "@online-school/api#build",
+          "hash": "2df90c2f9746002d",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 11326,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/api-contracts#build",
+          "hash": "12d07e201005fbea",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 12037,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/db#build",
+          "hash": "420e6459524a42f4",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 28568,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/jobs#build",
+          "hash": "2fed0f9a4fc71bf2",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 5374,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/qa-shell#build",
+          "hash": "9b7eff7cc06ff944",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 6143,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/server-kernel#build",
+          "hash": "aa720f76b2def0af",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 9124,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/shared#build",
+          "hash": "f03e93b2f6acfe40",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 978,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        },
+        {
+          "taskId": "@online-school/worker#build",
+          "hash": "51dabad36f13411b",
+          "cache": {
+            "local": true,
+            "remote": false,
+            "status": "HIT",
+            "source": "LOCAL",
+            "timeSaved": 8782,
+            "sha": "e1374685d05649b3c42f5ce2be17f9db98108076"
+          },
+          "outputs": [
+            "*.tsbuildinfo",
+            "dist-tools/**",
+            "dist/**",
+            "src/generated/**"
+          ]
+        }
+      ]
+    }
+  ]
+}

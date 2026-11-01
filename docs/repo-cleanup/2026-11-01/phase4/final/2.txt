@@ -1,0 +1,34 @@
+Scope: 8 of 9 workspace projects
+packages/shared build$ tsc -b --pretty false
+packages/shared build: Done
+packages/api-contracts build$ pnpm run generate && tsc -b --pretty false
+packages/db build$ pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+packages/db build: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\db
+packages/db build: > prisma generate
+packages/api-contracts build: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\api-contracts
+packages/api-contracts build: > node scripts/generate-openapi.mjs
+packages/api-contracts build: OpenAPI TypeScript: unchanged
+packages/api-contracts build: Done
+packages/db build: Loaded Prisma config from prisma.config.ts.
+packages/db build: Prisma schema loaded from prisma\schema.prisma.
+packages/db build: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 756ms
+packages/db build: Done
+packages/server-kernel build$ tsc -b --pretty false
+packages/server-kernel build: Done
+packages/jobs build$ tsc -b --pretty false
+packages/jobs build: Done
+apps/api build$ tsc -b --pretty false
+apps/worker build$ tsc -b --pretty false
+apps/worker build: Done
+apps/api build: Done
+apps/qa-shell build$ tsc -b --pretty false && vite build
+apps/qa-shell build: vite v7.3.7 building client environment for production...
+apps/qa-shell build: transforming...
+apps/qa-shell build: ✓ 56 modules transformed.
+apps/qa-shell build: rendering chunks...
+apps/qa-shell build: computing gzip size...
+apps/qa-shell build: dist/index.html                   0.45 kB │ gzip:  0.30 kB
+apps/qa-shell build: dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+apps/qa-shell build: dist/assets/index-Cg4i3MlG.js   183.04 kB │ gzip: 57.49 kB
+apps/qa-shell build: ✓ built in 1.85s
+apps/qa-shell build: Done

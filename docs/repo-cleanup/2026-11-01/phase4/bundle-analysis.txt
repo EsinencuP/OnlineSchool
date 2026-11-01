@@ -1,0 +1,49 @@
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 56 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.45 kB │ gzip:  0.30 kB
+dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+dist/assets/index-BZmGu95B.js   183.04 kB │ gzip: 57.49 kB
+✓ built in 941ms
+[
+  {
+    "file": "assets/index-BZmGu95B.js",
+    "bytes": 183042,
+    "modules": [
+      {
+        "id": "node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.production.min.js",
+        "renderedBytes": 133838
+      },
+      {
+        "id": "apps/qa-shell/src/App.tsx",
+        "renderedBytes": 28331
+      },
+      {
+        "id": "packages/api-contracts/dist/generated/client.js",
+        "renderedBytes": 19012
+      },
+      {
+        "id": "apps/qa-shell/src/scenarios.ts",
+        "renderedBytes": 8579
+      },
+      {
+        "id": "node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.production.min.js",
+        "renderedBytes": 7672
+      },
+      {
+        "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/identifyRegistrationError.js",
+        "renderedBytes": 5695
+      },
+      {
+        "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/methods/startRegistration.js",
+        "renderedBytes": 5314
+      },
+      {
+        "id": "node_modules/.pnpm/scheduler@0.23.2/node_modules/scheduler/cjs/scheduler.production.min.js",
+        "renderedBytes": 4616
+      }
+    ]
+  }
+]

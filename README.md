@@ -264,3 +264,12 @@ API и worker используют общие Nest-инфраструктуру 
 [Текущие слои, карта путей и отложенный перенос DTO](docs/REPOSITORY_STRUCTURE.md).
 Проверки архитектуры: `pnpm check:boundaries` и `pnpm check:cycles` (Madge через dlx).
 Результаты и ограничения — в [CLEANUP_REPORT.md](CLEANUP_REPORT.md).
+
+## Сборка после cleanup, 01.11.2026
+
+Turbo учитывает общий tsconfig, helper генерации и build SHA; изменения Markdown
+не запускают build. Проверен тёплый кэш 8/8 и восстановление артефактов после clean.
+Docker использует отдельный pnpm fetch с BuildKit cache и сохраняет только установленный
+граф зависимостей runtime/DB maintenance. API и worker образы уменьшены примерно на
+179 МБ каждый; frontend JS остаётся 183 042 байта. Команды установки и генерации,
+порты и точки запуска сохранены. [Подробности Docker](infra/README.md).

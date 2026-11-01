@@ -1,0 +1,44 @@
+{
+  "frontendBefore": [
+    {
+      "kind": "css",
+      "bytes": 9592
+    },
+    {
+      "kind": "js",
+      "bytes": 183042
+    },
+    {
+      "kind": "html",
+      "bytes": 454
+    }
+  ],
+  "frontendAfter": [
+    {
+      "kind": "css",
+      "bytes": 9592
+    },
+    {
+      "kind": "js",
+      "bytes": 183042
+    },
+    {
+      "kind": "html",
+      "bytes": 454
+    }
+  ],
+  "coldMs": {
+    "before": 64687,
+    "after": 45482
+  },
+  "warmMs": {
+    "before": 481,
+    "after": 712
+  },
+  "warmCachedTasks": {
+    "before": 8,
+    "after": 8
+  },
+  "newFormatFailuresInChangedCode": [],
+  "formatFailureFileCount": 154
+}

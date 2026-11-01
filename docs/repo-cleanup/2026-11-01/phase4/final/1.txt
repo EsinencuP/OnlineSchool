@@ -1,0 +1,25 @@
+Scope: 8 of 9 workspace projects
+packages/shared typecheck$ tsc -b --pretty false
+packages/shared typecheck: Done
+packages/api-contracts typecheck$ pnpm run generate && tsc -b --pretty false
+packages/db typecheck$ pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+packages/db typecheck: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\db
+packages/db typecheck: > prisma generate
+packages/api-contracts typecheck: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\api-contracts
+packages/api-contracts typecheck: > node scripts/generate-openapi.mjs
+packages/api-contracts typecheck: OpenAPI TypeScript: unchanged
+packages/api-contracts typecheck: Done
+packages/db typecheck: Loaded Prisma config from prisma.config.ts.
+packages/db typecheck: Prisma schema loaded from prisma\schema.prisma.
+packages/db typecheck: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 1.14s
+packages/db typecheck: Done
+packages/server-kernel typecheck$ tsc -b --pretty false
+packages/server-kernel typecheck: Done
+packages/jobs typecheck$ tsc -b --pretty false
+packages/jobs typecheck: Done
+apps/api typecheck$ tsc -b --pretty false
+apps/worker typecheck$ tsc -b --pretty false
+apps/api typecheck: Done
+apps/worker typecheck: Done
+apps/qa-shell typecheck$ tsc -b --pretty false
+apps/qa-shell typecheck: Done

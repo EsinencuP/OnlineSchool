@@ -1,0 +1,72 @@
+{
+  "base": "e137468",
+  "protectedFilesCompared": 28,
+  "protectedByteDifferences": [],
+  "protectedGitDiffEmpty": true,
+  "externalPackagesAndSnapshotsIdentical": true,
+  "packageKeys": 579,
+  "snapshotKeys": 579,
+  "originalPublicExportsUnchanged": true,
+  "historicalReadmePrefixPreserved": true,
+  "tsconfigBaseUnchanged": true,
+  "managerPathsChanged": [],
+  "openPrOverlaps": [
+    {
+      "number": 9,
+      "head": "codex/stu07-subscription-showcase",
+      "paths": []
+    },
+    {
+      "number": 8,
+      "head": "codex/stu06-student-materials",
+      "paths": []
+    },
+    {
+      "number": 7,
+      "head": "codex/stu05-homework",
+      "paths": []
+    },
+    {
+      "number": 6,
+      "head": "codex/stu04-history-disputes",
+      "paths": []
+    },
+    {
+      "number": 5,
+      "head": "codex/stu03-student-lessons",
+      "paths": []
+    },
+    {
+      "number": 4,
+      "head": "codex/stu02-dashboard",
+      "paths": [
+        ".dockerignore"
+      ]
+    },
+    {
+      "number": 3,
+      "head": "stu01/student-module",
+      "paths": []
+    },
+    {
+      "number": 2,
+      "head": "task15/foundation-tests",
+      "paths": [
+        "README.md"
+      ]
+    }
+  ],
+  "managerBranchOverlaps": [
+    ".dockerignore",
+    "README.md"
+  ],
+  "databaseOperations": "none; pre-existing main/working DB mismatch remains recorded in phase0",
+  "applicationSourceDiffEmpty": true,
+  "schemaMigrationsDiffFromMainEmpty": true,
+  "manifestAndLockfileDiffEmpty": true,
+  "lockfileSha256": "28365cecb44adf678ccc036181b7b65a0af1fdf634eafe1726793d999960b799",
+  "installGenerationCount": {
+    "prisma": 1,
+    "openapi": 1
+  }
+}

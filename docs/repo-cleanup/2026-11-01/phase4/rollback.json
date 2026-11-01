@@ -1,0 +1,12 @@
+{
+  "step": "Package-specific Turbo overrides",
+  "failure": "Cache invalidation regression: API source no longer invalidated dependent qa-shell",
+  "action": "Entire uncommitted turbo.json change restored from e137468; working tree clean after restoration",
+  "forwardFix": false,
+  "subsequentIndependentStep": "6e73d5c: common inputs/env only, original dependency graph preserved",
+  "legacyDeployPrototype": {
+    "trackedChangesCreated": false,
+    "adopted": false,
+    "reason": "Offline metadata re-resolution required"
+  }
+}

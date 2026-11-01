@@ -1,0 +1,53 @@
+{
+  "phase3": {
+    "size": 1182700250,
+    "config": {
+      "User": "node",
+      "WorkingDir": "/workspace/apps/worker",
+      "Cmd": [
+        "node",
+        "dist/main.js"
+      ],
+      "Entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "NODE_VERSION=24.22.2",
+        "YARN_VERSION=1.22.22",
+        "NODE_ENV=production"
+      ]
+    }
+  },
+  "phase4": {
+    "size": 1003498234,
+    "config": {
+      "User": "node",
+      "WorkingDir": "/workspace/apps/worker",
+      "Cmd": [
+        "node",
+        "dist/main.js"
+      ],
+      "Entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "NODE_VERSION=24.22.2",
+        "YARN_VERSION=1.22.22",
+        "NODE_ENV=production"
+      ]
+    }
+  },
+  "runtimeConfigEqual": true,
+  "smoke": {
+    "exitCode": 0,
+    "stdout": "{\"workerLifecycle\":\"PASS\"}",
+    "stderr": ""
+  },
+  "workerDockerfilesIdentical": true,
+  "databaseAccess": "none",
+  "network": "none",
+  "artifactsCompared": 28,
+  "artifactDifferences": []
+}

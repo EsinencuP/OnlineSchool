@@ -1,0 +1,55 @@
+{
+  "phase": "after",
+  "probes": [
+    {
+      "label": "documentation-only",
+      "changedTasks": []
+    },
+    {
+      "label": "root-tsconfig",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/api-contracts#build",
+        "@online-school/db#build",
+        "@online-school/jobs#build",
+        "@online-school/qa-shell#build",
+        "@online-school/server-kernel#build",
+        "@online-school/shared#build",
+        "@online-school/worker#build"
+      ]
+    },
+    {
+      "label": "generator-helper",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/api-contracts#build",
+        "@online-school/db#build",
+        "@online-school/jobs#build",
+        "@online-school/qa-shell#build",
+        "@online-school/server-kernel#build",
+        "@online-school/shared#build",
+        "@online-school/worker#build"
+      ]
+    },
+    {
+      "label": "server-source",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/qa-shell#build"
+      ]
+    },
+    {
+      "label": "build-commit-sha",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/api-contracts#build",
+        "@online-school/db#build",
+        "@online-school/jobs#build",
+        "@online-school/qa-shell#build",
+        "@online-school/server-kernel#build",
+        "@online-school/shared#build",
+        "@online-school/worker#build"
+      ]
+    }
+  ]
+}

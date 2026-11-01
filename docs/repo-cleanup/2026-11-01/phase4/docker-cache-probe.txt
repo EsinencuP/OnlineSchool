@@ -1,0 +1,57 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.09kB 0.0s done
+#1 DONE 0.1s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.1s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.3s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#4 DONE 0.9s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 1.84kB 0.0s done
+#5 DONE 0.2s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [base 1/3] FROM docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#7 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#7 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c 0.5s done
+#7 DONE 0.5s
+
+#6 [internal] load build context
+#6 transferring context: 101B 0.1s done
+#6 DONE 0.2s
+
+#8 [base 2/3] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#8 CACHED
+
+#9 [base 3/3] WORKDIR /workspace
+#9 CACHED
+
+#10 [dependencies 1/2] COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+#10 CACHED
+
+#11 [dependencies 2/2] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm fetch --frozen-lockfile --store-dir=/pnpm/store
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 37.0s done
+#12 exporting manifest sha256:31cd948a394ab8553e044ed716f2637939ed3c02459b3623469f79c1cbcae225 0.0s done
+#12 exporting config sha256:bfbe88e9fc308ca38ea0177ce4dc3436d8b202e6a08f9fc44c37e8fc35078f5d 0.0s done
+#12 exporting attestation manifest sha256:41c5d5259418a9f19285142c035689de654d23f23a1f87bebfd4049849e0948d
+#12 exporting attestation manifest sha256:41c5d5259418a9f19285142c035689de654d23f23a1f87bebfd4049849e0948d 0.1s done
+#12 exporting manifest list sha256:d3b7109628991ea2cb0efc1271175836d9a2f73c99142fc834f205970c024fdd 0.0s done
+#12 naming to docker.io/library/onlineschool-cleanup-dependency-probe:phase4 done
+#12 unpacking to docker.io/library/onlineschool-cleanup-dependency-probe:phase4
+#12 unpacking to docker.io/library/onlineschool-cleanup-dependency-probe:phase4 10.5s done
+#12 DONE 47.8s

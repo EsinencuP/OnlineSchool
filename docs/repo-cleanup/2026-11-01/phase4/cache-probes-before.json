@@ -1,0 +1,31 @@
+{
+  "phase": "before",
+  "probes": [
+    {
+      "label": "documentation-only",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/qa-shell#build"
+      ]
+    },
+    {
+      "label": "root-tsconfig",
+      "changedTasks": []
+    },
+    {
+      "label": "generator-helper",
+      "changedTasks": []
+    },
+    {
+      "label": "server-source",
+      "changedTasks": [
+        "@online-school/api#build",
+        "@online-school/qa-shell#build"
+      ]
+    },
+    {
+      "label": "build-commit-sha",
+      "changedTasks": []
+    }
+  ]
+}

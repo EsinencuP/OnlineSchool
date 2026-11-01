@@ -1,0 +1,163 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.api.prototype
+#1 transferring dockerfile:
+#1 transferring dockerfile: 1.72kB 0.1s done
+#1 DONE 0.3s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 1.3s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.2s done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#4 DONE 1.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 1.81kB 0.0s done
+#5 DONE 0.2s
+
+#6 [internal] load build context
+#6 DONE 0.0s
+
+#7 [base 1/3] FROM docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#7 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#7 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c 0.2s done
+#7 DONE 0.2s
+
+#8 [base 2/3] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#8 CACHED
+
+#9 [base 3/3] WORKDIR /workspace
+#9 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 23.86kB 1.5s done
+#6 DONE 1.8s
+
+#10 [dependencies 1/2] COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+#10 DONE 0.2s
+
+#11 [dependencies 2/2] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm fetch --frozen-lockfile --store-dir=/pnpm/store
+#11 1.100 Importing packages to virtual store
+#11 1.111 Already up to date
+#11 1.135 Progress: resolved 1, reused 0, downloaded 0, added 0
+#11 2.159 Progress: resolved 524, reused 0, downloaded 158, added 87
+#11 3.160 Progress: resolved 524, reused 0, downloaded 335, added 178
+#11 4.174 Progress: resolved 524, reused 0, downloaded 444, added 234
+#11 5.174 Progress: resolved 524, reused 0, downloaded 493, added 240
+#11 7.164 Progress: resolved 524, reused 0, downloaded 494, added 240
+#11 8.164 Progress: resolved 524, reused 0, downloaded 524, added 297
+#11 9.165 Progress: resolved 524, reused 0, downloaded 524, added 318
+#11 10.16 Progress: resolved 524, reused 0, downloaded 524, added 336
+#11 11.17 Progress: resolved 524, reused 0, downloaded 524, added 337
+#11 12.17 Progress: resolved 524, reused 0, downloaded 524, added 347
+#11 13.17 Progress: resolved 524, reused 0, downloaded 524, added 420
+#11 14.17 Progress: resolved 524, reused 0, downloaded 524, added 474
+#11 15.17 Progress: resolved 524, reused 0, downloaded 524, added 493
+#11 16.17 Progress: resolved 524, reused 0, downloaded 524, added 501
+#11 17.17 Progress: resolved 524, reused 0, downloaded 524, added 515
+#11 18.17 Progress: resolved 524, reused 0, downloaded 524, added 519
+#11 19.46 Progress: resolved 524, reused 0, downloaded 524, added 520
+#11 20.46 Progress: resolved 524, reused 0, downloaded 524, added 521
+#11 21.46 Progress: resolved 524, reused 0, downloaded 524, added 522
+#11 22.46 Progress: resolved 524, reused 0, downloaded 524, added 523
+#11 22.62 Progress: resolved 524, reused 0, downloaded 524, added 524, done
+#11 22.76 .../node_modules/@prisma/engines postinstall$ node scripts/postinstall.js
+#11 25.06 .../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+#11 25.12 .../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+#11 25.69 .../node_modules/@prisma/engines postinstall: Done
+#11 25.74 .../node_modules/prisma preinstall$ node scripts/preinstall-entry.js
+#11 25.80 .../node_modules/prisma preinstall: Done
+#11 26.28
+#11 26.28 ╭ Warning ─────────────────────────────────────────────────────────────────────╮
+#11 26.28 │                                                                              │
+#11 26.28 │   Ignored build scripts: @scarf/scarf@1.4.0.                                 │
+#11 26.28 │   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+#11 26.28 │   to run scripts.                                                            │
+#11 26.28 │                                                                              │
+#11 26.28 ╰──────────────────────────────────────────────────────────────────────────────╯
+#11 DONE 28.0s
+
+#12 [build 1/3] COPY . .
+#12 DONE 1.1s
+
+#13 [build 2/3] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm install --offline --frozen-lockfile --store-dir=/pnpm/store     && pnpm --filter @online-school/api build
+#13 0.597 Scope: all 9 workspace projects
+#13 0.646 Lockfile is up to date, resolution step is skipped
+#13 0.733 Already up to date
+#13 2.337
+#13 2.337 devDependencies:
+#13 2.337 + @eslint/js 9.39.5
+#13 2.337 + @types/node 24.19.2
+#13 2.337 + eslint 9.39.5
+#13 2.337 + eslint-config-prettier 10.1.8
+#13 2.337 + globals 17.13.0
+#13 2.337 + prettier 3.9.10
+#13 2.337 + turbo 2.11.10
+#13 2.337 + typescript 6.0.3
+#13 2.337 + typescript-eslint 8.72.0
+#13 2.337
+#13 2.348 . postinstall$ pnpm run generate
+#13 2.736 . postinstall: > online-school@0.0.0 generate /workspace
+#13 2.736 . postinstall: > pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate
+#13 3.141 . postinstall: > @online-school/db@0.0.0 generate /workspace/packages/db
+#13 3.141 . postinstall: > prisma generate
+#13 4.019 . postinstall: Loaded Prisma config from prisma.config.ts.
+#13 4.159 . postinstall: Prisma schema loaded from prisma/schema.prisma.
+#13 5.494 . postinstall: ✔ Generated Prisma Client (7.10.1) to ./src/generated/prisma in 840ms
+#13 5.892 . postinstall: > @online-school/api-contracts@0.0.0 generate /workspace/packages/api-contracts
+#13 5.892 . postinstall: > node scripts/generate-openapi.mjs
+#13 6.481 . postinstall: OpenAPI TypeScript: unchanged
+#13 6.520 . postinstall: Done
+#13 6.549 ╭ Warning ─────────────────────────────────────────────────────────────────────╮
+#13 6.549 │                                                                              │
+#13 6.549 │   Ignored build scripts: @scarf/scarf@1.4.0.                                 │
+#13 6.549 │   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+#13 6.549 │   to run scripts.                                                            │
+#13 6.549 │                                                                              │
+#13 6.549 ╰──────────────────────────────────────────────────────────────────────────────╯
+#13 6.567 Done in 6.2s using pnpm v10.34.9
+#13 6.911
+#13 6.911 > @online-school/api@0.0.0 build /workspace/apps/api
+#13 6.911 > tsc -b --pretty false
+#13 6.911
+#13 DONE 29.1s
+
+#14 [build 3/3] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm --filter @online-school/api --offline --store-dir=/pnpm/store deploy --legacy --prod /runtime/apps/api     && pnpm --filter @online-school/db --offline --store-dir=/pnpm/store deploy --legacy /runtime/packages/db
+#14 1.498  WARN  Shared workspace lockfile detected but configuration forces legacy deploy implementation.
+#14 1.528 Packages are copied from the content-addressable store to the virtual store.
+#14 1.528   Content-addressable store is at: /pnpm/store/v10
+#14 1.528   Virtual store is at:             ../runtime/apps/api/node_modules/.pnpm
+#14 1.570 Progress: resolved 1, reused 0, downloaded 0, added 0
+#14 1.687 .                                        |  WARN  deprecated eslint@9.39.5
+#14 2.136 /workspace/apps/api:
+#14 2.136  ERR_PNPM_NO_OFFLINE_META  Failed to resolve @prisma/adapter-pg@7.10.1 in package mirror /root/.cache/pnpm/metadata-v1.3/registry.npmjs.org/@prisma/adapter-pg.json
+#14 2.136
+#14 2.136 This error happened while installing the dependencies of @online-school/db@0.0.0
+#14 ERROR: process "/bin/sh -c pnpm --filter @online-school/api --offline --store-dir=/pnpm/store deploy --legacy --prod /runtime/apps/api     && pnpm --filter @online-school/db --offline --store-dir=/pnpm/store deploy --legacy /runtime/packages/db" did not complete successfully: exit code: 1
+------
+ > [build 3/3] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm --filter @online-school/api --offline --store-dir=/pnpm/store deploy --legacy --prod /runtime/apps/api     && pnpm --filter @online-school/db --offline --store-dir=/pnpm/store deploy --legacy /runtime/packages/db:
+1.498  WARN  Shared workspace lockfile detected but configuration forces legacy deploy implementation.
+1.528 Packages are copied from the content-addressable store to the virtual store.
+1.528   Content-addressable store is at: /pnpm/store/v10
+1.528   Virtual store is at:             ../runtime/apps/api/node_modules/.pnpm
+1.570 Progress: resolved 1, reused 0, downloaded 0, added 0
+1.687 .                                        |  WARN  deprecated eslint@9.39.5
+2.136 /workspace/apps/api:
+2.136  ERR_PNPM_NO_OFFLINE_META  Failed to resolve @prisma/adapter-pg@7.10.1 in package mirror /root/.cache/pnpm/metadata-v1.3/registry.npmjs.org/@prisma/adapter-pg.json
+2.136
+2.136 This error happened while installing the dependencies of @online-school/db@0.0.0
+------
+Dockerfile.api.prototype:18
+--------------------
+  17 |         && pnpm --filter @online-school/api build
+  18 | >>> RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store \
+  19 | >>>     pnpm --filter @online-school/api --offline --store-dir=/pnpm/store deploy --legacy --prod /runtime/apps/api \
+  20 | >>>     && pnpm --filter @online-school/db --offline --store-dir=/pnpm/store deploy --legacy /runtime/packages/db
+  21 |
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c pnpm --filter @online-school/api --offline --store-dir=/pnpm/store deploy --legacy --prod /runtime/apps/api     && pnpm --filter @online-school/db --offline --store-dir=/pnpm/store deploy --legacy /runtime/packages/db" did not complete successfully: exit code: 1

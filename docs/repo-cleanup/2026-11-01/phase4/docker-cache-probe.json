@@ -1,0 +1,8 @@
+{
+  "command": "docker build --target dependencies --progress=plain -f apps/api/Dockerfile -t onlineschool-cleanup-dependency-probe:phase4 .",
+  "exitCode": 0,
+  "ms": 54505,
+  "fetchLayerCached": true,
+  "scope": "dependency stage only; not an end-to-end build speed comparison",
+  "sourceRestored": true
+}

@@ -1,0 +1,5 @@
+{
+  "command": "docker build --progress=plain -f apps/worker/Dockerfile -t onlineschool-cleanup-worker:phase4 .",
+  "exitCode": 0,
+  "ms": 111896
+}

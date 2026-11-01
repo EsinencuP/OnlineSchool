@@ -1,0 +1,85 @@
+
+   • turbo 2.11.10
+   • Packages in scope: @online-school/api, @online-school/api-contracts, @online-school/db, @online-school/jobs, @online-school/qa-shell, @online-school/server-kernel, @online-school/shared, @online-school/worker
+   • Running build in 8 packages
+   • Remote caching disabled
+
+@online-school/shared:build: cache hit, replaying logs 07bec960a1612772
+@online-school/shared:build:
+@online-school/shared:build: > @online-school/shared@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\shared
+@online-school/shared:build: > tsc -b --pretty false
+@online-school/shared:build:
+@online-school/api-contracts:build: cache hit, replaying logs 24c717944847fd44
+@online-school/api-contracts:build:
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\api-contracts
+@online-school/api-contracts:build: > pnpm run generate && tsc -b --pretty false
+@online-school/api-contracts:build:
+@online-school/api-contracts:build:
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\api-contracts
+@online-school/api-contracts:build: > node scripts/generate-openapi.mjs
+@online-school/api-contracts:build:
+@online-school/api-contracts:build: OpenAPI TypeScript: unchanged
+@online-school/db:build: cache hit, replaying logs b86fa5fb652dacfb
+@online-school/db:build:
+@online-school/db:build: > @online-school/db@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\db
+@online-school/db:build: > pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+@online-school/db:build:
+@online-school/db:build:
+@online-school/db:build: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\db
+@online-school/db:build: > prisma generate
+@online-school/db:build:
+@online-school/db:build: Loaded Prisma config from prisma.config.ts.
+@online-school/db:build:
+@online-school/db:build: Prisma schema loaded from prisma\schema.prisma.
+@online-school/db:build: ┌─────────────────────────────────────────────────────────┐
+@online-school/db:build: │  Update available 7.10.1 -> 8.0.0-rc.29                 │
+@online-school/db:build: │                                                         │
+@online-school/db:build: │  This is a major update - please follow the guide at    │
+@online-school/db:build: │  https://pris.ly/d/major-version-upgrade                │
+@online-school/db:build: │                                                         │
+@online-school/db:build: │  Run the following to update                            │
+@online-school/db:build: │    npm i --save-dev prisma@latest                       │
+@online-school/db:build: │    npm i @prisma/client@latest                          │
+@online-school/db:build: └─────────────────────────────────────────────────────────┘
+@online-school/db:build:
+@online-school/db:build: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 1.06s
+@online-school/db:build:
+@online-school/server-kernel:build: cache hit, replaying logs 4f2545f292fef5b6
+@online-school/server-kernel:build:
+@online-school/server-kernel:build: > @online-school/server-kernel@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\server-kernel
+@online-school/server-kernel:build: > tsc -b --pretty false
+@online-school/server-kernel:build:
+@online-school/jobs:build: cache hit, replaying logs 0c9c376dc88cfee8
+@online-school/jobs:build:
+@online-school/jobs:build: > @online-school/jobs@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\jobs
+@online-school/jobs:build: > tsc -b --pretty false
+@online-school/jobs:build:
+@online-school/worker:build: cache hit, replaying logs 80dafa02ff9bd77f
+@online-school/worker:build:
+@online-school/worker:build: > @online-school/worker@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\worker
+@online-school/worker:build: > tsc -b --pretty false
+@online-school/worker:build:
+@online-school/api:build: cache hit, replaying logs c58ffe2fdbd142f0
+@online-school/api:build:
+@online-school/api:build: > @online-school/api@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\api
+@online-school/api:build: > tsc -b --pretty false
+@online-school/api:build:
+@online-school/qa-shell:build: cache hit, replaying logs c4056e8aff7209ec
+@online-school/qa-shell:build:
+@online-school/qa-shell:build: > @online-school/qa-shell@0.0.0 build D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\qa-shell
+@online-school/qa-shell:build: > tsc -b --pretty false && vite build
+@online-school/qa-shell:build:
+@online-school/qa-shell:build: vite v7.3.7 building client environment for production...
+@online-school/qa-shell:build: transforming...
+@online-school/qa-shell:build: ✓ 56 modules transformed.
+@online-school/qa-shell:build: rendering chunks...
+@online-school/qa-shell:build: computing gzip size...
+@online-school/qa-shell:build: dist/index.html                   0.45 kB │ gzip:  0.30 kB
+@online-school/qa-shell:build: dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+@online-school/qa-shell:build: dist/assets/index-D6zJAx7X.js   183.04 kB │ gzip: 57.49 kB
+@online-school/qa-shell:build: ✓ built in 711ms
+
+  Tasks:    8 successful, 8 total
+ Cached:    8 cached, 8 total
+   Time:    2.186s >>> FULL TURBO
+Summary:    D:\OnlineSchool\.codex\worktrees\repo-cleanup\.turbo\runs\3LVaq10rvDDceC9HrdDr1zoGiMa.json

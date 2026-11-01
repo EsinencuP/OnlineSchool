@@ -1,0 +1,110 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.api.closure
+#1 transferring dockerfile: 1.11kB 0.1s done
+#1 DONE 0.2s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1
+#2 DONE 0.9s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 resolve docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e 0.1s done
+#3 DONE 0.1s
+
+#3 docker-image://docker.io/docker/dockerfile:1@sha256:4edf897a3ffa55b89f906fc8cc78afdb3f1834cc9c7083565e611a8a7d5fe99e
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#4 DONE 0.7s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 1.84kB 0.0s done
+#5 DONE 0.1s
+
+#6 [base 1/3] FROM docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#6 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c 0.0s done
+#6 DONE 0.0s
+
+#7 [base 2/3] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#7 CACHED
+
+#8 [base 3/3] WORKDIR /workspace
+#8 CACHED
+
+#9 [internal] load build context
+#9 transferring context: 24.82kB 1.5s done
+#9 DONE 1.5s
+
+#10 [dependencies 1/2] COPY pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
+#10 CACHED
+
+#11 [dependencies 2/2] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm fetch --frozen-lockfile --store-dir=/pnpm/store
+#11 CACHED
+
+#12 [build 1/3] COPY . .
+#12 DONE 0.6s
+
+#13 [build 2/3] RUN --mount=type=cache,id=onlineschool-cleanup-pnpm-10,target=/pnpm/store     pnpm install --offline --frozen-lockfile --store-dir=/pnpm/store     && pnpm --filter @online-school/api build
+#13 0.975 Scope: all 9 workspace projects
+#13 1.025 Lockfile is up to date, resolution step is skipped
+#13 1.166 Already up to date
+#13 2.824
+#13 2.824 devDependencies:
+#13 2.824 + @eslint/js 9.39.5
+#13 2.824 + @types/node 24.19.2
+#13 2.824 + eslint 9.39.5
+#13 2.824 + eslint-config-prettier 10.1.8
+#13 2.824 + globals 17.13.0
+#13 2.824 + prettier 3.9.10
+#13 2.824 + turbo 2.11.10
+#13 2.824 + typescript 6.0.3
+#13 2.824 + typescript-eslint 8.72.0
+#13 2.824
+#13 2.833 . postinstall$ pnpm run generate
+#13 3.211 . postinstall: > online-school@0.0.0 generate /workspace
+#13 3.211 . postinstall: > pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate
+#13 3.604 . postinstall: > @online-school/db@0.0.0 generate /workspace/packages/db
+#13 3.604 . postinstall: > prisma generate
+#13 4.643 . postinstall: Loaded Prisma config from prisma.config.ts.
+#13 4.797 . postinstall: Prisma schema loaded from prisma/schema.prisma.
+#13 5.823 . postinstall: ✔ Generated Prisma Client (7.10.1) to ./src/generated/prisma in 652ms
+#13 6.162 . postinstall: > @online-school/api-contracts@0.0.0 generate /workspace/packages/api-contracts
+#13 6.162 . postinstall: > node scripts/generate-openapi.mjs
+#13 6.809 . postinstall: OpenAPI TypeScript: unchanged
+#13 6.844 . postinstall: Done
+#13 6.872 ╭ Warning ─────────────────────────────────────────────────────────────────────╮
+#13 6.872 │                                                                              │
+#13 6.872 │   Ignored build scripts: @scarf/scarf@1.4.0.                                 │
+#13 6.872 │   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+#13 6.872 │   to run scripts.                                                            │
+#13 6.872 │                                                                              │
+#13 6.872 ╰──────────────────────────────────────────────────────────────────────────────╯
+#13 6.887 Done in 6.2s using pnpm v10.34.9
+#13 7.216
+#13 7.216 > @online-school/api@0.0.0 build /workspace/apps/api
+#13 7.216 > tsc -b --pretty false
+#13 7.216
+#13 DONE 31.0s
+
+#14 [build 3/3] RUN node infra/package-runtime.mjs /runtime
+#14 9.836 {"retainedStoreEntries":292,"installedStoreEntries":524}
+#14 DONE 15.6s
+
+#15 [runtime 1/2] COPY --from=build --chown=node:node /runtime /workspace
+#15 DONE 10.3s
+
+#16 [runtime 2/2] WORKDIR /workspace/packages/db
+#16 DONE 0.6s
+
+#17 exporting to image
+#17 exporting layers
+#17 exporting layers 11.8s done
+#17 exporting manifest sha256:a90c7359cbefab3c29fc21b916134d62497d0b497d64f19ac4fc73f933231d25 0.0s done
+#17 exporting config sha256:efff8a3eb1c0ece02acb36a54c126acde5f5b358b62f89a8211f74cc585f7e65 0.0s done
+#17 exporting attestation manifest sha256:d6fb8dc2326687b8b79681a42f1c69371ff0d38639097296ed679d18f2c309bc
+#17 exporting attestation manifest sha256:d6fb8dc2326687b8b79681a42f1c69371ff0d38639097296ed679d18f2c309bc 0.0s done
+#17 exporting manifest list sha256:84a05cbd50b0cde4dec747a95c9b8af1af1ab705d8759b638c70ece838716df5 0.0s done
+#17 naming to docker.io/library/onlineschool-cleanup-api:phase4 done
+#17 unpacking to docker.io/library/onlineschool-cleanup-api:phase4
+#17 unpacking to docker.io/library/onlineschool-cleanup-api:phase4 7.9s done
+#17 DONE 19.9s

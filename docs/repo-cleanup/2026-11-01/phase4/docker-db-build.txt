@@ -1,0 +1,14 @@
+
+> @online-school/db@0.0.0 build /workspace/packages/db
+> pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+
+
+> @online-school/db@0.0.0 generate /workspace/packages/db
+> prisma generate
+
+
+✔ Generated Prisma Client (7.10.1) to ./src/generated/prisma in 884ms
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma/schema.prisma.

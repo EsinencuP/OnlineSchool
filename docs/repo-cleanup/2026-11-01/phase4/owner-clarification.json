@@ -1,0 +1,5 @@
+{
+  "date": "2026-11-01",
+  "question": "Rollback policy for known initial format failures with immutable OpenAPI",
+  "answer": "Откатывать только новые регрессии; исходные ошибки зафиксировать в отчёте"
+}

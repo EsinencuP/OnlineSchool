@@ -1,0 +1,190 @@
+{
+  "chunks": [
+    {
+      "file": "assets/index-BZmGu95B.js",
+      "bytes": 183042,
+      "modules": [
+        {
+          "id": "node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.production.min.js",
+          "renderedBytes": 133838
+        },
+        {
+          "id": "apps/qa-shell/src/App.tsx",
+          "renderedBytes": 28331
+        },
+        {
+          "id": "packages/api-contracts/dist/generated/client.js",
+          "renderedBytes": 19012
+        },
+        {
+          "id": "apps/qa-shell/src/scenarios.ts",
+          "renderedBytes": 8579
+        },
+        {
+          "id": "node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.production.min.js",
+          "renderedBytes": 7672
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/identifyRegistrationError.js",
+          "renderedBytes": 5695
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/methods/startRegistration.js",
+          "renderedBytes": 5314
+        },
+        {
+          "id": "node_modules/.pnpm/scheduler@0.23.2/node_modules/scheduler/cjs/scheduler.production.min.js",
+          "renderedBytes": 4616
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/methods/startAuthentication.js",
+          "renderedBytes": 4444
+        },
+        {
+          "id": "apps/qa-shell/src/auth.ts",
+          "renderedBytes": 2591
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/identifyAuthenticationError.js",
+          "renderedBytes": 2461
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/webAuthnAbortService.js",
+          "renderedBytes": 1443
+        },
+        {
+          "id": "packages/api-contracts/dist/transport.js",
+          "renderedBytes": 1386
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/browserSupportsWebAuthnAutofill.js",
+          "renderedBytes": 1261
+        },
+        {
+          "id": "node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react-jsx-runtime.production.min.js",
+          "renderedBytes": 1201
+        },
+        {
+          "id": "\u0000vite/modulepreload-polyfill.js",
+          "renderedBytes": 1168
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/base64URLStringToBuffer.js",
+          "renderedBytes": 1111
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/webAuthnError.js",
+          "renderedBytes": 981
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/isValidDomain.js",
+          "renderedBytes": 670
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/bufferToBase64URLString.js",
+          "renderedBytes": 561
+        },
+        {
+          "id": "node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/index.js",
+          "renderedBytes": 524
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/browserSupportsWebAuthn.js",
+          "renderedBytes": 455
+        },
+        {
+          "id": "apps/qa-shell/src/api.ts",
+          "renderedBytes": 449
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/toAuthenticatorAttachment.js",
+          "renderedBytes": 325
+        },
+        {
+          "id": "node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/helpers/toPublicKeyCredentialDescriptor.js",
+          "renderedBytes": 245
+        },
+        {
+          "id": "node_modules/.pnpm/react@18.3.1/node_modules/react/jsx-runtime.js",
+          "renderedBytes": 243
+        },
+        {
+          "id": "node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/client.js",
+          "renderedBytes": 242
+        },
+        {
+          "id": "apps/qa-shell/src/main.tsx",
+          "renderedBytes": 234
+        },
+        {
+          "id": "node_modules/.pnpm/scheduler@0.23.2/node_modules/scheduler/index.js",
+          "renderedBytes": 230
+        },
+        {
+          "id": "node_modules/.pnpm/react@18.3.1/node_modules/react/index.js",
+          "renderedBytes": 198
+        },
+        {
+          "id": "packages/shared/dist/result.js",
+          "renderedBytes": 91
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/jsx-runtime.js?commonjs-es-import",
+          "renderedBytes": 44
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react-jsx-runtime.production.min.js?commonjs-exports",
+          "renderedBytes": 40
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/client.js?commonjs-es-import",
+          "renderedBytes": 36
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/index.js?commonjs-es-import",
+          "renderedBytes": 34
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/scheduler@0.23.2/node_modules/scheduler/cjs/scheduler.production.min.js?commonjs-exports",
+          "renderedBytes": 34
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom.production.min.js?commonjs-exports",
+          "renderedBytes": 33
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/jsx-runtime.js?commonjs-module",
+          "renderedBytes": 31
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/cjs/react.production.min.js?commonjs-exports",
+          "renderedBytes": 30
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/scheduler@0.23.2/node_modules/scheduler/index.js?commonjs-module",
+          "renderedBytes": 30
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/index.js?commonjs-module",
+          "renderedBytes": 29
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react@18.3.1/node_modules/react/index.js?commonjs-module",
+          "renderedBytes": 26
+        },
+        {
+          "id": "\u0000node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/client.js?commonjs-exports",
+          "renderedBytes": 16
+        },
+        {
+          "id": "apps/qa-shell/src/style.css",
+          "renderedBytes": 0
+        },
+        {
+          "id": "apps/qa-shell/index.html",
+          "renderedBytes": 0
+        }
+      ]
+    }
+  ]
+}

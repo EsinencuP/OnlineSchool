@@ -1,0 +1,60 @@
+{
+  "phase3": {
+    "size": 1182291697,
+    "config": {
+      "User": "node",
+      "WorkingDir": "/workspace/packages/db",
+      "Cmd": [
+        "node",
+        "/workspace/apps/api/dist/main.js"
+      ],
+      "Entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "ExposedPorts": {
+        "3000/tcp": {}
+      },
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "NODE_VERSION=24.22.2",
+        "YARN_VERSION=1.22.22",
+        "NODE_ENV=production",
+        "HOST=0.0.0.0",
+        "PORT=3000"
+      ]
+    }
+  },
+  "phase4": {
+    "size": 1003093950,
+    "config": {
+      "User": "node",
+      "WorkingDir": "/workspace/packages/db",
+      "Cmd": [
+        "node",
+        "/workspace/apps/api/dist/main.js"
+      ],
+      "Entrypoint": [
+        "docker-entrypoint.sh"
+      ],
+      "ExposedPorts": {
+        "3000/tcp": {}
+      },
+      "Env": [
+        "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+        "NODE_VERSION=24.22.2",
+        "YARN_VERSION=1.22.22",
+        "NODE_ENV=production",
+        "HOST=0.0.0.0",
+        "PORT=3000"
+      ]
+    }
+  },
+  "runtimeConfigEqual": true,
+  "artifactsCompared": 716,
+  "artifactDifferences": [],
+  "smoke": "{\"health\":{\"status\":\"ok\",\"service\":\"api\"},\"openapiMatches\":true}\n{\"referenceSeedMock\":true,\"writes\":5}",
+  "prismaVersion": "prisma               : 7.10.1\n@prisma/client       : 7.10.1\nOperating System     : linux\nArchitecture         : x64\nNode.js              : v24.22.2\nTypeScript           : 6.0.3\nQuery Compiler       : enabled\nPSL                  : @prisma/prisma-schema-wasm 8.1.0-1.d1b3f377ca835d73fd50954a5e22128b9ebdd6b8\nSchema Engine        : schema-engine-cli d1b3f377ca835d73fd50954a5e22128b9ebdd6b8 (at ../../node_modules/.pnpm/@prisma+engines@7.10.1/node_modules/@prisma/engines/schema-engine-debian-openssl-3.0.x)\nDefault Engines Hash : d1b3f377ca835d73fd50954a5e22128b9ebdd6b8\nStudio               : 0.33.0\nPrisma CLI Path      : /workspace/node_modules/.pnpm/prisma@7.10.1_@types+node@24.19.2_@types+react-dom@18.3.7_@types+react@18.3.31__@types+_0f51e783ef93a556d5a98a215597f4ff/node_modules/prisma\nPreview Features     : partialIndexes",
+  "prismaValidate": "The schema at prisma/schema.prisma is valid 🚀",
+  "databaseAccess": "none; reference seed invoked only with mock transaction",
+  "network": "none"
+}

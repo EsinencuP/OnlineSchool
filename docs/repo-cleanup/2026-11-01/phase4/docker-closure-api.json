@@ -1,0 +1,5 @@
+{
+  "command": "docker build --progress=plain -f .codex/phase4/Dockerfile.api.closure -t onlineschool-cleanup-api:phase4 .",
+  "exitCode": 0,
+  "ms": 101607
+}

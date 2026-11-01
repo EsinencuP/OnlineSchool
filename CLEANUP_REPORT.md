@@ -1,4 +1,4 @@
-# CLEANUP_REPORT — фазы 0–3
+# CLEANUP_REPORT — фазы 0–4
 
 Дата: 01.11.2026, Europe/Chisinau. Начало измеряемого прогона: 01.11.2026, 14:48:48.
 
@@ -467,3 +467,172 @@ GitHub повторно сверён: открыты PR #2–#9, их heads со
 старые import paths сохранены. `modules/manager`, frontend менеджера, локальный
 корневой dirty tree и release worktree не перемещались и не менялись. Merge в main,
 force push и деплой не выполнялись.
+
+# Фаза 4 — сборка и оптимизация
+
+Дата: 01.11.2026, Europe/Chisinau. База: `e137468`. Ветка `chore/repo-cleanup`.
+Сохранены два измеримых изменения: корректность/область кэша Turbo и уменьшение
+Docker runtime-образов. Бизнес-код, runtime SQL, зависимости и generated-контракты
+не менялись. Прежний незавершённый перенос DTO из фазы 3 остаётся незавершённым.
+
+Уточнение владельца в этой фазе: **откатывать только новые регрессии, исходные ошибки
+зафиксировать в отчёте**. Оно применяется к ранее падавшему format:check; защищённый
+OpenAPI для форматирования не переписывался.
+
+## Измерения до/после
+
+| Метрика                                               | До                                 | После                       | Вывод                                                                                        |
+| ----------------------------------------------------- | ---------------------------------- | --------------------------- | -------------------------------------------------------------------------------------------- |
+| Turbo build, пустой отдельный Turbo cache + tsc clean | 64 687 мс                          | 45 482 мс                   | Одиночные локальные пробы; причинное ускорение не доказано, OS cache не очищался             |
+| Turbo build, повтор без изменений                     | 481 мс, 8/8 cached                 | 712 мс, 8/8 cached          | Все 8 задач восстанавливаются из кэша; ускорение самого тёплого запуска не заявляется        |
+| Изменение только Markdown в API                       | Меняются хеши API и qa-shell build | 0 изменённых build-хешей    | Устранены две ненужные пересборки                                                            |
+| Изменение общего tsconfig / generation helper         | 0 изменённых build-хешей           | Все 8 меняются              | Исправлены пропущенные входы кэша                                                            |
+| Изменение server source                               | API + qa-shell                     | API + qa-shell              | Транзитивная зависимость сохранена                                                           |
+| Изменение BUILD_COMMIT_SHA                            | 0 изменённых build-хешей           | Все 8 меняются              | SHA входит в strict environment/hash; выбран консервативный общий env без пакетных overrides |
+| Frontend JS / CSS / HTML                              | 183 042 / 9 592 / 454 байта        | 183 042 / 9 592 / 454 байта | Ни один артефакт не вырос при одинаковом окружении без SHA                                   |
+| API image, docker inspect Size                        | 1 182 291 697 байт                 | 1 003 093 950 байт          | −179 197 747 байт, около 15,2%                                                               |
+| Worker image, docker inspect Size                     | 1 182 700 250 байт                 | 1 003 498 234 байта         | −179 202 016 байт, около 15,2%                                                               |
+
+Замеры выполнены на одной машине с Node 24.21.0/pnpm 10.34.9; в контейнерах Node
+24.22.2, одинаковый base image до/после. Cold здесь означает отсутствие Turbo cache
+и compiler outputs после tsc clean, не холодный диск/OS. Один замер до и один после
+не является статистической оценкой производительности. Размер Docker — логический
+Size образа, не сжатый registry transfer и не размер занятого BuildKit cache.
+[Сводка](docs/repo-cleanup/2026-11-01/phase4/measurements.json),
+[до](docs/repo-cleanup/2026-11-01/phase4/before.json),
+[после](docs/repo-cleanup/2026-11-01/phase4/after.json).
+
+## Turbo, TypeScript и генерация
+
+В `6e73d5c` сохранены исходные `dependsOn: ["^build"]` и outputs dist/dist-tools/
+tsbuildinfo/generated. Добавлены globalDependencies для общего tsconfig и helper
+генерации, build inputs исключают Markdown, внешний test/, Dockerfile и env example.
+Эти файлы не входят в compiler/Vite build. Test/lint inputs не исключены из своих
+задач; lint дополнительно учитывает root ESLint plugin/config и workspace manifests,
+из которых вычисляются границы. Секретные env-файлы в build/cache не добавлялись.
+
+Проверены dry-run хеши при временных изменениях документа, tsconfig, helper, source
+и SHA. Все временные файлы/байты восстановлены. После tsc clean проверен реальный
+cache restore **8/8** и два monorepo smoke. [Входы кэша](docs/repo-cleanup/2026-11-01/phase4/cache-probes-after.json),
+[восстановление](docs/repo-cleanup/2026-11-01/phase4/cache-restore.json).
+
+Пакетные overrides первой попытки не прошли проверку: source change перестал
+инвалидировать зависимый qa-shell. Весь незакоммиченный шаг откачен; потерянные
+dependsOn не исправлялись вперёд. Этот подход оставлен. Независимый меньший шаг
+изменяет только общие inputs/env и сохраняет исходный граф зависимостей.
+[Неуспешная попытка](docs/repo-cleanup/2026-11-01/phase4/cache-probes-overrides-failed.json).
+
+Composite уже включён в общем tsconfig.base; incremental включается им неявно,
+включая DB tools и frontend typecheck. Новые флаги не добавлялись без выигрыша.
+Root postinstall уже выполняет ровно одну Prisma generation и одну OpenAPI generation
+на install: пакетных postinstall-дублей нет. Изменять это поведение не потребовалось.
+Повторные явные build/typecheck продолжают штатно вызывать свои генераторы, а warm
+Turbo build не запускает их. Fresh Docker install прошёл без .env/DB, со frozen
+lockfile, затем оба генератора завершились успешно. Prisma CLI 7.10.1 и TypeScript
+6.0.3 сохранены; Orval/Prisma/generated файлы вручную не редактировались.
+
+## Frontend
+
+Проведён Rollup generateBundle-анализ через установленный Vite, без новой зависимости
+и изменения production config. Основные rendered modules: React DOM 133 838 байт,
+App 28 331, generated client 19 012, scenarios 8 579. Это значения модулей до финальной
+совместной минификации, их нельзя складывать как размер итогового JS.
+[Полный анализ](docs/repo-cleanup/2026-11-01/phase4/bundle-analysis.json).
+
+В source-only main присутствует один экран qa-shell, отдельных маршрутов для lazy
+splitting нет. Ненужных прямых зависимостей не подтверждено (см. фазу 2). Ленивые
+импорты, новые loading states и разделение auth ради размера не вводились. CSS/HTML/
+JS не выросли. Непустой build SHA штатно занимает место в метаданных артефакта;
+размеры сравнивались при одинаковом окружении без SHA. Менеджерский frontend из
+отдельной ветки не изменялся.
+
+## Docker
+
+`fed32bb`: общий base, отдельный dependencies stage с `pnpm fetch` и BuildKit cache
+mount; исходники копируются после lock/config. Install использует offline/frozen.
+Проверка с временным изменением main.ts подтвердила fetch layer CACHED; исходник
+побайтово восстановлен. Измерение касалось только dependency stage, поэтому не
+доказывает ускорение полного Docker build.
+[Проба](docs/repo-cleanup/2026-11-01/phase4/docker-cache-probe.json).
+
+Runtime упаковщик обходит **уже установленные** pnpm entries/peer links и копирует
+292 из 524 Linux store entries. Он не переразрешает зависимости и не запускает
+scripts. Сохранены production-зависимости серверных workspace-пакетов, DB devDeps
+(Prisma CLI/dotenv/types), TypeScript/Node types для DB build/seed. ESLint, Vite,
+Orval и прочие инструменты остаются в build stage; их декларации/версии не удалялись.
+SQL/schema/migrations/seed и весь рабочий layout серверного кода копируются как были.
+`.dockerignore` дополнен только путём этого упаковщика; Dockerfile.worker не удалён
+и побайтово совпадает с apps/worker/Dockerfile.
+
+Первый отдельный, незакоммиченный pnpm deploy --legacy prototype был оставлен:
+offline deploy пытался повторно разрешить workspace-зависимости и требовал registry
+metadata. Версии/lockfile ради него не менялись. В принятом подходе deploy не
+используется, установленный граф копируется без resolver.
+[Лог отклонённого прототипа](docs/repo-cleanup/2026-11-01/phase4/docker-prototype.txt).
+
+Подтверждения поведения принятого образа:
+
+- API: **716** файлов compiled packages + schema/migrations/seed совпали по хешам;
+  worker: **28** файлов compiled worker совпали. tsbuildinfo исключён из сравнения
+  runtime-файлов. User/WorkingDir/Cmd/Entrypoint/ENV/ExposedPorts идентичны до/после.
+- API /health 200, Swagger точно совпал с checked-in JSON; worker Nest context
+  создался и закрылся. Network none, NODE_ENV=test; реальные фоновые DB jobs этим
+  smoke не проверялись.
+- Prisma --version и validate PASS; DB `pnpm run build` PASS без сети/БД/.env.
+  Reference seed вызван только с mock transaction: 5 ожидаемых вызовов, рабочих
+  SQL-записей нет. Команда migrate deploy сохранена по прежнему пути, но реальная
+  миграция не запускалась.
+
+[API equivalence](docs/repo-cleanup/2026-11-01/phase4/docker-api-equivalence.json),
+[worker equivalence](docs/repo-cleanup/2026-11-01/phase4/docker-worker-equivalence.json),
+[DB build](docs/repo-cleanup/2026-11-01/phase4/docker-db-build.txt).
+
+## Итоговый общий прогон — выполнен один раз
+
+| Команда             | Результат                                                 | Время     |
+| ------------------- | --------------------------------------------------------- | --------- |
+| `pnpm -r typecheck` | PASS                                                      | 60 658 мс |
+| `pnpm -r build`     | PASS                                                      | 9 705 мс  |
+| `pnpm -r lint`      | PASS                                                      | 9 876 мс  |
+| `pnpm test`         | PASS, 20 package + 2 monorepo tests                       | 28 128 мс |
+| `pnpm format:check` | FAIL, исходный долг, 154 файла в текущем Windows checkout | 4 489 мс  |
+| `pnpm generate`     | PASS; protected diff пустой                               | 3 673 мс  |
+
+[Команды и exit codes](docs/repo-cleanup/2026-11-01/phase4/final/results.json),
+[format log](docs/repo-cleanup/2026-11-01/phase4/final/5.txt).
+Отдельно адресный ESLint упаковщика прошёл. Повторных полных прогонов не делалось.
+Format baseline проверен заранее по Git LF blobs: уже неформатированы CLEANUP_REPORT.md,
+PHASE0_CHECKS.md, apps/qa-shell/TASK12_EVIDENCE.json и защищённый openapi.json. Большая
+часть Windows warnings дополнительно вызвана CRLF при настройке endOfLine=lf.
+Новых format failure в изменённом коде нет. ESLint/tsconfig/Prettier правила не
+ослаблялись; исходный долг оставлен по явному ответу владельца.
+[Диагностика до](docs/repo-cleanup/2026-11-01/phase4/format-baseline.json).
+
+Все **28 защищённых файлов** совпали побайтово с исходной линией; schema/migrations
+не изменились относительно main. Lockfile (579 packages/snapshots), все manifests,
+публичные export maps и общий tsconfig не менялись. OpenAPI и SDK diff пустой после
+generate; application source phase4 diff пустой. DB mismatch из фазы 0 сохраняется,
+пустой diff к расширенной рабочей БД не заявляется. Ни новых БД, ни live DB-запросов,
+ни новых внешних зависимостей/версий не вводилось.
+[Инварианты](docs/repo-cleanup/2026-11-01/phase4/invariants.json).
+
+Границы приёмки: full format gate остаётся красным по исходному долгу; реальная
+финансовая/конкурентная DB-регрессия/FND-GATE не объявляются пройденными. Исторические
+TASK-01…13 не переписаны. С manager веткой пересекаются .dockerignore и актуальные
+README-добавления; с PR #4 — .dockerignore, с PR #2 — README. Полные пути остальных
+открытых PR сохранены в фазе 0. Manager paths, Compose, Vercel и GitHub Actions этой
+фазой не менялись. Merge в main, force push и деплой не выполнялись.
+
+## Только находки рантайма, без изменений
+
+В Schedule BookingService.patchSlot (`booking.service.ts`) у каждого future lesson
+отдельно запрашивается outcome report; затем assignment/resources и обновления/jobs
+обрабатываются по каждому уроку. Это кандидат для измерения числа запросов на большой
+серии, не доказанная проблема latency. Профилирования/нагрузочного теста нет; код
+оставлен, поскольку пакетная замена должна сохранять блокировки, проверки доступа и
+атомарность Audit/Outbox. Оптимизаций runtime SQL/N+1 в фазе 4 нет.
+
+Справочные первичные источники, сверенные при подготовке: [Turbo configuration](https://turborepo.dev/docs/reference/configuration),
+[pnpm 10 Docker](https://pnpm.io/10.x/docker), [pnpm 10 deploy](https://pnpm.io/10.x/cli/deploy).
+Результаты выше основаны на локальных измерениях закреплённых версий, не на обещаниях
+из документации. В сохранённых копиях логов удалён только trailing whitespace.
