@@ -31,6 +31,8 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm -r lint
       - run: pnpm exec eslint infra scripts --max-warnings 0
+      - run: pnpm check:boundaries
+      - run: pnpm check:cycles
 
   unit-test:
     runs-on: ubuntu-24.04
@@ -39,7 +41,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with: { persist-credentials: false }
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @online-school/worker build
+      - run: pnpm --filter @online-school/api --filter @online-school/worker build
       - run: pnpm test:unit
 
   integration-test:
@@ -72,7 +74,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with: { persist-credentials: false }
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @online-school/db build && pnpm --filter @online-school/worker build
+      - run: pnpm --filter @online-school/db --filter @online-school/api --filter @online-school/worker build
       - run: pnpm test:integration:ci
 
   build:

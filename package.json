@@ -9,6 +9,8 @@
     "pnpm": ">=9 <13"
   },
   "scripts": {
+    "check:boundaries": "node --test scripts/repo-boundaries.test.mjs",
+    "check:cycles": "node scripts/check-cycles.mjs",
     "postinstall": "pnpm run generate",
     "generate": "pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate",
     "build": "turbo run build",
