@@ -1,0 +1,66 @@
+
+   • Packages in scope: @online-school/api, @online-school/api-contracts, @online-school/db, @online-school/qa-shell, @online-school/shared, @online-school/worker
+   • Running build in 6 packages
+   • Remote caching disabled
+
+@online-school/shared:build: cache hit, replaying logs 1db4527dc58ae286
+@online-school/shared:build: 
+@online-school/shared:build: > @online-school/shared@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\shared
+@online-school/shared:build: > tsc -b --pretty false
+@online-school/shared:build: 
+@online-school/api-contracts:build: cache hit, replaying logs 5806747f74ce3409
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > pnpm run generate && tsc -b --pretty false
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > openapi-typescript openapi/openapi.json -o src/generated/openapi.ts
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: ✨ openapi-typescript 7.13.0
+@online-school/api-contracts:build: 🚀 openapi/openapi.json → src/generated/openapi.ts [160.9ms]
+@online-school/db:build: cache hit, replaying logs 6e4fda9b33e7dd8d
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+@online-school/db:build: 
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > prisma generate
+@online-school/db:build: 
+@online-school/db:build: Loaded Prisma config from prisma.config.ts.
+@online-school/db:build: 
+@online-school/db:build: Prisma schema loaded from prisma\schema.prisma.
+@online-school/db:build: 
+@online-school/db:build: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 748ms
+@online-school/db:build: 
+@online-school/api:build: cache hit, replaying logs fc5b34625807e535
+@online-school/api:build: 
+@online-school/api:build: > @online-school/api@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\api
+@online-school/api:build: > tsc -b --pretty false
+@online-school/api:build: 
+@online-school/qa-shell:build: cache hit, replaying logs 3b231c0d1918a404
+@online-school/qa-shell:build: 
+@online-school/qa-shell:build: > @online-school/qa-shell@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\qa-shell
+@online-school/qa-shell:build: > tsc -b --pretty false && vite build
+@online-school/qa-shell:build: 
+@online-school/qa-shell:build: vite v7.3.7 building client environment for production...
+@online-school/qa-shell:build: transforming...
+@online-school/qa-shell:build: ✓ 55 modules transformed.
+@online-school/qa-shell:build: rendering chunks...
+@online-school/qa-shell:build: computing gzip size...
+@online-school/qa-shell:build: dist/index.html                   0.45 kB │ gzip:  0.30 kB
+@online-school/qa-shell:build: dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+@online-school/qa-shell:build: dist/assets/index-DKPUe2PE.js   183.04 kB │ gzip: 57.49 kB
+@online-school/qa-shell:build: ✓ built in 690ms
+@online-school/worker:build: cache hit, replaying logs e8a87c46987e13aa
+@online-school/worker:build: 
+@online-school/worker:build: > @online-school/worker@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\worker
+@online-school/worker:build: > tsc -b --pretty false
+@online-school/worker:build: 
+
+  Tasks:    6 successful, 6 total
+ Cached:    6 cached, 6 total
+   Time:    100ms >>> FULL TURBO
+Summary:    D:\OnlineSchool\.codex\worktrees\cleanup-baseline\.turbo\runs\3LVRhBRU90yYQnGofRNhSRgXNL9.json
+

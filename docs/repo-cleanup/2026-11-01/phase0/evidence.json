@@ -1,0 +1,786 @@
+{
+  "measuredAt": "2026-11-01T12:54:43.595Z",
+  "baselineCommit": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+  "reportBranch": "chore/repo-cleanup",
+  "initial": {
+    "commit": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+    "timestamp": "2026-11-01T12:48:48.300Z",
+    "node": "v24.21.0",
+    "pnpm": "10.34.9",
+    "host": {
+      "platform": "win32",
+      "arch": "x64",
+      "cpus": 12,
+      "processor": "AMD Ryzen 5 5600G with Radeon Graphics         ",
+      "memoryBytes": 16506822656
+    },
+    "cache": "New isolated local Turbo cache; remote cache disabled",
+    "distInitiallyPresent": [],
+    "tsbuildinfoInitiallyPresent": [],
+    "cacheInitiallyPresent": false
+  },
+  "commands": [
+    {
+      "label": "turbo-cold",
+      "command": "pnpm exec turbo run build --cache-dir=.codex/phase0/turbo-cache --cache=local:rw --summarize",
+      "exitCode": 0,
+      "wallMs": 31566,
+      "timestamp": "2026-11-01T12:48:53.745Z",
+      "log": "turbo-cold.txt",
+      "summary": "turbo-cold-summary.json"
+    },
+    {
+      "label": "turbo-warm",
+      "command": "pnpm exec turbo run build --cache-dir=.codex/phase0/turbo-cache --cache=local:rw --summarize",
+      "exitCode": 0,
+      "wallMs": 495,
+      "timestamp": "2026-11-01T12:49:25.313Z",
+      "log": "turbo-warm.txt",
+      "summary": "turbo-warm-summary.json"
+    },
+    {
+      "label": "typecheck",
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "wallMs": 4969,
+      "timestamp": "2026-11-01T12:49:25.812Z",
+      "log": "typecheck.txt"
+    },
+    {
+      "label": "lint",
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "wallMs": 3271,
+      "timestamp": "2026-11-01T12:49:30.781Z",
+      "log": "lint.txt"
+    },
+    {
+      "label": "test",
+      "command": "pnpm test",
+      "exitCode": 0,
+      "wallMs": 5628,
+      "timestamp": "2026-11-01T12:49:34.052Z",
+      "log": "test.txt"
+    }
+  ],
+  "turbo": {
+    "turbo-cold": {
+      "execution": {
+        "command": "turbo run build",
+        "repoPath": "",
+        "success": 6,
+        "failed": 0,
+        "cached": 0,
+        "attempted": 6,
+        "startTime": 1793537334088,
+        "endTime": 1793537365216,
+        "exitCode": 0
+      },
+      "tasks": [
+        {
+          "task": "@online-school/api#build",
+          "hash": "fc5b34625807e535",
+          "cache": "MISS",
+          "durationMs": 10156
+        },
+        {
+          "task": "@online-school/api-contracts#build",
+          "hash": "5806747f74ce3409",
+          "cache": "MISS",
+          "durationMs": 3126
+        },
+        {
+          "task": "@online-school/db#build",
+          "hash": "6e4fda9b33e7dd8d",
+          "cache": "MISS",
+          "durationMs": 12291
+        },
+        {
+          "task": "@online-school/qa-shell#build",
+          "hash": "3b231c0d1918a404",
+          "cache": "MISS",
+          "durationMs": 7811
+        },
+        {
+          "task": "@online-school/shared#build",
+          "hash": "1db4527dc58ae286",
+          "cache": "MISS",
+          "durationMs": 830
+        },
+        {
+          "task": "@online-school/worker#build",
+          "hash": "e8a87c46987e13aa",
+          "cache": "MISS",
+          "durationMs": 6574
+        }
+      ]
+    },
+    "turbo-warm": {
+      "execution": {
+        "command": "turbo run build",
+        "repoPath": "",
+        "success": 0,
+        "failed": 0,
+        "cached": 6,
+        "attempted": 6,
+        "startTime": 1793537365654,
+        "endTime": 1793537365754,
+        "exitCode": 0
+      },
+      "tasks": [
+        {
+          "task": "@online-school/api#build",
+          "hash": "fc5b34625807e535",
+          "cache": "HIT",
+          "durationMs": 12
+        },
+        {
+          "task": "@online-school/api-contracts#build",
+          "hash": "5806747f74ce3409",
+          "cache": "HIT",
+          "durationMs": 2
+        },
+        {
+          "task": "@online-school/db#build",
+          "hash": "6e4fda9b33e7dd8d",
+          "cache": "HIT",
+          "durationMs": 21
+        },
+        {
+          "task": "@online-school/qa-shell#build",
+          "hash": "3b231c0d1918a404",
+          "cache": "HIT",
+          "durationMs": 1
+        },
+        {
+          "task": "@online-school/shared#build",
+          "hash": "1db4527dc58ae286",
+          "cache": "HIT",
+          "durationMs": 22
+        },
+        {
+          "task": "@online-school/worker#build",
+          "hash": "e8a87c46987e13aa",
+          "cache": "HIT",
+          "durationMs": 2
+        }
+      ]
+    }
+  },
+  "sizes": {
+    "measuredAt": "2026-11-01T12:49:59.380Z",
+    "distributions": [
+      {
+        "path": "apps/api/dist",
+        "files": 252,
+        "bytes": 1084366,
+        "byExtension": {
+          "js": 528243,
+          "d.ts": 96247,
+          "map": 459876,
+          "other": 0
+        }
+      },
+      {
+        "path": "apps/worker/dist",
+        "files": 28,
+        "bytes": 74129,
+        "byExtension": {
+          "js": 34564,
+          "d.ts": 4788,
+          "map": 34777,
+          "other": 0
+        }
+      },
+      {
+        "path": "apps/qa-shell/dist",
+        "files": 3,
+        "bytes": 193088,
+        "byExtension": {
+          "js": 183042,
+          "d.ts": 0,
+          "map": 0,
+          "other": 10046
+        }
+      },
+      {
+        "path": "packages/api-contracts/dist",
+        "files": 16,
+        "bytes": 502419,
+        "byExtension": {
+          "js": 52745,
+          "d.ts": 248565,
+          "map": 201109,
+          "other": 0
+        }
+      },
+      {
+        "path": "packages/db/dist",
+        "files": 328,
+        "bytes": 15253344,
+        "byExtension": {
+          "js": 898506,
+          "d.ts": 8715824,
+          "map": 5639014,
+          "other": 0
+        }
+      },
+      {
+        "path": "packages/db/dist-tools",
+        "files": 13,
+        "bytes": 117885,
+        "byExtension": {
+          "js": 32094,
+          "d.ts": 1699,
+          "map": 29343,
+          "other": 54749
+        }
+      },
+      {
+        "path": "packages/shared/dist",
+        "files": 8,
+        "bytes": 2143,
+        "byExtension": {
+          "js": 275,
+          "d.ts": 518,
+          "map": 1350,
+          "other": 0
+        }
+      }
+    ],
+    "frontend": {
+      "files": [
+        {
+          "path": "apps/qa-shell/dist/assets/index-C7dOYG32.css",
+          "bytes": 9592,
+          "gzipBytes": 2680
+        },
+        {
+          "path": "apps/qa-shell/dist/assets/index-DKPUe2PE.js",
+          "bytes": 183042,
+          "gzipBytes": 57493
+        },
+        {
+          "path": "apps/qa-shell/dist/index.html",
+          "bytes": 454,
+          "gzipBytes": 300
+        }
+      ],
+      "rawBytes": 193088,
+      "gzipBytes": 60473,
+      "method": "Sum of raw logical bytes and gzipSync per emitted file, no transport headers"
+    }
+  },
+  "images": [
+    {
+      "kind": "api",
+      "dockerfile": "apps/api/Dockerfile",
+      "image": "onlineschool-phase0-api:d6e5c61",
+      "exitCode": 0,
+      "wallMs": 105038,
+      "id": "sha256:b3bca78a82d561ec328d5872f05972acf6925a92f96e4515ec335b9003f54606",
+      "sizeBytes": 1181208848,
+      "architecture": "amd64",
+      "os": "linux",
+      "nodeVersion": "24.22.2",
+      "workingDirectory": "/workspace/packages/db",
+      "user": "node",
+      "command": [
+        "node",
+        "/workspace/apps/api/dist/main.js"
+      ]
+    },
+    {
+      "kind": "worker",
+      "dockerfile": "Dockerfile.worker",
+      "image": "onlineschool-phase0-worker:d6e5c61",
+      "exitCode": 0,
+      "wallMs": 60011,
+      "id": "sha256:af94e735405d855cfeab6b0de0726742ea0818e13428e7db4457d74cdb0956e1",
+      "sizeBytes": 1181598995,
+      "architecture": "amd64",
+      "os": "linux",
+      "nodeVersion": "24.22.2",
+      "workingDirectory": "/workspace/apps/worker",
+      "user": "node",
+      "command": [
+        "node",
+        "dist/main.js"
+      ]
+    }
+  ],
+  "inventory": {
+    "commit": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+    "workspaces": [
+      {
+        "path": "apps/api",
+        "name": "@online-school/api",
+        "dependencies": {
+          "@js-temporal/polyfill": "0.5.1",
+          "@nestjs/common": "12.2.0",
+          "@nestjs/core": "12.2.0",
+          "@nestjs/platform-express": "12.2.0",
+          "@nestjs/swagger": "12.0.4",
+          "@online-school/api-contracts": "workspace:*",
+          "@online-school/db": "workspace:*",
+          "@online-school/shared": "workspace:*",
+          "@simplewebauthn/server": "14.0.3",
+          "class-transformer": "0.5.1",
+          "class-validator": "0.15.1",
+          "reflect-metadata": "0.2.2",
+          "rxjs": "7.8.2"
+        },
+        "devDependencies": {},
+        "scripts": {
+          "build": "tsc -b --pretty false",
+          "typecheck": "tsc -b --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "start": "node --env-file-if-exists=.env dist/main.js",
+          "dev": "node --env-file-if-exists=.env --watch dist/main.js",
+          "watch": "tsc -b --watch",
+          "test": "node --test test/*.test.mjs",
+          "test:unit": "node --test test/*.test.mjs",
+          "test:integration": "pnpm run build && node --test --test-concurrency=1 test/integration/*.test.mjs",
+          "export:openapi": "node scripts/export-openapi.mjs"
+        },
+        "exports": {
+          "./serverless": {
+            "types": "./dist/serverless.d.ts",
+            "import": "./dist/serverless.js"
+          },
+          "./finance-expiry": {
+            "types": "./dist/modules/finance/expiry.module.d.ts",
+            "import": "./dist/modules/finance/expiry.module.js"
+          },
+          "./schedule-deadlines": {
+            "types": "./dist/modules/schedule/deadline.module.d.ts",
+            "import": "./dist/modules/schedule/deadline.module.js"
+          }
+        },
+        "consumers": [
+          "@online-school/qa-shell",
+          "@online-school/worker"
+        ],
+        "referenceFiles": [
+          "PHASE0_CHECKS.md",
+          "README.md",
+          "apps/api/CORE.md",
+          "apps/api/FINANCE.md",
+          "apps/api/IDENTITY.md",
+          "apps/api/OPENAPI.md",
+          "apps/api/package.json",
+          "apps/api/src/app.module.ts",
+          "apps/qa-shell/QA_SHELL.md",
+          "apps/qa-shell/api/handler.ts",
+          "apps/qa-shell/package.json",
+          "apps/qa-shell/src/api.ts",
+          "apps/qa-shell/vercel.json",
+          "apps/worker/package.json",
+          "apps/worker/src/worker.module.ts",
+          "infra/vercel/build.mjs",
+          "package.json",
+          "packages/api-contracts/package.json",
+          "packages/db/package.json",
+          "pnpm-lock.yaml"
+        ]
+      },
+      {
+        "path": "apps/qa-shell",
+        "name": "@online-school/qa-shell",
+        "dependencies": {
+          "@online-school/api": "workspace:*",
+          "@online-school/api-contracts": "workspace:*",
+          "@online-school/shared": "workspace:*",
+          "@simplewebauthn/browser": "14.0.0",
+          "react": "18.3.1",
+          "react-dom": "18.3.1"
+        },
+        "devDependencies": {
+          "@types/react": "18.3.31",
+          "@types/react-dom": "18.3.7",
+          "@vitejs/plugin-react": "5.2.0",
+          "vite": "7.3.7"
+        },
+        "scripts": {
+          "build": "tsc -b --pretty false && vite build",
+          "typecheck": "tsc -b --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "dev": "vite --host 127.0.0.1",
+          "preview": "vite preview --host 127.0.0.1"
+        },
+        "exports": {},
+        "consumers": [],
+        "referenceFiles": [
+          "README.md",
+          "apps/qa-shell/QA_SHELL.md",
+          "apps/qa-shell/package.json",
+          "apps/qa-shell/vercel.json",
+          "infra/vercel/build.mjs"
+        ]
+      },
+      {
+        "path": "apps/worker",
+        "name": "@online-school/worker",
+        "dependencies": {
+          "@online-school/api": "workspace:*",
+          "@nestjs/common": "12.2.0",
+          "@nestjs/core": "12.2.0",
+          "@online-school/db": "workspace:*",
+          "@online-school/shared": "workspace:*",
+          "reflect-metadata": "0.2.2",
+          "rxjs": "7.8.2"
+        },
+        "devDependencies": {},
+        "scripts": {
+          "build": "tsc -b --pretty false",
+          "typecheck": "tsc -b --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "start": "node --env-file-if-exists=.env dist/main.js",
+          "dev": "node --env-file-if-exists=.env --watch dist/main.js",
+          "watch": "tsc -b --watch",
+          "test": "node --test test/*.test.mjs",
+          "test:unit": "node --test test/*.test.mjs",
+          "test:integration": "node --test --test-concurrency=1 test/integration/*.test.mjs"
+        },
+        "exports": {},
+        "consumers": [],
+        "referenceFiles": [
+          ".github/workflows/ci.yml",
+          "README.md",
+          "apps/worker/WORKER.md",
+          "apps/worker/package.json"
+        ]
+      },
+      {
+        "path": "packages/api-contracts",
+        "name": "@online-school/api-contracts",
+        "dependencies": {
+          "@online-school/shared": "workspace:*"
+        },
+        "devDependencies": {
+          "openapi-typescript": "7.13.0",
+          "orval": "8.45.0"
+        },
+        "scripts": {
+          "generate": "openapi-typescript openapi/openapi.json -o src/generated/openapi.ts",
+          "build": "pnpm run generate && tsc -b --pretty false",
+          "typecheck": "pnpm run generate && tsc -b --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "generate:client": "orval --config orval.config.mjs && pnpm run generate"
+        },
+        "exports": {
+          ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+          }
+        },
+        "consumers": [
+          "@online-school/api",
+          "@online-school/qa-shell"
+        ],
+        "referenceFiles": [
+          "README.md",
+          "apps/api/OPENAPI.md",
+          "apps/api/package.json",
+          "apps/api/src/app.module.ts",
+          "apps/qa-shell/package.json",
+          "apps/qa-shell/src/api.ts",
+          "package.json",
+          "packages/api-contracts/package.json",
+          "pnpm-lock.yaml"
+        ]
+      },
+      {
+        "path": "packages/db",
+        "name": "@online-school/db",
+        "dependencies": {
+          "@online-school/shared": "workspace:*",
+          "@prisma/adapter-pg": "7.10.1",
+          "@prisma/client": "7.10.1",
+          "pg": "8.23.1"
+        },
+        "devDependencies": {
+          "@types/pg": "8.23.1",
+          "dotenv": "18.0.9",
+          "prisma": "7.10.1"
+        },
+        "scripts": {
+          "generate": "prisma generate",
+          "build": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false",
+          "typecheck": "pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "test": "node --test test/*.test.mjs",
+          "test:unit": "node --test test/*.test.mjs",
+          "test:integration": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/integration/*.test.mjs",
+          "test:qa": "pnpm --filter @online-school/api build && node --test --test-concurrency=1 test/qa/*.test.mjs",
+          "db:validate": "prisma validate",
+          "db:migrate": "prisma migrate dev",
+          "db:deploy": "prisma migrate deploy",
+          "db:seed": "pnpm run build && node dist-tools/seed.js",
+          "db:seed:reference": "prisma db seed",
+          "db:reset-qa": "pnpm run build && node dist-tools/scripts/database-tools.js reset-qa",
+          "db:migrate:dry-run": "pnpm run build && node dist-tools/scripts/database-tools.js dry-run",
+          "db:migrate:up": "pnpm run build && node dist-tools/scripts/database-tools.js up",
+          "seed:run": "pnpm run build && node prisma/seed.mjs",
+          "db:migrate:legacy": "prisma migrate dev --config prisma.legacy.config.ts",
+          "db:deploy:legacy": "prisma migrate deploy --config prisma.legacy.config.ts"
+        },
+        "exports": {
+          ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+          }
+        },
+        "consumers": [
+          "@online-school/api",
+          "@online-school/worker"
+        ],
+        "referenceFiles": [
+          ".github/workflows/ci.yml",
+          "PHASE0_CHECKS.md",
+          "README.md",
+          "apps/api/FINANCE.md",
+          "apps/api/package.json",
+          "apps/api/src/core/audit/audit.service.ts",
+          "apps/api/src/core/database/database.module.ts",
+          "apps/api/src/core/http.ts",
+          "apps/api/src/core/idempotency/idempotency.module.ts",
+          "apps/api/src/core/policy/policy.service.ts",
+          "apps/api/src/core/rbac/decorators.ts",
+          "apps/api/src/core/rbac/rbac.guard.ts",
+          "apps/api/src/core/session/session.store.ts",
+          "apps/api/src/core/session/webauthn-challenge.store.ts",
+          "apps/api/src/core/transaction/transaction.service.ts",
+          "apps/api/src/modules/finance/entitlements.service.ts",
+          "apps/api/src/modules/finance/finance-common.ts",
+          "apps/api/src/modules/finance/finance-ledger.service.ts",
+          "apps/api/src/modules/finance/ledger-publication.service.ts",
+          "apps/api/src/modules/finance/teacher-rate.service.ts",
+          "apps/api/src/modules/identity/identity.service.ts",
+          "apps/api/src/modules/identity/recovery.service.ts",
+          "apps/api/src/modules/schedule/booking.service.ts",
+          "apps/api/src/modules/schedule/schedule-events.service.ts",
+          "apps/api/test/core.test.mjs",
+          "apps/api/test/integration/core-http.test.mjs",
+          "apps/api/test/integration/finance-http.test.mjs",
+          "apps/api/test/integration/identity-http.test.mjs",
+          "apps/api/test/integration/schedule-http.test.mjs",
+          "apps/worker/package.json",
+          "apps/worker/src/contracts.ts",
+          "apps/worker/src/handlers.ts",
+          "apps/worker/src/heartbeat.ts",
+          "apps/worker/src/outbox.ts",
+          "apps/worker/src/recovery.ts",
+          "apps/worker/src/worker.module.ts",
+          "apps/worker/test/fixtures/crash-worker.mjs",
+          "apps/worker/test/integration/worker.test.mjs",
+          "infra/vercel/build.mjs",
+          "package.json",
+          "packages/db/EDUCATION_INFRA.md",
+          "packages/db/FINANCE.md",
+          "packages/db/MIGRATIONS_SEED.md",
+          "packages/db/README.md",
+          "packages/db/package.json",
+          "packages/db/scripts/database-tools.ts",
+          "packages/db/seed.ts",
+          "pnpm-lock.yaml"
+        ]
+      },
+      {
+        "path": "packages/shared",
+        "name": "@online-school/shared",
+        "dependencies": {},
+        "devDependencies": {},
+        "scripts": {
+          "build": "tsc -b --pretty false",
+          "typecheck": "tsc -b --pretty false",
+          "lint": "eslint . --max-warnings 0",
+          "test": "node --test test/*.test.mjs",
+          "test:unit": "node --test test/*.test.mjs"
+        },
+        "exports": {
+          ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+          }
+        },
+        "consumers": [
+          "@online-school/api",
+          "@online-school/qa-shell",
+          "@online-school/worker",
+          "@online-school/api-contracts",
+          "@online-school/db"
+        ],
+        "referenceFiles": [
+          "README.md",
+          "apps/api/package.json",
+          "apps/api/src/app.module.ts",
+          "apps/api/src/core/audit/audit.service.ts",
+          "apps/api/src/core/errors/domain-error.ts",
+          "apps/api/src/core/http.ts",
+          "apps/api/src/core/idempotency/idempotency.module.ts",
+          "apps/api/src/core/policy/policy.service.ts",
+          "apps/api/src/core/rbac/rbac.guard.ts",
+          "apps/api/src/core/session/session.service.ts",
+          "apps/api/src/core/session/session.store.ts",
+          "apps/api/src/core/session/webauthn-challenge.store.ts",
+          "apps/api/src/core/transaction/transaction.service.ts",
+          "apps/api/src/modules/finance/expiry.module.ts",
+          "apps/api/src/modules/finance/finance-scope.guard.ts",
+          "apps/api/src/modules/finance/ledger-publication.service.ts",
+          "apps/api/src/modules/identity/identity.controller.ts",
+          "apps/api/src/modules/identity/identity.service.ts",
+          "apps/api/src/modules/identity/passwords.ts",
+          "apps/api/src/modules/identity/recovery.service.ts",
+          "apps/api/src/modules/identity/webauthn.config.ts",
+          "apps/api/src/modules/schedule/deadline.module.ts",
+          "apps/api/src/modules/schedule/schedule-scope.guard.ts",
+          "apps/qa-shell/package.json",
+          "apps/qa-shell/src/App.tsx",
+          "apps/qa-shell/src/api.ts",
+          "apps/qa-shell/src/auth.ts",
+          "apps/qa-shell/src/scenarios.ts",
+          "apps/worker/package.json",
+          "apps/worker/src/contracts.ts",
+          "apps/worker/src/handlers.ts",
+          "apps/worker/src/worker.module.ts",
+          "apps/worker/test/integration/worker.test.mjs",
+          "packages/api-contracts/package.json",
+          "packages/api-contracts/src/transport.ts",
+          "packages/db/package.json",
+          "packages/db/scripts/database-targets.ts",
+          "packages/db/scripts/database-tools.ts",
+          "packages/db/seed.ts",
+          "packages/db/src/index.ts",
+          "packages/shared/package.json",
+          "pnpm-lock.yaml"
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "name": "crm",
+        "path": "apps/api/src/modules/crm",
+        "sourceFiles": [
+          "apps/api/src/modules/crm/crm.module.ts",
+          "apps/api/src/modules/crm/registry.controller.ts",
+          "apps/api/src/modules/crm/registry.service.ts"
+        ]
+      },
+      {
+        "name": "education",
+        "path": "apps/api/src/modules/education",
+        "sourceFiles": [
+          "apps/api/src/modules/education/education.module.ts"
+        ]
+      },
+      {
+        "name": "finance",
+        "path": "apps/api/src/modules/finance",
+        "sourceFiles": [
+          "apps/api/src/modules/finance/entitlements.service.ts",
+          "apps/api/src/modules/finance/expiry.module.ts",
+          "apps/api/src/modules/finance/finance-access.service.ts",
+          "apps/api/src/modules/finance/finance-common.ts",
+          "apps/api/src/modules/finance/finance-events.service.ts",
+          "apps/api/src/modules/finance/finance-ledger.service.ts",
+          "apps/api/src/modules/finance/finance-scope.guard.ts",
+          "apps/api/src/modules/finance/finance.controller.ts",
+          "apps/api/src/modules/finance/finance.module.ts",
+          "apps/api/src/modules/finance/ledger-publication.service.ts",
+          "apps/api/src/modules/finance/payments.service.ts",
+          "apps/api/src/modules/finance/payroll.service.ts",
+          "apps/api/src/modules/finance/periods.service.ts",
+          "apps/api/src/modules/finance/teacher-rate.service.ts"
+        ]
+      },
+      {
+        "name": "identity",
+        "path": "apps/api/src/modules/identity",
+        "sourceFiles": [
+          "apps/api/src/modules/identity/auth-rate-limit.service.ts",
+          "apps/api/src/modules/identity/identity.controller.ts",
+          "apps/api/src/modules/identity/identity.module.ts",
+          "apps/api/src/modules/identity/identity.service.ts",
+          "apps/api/src/modules/identity/input.ts",
+          "apps/api/src/modules/identity/passwords.ts",
+          "apps/api/src/modules/identity/recovery.service.ts",
+          "apps/api/src/modules/identity/webauthn.config.ts"
+        ]
+      },
+      {
+        "name": "integrations",
+        "path": "apps/api/src/modules/integrations",
+        "sourceFiles": [
+          "apps/api/src/modules/integrations/integrations.module.ts"
+        ]
+      },
+      {
+        "name": "qa",
+        "path": "apps/api/src/modules/qa",
+        "sourceFiles": [
+          "apps/api/src/modules/qa/qa.dto.ts",
+          "apps/api/src/modules/qa/qa.module.ts",
+          "apps/api/src/modules/qa/worker-health.controller.ts"
+        ]
+      },
+      {
+        "name": "schedule",
+        "path": "apps/api/src/modules/schedule",
+        "sourceFiles": [
+          "apps/api/src/modules/schedule/booking.service.ts",
+          "apps/api/src/modules/schedule/deadline.module.ts",
+          "apps/api/src/modules/schedule/outcomes.service.ts",
+          "apps/api/src/modules/schedule/recurrence.ts",
+          "apps/api/src/modules/schedule/registry.service.ts",
+          "apps/api/src/modules/schedule/schedule-access.service.ts",
+          "apps/api/src/modules/schedule/schedule-events.service.ts",
+          "apps/api/src/modules/schedule/schedule-scope.guard.ts",
+          "apps/api/src/modules/schedule/schedule.controller.ts",
+          "apps/api/src/modules/schedule/schedule.module.ts"
+        ]
+      },
+      {
+        "name": "storage",
+        "path": "apps/api/src/modules/storage",
+        "sourceFiles": [
+          "apps/api/src/modules/storage/storage.module.ts"
+        ]
+      }
+    ],
+    "core": [
+      "audit",
+      "csrf",
+      "database",
+      "errors",
+      "idempotency",
+      "policy",
+      "rbac",
+      "request-id",
+      "session",
+      "transaction"
+    ],
+    "openapi": {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "gitBlobSha256": "f32a2cf03eca4db077ddc88e1f844aa5c0cfcd724353357f062573b635ccec9f",
+      "checkoutSha256": "5c7deefd2479228addfdb34d19e9ec74911664ab3e346011f94b94011a1444d5"
+    },
+    "trackedFiles": 214
+  },
+  "verification": {
+    "baselineGitDiffEmpty": true,
+    "openapiAfter": "5c7deefd2479228addfdb34d19e9ec74911664ab3e346011f94b94011a1444d5",
+    "openapiUnchanged": true,
+    "deletedTrackedFiles": [],
+    "databaseConnections": false,
+    "deployment": false,
+    "dependenciesChanged": false,
+    "versionsChanged": false
+  },
+  "method": {
+    "cold": "Fresh detached worktree; dependencies installed first; dist, tsbuildinfo and isolated local Turbo cache absent. Existing pnpm store and OS caches reused. One sample.",
+    "warm": "Immediate identical Turbo command with same environment/cache; no source edits, no artifacts removed. Six cache hits. One sample.",
+    "docker": "Original API and worker Dockerfiles at baseline; local Docker builder cache may be reused; logical uncompressed image size from docker image inspect, not registry transfer or unique disk use.",
+    "bundle": "Raw file sizes and gzipSync per emitted Vite file; measured host build, embedded build timestamp/commit metadata changes content hashes across runs."
+  }
+}

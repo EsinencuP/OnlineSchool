@@ -1,0 +1,147 @@
+
+> online-school@0.0.0 test D:\OnlineSchool\.codex\worktrees\cleanup-baseline
+> turbo run test && node --test scripts/monorepo-smoke.test.mjs
+
+
+   • Packages in scope: @online-school/api, @online-school/api-contracts, @online-school/db, @online-school/qa-shell, @online-school/shared, @online-school/worker
+   • Running test in 6 packages
+   • Remote caching disabled
+
+@online-school/shared:build: cache hit, replaying logs 1db4527dc58ae286
+@online-school/shared:build: 
+@online-school/shared:build: > @online-school/shared@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\shared
+@online-school/shared:build: > tsc -b --pretty false
+@online-school/shared:build: 
+@online-school/shared:test: cache miss, executing 2920b0391fec05af
+@online-school/api-contracts:build: cache hit, replaying logs 5806747f74ce3409
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > pnpm run generate && tsc -b --pretty false
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > openapi-typescript openapi/openapi.json -o src/generated/openapi.ts
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: ✨ openapi-typescript 7.13.0
+@online-school/api-contracts:build: 🚀 openapi/openapi.json → src/generated/openapi.ts [160.9ms]
+@online-school/db:build: cache hit, replaying logs 6e4fda9b33e7dd8d
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+@online-school/db:build: 
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > prisma generate
+@online-school/db:build: 
+@online-school/db:build: Loaded Prisma config from prisma.config.ts.
+@online-school/db:build: 
+@online-school/db:build: Prisma schema loaded from prisma\schema.prisma.
+@online-school/db:build: 
+@online-school/db:build: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 748ms
+@online-school/db:build: 
+@online-school/db:test: cache miss, executing 0a0bf8cccfff4bb4
+@online-school/api:build: cache hit, replaying logs fc5b34625807e535
+@online-school/api:build: 
+@online-school/api:build: > @online-school/api@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\api
+@online-school/api:build: > tsc -b --pretty false
+@online-school/api:build: 
+@online-school/api:test: cache miss, executing e504353ebe8dba6a
+@online-school/qa-shell:build: cache hit, replaying logs 3b231c0d1918a404
+@online-school/qa-shell:build: 
+@online-school/qa-shell:build: > @online-school/qa-shell@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\qa-shell
+@online-school/qa-shell:build: > tsc -b --pretty false && vite build
+@online-school/qa-shell:build: 
+@online-school/qa-shell:build: vite v7.3.7 building client environment for production...
+@online-school/qa-shell:build: transforming...
+@online-school/qa-shell:build: ✓ 55 modules transformed.
+@online-school/qa-shell:build: rendering chunks...
+@online-school/qa-shell:build: computing gzip size...
+@online-school/qa-shell:build: dist/index.html                   0.45 kB │ gzip:  0.30 kB
+@online-school/qa-shell:build: dist/assets/index-C7dOYG32.css    9.59 kB │ gzip:  2.68 kB
+@online-school/qa-shell:build: dist/assets/index-DKPUe2PE.js   183.04 kB │ gzip: 57.49 kB
+@online-school/qa-shell:build: ✓ built in 690ms
+@online-school/worker:build: cache hit, replaying logs e8a87c46987e13aa
+@online-school/worker:build: 
+@online-school/worker:build: > @online-school/worker@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\worker
+@online-school/worker:build: > tsc -b --pretty false
+@online-school/worker:build: 
+@online-school/worker:test: cache miss, executing e8c31a999d4ef380
+@online-school/shared:test: 
+@online-school/shared:test: > @online-school/shared@0.0.0 test D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\shared
+@online-school/shared:test: > node --test test/*.test.mjs
+@online-school/shared:test: 
+@online-school/shared:test: ✔ Result preserves values and error identity across the package boundary (0.9869ms)
+@online-school/shared:test: ℹ tests 1
+@online-school/shared:test: ℹ suites 0
+@online-school/shared:test: ℹ pass 1
+@online-school/shared:test: ℹ fail 0
+@online-school/shared:test: ℹ cancelled 0
+@online-school/shared:test: ℹ skipped 0
+@online-school/shared:test: ℹ todo 0
+@online-school/shared:test: ℹ duration_ms 87.29
+@online-school/db:test: 
+@online-school/db:test: > @online-school/db@0.0.0 test D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:test: > node --test test/*.test.mjs
+@online-school/db:test: 
+@online-school/api:test: 
+@online-school/api:test: > @online-school/api@0.0.0 test D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\api
+@online-school/api:test: > node --test test/*.test.mjs
+@online-school/api:test: 
+@online-school/worker:test: 
+@online-school/worker:test: > @online-school/worker@0.0.0 test D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\worker
+@online-school/worker:test: > node --test test/*.test.mjs
+@online-school/worker:test: 
+@online-school/db:test: ✔ runtime and direct clients never fall back to the other connection (2.6912ms)
+@online-school/db:test: ✔ invalid URLs return sanitized errors without leaking credentials (0.474ms)
+@online-school/db:test: ✔ both factories construct independently disposable Prisma clients offline (95.7114ms)
+@online-school/db:test: ℹ tests 3
+@online-school/db:test: ℹ suites 0
+@online-school/db:test: ℹ pass 3
+@online-school/db:test: ℹ fail 0
+@online-school/db:test: ℹ cancelled 0
+@online-school/db:test: ℹ skipped 0
+@online-school/db:test: ℹ todo 0
+@online-school/db:test: ℹ duration_ms 321.6877
+@online-school/api:test: ✔ canonical payload hash ignores object property ordering and keeps array order (1.5253ms)
+@online-school/api:test: ✔ ambiguous cookies are rejected; token comparison handles different lengths (0.335ms)
+@online-school/worker:test: ✔ bounded retry schedule and strict environment config (3.1162ms)
+@online-school/worker:test: ✔ worker application context starts and shuts down without an HTTP listener (1962.538ms)
+@online-school/worker:test: ℹ tests 2
+@online-school/worker:test: ℹ suites 0
+@online-school/worker:test: ℹ pass 2
+@online-school/worker:test: ℹ fail 0
+@online-school/worker:test: ℹ cancelled 0
+@online-school/worker:test: ℹ skipped 0
+@online-school/worker:test: ℹ todo 0
+@online-school/worker:test: ℹ duration_ms 2098.3923
+@online-school/api:test: ✔ serialization/deadlock retries stop at three total attempts (240.0282ms)
+@online-school/api:test: ✔ domain failures are returned without retry or driver detail leakage (0.5934ms)
+@online-school/api:test: ✔ ordinary 4/5/9/10 point boundaries are 200/220/220/250; no automatic 230 (1.0415ms)
+@online-school/api:test: ✔ rehire restores tenure within six calendar months, but never across seven-month break (0.9705ms)
+@online-school/api:test: ✔ money accepts exact decimal strings only, rejecting float, exponent, excess scale and range (0.8751ms)
+@online-school/api:test: ✔ WebAuthn config pins one exact HTTPS QA hostname, including a permanent Vercel alias (1.8704ms)
+@online-school/api:test: ✔ weekly wall time keeps local time across DST, producing distinct stable local dates (18.7162ms)
+@online-school/api:test: ✔ nonexistent and ambiguous DST times require an explicit manager choice; unbounded rules are rejected (3.8233ms)
+@online-school/api:test: ℹ tests 10
+@online-school/api:test: ℹ suites 0
+@online-school/api:test: ℹ pass 10
+@online-school/api:test: ℹ fail 0
+@online-school/api:test: ℹ cancelled 0
+@online-school/api:test: ℹ skipped 0
+@online-school/api:test: ℹ todo 0
+@online-school/api:test: ℹ duration_ms 2280.8242
+
+ Tasks:    10 successful, 10 total
+Cached:    6 cached, 10 total
+  Time:    3.038s 
+
+✔ API serves the generated health contract using workspace ESM imports (316.4385ms)
+✔ standalone worker loads workspace imports and releases its lifecycle timer (3.9832ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2126.2961

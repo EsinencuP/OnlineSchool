@@ -1,0 +1,106 @@
+
+> online-school@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline
+> turbo run typecheck
+
+
+   • Packages in scope: @online-school/api, @online-school/api-contracts, @online-school/db, @online-school/qa-shell, @online-school/shared, @online-school/worker
+   • Running typecheck in 6 packages
+   • Remote caching disabled
+
+@online-school/shared:typecheck: cache bypass, force executing a87aceead25a6201
+@online-school/shared:build: cache hit, replaying logs 1db4527dc58ae286
+@online-school/shared:build: 
+@online-school/shared:build: > @online-school/shared@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\shared
+@online-school/shared:build: > tsc -b --pretty false
+@online-school/shared:build: 
+@online-school/db:typecheck: cache bypass, force executing e96c0dc4329394d9
+@online-school/api-contracts:typecheck: cache bypass, force executing d0c05b4d33b23e15
+@online-school/api-contracts:build: cache hit, replaying logs 5806747f74ce3409
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > pnpm run generate && tsc -b --pretty false
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:build: > openapi-typescript openapi/openapi.json -o src/generated/openapi.ts
+@online-school/api-contracts:build: 
+@online-school/api-contracts:build: ✨ openapi-typescript 7.13.0
+@online-school/api-contracts:build: 🚀 openapi/openapi.json → src/generated/openapi.ts [160.9ms]
+@online-school/db:build: cache hit, replaying logs 6e4fda9b33e7dd8d
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+@online-school/db:build: 
+@online-school/db:build: 
+@online-school/db:build: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:build: > prisma generate
+@online-school/db:build: 
+@online-school/db:build: Loaded Prisma config from prisma.config.ts.
+@online-school/db:build: 
+@online-school/db:build: Prisma schema loaded from prisma\schema.prisma.
+@online-school/db:build: 
+@online-school/db:build: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 748ms
+@online-school/db:build: 
+@online-school/api:typecheck: cache bypass, force executing b34341dc0f57cb0f
+@online-school/api:build: cache hit, replaying logs fc5b34625807e535
+@online-school/api:build: 
+@online-school/api:build: > @online-school/api@0.0.0 build D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\api
+@online-school/api:build: > tsc -b --pretty false
+@online-school/api:build: 
+@online-school/qa-shell:typecheck: cache bypass, force executing 429a762ef72a6ab3
+@online-school/worker:typecheck: cache bypass, force executing 623b39f4a5a6b14a
+@online-school/shared:typecheck: 
+@online-school/shared:typecheck: > @online-school/shared@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\shared
+@online-school/shared:typecheck: > tsc -b --pretty false
+@online-school/shared:typecheck: 
+@online-school/db:typecheck: 
+@online-school/db:typecheck: > @online-school/db@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:typecheck: > pnpm run generate && tsc -b --pretty false && tsc -p tsconfig.tools.json --pretty false
+@online-school/db:typecheck: 
+@online-school/api-contracts:typecheck: 
+@online-school/api-contracts:typecheck: > @online-school/api-contracts@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:typecheck: > pnpm run generate && tsc -b --pretty false
+@online-school/api-contracts:typecheck: 
+@online-school/api:typecheck: 
+@online-school/api:typecheck: > @online-school/api@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\api
+@online-school/api:typecheck: > tsc -b --pretty false
+@online-school/api:typecheck: 
+@online-school/qa-shell:typecheck: 
+@online-school/qa-shell:typecheck: > @online-school/qa-shell@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\qa-shell
+@online-school/qa-shell:typecheck: > tsc -b --pretty false
+@online-school/qa-shell:typecheck: 
+@online-school/worker:typecheck: 
+@online-school/worker:typecheck: > @online-school/worker@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\cleanup-baseline\apps\worker
+@online-school/worker:typecheck: > tsc -b --pretty false
+@online-school/worker:typecheck: 
+@online-school/db:typecheck: 
+@online-school/db:typecheck: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+@online-school/db:typecheck: > prisma generate
+@online-school/db:typecheck: 
+@online-school/api-contracts:typecheck: 
+@online-school/api-contracts:typecheck: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+@online-school/api-contracts:typecheck: > openapi-typescript openapi/openapi.json -o src/generated/openapi.ts
+@online-school/api-contracts:typecheck: 
+@online-school/api-contracts:typecheck: ✨ openapi-typescript 7.13.0
+@online-school/api-contracts:typecheck: 🚀 openapi/openapi.json → src/generated/openapi.ts [149.6ms]
+@online-school/db:typecheck: Loaded Prisma config from prisma.config.ts.
+@online-school/db:typecheck: 
+@online-school/db:typecheck: Prisma schema loaded from prisma\schema.prisma.
+@online-school/db:typecheck: ┌─────────────────────────────────────────────────────────┐
+@online-school/db:typecheck: │  Update available 7.10.1 -> 8.0.0-rc.29                 │
+@online-school/db:typecheck: │                                                         │
+@online-school/db:typecheck: │  This is a major update - please follow the guide at    │
+@online-school/db:typecheck: │  https://pris.ly/d/major-version-upgrade                │
+@online-school/db:typecheck: │                                                         │
+@online-school/db:typecheck: │  Run the following to update                            │
+@online-school/db:typecheck: │    npm i --save-dev prisma@latest                       │
+@online-school/db:typecheck: │    npm i @prisma/client@latest                          │
+@online-school/db:typecheck: └─────────────────────────────────────────────────────────┘
+@online-school/db:typecheck: 
+@online-school/db:typecheck: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 599ms
+@online-school/db:typecheck: 
+
+ Tasks:    10 successful, 10 total
+Cached:    4 cached, 10 total
+  Time:    4.549s 
+

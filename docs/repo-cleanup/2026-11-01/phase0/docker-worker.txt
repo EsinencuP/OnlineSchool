@@ -1,0 +1,65 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.worker
+#1 transferring dockerfile: 780B 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 1.41kB 0.0s done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [build 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#5 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#5 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c 0.4s done
+#5 DONE 0.4s
+
+#4 [internal] load build context
+#4 transferring context: 16.07kB 1.2s done
+#4 DONE 2.0s
+
+#6 [build 2/6] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#6 CACHED
+
+#7 [build 3/6] WORKDIR /workspace
+#7 CACHED
+
+#8 [build 4/6] COPY . .
+#8 CACHED
+
+#9 [build 5/6] RUN pnpm install --frozen-lockfile && pnpm --filter @online-school/api build
+#9 CACHED
+
+#10 [build 6/6] RUN pnpm --filter @online-school/worker build
+#10 2.242 
+#10 2.242 > @online-school/worker@0.0.0 build /workspace/apps/worker
+#10 2.242 > tsc -b --pretty false
+#10 2.242 
+#10 DONE 9.0s
+
+#6 [build 2/6] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#6 CACHED
+
+#11 [runtime 3/4] COPY --from=build --chown=node:node /workspace /workspace
+#11 DONE 14.0s
+
+#12 [runtime 4/4] WORKDIR /workspace/apps/worker
+#12 DONE 0.5s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 15.3s done
+#13 exporting manifest sha256:02efa6dd52f5b7b94767023e47a6e9e8d82a1edb6ce9066fb2f863a17ab81c0d 0.0s done
+#13 exporting config sha256:f6e43642bc451005e50fe8b41c2e81355a8c9ff4df14f7faaa8786ef91ad2b61 0.0s done
+#13 exporting attestation manifest sha256:6c3b36ff953f7006c1d4d3ba02f381849f1fc53118cf252d614e26454947d7e5
+#13 exporting attestation manifest sha256:6c3b36ff953f7006c1d4d3ba02f381849f1fc53118cf252d614e26454947d7e5 0.1s done
+#13 exporting manifest list sha256:af94e735405d855cfeab6b0de0726742ea0818e13428e7db4457d74cdb0956e1 0.0s done
+#13 naming to docker.io/library/onlineschool-phase0-worker:d6e5c61 0.0s done
+#13 unpacking to docker.io/library/onlineschool-phase0-worker:d6e5c61
+#13 unpacking to docker.io/library/onlineschool-phase0-worker:d6e5c61 12.7s done
+#13 DONE 28.2s

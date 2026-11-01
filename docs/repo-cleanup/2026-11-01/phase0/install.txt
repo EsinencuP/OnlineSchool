@@ -1,0 +1,107 @@
+Scope: all 7 workspace projects
+Lockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +524
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 524, reused 0, downloaded 0, added 0
+Progress: resolved 524, reused 1, downloaded 0, added 0
+Progress: resolved 524, reused 9, downloaded 0, added 0
+Progress: resolved 524, reused 13, downloaded 0, added 0
+Progress: resolved 524, reused 14, downloaded 0, added 0
+Progress: resolved 524, reused 17, downloaded 0, added 0
+Progress: resolved 524, reused 18, downloaded 0, added 0
+Progress: resolved 524, reused 24, downloaded 0, added 0
+Progress: resolved 524, reused 26, downloaded 0, added 0
+Progress: resolved 524, reused 28, downloaded 0, added 0
+Progress: resolved 524, reused 31, downloaded 0, added 0
+Progress: resolved 524, reused 35, downloaded 0, added 0
+Progress: resolved 524, reused 43, downloaded 0, added 0
+Progress: resolved 524, reused 44, downloaded 0, added 0
+Progress: resolved 524, reused 45, downloaded 0, added 0
+Progress: resolved 524, reused 48, downloaded 0, added 0
+Progress: resolved 524, reused 51, downloaded 0, added 0
+Progress: resolved 524, reused 56, downloaded 0, added 0
+Progress: resolved 524, reused 59, downloaded 0, added 0
+Progress: resolved 524, reused 67, downloaded 0, added 0
+Progress: resolved 524, reused 79, downloaded 0, added 0
+Progress: resolved 524, reused 94, downloaded 0, added 0
+Progress: resolved 524, reused 102, downloaded 0, added 0
+Progress: resolved 524, reused 103, downloaded 0, added 0
+Progress: resolved 524, reused 104, downloaded 0, added 0
+Progress: resolved 524, reused 106, downloaded 0, added 0
+Progress: resolved 524, reused 107, downloaded 0, added 0
+Progress: resolved 524, reused 110, downloaded 0, added 0
+Progress: resolved 524, reused 113, downloaded 0, added 0
+Progress: resolved 524, reused 119, downloaded 0, added 0
+Progress: resolved 524, reused 123, downloaded 0, added 0
+Progress: resolved 524, reused 126, downloaded 0, added 0
+Progress: resolved 524, reused 132, downloaded 0, added 0
+Progress: resolved 524, reused 139, downloaded 0, added 0
+Progress: resolved 524, reused 144, downloaded 0, added 0
+Progress: resolved 524, reused 151, downloaded 0, added 0
+Progress: resolved 524, reused 164, downloaded 0, added 0
+Progress: resolved 524, reused 175, downloaded 0, added 0
+Progress: resolved 524, reused 187, downloaded 0, added 0
+Progress: resolved 524, reused 198, downloaded 0, added 0
+Progress: resolved 524, reused 201, downloaded 0, added 0
+Progress: resolved 524, reused 209, downloaded 0, added 0
+Progress: resolved 524, reused 225, downloaded 0, added 0
+Progress: resolved 524, reused 236, downloaded 0, added 0
+Progress: resolved 524, reused 249, downloaded 0, added 0
+Progress: resolved 524, reused 250, downloaded 0, added 0
+Progress: resolved 524, reused 252, downloaded 0, added 0
+Progress: resolved 524, reused 255, downloaded 0, added 0
+Progress: resolved 524, reused 275, downloaded 0, added 0
+Progress: resolved 524, reused 323, downloaded 0, added 0
+Progress: resolved 524, reused 366, downloaded 0, added 0
+Progress: resolved 524, reused 407, downloaded 0, added 0
+Progress: resolved 524, reused 472, downloaded 0, added 0
+Progress: resolved 524, reused 521, downloaded 0, added 49
+Progress: resolved 524, reused 524, downloaded 0, added 144
+Progress: resolved 524, reused 524, downloaded 0, added 145
+Progress: resolved 524, reused 524, downloaded 0, added 153
+Progress: resolved 524, reused 524, downloaded 0, added 248
+Progress: resolved 524, reused 524, downloaded 0, added 272
+Progress: resolved 524, reused 524, downloaded 0, added 273
+Progress: resolved 524, reused 524, downloaded 0, added 424
+Progress: resolved 524, reused 524, downloaded 0, added 425
+Progress: resolved 524, reused 524, downloaded 0, added 520
+Progress: resolved 524, reused 524, downloaded 0, added 522
+Progress: resolved 524, reused 524, downloaded 0, added 523
+Progress: resolved 524, reused 524, downloaded 0, added 524
+Progress: resolved 524, reused 524, downloaded 0, added 524, done
+.../esbuild@0.28.2/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.28.2/node_modules/esbuild postinstall: Done
+
+devDependencies:
++ @eslint/js 9.39.5
++ @types/node 24.19.2
++ eslint 9.39.5
++ eslint-config-prettier 10.1.8
++ globals 17.13.0
++ prettier 3.9.10
++ turbo 2.11.10
++ typescript 6.0.3
++ typescript-eslint 8.72.0
+
+. postinstall$ pnpm run generate
+. postinstall: > online-school@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline
+. postinstall: > pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate
+. postinstall: > @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\db
+. postinstall: > prisma generate
+. postinstall: Loaded Prisma config from prisma.config.ts.
+. postinstall: Prisma schema loaded from prisma\schema.prisma.
+. postinstall: ✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 591ms
+. postinstall: > @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\cleanup-baseline\packages\api-contracts
+. postinstall: > openapi-typescript openapi/openapi.json -o src/generated/openapi.ts
+. postinstall: ✨ openapi-typescript 7.13.0
+. postinstall: 🚀 openapi/openapi.json → src/generated/openapi.ts [148.4ms]
+. postinstall: Done
+╭ Warning ─────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│   Ignored build scripts: @scarf/scarf@1.4.0.                                 │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed     │
+│   to run scripts.                                                            │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+Done in 1m 44.1s using pnpm v10.34.9
