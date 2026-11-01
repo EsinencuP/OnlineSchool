@@ -1,0 +1,22 @@
+# OnlineSchool
+
+Public repository: https://github.com/EsinencuP/OnlineSchool
+Canonical branch: main
+Public source guide: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/PUBLIC_INDEX.md
+Machine-readable source catalogs: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/PUBLIC_FILES.json
+Complete public archive: https://codeload.github.com/EsinencuP/OnlineSchool/zip/refs/heads/main
+
+Teacher regulations: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/regul/online_academy_teacher_regulations_v1.0.md
+Manager regulations: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/regul/online_academy_manager_regulations_v1.0.md
+Roadmap v9.7 complete small parts: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/readable/roadmap-v9.7/README.md
+Original manager tasks and shared invariants: https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/readable/manager-tasks/README.md
+
+Student frontend: apps/student-cabinet/src/
+Manager frontend: apps/manager-web/src/
+QA frontend: apps/qa-shell/src/
+Student backend: apps/api/src/student/
+Manager backend: apps/api/src/modules/manager/
+Public visual sources: ref/ and template/ (WebP).
+
+Preserve source dates/statuses. Later explicit owner decisions govern the specified conflicts.
+Original STU task prompts are absent from the supplied local project; implementation reports are not substitutes for those prompts.

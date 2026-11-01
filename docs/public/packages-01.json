@@ -1,0 +1,69 @@
+{
+  "area": "packages",
+  "files": [
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/openapi/openapi.json"
+    },
+    {
+      "path": "packages/api-contracts/orval.config.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/orval.config.mjs"
+    },
+    {
+      "path": "packages/api-contracts/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/package.json"
+    },
+    {
+      "path": "packages/api-contracts/scripts/generate-openapi.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/scripts/generate-openapi.mjs"
+    },
+    {
+      "path": "packages/api-contracts/scripts/publish-client.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/scripts/publish-client.mjs"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/src/generated/client.ts"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/manager-error-codes.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/src/generated/manager-error-codes.ts"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/src/generated/openapi.ts"
+    },
+    {
+      "path": "packages/api-contracts/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/src/index.ts"
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/src/transport.ts"
+    },
+    {
+      "path": "packages/api-contracts/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/api-contracts/tsconfig.json"
+    },
+    {
+      "path": "packages/shared/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/shared/package.json"
+    },
+    {
+      "path": "packages/shared/src/index.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/shared/src/index.ts"
+    },
+    {
+      "path": "packages/shared/src/result.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/shared/src/result.ts"
+    },
+    {
+      "path": "packages/shared/test/result.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/shared/test/result.test.mjs"
+    },
+    {
+      "path": "packages/shared/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/shared/tsconfig.json"
+    }
+  ]
+}

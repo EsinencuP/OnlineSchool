@@ -1,0 +1,30 @@
+# Публичные каталоги файлов
+
+Для автоматического чтения GitHub-деревья не нужны. Каждый JSON содержит пути и прямую Raw-ссылку, без авторизации. Каталоги разбиты по 50 файлов.
+
+- repository, 50 файлов: [GitHub](repository-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/repository-01.json)
+- repository, 50 файлов: [GitHub](repository-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/repository-02.json)
+- repository, 26 файлов: [GitHub](repository-03.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/repository-03.json)
+- api, 50 файлов: [GitHub](api-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-01.json)
+- api, 50 файлов: [GitHub](api-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-02.json)
+- api, 50 файлов: [GitHub](api-03.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-03.json)
+- api, 50 файлов: [GitHub](api-04.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-04.json)
+- api, 50 файлов: [GitHub](api-05.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-05.json)
+- api, 17 файлов: [GitHub](api-06.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/api-06.json)
+- manager, 48 файлов: [GitHub](manager-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/manager-01.json)
+- qa, 20 файлов: [GitHub](qa-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/qa-01.json)
+- student, 23 файлов: [GitHub](student-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/student-01.json)
+- worker, 23 файлов: [GitHub](worker-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/worker-01.json)
+- documents, 50 файлов: [GitHub](documents-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/documents-01.json)
+- documents, 32 файлов: [GitHub](documents-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/documents-02.json)
+- packages, 16 файлов: [GitHub](packages-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/packages-01.json)
+- database, 50 файлов: [GitHub](database-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/database-01.json)
+- database, 20 файлов: [GitHub](database-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/database-02.json)
+- references, 50 файлов: [GitHub](references-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/references-01.json)
+- references, 17 файлов: [GitHub](references-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/references-02.json)
+- tests, 50 файлов: [GitHub](tests-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-01.json)
+- tests, 50 файлов: [GitHub](tests-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-02.json)
+- tests, 50 файлов: [GitHub](tests-03.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-03.json)
+- tests, 8 файлов: [GitHub](tests-04.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-04.json)
+
+[Общий машинный индекс](../../PUBLIC_FILES.json) · [Обзор источников](../../PUBLIC_INDEX.md)

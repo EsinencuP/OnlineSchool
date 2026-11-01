@@ -1,0 +1,205 @@
+{
+  "area": "repository",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.dockerignore"
+    },
+    {
+      "path": ".editorconfig",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.editorconfig"
+    },
+    {
+      "path": ".env.example",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.env.example"
+    },
+    {
+      "path": ".github/actions/setup/action.yml",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.github/actions/setup/action.yml"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.github/workflows/ci.yml"
+    },
+    {
+      "path": ".gitignore",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.gitignore"
+    },
+    {
+      "path": ".npmrc",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.npmrc"
+    },
+    {
+      "path": ".nvmrc",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.nvmrc"
+    },
+    {
+      "path": ".prettierignore",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.prettierignore"
+    },
+    {
+      "path": ".prettierrc.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/.prettierrc.json"
+    },
+    {
+      "path": "AGENTS.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/AGENTS.md"
+    },
+    {
+      "path": "Dockerfile.worker",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/Dockerfile.worker"
+    },
+    {
+      "path": "PHASE0_CHECKS.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/PHASE0_CHECKS.md"
+    },
+    {
+      "path": "PUBLIC_INDEX.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/PUBLIC_INDEX.md"
+    },
+    {
+      "path": "README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/README.md"
+    },
+    {
+      "path": "api/handler.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/api/handler.ts"
+    },
+    {
+      "path": "deliverables/staff_regulations_2026-10-26/Регламент_менеджера.docx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/deliverables/staff_regulations_2026-10-26/%D0%A0%D0%B5%D0%B3%D0%BB%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80%D0%B0.docx"
+    },
+    {
+      "path": "deliverables/staff_regulations_2026-10-26/Регламент_преподавателя.docx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/deliverables/staff_regulations_2026-10-26/%D0%A0%D0%B5%D0%B3%D0%BB%D0%B0%D0%BC%D0%B5%D0%BD%D1%82_%D0%BF%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F.docx"
+    },
+    {
+      "path": "docker-compose.vps.yml",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docker-compose.vps.yml"
+    },
+    {
+      "path": "docker-compose.yml",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docker-compose.yml"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/eslint.config.mjs"
+    },
+    {
+      "path": "infra/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/README.md"
+    },
+    {
+      "path": "infra/STU01_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU01_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU02_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU02_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU03_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU03_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU04_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU04_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU05_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU05_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU06_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU06_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU07_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU07_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU08_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU08_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU09_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU09_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU10_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU10_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU11_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU11_EVIDENCE.json"
+    },
+    {
+      "path": "infra/STU12_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/STU12_EVIDENCE.json"
+    },
+    {
+      "path": "infra/TASK13_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/TASK13_EVIDENCE.json"
+    },
+    {
+      "path": "infra/TASK14_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/TASK14_EVIDENCE.json"
+    },
+    {
+      "path": "infra/TASK15_EVIDENCE.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/TASK15_EVIDENCE.json"
+    },
+    {
+      "path": "infra/ci/integration.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/ci/integration.mjs"
+    },
+    {
+      "path": "infra/compose-smoke.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/compose-smoke.mjs"
+    },
+    {
+      "path": "infra/create-local-env.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/create-local-env.mjs"
+    },
+    {
+      "path": "infra/nginx/http.conf",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/nginx/http.conf"
+    },
+    {
+      "path": "infra/nginx/tls.conf.template",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/nginx/tls.conf.template"
+    },
+    {
+      "path": "infra/postgres/00-roles.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/postgres/00-roles.sql"
+    },
+    {
+      "path": "infra/prepare-source-export.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/prepare-source-export.mjs"
+    },
+    {
+      "path": "infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/DEPLOYMENT_REVIEW_2026-10-27.md"
+    },
+    {
+      "path": "infra/vercel/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/README.md"
+    },
+    {
+      "path": "infra/vercel/STU12_WORKING_DEPLOYMENT.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/STU12_WORKING_DEPLOYMENT.json"
+    },
+    {
+      "path": "infra/vercel/STU12_WORKING_DEPLOYMENT.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/STU12_WORKING_DEPLOYMENT.md"
+    },
+    {
+      "path": "infra/vercel/STUDENT_TEST_DATA_PLAN.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/STUDENT_TEST_DATA_PLAN.md"
+    },
+    {
+      "path": "infra/vercel/build.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/infra/vercel/build.mjs"
+    }
+  ]
+}

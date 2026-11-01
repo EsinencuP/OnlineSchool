@@ -1,0 +1,97 @@
+{
+  "area": "worker",
+  "files": [
+    {
+      "path": "apps/worker/.env.example",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/.env.example"
+    },
+    {
+      "path": "apps/worker/Dockerfile",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/Dockerfile"
+    },
+    {
+      "path": "apps/worker/WORKER.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/WORKER.md"
+    },
+    {
+      "path": "apps/worker/assets/fonts/NotoSans-Bold.ttf",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/assets/fonts/NotoSans-Bold.ttf"
+    },
+    {
+      "path": "apps/worker/assets/fonts/NotoSans-Regular.ttf",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/assets/fonts/NotoSans-Regular.ttf"
+    },
+    {
+      "path": "apps/worker/assets/fonts/OFL.txt",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/assets/fonts/OFL.txt"
+    },
+    {
+      "path": "apps/worker/assets/fonts/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/assets/fonts/README.md"
+    },
+    {
+      "path": "apps/worker/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/package.json"
+    },
+    {
+      "path": "apps/worker/src/contracts.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/contracts.ts"
+    },
+    {
+      "path": "apps/worker/src/education-pdf.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/education-pdf.ts"
+    },
+    {
+      "path": "apps/worker/src/handlers.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/handlers.ts"
+    },
+    {
+      "path": "apps/worker/src/heartbeat.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/heartbeat.ts"
+    },
+    {
+      "path": "apps/worker/src/main.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/main.ts"
+    },
+    {
+      "path": "apps/worker/src/notification-delivery.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/notification-delivery.ts"
+    },
+    {
+      "path": "apps/worker/src/notifications.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/notifications.ts"
+    },
+    {
+      "path": "apps/worker/src/outbox.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/outbox.ts"
+    },
+    {
+      "path": "apps/worker/src/pdf-exports.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/pdf-exports.ts"
+    },
+    {
+      "path": "apps/worker/src/recovery.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/recovery.ts"
+    },
+    {
+      "path": "apps/worker/src/worker.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/src/worker.module.ts"
+    },
+    {
+      "path": "apps/worker/test/config.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/test/config.test.mjs"
+    },
+    {
+      "path": "apps/worker/test/fixtures/crash-worker.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/test/fixtures/crash-worker.mjs"
+    },
+    {
+      "path": "apps/worker/test/integration/worker.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/test/integration/worker.test.mjs"
+    },
+    {
+      "path": "apps/worker/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/worker/tsconfig.json"
+    }
+  ]
+}

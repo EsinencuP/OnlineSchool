@@ -1,0 +1,205 @@
+{
+  "area": "database",
+  "files": [
+    {
+      "path": "packages/db/.env.example",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/.env.example"
+    },
+    {
+      "path": "packages/db/EDUCATION_INFRA.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/EDUCATION_INFRA.md"
+    },
+    {
+      "path": "packages/db/ERD.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/ERD.md"
+    },
+    {
+      "path": "packages/db/FINANCE.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/FINANCE.md"
+    },
+    {
+      "path": "packages/db/MIGRATIONS_SEED.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/MIGRATIONS_SEED.md"
+    },
+    {
+      "path": "packages/db/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/README.md"
+    },
+    {
+      "path": "packages/db/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/package.json"
+    },
+    {
+      "path": "packages/db/prisma.config.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma.config.ts"
+    },
+    {
+      "path": "packages/db/prisma.legacy.config.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma.legacy.config.ts"
+    },
+    {
+      "path": "packages/db/prisma/baseline-parts/task04-invariants.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/baseline-parts/task04-invariants.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261025210404_task02_identity_access_crm/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261025210404_task02_identity_access_crm/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026010000_task03_schedule_finance/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026010000_task03_schedule_finance/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026010100_task03_financial_invariants/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026010100_task03_financial_invariants/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026020100_task04_education_files_infra/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026020100_task04_education_files_infra/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026030000_task05_guards/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026030000_task05_guards/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026040000_task07_identity/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026040000_task07_identity/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026050000_task08_finance/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026050000_task08_finance/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026060000_task09_schedule/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026060000_task09_schedule/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026070000_task11_worker/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026070000_task11_worker/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/20261026080000_task12_qa_runtime/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/20261026080000_task12_qa_runtime/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/migration_lock.toml",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/migration_lock.toml"
+    },
+    {
+      "path": "packages/db/prisma/migrations-history/task02-task03-sha256.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations-history/task02-task03-sha256.json"
+    },
+    {
+      "path": "packages/db/prisma/migrations/.gitkeep",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/.gitkeep"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026020000_init/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026020000_init/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026030000_task05_guards/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026030000_task05_guards/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026040000_task07_identity/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026040000_task07_identity/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026050000_task08_finance/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026050000_task08_finance/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026060000_task09_schedule/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026060000_task09_schedule/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026070000_task11_worker/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026070000_task11_worker/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261026080000_task12_qa_runtime/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261026080000_task12_qa_runtime/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027090000_stu01_student_context/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027090000_stu01_student_context/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027100000_stu02_dashboard/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027100000_stu02_dashboard/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027110000_stu03_student_lessons/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027110000_stu03_student_lessons/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027120000_stu04_dispute_enums/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027120000_stu04_dispute_enums/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027120100_stu04_history_disputes/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027120100_stu04_history_disputes/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027130000_stu05_homework/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027130000_stu05_homework/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027140000_stu06_materials/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027140000_stu06_materials/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027150000_stu07_subscription/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027150000_stu07_subscription/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027160000_stu08_skill_level/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027160000_stu08_skill_level/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261028100000_stu10_notifications/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261028100000_stu10_notifications/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261028110000_stu11_profile_security/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261028110000_stu11_profile_security/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261028130000_stu12_runtime_profile_permissions/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261028130000_stu12_runtime_profile_permissions/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261031100000_mgr02_student_crm/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261031100000_mgr02_student_crm/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261031110000_mgr03_student_credentials/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261031110000_mgr03_student_credentials/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261031120000_mgr04_managed_subscriptions/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261031120000_mgr04_managed_subscriptions/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261031130000_mgr05_receipts/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261031130000_mgr05_receipts/migration.sql"
+    },
+    {
+      "path": "packages/db/prisma/migrations/20261031140000_mgr06_schedule/migration.sql",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/packages/db/prisma/migrations/20261031140000_mgr06_schedule/migration.sql"
+    }
+  ]
+}

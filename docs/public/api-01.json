@@ -1,0 +1,205 @@
+{
+  "area": "api",
+  "files": [
+    {
+      "path": "apps/api/.env.example",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/.env.example"
+    },
+    {
+      "path": "apps/api/CORE.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/CORE.md"
+    },
+    {
+      "path": "apps/api/Dockerfile",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/Dockerfile"
+    },
+    {
+      "path": "apps/api/FINANCE.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/FINANCE.md"
+    },
+    {
+      "path": "apps/api/IDENTITY.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/IDENTITY.md"
+    },
+    {
+      "path": "apps/api/OPENAPI.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/OPENAPI.md"
+    },
+    {
+      "path": "apps/api/SCHEDULE.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/SCHEDULE.md"
+    },
+    {
+      "path": "apps/api/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/package.json"
+    },
+    {
+      "path": "apps/api/scripts/export-openapi.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/scripts/export-openapi.mjs"
+    },
+    {
+      "path": "apps/api/src/app.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/app.module.ts"
+    },
+    {
+      "path": "apps/api/src/core/audit/audit.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/audit/audit.service.ts"
+    },
+    {
+      "path": "apps/api/src/core/core.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/core.module.ts"
+    },
+    {
+      "path": "apps/api/src/core/csrf/csrf.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/csrf/csrf.module.ts"
+    },
+    {
+      "path": "apps/api/src/core/database/database.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/database/database.module.ts"
+    },
+    {
+      "path": "apps/api/src/core/errors/app-exception.filter.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/errors/app-exception.filter.ts"
+    },
+    {
+      "path": "apps/api/src/core/errors/database-error.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/errors/database-error.ts"
+    },
+    {
+      "path": "apps/api/src/core/errors/domain-error.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/errors/domain-error.ts"
+    },
+    {
+      "path": "apps/api/src/core/errors/error-mapper.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/errors/error-mapper.ts"
+    },
+    {
+      "path": "apps/api/src/core/http.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/http.ts"
+    },
+    {
+      "path": "apps/api/src/core/idempotency/idempotency.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/idempotency/idempotency.module.ts"
+    },
+    {
+      "path": "apps/api/src/core/policy/policy.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/policy/policy.service.ts"
+    },
+    {
+      "path": "apps/api/src/core/rbac/decorators.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/rbac/decorators.ts"
+    },
+    {
+      "path": "apps/api/src/core/rbac/rbac.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/rbac/rbac.guard.ts"
+    },
+    {
+      "path": "apps/api/src/core/request-id/request-id.middleware.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/request-id/request-id.middleware.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/manager-password-policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/manager-password-policy.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/qa-password-policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/qa-password-policy.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/session.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/session.service.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/session.store.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/session.store.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/student-password-policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/student-password-policy.ts"
+    },
+    {
+      "path": "apps/api/src/core/session/webauthn-challenge.store.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/session/webauthn-challenge.store.ts"
+    },
+    {
+      "path": "apps/api/src/core/transaction/transaction.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/core/transaction/transaction.service.ts"
+    },
+    {
+      "path": "apps/api/src/main.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/main.ts"
+    },
+    {
+      "path": "apps/api/src/modules/crm/crm.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/crm/crm.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/crm/lead-data.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/crm/lead-data.ts"
+    },
+    {
+      "path": "apps/api/src/modules/crm/registry.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/crm/registry.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/crm/registry.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/crm/registry.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/education/education.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/education/education.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/entitlements.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/entitlements.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/expiry.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/expiry.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-access.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-access.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-common.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-common.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-events.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-events.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-infrastructure.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-infrastructure.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-ledger.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-ledger.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-scope.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance-scope.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/finance.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/ledger-publication.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/ledger-publication.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/manager-disputes/director.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/manager-disputes/director.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/finance/manager-disputes/dispute.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/finance/manager-disputes/dispute.service.ts"
+    }
+  ]
+}

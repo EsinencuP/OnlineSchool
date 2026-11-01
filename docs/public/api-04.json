@@ -1,0 +1,205 @@
+{
+  "area": "api",
+  "files": [
+    {
+      "path": "apps/api/src/modules/manager/tasks/manager-tasks.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/task-cursor.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/task-cursor.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/task-read.spec.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/task-read.spec.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/validators/is-money-string.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/validators/is-money-string.ts"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/notification-outbox.publisher.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/notifications/notification-outbox.publisher.ts"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/notification.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/notifications/notification.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/templates.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/notifications/templates.ts"
+    },
+    {
+      "path": "apps/api/src/modules/qa/qa.dto.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/qa/qa.dto.ts"
+    },
+    {
+      "path": "apps/api/src/modules/qa/qa.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/qa/qa.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/qa/worker-health.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/qa/worker-health.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/booking.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/booking.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/deadline.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/deadline.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/approval.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/approval.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/contracts.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/contracts.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/freeze-cancellation.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/freeze-cancellation.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/meet-link.port.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/meet-link.port.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/policy.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/manager/workflow.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/manager/workflow.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/meet-link.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/meet-link.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/outcomes.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/outcomes.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/recurrence.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/recurrence.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/registry.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/registry.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule-access.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule-access.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule-events.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule-events.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule-infrastructure.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule-infrastructure.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule-scope.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule-scope.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/schedule/schedule.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/storage/private-uploads.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/storage/private-uploads.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/storage/storage.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/storage/storage.module.ts"
+    },
+    {
+      "path": "apps/api/src/openapi/dto-validation.pipe.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/openapi/dto-validation.pipe.ts"
+    },
+    {
+      "path": "apps/api/src/openapi/dtos.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/openapi/dtos.ts"
+    },
+    {
+      "path": "apps/api/src/openapi/swagger.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/openapi/swagger.ts"
+    },
+    {
+      "path": "apps/api/src/serverless.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/serverless.ts"
+    },
+    {
+      "path": "apps/api/src/student/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/README.md"
+    },
+    {
+      "path": "apps/api/src/student/access-policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/access-policy.ts"
+    },
+    {
+      "path": "apps/api/src/student/active-subscription.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/active-subscription.guard.ts"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/dashboard/README.md"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/dashboard/dashboard-cache.interceptor.ts"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/dashboard/dashboard.controller.ts"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.dto.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/dashboard/dashboard.dto.ts"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/dashboard/dashboard.service.ts"
+    },
+    {
+      "path": "apps/api/src/student/history/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/README.md"
+    },
+    {
+      "path": "apps/api/src/student/history/dispute.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/dispute.service.ts"
+    },
+    {
+      "path": "apps/api/src/student/history/history.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.controller.ts"
+    },
+    {
+      "path": "apps/api/src/student/history/history.dto.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.dto.ts"
+    },
+    {
+      "path": "apps/api/src/student/history/history.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/history/history.service.ts"
+    },
+    {
+      "path": "apps/api/src/student/homework/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/README.md"
+    },
+    {
+      "path": "apps/api/src/student/homework/draft-expiry.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/student/homework/draft-expiry.module.ts"
+    }
+  ]
+}

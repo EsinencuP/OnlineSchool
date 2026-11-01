@@ -1,0 +1,205 @@
+{
+  "area": "tests",
+  "files": [
+    {
+      "path": "tests/integration/education-files.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/education-files.test.mjs"
+    },
+    {
+      "path": "tests/integration/finance.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/finance.test.mjs"
+    },
+    {
+      "path": "tests/integration/identity-crm.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/identity-crm.test.mjs"
+    },
+    {
+      "path": "tests/integration/recorded-sql.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/recorded-sql.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-dashboard-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-dashboard-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-history-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-history-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-homework-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-homework-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-lessons-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-lessons-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-materials-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-materials-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-notifications-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-notifications-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-reports-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-reports-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-security-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-security-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-skills-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-skills-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/student-subscription-readonly.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/student-subscription-readonly.test.mjs"
+    },
+    {
+      "path": "tests/integration/worker.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/integration/worker.test.mjs"
+    },
+    {
+      "path": "tests/support/api-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/api-fixture.mjs"
+    },
+    {
+      "path": "tests/support/education-pdf-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/education-pdf-fixture.mjs"
+    },
+    {
+      "path": "tests/support/homework-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/homework-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/http.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/http.mjs"
+    },
+    {
+      "path": "tests/support/live-identities.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/live-identities.mjs"
+    },
+    {
+      "path": "tests/support/manager-accounts-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-accounts-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-crm-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-crm-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-dashboard-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-dashboard-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-leads-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-leads-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-payments-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-payments-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-schedule-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-schedule-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-subscriptions-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-subscriptions-fixture.mjs"
+    },
+    {
+      "path": "tests/support/manager-tasks-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/manager-tasks-fixture.mjs"
+    },
+    {
+      "path": "tests/support/materials-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/materials-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/notification-storage.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/notification-storage.mjs"
+    },
+    {
+      "path": "tests/support/notifications-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/notifications-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/render-education-pdf-sample.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/render-education-pdf-sample.mjs"
+    },
+    {
+      "path": "tests/support/reports-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/reports-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/run-foundation.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/run-foundation.mjs"
+    },
+    {
+      "path": "tests/support/schema-contract.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/schema-contract.mjs"
+    },
+    {
+      "path": "tests/support/security-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/security-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/skills-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/skills-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/subscription-readonly-fixture.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/subscription-readonly-fixture.mjs"
+    },
+    {
+      "path": "tests/support/target.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/target.mjs"
+    },
+    {
+      "path": "tests/support/test-harness.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/support/test-harness.mjs"
+    },
+    {
+      "path": "tests/unit/erd-contract.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/erd-contract.test.mjs"
+    },
+    {
+      "path": "tests/unit/existing-foundation.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/existing-foundation.test.mjs"
+    },
+    {
+      "path": "tests/unit/http-transport.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/http-transport.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-accounts-http.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-accounts-http.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-accounts-sdk.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-accounts-sdk.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-accounts.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-accounts.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-architecture.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-architecture.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-dashboard-http.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-dashboard-http.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-dashboard-sdk.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-dashboard-sdk.test.mjs"
+    },
+    {
+      "path": "tests/unit/manager-dashboard.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/unit/manager-dashboard.test.mjs"
+    }
+  ]
+}

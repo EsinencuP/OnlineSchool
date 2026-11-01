@@ -33,6 +33,21 @@ https://onlineschool-xi.vercel.app. Используется единствен�
 - Цвета и шрифты заданы CSS-токенами. Секции появляются за 200 ms; reduced-motion
   отключает анимацию. Проверены desktop 1440, tablet 768 и mobile 390 без overflow.
 
+## Исходники настоящих кабинетов
+
+Ученический кабинет — [apps/student-cabinet/src/main.tsx](../student-cabinet/src/main.tsx),
+[router.tsx](../student-cabinet/src/router.tsx), `apps/student-cabinet/src/pages/`,
+[style.css](../student-cabinet/src/style.css).
+
+Кабинет менеджера — [apps/manager-web/src/main.tsx](../manager-web/src/main.tsx),
+[layout.tsx](../manager-web/src/components/layout.tsx), `apps/manager-web/src/pages/`,
+[style.css](../manager-web/src/style.css).
+
+[infra/vercel/build.mjs](../../infra/vercel/build.mjs) собирает самостоятельные
+React/Vite-приложения и размещает их под `/student` и `/manager` на одном домене.
+[Публичный индекс](../../PUBLIC_INDEX.md) содержит прямые Raw-ссылки, галереи,
+регламенты, исходные MGR-задачи и полную версию roadmap по небольшим частям.
+
 ## Сборка и запуск
 
 ```sh

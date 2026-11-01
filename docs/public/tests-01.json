@@ -1,0 +1,205 @@
+{
+  "area": "tests",
+  "files": [
+    {
+      "path": "tests/FOUNDATION_STATUS.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/FOUNDATION_STATUS.json"
+    },
+    {
+      "path": "tests/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/README.md"
+    },
+    {
+      "path": "tests/api/core.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/core.test.mjs"
+    },
+    {
+      "path": "tests/api/file-permissions.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/file-permissions.test.mjs"
+    },
+    {
+      "path": "tests/api/finance.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/finance.test.mjs"
+    },
+    {
+      "path": "tests/api/identity.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/identity.test.mjs"
+    },
+    {
+      "path": "tests/api/schedule.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/schedule.test.mjs"
+    },
+    {
+      "path": "tests/api/student-dashboard-live.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/student-dashboard-live.test.mjs"
+    },
+    {
+      "path": "tests/api/working-health.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/api/working-health.test.mjs"
+    },
+    {
+      "path": "tests/concurrent/commands.test.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/concurrent/commands.test.mjs"
+    },
+    {
+      "path": "tests/e2e/webauthn.spec.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/e2e/webauthn.spec.mjs"
+    },
+    {
+      "path": "tests/evidence/main-consolidation.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/main-consolidation.json"
+    },
+    {
+      "path": "tests/evidence/manager-password-login.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/manager-password-login.json"
+    },
+    {
+      "path": "tests/evidence/manager-password-production.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/manager-password-production.json"
+    },
+    {
+      "path": "tests/evidence/mgr03-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr03-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr03-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr03-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr04-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr04-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr04-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr04-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr05-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr05-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr05-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr05-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr06-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr06-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr06-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr06-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr07-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr07-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr07-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr07-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr08-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr08-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr08-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr08-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr09-load-report.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr09-load-report.json"
+    },
+    {
+      "path": "tests/evidence/mgr09-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr09-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr09-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr09-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr10-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr10-verification.json"
+    },
+    {
+      "path": "tests/evidence/mgr11-production.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr11-production.json"
+    },
+    {
+      "path": "tests/evidence/mgr11-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr11-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/mgr11-verification.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/mgr11-verification.json"
+    },
+    {
+      "path": "tests/evidence/platform-demo-base.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/platform-demo-base.json"
+    },
+    {
+      "path": "tests/evidence/qa-password-login.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/qa-password-login.json"
+    },
+    {
+      "path": "tests/evidence/qa-password-production.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/qa-password-production.json"
+    },
+    {
+      "path": "tests/evidence/stu02-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu02-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu03-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu03-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu04-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu04-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu05-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu05-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu06-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu06-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu07-readonly-projections.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu07-readonly-projections.json"
+    },
+    {
+      "path": "tests/evidence/stu08-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu08-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/stu09-pdf-review.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu09-pdf-review.json"
+    },
+    {
+      "path": "tests/evidence/stu09-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu09-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/stu10-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu10-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/stu11-browser.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu11-browser.json"
+    },
+    {
+      "path": "tests/evidence/stu11-sql-syntax.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/stu11-sql-syntax.json"
+    },
+    {
+      "path": "tests/evidence/task15-live-schema.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/task15-live-schema.json"
+    },
+    {
+      "path": "tests/evidence/task15-prisma-contract.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/tests/evidence/task15-prisma-contract.json"
+    }
+  ]
+}

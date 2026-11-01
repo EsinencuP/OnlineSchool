@@ -1,0 +1,197 @@
+{
+  "area": "manager",
+  "files": [
+    {
+      "path": "apps/manager-web/README.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/README.md"
+    },
+    {
+      "path": "apps/manager-web/index.html",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/index.html"
+    },
+    {
+      "path": "apps/manager-web/package.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/package.json"
+    },
+    {
+      "path": "apps/manager-web/playwright.config.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/playwright.config.mjs"
+    },
+    {
+      "path": "apps/manager-web/src/api/client.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/api/client.ts"
+    },
+    {
+      "path": "apps/manager-web/src/api/error-view.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/api/error-view.ts"
+    },
+    {
+      "path": "apps/manager-web/src/components/business-forms.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/business-forms.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/components/error-boundary.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/error-boundary.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/components/icon.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/icon.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/components/layout.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/layout.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/components/lead-form.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/lead-form.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/components/ui.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/components/ui.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-command.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/hooks/use-command.ts"
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-idempotency-key.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/hooks/use-idempotency-key.ts"
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-options.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/hooks/use-options.ts"
+    },
+    {
+      "path": "apps/manager-web/src/i18n/error-messages.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/i18n/error-messages.ts"
+    },
+    {
+      "path": "apps/manager-web/src/i18n/ru.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/i18n/ru.ts"
+    },
+    {
+      "path": "apps/manager-web/src/lib/money.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/lib/money.ts"
+    },
+    {
+      "path": "apps/manager-web/src/lib/time.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/lib/time.ts"
+    },
+    {
+      "path": "apps/manager-web/src/main.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/main.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Account.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Account.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Dashboard.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Dashboard.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Lead.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Lead.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Leads.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Leads.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Login.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Login.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Schedule.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Schedule.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Student.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Student.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Students.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Students.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Task.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Task.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Tasks.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/Tasks.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Notifications.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/student/Notifications.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Payments.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/student/Payments.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Subscriptions.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/pages/student/Subscriptions.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/routes.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/routes.ts"
+    },
+    {
+      "path": "apps/manager-web/src/session.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/session.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/style.css",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/style.css"
+    },
+    {
+      "path": "apps/manager-web/src/test/browser.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/browser.ts"
+    },
+    {
+      "path": "apps/manager-web/src/test/fixtures.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/fixtures.ts"
+    },
+    {
+      "path": "apps/manager-web/src/test/forms.test.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/forms.test.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/test/handlers.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/handlers.ts"
+    },
+    {
+      "path": "apps/manager-web/src/test/session.test.tsx",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/session.test.tsx"
+    },
+    {
+      "path": "apps/manager-web/src/test/setup.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/src/test/setup.ts"
+    },
+    {
+      "path": "apps/manager-web/test/leads.spec.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/test/leads.spec.mjs"
+    },
+    {
+      "path": "apps/manager-web/test/manager.spec.mjs",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/test/manager.spec.mjs"
+    },
+    {
+      "path": "apps/manager-web/test/public/mockServiceWorker.js",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/test/public/mockServiceWorker.js"
+    },
+    {
+      "path": "apps/manager-web/tsconfig.json",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/tsconfig.json"
+    },
+    {
+      "path": "apps/manager-web/vite.config.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/vite.config.ts"
+    },
+    {
+      "path": "apps/manager-web/vitest.config.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/manager-web/vitest.config.ts"
+    }
+  ]
+}

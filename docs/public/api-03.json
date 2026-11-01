@@ -1,0 +1,205 @@
+{
+  "area": "api",
+  "files": [
+    {
+      "path": "apps/api/src/modules/manager/errors/manager-payment.errors.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/errors/manager-schedule.errors.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/errors/manager-subscription.errors.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/errors/student-account.errors.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/errors/student-account.errors.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/finance/manager-finance.facade.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/finance/manager-finance.facade.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/guards/manager-context.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/guards/manager-context.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/guards/manager-route.decorator.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/guards/manager-route.decorator.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/MGR-11.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/MGR-11.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/events.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/events.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/lead-cursor.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/lead-cursor.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/manager-leads.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/manager-leads.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/manager-leads.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/manager-leads.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/manager-leads.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/manager-leads.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/policy.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/policy.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/summary.sql.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/summary.sql.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/leads/worker.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/leads/worker.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/manager.module.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/manager.module.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/me/manager-me.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/me/manager-me.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/me/manager-me.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/me/manager-me.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/notifications/MGR-08.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/notifications/MGR-08.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/notifications/manager-notifications.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/notifications/manager-notifications.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/notifications/manager-notifications.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/notifications/manager-notifications.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/notifications/manager-notifications.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/notifications/manager-notifications.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/options/manager-options.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/options/manager-options.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/options/manager-options.dto.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/options/manager-options.dto.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/options/manager-options.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/options/manager-options.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/payments/MGR-05.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/payments/MGR-05.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/payments/manager-payments.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/payments/manager-payments.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/payments/manager-payments.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/payments/manager-payments.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/payments/manager-payments.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/payments/manager-payments.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/schedule/MGR-06.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/schedule/MGR-06.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/schedule/manager-schedule.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/schedule/manager-schedule.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/schedule/manager-schedule.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/schedule/manager-schedule.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/schedule/manager-schedule.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/schedule/manager-schedule.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/schedule/schedule-read.spec.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/schedule/schedule-read.spec.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/scope/manager-scope.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/scope/manager-scope.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/MGR-02.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/MGR-02.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/manager-create.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/manager-create.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/manager-students.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/manager-students.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/manager-students.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/manager-students.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/student-cursor.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/student-cursor.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/student-status.sql.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/student-status.sql.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/students/students.read.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/students/students.read.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/subscriptions/MGR-04.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/subscriptions/MGR-04.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/subscriptions/manager-subscriptions.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/subscriptions/manager-subscriptions.controller.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/subscriptions/manager-subscriptions.guard.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/subscriptions/manager-subscriptions.guard.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/subscriptions/manager-subscriptions.service.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/subscriptions/manager-subscriptions.service.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/MGR-07.md",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/MGR-07.md"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/contracts.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/contracts.ts"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/manager-tasks.controller.ts",
+      "raw": "https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/apps/api/src/modules/manager/tasks/manager-tasks.controller.ts"
+    }
+  ]
+}
