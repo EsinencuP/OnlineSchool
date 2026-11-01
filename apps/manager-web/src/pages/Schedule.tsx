@@ -47,7 +47,7 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
   const me = useManager();
   const [params] = useSearchParams();
   const [date, setDate] = useState(schoolDate(me.timezone));
-  const [view, setView] = useState('week');
+  const [view, setView] = useState('list');
   const [studentId, setStudentId] = useState(fixedStudent ?? params.get('studentId') ?? '');
   const [status, setStatus] = useState('SCHEDULED');
   const [kind, setKind] = useState('');

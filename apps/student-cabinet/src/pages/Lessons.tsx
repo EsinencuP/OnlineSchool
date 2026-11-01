@@ -115,7 +115,7 @@ export function LessonList({ items }: { items: LessonCardDto[] }) {
   );
 }
 export function Lessons() {
-  const [period, setPeriod] = useState<'today' | 'week' | 'month' | 'archive'>('today'),
+  const [period, setPeriod] = useState<'today' | 'week' | 'month' | 'archive'>('month'),
     [view, setView] = useState('list'),
     [page, setPage] = useState(1),
     [month, setMonth] = useState(() => dayKey(new Date().toISOString()).slice(0, 7));
