@@ -4,34 +4,45 @@
 Исходный проект: [индекс](PUBLIC_INDEX.md) · [каталоги](PUBLIC_FILES.json).
 Production собирается из `main` одним проектом Vercel: API, worker и кабинеты.
 
-## Вход и смена пользователя
+## Логины и пароли для входа
 
-QA app удалён. Входите в платформу по логину и паролю. В любом кабинете нажмите
-**аккаунт справа сверху → Сменить пользователя** и выберите ученика, преподавателя,
-менеджера, руководителя или техоператора. Для тестовой школы повторный пароль
-при смене не нужен: сервер заменяет сессию и открывает соответствующий кабинет.
-Произвольное повышение роли обычного пользователя запрещено.
+**Общий вход для всех аккаунтов:** [onlineschool-xi.vercel.app/account](https://onlineschool-xi.vercel.app/account).
 
-[Ученик](https://onlineschool-xi.vercel.app/student) ·
-[Менеджер](https://onlineschool-xi.vercel.app/manager) ·
-[Преподаватель](https://onlineschool-xi.vercel.app/teacher) ·
-[Руководитель](https://onlineschool-xi.vercel.app/director).
+1. Откройте общий вход, даже если в браузере уже выполнен вход в другой аккаунт.
+2. Скопируйте **логин и пароль из одной строки** таблицы ниже и нажмите «Войти в кабинет».
+   Для прежних тестовых аккаунтов введите логин вручную в поле «Логин».
+3. Платформа автоматически откроет кабинет соответствующей роли.
 
-Тестовые доступы опубликованы по ранее явно подтверждённому решению владельца.
-Прежние аккаунты и пароли сохранены. Начать удобнее с Тамары, затем выбрать
-Анну, Андрея или Пашу через меню аккаунта.
+Ниже перечислены **все 13 тестовых аккаунтов с опубликованными доступами**.
+Логины и пароли сохранены без изменений; их публикация явно подтверждена владельцем.
+Для проверки наполненной школы начните с Тамары, Анны, Андрея, Елены или Паши.
 
-| Аккаунт              | Логин                           | Пароль                           |
-| -------------------- | ------------------------------- | -------------------------------- |
-| Менеджер Тамара      | `tamara.demo@onlineschool.test` | `Demo-YclL44xdblnx!26`           |
-| Руководитель Паша    | `pasha.demo@onlineschool.test`  | `Demo-FJBXSiFw6B4K!26`           |
-| Преподаватель Андрей | `andrei.demo@onlineschool.test` | `Demo-JHdkFLhaSsoS!26`           |
-| Преподаватель Елена  | `elena.demo@onlineschool.test`  | `Demo-Z0g9iCjGQzlD!26`           |
-| Ученик Анна Волкова  | `anna.demo@onlineschool.test`   | `Demo-2G-Mq0a4ZFH6GS5hKYqVoQ!26` |
-| Ученик Максим Русу   | `maksim.demo@onlineschool.test` | `Demo-SyGk1K_rOQ9nX3HA-709wg!26` |
-| Ученик София Ионеску | `sofia.demo@onlineschool.test`  | `Demo-NVMENpzJ6Hy2e60qcCWc2w!26` |
-| Ученик Даниил Марин  | `daniil.demo@onlineschool.test` | `Demo-Z0Rc9u1Mq5GdPQ34EEZ1IA!26` |
-| Технический оператор | `qa.tech@onlineschool.test`     | `QaTech!x8Voos3d22vxRK3i`        |
+| Аккаунт                          | Логин                           | Пароль                                | Кабинет                                                     |
+| -------------------------------- | ------------------------------- | ------------------------------------- | ----------------------------------------------------------- |
+| Менеджер Тамара                  | `tamara.demo@onlineschool.test` | `Demo-YclL44xdblnx!26`                | [Менеджер](https://onlineschool-xi.vercel.app/manager)      |
+| Руководитель Паша                | `pasha.demo@onlineschool.test`  | `Demo-FJBXSiFw6B4K!26`                | [Руководитель](https://onlineschool-xi.vercel.app/director) |
+| Преподаватель Андрей             | `andrei.demo@onlineschool.test` | `Demo-JHdkFLhaSsoS!26`                | [Преподаватель](https://onlineschool-xi.vercel.app/teacher) |
+| Преподаватель Елена              | `elena.demo@onlineschool.test`  | `Demo-Z0g9iCjGQzlD!26`                | [Преподаватель](https://onlineschool-xi.vercel.app/teacher) |
+| Ученик Анна Волкова              | `anna.demo@onlineschool.test`   | `Demo-2G-Mq0a4ZFH6GS5hKYqVoQ!26`      | [Ученик](https://onlineschool-xi.vercel.app/student)        |
+| Ученик Максим Русу               | `maksim.demo@onlineschool.test` | `Demo-SyGk1K_rOQ9nX3HA-709wg!26`      | [Ученик](https://onlineschool-xi.vercel.app/student)        |
+| Ученик София Ионеску             | `sofia.demo@onlineschool.test`  | `Demo-NVMENpzJ6Hy2e60qcCWc2w!26`      | [Ученик](https://onlineschool-xi.vercel.app/student)        |
+| Ученик Даниил Марин              | `daniil.demo@onlineschool.test` | `Demo-Z0Rc9u1Mq5GdPQ34EEZ1IA!26`      | [Ученик](https://onlineschool-xi.vercel.app/student)        |
+| Технический оператор             | `qa.tech@onlineschool.test`     | `QaTech!x8Voos3d22vxRK3i`             | [Техоператор](https://onlineschool-xi.vercel.app/operator)  |
+| Директор (прежний тестовый)      | `qa.director@onlineschool.test` | `QaDirector!iodJUyv_EqMLgvTD`         | [Руководитель](https://onlineschool-xi.vercel.app/director) |
+| Менеджер (прежний тестовый)      | `manager@onlineschool.test`     | `AcM-KH3I-LtLRwkjWcTbGhRK7`           | [Менеджер](https://onlineschool-xi.vercel.app/manager)      |
+| Преподаватель (прежний тестовый) | `qa.teacher@onlineschool.test`  | `QaTeacher!P8zDOsmx6Rd_iv2A`          | [Преподаватель](https://onlineschool-xi.vercel.app/teacher) |
+| Ученик (прежний тестовый)        | `themrack26@gmail.com`          | `Aa1JltHCIlBxrnVfFVsS28Y7gJP9cShQbgo` | [Ученик](https://onlineschool-xi.vercel.app/student)        |
+
+## Смена пользователя внутри кабинета
+
+Нажмите **аккаунт справа сверху → Сменить пользователя** и выберите ученика,
+преподавателя, менеджера, руководителя или техоператора из демонстрационной школы.
+Сессия и интерфейс кабинета изменятся вместе с пользователем; повторный пароль
+для этого переключения не нужен. Для прямого входа в любую строку таблицы
+используйте [общую форму входа](https://onlineschool-xi.vercel.app/account).
+
+Олег — CRM-карточка без аккаунта для входа, поэтому отдельного логина и пароля
+у него пока нет. QA app удалён; все перечисленные аккаунты входят в саму платформу.
 
 ## Тестовая школа
 
