@@ -5,7 +5,7 @@ import { DatabaseService } from '../../core/database/database.module.js';
 import { AuditService } from '../../core/audit/audit.service.js';
 import { AppException, domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import type { HttpRequest, CriticalContext } from '../../core/http.js';
-import { uuid } from '../identity/input.js';
+import { uuid } from '../../core/validation/input.js';
 import { FinanceAccess } from './finance-access.service.js';
 
 @Injectable()

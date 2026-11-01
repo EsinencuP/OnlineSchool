@@ -3,16 +3,16 @@ import { ApiHeader, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Module } from '@nestjs/common';
 import type { HealthResponse } from '@online-school/api-contracts';
 import { ok, SERVICE_NAMES } from '@online-school/shared';
-import { FinanceModule } from './modules/finance/finance.module.js';
-import { IdentityModule } from './modules/identity/identity.module.js';
-import { CrmModule } from './modules/crm/crm.module.js';
-import { ScheduleModule } from './modules/schedule/schedule.module.js';
-import { EducationModule } from './modules/education/education.module.js';
-import { StorageModule } from './modules/storage/storage.module.js';
-import { IntegrationsModule } from './modules/integrations/integrations.module.js';
+import { FinanceModule } from './modules/finance/index.js';
+import { IdentityModule } from './modules/identity/index.js';
+import { CrmModule } from './modules/crm/index.js';
+import { ScheduleModule } from './modules/schedule/index.js';
+import { EducationModule } from './modules/education/index.js';
+import { StorageModule } from './modules/storage/index.js';
+import { IntegrationsModule } from './modules/integrations/index.js';
 import { CoreModule } from './core/core.module.js';
 import { Public } from './core/rbac/decorators.js';
-import { QaModule } from './modules/qa/qa.module.js';
+import { QaModule } from './modules/qa/index.js';
 
 @Controller('health')
 export class HealthController {

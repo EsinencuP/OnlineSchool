@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@online-school/db';
 import type { CriticalContext } from '../../core/http.js';
 import { AuditService } from '../../core/audit/audit.service.js';
-import { at } from '../finance/finance-common.js';
+import { at } from '../finance/index.js';
 
 @Injectable()
 export class ScheduleEvents {

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@online-school/db';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import type { CriticalContext } from '../../core/http.js';
-import { object, string, uuid } from '../identity/input.js';
+import { object, string, uuid } from '../../core/validation/input.js';
 import { at, count, operation } from './finance-common.js';
 import { FinanceAccess } from './finance-access.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import { PolicyService } from '../../core/policy/policy.service.js';
-import { uuid } from '../identity/input.js';
+import { uuid } from '../../core/validation/input.js';
 
 @Injectable()
 export class ScheduleAccess {

@@ -9,7 +9,7 @@ import { constantEqual } from '../../core/csrf/csrf.module.js';
 import { randomToken, SessionStore, tokenHash } from '../../core/session/session.store.js';
 import { IdentityService, now } from './identity.service.js';
 import type { IdentityOutcome } from './identity.service.js';
-import { object, string, uuid } from './input.js';
+import { object, string, uuid } from '../../core/validation/input.js';
 
 @Injectable()
 export class RecoveryService {

@@ -12,7 +12,7 @@ import { Body, Controller, Delete, Param, Patch, Post, UseGuards } from '@nestjs
 import type { CriticalContext } from '../../core/http.js';
 import { CriticalCommand, CurrentTransaction } from '../../core/idempotency/idempotency.module.js';
 import { RequireMfa, RequirePermission, RequireRole } from '../../core/rbac/decorators.js';
-import { serialize } from '../finance/finance-common.js';
+import { serialize } from '../finance/index.js';
 import { ScheduleRegistry } from './registry.service.js';
 import { BookingService } from './booking.service.js';
 import { OutcomesService } from './outcomes.service.js';

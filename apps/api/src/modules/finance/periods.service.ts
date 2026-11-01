@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { DatabaseService } from '../../core/database/database.module.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
-import { object, uuid } from '../identity/input.js';
+import { object, uuid } from '../../core/validation/input.js';
 import { at } from './finance-common.js';
 import { FinanceAccess } from './finance-access.service.js';
 

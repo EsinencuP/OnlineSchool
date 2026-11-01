@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
-import { object, string, uuid } from '../identity/input.js';
-import { at, count, date } from '../finance/finance-common.js';
-import { TeacherRateService } from '../finance/teacher-rate.service.js';
+import { object, string, uuid } from '../../core/validation/input.js';
+import { at, count, date } from '../finance/index.js';
+import { TeacherRateService } from '../finance/index.js';
 import { ScheduleAccess } from './schedule-access.service.js';
 import { ScheduleEvents } from './schedule-events.service.js';
 import { admission } from './booking.service.js';

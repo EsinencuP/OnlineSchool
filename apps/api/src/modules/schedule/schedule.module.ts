@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { FinanceModule } from '../finance/finance.module.js';
+import { FinanceModule } from '../finance/index.js';
 import { ScheduleAccess } from './schedule-access.service.js';
 import { ScheduleEvents } from './schedule-events.service.js';
 import { ScheduleRegistry } from './registry.service.js';

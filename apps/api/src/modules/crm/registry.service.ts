@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import { PolicyService } from '../../core/policy/policy.service.js';
-import { email, object, string, uuid } from '../identity/input.js';
-import { now } from '../identity/identity.service.js';
+import { email, object, string, uuid } from '../../core/validation/input.js';
+import { databaseNow as now } from '@online-school/server-kernel';
 
 @Injectable()
 export class RegistryService {

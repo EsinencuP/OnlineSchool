@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
-import { object, string, uuid } from '../identity/input.js';
+import { object, string, uuid } from '../../core/validation/input.js';
 import { at, count, currency, date, Decimal, money, operation } from './finance-common.js';
 import { FinanceAccess } from './finance-access.service.js';
 import { FinanceEvents } from './finance-events.service.js';

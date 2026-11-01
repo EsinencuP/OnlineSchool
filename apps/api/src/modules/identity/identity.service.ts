@@ -30,7 +30,7 @@ import {
 } from '../../core/session/webauthn-challenge.store.js';
 import { TransactionService } from '../../core/transaction/transaction.service.js';
 import { AuthRateLimitService } from './auth-rate-limit.service.js';
-import { email, object } from './input.js';
+import { email, object } from '../../core/validation/input.js';
 import { Passwords } from './passwords.js';
 import { WebAuthnConfig } from './webauthn.config.js';
 

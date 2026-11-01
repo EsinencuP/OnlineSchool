@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import type { AccountContext, CriticalContext } from '../../core/http.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import { DatabaseService } from '../../core/database/database.module.js';
-import { object, string, uuid } from '../identity/input.js';
+import { object, string, uuid } from '../../core/validation/input.js';
 import { at, Decimal, money, operation } from './finance-common.js';
 import { FinanceAccess } from './finance-access.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';
