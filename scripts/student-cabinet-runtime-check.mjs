@@ -12,7 +12,9 @@ try {
       has_column_privilege(current_user,'auth_accounts','email_verified_at','UPDATE') AS verification,
       has_column_privilege(current_user,'student_accounts','must_change_password','UPDATE') AS bootstrap,
       has_column_privilege(current_user,'students','display_name','UPDATE') AS profile,
-      has_column_privilege(current_user,'students','avatar_file_id','UPDATE') AS avatar`;
+      has_column_privilege(current_user,'students','avatar_file_id','UPDATE') AS avatar,
+      has_table_privilege(current_user,'education_reports','SELECT') AS crm_reports,
+      has_table_privilege(current_user,'progress_checkpoints','SELECT') AS crm_checkpoints`;
     if (!Object.values(permissions).every(Boolean))
       throw new Error('Student runtime permissions incomplete');
   });
