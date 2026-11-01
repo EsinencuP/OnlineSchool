@@ -7,6 +7,7 @@ import { UUID } from '../http.js';
 import { DatabaseService } from '../database/database.module.js';
 import { domainError } from '../errors/domain-error.js';
 import type { DomainError } from '../errors/domain-error.js';
+import { managerPasswordOnlyLogin } from '../session/manager-password-policy.js';
 
 // Explicit command permissions. Tech operations confer no financial or scheduling authority.
 const permissions: Record<RoleCode, readonly string[]> = {
@@ -65,7 +66,7 @@ export class PolicyService {
       actor.kind !== 'STAFF' ||
       actor.roles.length !== 1 ||
       actor.roles[0] !== 'MANAGER' ||
-      !actor.mfaCompleted ||
+      (!actor.mfaCompleted && !managerPasswordOnlyLogin(actor)) ||
       actor.recoveryOnly
     )
       return err(domainError('FORBIDDEN_ROLE', 403));
@@ -83,7 +84,10 @@ export class PolicyService {
     studentId: string,
     tx?: Prisma.TransactionClient,
   ): Promise<Result<void, DomainError>> {
-    if (!UUID.test(studentId) || (!actor.mfaCompleted && actor.kind !== 'STUDENT'))
+    if (
+      !UUID.test(studentId) ||
+      (!actor.mfaCompleted && actor.kind !== 'STUDENT' && !managerPasswordOnlyLogin(actor))
+    )
       return err(domainError('FORBIDDEN', 403));
     const client = tx ?? this.db.client;
     const now = (await client.$queryRaw<{ now: Date }[]>`SELECT clock_timestamp() AS now`)[0]!.now;

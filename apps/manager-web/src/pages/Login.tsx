@@ -35,7 +35,8 @@ export default function Login() {
     const result = await command.run({ email: payload.email }, (o) => createSession(payload, o));
     payload.password = '';
     if (result && 'mfa_completed' in result) {
-      if (result.mfa_completed) navigate('/manager', { replace: true });
+      if (result.mfa_completed || result.manager_password_only)
+        navigate('/manager', { replace: true });
       else setMfa(true);
     }
   }

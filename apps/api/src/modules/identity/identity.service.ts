@@ -24,6 +24,7 @@ import {
   tokenHash,
 } from '../../core/session/session.store.js';
 import type { IssuedSession } from '../../core/session/session.store.js';
+import { managerPasswordOnlyLogin } from '../../core/session/manager-password-policy.js';
 import {
   clientChallenge,
   WebAuthnChallengeStore,
@@ -181,6 +182,9 @@ export class IdentityService {
     return {
       account: { id: account.id, kind: account.kind, roles },
       mfa_completed: mfa,
+      ...(managerPasswordOnlyLogin({ kind: account.kind, roles, recoveryOnly })
+        ? { manager_password_only: true }
+        : {}),
       recovery_only: recoveryOnly,
       expires_at: issued.expiresAt.toISOString(),
       csrfToken: issued.csrfToken,

@@ -22287,6 +22287,10 @@
           "mfa_completed": {
             "type": "boolean"
           },
+          "manager_password_only": {
+            "type": "boolean",
+            "description": "Temporary server-authorized password-only manager access; MFA remains unverified."
+          },
           "recovery_only": {
             "type": "boolean"
           },

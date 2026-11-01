@@ -389,6 +389,8 @@ export interface SessionResponseAccount {
 export interface SessionResponse {
   account: SessionResponseAccount;
   mfa_completed: boolean;
+  /** Temporary server-authorized password-only manager access; MFA remains unverified. */
+  manager_password_only?: boolean;
   recovery_only: boolean;
   expires_at: string;
   csrfToken?: string;

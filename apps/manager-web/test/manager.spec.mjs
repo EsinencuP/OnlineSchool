@@ -267,6 +267,24 @@ test('staff password login stops at MFA and never grants access itself', async (
   await noLeaks(page);
 });
 
+test('owner-enabled password-only manager login opens the cabinet without passkey', async ({
+  page,
+}) => {
+  await page.goto('/manager/login');
+  await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
+  await page.evaluate(() => {
+    window.__managerMock.passwordOnly = true;
+  });
+  await page.getByLabel('Email', { exact: true }).fill('manager@example.test');
+  await page.getByLabel('Пароль', { exact: true }).fill('Fixture-Password!47');
+  await page.getByRole('button', { name: 'Войти', exact: true }).click();
+  await expect(page.getByRole('navigation', { name: 'Меню' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Подтвердите вход ключом доступа' })).toHaveCount(
+    0,
+  );
+  await noLeaks(page);
+});
+
 test('leaving account page before completion suppresses a late password; logout clears every cache', async ({
   page,
 }) => {

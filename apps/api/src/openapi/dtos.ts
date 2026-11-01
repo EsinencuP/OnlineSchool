@@ -222,6 +222,15 @@ export class SessionResponse {
   @IsDefined()
   @IsBoolean()
   'mfa_completed'!: boolean;
+  @ApiProperty({
+    type: 'boolean',
+    required: false,
+    description:
+      'Temporary server-authorized password-only manager access; MFA remains unverified.',
+  } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
+  'manager_password_only'?: boolean;
   @ApiProperty({ type: 'boolean', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsBoolean()
@@ -1279,7 +1288,11 @@ export class PaymentRegisterRequest {
   @IsString()
   @Matches(new RegExp('^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,4})?$'))
   'amount'!: string;
-  @ApiProperty({ type: 'string', enum: SUPPORTED_RECEIPT_CURRENCIES, required: true } as ApiPropertyOptions)
+  @ApiProperty({
+    type: 'string',
+    enum: SUPPORTED_RECEIPT_CURRENCIES,
+    required: true,
+  } as ApiPropertyOptions)
   @IsDefined()
   @IsString()
   @IsIn(SUPPORTED_RECEIPT_CURRENCIES)
@@ -2308,6 +2321,10 @@ export class CreateSessionResponse {
   @ApiProperty({ type: 'boolean', required: false } as ApiPropertyOptions)
   @IsOptional()
   @IsBoolean()
+  'manager_password_only'?: boolean;
+  @ApiProperty({ type: 'boolean', required: false } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
   'recovery_only'?: boolean;
   @ApiProperty({ type: 'string', format: 'date-time', required: false } as ApiPropertyOptions)
   @IsOptional()
@@ -2578,14 +2595,53 @@ export const SCHEMA_OVERRIDES = {
   },
 };
 export const SCHEMA_ADDITIONAL_PROPERTIES = {
-  DashboardQueryDto:false,ManagerDashboardDto:false,DashboardStudentCountsDto:false,DashboardLessonDto:false,DashboardTaskDto:false,DashboardOverdueTasksDto:false,DashboardSubscriptionDto:false,DashboardCurrencyTotalDto:false,DashboardPendingPaymentsDto:false,
-  SendManagerNotificationDto:false,ListManagerNotificationsDto:false,ManagerNotificationDto:false,ManagerNotificationPageDto:false,
-  ClaimManagerTaskDto:false,ResolveManagerRescheduleDto:false,ResolveManagerDisputeDto:false,ManagerTaskDto:false,ManagerTaskPageDto:false,ManagerTaskDetailDto:false,TaskPreferredWindowDto:false,TaskReschedulePayloadDto:false,TaskDisputePayloadDto:false,TaskExpiringPayloadDto:false,TaskGeneralPayloadDto:false,ApproveCrmDisputeDto:false,CrmDisputeResolutionDto:false,CrmDisputeReviewDto:false,
-  ScheduleChangeReviewDto:false,
-  ListManagerScheduleDto:false,CreateManagerLessonDto:false,RescheduleManagerLessonDto:false,CancelManagerLessonDto:false,SetManagerMeetDto:false,EmptyManagerScheduleDto:false,ManagerLessonDto:false,ApproveScheduleChangeDto:false,ScheduleChangeApprovalDto:false,
-  CreateManagerPaymentDto:false,ConfirmManagerPaymentDto:false,RejectManagerPaymentDto:false,
-  PrepareManagerDistributionDto:false,AllocateManagerPaymentDto:false,ListManagerPaymentsQueryDto:false,
-  ManagerPaymentDto:false,ManagerPaymentPageDto:false,ManagerDistributionDto:false,ManagerDistributionPageDto:false,
+  DashboardQueryDto: false,
+  ManagerDashboardDto: false,
+  DashboardStudentCountsDto: false,
+  DashboardLessonDto: false,
+  DashboardTaskDto: false,
+  DashboardOverdueTasksDto: false,
+  DashboardSubscriptionDto: false,
+  DashboardCurrencyTotalDto: false,
+  DashboardPendingPaymentsDto: false,
+  SendManagerNotificationDto: false,
+  ListManagerNotificationsDto: false,
+  ManagerNotificationDto: false,
+  ManagerNotificationPageDto: false,
+  ClaimManagerTaskDto: false,
+  ResolveManagerRescheduleDto: false,
+  ResolveManagerDisputeDto: false,
+  ManagerTaskDto: false,
+  ManagerTaskPageDto: false,
+  ManagerTaskDetailDto: false,
+  TaskPreferredWindowDto: false,
+  TaskReschedulePayloadDto: false,
+  TaskDisputePayloadDto: false,
+  TaskExpiringPayloadDto: false,
+  TaskGeneralPayloadDto: false,
+  ApproveCrmDisputeDto: false,
+  CrmDisputeResolutionDto: false,
+  CrmDisputeReviewDto: false,
+  ScheduleChangeReviewDto: false,
+  ListManagerScheduleDto: false,
+  CreateManagerLessonDto: false,
+  RescheduleManagerLessonDto: false,
+  CancelManagerLessonDto: false,
+  SetManagerMeetDto: false,
+  EmptyManagerScheduleDto: false,
+  ManagerLessonDto: false,
+  ApproveScheduleChangeDto: false,
+  ScheduleChangeApprovalDto: false,
+  CreateManagerPaymentDto: false,
+  ConfirmManagerPaymentDto: false,
+  RejectManagerPaymentDto: false,
+  PrepareManagerDistributionDto: false,
+  AllocateManagerPaymentDto: false,
+  ListManagerPaymentsQueryDto: false,
+  ManagerPaymentDto: false,
+  ManagerPaymentPageDto: false,
+  ManagerDistributionDto: false,
+  ManagerDistributionPageDto: false,
   CreateManagerSubscriptionDto: false,
   RenewManagerSubscriptionDto: false,
   FreezeManagerSubscriptionDto: false,

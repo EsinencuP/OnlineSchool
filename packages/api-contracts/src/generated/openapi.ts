@@ -4030,6 +4030,8 @@ export interface components {
         SessionResponse: {
             account: components["schemas"]["SessionResponseAccount"];
             mfa_completed: boolean;
+            /** @description Temporary server-authorized password-only manager access; MFA remains unverified. */
+            manager_password_only?: boolean;
             recovery_only: boolean;
             /** Format: date-time */
             expires_at: string;

@@ -13,6 +13,7 @@ import type { DomainError } from '../errors/domain-error.js';
 import { cookie } from '../http.js';
 import type { AccountContext, HttpRequest } from '../http.js';
 import { ACCESS } from './decorators.js';
+import { managerPasswordOnlyLogin } from '../session/manager-password-policy.js';
 import {
   studentPasswordChangeRoute,
   studentLogoutRoute,
@@ -87,6 +88,12 @@ export class AccessService {
       /^\/api\/v1\/auth\/webauthn\/(register|authenticate)\/(start|finish)$/.test(path ?? '');
     if (
       !actor.mfaCompleted &&
+      !(
+        managerPasswordOnlyLogin(actor) &&
+        this.metadata<boolean>(ACCESS.managerProfileErrors, context) === true &&
+        path?.startsWith('/api/v1/manager/') &&
+        !this.metadata<boolean>(ACCESS.mfa, context)
+      ) &&
       (this.metadata<boolean>(ACCESS.mfa, context) || (actor.kind !== 'STUDENT' && !preMfa))
     )
       return err(domainError('MFA_REQUIRED', 403));

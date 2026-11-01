@@ -31,6 +31,7 @@ const operations = Object.entries(openapi.paths).flatMap(([path, item]) =>
   })),
 );
 export const mockState = {
+  passwordOnly: false,
   leads: [structuredClone(lead)] as LeadDto[],
   student: structuredClone(student),
   subscriptions: [structuredClone(subscription)],
@@ -256,6 +257,7 @@ export const handlers = [
     json({
       account: { id: ids.manager, kind: 'STAFF', roles: ['MANAGER'] },
       mfa_completed: false,
+      ...(mockState.passwordOnly ? { manager_password_only: true } : {}),
       recovery_only: false,
       expires_at: new Date(Date.now() + 3600000).toISOString(),
     }),
