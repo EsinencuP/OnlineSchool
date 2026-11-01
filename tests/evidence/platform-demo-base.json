@@ -1,0 +1,185 @@
+{
+  "checkedAt": "2026-11-01T16:27:59.172Z",
+  "origin": "https://onlineschool-xi.vercel.app",
+  "sourceCommit": "d8e3a0c5702e07fe1b7a380fbd86da655ba8dedc",
+  "deploymentId": "dpl_7jbPMXDouL5NGaCtTGhuRt98r9N6",
+  "deploymentStatus": "READY",
+  "status": "BASE_READY_FINANCE_APPROVAL_PENDING",
+  "baseAppliedAt": "2026-11-01T16:13:45.595Z",
+  "identities": [
+    {
+      "role": "MANAGER",
+      "login": "tamara.demo@onlineschool.test",
+      "status": 200,
+      "passwordOnly": true,
+      "components": {
+        "api": "ok",
+        "db": "ok",
+        "worker": "ok"
+      }
+    },
+    {
+      "role": "DIRECTOR",
+      "login": "pasha.demo@onlineschool.test",
+      "status": 200,
+      "passwordOnly": true,
+      "components": {
+        "api": "ok",
+        "db": "ok",
+        "worker": "ok"
+      }
+    },
+    {
+      "role": "TEACHER",
+      "login": "andrei.demo@onlineschool.test",
+      "status": 200,
+      "passwordOnly": true,
+      "components": {
+        "api": "ok",
+        "db": "ok",
+        "worker": "ok"
+      }
+    },
+    {
+      "role": "TEACHER",
+      "login": "elena.demo@onlineschool.test",
+      "status": 200,
+      "passwordOnly": true,
+      "components": {
+        "api": "ok",
+        "db": "ok",
+        "worker": "ok"
+      }
+    },
+    {
+      "role": "MANAGER",
+      "login": "manager@onlineschool.test",
+      "status": 200,
+      "passwordOnly": true,
+      "demoStudentInOtherPortfolio": "404 STUDENT_NOT_FOUND",
+      "components": {
+        "api": "ok",
+        "db": "ok",
+        "worker": "ok"
+      }
+    }
+  ],
+  "cards": [
+    {
+      "key": "anna",
+      "studentId": "8f712b6c-604b-5798-9b1c-fce86a7777ae",
+      "status": "LEAD",
+      "hasAccount": false,
+      "homeworkPending": 1,
+      "balances": [
+        {
+          "currency": "MDL",
+          "amount": "0.0000"
+        }
+      ]
+    },
+    {
+      "key": "maksim",
+      "studentId": "1203cfc2-d461-5493-956c-ddee597b2e5b",
+      "status": "LEAD",
+      "hasAccount": false,
+      "homeworkPending": 1,
+      "balances": [
+        {
+          "currency": "MDL",
+          "amount": "0.0000"
+        }
+      ]
+    },
+    {
+      "key": "sofia",
+      "studentId": "8a1b60b9-75fb-51a1-8903-b86648165a68",
+      "status": "LEAD",
+      "hasAccount": false,
+      "homeworkPending": 1,
+      "balances": [
+        {
+          "currency": "MDL",
+          "amount": "0.0000"
+        }
+      ]
+    },
+    {
+      "key": "daniil",
+      "studentId": "c2ab844b-2aa8-5de6-96e1-c791c8747a6f",
+      "status": "LEAD",
+      "hasAccount": false,
+      "homeworkPending": 1,
+      "balances": [
+        {
+          "currency": "MDL",
+          "amount": "0.0000"
+        }
+      ]
+    },
+    {
+      "key": "oleg",
+      "studentId": "6b3808ab-6174-5df7-92a1-6db3a7f0a9b0",
+      "status": "LEAD",
+      "hasAccount": false,
+      "homeworkPending": 0,
+      "balances": [
+        {
+          "currency": "MDL",
+          "amount": "0.0000"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "portfolioStudents": 5,
+    "teachers": 2,
+    "assignmentsPerTeacher": 2,
+    "trialRequests": 1,
+    "homeworkDeliveries": 4,
+    "visibleManagerTasks": 4,
+    "newStudentAccounts": 0,
+    "newReceipts": 0
+  },
+  "idempotence": "PLATFORM_DEMO_IDEMPOTENCE_OK",
+  "outbox": "DELIVERED",
+  "setup": {
+    "window": "0",
+    "hashes": "[]",
+    "enabled": false
+  },
+  "runtimeFix": {
+    "previousReportsRead": false,
+    "previousCheckpointsRead": false,
+    "currentReportsRead": true,
+    "currentCheckpointsRead": true,
+    "migration": "20261101120000_mgr02_report_read_permissions",
+    "existingMigrationsEdited": false
+  },
+  "browser": {
+    "provider": "Playwright MCP",
+    "passwordLogin": "PASS",
+    "routes": [
+      "/manager",
+      "/manager/students",
+      "/manager/students/8f712b6c-604b-5798-9b1c-fce86a7777ae",
+      "/manager/leads",
+      "/manager/tasks"
+    ],
+    "studentSubjectAndTeacher": "[ДЕМО] Математика / [ДЕМО] Андрей Мельник",
+    "unexpectedConsoleErrors": 0,
+    "expectedAnonymousResponse": "401 before login"
+  },
+  "checks": {
+    "seedSafetyTests": 4,
+    "managerCrmTests": 19,
+    "workerTypecheck": "PASS",
+    "qaTypecheck": "PASS",
+    "changedFileLint": "PASS"
+  },
+  "limitations": [
+    "Paid stage is prepared but not run: no published synthetic receipts/allocations, managed subscriptions, regular lessons, four new student logins, or in-app messages yet. Owner finance answer remains pending.",
+    "Local standalone Chromium navigation timed out; live UI verification completed through Playwright MCP.",
+    "Full repository regression gate not rerun for this dataset task."
+  ]
+}
