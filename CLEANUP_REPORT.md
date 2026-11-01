@@ -1,6 +1,8 @@
-# CLEANUP_REPORT — фазы 0–4
+# CLEANUP_REPORT — фазы 0–5
 
 Дата: 01.11.2026, Europe/Chisinau. Начало измеряемого прогона: 01.11.2026, 14:48:48.
+
+Итог для ревью: [Фаза 5 — восемь разделов, финальный прогон и ограничения](#фаза-5--итоговая-сводка-для-pr). Предыдущие разделы сохраняют историю отдельных фаз.
 
 ## Область и неизменность
 
@@ -636,3 +638,160 @@ README-добавления; с PR #4 — .dockerignore, с PR #2 — README. П
 [pnpm 10 Docker](https://pnpm.io/10.x/docker), [pnpm 10 deploy](https://pnpm.io/10.x/cli/deploy).
 Результаты выше основаны на локальных измерениях закреплённых версий, не на обещаниях
 из документации. В сохранённых копиях логов удалён только trailing whitespace.
+
+# Фаза 5 — итоговая сводка для PR
+
+Дата: 01.11.2026, Europe/Chisinau. Ветка: `chore/repo-cleanup`, база — актуальный `origin/main` `d6e5c6116dd79948ebad988d1852b7b65d37b1f1`. Код финального прогона: `310040e` (после него в фазе 5 меняются только отчёт и evidence). Main повторно проверен на remote и не изменился. Итоговая сводка дополняет исторические записи фаз 0–4; они не заменяют этот финальный статус.
+
+**Статус для ревью:** структура/сборка улучшены, бизнес-контракты и DB-артефакты сохранены. Полная унификация DTO/controller не завершена; format gate остаётся красным по исходному долгу. Это не production GO и не закрытие FND-GATE.
+
+## Финальный прогон по правилу 7
+
+В фазе 5 выполнена **ровно одна** последовательность всех шести требуемых команд. Более ранние прогоны фаз 0 и 4 — отдельные датированные свидетельства, не подмена этого запуска.
+
+| Команда             | Результат                   | Wall time, мс | Лог                                                      |
+| ------------------- | --------------------------- | ------------- | -------------------------------------------------------- |
+| `pnpm -r typecheck` | PASS                        | 32476         | [1.txt](docs/repo-cleanup/2026-11-01/phase5/final/1.txt) |
+| `pnpm -r build`     | PASS                        | 9266          | [2.txt](docs/repo-cleanup/2026-11-01/phase5/final/2.txt) |
+| `pnpm -r lint`      | PASS                        | 23068         | [3.txt](docs/repo-cleanup/2026-11-01/phase5/final/3.txt) |
+| `pnpm test`         | PASS                        | 37315         | [4.txt](docs/repo-cleanup/2026-11-01/phase5/final/4.txt) |
+| `pnpm format:check` | FAIL — исходный format-долг | 5880          | [5.txt](docs/repo-cleanup/2026-11-01/phase5/final/5.txt) |
+| `pnpm generate`     | PASS                        | 4713          | [6.txt](docs/repo-cleanup/2026-11-01/phase5/final/6.txt) |
+
+`pnpm test`: API 10 + worker 2 + DB clients 3 + shared 3 + contracts generator 2 + monorepo smoke 2 = **22/22**. Исходные 18 тестов по прежним именам/сценариям сохранены и прошли; добавлены четыре проверки JSON/generator. Проверки DB client не являются реальной DB-регрессией. Все 154 предупреждения format:check совпадают с фазой 4, новых/исчезнувших путей — 0. По явному решению владельца исходные ошибки сохранены, откату подлежат новые регрессии. Защищённый OpenAPI и старые документы ради format не переписывались.
+
+Адресные финальные проверки: 13/13 fixtures правил границ; Madge 8.0.0 через pnpm dlx — **105 файлов, 392 ребра, 0 циклов**, unresolved local imports 0; ESLint новых infra/scripts PASS; Nest/Swagger in-memory полностью совпал с checked-in OpenAPI. Повторный полный прогон после этого не запускался.
+
+[Машинные результаты](docs/repo-cleanup/2026-11-01/phase5/final/results.json), [дополнительные проверки](docs/repo-cleanup/2026-11-01/phase5/extra-checks.json), [финальные инварианты и размеры](docs/repo-cleanup/2026-11-01/phase5/final-evidence.json).
+
+## 1. База «до» и «после» по метрикам
+
+| Метрика                               | Исходный main, фаза 0                                            | Финальная линия cleanup          | Границы сравнения                                                        |
+| ------------------------------------- | ---------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| Workspace-пакеты без root             | 6                                                                | 8                                | Добавлены kernel/jobs; исходные приложения сохранены                     |
+| Холодный Turbo build                  | 31 566 мс, 0/6 cached                                            | 45 482 мс, 0/8 cached (фаза 4)   | Разный граф и одиночные пробы; ускорение относительно main не заявляется |
+| Тёплый Turbo build                    | 495 мс, 6/6 cached                                               | 712 мс, 8/8 cached (фаза 4)      | Все задачи из кэша; ускорение wall time не заявляется                    |
+| API Markdown-only edit                | 2 изменённых build-хеша перед оптимизацией фазы 4                | 0 после                          | Контрольный dry-run до/после, см. фазу 4                                 |
+| Пропущенные cache inputs              | общий tsconfig/helper/SHA не учитывались                         | Учитываются                      | Проверены временными probes, байты восстановлены                         |
+| Unit + monorepo smoke                 | 18/18 PASS                                                       | 22/22 PASS                       | +4 осмысленных теста; real DB не проверялась                             |
+| typecheck/build/lint                  | PASS                                                             | PASS                             | Разные команды/кэш/граф; времена финального прогона выше                 |
+| Общий format                          | Исходный долг в раннем общем прогоне                             | FAIL, 154 файла Windows checkout | CRLF и 4 исходно неформатированных LF blobs; новые предупреждения 0      |
+| Frontend JS, байт                     | 183 042                                                          | 183 042                          | Только актуальный entry chunk; без увеличения                            |
+| Frontend CSS / HTML, байт             | 9 592 / 454                                                      | 9 592 / 454                      | Состав и размеры прежние                                                 |
+| API Docker image Size, байт           | 1 181 208 848                                                    | 1 003 093 950                    | −178 114 898 байт (около 15,1%) к исходному main                         |
+| Worker Docker image Size, байт        | 1 181 598 995                                                    | 1 003 498 234                    | −178 100 761 байт (около 15,1%) к исходному main                         |
+| OpenAPI Git blob SHA-256              | f32a2cf03eca4db077ddc88e1f844aa5c0cfcd724353357f062573b635ccec9f | Тот же                           | Checked-in JSON и generated SDK/types git diff пустой                    |
+| Внешние lockfile packages / snapshots | 579 / 579                                                        | 579 / 579                        | Оба раздела идентичны, версии не обновлялись                             |
+
+Выигрыш Docker собственно фазы 4 относительно расширенной структуры фазы 3 — около 179 МБ на образ; таблица здесь сравнивает со **старым main**, поэтому дельта немного другая. Docker Size не равен registry download/уникальному расходу диска. Host OS/pnpm cache и Docker builder cache не очищались. Скорость холодного старта/пользовательский latency и N+1 не оптимизировались.
+
+Размеры dist (логические байты с declarations/maps; не node_modules):
+
+| Каталог                       | Main, фаза 0 | Фактически в локальном dist после итогового прогона | Актуальные compiler outputs / HTML-referenced frontend |
+| ----------------------------- | ------------ | --------------------------------------------------- | ------------------------------------------------------ |
+| `apps/api/dist`               | 1084366      | 1064184                                             | 1034555                                                |
+| `apps/worker/dist`            | 74129        | 73900                                               | 73900                                                  |
+| `apps/qa-shell/dist`          | 193088       | 376130                                              | 193088                                                 |
+| `packages/api-contracts/dist` | 502419       | 502419                                              | 502419                                                 |
+| `packages/db/dist`            | 15253344     | 15253344                                            | 15253344                                               |
+| `packages/db/dist-tools`      | 117885       | 118025                                              | 118025                                                 |
+| `packages/shared/dist`        | 2143         | 3082                                                | 3082                                                   |
+| `packages/server-kernel/dist` | —            | 22939                                               | 22939                                                  |
+| `packages/jobs/dist`          | —            | 42873                                               | 42873                                                  |
+
+У API локально остались **32 файла / 29 629 байт** от откатанной DTO-попытки; tsc не удаляет outputs исчезнувших source files. В qa-shell лежат два timestamp-разных JS-файла по 183 042 байта; HTML ссылается на один. Фактический frontend dist — 376 130 байт, актуальный HTML+CSS+JS — **193 088**, как в main. Остатки появились при прежних пробах/аддитивном cache restore, не входят в tracked source и не включались в Docker context. В фазе 5 они не удалялись и не выдаются за рост используемого bundle. Для следующей сборочной задачи остаётся проверка очистки stale outputs/cache после отката/перемещений; это ограничение локальных измерений, не скрытая экономия.
+
+## 2. Удалённое и доказательства
+
+Полностью удалённых tracked файлов приложения/инфраструктуры — **0**. Убраны только четыре лишних export modifier, сами определения и локальные вызовы сохранены:
+
+| Путь / декларация                                | Удалено     | Доказательство отсутствия внешнего использования                                    | Коммит  |
+| ------------------------------------------------ | ----------- | ----------------------------------------------------------------------------------- | ------- |
+| core/session/session.store.ts: SESSION_TTL_MS    | export      | Knip и поиск HEAD + активных веток: только локальный expiresAt; без DI/Swagger      | ebf7779 |
+| modules/finance/finance-ledger.service.ts: pair  | export      | Все вызовы в том же файле; string/dynamic/DI/metadata refs не обнаружены            | ebf7779 |
+| modules/identity/identity.service.ts: userHandle | export      | Локальный WebAuthn helper; response.userHandle — данные протокола, не import        | ebf7779 |
+| apps/qa-shell/src/scenarios.ts: Role             | export type | App импортирует Action/Field/Values, внешних Role imports нет; emitted JS идентичен | ebf7779 |
+
+Первые три пути относительны `apps/api/src/`. Во всех четырёх случаях class/function AST идентичен, кроме export. Полные пути, результаты поиска по всему репозиторию, конфигам/SQL/seed/активным веткам и retained candidates — [фаза 1](docs/repo-cleanup/2026-11-01/phase1/evidence.json), [декларации](docs/repo-cleanup/2026-11-01/phase1/removed.json). Цель не подменялась количеством удалённых строк. Неиспользуемые на вид entrypoints, публичные extension tokens, эксплуатационные scripts и generated declarations оставлены.
+
+## 3. Перенесённое и переименованное
+
+| Раньше                                              | Теперь                                                  | Сохранение поведения                                                                  |
+| --------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| API core database/transaction/audit implementations | packages/server-kernel/src/{database,transaction,audit} | Старые пути реэкспортируют те же классы/модули; AST + DI identities проверены         |
+| API core errors/domain-error.ts implementation      | packages/server-kernel/src/errors/domain-error.ts       | Единственная throw-граница перенесена; старые exports и DTO alias сохранены           |
+| AccountContext в core/http.ts                       | kernel/contracts/account-context.ts                     | Type re-export в старом HTTP пути                                                     |
+| Finance expiry.module.ts implementation             | packages/jobs/src/finance-expiry module/service         | Существующие API exports/subpath и class identity сохранены                           |
+| Schedule deadline.module.ts implementation          | packages/jobs/src/schedule-deadline module/service      | Те же классы и алгоритмы                                                              |
+| Identity input.ts implementation                    | core/validation/input.ts                                | Старый путь реэкспортирует функции; остальные домены не зависят от Identity internals |
+| Finance/Schedule JSON snapshots                     | shared/src/json.ts                                      | Нативные JSON/Date/Decimal.toJSON и BigInt failure сохранены                          |
+| Identity now / Finance at / worker dbNow            | kernel/database/clock.ts                                | Старые имена — aliases, тот же clock_timestamp()                                      |
+| Междоменные Schedule → Finance imports              | finance/index.ts                                        | Публичный barrel, Nest exports прежние                                                |
+
+Старые файлы-адаптеры и package export subpaths **не удалены**, поэтому это перенос реализации, а не массовый git rename. Добавлены 8 публичных index. Worker dependency/reference на API заменены kernel/jobs. Каталоги modules/manager и frontend менеджера не перемещались. Новый универсальный money/parser/pagination helper не создавался без двух равнозначных реализаций. [Полная карта](docs/REPOSITORY_STRUCTURE.md), [equivalence](docs/repo-cleanup/2026-11-01/phase3/runtime-equivalence.json).
+
+## 4. Удалённые зависимости
+
+| Вид                                  | Результат                                                                                                  |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| Внешние dependencies/devDependencies | **0 удалено**, 0 новых версий, 0 новых dev-зависимостей                                                    |
+| Peer exceptions                      | 0 удалено; единственное openapi-typescript → TypeScript 6.0.3 сохранено                                    |
+| Workspace edge worker → API          | Удалён как часть переноса; вместо него kernel/jobs                                                         |
+| Транзитивные дубли                   | 29 групп оставлены: несовместимые consumer ranges/точные pins; orphan snapshots 0                          |
+| Docker runtime                       | 292 из 524 установленных Linux store entries сохранены; это packaging, не удаление деклараций/lock entries |
+
+Lockfile меняет только workspace importers/links для двух новых пакетов и worker edge. Frozen install прошёл; offline install без .env/DB по-прежнему генерирует Prisma Client и OpenAPI types по одному разу. DB CLI/types/TypeScript сохранены в runtime для maintenance. [Аудит зависимостей](docs/repo-cleanup/2026-11-01/phase2/evidence.json), [финальные инварианты](docs/repo-cleanup/2026-11-01/phase5/final-evidence.json).
+
+## 5. Добавленные правила ESLint и архитектуры
+
+| Правило                                            | Охват / ограничение                                                                                                              |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| repository/boundaries                              | packages не импортируют apps; API ↔ worker запрещён; core → домены запрещён; cross-domain только public index.js/ports           |
+| repository/esm-relative-imports                    | Server relative import/re-export/dynamic literal/require требует .js                                                             |
+| repository/decimal-money                           | Известные денежные fields не number; очевидные Number/parseFloat/toNumber conversions запрещены; не полноценный data-flow анализ |
+| Существующий no-restricted-syntax / ThrowStatement | Не ослаблен; исключение перемещено из старого core пути в единственную kernel DomainError → AppException boundary                |
+| check:boundaries + check:cycles в CI               | 13 fixtures + Madge через pnpm dlx; 0 source cycles; не новые dev-зависимости                                                    |
+
+Три точные legacy core → OpenAPI пары перечислены ниже и не разрешают domain imports. Добавленный plugin не требует новых npm-пакетов. Strict/skipLibCheck/ESLint/Prettier не ослаблялись. [Код правил](scripts/repo-boundary-rules.mjs), [конфигурация](eslint.config.mjs), [финальные результаты](docs/repo-cleanup/2026-11-01/phase5/extra-checks.json).
+
+## 6. Отложенное и спорное — нужно решение владельца
+
+| Пункт                                                                | Состояние / что потребуется решить                                                                                                                                                           |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Полная DTO/controller раскладка, отделение core от OpenAPI           | Шаг не прошёл typecheck и полностью откачен. Отдельная следующая задача с сохранением Swagger metadata; сейчас не завершено                                                                  |
+| Format долг                                                          | Владелец уже разрешил сохранить исходные ошибки; полного зелёного gate нет. Отдельно определить форматирование защищённого OpenAPI/исторических актов, не менять в cleanup                   |
+| DB schema mismatch и настоящая DB/race/migration приёмка             | Принято: зафиксировать исходный drift и доказать неизменность schema/migrations main. Реальная приёмка требует стратегии владельца; новые БД/синтетические записи запрещены и не выполнялись |
+| Stale dist/cache после rollback/source moves                         | 32 compiler-файла API и один старый frontend asset видимы только локально; отдельная задача на безопасный clean/cache restore. Fresh Docker их не содержит                                   |
+| Knip file/dependency candidates, extension points, env/scripts/infra | Без доказательства внешней неиспользуемости оставлены, подробная таблица фазы 1. Не удалять только по одному статическому сигналу                                                            |
+| 29 транзитивных duplicate groups                                     | Слить без смены закреплённых версий нельзя; требуется отдельное разрешение на upgrade, которого в cleanup нет                                                                                |
+| Runtime N+1                                                          | BookingService.patchSlot делает report/assignment/resources calls на элементы серии; без профиля/нагрузочного теста ничего не менялось                                                       |
+| Интеграция с параллельными ветками                                   | PR paths ниже пересекаются; compatibility re-exports сохранены, отсутствия merge conflicts не обещаем                                                                                        |
+
+Это перечень для ревью, не новый запрос разрешений на завершённую работу. Исторические TASK-01…13, неподтверждённые design/production gates и исходный регламент не переписывались.
+
+## 7. Найденные нарушения соглашений, не исправленные
+
+- `core/core.module.ts → openapi/dto-validation.pipe.js`, `core/csrf/csrf.module.ts → openapi/dtos.js`, `core/errors/domain-error.ts → openapi/dtos.js`: три legacy composition зависимости. Core не импортирует доменные модули; абсолютная независимость от composition пока не достигнута.
+- Центральный `apps/api/src/openapi/dtos.ts`, `qa/qa.dto.ts`, контроллеры внутри `qa.module.ts`: единая физическая Nest раскладка всех старых модулей не завершена после обязательного отката TS2339 ApiError.
+- Prettier endOfLine=lf против Windows CRLF и четыре исходно неформатированных Git LF blobs (CLEANUP_REPORT, PHASE0_CHECKS, TASK12_EVIDENCE, защищённый openapi.json): сохраняется по решению владельца. Точный список 154 путей в финальном логе.
+
+Обнаруженных application нарушений .js/explicit throw/очевидных денежных number, которые lint пропускает через исключение, кроме разрешённой throw-границы, не заявлено. Это ограниченный статический анализ, не доказательство всех возможных денежных вычислений. Эксплуатационные/build scripts используют throw для аварии CLI и не являются бизнес-слоем Result.
+
+## 8. Затронутые открытые PR
+
+Список GitHub повторно прочитан в фазе 5. PR #2–#9 остаются открытыми, их heads совпали с предыдущим inventory; поэтому сохранённые полные списки files принадлежат тем же точным commits. В таблице — пересечение **всей cleanup ветки с main**, не только финального документа.
+
+| PR                                                     | Head                                | Пересекающиеся пути                                                                                                                                                                                   |
+| ------------------------------------------------------ | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [#9](https://github.com/EsinencuP/OnlineSchool/pull/9) | `codex/stu07-subscription-showcase` | `.github/workflows/ci.yml`, `package.json`                                                                                                                                                            |
+| [#8](https://github.com/EsinencuP/OnlineSchool/pull/8) | `codex/stu06-student-materials`     | `.github/workflows/ci.yml`, `package.json`                                                                                                                                                            |
+| [#7](https://github.com/EsinencuP/OnlineSchool/pull/7) | `codex/stu05-homework`              | `.github/workflows/ci.yml`, `apps/api/package.json`, `apps/api/src/core/http.ts`, `apps/worker/src/worker.module.ts`, `package.json`, `pnpm-lock.yaml`                                                |
+| [#6](https://github.com/EsinencuP/OnlineSchool/pull/6) | `codex/stu04-history-disputes`      | `.github/workflows/ci.yml`, `apps/api/src/modules/finance/entitlements.service.ts`, `apps/api/src/modules/finance/finance-ledger.service.ts`, `package.json`                                          |
+| [#5](https://github.com/EsinencuP/OnlineSchool/pull/5) | `codex/stu03-student-lessons`       | `.github/workflows/ci.yml`, `apps/api/src/modules/schedule/outcomes.service.ts`, `package.json`                                                                                                       |
+| [#4](https://github.com/EsinencuP/OnlineSchool/pull/4) | `codex/stu02-dashboard`             | `.dockerignore`, `.github/workflows/ci.yml`, `apps/api/package.json`, `apps/api/src/modules/schedule/registry.service.ts`, `package.json`, `pnpm-lock.yaml`                                           |
+| [#3](https://github.com/EsinencuP/OnlineSchool/pull/3) | `stu01/student-module`              | `.github/workflows/ci.yml`, `apps/api/package.json`, `apps/api/src/app.module.ts`, `apps/api/src/core/http.ts`, `apps/api/src/modules/identity/identity.service.ts`, `package.json`, `pnpm-lock.yaml` |
+| [#2](https://github.com/EsinencuP/OnlineSchool/pull/2) | `task15/foundation-tests`           | `.github/workflows/ci.yml`, `README.md`, `package.json`, `pnpm-lock.yaml`                                                                                                                             |
+
+[Полные PR paths](docs/repo-cleanup/2026-11-01/open-pr-paths.md), [свежий snapshot](docs/repo-cleanup/2026-11-01/phase5/open-prs.json), [полные пересечения и codex/manager-vercel](docs/repo-cleanup/2026-11-01/phase5/final-evidence.json). Manager branch не является открытым PR в полученном списке; его отдельное пересечение учтено (ядро, импортные адаптеры, manifests, CI, .dockerignore/README). Worker/code sharing сделаны отдельными коммитами, старые import paths оставлены. Основной dirty workspace D:/OnlineSchool и release worktree не менялись.
+
+Защищённые **28 файлов** после generate совпали и с исходными checkout-хешами, и с Git blobs main. OpenAPI/SDK/схема/миграции/seed diff пустой; HTTP-контракт совпал при сравнении Nest/Swagger. Рабочую DB в фазе 5 не читали и не меняли; пустой migrate diff к расширенной рабочей схеме не заявляется. Force push, merge в main, деплой и отправка сообщений третьим лицам не выполнялись. Следующий внешний результат этой фазы — PR для ревью со ссылкой на этот отчёт; слияние остаётся за владельцем.

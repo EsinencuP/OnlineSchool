@@ -1,0 +1,66 @@
+[
+  {
+    "number": 9,
+    "title": "STU-07: витрина абонемента и подтверждённая история",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/9",
+    "head": "codex/stu07-subscription-showcase",
+    "headSha": "837f82dfb4547eb499060ebce95cbd813c4c61a9",
+    "base": "codex/stu06-student-materials"
+  },
+  {
+    "number": 8,
+    "title": "STU-06: выданные материалы и временный приватный доступ",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/8",
+    "head": "codex/stu06-student-materials",
+    "headSha": "396bc3a286a36546520f5bb31e8936fab286ece7",
+    "base": "codex/stu05-homework"
+  },
+  {
+    "number": 7,
+    "title": "STU-05: домашние задания, черновики, версии и приватные вложения",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/7",
+    "head": "codex/stu05-homework",
+    "headSha": "9b9886dcd4cff8c8d48fbf57198ea5e7af3835b9",
+    "base": "codex/stu04-history-disputes"
+  },
+  {
+    "number": 6,
+    "title": "STU-04: история списаний и адресный диспут ученика",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/6",
+    "head": "codex/stu04-history-disputes",
+    "headSha": "b5fb504bfed83d79e9c0c62cd9565cb5bed0f800",
+    "base": "codex/stu03-student-lessons"
+  },
+  {
+    "number": 5,
+    "title": "STU-03: расписание ученика и адресный запрос на перенос",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/5",
+    "head": "codex/stu03-student-lessons",
+    "headSha": "b18246ad21e5bad9aa2a44ce87d5679428e842b1",
+    "base": "codex/stu02-dashboard"
+  },
+  {
+    "number": 4,
+    "title": "STU-02: Dashboard ученика, параллельная агрегация и инвалидация кэша",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/4",
+    "head": "codex/stu02-dashboard",
+    "headSha": "5cf39f76a75e10548ceb335a37eec2303e74eaa2",
+    "base": "stu01/student-module"
+  },
+  {
+    "number": 3,
+    "title": "STU-01: StudentModule, контекст ученика и проверка доступа",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/3",
+    "head": "stu01/student-module",
+    "headSha": "e61970ac59a6bb906e7583bce0b3d7a15fea3c68",
+    "base": "task15/foundation-tests"
+  },
+  {
+    "number": 2,
+    "title": "TASK-15: foundation tests and explicit blocked FND-GATE",
+    "url": "https://github.com/EsinencuP/OnlineSchool/pull/2",
+    "head": "task15/foundation-tests",
+    "headSha": "db3aba9bc86b9d337acc6bf26f246fbd7917f097",
+    "base": "main"
+  }
+]

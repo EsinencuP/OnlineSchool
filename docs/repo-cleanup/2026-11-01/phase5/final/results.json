@@ -1,0 +1,38 @@
+[
+  {
+    "command": "pnpm -r typecheck",
+    "exitCode": 0,
+    "ms": 32476,
+    "log": "final/1.txt"
+  },
+  {
+    "command": "pnpm -r build",
+    "exitCode": 0,
+    "ms": 9266,
+    "log": "final/2.txt"
+  },
+  {
+    "command": "pnpm -r lint",
+    "exitCode": 0,
+    "ms": 23068,
+    "log": "final/3.txt"
+  },
+  {
+    "command": "pnpm test",
+    "exitCode": 0,
+    "ms": 37315,
+    "log": "final/4.txt"
+  },
+  {
+    "command": "pnpm format:check",
+    "exitCode": 1,
+    "ms": 5880,
+    "log": "final/5.txt"
+  },
+  {
+    "command": "pnpm generate",
+    "exitCode": 0,
+    "ms": 4713,
+    "log": "final/6.txt"
+  }
+]

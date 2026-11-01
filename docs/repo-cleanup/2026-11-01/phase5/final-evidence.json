@@ -1,0 +1,473 @@
+{
+  "main": "d6e5c6116dd79948ebad988d1852b7b65d37b1f1",
+  "codeCommit": "310040ecbcd2b6cf83ebbae6fd37f5572021fa23",
+  "measuredAt": "2026-11-01T15:04:06.847Z",
+  "protectedFilesCompared": 28,
+  "protectedByteDifferences": [],
+  "protectedGitDiffEmpty": true,
+  "openapiCanonicalSha256": "f32a2cf03eca4db077ddc88e1f844aa5c0cfcd724353357f062573b635ccec9f",
+  "openapiCheckoutSha256": "5c7deefd2479228addfdb34d19e9ec74911664ab3e346011f94b94011a1444d5",
+  "externalPackagesAndSnapshotsIdentical": true,
+  "packageKeys": 579,
+  "snapshotKeys": 579,
+  "deletedTrackedFiles": [],
+  "baselineDist": [
+    {
+      "path": "apps/api/dist",
+      "files": 252,
+      "bytes": 1084366,
+      "byExtension": {
+        "js": 528243,
+        "d.ts": 96247,
+        "map": 459876,
+        "other": 0
+      }
+    },
+    {
+      "path": "apps/worker/dist",
+      "files": 28,
+      "bytes": 74129,
+      "byExtension": {
+        "js": 34564,
+        "d.ts": 4788,
+        "map": 34777,
+        "other": 0
+      }
+    },
+    {
+      "path": "apps/qa-shell/dist",
+      "files": 3,
+      "bytes": 193088,
+      "byExtension": {
+        "js": 183042,
+        "d.ts": 0,
+        "map": 0,
+        "other": 10046
+      }
+    },
+    {
+      "path": "packages/api-contracts/dist",
+      "files": 16,
+      "bytes": 502419,
+      "byExtension": {
+        "js": 52745,
+        "d.ts": 248565,
+        "map": 201109,
+        "other": 0
+      }
+    },
+    {
+      "path": "packages/db/dist",
+      "files": 328,
+      "bytes": 15253344,
+      "byExtension": {
+        "js": 898506,
+        "d.ts": 8715824,
+        "map": 5639014,
+        "other": 0
+      }
+    },
+    {
+      "path": "packages/db/dist-tools",
+      "files": 13,
+      "bytes": 117885,
+      "byExtension": {
+        "js": 32094,
+        "d.ts": 1699,
+        "map": 29343,
+        "other": 54749
+      }
+    },
+    {
+      "path": "packages/shared/dist",
+      "files": 8,
+      "bytes": 2143,
+      "byExtension": {
+        "js": 275,
+        "d.ts": 518,
+        "map": 1350,
+        "other": 0
+      }
+    }
+  ],
+  "afterDist": [
+    {
+      "path": "apps/api/dist",
+      "files": 320,
+      "bytes": 1064184
+    },
+    {
+      "path": "apps/worker/dist",
+      "files": 28,
+      "bytes": 73900
+    },
+    {
+      "path": "apps/qa-shell/dist",
+      "files": 4,
+      "bytes": 376130
+    },
+    {
+      "path": "packages/api-contracts/dist",
+      "files": 16,
+      "bytes": 502419
+    },
+    {
+      "path": "packages/db/dist",
+      "files": 328,
+      "bytes": 15253344
+    },
+    {
+      "path": "packages/db/dist-tools",
+      "files": 13,
+      "bytes": 118025
+    },
+    {
+      "path": "packages/shared/dist",
+      "files": 12,
+      "bytes": 3082
+    },
+    {
+      "path": "packages/server-kernel/dist",
+      "files": 28,
+      "bytes": 22939
+    },
+    {
+      "path": "packages/jobs/dist",
+      "files": 20,
+      "bytes": 42873
+    }
+  ],
+  "frontend": [
+    {
+      "path": "apps/qa-shell/dist/assets/index-C7dOYG32.css",
+      "bytes": 9592,
+      "gzipBytes": 2680
+    },
+    {
+      "path": "apps/qa-shell/dist/assets/index-DeOErXUD.js",
+      "bytes": 183042,
+      "gzipBytes": 57493
+    },
+    {
+      "path": "apps/qa-shell/dist/assets/index-Di5t9U5q.js",
+      "bytes": 183042,
+      "gzipBytes": 57492
+    },
+    {
+      "path": "apps/qa-shell/dist/index.html",
+      "bytes": 454,
+      "gzipBytes": 300
+    }
+  ],
+  "openPrFileListsReusableBecauseHeadsUnchanged": true,
+  "openPrOverlaps": [
+    {
+      "number": 9,
+      "title": "STU-07: витрина абонемента и подтверждённая история",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/9",
+      "head": "codex/stu07-subscription-showcase",
+      "headSha": "837f82dfb4547eb499060ebce95cbd813c4c61a9",
+      "base": "codex/stu06-student-materials",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "package.json"
+      ]
+    },
+    {
+      "number": 8,
+      "title": "STU-06: выданные материалы и временный приватный доступ",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/8",
+      "head": "codex/stu06-student-materials",
+      "headSha": "396bc3a286a36546520f5bb31e8936fab286ece7",
+      "base": "codex/stu05-homework",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "package.json"
+      ]
+    },
+    {
+      "number": 7,
+      "title": "STU-05: домашние задания, черновики, версии и приватные вложения",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/7",
+      "head": "codex/stu05-homework",
+      "headSha": "9b9886dcd4cff8c8d48fbf57198ea5e7af3835b9",
+      "base": "codex/stu04-history-disputes",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/core/http.ts",
+        "apps/worker/src/worker.module.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 6,
+      "title": "STU-04: история списаний и адресный диспут ученика",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/6",
+      "head": "codex/stu04-history-disputes",
+      "headSha": "b5fb504bfed83d79e9c0c62cd9565cb5bed0f800",
+      "base": "codex/stu03-student-lessons",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/src/modules/finance/entitlements.service.ts",
+        "apps/api/src/modules/finance/finance-ledger.service.ts",
+        "package.json"
+      ]
+    },
+    {
+      "number": 5,
+      "title": "STU-03: расписание ученика и адресный запрос на перенос",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/5",
+      "head": "codex/stu03-student-lessons",
+      "headSha": "b18246ad21e5bad9aa2a44ce87d5679428e842b1",
+      "base": "codex/stu02-dashboard",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/src/modules/schedule/outcomes.service.ts",
+        "package.json"
+      ]
+    },
+    {
+      "number": 4,
+      "title": "STU-02: Dashboard ученика, параллельная агрегация и инвалидация кэша",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/4",
+      "head": "codex/stu02-dashboard",
+      "headSha": "5cf39f76a75e10548ceb335a37eec2303e74eaa2",
+      "base": "stu01/student-module",
+      "paths": [
+        ".dockerignore",
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/modules/schedule/registry.service.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 3,
+      "title": "STU-01: StudentModule, контекст ученика и проверка доступа",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/3",
+      "head": "stu01/student-module",
+      "headSha": "e61970ac59a6bb906e7583bce0b3d7a15fea3c68",
+      "base": "task15/foundation-tests",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/app.module.ts",
+        "apps/api/src/core/http.ts",
+        "apps/api/src/modules/identity/identity.service.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 2,
+      "title": "TASK-15: foundation tests and explicit blocked FND-GATE",
+      "url": "https://github.com/EsinencuP/OnlineSchool/pull/2",
+      "head": "task15/foundation-tests",
+      "headSha": "db3aba9bc86b9d337acc6bf26f246fbd7917f097",
+      "base": "main",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "README.md",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    }
+  ],
+  "managerBranchOverlaps": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "apps/api/package.json",
+    "apps/api/src/app.module.ts",
+    "apps/api/src/core/errors/domain-error.ts",
+    "apps/api/src/core/http.ts",
+    "apps/api/src/core/session/session.store.ts",
+    "apps/api/src/core/transaction/transaction.service.ts",
+    "apps/api/src/modules/finance/entitlements.service.ts",
+    "apps/api/src/modules/finance/expiry.module.ts",
+    "apps/api/src/modules/finance/finance-access.service.ts",
+    "apps/api/src/modules/finance/finance-ledger.service.ts",
+    "apps/api/src/modules/finance/payments.service.ts",
+    "apps/api/src/modules/identity/identity.service.ts",
+    "apps/api/src/modules/identity/recovery.service.ts",
+    "apps/api/src/modules/schedule/booking.service.ts",
+    "apps/api/src/modules/schedule/outcomes.service.ts",
+    "apps/api/src/modules/schedule/registry.service.ts",
+    "apps/api/src/modules/schedule/schedule-access.service.ts",
+    "apps/api/src/modules/schedule/schedule-events.service.ts",
+    "apps/api/src/modules/schedule/schedule.controller.ts",
+    "apps/api/src/modules/schedule/schedule.module.ts",
+    "apps/qa-shell/src/scenarios.ts",
+    "apps/worker/package.json",
+    "apps/worker/src/worker.module.ts",
+    "eslint.config.mjs",
+    "package.json",
+    "packages/api-contracts/package.json",
+    "packages/api-contracts/scripts/generate-openapi.mjs",
+    "pnpm-lock.yaml",
+    "scripts/write-generated.mjs"
+  ],
+  "noManagerPathsChanged": true,
+  "databaseOperations": "none; baseline main / working DB mismatch accepted by owner remains unresolved",
+  "currentCompilerOutputs": [
+    {
+      "directory": "apps/api",
+      "sources": 72,
+      "filesInCurrentCompilerOutputs": 288,
+      "bytesInCurrentCompilerOutputs": 1034555,
+      "extraFiles": [
+        "apps/api/dist/core/csrf/dto/csrf.response.dto.d.ts",
+        "apps/api/dist/core/csrf/dto/csrf.response.dto.d.ts.map",
+        "apps/api/dist/core/csrf/dto/csrf.response.dto.js",
+        "apps/api/dist/core/csrf/dto/csrf.response.dto.js.map",
+        "apps/api/dist/core/errors/dto/api-error.dto.d.ts",
+        "apps/api/dist/core/errors/dto/api-error.dto.d.ts.map",
+        "apps/api/dist/core/errors/dto/api-error.dto.js",
+        "apps/api/dist/core/errors/dto/api-error.dto.js.map",
+        "apps/api/dist/modules/crm/dto/index.d.ts",
+        "apps/api/dist/modules/crm/dto/index.d.ts.map",
+        "apps/api/dist/modules/crm/dto/index.js",
+        "apps/api/dist/modules/crm/dto/index.js.map",
+        "apps/api/dist/modules/finance/dto/index.d.ts",
+        "apps/api/dist/modules/finance/dto/index.d.ts.map",
+        "apps/api/dist/modules/finance/dto/index.js",
+        "apps/api/dist/modules/finance/dto/index.js.map",
+        "apps/api/dist/modules/identity/dto/index.d.ts",
+        "apps/api/dist/modules/identity/dto/index.d.ts.map",
+        "apps/api/dist/modules/identity/dto/index.js",
+        "apps/api/dist/modules/identity/dto/index.js.map",
+        "apps/api/dist/modules/qa/dto/qa.dto.d.ts",
+        "apps/api/dist/modules/qa/dto/qa.dto.d.ts.map",
+        "apps/api/dist/modules/qa/dto/qa.dto.js",
+        "apps/api/dist/modules/qa/dto/qa.dto.js.map",
+        "apps/api/dist/modules/qa/qa.controller.d.ts",
+        "apps/api/dist/modules/qa/qa.controller.d.ts.map",
+        "apps/api/dist/modules/qa/qa.controller.js",
+        "apps/api/dist/modules/qa/qa.controller.js.map",
+        "apps/api/dist/modules/schedule/dto/index.d.ts",
+        "apps/api/dist/modules/schedule/dto/index.d.ts.map",
+        "apps/api/dist/modules/schedule/dto/index.js",
+        "apps/api/dist/modules/schedule/dto/index.js.map"
+      ]
+    },
+    {
+      "directory": "apps/worker",
+      "sources": 7,
+      "filesInCurrentCompilerOutputs": 28,
+      "bytesInCurrentCompilerOutputs": 73900,
+      "extraFiles": []
+    },
+    {
+      "directory": "packages/api-contracts",
+      "sources": 4,
+      "filesInCurrentCompilerOutputs": 16,
+      "bytesInCurrentCompilerOutputs": 502419,
+      "extraFiles": []
+    },
+    {
+      "directory": "packages/db",
+      "sources": 82,
+      "filesInCurrentCompilerOutputs": 328,
+      "bytesInCurrentCompilerOutputs": 15253344,
+      "extraFiles": []
+    },
+    {
+      "directory": "packages/shared",
+      "sources": 3,
+      "filesInCurrentCompilerOutputs": 12,
+      "bytesInCurrentCompilerOutputs": 3082,
+      "extraFiles": []
+    },
+    {
+      "directory": "packages/server-kernel",
+      "sources": 7,
+      "filesInCurrentCompilerOutputs": 28,
+      "bytesInCurrentCompilerOutputs": 22939,
+      "extraFiles": []
+    },
+    {
+      "directory": "packages/jobs",
+      "sources": 5,
+      "filesInCurrentCompilerOutputs": 20,
+      "bytesInCurrentCompilerOutputs": 42873,
+      "extraFiles": []
+    }
+  ],
+  "prismaSourceAndProtectedOutputsComparedAfterGenerate": true,
+  "frontendReferencedAssets": [
+    {
+      "path": "apps/qa-shell/dist/assets/index-C7dOYG32.css",
+      "bytes": 9592,
+      "gzipBytes": 2680
+    },
+    {
+      "path": "apps/qa-shell/dist/assets/index-Di5t9U5q.js",
+      "bytes": 183042,
+      "gzipBytes": 57492
+    },
+    {
+      "path": "apps/qa-shell/dist/index.html",
+      "bytes": 454,
+      "gzipBytes": 300
+    }
+  ],
+  "frontendUnreferencedLocalFiles": [
+    {
+      "path": "apps/qa-shell/dist/assets/index-DeOErXUD.js",
+      "bytes": 183042,
+      "gzipBytes": 57493
+    }
+  ],
+  "referencedFrontendBytes": 193088,
+  "formatComparison": {
+    "baseline": "Phase4 Windows checkout",
+    "beforeCount": 154,
+    "afterCount": 154,
+    "newWarnings": [],
+    "resolvedWarnings": []
+  },
+  "allProtectedGitBlobsEqualMain": true,
+  "checks": [
+    {
+      "command": "pnpm -r typecheck",
+      "exitCode": 0,
+      "ms": 32476,
+      "log": "final/1.txt"
+    },
+    {
+      "command": "pnpm -r build",
+      "exitCode": 0,
+      "ms": 9266,
+      "log": "final/2.txt"
+    },
+    {
+      "command": "pnpm -r lint",
+      "exitCode": 0,
+      "ms": 23068,
+      "log": "final/3.txt"
+    },
+    {
+      "command": "pnpm test",
+      "exitCode": 0,
+      "ms": 37315,
+      "log": "final/4.txt"
+    },
+    {
+      "command": "pnpm format:check",
+      "exitCode": 1,
+      "ms": 5880,
+      "log": "final/5.txt"
+    },
+    {
+      "command": "pnpm generate",
+      "exitCode": 0,
+      "ms": 4713,
+      "log": "final/6.txt"
+    }
+  ],
+  "finalFormatGatePassed": false,
+  "newExecutableCodeChangesInPhase5": true
+}

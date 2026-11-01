@@ -1,0 +1,84 @@
+[
+  {
+    "directory": "apps/api",
+    "sources": 72,
+    "filesInCurrentCompilerOutputs": 288,
+    "bytesInCurrentCompilerOutputs": 1034555,
+    "extraFiles": [
+      "apps/api/dist/core/csrf/dto/csrf.response.dto.d.ts",
+      "apps/api/dist/core/csrf/dto/csrf.response.dto.d.ts.map",
+      "apps/api/dist/core/csrf/dto/csrf.response.dto.js",
+      "apps/api/dist/core/csrf/dto/csrf.response.dto.js.map",
+      "apps/api/dist/core/errors/dto/api-error.dto.d.ts",
+      "apps/api/dist/core/errors/dto/api-error.dto.d.ts.map",
+      "apps/api/dist/core/errors/dto/api-error.dto.js",
+      "apps/api/dist/core/errors/dto/api-error.dto.js.map",
+      "apps/api/dist/modules/crm/dto/index.d.ts",
+      "apps/api/dist/modules/crm/dto/index.d.ts.map",
+      "apps/api/dist/modules/crm/dto/index.js",
+      "apps/api/dist/modules/crm/dto/index.js.map",
+      "apps/api/dist/modules/finance/dto/index.d.ts",
+      "apps/api/dist/modules/finance/dto/index.d.ts.map",
+      "apps/api/dist/modules/finance/dto/index.js",
+      "apps/api/dist/modules/finance/dto/index.js.map",
+      "apps/api/dist/modules/identity/dto/index.d.ts",
+      "apps/api/dist/modules/identity/dto/index.d.ts.map",
+      "apps/api/dist/modules/identity/dto/index.js",
+      "apps/api/dist/modules/identity/dto/index.js.map",
+      "apps/api/dist/modules/qa/dto/qa.dto.d.ts",
+      "apps/api/dist/modules/qa/dto/qa.dto.d.ts.map",
+      "apps/api/dist/modules/qa/dto/qa.dto.js",
+      "apps/api/dist/modules/qa/dto/qa.dto.js.map",
+      "apps/api/dist/modules/qa/qa.controller.d.ts",
+      "apps/api/dist/modules/qa/qa.controller.d.ts.map",
+      "apps/api/dist/modules/qa/qa.controller.js",
+      "apps/api/dist/modules/qa/qa.controller.js.map",
+      "apps/api/dist/modules/schedule/dto/index.d.ts",
+      "apps/api/dist/modules/schedule/dto/index.d.ts.map",
+      "apps/api/dist/modules/schedule/dto/index.js",
+      "apps/api/dist/modules/schedule/dto/index.js.map"
+    ]
+  },
+  {
+    "directory": "apps/worker",
+    "sources": 7,
+    "filesInCurrentCompilerOutputs": 28,
+    "bytesInCurrentCompilerOutputs": 73900,
+    "extraFiles": []
+  },
+  {
+    "directory": "packages/api-contracts",
+    "sources": 4,
+    "filesInCurrentCompilerOutputs": 16,
+    "bytesInCurrentCompilerOutputs": 502419,
+    "extraFiles": []
+  },
+  {
+    "directory": "packages/db",
+    "sources": 82,
+    "filesInCurrentCompilerOutputs": 328,
+    "bytesInCurrentCompilerOutputs": 15253344,
+    "extraFiles": []
+  },
+  {
+    "directory": "packages/shared",
+    "sources": 3,
+    "filesInCurrentCompilerOutputs": 12,
+    "bytesInCurrentCompilerOutputs": 3082,
+    "extraFiles": []
+  },
+  {
+    "directory": "packages/server-kernel",
+    "sources": 7,
+    "filesInCurrentCompilerOutputs": 28,
+    "bytesInCurrentCompilerOutputs": 22939,
+    "extraFiles": []
+  },
+  {
+    "directory": "packages/jobs",
+    "sources": 5,
+    "filesInCurrentCompilerOutputs": 20,
+    "bytesInCurrentCompilerOutputs": 42873,
+    "extraFiles": []
+  }
+]

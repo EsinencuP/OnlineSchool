@@ -1,0 +1,22 @@
+[
+  {
+    "command": "pnpm check:boundaries",
+    "exitCode": 0,
+    "log": "extra-0.txt"
+  },
+  {
+    "command": "pnpm check:cycles",
+    "exitCode": 0,
+    "log": "extra-1.txt"
+  },
+  {
+    "command": "pnpm exec eslint infra/package-runtime.mjs scripts/write-generated.mjs scripts/check-cycles.mjs scripts/repo-boundary-rules.mjs scripts/repo-boundaries.test.mjs --max-warnings 0",
+    "exitCode": 0,
+    "log": "extra-2.txt"
+  },
+  {
+    "command": "node .codex/phase1/contract-check.mjs",
+    "exitCode": 0,
+    "log": "extra-3.txt"
+  }
+]

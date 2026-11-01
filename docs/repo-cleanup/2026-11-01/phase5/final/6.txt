@@ -1,0 +1,19 @@
+
+> online-school@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup
+> pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate
+
+
+> @online-school/db@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\db
+> prisma generate
+
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+
+✔ Generated Prisma Client (7.10.1) to .\src\generated\prisma in 665ms
+
+
+> @online-school/api-contracts@0.0.0 generate D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\api-contracts
+> node scripts/generate-openapi.mjs
+
+OpenAPI TypeScript: unchanged

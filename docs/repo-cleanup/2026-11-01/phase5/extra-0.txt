@@ -1,0 +1,25 @@
+
+> online-school@0.0.0 check:boundaries D:\OnlineSchool\.codex\worktrees\repo-cleanup
+> node --test scripts/repo-boundaries.test.mjs
+
+✔ reject repository/boundaries: apps/api/src/core/policy/probe.ts: import '../../modules/finance/index.js'; (775.3549ms)
+✔ reject repository/boundaries: apps/api/src/modules/schedule/probe.ts: import '../finance/payments.service.js'; (3.3082ms)
+✔ reject repository/boundaries: apps/api/src/modules/schedule/probe.ts: export * from '../finance/payments.service.js'; (2.7763ms)
+✔ reject repository/boundaries: apps/api/src/modules/schedule/probe.ts: export const load = () => import('../finance/payments.service.js'); (6.6596ms)
+✔ reject repository/boundaries: apps/api/src/core/probe.ts: import '../openapi/dtos.js'; (2.3997ms)
+✔ reject repository/boundaries: apps/worker/src/probe.ts: import '@online-school/api/finance-expiry'; (2.3449ms)
+✔ reject repository/boundaries: packages/shared/src/probe.ts: import '../../../apps/api/src/core/http.js'; (2.0828ms)
+✔ reject repository/esm-relative-imports: apps/api/src/probe.ts: export * from './service'; (1.8048ms)
+✔ reject repository/decimal-money: apps/api/src/probe.ts: export type Receipt = { amount: number }; (3.2648ms)
+✔ reject repository/decimal-money: apps/api/src/probe.ts: export const bad = (amount: string) => parseFloat(amount); (4.3125ms)
+✔ reject no-restricted-syntax: apps/api/src/probe.ts: throw new Error('bad'); (3.628ms)
+✔ public modules, precise strings and lower packages remain permitted (7.397ms)
+✔ worker has no API dependency or API project reference (11.4729ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1208.0712
