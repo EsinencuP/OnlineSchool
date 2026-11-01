@@ -7,17 +7,105 @@
     "studentBuild": "passed",
     "managerBuild": "passed",
     "focusedLint": "passed",
-    "demoGuardsAndSwitchingTests": { "passed": 10 },
-    "passwordAndMountRegressionTests": { "passed": 29 }
+    "demoGuardsAndSwitchingTests": {
+      "passed": 10
+    },
+    "passwordAndMountRegressionTests": {
+      "passed": 29
+    },
+    "switchHttpBoundaryTests": {
+      "passed": 3
+    },
+    "managerSessionUiTests": {
+      "passed": 7
+    }
   },
   "seed": {
-    "status": "pending-retry",
+    "status": "committed",
     "firstAttempt": {
       "deployment": "dpl_2jJxXMM7rBtAnjNANnNtsueGqeq1",
       "result": "rolled back at schedule-daniil after the original 120-second transaction deadline",
       "fix": "allow 300 seconds for the same atomic, idempotent seed"
-    }
+    },
+    "secondAttempt": {
+      "deployment": "dpl_5QjCsCTvwAoGieeTePZ8anFYDC1P",
+      "result": "rolled back while creating manual notification sources",
+      "fix": "use canonical manual:<managerId>:<studentId>:<operationId> sourceKey; preserve all SQL guards"
+    },
+    "recordedAt": "2026-11-01T21:04:59.427Z",
+    "studentAccounts": 4,
+    "futureLessons": 12,
+    "lessonsPerTeacher": {
+      "andrei": 6,
+      "elena": 6
+    },
+    "paidRights": 22,
+    "syntheticAmount": "8500.0000 MDL",
+    "manualInAppMessages": 2,
+    "oneOffWindowDisabled": true,
+    "oneOffHashesCleared": true,
+    "openManagerTasks": 8,
+    "subscriptions": 4,
+    "homeworkAssignments": 4
   },
-  "liveBrowser": "pending",
-  "fullRegressionGate": "not-run; remains open"
+  "liveBrowser": {
+    "status": "passed",
+    "origin": "https://onlineschool-xi.vercel.app",
+    "deployment": "dpl_3Ykoo9q5iSkzJueqzj8oeUa28Mqc",
+    "accountTargets": [
+      "tamara",
+      "anna",
+      "andrei",
+      "pasha",
+      "tech",
+      "elena",
+      "sofia",
+      "maksim",
+      "daniil"
+    ],
+    "studentLessonsEach": 3,
+    "teacherLessonsEach": 6,
+    "teacherStudentsEach": 2,
+    "teacherHomeworkEach": 2,
+    "managerVisibleTaskCards": 4,
+    "managerActiveStudents": 4,
+    "previousSessionStatus": 401,
+    "studentCallingManagerStatus": 403,
+    "foreignStudentLessonStatus": 404,
+    "otherTabUpdatedOnSwitch": true,
+    "mobileManagerAccountMenuVisible": true,
+    "unexpectedConsoleErrors": 0,
+    "expectedAccessProbeErrors": [403, 404],
+    "components": {
+      "api": "ok",
+      "db": "ok",
+      "worker": "ok"
+    },
+    "scheduleDefaultRangeFix": {
+      "status": "passed-live",
+      "managerDefault": "list; seven days from selected date",
+      "managerVisibleLessons": 12,
+      "studentDefault": "month",
+      "studentVisibleLessons": 3,
+      "horizontalOverflow": false,
+      "consoleErrors": 0
+    },
+    "studentPasswordsVerified": 4,
+    "studentPasswordChecks": {
+      "loginStatus": 200,
+      "meStatus": 200,
+      "activeAccess": true,
+      "upcomingLessonsEach": 3,
+      "logoutStatus": 200
+    },
+    "implementationCommit": "e27e37d7336a65311f150cc1ee0ffed49239e3a8"
+  },
+  "fullRegressionGate": "not-run; remains open",
+  "visualChecks": {
+    "mode": "local built UI with explicit fixtures; separate from live authentication checks",
+    "desktopWidth": 1440,
+    "mobileWidth": 390,
+    "horizontalOverflow": false,
+    "mobileAccountMenuVisible": true
+  }
 }

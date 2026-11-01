@@ -21,17 +21,17 @@ QA app удалён. Входите в платформу по логину и �
 Прежние аккаунты и пароли сохранены. Начать удобнее с Тамары, затем выбрать
 Анну, Андрея или Пашу через меню аккаунта.
 
-| Аккаунт | Логин | Пароль |
-| --- | --- | --- |
-| Менеджер Тамара | `tamara.demo@onlineschool.test` | `Demo-YclL44xdblnx!26` |
-| Руководитель Паша | `pasha.demo@onlineschool.test` | `Demo-FJBXSiFw6B4K!26` |
-| Преподаватель Андрей | `andrei.demo@onlineschool.test` | `Demo-JHdkFLhaSsoS!26` |
-| Преподаватель Елена | `elena.demo@onlineschool.test` | `Demo-Z0g9iCjGQzlD!26` |
-| Ученик Анна Волкова | `anna.demo@onlineschool.test` | `Demo-2G-Mq0a4ZFH6GS5hKYqVoQ!26` |
-| Ученик Максим Русу | `maksim.demo@onlineschool.test` | `Demo-SyGk1K_rOQ9nX3HA-709wg!26` |
-| Ученик София Ионеску | `sofia.demo@onlineschool.test` | `Demo-NVMENpzJ6Hy2e60qcCWc2w!26` |
-| Ученик Даниил Марин | `daniil.demo@onlineschool.test` | `Demo-Z0Rc9u1Mq5GdPQ34EEZ1IA!26` |
-| Технический оператор | `qa.tech@onlineschool.test` | `QaTech!x8Voos3d22vxRK3i` |
+| Аккаунт              | Логин                           | Пароль                           |
+| -------------------- | ------------------------------- | -------------------------------- |
+| Менеджер Тамара      | `tamara.demo@onlineschool.test` | `Demo-YclL44xdblnx!26`           |
+| Руководитель Паша    | `pasha.demo@onlineschool.test`  | `Demo-FJBXSiFw6B4K!26`           |
+| Преподаватель Андрей | `andrei.demo@onlineschool.test` | `Demo-JHdkFLhaSsoS!26`           |
+| Преподаватель Елена  | `elena.demo@onlineschool.test`  | `Demo-Z0g9iCjGQzlD!26`           |
+| Ученик Анна Волкова  | `anna.demo@onlineschool.test`   | `Demo-2G-Mq0a4ZFH6GS5hKYqVoQ!26` |
+| Ученик Максим Русу   | `maksim.demo@onlineschool.test` | `Demo-SyGk1K_rOQ9nX3HA-709wg!26` |
+| Ученик София Ионеску | `sofia.demo@onlineschool.test`  | `Demo-NVMENpzJ6Hy2e60qcCWc2w!26` |
+| Ученик Даниил Марин  | `daniil.demo@onlineschool.test` | `Demo-Z0Rc9u1Mq5GdPQ34EEZ1IA!26` |
+| Технический оператор | `qa.tech@onlineschool.test`     | `QaTech!x8Voos3d22vxRK3i`        |
 
 ## Тестовая школа
 
@@ -39,7 +39,9 @@ QA app удалён. Входите в платформу по логину и �
 Максим — программирование у Андрея; София — английский, Даниил — румынский у Елены.
 У каждого из четырёх учеников — аккаунт, абонемент, три будущих урока и домашнее
 задание. У Тамары — пять CRM-карточек (Олег ещё без назначения), новая заявка
-на пробный урок, четыре задачи, включая просроченную. Руководитель видит
+на пробный урок и четыре задачи в кабинете, включая просроченную. Дополнительно
+в БД есть четыре служебные задачи проверки доступа после тестовой оплаты.
+Руководитель видит
 расписание школы и открытые задачи менеджеров, преподаватель — свои занятия,
 учеников и выданные ДЗ.
 
