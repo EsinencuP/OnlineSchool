@@ -27,11 +27,11 @@
 
 ## Настоящие экраны и дизайн-код
 
-| Кабинет         | Входная точка                                 | Маршруты и экраны                                                                                                                       | Стили                                           |
-| --------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| Ученик          | [main.tsx](apps/student-cabinet/src/main.tsx) | [router.tsx](apps/student-cabinet/src/router.tsx), [Layout.tsx](apps/student-cabinet/src/Layout.tsx), `apps/student-cabinet/src/pages/` | [style.css](apps/student-cabinet/src/style.css) |
-| Менеджер        | [main.tsx](apps/manager-web/src/main.tsx)     | [layout.tsx](apps/manager-web/src/components/layout.tsx), `apps/manager-web/src/pages/`                                                 | [style.css](apps/manager-web/src/style.css)     |
-| QA и общий вход | [App.tsx](apps/qa-shell/src/App.tsx)          | Переходы в `/student` и `/manager`                                                                                                      | [style.css](apps/qa-shell/src/style.css)        |
+| Кабинет               | Входная точка                                 | Маршруты и экраны                                                                                                                       | Стили                                           |
+| --------------------- | --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Ученик                | [main.tsx](apps/student-cabinet/src/main.tsx) | [router.tsx](apps/student-cabinet/src/router.tsx), [Layout.tsx](apps/student-cabinet/src/Layout.tsx), `apps/student-cabinet/src/pages/` | [style.css](apps/student-cabinet/src/style.css) |
+| Менеджер              | [main.tsx](apps/manager-web/src/main.tsx)     | [layout.tsx](apps/manager-web/src/components/layout.tsx), `apps/manager-web/src/pages/`                                                 | [style.css](apps/manager-web/src/style.css)     |
+| Вход и staff-кабинеты | [App.tsx](apps/platform/src/App.tsx)          | `/account`, `/teacher`, `/director`, `/operator`; смена пользователей в `packages/account-ui`                                           | [style.css](apps/platform/src/style.css)        |
 
 Экраны находятся в самостоятельных React/Vite-приложениях. [Vercel build](infra/vercel/build.mjs)
 собирает их и размещает под общим доменом. Сервер кабинета ученика находится в

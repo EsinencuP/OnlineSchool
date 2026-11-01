@@ -475,6 +475,7 @@ export async function provisionPaid(tx, rows, services) {
         variables: { body },
         subject: '[ДЕМО] Сообщение от Тамары',
         dedupeKey: `${namespace}:${key}`,
+        sourceKey: `manual:${id('profile:tamara')}:${id(`student:${pupil}`)}:${op(`notice:${key}`)}`,
         operationId: op(`notice:${key}`),
         actorId: id('account:tamara'),
         requestId: id('request'),

@@ -25,6 +25,6 @@
 - tests, 50 файлов: [GitHub](tests-01.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-01.json)
 - tests, 50 файлов: [GitHub](tests-02.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-02.json)
 - tests, 50 файлов: [GitHub](tests-03.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-03.json)
-- tests, 9 файлов: [GitHub](tests-04.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-04.json)
+- tests, 10 файлов: [GitHub](tests-04.json) · [Raw](https://raw.githubusercontent.com/EsinencuP/OnlineSchool/main/docs/public/tests-04.json)
 
 [Общий машинный индекс](../../PUBLIC_FILES.json) · [Обзор источников](../../PUBLIC_INDEX.md)
