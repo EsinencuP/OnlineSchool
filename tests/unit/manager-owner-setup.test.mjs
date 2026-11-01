@@ -39,6 +39,7 @@ function fixture(existing = null, director = { id: 'director-id' }) {
     return { id: 'audit-id', ...args.data };
   };
   const tx = {
+    $executeRaw: async () => 1,
     $queryRaw: async () => [{ now: new Date('2026-11-01T12:00:00Z') }],
     authAccount: { findUnique: async () => existing, create: create('account') },
     staffAccount: { findFirst: async () => director, create: create('profile') },

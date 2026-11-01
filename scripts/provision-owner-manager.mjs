@@ -24,7 +24,8 @@ export function managerSetupInput(env, now = Date.now()) {
   return { login, hash };
 }
 export async function provisionOwnerManager(tx, input) {
-  await tx.$queryRaw`SELECT pg_advisory_xact_lock(120061240)`;
+  // Execute without deserializing PostgreSQL's void return value through Prisma.
+  await tx.$executeRaw`SELECT pg_advisory_xact_lock(120061240)`;
   const existing = await tx.authAccount.findUnique({
     where: { login_id: input.login },
     include: {
@@ -131,7 +132,13 @@ async function main() {
   }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href)
-  void main().catch(() => {
-    console.error('MANAGER_SETUP_FAILED');
+  void main().catch((error) => {
+    const code =
+      /^MANAGER_SETUP_[A-Z_]+$/.test(error?.message ?? '')
+        ? error.message
+        : /^P\d{4}$/.test(error?.code ?? '')
+          ? error.code
+          : 'UNKNOWN';
+    console.error(`MANAGER_SETUP_FAILED (${code})`);
     process.exitCode = 1;
   });
