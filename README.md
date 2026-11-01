@@ -1,5 +1,11 @@
 # Онлайн-академия
 
+Production-источник проекта — ветка **`main`** этого репозитория. QA, API, worker,
+кабинет ученика и кабинет менеджера собираются одним проектом Vercel из одного
+коммита `main`. Референсы находятся в `ref/`, шаблоны — в `template/`; 65 растровых
+изображений переведены в WebP с уменьшением размеров. Подробности объединения:
+[MAIN_RELEASE.md](docs/MAIN_RELEASE.md).
+
 ## Вход в рабочую платформу Vercel
 
 [QA](https://onlineschool-xi.vercel.app/) · [Кабинет ученика](https://onlineschool-xi.vercel.app/student) · [Кабинет менеджера](https://onlineschool-xi.vercel.app/manager)

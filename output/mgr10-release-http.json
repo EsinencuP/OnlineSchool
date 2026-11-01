@@ -1,0 +1,97 @@
+{
+  "deployment": "dpl_G68pXxcpfnwxL7fvsyCc2xSWS7x4",
+  "commit": "4159435de2bd764f9b8e87d299c87110a53413e8",
+  "state": "READY",
+  "checks": [
+    {
+      "path": "/manager/login",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "no-store",
+      "managerTitle": true
+    },
+    {
+      "asset": "/manager/assets/index-G6MXT-PG.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "asset": "/manager/assets/preload-helper-BjPlTtXg.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "asset": "/manager/assets/ui-DOeeyBvz.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "asset": "/manager/assets/useQuery-CCctluLJ.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "asset": "/manager/assets/session-CuFzTsXK.js",
+      "status": 200,
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "asset": "/manager/assets/index-BqMUPO0T.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8"
+    },
+    {
+      "path": "/manager/students",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "no-store",
+      "managerTitle": true
+    },
+    {
+      "path": "/student/login",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "cacheControl": "no-store"
+    },
+    {
+      "path": "/api/v1/manager/me",
+      "status": 401,
+      "body": {
+        "requestId": "a8a6f78e-62e5-436d-9732-bb81eee12292",
+        "code": "UNAUTHENTICATED",
+        "message": "UNAUTHENTICATED",
+        "timestamp": "2026-11-01T09:35:11.680Z"
+      }
+    },
+    {
+      "path": "/api/v1/manager/dashboard",
+      "status": 401,
+      "body": {
+        "requestId": "54098b5b-6615-4ccb-9d16-60d0bf07ca31",
+        "code": "UNAUTHENTICATED",
+        "message": "UNAUTHENTICATED",
+        "timestamp": "2026-11-01T09:35:11.870Z"
+      }
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "body": {
+        "status": "ok",
+        "service": "api"
+      }
+    },
+    {
+      "path": "/api/health/worker",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "cacheControl": "no-store",
+      "body": {
+        "status": "ok",
+        "service": "worker"
+      }
+    }
+  ]
+}

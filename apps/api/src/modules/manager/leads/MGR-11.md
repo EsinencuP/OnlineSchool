@@ -5,7 +5,7 @@
 Сверены `schema.prisma`, core session/RBAC/CSRF/policy/idempotency/transaction/errors,
 MGR-02/03/05/06/07/08/09 и расписание преподавателя. Требования:
 `docs/AI Coder Tasks — Модуль 2 — MGR-11.md`. Учитываются действующие CON-01…11,
-DEV-04…06 из roadmap v9.7, исходный шаблон `template/manager.png` и CRM-референсы
+DEV-04…06 из roadmap v9.7, исходный шаблон `template/manager.webp` и CRM-референсы
 в `ref/`. Новые решения владельца от 01.11.2026 приведены ниже; старые акты не изменены.
 
 | ТЗ              | Код                                                              | Адаптация                                                                                                                                   |

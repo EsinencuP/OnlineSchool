@@ -1,0 +1,86 @@
+{
+  "origin": "https://onlineschool-xi.vercel.app",
+  "at": "2026-10-28T18:18:07.207Z",
+  "routes": [],
+  "login": true,
+  "dashboard": {
+    "nextLesson": {
+      "lessonId": "a572d036-6907-5399-840f-dd253756abb8",
+      "scheduledAt": "2026-10-29T18:09:22.093Z",
+      "durationMinutes": 50,
+      "teacherName": "[TEST] Преподаватель",
+      "subjectName": "[TEST] Английский язык",
+      "canJoin": false,
+      "meetLink": null
+    },
+    "homework": {
+      "notSubmitted": 1,
+      "submitted": 0,
+      "needsRevision": 0,
+      "total": 1
+    },
+    "subscription": {
+      "lessonsRemaining": 6,
+      "validUntil": "2026-11-27",
+      "isFrozen": false,
+      "frozenUntil": null
+    },
+    "skillProgress": {
+      "familiarizing": 1,
+      "practicing": 1,
+      "applying": 1,
+      "notStudied": 1
+    },
+    "generatedAt": "2026-10-28T18:18:08.389Z"
+  },
+  "homeworkId": "a1cf025c-b2db-5086-8555-5d1cc12ce2c4",
+  "draftSaved": true,
+  "uploadConfirmed": true,
+  "homeworkSubmitted": true,
+  "balanceUnchanged": true,
+  "mobile": true,
+  "ok": true,
+  "pageErrors": [],
+  "apiFailures": [
+    {
+      "path": "/api/v1/student/homework",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/skills",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/lessons",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/materials",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/materials",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/lessons",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/lessons",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    },
+    {
+      "path": "/api/v1/student/materials",
+      "status": 400,
+      "code": "INVALID_INPUT"
+    }
+  ]
+}

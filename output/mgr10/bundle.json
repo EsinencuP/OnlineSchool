@@ -1,0 +1,103 @@
+{
+  "measuredAt": "2026-11-01T11:41:18.067Z",
+  "mode": "production",
+  "entry": {
+    "gzipBytes": 91138,
+    "budgetBytes": 256000,
+    "passed": true,
+    "files": [
+      "assets/index-aUnTTgAm.js",
+      "assets/preload-helper-BjPlTtXg.js",
+      "assets/ui-Lt1PckF4.js",
+      "assets/useQuery-CAWfVrFO.js",
+      "assets/session-tG_Fx0A9.js",
+      "assets/icon-4zP13cDP.js"
+    ]
+  },
+  "routes": {
+    "src/pages/Dashboard.tsx": {
+      "gzipBytes": 152251,
+      "budgetBytes": 256000,
+      "passed": true,
+      "files": [
+        "assets/index-aUnTTgAm.js",
+        "assets/preload-helper-BjPlTtXg.js",
+        "assets/ui-Lt1PckF4.js",
+        "assets/useQuery-CAWfVrFO.js",
+        "assets/session-tG_Fx0A9.js",
+        "assets/icon-4zP13cDP.js",
+        "assets/Dashboard-B-We-1ns.js",
+        "assets/money-Bp_Elg0h.js",
+        "assets/time-BD80Sg7U.js"
+      ]
+    },
+    "src/pages/Lead.tsx": {
+      "gzipBytes": 140227,
+      "budgetBytes": 256000,
+      "passed": true,
+      "files": [
+        "assets/index-aUnTTgAm.js",
+        "assets/preload-helper-BjPlTtXg.js",
+        "assets/ui-Lt1PckF4.js",
+        "assets/useQuery-CAWfVrFO.js",
+        "assets/session-tG_Fx0A9.js",
+        "assets/icon-4zP13cDP.js",
+        "assets/Lead-BgShDkvr.js",
+        "assets/use-options-CPNcFjPW.js",
+        "assets/use-command-Cvtm_Hm2.js",
+        "assets/lead-form-IUROx94a.js",
+        "assets/time-BD80Sg7U.js"
+      ]
+    },
+    "src/pages/Leads.tsx": {
+      "gzipBytes": 139684,
+      "budgetBytes": 256000,
+      "passed": true,
+      "files": [
+        "assets/index-aUnTTgAm.js",
+        "assets/preload-helper-BjPlTtXg.js",
+        "assets/ui-Lt1PckF4.js",
+        "assets/useQuery-CAWfVrFO.js",
+        "assets/session-tG_Fx0A9.js",
+        "assets/icon-4zP13cDP.js",
+        "assets/Leads-itJxHu8d.js",
+        "assets/use-options-CPNcFjPW.js",
+        "assets/lead-form-IUROx94a.js",
+        "assets/use-command-Cvtm_Hm2.js",
+        "assets/time-BD80Sg7U.js"
+      ]
+    },
+    "src/pages/Login.tsx": {
+      "gzipBytes": 92949,
+      "budgetBytes": 256000,
+      "passed": true,
+      "files": [
+        "assets/index-aUnTTgAm.js",
+        "assets/preload-helper-BjPlTtXg.js",
+        "assets/ui-Lt1PckF4.js",
+        "assets/useQuery-CAWfVrFO.js",
+        "assets/session-tG_Fx0A9.js",
+        "assets/icon-4zP13cDP.js",
+        "assets/Login-9swiQaN6.js",
+        "assets/use-command-Cvtm_Hm2.js"
+      ]
+    },
+    "src/pages/Students.tsx": {
+      "gzipBytes": 151363,
+      "budgetBytes": 256000,
+      "passed": true,
+      "files": [
+        "assets/index-aUnTTgAm.js",
+        "assets/preload-helper-BjPlTtXg.js",
+        "assets/ui-Lt1PckF4.js",
+        "assets/useQuery-CAWfVrFO.js",
+        "assets/session-tG_Fx0A9.js",
+        "assets/icon-4zP13cDP.js",
+        "assets/Students-CcIiS3Vy.js",
+        "assets/use-command-Cvtm_Hm2.js",
+        "assets/money-Bp_Elg0h.js",
+        "assets/time-BD80Sg7U.js"
+      ]
+    }
+  }
+}

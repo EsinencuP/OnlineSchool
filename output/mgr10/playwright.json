@@ -1,0 +1,192 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\.pnpm\\@playwright+test@1.64.1\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--grep",
+      "password login|password-only manager login"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\manager-web\\playwright.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/manager-web/test",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/mgr10/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/OnlineSchool/apps/manager-web/test",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\mgr10\\browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "D:\\OnlineSchool\\apps\\manager-web\\test",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\manager-web\\test",
+        "testIgnore": [],
+        "testMatch": "*.spec.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5177",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../output/mgr10/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "pnpm dev --mode mock",
+      "url": "http://127.0.0.1:5177/manager/",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "manager.spec.mjs",
+      "file": "manager.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "staff password login stops at MFA and never grants access itself",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T11:54:24.444Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e000208d3f37b209a95-291b0cb81681699e5260",
+          "file": "manager.spec.mjs",
+          "line": 258,
+          "column": 1
+        },
+        {
+          "title": "owner-enabled password-only manager login opens the cabinet without passkey",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 675,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-01T11:54:25.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3e000208d3f37b209a95-b0841d8278b64679b0cd",
+          "file": "manager.spec.mjs",
+          "line": 270,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-01T11:54:22.770Z",
+    "duration": 3167.165,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

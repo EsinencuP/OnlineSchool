@@ -1,0 +1,118 @@
+{
+  "origin": "https://onlineschool-xi.vercel.app",
+  "at": "2026-10-28T18:24:01.049Z",
+  "routes": [
+    {
+      "path": "/student/lessons",
+      "heading": "Уроки"
+    },
+    {
+      "path": "/student/homework",
+      "heading": "Домашние задания"
+    },
+    {
+      "path": "/student/skills",
+      "heading": "Мой путь знаний"
+    },
+    {
+      "path": "/student/materials",
+      "heading": "Материалы"
+    },
+    {
+      "path": "/student/subscription",
+      "heading": "Абонемент"
+    },
+    {
+      "path": "/student/notifications",
+      "heading": "Уведомления"
+    },
+    {
+      "path": "/student/profile",
+      "heading": "Профиль и настройки"
+    },
+    {
+      "path": "/student/security",
+      "heading": "Безопасность"
+    },
+    {
+      "path": "/student/lessons/a572d036-6907-5399-840f-dd253756abb8",
+      "heading": "Урок"
+    },
+    {
+      "path": "/student/security/change-password",
+      "heading": "Задайте новый пароль"
+    },
+    {
+      "path": "/student/suspended",
+      "heading": "Доступ приостановлен"
+    }
+  ],
+  "login": true,
+  "passwordChanged": true,
+  "dashboard": {
+    "nextLesson": {
+      "lessonId": "a572d036-6907-5399-840f-dd253756abb8",
+      "scheduledAt": "2026-10-29T18:09:22.093Z",
+      "durationMinutes": 50,
+      "teacherName": "[TEST] Преподаватель",
+      "subjectName": "[TEST] Английский язык",
+      "canJoin": false,
+      "meetLink": null
+    },
+    "homework": {
+      "notSubmitted": 0,
+      "submitted": 1,
+      "needsRevision": 0,
+      "total": 1
+    },
+    "subscription": {
+      "lessonsRemaining": 6,
+      "validUntil": "2026-11-27",
+      "isFrozen": false,
+      "frozenUntil": null
+    },
+    "skillProgress": {
+      "familiarizing": 1,
+      "practicing": 1,
+      "applying": 1,
+      "notStudied": 1
+    },
+    "generatedAt": "2026-10-28T18:24:06.576Z"
+  },
+  "profileSaved": true,
+  "notifications": true,
+  "homeworkId": "a1cf025c-b2db-5086-8555-5d1cc12ce2c4",
+  "persistedHomeworkStatus": "SUBMITTED",
+  "subscription": {
+    "status": "ACTIVE",
+    "isFrozen": false,
+    "planName": "[TEST] STU12 — 6 занятий",
+    "validFrom": "2026-10-28",
+    "frozenFrom": null,
+    "validUntil": "2026-11-27",
+    "frozenUntil": null,
+    "lessonsTotal": 6,
+    "subscriptionId": "9cd589f1-d358-568a-ac66-45a5a530a65f",
+    "lessonsRemaining": 6
+  },
+  "payments": {
+    "items": [
+      {
+        "amount": "120.00",
+        "currency": "MDL",
+        "paymentId": "7a027e27-0267-5669-99ad-c27b7e3c2e38",
+        "confirmedAt": "2026-10-28T18:09:22.093Z",
+        "description": "Подтверждённая оплата: [TEST] STU12 — 6 занятий",
+        "lessonsAdded": 6
+      }
+    ],
+    "total": 1,
+    "page": 1,
+    "pageSize": 20
+  },
+  "balanceUnchanged": true,
+  "mobile": true,
+  "ok": true,
+  "pageErrors": [],
+  "apiFailures": []
+}

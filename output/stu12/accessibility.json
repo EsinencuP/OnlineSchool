@@ -1,0 +1,77 @@
+{
+  "testedAt": "2026-10-28T16:35:41.180Z",
+  "lighthouseVersion": "13.6.0",
+  "boundary": "Production bundle, local synthetic API only; no working DB or S3 writes",
+  "results": [
+    {
+      "route": "/student",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/lessons",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/lessons/10000000-0000-4000-8000-000000000001",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/homework",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/skills",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/materials",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/subscription",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/notifications",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/profile",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/security",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/security/change-password",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/suspended",
+      "score": 100,
+      "failures": []
+    },
+    {
+      "route": "/student/login",
+      "score": 100,
+      "failures": []
+    }
+  ]
+}

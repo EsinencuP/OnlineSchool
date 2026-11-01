@@ -20,6 +20,9 @@ function run(args, env = process.env, quiet = false) {
 if (process.env.VERCEL_ENV !== 'production') {
   throw new Error('Only the single working production target is configured; previews are disabled');
 }
+if (process.env.VERCEL_GIT_COMMIT_REF !== 'main') {
+  throw new Error('Production builds must use the main Git branch');
+}
 const direct = process.env.DIRECT_DATABASE_URL;
 if (!direct || !process.env.DATABASE_URL)
   throw new Error('Deployment database configuration missing');

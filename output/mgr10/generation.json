@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "sha256": {
+    "packages/api-contracts/src/generated/client.ts": "D5FC1279B3476814B66047BC2AFC9ECC2C3F7708885C38D4DE1BFF4CC3CC14F2",
+    "packages/api-contracts/src/generated/openapi.ts": "1CE562ECA74BF595D2677E73E46EDBB71D3BB1DAB770C3551615DCFBEAA7715F",
+    "packages/api-contracts/openapi/openapi.json": "52EEC3136CB4E730366D5201637BC7F230DCF3455D195D82CE8800443E02D1D6",
+    "packages/api-contracts/src/generated/manager-error-codes.ts": "60FF36BF83ED6E157A08F00F6F0F94FC83F11558992A07FC02FE4577B3DCE485"
+  },
+  "commands": [
+    "pnpm generate",
+    "API export:openapi",
+    "api-contracts generate:client"
+  ],
+  "changedFiles": []
+}
