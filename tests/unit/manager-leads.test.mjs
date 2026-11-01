@@ -168,6 +168,8 @@ test('summary binds school timezone, assigned portfolio, all trial attempts and 
   expect(q.values).toContain('Europe/Chisinau');
   expect(q.text).toContain('l.trial_lead_id');
   expect(q.text).toContain('converted*10000/cohort');
+  // PostgreSQL otherwise infers an untyped left operand from the interval on the right.
+  expect(q.text.match(/created_at>=\$\d+::timestamptz-interval/g)).toHaveLength(2);
   expect(q.text).not.toContain(ctx.managerId);
 });
 test('manager cannot write teacher outcomes or ledger; all lead controllers use ManagerRoute', async () => {
