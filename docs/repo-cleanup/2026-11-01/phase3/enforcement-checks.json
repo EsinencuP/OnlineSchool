@@ -1,0 +1,17 @@
+[
+  {
+    "command": "pnpm check:boundaries",
+    "exitCode": 0,
+    "log": "enforcement-0.txt"
+  },
+  {
+    "command": "pnpm check:cycles",
+    "exitCode": 0,
+    "log": "enforcement-1.txt"
+  },
+  {
+    "command": "pnpm exec eslint apps/api/src apps/worker/src packages/server-kernel/src packages/jobs/src packages/shared/src packages/db/src packages/api-contracts/src scripts/repo-boundary-rules.mjs scripts/check-cycles.mjs scripts/repo-boundaries.test.mjs --max-warnings 0",
+    "exitCode": 0,
+    "log": "enforcement-2.txt"
+  }
+]

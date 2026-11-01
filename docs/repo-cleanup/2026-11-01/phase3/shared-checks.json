@@ -1,0 +1,56 @@
+[
+  {
+    "command": "pnpm --filter @online-school/api typecheck",
+    "exitCode": 0,
+    "ms": 5306,
+    "log": "runtime-0.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/worker typecheck",
+    "exitCode": 0,
+    "ms": 2362,
+    "log": "runtime-1.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/server-kernel lint",
+    "exitCode": 0,
+    "ms": 1402,
+    "log": "runtime-2.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/jobs lint",
+    "exitCode": 0,
+    "ms": 1422,
+    "log": "runtime-3.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/api lint",
+    "exitCode": 0,
+    "ms": 2267,
+    "log": "runtime-4.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/worker lint",
+    "exitCode": 0,
+    "ms": 1497,
+    "log": "runtime-5.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/api test",
+    "exitCode": 0,
+    "ms": 2217,
+    "log": "runtime-6.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/worker test",
+    "exitCode": 0,
+    "ms": 1150,
+    "log": "runtime-7.txt"
+  },
+  {
+    "command": "node --test scripts/monorepo-smoke.test.mjs",
+    "exitCode": 0,
+    "ms": 2150,
+    "log": "runtime-8.txt"
+  }
+]

@@ -1,4 +1,4 @@
-# CLEANUP_REPORT — фазы 0–2
+# CLEANUP_REPORT — фазы 0–3
 
 Дата: 01.11.2026, Europe/Chisinau. Начало измеряемого прогона: 01.11.2026, 14:48:48.
 
@@ -310,3 +310,160 @@ SHA-256 `pnpm-lock.yaml` до/после: `a6d152cb65b09559c078eb136b23e56921408
 Удалено зависимостей: **0**; слито несовместимых версий: **0**; удалено peer-правил: **0**. Это консервативный результат проверки, а не обещание удаления ради уменьшения числа строк. Для объединения перечисленных библиотек потребовалось бы отдельное разрешение на смену версий; в этой фазе оно запрещено.
 
 [Прямые декларации](docs/repo-cleanup/2026-11-01/phase2/direct-dependencies.json), [хеши и доказательства графа](docs/repo-cleanup/2026-11-01/phase2/evidence.json).
+
+# Фаза 3 — структура
+
+Дата: 01.11.2026, Europe/Chisinau. База фазы: `56a2597`. Работа продолжена в
+`chore/repo-cleanup`, в изолированном cleanup worktree. Изменения относятся к
+структуре; схема, миграции, seed, бизнес-алгоритмы и HTTP-контракты не менялись.
+
+**Статус: основные границы закреплены; полная раскладка DTO/controller не завершена
+после обязательного отката неуспешного шага.** Три существующих зависимости core от
+OpenAPI composition сохранены явно, а не объявлены устранёнными.
+
+## Коммиты и карта изменений
+
+| Коммит | Категория | Результат |
+| --- | --- | --- |
+| `4b10320` | Структура: общие серверные пакеты | Database/Transaction/Audit/AccountContext/DomainError вынесены в `packages/server-kernel`, FinanceExpiry/ScheduleDeadline — в `packages/jobs`; API и worker используют пакеты |
+| `acfb46d` | Структура: публичные границы доменов | Добавлены 8 публичных index, Schedule → Finance переведён на index, общая input-валидация перемещена из Identity в core, CRM больше не импортирует IdentityService ради clock |
+| `a143bae` | Структура: совпадающие утилиты | Общая JSON-проекция в shared и DB clock в kernel; прежние `serialize`, `at`, `now`, `dbNow` сохранены alias |
+| `0e8febe` | Структура: автоматический контроль | ESLint boundaries/ESM/money, 13 архитектурных fixtures и проверка циклов Madge; CI вызывает проверки |
+
+Старые пути ядра и обработчиков API сохранены реэкспортами тех же классов; старые
+package export subpaths не удалены. Это снижает конфликтность с manager-веткой и
+открытыми PR. В новых jobs module/service находятся в отдельных файлах. Общие
+Result и константы не дублировались заново; generic money-парсер и универсальная
+пагинационная DTO-обёртка не создавались: одинаковых по смыслу реализаций для такого
+объединения не установлено. Разные правила денежных входов сохранены.
+
+Worker больше не зависит от `@online-school/api` ни в package.json, ни в project
+references. API → kernel/jobs; worker → kernel/jobs; jobs → kernel/db/shared;
+kernel → db/shared. Все tsconfig по-прежнему наследуют `tsconfig.base.json`; strict,
+NodeNext и проверки библиотечных типов не ослаблялись. У qa-shell reference на API
+сохранён: он нужен serverless-адаптеру. Новый состав ссылок не требует менять
+общий tsconfig.base. В CI unit-test теперь явно собирает API и worker: прежде API
+собирался транзитивно через worker. Отключённый integration job не включался.
+
+Для Docker расширен только allow-list контекста двумя новыми пакетами. Dockerfile,
+Compose, корневой api/, infra, seed и эксплуатационные SQL сохранены. Текущие слои
+и полная карта прежних/новых путей — [REPOSITORY_STRUCTURE.md](docs/REPOSITORY_STRUCTURE.md).
+В README добавлен отдельный актуальный раздел; его исторический префикс побайтово
+совпадает после нормализации EOL. TASK-01…13 и старые описания путей не переписаны.
+
+## Правила и циклы
+
+Локальный ESLint plugin без новой зависимости проверяет:
+
+- запрет imports из packages в приложения и API ↔ worker;
+- отсутствие domain-module imports в core;
+- междоменные imports только через публичный index.js или ports/;
+- `.js` в относительных server imports;
+- запрет денежных `number` и очевидных Number/parseFloat/toNumber для известных
+  денежных полей. Это синтаксический guard, не полный анализ потоков данных.
+
+Проверяются import, re-export, literal dynamic import и require. Существующий
+запрет явного throw сохранён; единственное исключение перенесено вместе с
+DomainError → AppException в kernel. В исходниках приложений явных throw больше
+нет. Счётчики могут оставаться number; деньги не конвертировались в float.
+
+`pnpm check:boundaries`: **13/13 PASS**, включая намеренно запрещённые fixtures и
+разрешённые imports. Новые исключения для доменов/worker не добавлены.
+
+`pnpm check:cycles`: **105 файлов, 392 ребра, 0 циклов**, неразрешённых локальных
+импортов нет. Выполняется `pnpm dlx madge@8.0.0 --stdin --circular --json --no-spinner`.
+Граф построен из Git inventory с TypeScript resolution и workspace exports; он
+охватывает first-party apps/packages/serverless исходники и type imports, исключая
+generated-код и внешние библиотеки. Пустой graph считается ошибкой. Первый пробный
+directory scan Madge обработал 0 файлов под скрытой `.codex` и **не считался PASS**;
+поэтому рабочая проверка передаёт явный граф через stdin. Analysis tool не добавлен
+в manifests. [Лог Madge](docs/repo-cleanup/2026-11-01/phase3/enforcement-1.txt).
+
+## Неуспешный шаг и оставшийся долг
+
+Незакоммиченная совместная попытка разложить OpenAPI DTO registry и QA controller
+по папкам модулей остановлена на первой API typecheck ошибке TS2339: новый CSRF
+namespace facade не экспортировал `ApiError`, используемый Swagger error-response
+annotations. Весь шаг откачен к `4b10320`: 33 tracked пути восстановлены, 18
+собственных новых файлов удалены. Исправления вперёд и ослабления проверок не было.
+[Лог ошибки](docs/repo-cleanup/2026-11-01/phase3/layout-failed-typecheck.txt),
+[доказательство отката](docs/repo-cleanup/2026-11-01/phase3/rollback.json).
+
+Последующие небольшие шаги касались импортов и независимых общих функций; DTO move
+не восстанавливался. Остаются `openapi/dtos.ts`, `qa/qa.dto.ts`, контроллеры в
+`qa.module.ts` и три точных старых core → composition зависимости:
+
+| Core source | Сохранённая цель |
+| --- | --- |
+| `core/core.module.ts` | `openapi/dto-validation.pipe.js` |
+| `core/csrf/csrf.module.ts` | `openapi/dtos.js` |
+| `core/errors/domain-error.ts` | `openapi/dtos.js`, старый DTO alias |
+
+ESLint фиксирует только эти три пары; новый core → composition import запрещён.
+Core → доменные модули запрещён без исключений. Полное отделение core от DTO registry
+и единая физическая раскладка всех старых module/controller/service/dto/errors
+остаются незавершёнными. Пустые папки для формального соответствия не добавлялись.
+
+## Адресные проверки и неизменность
+
+| Проверка | Результат / доказательство |
+| --- | --- |
+| API/worker typecheck после каждого сохранённого runtime шага | PASS; [промежуточные результаты](docs/repo-cleanup/2026-11-01/phase3/public-checks.json), [итоговые результаты](docs/repo-cleanup/2026-11-01/phase3/shared-checks.json) |
+| kernel/jobs/API/worker lint | PASS; [адресные проверки](docs/repo-cleanup/2026-11-01/phase3/shared-checks.json) |
+| API unit / worker unit / monorepo smoke | 10/10 + 2/2 + 2/2 PASS; итоговые runtime-6/7/8.txt в evidence |
+| Shared typecheck и unit | PASS, 3/3; [результаты](docs/repo-cleanup/2026-11-01/phase3/consumer-checks.json) |
+| ESLint всех server src, включая db/contracts, и новых scripts | PASS; [лог](docs/repo-cleanup/2026-11-01/phase3/enforcement-2.txt) |
+| qa-shell typecheck и Vite build | PASS; 56 modules, JS 183.04 kB / gzip 57.49 kB; [лог](docs/repo-cleanup/2026-11-01/phase3/consumer-3.txt) |
+| Новые scripts и документ структуры, адресный prettier check | PASS; [лог](docs/repo-cleanup/2026-11-01/phase3/consumer-4.txt) |
+| Frozen install + штатный postinstall `pnpm generate` | PASS; generated TypeScript unchanged; [лог](docs/repo-cleanup/2026-11-01/phase3/final-0.txt) |
+| Nest Swagger in-memory против checked-in OpenAPI | Полное совпадение; без DB и перезаписи контракта; [проверка](docs/repo-cleanup/2026-11-01/phase3/contract-check.json) |
+| Docker API и worker, исходные Dockerfile | Обе сборки PASS; [команды](docs/repo-cleanup/2026-11-01/phase3/final-checks.json) |
+| Контейнерные smoke | API /health 200; worker Nest lifecycle PASS; NODE_ENV=test, network none, БД не использовалась; [результат](docs/repo-cleanup/2026-11-01/phase3/docker-smoke.json) |
+
+Shared tests проверяют сохранение денежной строки `9007199254740993.1234`, Date
+snapshot и независимость вложенного audit JSON, а также прежний нативный отказ для
+BigInt. Class AST DatabaseService/TransactionService/AuditService и двух job services
+совпадает с исходным. Проверены идентичность старых и новых конструкторов,
+совместимость `instanceof HttpException` и сохранение Nest peer context.
+[Runtime equivalence](docs/repo-cleanup/2026-11-01/phase3/runtime-equivalence.json).
+
+Хеши всех **28 защищённых файлов** до/после совпали, protected git diff пустой:
+schema, migrations/history, seed, OpenAPI, generated SDK/types. Существующие package
+exports сохранены. В lockfile изменены только workspace importers/links для
+kernel/jobs и удаления worker → API; внешние 579 packages и 579 snapshots идентичны
+базе фазы. Новых внешних версий/dev-зависимостей нет. Peer-исключение
+openapi-typescript/TypeScript 6.0.3 не трогалось.
+[Инварианты](docs/repo-cleanup/2026-11-01/phase3/invariants.json).
+
+Ни один запрос к рабочей БД, миграция или создание тестовой БД не выполнялись.
+Предварительно зафиксированное расхождение схемы main с расширенной рабочей БД
+сохраняется: пустой migrate diff к этой БД **не заявляется**. Принятое владельцем
+доказательство — неизменность schema/migrations относительно main — сохранено.
+
+Полный recursive gate в этой фазе не повторялся согласно правилу адресных проверок.
+Его известный format failure из фазы 0 остаётся в отчёте; новый полный gate и реальная
+DB-регрессия не объявляются пройденными. Сохранены итоговые текстовые логи и JSON
+результаты промежуточных шагов; в копиях логов удалены только trailing whitespace.
+
+## Открытые PR и пересечения
+
+GitHub повторно сверён: открыты PR #2–#9, их heads совпадают с инвентаризацией фазы 0.
+[Снимок](docs/repo-cleanup/2026-11-01/phase3/open-prs.json). Полные перечни PR paths
+сохранены в фазе 0; пересечения с этим шагом перечислены в phase3 invariants.json.
+
+| PR | Пересекающиеся пути этой фазы |
+| --- | --- |
+| #2 | CI, README, root package.json, lockfile |
+| #3 | CI, API package.json, AppModule, core/http.ts, IdentityService, root package.json, lockfile |
+| #4 | .dockerignore, CI, API package.json, Schedule registry.service.ts, root package.json, lockfile |
+| #5 | CI, Schedule outcomes.service.ts, root package.json |
+| #6 | CI, Finance entitlements.service.ts / finance-ledger.service.ts, root package.json |
+| #7 | CI, API package.json, core/http.ts, WorkerModule, root package.json, lockfile |
+| #8 / #9 | CI, root package.json |
+
+Для `codex/manager-vercel` сохранён отдельный полный список пересечений в invariants.
+Есть общие изменения ядра и импортов, поэтому автоматическое отсутствие merge
+конфликтов не обещается. Общие переносы разделены на четыре небольших коммита,
+старые import paths сохранены. `modules/manager`, frontend менеджера, локальный
+корневой dirty tree и release worktree не перемещались и не менялись. Merge в main,
+force push и деплой не выполнялись.

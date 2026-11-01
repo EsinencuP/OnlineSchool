@@ -1,0 +1,127 @@
+{
+  "base": "56a2597",
+  "protectedFilesCompared": 28,
+  "protectedByteDifferences": [],
+  "protectedGitDiffEmpty": true,
+  "externalPackagesAndSnapshotsIdentical": true,
+  "packageKeys": 579,
+  "snapshotKeys": 579,
+  "originalPublicExportsUnchanged": true,
+  "historicalReadmePrefixPreserved": true,
+  "tsconfigBaseUnchanged": true,
+  "managerPathsChanged": [],
+  "openPrOverlaps": [
+    {
+      "number": 9,
+      "head": "codex/stu07-subscription-showcase",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "package.json"
+      ]
+    },
+    {
+      "number": 8,
+      "head": "codex/stu06-student-materials",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "package.json"
+      ]
+    },
+    {
+      "number": 7,
+      "head": "codex/stu05-homework",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/core/http.ts",
+        "apps/worker/src/worker.module.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 6,
+      "head": "codex/stu04-history-disputes",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/src/modules/finance/entitlements.service.ts",
+        "apps/api/src/modules/finance/finance-ledger.service.ts",
+        "package.json"
+      ]
+    },
+    {
+      "number": 5,
+      "head": "codex/stu03-student-lessons",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/src/modules/schedule/outcomes.service.ts",
+        "package.json"
+      ]
+    },
+    {
+      "number": 4,
+      "head": "codex/stu02-dashboard",
+      "paths": [
+        ".dockerignore",
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/modules/schedule/registry.service.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 3,
+      "head": "stu01/student-module",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "apps/api/package.json",
+        "apps/api/src/app.module.ts",
+        "apps/api/src/core/http.ts",
+        "apps/api/src/modules/identity/identity.service.ts",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    },
+    {
+      "number": 2,
+      "head": "task15/foundation-tests",
+      "paths": [
+        ".github/workflows/ci.yml",
+        "README.md",
+        "package.json",
+        "pnpm-lock.yaml"
+      ]
+    }
+  ],
+  "managerBranchOverlaps": [
+    ".dockerignore",
+    ".github/workflows/ci.yml",
+    "README.md",
+    "apps/api/package.json",
+    "apps/api/src/app.module.ts",
+    "apps/api/src/core/errors/domain-error.ts",
+    "apps/api/src/core/http.ts",
+    "apps/api/src/core/transaction/transaction.service.ts",
+    "apps/api/src/modules/finance/entitlements.service.ts",
+    "apps/api/src/modules/finance/expiry.module.ts",
+    "apps/api/src/modules/finance/finance-access.service.ts",
+    "apps/api/src/modules/finance/finance-ledger.service.ts",
+    "apps/api/src/modules/finance/payments.service.ts",
+    "apps/api/src/modules/identity/identity.service.ts",
+    "apps/api/src/modules/identity/recovery.service.ts",
+    "apps/api/src/modules/schedule/booking.service.ts",
+    "apps/api/src/modules/schedule/outcomes.service.ts",
+    "apps/api/src/modules/schedule/registry.service.ts",
+    "apps/api/src/modules/schedule/schedule-access.service.ts",
+    "apps/api/src/modules/schedule/schedule-events.service.ts",
+    "apps/api/src/modules/schedule/schedule.controller.ts",
+    "apps/api/src/modules/schedule/schedule.module.ts",
+    "apps/worker/package.json",
+    "apps/worker/src/worker.module.ts",
+    "eslint.config.mjs",
+    "package.json",
+    "pnpm-lock.yaml"
+  ],
+  "databaseOperations": "none; pre-existing main/working DB mismatch remains recorded in phase0"
+}

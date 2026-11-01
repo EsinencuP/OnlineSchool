@@ -1,0 +1,13 @@
+
+> @online-school/api@0.0.0 typecheck D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\api
+> tsc -b --pretty false
+
+src/core/csrf/csrf.module.ts(109,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+src/core/csrf/csrf.module.ts(110,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+src/core/csrf/csrf.module.ts(111,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+src/core/csrf/csrf.module.ts(112,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+src/core/csrf/csrf.module.ts(113,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+src/core/csrf/csrf.module.ts(114,44): error TS2339: Property 'ApiError' does not exist on type 'typeof import("D:/OnlineSchool/.codex/worktrees/repo-cleanup/apps/api/src/core/csrf/dto/csrf.response.dto", { with: { "resolution-mode": "import" } })'.
+D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\api:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @online-school/api@0.0.0 typecheck: `tsc -b --pretty false`
+Exit status 2

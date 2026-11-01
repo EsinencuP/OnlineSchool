@@ -1,0 +1,22 @@
+
+> @online-school/api@0.0.0 test D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\api
+> node --test test/*.test.mjs
+
+✔ canonical payload hash ignores object property ordering and keeps array order (1.3545ms)
+✔ ambiguous cookies are rejected; token comparison handles different lengths (0.2422ms)
+✔ serialization/deadlock retries stop at three total attempts (253.3598ms)
+✔ domain failures are returned without retry or driver detail leakage (0.6058ms)
+✔ ordinary 4/5/9/10 point boundaries are 200/220/220/250; no automatic 230 (1.4045ms)
+✔ rehire restores tenure within six calendar months, but never across seven-month break (1.3474ms)
+✔ money accepts exact decimal strings only, rejecting float, exponent, excess scale and range (1.3065ms)
+✔ WebAuthn config pins one exact HTTPS QA hostname, including a permanent Vercel alias (1.131ms)
+✔ weekly wall time keeps local time across DST, producing distinct stable local dates (11.4924ms)
+✔ nonexistent and ambiguous DST times require an explicit manager choice; unbounded rules are rejected (2.6419ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1821.2224

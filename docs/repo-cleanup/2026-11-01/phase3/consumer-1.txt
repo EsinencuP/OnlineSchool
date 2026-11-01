@@ -1,0 +1,15 @@
+
+> @online-school/shared@0.0.0 test D:\OnlineSchool\.codex\worktrees\repo-cleanup\packages\shared
+> node --test test/*.test.mjs
+
+✔ JSON projection preserves decimal strings/date snapshots and isolates nested audit data (140.169ms)
+✔ unsupported JSON input preserves native failure behavior (0.4233ms)
+✔ Result preserves values and error identity across the package boundary (1.6769ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 317.2186

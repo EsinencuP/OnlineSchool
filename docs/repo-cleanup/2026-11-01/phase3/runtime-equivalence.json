@@ -1,0 +1,30 @@
+{
+  "classes": [
+    {
+      "name": "TemporaryAccessExpiry",
+      "identicalClassAst": true
+    },
+    {
+      "name": "ScheduleDeadlines",
+      "identicalClassAst": true
+    },
+    {
+      "name": "DatabaseService",
+      "identicalClassAst": true
+    },
+    {
+      "name": "TransactionService",
+      "identicalClassAst": true
+    },
+    {
+      "name": "AuditService",
+      "identicalClassAst": true
+    }
+  ],
+  "singleton": {
+    "exception": true,
+    "processor": true,
+    "httpException": true
+  },
+  "externalVersionsUnchanged": true
+}

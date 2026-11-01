@@ -1,0 +1,20 @@
+[
+  {
+    "kind": "api",
+    "exitCode": 0,
+    "network": "none",
+    "databaseAccess": "none",
+    "nodeEnv": "test",
+    "stdout": "{\"health\":{\"status\":\"ok\",\"service\":\"api\"}}",
+    "stderr": ""
+  },
+  {
+    "kind": "worker",
+    "exitCode": 0,
+    "network": "none",
+    "databaseAccess": "none",
+    "nodeEnv": "test",
+    "stdout": "{\"lifecycle\":\"PASS\"}",
+    "stderr": ""
+  }
+]

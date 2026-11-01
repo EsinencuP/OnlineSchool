@@ -1,0 +1,27 @@
+[
+  {
+    "command": "pnpm --filter @online-school/shared typecheck",
+    "exitCode": 0,
+    "log": "consumer-0.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/shared test",
+    "exitCode": 0,
+    "log": "consumer-1.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/qa-shell typecheck",
+    "exitCode": 0,
+    "log": "consumer-2.txt"
+  },
+  {
+    "command": "pnpm --filter @online-school/qa-shell build",
+    "exitCode": 0,
+    "log": "consumer-3.txt"
+  },
+  {
+    "command": "pnpm exec prettier --check scripts/repo-boundary-rules.mjs scripts/check-cycles.mjs scripts/repo-boundaries.test.mjs docs/REPOSITORY_STRUCTURE.md",
+    "exitCode": 0,
+    "log": "consumer-4.txt"
+  }
+]

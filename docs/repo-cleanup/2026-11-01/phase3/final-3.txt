@@ -1,0 +1,65 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 773B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 1.81kB 0.0s done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [build 1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
+#5 resolve docker.io/library/node:24-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c 0.0s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 19.40kB 1.5s done
+#4 DONE 2.4s
+
+#6 [build 4/6] COPY . .
+#6 CACHED
+
+#7 [build 2/6] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#7 CACHED
+
+#8 [build 3/6] WORKDIR /workspace
+#8 CACHED
+
+#9 [build 5/6] RUN pnpm install --frozen-lockfile && pnpm --filter @online-school/api build
+#9 CACHED
+
+#10 [build 6/6] RUN pnpm --filter @online-school/worker build
+#10 1.154
+#10 1.154 > @online-school/worker@0.0.0 build /workspace/apps/worker
+#10 1.154 > tsc -b --pretty false
+#10 1.154
+#10 DONE 9.1s
+
+#7 [build 2/6] RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates openssl     && rm -rf /var/lib/apt/lists/*     && npm install --global pnpm@10.34.9
+#7 CACHED
+
+#11 [runtime 3/4] COPY --from=build --chown=node:node /workspace /workspace
+#11 DONE 11.3s
+
+#12 [runtime 4/4] WORKDIR /workspace/apps/worker
+#12 DONE 0.5s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 18.7s done
+#13 exporting manifest sha256:2e27d92b2dfa82e832701aadf100f59a88858275b4b3c0073651109cf2d550c0 0.0s done
+#13 exporting config sha256:d538cc6d96876f0ecd756c5778e30d79af67e335e40978a783ba3c77f9a82a1f 0.0s done
+#13 exporting attestation manifest sha256:e8ebc84f04faeaca4e666c73642d32ad65faa56783d56582df37fbb680a186ee
+#13 exporting attestation manifest sha256:e8ebc84f04faeaca4e666c73642d32ad65faa56783d56582df37fbb680a186ee 0.1s done
+#13 exporting manifest list sha256:4bdebe13bb6c31c075ccc1f37bdebd4eb5f0c8d40d49df8d36d6485dab863f05 0.1s done
+#13 naming to docker.io/library/onlineschool-cleanup-worker:phase3
+#13 naming to docker.io/library/onlineschool-cleanup-worker:phase3 done
+#13 unpacking to docker.io/library/onlineschool-cleanup-worker:phase3
+#13 unpacking to docker.io/library/onlineschool-cleanup-worker:phase3 11.3s done
+#13 DONE 30.3s

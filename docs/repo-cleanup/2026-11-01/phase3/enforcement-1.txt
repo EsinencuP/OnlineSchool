@@ -1,0 +1,14 @@
+
+> online-school@0.0.0 check:cycles D:\OnlineSchool\.codex\worktrees\repo-cleanup
+> node scripts/check-cycles.mjs
+
+{
+  "files": 105,
+  "edges": 392,
+  "cycles": [],
+  "madge": "8.0.0",
+  "command": "pnpm dlx madge@8.0.0 --stdin --circular --json --no-spinner",
+  "unresolvedLocalImports": []
+}
+(node:55352) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

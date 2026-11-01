@@ -253,3 +253,14 @@ docker compose up -d --build --wait
 Карта фиксирует происхождение и статус требований. Черновики, рекомендации и демонстрационные данные макетов не становятся утверждёнными правилами.
 
 Graphify 0.9.76 и скилл для Codex установлены. Поиск: `graphify query "ваш вопрос"`. Повторная сборка из сохранённых смысловых фрагментов: `python scripts/build_project_map.py`, затем `graphify export html` и `graphify tree --root . --label OnlineSchool`. Для изменённых документов требуется повторный смысловой анализ; признак устаревания — `graphify-out/freshness.json`.
+
+## Структура после cleanup, 01.11.2026
+
+API и worker используют общие Nest-инфраструктуру и фоновые обработчики через
+`packages/server-kernel` и `packages/jobs`. Старые API пути сохранены реэкспортами;
+исторические описания TASK-01…13 выше не переписывались. Домены API взаимодействуют
+через публичные `index.js`/порты, worker больше не зависит от API.
+
+[Текущие слои, карта путей и отложенный перенос DTO](docs/REPOSITORY_STRUCTURE.md).
+Проверки архитектуры: `pnpm check:boundaries` и `pnpm check:cycles` (Madge через dlx).
+Результаты и ограничения — в [CLEANUP_REPORT.md](CLEANUP_REPORT.md).

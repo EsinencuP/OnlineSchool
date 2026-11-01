@@ -1,0 +1,14 @@
+
+> @online-school/worker@0.0.0 test D:\OnlineSchool\.codex\worktrees\repo-cleanup\apps\worker
+> node --test test/*.test.mjs
+
+✔ bounded retry schedule and strict environment config (1.4218ms)
+✔ worker application context starts and shuts down without an HTTP listener (311.2664ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 721.1038

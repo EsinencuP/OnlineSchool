@@ -1,0 +1,22 @@
+[
+  {
+    "command": "pnpm install --frozen-lockfile",
+    "exitCode": 0,
+    "log": "final-0.txt"
+  },
+  {
+    "command": "node .codex/phase1/contract-check.mjs",
+    "exitCode": 0,
+    "log": "final-1.txt"
+  },
+  {
+    "command": "docker build -f apps/api/Dockerfile -t onlineschool-cleanup-api:phase3 .",
+    "exitCode": 0,
+    "log": "final-2.txt"
+  },
+  {
+    "command": "docker build -f apps/worker/Dockerfile -t onlineschool-cleanup-worker:phase3 .",
+    "exitCode": 0,
+    "log": "final-3.txt"
+  }
+]
