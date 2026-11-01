@@ -50,6 +50,7 @@
 !packages/db/prisma/migrations/**
 !infra/
 !infra/worker-health.mjs
+!infra/package-runtime.mjs
 !scripts/
 !scripts/write-generated.mjs
 packages/db/src/generated/
