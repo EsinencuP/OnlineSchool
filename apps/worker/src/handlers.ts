@@ -3,6 +3,7 @@ import { err, ok } from '@online-school/shared';
 import type { Handler, Tx } from './contracts.js';
 import { systemAudit } from './contracts.js';
 import { NotificationOutboxPublisher } from '@online-school/api/notifications';
+import { applyLeadEvent } from '@online-school/api/manager-leads';
 import { notificationDeliveryHandler } from './notification-delivery.js';
 
 export const StudentAccountCreatedHandler: Handler = async (tx, event) => {
@@ -217,6 +218,9 @@ const observed: Handler = async (tx, event) => {
 
 export function createHandlers(): ReadonlyMap<string, Handler> {
   const handlers = new Map<string, Handler>([
+    ['schedule.trial.outcome.v1', applyLeadEvent],
+    ['schedule.lesson.changed.v1', applyLeadEvent],
+    ['finance.lead-first-payment.allocated.v1', applyLeadEvent],
     ['notification.deliver.v1', notificationDeliveryHandler()],
     ...Object.keys(subscriptionNoticeTypes).map(
       (topic) => [topic, ManagerSubscriptionNoticeHandler] as const,
@@ -230,11 +234,15 @@ export function createHandlers(): ReadonlyMap<string, Handler> {
     ['entitlement.granted.v1', EntitlementGrantedHandler],
   ]);
   // These existing Phase-0 events have no secondary business effect. Record receipt explicitly.
-  for (const topic of OBSERVED_TOPICS) handlers.set(topic, observed);
+  for (const topic of OBSERVED_TOPICS) if (!handlers.has(topic)) handlers.set(topic, observed);
   return handlers;
 }
 
 const OBSERVED_TOPICS = [
+  'manager.lead.changed.v1',
+  ...['create', 'update', 'claim', 'trial', 'transition', 'lose', 'reopen'].map(
+    (name) => `manager.lead.command-${name}.v1`,
+  ),
   'manager.notification.queued.v1',
   'manager.payment.created.v1',
   'manager.payment.approval-requested.v1',

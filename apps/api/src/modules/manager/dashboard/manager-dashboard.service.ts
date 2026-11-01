@@ -16,6 +16,8 @@ import { ManagerDashboardRead } from './dashboard.read.js';
 import { dashboardOverviewSql, dashboardSubscriptionsSql } from './dashboard.sql.js';
 import { pendingReceiptTotalsSql } from '../../finance/manager-payments/pending-totals.sql.js';
 import { subscriptionExpiryUntil } from '../../finance/manager-subscriptions/read-spec.js';
+import { leadSummarySql } from '../leads/summary.sql.js';
+import type { LeadSummaryDto } from '../dto/manager-lead.dto.js';
 @Injectable()
 export class ManagerDashboardService {
   constructor(
@@ -62,7 +64,15 @@ export class ManagerDashboardService {
       const overview = unwrap(
         await this.reader.read<
           Pick<ManagerDashboardDto, 'students' | 'upcomingLessons' | 'overdueTasks'>
-        >(tx, dashboardOverviewSql(scope, now, lessonsUntil)),
+        >(
+          tx,
+          dashboardOverviewSql(
+            scope,
+            now,
+            lessonsUntil,
+            Prisma.sql`${this.scope.leadSql(ctx, now)} AND t.assigned_manager_id=${ctx.managerId}::uuid`,
+          ),
+        ),
       );
       const students = overview.students,
         tasks = overview.overdueTasks;
@@ -79,6 +89,16 @@ export class ManagerDashboardService {
         ),
       );
       return ok({
+        leads: unwrap(
+          await this.reader.read<LeadSummaryDto>(
+            tx,
+            leadSummarySql(
+              this.scope.leadSql(ctx, now),
+              now,
+              process.env.SCHOOL_TIMEZONE ?? 'Europe/Chisinau',
+            ),
+          ),
+        ),
         generatedAt: now.toISOString(),
         students,
         upcomingLessons: overview.upcomingLessons.map((x) => ({

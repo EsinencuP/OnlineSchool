@@ -26,9 +26,12 @@ export const dashboardLessonsSql = (
 export const dashboardTasksSql = (
   scope: Prisma.Sql,
   now: Date,
+  leadScope: Prisma.Sql = Prisma.sql`false`,
 ): Prisma.Sql => Prisma.sql`/* mgr09:tasks */ WITH overdue AS(
  SELECT t.id AS "taskId",${taskPublicTypeSql()} AS type,st.full_name AS "studentName",t.due_at AS "dueAt"
- FROM students st JOIN crm_tasks t ON t.student_id=st.id WHERE ${scope} AND ${taskVisibleSql()} AND ${taskOverdueSql(now)}), oldest AS(SELECT * FROM overdue ORDER BY "dueAt","taskId" LIMIT 5)
+ FROM students st JOIN crm_tasks t ON t.student_id=st.id WHERE t.lead_id IS NULL AND ${scope} AND ${taskVisibleSql()} AND ${taskOverdueSql(now)}
+ UNION ALL SELECT t.id AS "taskId",t.type::text AS type,ld.full_name AS "studentName",t.due_at AS "dueAt" FROM leads ld JOIN crm_tasks t ON t.lead_id=ld.id
+ WHERE ${leadScope} AND t.type::text IN('LEAD_FOLLOWUP','ASSIGN_TEACHER') AND ${taskOverdueSql(now)}), oldest AS(SELECT * FROM overdue ORDER BY "dueAt","taskId" LIMIT 5)
  SELECT (SELECT count(*)::int FROM overdue) AS count,coalesce((SELECT jsonb_agg(to_jsonb(oldest) ORDER BY "dueAt","taskId") FROM oldest),'[]'::jsonb) AS top`;
 export const dashboardSubscriptionsSql = (
   scope: Prisma.Sql,
@@ -47,6 +50,7 @@ export const dashboardOverviewSql = (
   scope: Prisma.Sql,
   now: Date,
   until: Date,
+  leadScope: Prisma.Sql = Prisma.sql`false`,
 ): Prisma.Sql => Prisma.sql`/* mgr09:overview */
  SELECT to_jsonb(students) AS students,lessons.items AS "upcomingLessons",jsonb_build_object('count',tasks.count,'top',tasks.top) AS "overdueTasks"
- FROM(${dashboardStudentsSql(scope, now)}) students CROSS JOIN(${dashboardLessonsSql(scope, now, until)}) lessons CROSS JOIN(${dashboardTasksSql(scope, now)}) tasks`;
+ FROM(${dashboardStudentsSql(scope, now)}) students CROSS JOIN(${dashboardLessonsSql(scope, now, until)}) lessons CROSS JOIN(${dashboardTasksSql(scope, now, leadScope)}) tasks`;

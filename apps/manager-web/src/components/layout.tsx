@@ -14,6 +14,7 @@ const useNavigation = create<{ expanded: boolean; toggle: () => void }>((set) =>
 }));
 const links: Array<{ to: string; label: string; icon: IconName }> = [
   { to: routes.dashboard, label: ru.dashboard, icon: 'home' },
+  { to: routes.leads, label: ru.leads, icon: 'mail' },
   { to: routes.students, label: ru.students, icon: 'users' },
   { to: routes.schedule, label: ru.schedule, icon: 'calendar' },
   { to: routes.tasks, label: ru.tasks, icon: 'tasks' },
@@ -87,7 +88,7 @@ export function Layout() {
         </nav>
         <div className="sidebar-subsection">
           <span className="sidebar-section-label">{ru.myPortfolio}</span>
-          <Link to={`${routes.students}?status=LEAD`}>
+          <Link to={`${routes.leads}?stage=NEW`}>
             <Icon name="plus" size={17} />
             {ru.newLeads}
             <Icon name="chevron" size={13} />

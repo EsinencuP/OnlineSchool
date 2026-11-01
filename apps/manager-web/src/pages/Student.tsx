@@ -65,6 +65,11 @@ export default function Student() {
                 {ru.account}
               </Link>
             </div>
+            {s.leadId && (
+              <Link className="back-link" to={routes.lead(s.leadId)}>
+                {ru.openLead} →
+              </Link>
+            )}
             <nav className="tabs" aria-label={ru.viewStudent}>
               {tabs.map((t) => (
                 <Link

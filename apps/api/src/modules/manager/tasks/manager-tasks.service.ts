@@ -35,6 +35,7 @@ import type {
 import { readTaskCursor, writeTaskCursor } from './task-cursor.js';
 import { taskPortfolioWhere, taskOverdueWhere } from './task-read.spec.js';
 const include = {
+  lead: { select: { id: true, full_name: true } },
   student: { select: { full_name: true } },
   lesson: {
     select: { id: true, scheduled_at: true, enrollment_ref: { select: { student_id: true } } },
@@ -70,7 +71,11 @@ export class ManagerTasksService {
     private readonly audit: AuditService,
   ) {}
   private where(ctx: ManagerContext): Prisma.CrmTaskWhereInput {
-    return taskPortfolioWhere(this.scope.portfolioWhere(ctx));
+    return taskPortfolioWhere(
+      this.scope.portfolioWhere(ctx),
+      this.scope.leadWhere(ctx),
+      ctx.managerId,
+    );
   }
   async find(
     ctx: ManagerContext,
@@ -84,11 +89,14 @@ export class ManagerTasksService {
       });
       if (
         !row ||
-        !row.student_id ||
-        !row.student ||
+        (!row.lead_id && (!row.student_id || !row.student)) ||
         (row.lesson && row.lesson.enrollment_ref.student_id !== row.student_id)
       )
         return err(domainError('TASK_NOT_FOUND', 404));
+      if (row.student_id) {
+        const allowed = await this.scope.assertStudentInPortfolio(ctx, row.student_id, tx);
+        if (!allowed.ok) return err(domainError('TASK_NOT_FOUND', 404));
+      }
       return ok(row);
     } catch (error: unknown) {
       return err(subscriptionFailure(error));
@@ -115,7 +123,10 @@ export class ManagerTasksService {
       const payload = obj(row.payload),
         decision = obj(row.decision);
       let data: TaskPayload;
-      if (row.type === 'RESCHEDULE_REQUEST') {
+      if (row.type === 'LEAD_FOLLOWUP' || row.type === 'ASSIGN_TEACHER') {
+        if (!row.lead_id || !row.lead) return err(domainError('TASK_NOT_FOUND', 404));
+        data = { kind: row.type, leadId: row.lead_id };
+      } else if (row.type === 'RESCHEDULE_REQUEST') {
         if (!row.lesson) return err(domainError('TASK_NOT_FOUND', 404));
         data = {
           kind: 'RESCHEDULE_REQUEST',
@@ -181,8 +192,9 @@ export class ManagerTasksService {
         type: data.kind,
         status,
         version: row.version,
-        studentId: row.student_id!,
-        studentName: row.student!.full_name,
+        studentId: row.student_id,
+        leadId: row.lead_id ?? null,
+        studentName: row.student?.full_name ?? row.lead?.full_name ?? '',
         createdAt: row.created_at.toISOString(),
         dueAt: row.due_at.toISOString(),
         isOverdue: !closed(row.status) && row.due_at < now,
@@ -258,8 +270,7 @@ export class ManagerTasksService {
         items: TaskView[] = [];
       for (const row of rows.slice(0, q.limit)) {
         if (
-          !row.student_id ||
-          !row.student ||
+          (!row.lead_id && (!row.student_id || !row.student)) ||
           (row.lesson && row.lesson.enrollment_ref.student_id !== row.student_id)
         )
           continue;

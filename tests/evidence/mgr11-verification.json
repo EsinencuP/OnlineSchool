@@ -1,0 +1,57 @@
+{
+  "task": "MGR-11",
+  "verifiedAt": "2026-11-01T11:42:33.577Z",
+  "backend": {
+    "kind": "Nest HTTP + worker/unit/SDK; in-memory Prisma fixture, no physical PostgreSQL",
+    "tests": 207,
+    "passed": 207,
+    "suites": 7
+  },
+  "browser": {
+    "kind": "Playwright with mocked API, 5 lead tests + 13 existing manager scenarios",
+    "passed": 18,
+    "failed": 0,
+    "flaky": 0,
+    "accessibility": "axe WCAG 2 A/AA and 2.1 AA at 360/768/1536 widths"
+  },
+  "builds": [
+    "API TypeScript strict",
+    "Worker TypeScript strict",
+    "Manager React/Vite production",
+    "OpenAPI + Orval regenerated"
+  ],
+  "checks": {
+    "prismaValidate": "PASS",
+    "targetedESLint": "PASS",
+    "sqlSyntax": "See mgr11-sql-syntax.json",
+    "reactReview": "Lazy routes, independent React Query requests, abort signals, labeled forms, keyboard dialogs, escaped text; project React 18 conventions preserved"
+  },
+  "bundle": {
+    "entryGzipBytes": 91138,
+    "routeGzipBytes": {
+      "src/pages/Dashboard.tsx": 152251,
+      "src/pages/Lead.tsx": 140227,
+      "src/pages/Leads.tsx": 139684,
+      "src/pages/Login.tsx": 92949,
+      "src/pages/Students.tsx": 151363
+    },
+    "limitBytes": 256000,
+    "mockCodeInProductionManifest": false
+  },
+  "ownerDecisions": {
+    "trialMinutes": 50,
+    "trialFree": true,
+    "feedbackVisible": true,
+    "followupMinutes": 120,
+    "skipTrialCreatesStudentWithoutAccount": true
+  },
+  "interpretationPending": {
+    "latePublishedFirstPaymentAfterLost": "Converts to CONVERTED under task rule 7; no separate owner decision received"
+  },
+  "deferred": [
+    "migrate dev/shadow/disposable DB (owner policy)",
+    "Real PostgreSQL concurrency and migration rehearsal; no synthetic writes to working database",
+    "Real teacher/manager WebAuthn and email provider end-to-end"
+  ],
+  "productionDeployment": "Recorded separately after deployment; local evidence does not claim the full DB gate."
+}

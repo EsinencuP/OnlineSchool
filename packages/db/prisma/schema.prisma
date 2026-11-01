@@ -75,6 +75,8 @@ enum ContactChannel {
 }
 
 enum CrmTaskType {
+  LEAD_FOLLOWUP
+  ASSIGN_TEACHER
   SUBSCRIPTION_EXPIRING
   ATTENDANCE_DISPUTE
   RESCHEDULE_REQUEST
@@ -136,6 +138,7 @@ model Student {
 }
 
 enum StudentNotificationType {
+  TRIAL_SCHEDULED
   LESSON_SCHEDULED
   RESCHEDULE_DECLINED
   DISPUTE_ACCEPTED
@@ -189,8 +192,10 @@ enum NotificationDeliveryStatus {
 
 // Delivery intent/status are separate from the immutable inbox and its read receipt.
 model NotificationDispatch {
+  lead_id String? @db.Uuid
+  lead Lead? @relation(fields:[lead_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
   id String @id @default(uuid()) @db.Uuid
-  student_id String @db.Uuid
+  student_id String? @db.Uuid
   manager_id String? @db.Uuid
   channel NotificationChannel
   template_code StudentNotificationType
@@ -207,7 +212,7 @@ model NotificationDispatch {
   first_attempt_at DateTime? @db.Timestamptz(3)
   failure_reason String?
   provider_reference String?
-  student Student @relation(fields:[student_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  student Student? @relation(fields:[student_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
   manager StaffAccount? @relation(fields:[manager_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
   source StudentNotificationSource? @relation(fields:[source_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
   @@index([student_id,created_at,id],map:"idx_mgr08_dispatch_student")
@@ -701,7 +706,59 @@ model AccessRevocation {
 }
 
 // Owner: CRM / Intake. No account FK: a lead never grants login or paid rights.
+enum LeadAudience {
+  CHILD
+  ADULT
+}
+
+enum LeadLostReason {
+  NOT_INTERESTED
+  PRICE
+  NO_CONTACT
+  COMPETITOR
+  SCHEDULE_MISMATCH
+  TRIAL_NO_SHOW
+  OTHER
+}
+
+enum LessonKind {
+  REGULAR
+  TRIAL
+}
+
+model LeadStageEvent {
+  id String @id @default(uuid()) @db.Uuid
+  lead_id String @db.Uuid
+  from_stage LeadStage?
+  to_stage LeadStage
+  actor String
+  reason String?
+  created_at DateTime @default(now()) @db.Timestamptz(3)
+  lead Lead @relation(fields:[lead_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  @@index([lead_id,created_at,id])
+  @@map("lead_stage_events")
+}
+
 model Lead {
+  archived_student_at DateTime? @db.Timestamptz(3)
+  audience LeadAudience @default(ADULT)
+  guardian_name String?
+  subject_id String? @db.Uuid
+  subject Subject? @relation(fields:[subject_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  grade Int?
+  age_years Int?
+  level String?
+  comment String?
+  lost_reason LeadLostReason?
+  lost_comment String?
+  trial_lesson_id String? @unique @db.Uuid
+  trial_lesson LessonOccurrence? @relation("CurrentLeadTrial",fields:[trial_lesson_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  trial_lessons LessonOccurrence[] @relation("LeadTrials")
+  version Int @default(1)
+  stage_changed_at DateTime @default(now()) @db.Timestamptz(3)
+  converted_at DateTime? @db.Timestamptz(3)
+  stage_events LeadStageEvent[]
+  notification_dispatches NotificationDispatch[]
   id          String    @id @default(uuid()) @db.Uuid
   stage       LeadStage @default(NEW)
   full_name   String // PII: incoming contact name, not a Student identity key
@@ -790,6 +847,7 @@ model ContactLog {
 }
 
 model CrmTask {
+  system_resolved Boolean @default(false)
   version Int @default(1)
   escalated_at DateTime? @db.Timestamptz(3)
   decision Json?
@@ -895,6 +953,7 @@ enum PayoutAttemptStatus {
 }
 
 model Subject {
+  leads Lead[]
   material_permissions                    FilePermission[]           @relation("MaterialSubject")
   id                                      String                     @id @default(uuid()) @db.Uuid
   code                                    String                     @unique
@@ -1015,6 +1074,12 @@ model RecurringSlot {
 }
 
 model LessonOccurrence {
+  trial_lead_id String? @db.Uuid
+  trial_source_lead Lead? @relation("LeadTrials",fields:[trial_lead_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
+  trial_started_at DateTime? @db.Timestamptz(3)
+  @@index([trial_lead_id, scheduled_at],map:"idx_mgr11_trial_source")
+  kind LessonKind @default(REGULAR)
+  trial_lead Lead? @relation("CurrentLeadTrial")
   manager_subscription_id String? @db.Uuid
   manager_subscription ManagerSubscription? @relation(fields: [manager_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   google_meet_link String?

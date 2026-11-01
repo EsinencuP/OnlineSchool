@@ -600,6 +600,134 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/leads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["listManagerLeads"];
+        put?: never;
+        post: operations["createManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getManagerLead"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["updateManagerLead"];
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/claim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["claimManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/lose": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["loseManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["reopenManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/transition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["transitionManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/trial": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["scheduleManagerTrial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getManagerLeadSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/lessons/{lessonId}/cancel": {
         parameters: {
             query?: never;
@@ -2362,7 +2490,29 @@ export interface components {
             /** @enum {string} */
             status: "VERIFIED";
         };
+        CreateLeadDto: {
+            /** @enum {string} */
+            audience: "CHILD" | "ADULT";
+            contactName: string;
+            guardianName?: string;
+            phone?: string;
+            email?: string;
+            /** Format: uuid */
+            subjectId: string;
+            grade?: number;
+            ageYears?: number;
+            level?: string;
+            /** @enum {string} */
+            source: "SITE" | "PHONE" | "MESSENGER" | "REFERRAL" | "OTHER";
+            comment?: string;
+            forceCreate?: boolean;
+        };
         CreateManagerLessonDto: {
+            /**
+             * @description TRIAL is scheduled atomically through the lead trial endpoint.
+             * @enum {string}
+             */
+            kind?: "REGULAR" | "TRIAL";
             /** Format: uuid */
             teacherId: string;
             /** Format: date-time */
@@ -2523,7 +2673,7 @@ export interface components {
             /** Format: uuid */
             taskId: string;
             /** @enum {string} */
-            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            type: "LEAD_FOLLOWUP" | "ASSIGN_TEACHER" | "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
             studentName: string;
             /** Format: date-time */
             dueAt: string;
@@ -2801,6 +2951,107 @@ export interface components {
             /** Format: uuid */
             householdId: string;
         };
+        LeadDto: {
+            /** Format: uuid */
+            leadId: string;
+            /** @enum {string} */
+            stage: "NEW" | "IN_PROGRESS" | "TRIAL" | "AWAITING_PAYMENT" | "CONVERTED" | "LOST";
+            /** @enum {string} */
+            audience: "CHILD" | "ADULT";
+            contactName: string;
+            subjectName: string;
+            grade: number | null;
+            maskedPhone: string | null;
+            /** @enum {string} */
+            source: "SITE" | "PHONE" | "MESSENGER" | "REFERRAL" | "OTHER";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            stageChangedAt: string;
+            /** Format: date-time */
+            trialAt: string | null;
+            /** Format: date-time */
+            nextActionAt: string | null;
+            isOverdue: boolean;
+            version: number;
+            guardianName: string | null;
+            phone: string | null;
+            email: string | null;
+            ageYears: number | null;
+            level: string | null;
+            comment: string | null;
+            /** Format: uuid */
+            studentId: string | null;
+            /** Format: uuid */
+            subjectId: string | null;
+            /** @enum {string|null} */
+            lostReason: "NOT_INTERESTED" | "PRICE" | "NO_CONTACT" | "COMPETITOR" | "SCHEDULE_MISMATCH" | "TRIAL_NO_SHOW" | "OTHER" | null;
+            lostComment: string | null;
+            trial: components["schemas"]["TrialLessonViewDto"] | null;
+            history: components["schemas"]["LeadHistoryDto"][];
+            openTasks: components["schemas"]["LeadTaskBriefDto"][];
+        };
+        LeadHistoryDto: {
+            /** @enum {string|null} */
+            from: "NEW" | "IN_PROGRESS" | "TRIAL" | "AWAITING_PAYMENT" | "CONVERTED" | "LOST" | null;
+            /** @enum {string} */
+            to: "NEW" | "IN_PROGRESS" | "TRIAL" | "AWAITING_PAYMENT" | "CONVERTED" | "LOST";
+            /** Format: date-time */
+            at: string;
+            byManager: boolean;
+        };
+        LeadListItemDto: {
+            /** Format: uuid */
+            leadId: string;
+            /** @enum {string} */
+            stage: "NEW" | "IN_PROGRESS" | "TRIAL" | "AWAITING_PAYMENT" | "CONVERTED" | "LOST";
+            /** @enum {string} */
+            audience: "CHILD" | "ADULT";
+            contactName: string;
+            subjectName: string;
+            grade: number | null;
+            maskedPhone: string | null;
+            /** @enum {string} */
+            source: "SITE" | "PHONE" | "MESSENGER" | "REFERRAL" | "OTHER";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            stageChangedAt: string;
+            /** Format: date-time */
+            trialAt: string | null;
+            /** Format: date-time */
+            nextActionAt: string | null;
+            isOverdue: boolean;
+        };
+        LeadPageDto: {
+            items: components["schemas"]["LeadListItemDto"][];
+            nextCursor: string | null;
+        };
+        LeadStageCountsDto: {
+            NEW: number;
+            IN_PROGRESS: number;
+            TRIAL: number;
+            AWAITING_PAYMENT: number;
+        };
+        LeadSummaryDto: {
+            countsByStage: components["schemas"]["LeadStageCountsDto"];
+            createdToday: number;
+            trialsToday: number;
+            overdueFollowups: number;
+            /** @description Converted leads / leads created in the trailing 30-day cohort, in basis points */
+            conversion30dBp: number;
+        };
+        LeadTaskBriefDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** @enum {string} */
+            type: "LEAD_FOLLOWUP" | "ASSIGN_TEACHER";
+            /** Format: date-time */
+            dueAt: string;
+        };
+        LeadVersionDto: {
+            version: number;
+        };
         LearningGoalDto: {
             /** Format: uuid */
             goalId: string;
@@ -3051,11 +3302,18 @@ export interface components {
             /** @enum {boolean} */
             loggedOut: true;
         };
+        LoseLeadDto: {
+            version: number;
+            /** @enum {string} */
+            reason: "NOT_INTERESTED" | "PRICE" | "NO_CONTACT" | "COMPETITOR" | "SCHEDULE_MISMATCH" | "TRIAL_NO_SHOW" | "OTHER";
+            comment?: string;
+        };
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
         };
         ManagerDashboardDto: {
+            leads: components["schemas"]["LeadSummaryDto"];
             /** Format: date-time */
             generatedAt: string;
             students: components["schemas"]["DashboardStudentCountsDto"];
@@ -3107,6 +3365,9 @@ export interface components {
             startsAt: string;
         };
         ManagerLessonDto: {
+            trialBrief?: components["schemas"]["TrialBriefDto"] | null;
+            /** @enum {string} */
+            kind: "REGULAR" | "TRIAL";
             /** Format: uuid */
             lessonId: string;
             /** Format: uuid */
@@ -3140,7 +3401,7 @@ export interface components {
             portfolioSize: number;
             /** @example Europe/Chisinau */
             timezone: string;
-            capabilities: ("STUDENTS_VIEW" | "ACCOUNTS_CREATE" | "PAYMENTS_CONFIRM" | "SUBSCRIPTIONS_MANAGE" | "SCHEDULE_MANAGE" | "TASKS_PROCESS" | "NOTIFICATIONS_SEND")[];
+            capabilities: ("LEADS_MANAGE" | "STUDENTS_VIEW" | "ACCOUNTS_CREATE" | "PAYMENTS_CONFIRM" | "SUBSCRIPTIONS_MANAGE" | "SCHEDULE_MANAGE" | "TASKS_PROCESS" | "NOTIFICATIONS_SEND")[];
         };
         ManagerNamedOptionDto: {
             id: string;
@@ -3154,7 +3415,7 @@ export interface components {
             /** @enum {string} */
             channel: "IN_APP" | "EMAIL";
             /** @enum {string} */
-            templateCode: "ACCOUNT_CREATED" | "PAYMENT_CONFIRMED" | "SUBSCRIPTION_CREATED" | "SUBSCRIPTION_RENEWED" | "SUBSCRIPTION_FROZEN" | "SUBSCRIPTION_UNFROZEN" | "SUBSCRIPTION_EXPIRED" | "LESSON_SCHEDULED" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "RESCHEDULE_DECLINED" | "DISPUTE_ACCEPTED" | "DISPUTE_REJECTED" | "MANUAL_MESSAGE";
+            templateCode: "TRIAL_SCHEDULED" | "ACCOUNT_CREATED" | "PAYMENT_CONFIRMED" | "SUBSCRIPTION_CREATED" | "SUBSCRIPTION_RENEWED" | "SUBSCRIPTION_FROZEN" | "SUBSCRIPTION_UNFROZEN" | "SUBSCRIPTION_EXPIRED" | "LESSON_SCHEDULED" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "RESCHEDULE_DECLINED" | "DISPUTE_ACCEPTED" | "DISPUTE_REJECTED" | "MANUAL_MESSAGE";
             /** @enum {string} */
             status: "QUEUED" | "SENT" | "FAILED";
             /** Format: date-time */
@@ -3168,6 +3429,7 @@ export interface components {
             nextCursor: string | null;
         };
         ManagerOptionsDto: {
+            teachers: components["schemas"]["ManagerNamedOptionDto"][];
             students: components["schemas"]["ManagerNamedOptionDto"][];
             subjects: components["schemas"]["ManagerNamedOptionDto"][];
             plans: components["schemas"]["ManagerPlanOptionDto"][];
@@ -3248,12 +3510,14 @@ export interface components {
             /** Format: uuid */
             taskId: string;
             /** @enum {string} */
-            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            type: "LEAD_FOLLOWUP" | "ASSIGN_TEACHER" | "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
             /** @enum {string} */
             status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "REJECTED";
             version: number;
             /** Format: uuid */
-            studentId: string;
+            studentId: string | null;
+            /** Format: uuid */
+            leadId: string | null;
             studentName: string;
             /** Format: date-time */
             createdAt: string;
@@ -3264,7 +3528,7 @@ export interface components {
             escalatedAt: string | null;
             /** @enum {string} */
             approvalStatus: "NONE" | "AWAITING_DIRECTOR" | "MANUAL_FINANCE_REVIEW" | "AWAITING_SCHEDULE_APPROVAL";
-            payload: components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
+            payload: components["schemas"]["TaskLeadPayloadDto"] | components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
             /** Format: uuid */
             ledgerPublicationId: string | null;
             /** @description Whitelisted last decision; student comments are plain text, never HTML */
@@ -3274,12 +3538,14 @@ export interface components {
             /** Format: uuid */
             taskId: string;
             /** @enum {string} */
-            type: "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
+            type: "LEAD_FOLLOWUP" | "ASSIGN_TEACHER" | "RESCHEDULE_REQUEST" | "CHARGE_DISPUTE" | "SUBSCRIPTION_EXPIRING" | "GENERAL";
             /** @enum {string} */
             status: "OPEN" | "IN_PROGRESS" | "RESOLVED" | "REJECTED";
             version: number;
             /** Format: uuid */
-            studentId: string;
+            studentId: string | null;
+            /** Format: uuid */
+            leadId: string | null;
             studentName: string;
             /** Format: date-time */
             createdAt: string;
@@ -3290,7 +3556,7 @@ export interface components {
             escalatedAt: string | null;
             /** @enum {string} */
             approvalStatus: "NONE" | "AWAITING_DIRECTOR" | "MANUAL_FINANCE_REVIEW" | "AWAITING_SCHEDULE_APPROVAL";
-            payload: components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
+            payload: components["schemas"]["TaskLeadPayloadDto"] | components["schemas"]["TaskReschedulePayloadDto"] | components["schemas"]["TaskDisputePayloadDto"] | components["schemas"]["TaskExpiringPayloadDto"] | components["schemas"]["TaskGeneralPayloadDto"];
             /** Format: uuid */
             ledgerPublicationId: string | null;
         };
@@ -3735,6 +4001,13 @@ export interface components {
         ScheduleReasonRequest: {
             reason: string;
         };
+        ScheduleTrialDto: {
+            version: number;
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: date-time */
+            startsAt: string;
+        };
         SendManagerNotificationDto: {
             /** @enum {string} */
             channel: "IN_APP" | "EMAIL";
@@ -3859,6 +4132,8 @@ export interface components {
             passwordAlreadyIssued: boolean;
         };
         StudentCardDto: {
+            /** Format: uuid */
+            leadId: string | null;
             /** Format: uuid */
             studentId: string;
             version: number;
@@ -4101,6 +4376,15 @@ export interface components {
             kind: "TaskGeneralPayloadDto";
             text: string;
         };
+        TaskLeadPayloadDto: {
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "TaskLeadPayloadDto";
+            /** Format: uuid */
+            leadId: string;
+        };
         TaskPreferredWindowDto: {
             /** Format: date-time */
             from: string;
@@ -4222,8 +4506,56 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        TransitionLeadDto: {
+            version: number;
+            /** @enum {string} */
+            to: "IN_PROGRESS" | "AWAITING_PAYMENT";
+            skipTrialReason?: string;
+        };
+        TrialBriefDto: {
+            /** Format: uuid */
+            leadId: string;
+            /** @enum {string} */
+            audience: "CHILD" | "ADULT";
+            ageYears: number | null;
+            grade: number | null;
+            level: string | null;
+            subjectName: string;
+        };
+        TrialLessonViewDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            teacherName: string;
+            meetLink: string | null;
+            /** @enum {string} */
+            outcome: "PENDING" | "ATTENDED" | "NO_SHOW" | "CANCELLED";
+            /** @enum {string} */
+            feedbackStatus: "PENDING" | "SUBMITTED";
+            feedbackSummary: string | null;
+        };
         UnreadCountDto: {
             unreadCount: number;
+        };
+        UpdateLeadDto: {
+            /** @enum {string} */
+            audience?: "CHILD" | "ADULT";
+            contactName?: string;
+            guardianName?: string;
+            phone?: string;
+            email?: string;
+            /** Format: uuid */
+            subjectId?: string;
+            grade?: number;
+            ageYears?: number;
+            level?: string;
+            /** @enum {string} */
+            source?: "SITE" | "PHONE" | "MESSENGER" | "REFERRAL" | "OTHER";
+            comment?: string;
+            version: number;
         };
         UpdateProfileDto: {
             displayName?: string;
@@ -6756,6 +7088,958 @@ export interface operations {
             };
         };
     };
+    listManagerLeads: {
+        parameters: {
+            query?: {
+                /** @description Comma-separated stages */
+                stage?: string;
+                search?: string;
+                subjectId?: string;
+                source?: "SITE" | "PHONE" | "MESSENGER" | "REFERRAL" | "OTHER";
+                overdue?: boolean;
+                cursor?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadPageDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateLeadDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerLead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    updateManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateLeadDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    claimManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeadVersionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    loseManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoseLeadDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reopenManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LeadVersionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    transitionManagerLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransitionLeadDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    scheduleManagerTrial: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScheduleTrialDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerLeadSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LeadSummaryDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND, SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_RATE_LIMITED */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     cancelManagerLesson: {
         parameters: {
             query?: never;
@@ -7667,6 +8951,7 @@ export interface operations {
     listManagerSchedule: {
         parameters: {
             query: {
+                kind?: "REGULAR" | "TRIAL";
                 from: string;
                 to: string;
                 studentId?: string;
@@ -9230,7 +10515,7 @@ export interface operations {
             query?: {
                 /** @description Comma-separated OPEN, IN_PROGRESS, RESOLVED, REJECTED */
                 status?: string;
-                /** @description Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL */
+                /** @description Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL, LEAD_FOLLOWUP, ASSIGN_TEACHER */
                 type?: string;
                 overdue?: boolean;
                 studentId?: string;

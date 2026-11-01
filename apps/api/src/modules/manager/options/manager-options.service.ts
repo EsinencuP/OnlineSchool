@@ -25,6 +25,11 @@ export class ManagerOptionsService {
           if (!access.ok) return access;
         }
         const now = new Date();
+        const teachers = await tx.teacherAccount.findMany({
+          where: { deactivated_at: null, account: { disabled_at: null } },
+          orderBy: [{ full_name: 'asc' }, { id: 'asc' }],
+          select: { id: true, full_name: true },
+        });
         const students = await tx.student.findMany({
           where: {
             AND: [this.scope.portfolioWhere(ctx, now), ...(studentId ? [{ id: studentId }] : [])],
@@ -93,6 +98,7 @@ export class ManagerOptionsService {
             })
           : [];
         return ok({
+          teachers: teachers.map((t) => ({ id: t.id, label: t.full_name })),
           students: students.map((s) => ({ id: s.id, label: s.full_name })),
           subjects: subjects.map((s) => ({ id: s.id, label: s.name })),
           plans: plans.map((p) => ({

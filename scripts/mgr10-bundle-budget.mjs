@@ -19,7 +19,7 @@ async function measure(route) {
   return { gzipBytes: bytes, budgetBytes: 250 * 1024, passed: bytes <= 250 * 1024, files };
 }
 const routes = Object.keys(manifest).filter((key) =>
-  /pages\/(?:Dashboard|Login|Students)\.tsx$/.test(key),
+  /pages\/(?:Dashboard|Login|Students|Leads|Lead)\.tsx$/.test(key),
 );
 const report = {
   measuredAt: new Date().toISOString(),

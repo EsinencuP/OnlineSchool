@@ -33,6 +33,87 @@ const same = (a: unknown, b: Record<string, string>) =>
   JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());
 @Injectable()
 export class NotificationOutboxPublisher {
+  async enqueueContact(
+    tx: Prisma.TransactionClient,
+    event: {
+      leadId: string;
+      lessonId: string;
+      operationId: string;
+      requestId: string;
+      actorId: string;
+    },
+  ): Promise<Result<void, DomainError>> {
+    try {
+      const lead = await tx.lead.findUnique({
+        where: { id: event.leadId },
+        include: { trial_lesson: true },
+      });
+      if (!lead || lead.trial_lesson_id !== event.lessonId || !lead.trial_lesson)
+        return err(domainError('LEAD_NOT_FOUND', 404));
+      const key = `trial-contact:${event.leadId}:${event.lessonId}:${lead.trial_lesson.version}`;
+      const previous = await tx.notificationDispatch.findUnique({ where: { dedupe_key: key } });
+      if (previous)
+        return previous.lead_id === event.leadId && previous.channel === 'EMAIL'
+          ? ok(undefined)
+          : err(domainError('NOTIFICATION_DEDUPE_CONFLICT', 409));
+      const variables = {
+          lessonId: event.lessonId,
+          startsAt: lead.trial_lesson.scheduled_at.toISOString(),
+        },
+        content = unwrap(renderNotification('TRIAL_SCHEDULED', variables, 'ru'));
+      const hasEmail = !!lead.email && /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(lead.email),
+        id = randomUUID(),
+        auditId = randomUUID();
+      await tx.notificationDispatch.create({
+        data: {
+          id,
+          lead_id: lead.id,
+          channel: 'EMAIL',
+          template_code: 'TRIAL_SCHEDULED',
+          variables,
+          dedupe_key: key,
+          recipient_email: hasEmail ? lead.email : null,
+          subject: content.title,
+          body: content.body,
+          ...(hasEmail ? {} : { status: 'FAILED', failure_reason: 'NO_DELIVERY_CHANNEL' }),
+        },
+      });
+      await tx.auditEvent.create({
+        data: {
+          id: auditId,
+          actor_kind: 'ACCOUNT',
+          actor_id: event.actorId,
+          action: 'NOTIFICATION_QUEUED',
+          resource_type: 'NotificationDispatch',
+          resource_id: id,
+          result: 'SUCCESS',
+          request_id: event.requestId,
+          source_operation_id: event.operationId,
+          event_key: `notification-queued:${id}`,
+          metadata: {
+            recipient: 'CONTACT',
+            leadId: lead.id,
+            channel: 'EMAIL',
+            templateCode: 'TRIAL_SCHEDULED',
+          },
+        },
+      });
+      await tx.outboxEvent.create({
+        data: {
+          topic: 'notification.deliver.v1',
+          aggregate_type: 'NotificationDispatch',
+          aggregate_id: id,
+          audit_event_id: auditId,
+          source_operation_id: event.operationId,
+          event_key: `notification-deliver:${id}`,
+          payload: { schemaVersion: 1, notificationId: id },
+        },
+      });
+      return ok(undefined);
+    } catch (e: unknown) {
+      return err(e instanceof AppException ? e.domain : databaseError(e));
+    }
+  }
   async enqueue(
     tx: Prisma.TransactionClient,
     event: NotificationIntent,

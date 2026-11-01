@@ -46,7 +46,17 @@ export default function Task() {
             <div className="page-heading">
               <div>
                 <h1>{label(t.type)}</h1>
-                <Link to={routes.student(t.studentId)}>{t.studentName}</Link>
+                <Link
+                  to={
+                    t.leadId
+                      ? routes.lead(t.leadId)
+                      : t.studentId
+                        ? routes.student(t.studentId)
+                        : routes.tasks
+                  }
+                >
+                  {t.studentName}
+                </Link>
               </div>
               <Badge value={t.status} />
             </div>
@@ -131,7 +141,7 @@ function TaskDecision({
 }) {
   const me = useManager();
   const command = useCommand();
-  const options = useOptions(t.studentId);
+  const options = useOptions(t.studentId ?? undefined);
   const [decision, setDecision] = useState('APPROVE');
   const [message, setMessage] = useState('');
   const teachers = Array.from(
@@ -259,7 +269,17 @@ function TaskDecision({
       ) : (
         <>
           <p>{ru.taskOther}</p>
-          <Link to={routes.student(t.studentId)}>{ru.viewStudent}</Link>
+          <Link
+            to={
+              t.leadId
+                ? routes.lead(t.leadId)
+                : t.studentId
+                  ? routes.student(t.studentId)
+                  : routes.tasks
+            }
+          >
+            {t.leadId ? ru.openLead : ru.viewStudent}
+          </Link>
         </>
       )}
     </>

@@ -26,6 +26,7 @@ export class ManagerFinancialSubscriptionOptionDto extends ManagerNamedOptionDto
   @ApiProperty({ format: 'date-time' }) startsAt!: string;
 }
 export class ManagerOptionsDto {
+  @ApiProperty({ type: [ManagerNamedOptionDto] }) teachers!: ManagerNamedOptionDto[];
   @ApiProperty({ type: [ManagerNamedOptionDto] }) students!: ManagerNamedOptionDto[];
   @ApiProperty({ type: [ManagerNamedOptionDto] }) subjects!: ManagerNamedOptionDto[];
   @ApiProperty({ type: [ManagerPlanOptionDto] }) plans!: ManagerPlanOptionDto[];

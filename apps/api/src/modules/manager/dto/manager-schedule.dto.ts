@@ -21,6 +21,10 @@ import { MEET_LINK_REGEX as MEET } from '../../schedule/meet-link.js';
 export class EmptyManagerScheduleDto {}
 @SetMetadata(STRICT_INPUT_DTO, true)
 export class ListManagerScheduleDto {
+  @ApiPropertyOptional({ enum: ['REGULAR', 'TRIAL'] })
+  @IsOptional()
+  @IsIn(['REGULAR', 'TRIAL'])
+  kind?: 'REGULAR' | 'TRIAL';
   @ApiProperty({ format: 'date-time' })
   @IsISO8601({ strict: true })
   @Matches(INSTANT)
@@ -35,6 +39,13 @@ export class ListManagerScheduleDto {
 }
 @SetMetadata(STRICT_INPUT_DTO, true)
 export class CreateManagerLessonDto {
+  @ApiPropertyOptional({
+    enum: ['REGULAR', 'TRIAL'],
+    description: 'TRIAL is scheduled atomically through the lead trial endpoint.',
+  })
+  @IsOptional()
+  @IsIn(['REGULAR', 'TRIAL'])
+  kind?: 'REGULAR' | 'TRIAL';
   @ApiProperty({ format: 'uuid' }) @IsUUID() teacherId!: string;
   @ApiProperty({ format: 'date-time' })
   @IsISO8601({ strict: true })
@@ -92,7 +103,17 @@ export class SetManagerMeetDto {
   @Matches(MEET, { message: 'INVALID_MEET_LINK' })
   url!: string;
 }
+export class TrialBriefDto {
+  @ApiProperty({ format: 'uuid' }) leadId!: string;
+  @ApiProperty({ enum: ['CHILD', 'ADULT'] }) audience!: 'CHILD' | 'ADULT';
+  @ApiProperty({ type: Number, nullable: true }) ageYears!: number | null;
+  @ApiProperty({ type: Number, nullable: true }) grade!: number | null;
+  @ApiProperty({ type: String, nullable: true }) level!: string | null;
+  @ApiProperty() subjectName!: string;
+}
 export class ManagerLessonDto {
+  @ApiPropertyOptional({ type: TrialBriefDto, nullable: true }) trialBrief?: TrialBriefDto | null;
+  @ApiProperty({ enum: ['REGULAR', 'TRIAL'] }) kind!: 'REGULAR' | 'TRIAL';
   @ApiProperty({ format: 'uuid' }) lessonId!: string;
   @ApiProperty({ format: 'uuid' }) studentId!: string;
   @ApiProperty({ format: 'uuid' }) teacherId!: string;

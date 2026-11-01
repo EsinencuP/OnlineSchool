@@ -45,11 +45,18 @@ const lesson = (student, ready, start, extra = {}) => {
   f.state.lessons.set(row.id, row);
   return row;
 };
-test('empty portfolio returns200, one READ ONLY snapshot, six commands and no business writes', async () => {
+test('empty portfolio returns200, one READ ONLY snapshot, seven commands and no business writes', async () => {
   const r = await get();
   expect(r.status).toBe(200);
   expect(r.headers['cache-control']).toBe('private, no-store');
   expect(r.body).toEqual({
+    leads: {
+      countsByStage: { NEW: 0, IN_PROGRESS: 0, TRIAL: 0, AWAITING_PAYMENT: 0 },
+      createdToday: 0,
+      trialsToday: 0,
+      overdueFollowups: 0,
+      conversion30dBp: 0,
+    },
     generatedAt: f.state.now.toISOString(),
     students: { active: 0, frozen: 0, leads: 0 },
     upcomingLessons: [],
@@ -60,7 +67,7 @@ test('empty portfolio returns200, one READ ONLY snapshot, six commands and no bu
   expect(fx.captured).toHaveLength(1);
   expect(fx.captured[0]).toMatchObject({
     readOnly: true,
-    readCount: 6,
+    readCount: 7,
     options: { timeout: 15000, maxWait: 5000 },
   });
   expect(fx.calls[0].text).toBe('SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY');
@@ -312,7 +319,7 @@ test('counter/list and all time bounds use the transaction snapshot despite a co
   expect(r.body.students.active).toBe(1);
   expect(r.body.upcomingLessons).toHaveLength(1);
   expect(r.body.expiringSubscriptions).toHaveLength(1);
-  expect(fx.captured[0].readCount).toBe(6);
+  expect(fx.captured[0].readCount).toBe(7);
 });
 test('large exact decimals and published reversal of an allocation are reflected without float arithmetic', async () => {
   const own = f.addStudent(),

@@ -200,6 +200,16 @@ export async function managerDashboardFixture() {
       calls.push({ text, values });
     }
     if (text.includes('transaction_timestamp() AS now')) return [{ now: s.now }];
+    if (text.includes('AS "conversion30dBp"'))
+      return [
+        {
+          countsByStage: { NEW: 0, IN_PROGRESS: 0, TRIAL: 0, AWAITING_PAYMENT: 0 },
+          createdToday: 0,
+          trialsToday: 0,
+          overdueFollowups: 0,
+          conversion30dBp: 0,
+        },
+      ];
     const manager = f.accounts.find((a) => values.includes(a.staffId))?.staffId;
     if (text.includes('mgr09:') || text.includes('WITH RECURSIVE portfolio AS')) {
       if (!manager) throw Error('dashboard query missing portfolio parameter');

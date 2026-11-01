@@ -82,7 +82,17 @@ export class BookingService {
     return a;
   }
   async one(ctx: CriticalContext, body: unknown) {
-    const input = object(body, ['teachingAssignmentId', 'startsAt', 'endsAt', 'status', 'basis']);
+    const input = object(body, [
+      'teachingAssignmentId',
+      'startsAt',
+      'endsAt',
+      'status',
+      'basis',
+      'kind',
+      'trialLeadId',
+    ]);
+    if (input.kind !== undefined && !['REGULAR', 'TRIAL'].includes(input.kind as string))
+      return fail(domainError('INVALID_LESSON_KIND', 422));
     const start = date(input.startsAt),
       end = date(input.endsAt),
       a = await this.assignment(ctx, uuid(input.teachingAssignmentId), start, end);
@@ -93,9 +103,14 @@ export class BookingService {
       !['SCHEDULED', 'STAR_PENDING'].includes(input.status as string)
     )
       return fail(domainError('INVALID_LESSON_STATUS', 422));
-    const allowed = await admission(ctx.tx, a.enrollment_id, start);
+    const trial = input.kind === 'TRIAL';
+    const allowed = trial
+      ? { paid: true, permissionId: null }
+      : await admission(ctx.tx, a.enrollment_id, start);
     const lesson = await ctx.tx.lessonOccurrence.create({
       data: {
+        kind: trial ? 'TRIAL' : 'REGULAR',
+        trial_lead_id: trial ? uuid(input.trialLeadId) : null,
         enrollment_id: a.enrollment_id,
         teaching_assignment_id: a.id,
         scheduled_teacher_id: a.teacher_id,

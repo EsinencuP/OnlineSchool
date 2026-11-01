@@ -1,4 +1,6 @@
 export const MANAGER_TASK_TYPES = [
+  'LEAD_FOLLOWUP',
+  'ASSIGN_TEACHER',
   'RESCHEDULE_REQUEST',
   'CHARGE_DISPUTE',
   'SUBSCRIPTION_EXPIRING',
@@ -8,18 +10,23 @@ export type ManagerTaskType = (typeof MANAGER_TASK_TYPES)[number];
 export const TASK_STATUSES = ['OPEN', 'IN_PROGRESS', 'RESOLVED', 'REJECTED'] as const;
 export type ManagerTaskStatus = (typeof TASK_STATUSES)[number];
 export const TASK_STORAGE_TYPES = [
+  'LEAD_FOLLOWUP',
+  'ASSIGN_TEACHER',
   'RESCHEDULE_REQUEST',
   'ATTENDANCE_DISPUTE',
   'SUBSCRIPTION_EXPIRING',
   'MANUAL',
 ] as const;
 export const TYPE_STORAGE = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
   RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
   CHARGE_DISPUTE: 'ATTENDANCE_DISPUTE',
   SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
   GENERAL: 'MANUAL',
 } as const;
 export type TaskPayload =
+  | { kind: 'LEAD_FOLLOWUP' | 'ASSIGN_TEACHER'; leadId: string }
   | {
       kind: 'RESCHEDULE_REQUEST';
       lessonId: string;
@@ -68,7 +75,8 @@ export type TaskView = {
   type: ManagerTaskType;
   status: ManagerTaskStatus;
   version: number;
-  studentId: string;
+  studentId: string | null;
+  leadId: string | null;
   studentName: string;
   createdAt: string;
   dueAt: string;

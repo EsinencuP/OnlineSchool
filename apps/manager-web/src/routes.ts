@@ -1,4 +1,6 @@
 export const MANAGER_ROUTES = {
+  leads: '/manager/leads',
+  lead: (id: string) => `/manager/leads/${encodeURIComponent(id)}`,
   dashboard: '/manager',
   students: '/manager/students',
   student: (id: string) => `/manager/students/${encodeURIComponent(id)}`,

@@ -63,7 +63,8 @@ export function notificationDeliveryHandler(
     if (row.status !== 'QUEUED') return ok(undefined);
     let reference: string | null = null;
     if (row.channel === 'IN_APP') {
-      if (!row.source_id) return err({ code: 'INVALID_NOTIFICATION_SOURCE' });
+      if (!row.source_id || !row.student_id || row.lead_id)
+        return err({ code: 'INVALID_NOTIFICATION_SOURCE' });
       const account = await tx.studentAccount.findFirst({
         where: { student_id: row.student_id, deactivated_at: null, account: { disabled_at: null } },
         select: { id: true },

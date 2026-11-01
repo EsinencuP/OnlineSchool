@@ -3923,6 +3923,1397 @@
         ]
       }
     },
+    "/api/v1/manager/leads": {
+      "get": {
+        "operationId": "listManagerLeads",
+        "parameters": [
+          {
+            "name": "stage",
+            "required": false,
+            "in": "query",
+            "description": "Comma-separated stages",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minLength": 2,
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "source",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "SITE",
+                "PHONE",
+                "MESSENGER",
+                "REFERRAL",
+                "OTHER"
+              ]
+            }
+          },
+          {
+            "name": "overdue",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "maxLength": 200,
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadPageDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      },
+      "post": {
+        "operationId": "createManagerLead",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLeadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}": {
+      "get": {
+        "operationId": "getManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      },
+      "patch": {
+        "operationId": "updateManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLeadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/claim": {
+      "post": {
+        "operationId": "claimManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadVersionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/lose": {
+      "post": {
+        "operationId": "loseManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoseLeadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/reopen": {
+      "post": {
+        "operationId": "reopenManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadVersionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/transition": {
+      "post": {
+        "operationId": "transitionManagerLead",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransitionLeadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/trial": {
+      "post": {
+        "operationId": "scheduleManagerTrial",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScheduleTrialDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/summary": {
+      "get": {
+        "operationId": "getManagerLeadSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadSummaryDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND, SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LEAD_DUPLICATE_SUSPECTED, LEAD_VERSION_CONFLICT, INVALID_STAGE_TRANSITION, TRIAL_ALREADY_SCHEDULED, TRIAL_OUTCOME_REQUIRED, LEAD_TERMINAL, SLOT_CONFLICT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "LEAD_RATE_LIMITED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/lessons/{lessonId}/cancel": {
       "post": {
         "operationId": "cancelManagerLesson",
@@ -5247,6 +6638,18 @@
       "get": {
         "operationId": "listManagerSchedule",
         "parameters": [
+          {
+            "name": "kind",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "REGULAR",
+                "TRIAL"
+              ]
+            }
+          },
           {
             "name": "from",
             "required": true,
@@ -7645,7 +9048,7 @@
             "name": "type",
             "required": false,
             "in": "query",
-            "description": "Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL",
+            "description": "Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL, LEAD_FOLLOWUP, ASSIGN_TEACHER",
             "schema": {
               "type": "string"
             }
@@ -15410,9 +16813,86 @@
           "status"
         ]
       },
+      "CreateLeadDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "contactName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "guardianName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grade": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 11
+          },
+          "ageYears": {
+            "type": "number",
+            "minimum": 3,
+            "maximum": 99
+          },
+          "level": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "SITE",
+              "PHONE",
+              "MESSENGER",
+              "REFERRAL",
+              "OTHER"
+            ]
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "forceCreate": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "audience",
+          "contactName",
+          "subjectId",
+          "source"
+        ]
+      },
       "CreateManagerLessonDto": {
         "type": "object",
         "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "TRIAL"
+            ],
+            "description": "TRIAL is scheduled atomically through the lead trial endpoint."
+          },
           "teacherId": {
             "type": "string",
             "format": "uuid"
@@ -15968,6 +17448,8 @@
           "type": {
             "type": "string",
             "enum": [
+              "LEAD_FOLLOWUP",
+              "ASSIGN_TEACHER",
               "RESCHEDULE_REQUEST",
               "CHARGE_DISPUTE",
               "SUBSCRIPTION_EXPIRING",
@@ -16875,6 +18357,462 @@
         ],
         "additionalProperties": false
       },
+      "LeadDto": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "IN_PROGRESS",
+              "TRIAL",
+              "AWAITING_PAYMENT",
+              "CONVERTED",
+              "LOST"
+            ]
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "grade": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "maskedPhone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "SITE",
+              "PHONE",
+              "MESSENGER",
+              "REFERRAL",
+              "OTHER"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stageChangedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trialAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "nextActionAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "isOverdue": {
+            "type": "boolean"
+          },
+          "version": {
+            "type": "number"
+          },
+          "guardianName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ageYears": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "level": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "comment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "studentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "subjectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "lostReason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "NOT_INTERESTED",
+              "PRICE",
+              "NO_CONTACT",
+              "COMPETITOR",
+              "SCHEDULE_MISMATCH",
+              "TRIAL_NO_SHOW",
+              "OTHER",
+              null
+            ]
+          },
+          "lostComment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "trial": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrialLessonViewDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadHistoryDto"
+            }
+          },
+          "openTasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadTaskBriefDto"
+            }
+          }
+        },
+        "required": [
+          "leadId",
+          "stage",
+          "audience",
+          "contactName",
+          "subjectName",
+          "grade",
+          "maskedPhone",
+          "source",
+          "createdAt",
+          "stageChangedAt",
+          "trialAt",
+          "nextActionAt",
+          "isOverdue",
+          "version",
+          "guardianName",
+          "phone",
+          "email",
+          "ageYears",
+          "level",
+          "comment",
+          "studentId",
+          "subjectId",
+          "lostReason",
+          "lostComment",
+          "trial",
+          "history",
+          "openTasks"
+        ]
+      },
+      "LeadHistoryDto": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "NEW",
+              "IN_PROGRESS",
+              "TRIAL",
+              "AWAITING_PAYMENT",
+              "CONVERTED",
+              "LOST",
+              null
+            ]
+          },
+          "to": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "IN_PROGRESS",
+              "TRIAL",
+              "AWAITING_PAYMENT",
+              "CONVERTED",
+              "LOST"
+            ]
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "byManager": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "at",
+          "byManager"
+        ]
+      },
+      "LeadListItemDto": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "NEW",
+              "IN_PROGRESS",
+              "TRIAL",
+              "AWAITING_PAYMENT",
+              "CONVERTED",
+              "LOST"
+            ]
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "grade": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "maskedPhone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "SITE",
+              "PHONE",
+              "MESSENGER",
+              "REFERRAL",
+              "OTHER"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stageChangedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trialAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "nextActionAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "isOverdue": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "leadId",
+          "stage",
+          "audience",
+          "contactName",
+          "subjectName",
+          "grade",
+          "maskedPhone",
+          "source",
+          "createdAt",
+          "stageChangedAt",
+          "trialAt",
+          "nextActionAt",
+          "isOverdue"
+        ]
+      },
+      "LeadPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeadListItemDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "LeadStageCountsDto": {
+        "type": "object",
+        "properties": {
+          "NEW": {
+            "type": "number"
+          },
+          "IN_PROGRESS": {
+            "type": "number"
+          },
+          "TRIAL": {
+            "type": "number"
+          },
+          "AWAITING_PAYMENT": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "NEW",
+          "IN_PROGRESS",
+          "TRIAL",
+          "AWAITING_PAYMENT"
+        ]
+      },
+      "LeadSummaryDto": {
+        "type": "object",
+        "properties": {
+          "countsByStage": {
+            "$ref": "#/components/schemas/LeadStageCountsDto"
+          },
+          "createdToday": {
+            "type": "number"
+          },
+          "trialsToday": {
+            "type": "number"
+          },
+          "overdueFollowups": {
+            "type": "number"
+          },
+          "conversion30dBp": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10000,
+            "description": "Converted leads / leads created in the trailing 30-day cohort, in basis points"
+          }
+        },
+        "required": [
+          "countsByStage",
+          "createdToday",
+          "trialsToday",
+          "overdueFollowups",
+          "conversion30dBp"
+        ]
+      },
+      "LeadTaskBriefDto": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LEAD_FOLLOWUP",
+              "ASSIGN_TEACHER"
+            ]
+          },
+          "dueAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "taskId",
+          "type",
+          "dueAt"
+        ]
+      },
+      "LeadVersionDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
       "LearningGoalDto": {
         "type": "object",
         "properties": {
@@ -17714,6 +19652,35 @@
         ],
         "additionalProperties": false
       },
+      "LoseLeadDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number",
+            "minimum": 1
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "NOT_INTERESTED",
+              "PRICE",
+              "NO_CONTACT",
+              "COMPETITOR",
+              "SCHEDULE_MISMATCH",
+              "TRIAL_NO_SHOW",
+              "OTHER"
+            ]
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "version",
+          "reason"
+        ]
+      },
       "ManagerContactsDto": {
         "type": "object",
         "properties": {
@@ -17732,6 +19699,9 @@
       "ManagerDashboardDto": {
         "type": "object",
         "properties": {
+          "leads": {
+            "$ref": "#/components/schemas/LeadSummaryDto"
+          },
           "generatedAt": {
             "type": "string",
             "format": "date-time"
@@ -17759,6 +19729,7 @@
           }
         },
         "required": [
+          "leads",
           "generatedAt",
           "students",
           "upcomingLessons",
@@ -17921,6 +19892,23 @@
       "ManagerLessonDto": {
         "type": "object",
         "properties": {
+          "trialBrief": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrialBriefDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "TRIAL"
+            ]
+          },
           "lessonId": {
             "type": "string",
             "format": "uuid"
@@ -17983,6 +19971,7 @@
           }
         },
         "required": [
+          "kind",
           "lessonId",
           "studentId",
           "teacherId",
@@ -18027,6 +20016,7 @@
             "items": {
               "type": "string",
               "enum": [
+                "LEADS_MANAGE",
                 "STUDENTS_VIEW",
                 "ACCOUNTS_CREATE",
                 "PAYMENTS_CONFIRM",
@@ -18083,6 +20073,7 @@
           "templateCode": {
             "type": "string",
             "enum": [
+              "TRIAL_SCHEDULED",
               "ACCOUNT_CREATED",
               "PAYMENT_CONFIRMED",
               "SUBSCRIPTION_CREATED",
@@ -18162,6 +20153,12 @@
       "ManagerOptionsDto": {
         "type": "object",
         "properties": {
+          "teachers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerNamedOptionDto"
+            }
+          },
           "students": {
             "type": "array",
             "items": {
@@ -18194,6 +20191,7 @@
           }
         },
         "required": [
+          "teachers",
           "students",
           "subjects",
           "plans",
@@ -18466,6 +20464,8 @@
           "type": {
             "type": "string",
             "enum": [
+              "LEAD_FOLLOWUP",
+              "ASSIGN_TEACHER",
               "RESCHEDULE_REQUEST",
               "CHARGE_DISPUTE",
               "SUBSCRIPTION_EXPIRING",
@@ -18485,7 +20485,17 @@
             "type": "integer"
           },
           "studentId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "leadId": {
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "studentName": {
@@ -18520,6 +20530,9 @@
           },
           "payload": {
             "oneOf": [
+              {
+                "$ref": "#/components/schemas/TaskLeadPayloadDto"
+              },
               {
                 "$ref": "#/components/schemas/TaskReschedulePayloadDto"
               },
@@ -18558,6 +20571,7 @@
           "status",
           "version",
           "studentId",
+          "leadId",
           "studentName",
           "createdAt",
           "dueAt",
@@ -18580,6 +20594,8 @@
           "type": {
             "type": "string",
             "enum": [
+              "LEAD_FOLLOWUP",
+              "ASSIGN_TEACHER",
               "RESCHEDULE_REQUEST",
               "CHARGE_DISPUTE",
               "SUBSCRIPTION_EXPIRING",
@@ -18599,7 +20615,17 @@
             "type": "integer"
           },
           "studentId": {
-            "type": "string",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "leadId": {
+            "type": [
+              "string",
+              "null"
+            ],
             "format": "uuid"
           },
           "studentName": {
@@ -18635,6 +20661,9 @@
           "payload": {
             "oneOf": [
               {
+                "$ref": "#/components/schemas/TaskLeadPayloadDto"
+              },
+              {
                 "$ref": "#/components/schemas/TaskReschedulePayloadDto"
               },
               {
@@ -18665,6 +20694,7 @@
           "status",
           "version",
           "studentId",
+          "leadId",
           "studentName",
           "createdAt",
           "dueAt",
@@ -20164,6 +22194,28 @@
         ],
         "additionalProperties": false
       },
+      "ScheduleTrialDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number",
+            "minimum": 1
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "version",
+          "teacherId",
+          "startsAt"
+        ]
+      },
       "SendManagerNotificationDto": {
         "type": "object",
         "properties": {
@@ -20609,6 +22661,13 @@
       "StudentCardDto": {
         "type": "object",
         "properties": {
+          "leadId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
           "studentId": {
             "type": "string",
             "format": "uuid"
@@ -20691,6 +22750,7 @@
           }
         },
         "required": [
+          "leadId",
           "studentId",
           "version",
           "fullName",
@@ -21509,6 +23569,26 @@
         ],
         "additionalProperties": false
       },
+      "TaskLeadPayloadDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "LEAD_FOLLOWUP",
+              "ASSIGN_TEACHER"
+            ]
+          },
+          "leadId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "kind",
+          "leadId"
+        ]
+      },
       "TaskPreferredWindowDto": {
         "type": "object",
         "properties": {
@@ -21864,6 +23944,134 @@
         ],
         "additionalProperties": true
       },
+      "TransitionLeadDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number",
+            "minimum": 1
+          },
+          "to": {
+            "type": "string",
+            "enum": [
+              "IN_PROGRESS",
+              "AWAITING_PAYMENT"
+            ]
+          },
+          "skipTrialReason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "version",
+          "to"
+        ]
+      },
+      "TrialBriefDto": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "ageYears": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "grade": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "level": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "subjectName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "leadId",
+          "audience",
+          "ageYears",
+          "grade",
+          "level",
+          "subjectName"
+        ]
+      },
+      "TrialLessonViewDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "meetLink": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "ATTENDED",
+              "NO_SHOW",
+              "CANCELLED"
+            ]
+          },
+          "feedbackStatus": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "SUBMITTED"
+            ]
+          },
+          "feedbackSummary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "startsAt",
+          "endsAt",
+          "teacherName",
+          "meetLink",
+          "outcome",
+          "feedbackStatus",
+          "feedbackSummary"
+        ]
+      },
       "UnreadCountDto": {
         "type": "object",
         "properties": {
@@ -21873,6 +24081,73 @@
         },
         "required": [
           "unreadCount"
+        ]
+      },
+      "UpdateLeadDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "contactName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "guardianName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grade": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 11
+          },
+          "ageYears": {
+            "type": "number",
+            "minimum": 3,
+            "maximum": 99
+          },
+          "level": {
+            "type": "string",
+            "maxLength": 10
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "SITE",
+              "PHONE",
+              "MESSENGER",
+              "REFERRAL",
+              "OTHER"
+            ]
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "version": {
+            "type": "number",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "version"
         ]
       },
       "UpdateProfileDto": {

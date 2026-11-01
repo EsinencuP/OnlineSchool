@@ -1,5 +1,8 @@
 // Manager boundary rules also run against mutation fixtures in manager-architecture.test.mjs.
 const protectedDelegates = new Set([
+  'lessonOccurrence',
+  'lessonOutcomeReport',
+  'lessonActualOutcome',
   'paymentReceipt',
   'paymentDistribution',
   'subscription',
@@ -245,6 +248,12 @@ export const managerRules = {
             !['PropertyDefinition', 'TSPropertySignature', 'Identifier'].includes(field.type)
           )
             field = field.parent;
+          // This named stage is a count of leads, never a monetary amount.
+          if (
+            field?.key?.name === 'AWAITING_PAYMENT' &&
+            field.parent?.parent?.id?.name === 'LeadStageCountsDto'
+          )
+            return;
           if (
             field?.key?.name === 'total' &&
             /PageDto$/.test(field.parent?.parent?.id?.name ?? '')

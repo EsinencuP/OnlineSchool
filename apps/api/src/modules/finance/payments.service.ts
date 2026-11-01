@@ -86,7 +86,9 @@ export class PaymentsService {
         'finance.payment.confirmed',
         'PaymentReceipt',
         id,
-        receipt.student_id ? { studentId: receipt.student_id } : {},
+        receipt.student_id
+          ? { studentId: receipt.student_id, purpose: receipt.purpose ?? 'OTHER' }
+          : { purpose: receipt.purpose ?? 'OTHER' },
       );
       if (receipt.student_id) {
         unwrap(
@@ -197,6 +199,14 @@ export class PaymentsService {
       ...operation(randomUUID()),
     });
     const { enrollment } = await this.access.subscription(ctx, sub.id);
+    if (payment.purpose === 'FIRST_PAYMENT')
+      await this.events.record(
+        ctx,
+        'finance.lead-first-payment.allocated',
+        'PaymentDistribution',
+        id,
+        { studentId: enrollment.student_id, purpose: 'FIRST_PAYMENT', paymentId: payment.id },
+      );
     // Each allocated payment supersedes earlier limited admissions, even at equal timestamps.
     const permissions = await ctx.tx.temporaryAccessPermission.findMany({
       where: { subscription_id: sub.id, revoked_at: null, valid_to: { gt: now } },

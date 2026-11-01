@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { ManagerLeadsService } from './leads/manager-leads.service.js';
+import { ManagerLeadsController } from './leads/manager-leads.controller.js';
+import { ManagerLeadsGuard } from './leads/manager-leads.guard.js';
 import { ManagerOptionsController } from './options/manager-options.controller.js';
 import { ManagerOptionsService } from './options/manager-options.service.js';
 import { ManagerDashboardController } from './dashboard/manager-dashboard.controller.js';
@@ -47,6 +50,7 @@ import { ManagerNotificationsGuard } from './notifications/manager-notifications
     ScheduleInfrastructureModule,
   ],
   controllers: [
+    ManagerLeadsController,
     ManagerOptionsController,
     ManagerDashboardController,
     ManagerNotificationsController,
@@ -59,6 +63,8 @@ import { ManagerNotificationsGuard } from './notifications/manager-notifications
     ManagerTasksController,
   ],
   providers: [
+    ManagerLeadsService,
+    ManagerLeadsGuard,
     ManagerOptionsService,
     ManagerDashboardService,
     ManagerDashboardRead,

@@ -28,7 +28,7 @@ export type NotificationView = {
 };
 export const notificationView = (r: NotificationDispatch): NotificationView => ({
   notificationId: r.id,
-  studentId: r.student_id,
+  studentId: r.student_id!, // This projection is used only by student-scoped endpoints.
   channel: r.channel,
   templateCode: r.template_code,
   status: r.status,

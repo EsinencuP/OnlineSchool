@@ -190,6 +190,7 @@ export function projectCard(row: StudentCardDto): StudentCardDto {
   const l = row.learning,
     c = row.contacts;
   return dates({
+    leadId: row.leadId ?? null,
     studentId: row.studentId,
     version: row.version,
     fullName: row.fullName,
@@ -281,9 +282,18 @@ export class ManagerStudentsRead {
       );
     if (!result.ok) return result;
     try {
-      return result.value[0]
-        ? ok(projectCard(result.value[0].card))
-        : err(domainError('STUDENT_NOT_FOUND', 404));
+      if (!result.value[0]) return err(domainError('STUDENT_NOT_FOUND', 404));
+      const lead = await tx.lead.findFirst({
+        where: {
+          AND: [
+            this.scope.leadWhere(ctx),
+            { student_links: { some: { student_id: id, unlinked_at: null } } },
+          ],
+        },
+        orderBy: [{ created_at: 'desc' }, { id: 'desc' }],
+        select: { id: true },
+      });
+      return ok({ ...projectCard(result.value[0].card), leadId: lead?.id ?? null });
     } catch {
       return err(domainError('DATABASE_ERROR', 503));
     }

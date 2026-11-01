@@ -16,6 +16,7 @@ import { at } from '../../finance/finance-common.js';
 import { ManagerLessonRights } from '../../finance/manager-payments/lesson-rights.service.js';
 import { meetLink, redactMeet, effectiveMeetLink } from '../meet-link.js';
 import { MeetLinkPort } from './meet-link.port.js';
+import { ScheduleRegistry } from '../registry.service.js';
 import { scheduleFailure, schedulePolicy } from './policy.js';
 import type {
   CancelManagedLesson,
@@ -44,10 +45,12 @@ export class ManagerScheduleWorkflow {
     private readonly access: ScheduleAccess,
     private readonly events: ScheduleEvents,
     private readonly meet: MeetLinkPort,
+    private readonly registry: ScheduleRegistry,
   ) {}
   project(row: Row): ManagedLessonView {
     const pending = row.change_approvals.find((r) => r.lesson_version === row.version);
     return {
+      kind: row.kind ?? 'REGULAR',
       lessonId: row.id,
       studentId: row.enrollment_ref.student_id,
       teacherId: row.scheduled_teacher_id,
@@ -168,9 +171,10 @@ export class ManagerScheduleWorkflow {
     if (templateCode) {
       const row = await ctx.tx.lessonOccurrence.findUnique({
         where: { id: lessonId },
-        select: { version: true },
+        select: { version: true, kind: true },
       });
       if (!row) return unwrap(err(domainError('LESSON_NOT_FOUND', 404)));
+      if (row.kind === 'TRIAL') return;
       unwrap(
         await new NotificationOutboxPublisher().enqueue(ctx.tx, {
           studentId,
@@ -222,9 +226,44 @@ export class ManagerScheduleWorkflow {
         start = new Date(input.startsAt),
         end = new Date(+start + input.durationMinutes * 60000);
       unwrap(this.lead(start, now));
-      const rights = unwrap(
-        await this.rights.resolve(ctx, studentId, start, end, input.subscriptionId),
-      );
+      let rights: { enrollmentId: string; subscriptionId: string | null };
+      if (input.kind === 'TRIAL') {
+        if (!input.subjectId || input.subscriptionId)
+          return err(domainError('INVALID_TRIAL_INPUT', 422));
+        let enrollment = await ctx.tx.studentSubjectEnrollment.findFirst({
+          where: {
+            student_id: studentId,
+            subject_id: input.subjectId,
+            valid_to: null,
+            status: 'ACTIVE',
+          },
+        });
+        if (!enrollment)
+          enrollment = await this.registry.enrollment(ctx, {
+            studentId,
+            subjectId: input.subjectId,
+          });
+        const assigned = await ctx.tx.teachingAssignment.findFirst({
+          where: {
+            enrollment_id: enrollment.id,
+            teacher_id: input.teacherId,
+            valid_from: { lte: start },
+            OR: [{ valid_to: null }, { valid_to: { gte: end } }],
+          },
+          select: { id: true },
+        });
+        if (!assigned)
+          await this.registry.assignment(ctx, {
+            enrollmentId: enrollment.id,
+            teacherId: input.teacherId,
+            validFrom: now.toISOString(),
+            basis: 'Пробный урок по заявке',
+          });
+        rights = { enrollmentId: enrollment.id, subscriptionId: null };
+      } else
+        rights = unwrap(
+          await this.rights.resolve(ctx, studentId, start, end, input.subscriptionId),
+        );
       const assignment = await this.assignment(
         ctx,
         rights.enrollmentId,
@@ -237,7 +276,9 @@ export class ManagerScheduleWorkflow {
         teachingAssignmentId: assignment,
         startsAt: start.toISOString(),
         endsAt: end.toISOString(),
-        basis: 'Manager booked a paid lesson',
+        basis: input.kind === 'TRIAL' ? 'Пробный урок по заявке' : 'Manager booked a paid lesson',
+        kind: input.kind ?? 'REGULAR',
+        ...(input.kind === 'TRIAL' ? { trialLeadId: input.trialLeadId } : {}),
       });
       if (row.status !== 'SCHEDULED') return err(domainError('SUBSCRIPTION_NOT_ACTIVE', 409));
       await ctx.tx.lessonOccurrence.update({
@@ -337,21 +378,25 @@ export class ManagerScheduleWorkflow {
         teacher = input.newTeacherId ?? row.scheduled_teacher_id;
       if (+start === +row.scheduled_at && teacher === row.scheduled_teacher_id)
         return err(domainError('NO_SCHEDULE_CHANGE', 422));
-      const rights = unwrap(
-        await this.rights.resolve(
-          ctx,
-          studentId,
-          start,
-          end,
-          row.manager_subscription_id ?? undefined,
-          row.enrollment_id,
-        ),
-      );
+      const rights =
+        row.kind === 'TRIAL'
+          ? { subscriptionId: null }
+          : unwrap(
+              await this.rights.resolve(
+                ctx,
+                studentId,
+                start,
+                end,
+                row.manager_subscription_id ?? undefined,
+                row.enrollment_id,
+              ),
+            );
       const assignment = await this.assignment(ctx, row.enrollment_id, teacher, start, end);
       const late = +row.scheduled_at - +now < unwrap(schedulePolicy()).freeHours * 3600000;
-      if (initiator === 'STUDENT' && late && !input.overrideLateRule)
+      if (row.kind !== 'TRIAL' && initiator === 'STUDENT' && late && !input.overrideLateRule)
         return err(domainError('LATE_RULE_OVERRIDE_REQUIRED', 409));
       const needs =
+        row.kind !== 'TRIAL' &&
         initiator === 'STUDENT' &&
         (late || !row.reschedule_history_verified || row.student_reschedule_count >= 2);
       const pending = await this.exception(
@@ -417,7 +462,10 @@ export class ManagerScheduleWorkflow {
       const row = unwrap(await this.mutable(ctx, id)),
         now = await at(ctx.tx),
         initiator = input.initiator ?? 'STUDENT';
-      const late = +row.scheduled_at - +now < unwrap(schedulePolicy()).freeHours * 3600000;
+      if (row.kind === 'TRIAL') input = { ...input, chargeable: false };
+      const late =
+        row.kind !== 'TRIAL' &&
+        +row.scheduled_at - +now < unwrap(schedulePolicy()).freeHours * 3600000;
       if (
         !bypassException &&
         initiator === 'STUDENT' &&

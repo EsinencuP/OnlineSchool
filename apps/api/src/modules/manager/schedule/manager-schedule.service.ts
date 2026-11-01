@@ -27,6 +27,50 @@ export class ManagerScheduleService {
     private readonly scope: ManagerScopeService,
     private readonly finance: ManagerFinanceFacade,
   ) {}
+  private async brief(
+    ctx: ManagerContext,
+    views: ManagedLessonView[],
+    tx: Prisma.TransactionClient,
+  ): Promise<Result<ManagedLessonView[], DomainError>> {
+    try {
+      const ids = views.filter((v) => v.kind === 'TRIAL').map((v) => v.lessonId);
+      if (!ids.length) return ok(views.map((v) => ({ ...v, trialBrief: null })));
+      const leads = await tx.lead.findMany({
+        where: {
+          AND: [this.scope.leadWhere(ctx), { trial_lessons: { some: { id: { in: ids } } } }],
+        },
+        select: {
+          id: true,
+          audience: true,
+          age_years: true,
+          grade: true,
+          level: true,
+          subject: { select: { name: true } },
+          trial_lessons: { where: { id: { in: ids } }, select: { id: true } },
+        },
+      });
+      return ok(
+        views.map((v) => {
+          const lead = leads.find((l) => l.trial_lessons.some((t) => t.id === v.lessonId));
+          return {
+            ...v,
+            trialBrief: lead
+              ? {
+                  leadId: lead.id,
+                  audience: lead.audience,
+                  ageYears: lead.age_years,
+                  grade: lead.grade,
+                  level: lead.level,
+                  subjectName: lead.subject?.name ?? '',
+                }
+              : null,
+          };
+        }),
+      );
+    } catch (e: unknown) {
+      return err(scheduleFailure(e));
+    }
+  }
   async target(
     ctx: ManagerContext,
     id: string,
@@ -72,21 +116,27 @@ export class ManagerScheduleService {
         const allowed = await this.scope.assertStudentInPortfolio(ctx, q.studentId, tx);
         if (!allowed.ok) return allowed;
       }
-      return this.workflow.list(tx, {
+      const result = await this.workflow.list(tx, {
         ...scheduleOverlapWhere(dates.value.from, dates.value.to),
         ...(q.teacherId ? { scheduled_teacher_id: q.teacherId } : {}),
         ...(q.status ? { status: q.status } : {}),
+        ...(q.kind ? { kind: q.kind } : {}),
         enrollment_ref: {
           ...(q.studentId ? { student_id: q.studentId } : {}),
           student_ref: this.scope.portfolioWhere(ctx),
         },
       });
+      return result.ok ? this.brief(ctx, result.value, tx) : result;
     });
   }
   get(ctx: ManagerContext, id: string): Promise<Result<ManagedLessonView, DomainError>> {
     return this.transactions.runResult(async (tx) => {
       const s = await this.target(ctx, id, tx);
-      return s.ok ? this.workflow.get(tx, id) : s;
+      if (!s.ok) return s;
+      const result = await this.workflow.get(tx, id);
+      if (!result.ok) return result;
+      const projected = await this.brief(ctx, [result.value], tx);
+      return projected.ok ? ok(projected.value[0]!) : projected;
     });
   }
   async create(
@@ -94,9 +144,26 @@ export class ManagerScheduleService {
     studentId: string,
     input: CreateManagedLesson,
     c: CriticalContext,
+    trialLeadId?: string,
   ): Promise<Result<ManagedLessonView, DomainError>> {
     const actor = await this.authorize(ctx, c);
     if (!actor.ok) return actor;
+    if (input.kind === 'TRIAL') {
+      if (!trialLeadId || !input.subjectId) return err(domainError('TRIAL_LEAD_REQUIRED', 422));
+      const allowed = await this.scope.assertLeadInPortfolio(ctx, trialLeadId, c.tx);
+      if (!allowed.ok) return allowed;
+      const lead = await c.tx.lead.findFirst({
+        where: {
+          id: trialLeadId,
+          subject_id: input.subjectId,
+          stage: { in: ['CONTACTED', 'AWAITING_PAYMENT'] },
+          student_links: { some: { student_id: studentId, unlinked_at: null } },
+        },
+        select: { id: true },
+      });
+      if (!lead) return err(domainError('LEAD_NOT_FOUND', 404));
+      input = { ...input, trialLeadId };
+    }
     const s = await this.scope.assertStudentInPortfolio(ctx, studentId, c.tx);
     return s.ok ? this.workflow.create(c, studentId, input) : s;
   }
@@ -126,7 +193,8 @@ export class ManagerScheduleService {
       !result.ok ||
       result.value.requiresApproval ||
       result.value.status !== 'CANCELLED' ||
-      !input.chargeable
+      !input.chargeable ||
+      result.value.kind === 'TRIAL'
     )
       return result;
     if (!result.value.subscriptionId) return err(domainError('SUBSCRIPTION_NOT_ACTIVE', 409));

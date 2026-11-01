@@ -1,5 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { LeadSummaryDto } from './manager-lead.dto.js';
 import { Type } from 'class-transformer';
 import { IsIn } from 'class-validator';
 import { STRICT_INPUT_DTO } from '../../../openapi/dto-validation.pipe.js';
@@ -56,6 +57,7 @@ export class DashboardPendingPaymentsDto {
   totalsByCurrency!: DashboardCurrencyTotalDto[];
 }
 export class ManagerDashboardDto {
+  @ApiProperty({ type: LeadSummaryDto }) leads!: LeadSummaryDto;
   @ApiProperty({ format: 'date-time' }) generatedAt!: string;
   @ApiProperty({ type: DashboardStudentCountsDto }) students!: DashboardStudentCountsDto;
   @ApiProperty({ type: [DashboardLessonDto] }) upcomingLessons!: DashboardLessonDto[];

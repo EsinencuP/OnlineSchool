@@ -37,7 +37,7 @@ import {
   localToIso,
   localInput,
 } from '../lib/time.js';
-import { ru } from '../i18n/ru.js';
+import { ru, label } from '../i18n/ru.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
 const MEET = /^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$/;
 type Action =
@@ -50,12 +50,14 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
   const [view, setView] = useState('week');
   const [studentId, setStudentId] = useState(fixedStudent ?? params.get('studentId') ?? '');
   const [status, setStatus] = useState('SCHEDULED');
+  const [kind, setKind] = useState('');
   const [action, setAction] = useState<Action | null>(null);
   const [choosing, setChoosing] = useState(params.get('create') === 'true');
   const options = useOptions(fixedStudent);
   const start = view === 'week' ? weekStart(date) : date;
   const length = view === 'day' ? 1 : 7;
   const q: ListManagerScheduleParams = {
+    ...(kind ? { kind: kind as 'REGULAR' | 'TRIAL' } : {}),
     from: localToIso(`${start}T00:00`, me.timezone)!,
     to: localToIso(`${dateShift(start, length)}T00:00`, me.timezone)!,
     ...(studentId ? { studentId } : {}),
@@ -110,6 +112,13 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
           />
         )}
         <Select
+          name="kind"
+          label={ru.type}
+          value={kind}
+          onChange={(e) => setKind(e.target.value)}
+          options={enumOptions(['REGULAR', 'TRIAL'])}
+        />
+        <Select
           name="lessonStatus"
           label={ru.status}
           options={enumOptions(['SCHEDULED', 'STAR_PENDING', 'CONDUCTED', 'CANCELLED', 'DISPUTED'])}
@@ -156,6 +165,22 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
                       </Link>
                       <p>{l.teacherName}</p>
                       <Badge value={l.status} />
+                      {l.kind === 'TRIAL' && (
+                        <>
+                          <Badge value="TRIAL" />
+                          {l.trialBrief && (
+                            <p>
+                              <Link to={routes.lead(l.trialBrief.leadId)}>{ru.openLead}</Link> ·{' '}
+                              {l.trialBrief.subjectName} · {l.trialBrief.level ?? ru.dash} ·{' '}
+                              {label(l.trialBrief.audience)}
+                              {l.trialBrief.ageYears
+                                ? ` · ${ru.ageYears}: ${l.trialBrief.ageYears}`
+                                : ''}
+                              {l.trialBrief.grade ? ` · ${ru.grade}: ${l.trialBrief.grade}` : ''}
+                            </p>
+                          )}
+                        </>
+                      )}
                       {l.requiresApproval && <p className="warning">{ru.pendingApproval}</p>}
                       {l.meetLink && MEET.test(l.meetLink) && (
                         <a
@@ -408,7 +433,9 @@ function LessonAction({ action, close }: { action: Action; close: () => void }) 
                 defaultValue="STUDENT"
               />
               <TextArea name="reason" label={ru.reason} minLength={3} maxLength={500} required />
-              <Check name="chargeable" label={ru.chargeable} />
+              {action.kind === 'cancel' && action.lesson.kind !== 'TRIAL' && (
+                <Check name="chargeable" label={ru.chargeable} />
+              )}
               <Check name="overrideLateRule" label={ru.lateOverride} />
               <Check name="acknowledge" label={ru.acknowledge} required />
             </>

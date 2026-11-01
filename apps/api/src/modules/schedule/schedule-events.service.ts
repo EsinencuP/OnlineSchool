@@ -9,6 +9,35 @@ import { redactMeet } from './meet-link.js';
 @Injectable()
 export class ScheduleEvents {
   constructor(private readonly audit: AuditService) {}
+  async trialOutcome(ctx: CriticalContext, lessonId: string, reportId: string) {
+    const id = randomUUID();
+    await this.audit.record(
+      {
+        id,
+        actor_kind: 'ACCOUNT',
+        actor_id: ctx.actor.accountId,
+        action: 'TRIAL_OUTCOME_REPORTED',
+        resource_type: 'LessonOutcomeReport',
+        resource_id: reportId,
+        result: 'SUCCESS',
+        request_id: ctx.requestId,
+        source_operation_id: ctx.operationId,
+        event_key: `trial-report:${reportId}`,
+      },
+      ctx.tx,
+    );
+    await ctx.tx.outboxEvent.create({
+      data: {
+        topic: 'schedule.trial.outcome.v1',
+        aggregate_type: 'LessonOccurrence',
+        aggregate_id: lessonId,
+        audit_event_id: id,
+        source_operation_id: ctx.operationId,
+        event_key: `trial-report:${reportId}`,
+        payload: { schemaVersion: 1, lessonId, reportId },
+      },
+    });
+  }
   async task(
     ctx: CriticalContext,
     studentId: string,

@@ -9,6 +9,7 @@ import type {
   ManagerTaskDetailDto,
   ManagerNotificationDto,
   ManagerOptionsDto,
+  LeadDto,
 } from '@online-school/api-contracts';
 export const ids = {
   student: '11111111-1111-4111-8111-111111111111',
@@ -22,9 +23,39 @@ export const ids = {
   task: '99999999-9999-4999-8999-999999999999',
   receipt: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
   distribution: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+  lead: 'dddddddd-dddd-4ddd-8ddd-dddddddddddd',
 };
 const now = new Date();
 const end = new Date(now.getTime() + 7 * 86400000).toISOString();
+export const lead: LeadDto = {
+  leadId: ids.lead,
+  stage: 'NEW',
+  audience: 'CHILD',
+  contactName: 'Виктория Мирон',
+  subjectName: 'Математика',
+  subjectId: ids.subject,
+  grade: 5,
+  maskedPhone: '••• 123',
+  source: 'PHONE',
+  createdAt: now.toISOString(),
+  stageChangedAt: now.toISOString(),
+  trialAt: null,
+  nextActionAt: new Date(+now + 120 * 60000).toISOString(),
+  isOverdue: false,
+  version: 1,
+  guardianName: 'Анна Мирон',
+  phone: '+37360000123',
+  email: 'trial@example.test',
+  ageYears: 11,
+  level: null,
+  comment: 'Нужно подобрать вечернее время.',
+  studentId: null,
+  lostReason: null,
+  lostComment: null,
+  trial: null,
+  history: [{ from: null, to: 'NEW', at: now.toISOString(), byManager: true }],
+  openTasks: [],
+};
 export const me: ManagerMeResponseDto = {
   managerId: ids.manager,
   displayName: 'Елена Попеску',
@@ -41,6 +72,7 @@ export const me: ManagerMeResponseDto = {
   ],
 };
 export const student: StudentCardDto = {
+  leadId: null,
   studentId: ids.student,
   version: 1,
   fullName: 'Александра Русу',
@@ -130,6 +162,7 @@ export const distribution: ManagerDistributionDto = {
 const lessonStart = new Date(now);
 lessonStart.setHours(16, 0, 0, 0);
 export const lesson: ManagerLessonDto = {
+  kind: 'REGULAR',
   lessonId: ids.lesson,
   studentId: ids.student,
   teacherId: ids.teacher,
@@ -144,6 +177,7 @@ export const lesson: ManagerLessonDto = {
   requiresApproval: false,
 };
 export const task: ManagerTaskDetailDto = {
+  leadId: null,
   taskId: ids.task,
   type: 'CHARGE_DISPUTE',
   status: 'OPEN',
@@ -168,6 +202,7 @@ export const task: ManagerTaskDetailDto = {
   resolution: null,
 };
 export const options: ManagerOptionsDto = {
+  teachers: [{ id: ids.teacher, label: lesson.teacherName }],
   students: [{ id: ids.student, label: student.fullName }],
   subjects: [{ id: ids.subject, label: 'Математика' }],
   plans: [

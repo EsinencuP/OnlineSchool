@@ -173,6 +173,7 @@ export class LearningSummaryDto {
   @ApiProperty({ type: String, nullable: true }) lastReportStatus!: string | null;
 }
 export class StudentCardDto {
+  @ApiProperty({ type: String, nullable: true, format: 'uuid' }) leadId!: string | null;
   @ApiProperty({ format: 'uuid' }) studentId!: string;
   @ApiProperty({ type: 'integer' }) version!: number;
   @ApiProperty() fullName!: string;

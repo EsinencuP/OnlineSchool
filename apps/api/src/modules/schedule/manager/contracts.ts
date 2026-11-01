@@ -1,6 +1,7 @@
 import type { LessonStatus } from '@online-school/db';
 export type ChangeInitiator = 'STUDENT' | 'TEACHER' | 'ACADEMY';
 export type ScheduleQuery = {
+  kind?: 'REGULAR' | 'TRIAL';
   from: string;
   to: string;
   studentId?: string;
@@ -8,6 +9,9 @@ export type ScheduleQuery = {
   status?: LessonStatus;
 };
 export type CreateManagedLesson = {
+  kind?: 'REGULAR' | 'TRIAL';
+  subjectId?: string;
+  trialLeadId?: string;
   teacherId: string;
   startsAt: string;
   durationMinutes: number;
@@ -28,6 +32,15 @@ export type CancelManagedLesson = {
   overrideLateRule?: boolean;
 };
 export type ManagedLessonView = {
+  trialBrief?: {
+    leadId: string;
+    audience: 'CHILD' | 'ADULT';
+    ageYears: number | null;
+    grade: number | null;
+    level: string | null;
+    subjectName: string;
+  } | null;
+  kind: 'REGULAR' | 'TRIAL';
   lessonId: string;
   studentId: string;
   teacherId: string;

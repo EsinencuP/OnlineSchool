@@ -59,6 +59,8 @@ export default function Tasks({ studentId }: { studentId?: string }) {
           label={ru.type}
           value={type}
           options={enumOptions([
+            'LEAD_FOLLOWUP',
+            'ASSIGN_TEACHER',
             'RESCHEDULE_REQUEST',
             'CHARGE_DISPUTE',
             'SUBSCRIPTION_EXPIRING',
@@ -91,7 +93,17 @@ export default function Tasks({ studentId }: { studentId?: string }) {
                     </Link>
                     <Badge value={t.status} />
                   </div>
-                  <Link to={routes.student(t.studentId)}>{t.studentName}</Link>
+                  <Link
+                    to={
+                      t.leadId
+                        ? routes.lead(t.leadId)
+                        : t.studentId
+                          ? routes.student(t.studentId)
+                          : routes.tasks
+                    }
+                  >
+                    {t.studentName}
+                  </Link>
                   <p className={t.isOverdue ? 'danger-text' : ''}>
                     {ru.dueAt}: {displayTime(t.dueAt, me.timezone)} {t.isOverdue && ru.overdue}
                   </p>

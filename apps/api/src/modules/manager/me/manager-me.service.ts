@@ -37,6 +37,7 @@ export class ManagerMeService {
         return err(domainError('MANAGER_CONFIGURATION_INVALID', 503));
       }
       const permissions: ReadonlyArray<readonly [ManagerCapability, string]> = [
+        ['LEADS_MANAGE', 'student:create'],
         ['STUDENTS_VIEW', 'student:read'],
         ['ACCOUNTS_CREATE', 'student:create'],
         ['SUBSCRIPTIONS_MANAGE', 'subscription:create'],

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ScheduleRegistry } from './registry.service.js';
 import { DatabaseModule } from '../../core/database/database.module.js';
 import { AuditModule } from '../../core/audit/audit.service.js';
 import { PolicyModule } from '../../core/policy/policy.service.js';
@@ -12,6 +13,7 @@ import { MeetLinkPort, UnavailableMeetLink } from './manager/meet-link.port.js';
 @Module({
   imports: [DatabaseModule, AuditModule, PolicyModule, FinanceInfrastructureModule],
   providers: [
+    ScheduleRegistry,
     ScheduleAccess,
     ScheduleEvents,
     BookingService,

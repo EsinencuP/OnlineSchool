@@ -7,6 +7,7 @@ export type SchoolRequestOptions = RequestInit & {
   binaryResponse?: boolean;
 };
 export type ClientError = {
+  existingId?: string;
   code: string;
   status: number;
   requestId?: string;
@@ -56,6 +57,10 @@ export async function schoolFetch<T>(
         typeof error.managerContacts === 'object'
           ? (error.managerContacts as Record<string, unknown>)
           : undefined;
+      const details =
+        error.details && typeof error.details === 'object'
+          ? (error.details as Record<string, unknown>)
+          : {};
       return err({
         code: typeof error.code === 'string' ? error.code : 'HTTP_ERROR',
         status: response.status,
@@ -71,6 +76,11 @@ export async function schoolFetch<T>(
           ? { managerContacts: { whatsapp: contacts.whatsapp, telegram: contacts.telegram } }
           : {}),
         ...(requestId ? { requestId } : {}),
+        ...(error.code === 'LEAD_DUPLICATE_SUSPECTED' &&
+        typeof details.existingId === 'string' &&
+        /^[0-9a-f-]{36}$/i.test(details.existingId)
+          ? { existingId: details.existingId }
+          : {}),
       });
     }
     return ok(body as T);

@@ -16,6 +16,8 @@ const Account = lazy(() => import('./pages/Account.js'));
 const Schedule = lazy(() => import('./pages/Schedule.js'));
 const Tasks = lazy(() => import('./pages/Tasks.js'));
 const Task = lazy(() => import('./pages/Task.js'));
+const Leads = lazy(() => import('./pages/Leads.js'));
+const Lead = lazy(() => import('./pages/Lead.js'));
 if (import.meta.env.MODE === 'mock') await (await import('./test/browser.js')).startMocks();
 // BFCache must not restore a privileged screen or an aborted one-time-secret command.
 window.addEventListener('pageshow', (event) => {
@@ -39,6 +41,8 @@ createRoot(document.getElementById('root')!).render(
                 <Route element={<RequireManager />}>
                   <Route element={<Layout />}>
                     <Route path="/manager" element={<Dashboard />} />
+                    <Route path="/manager/leads" element={<Leads />} />
+                    <Route path="/manager/leads/:id" element={<Lead />} />
                     <Route path="/manager/students" element={<Students />} />
                     <Route path="/manager/students/:id" element={<Student />} />
                     <Route path="/manager/students/:id/account" element={<Account />} />

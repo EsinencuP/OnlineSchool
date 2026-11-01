@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./manager-leads": {
+      "types": "./dist/modules/manager/leads/worker.d.ts",
+      "import": "./dist/modules/manager/leads/worker.js"
+    },
     "./manager-subscription-lifecycle": {
       "types": "./dist/modules/finance/manager-subscriptions/lifecycle.module.d.ts",
       "import": "./dist/modules/finance/manager-subscriptions/lifecycle.module.js"

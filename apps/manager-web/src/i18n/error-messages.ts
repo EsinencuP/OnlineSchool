@@ -2,6 +2,27 @@ import type { AnyManagerErrorCode } from '@online-school/api-contracts';
 import { ru } from './ru.js';
 export type { AnyManagerErrorCode } from '@online-school/api-contracts';
 export const ERROR_MESSAGES = {
+  CONTACT_REQUIRED: 'Укажите телефон или email.',
+  GUARDIAN_REQUIRED: 'Для ребёнка укажите имя родителя или представителя.',
+  INVALID_LESSON_KIND: 'Выберите вид урока.',
+  INVALID_STAGE_TRANSITION: 'Этот переход сейчас недоступен. Обновите заявку.',
+  INVALID_TRIAL_INPUT: 'Проверьте предмет и параметры пробного урока.',
+  INVALID_TRIAL_OUTCOME: 'Исход пробного должен указать преподаватель.',
+  LEAD_CONFIGURATION_INVALID: ru.error,
+  LEAD_DUPLICATE_SUSPECTED:
+    'В вашем портфолио уже есть заявка или ученик с таким контактом. Проверьте совпадение.',
+  LEAD_LINK_AMBIGUOUS: 'У заявки несколько связей с учениками. Уточните связь перед продолжением.',
+  LEAD_NOT_FOUND: 'Заявка не найдена или недоступна.',
+  LEAD_RATE_LIMITED: 'Лимит новых заявок исчерпан. Повторите через минуту.',
+  LEAD_SUBJECT_IMMUTABLE: 'После создания ученика предмет заявки менять нельзя.',
+  LEAD_TERMINAL: 'Заявка завершена. Для закрытой без оплаты заявки доступно возобновление.',
+  LEAD_VERSION_CONFLICT: 'Заявка изменилась. Обновите данные и повторите действие.',
+  SKIP_TRIAL_REASON_REQUIRED: 'Укажите причину перехода к оплате без пробного урока.',
+  SUBJECT_NOT_FOUND: 'Предмет не найден или недоступен.',
+  TRIAL_ALREADY_SCHEDULED: 'У заявки уже есть незавершённый пробный урок.',
+  TRIAL_FINANCIAL_CONFIRMATION_FORBIDDEN: 'Пробный урок не подтверждается как платный.',
+  TRIAL_LEAD_REQUIRED: 'Назначьте пробный урок из карточки заявки.',
+  TRIAL_OUTCOME_REQUIRED: 'Для этого перехода требуется соответствующий исход от преподавателя.',
   ACCESS_CONFIGURATION_ERROR: ru.error,
   ACCOUNT_ALREADY_EXISTS: 'Аккаунт ученика уже создан.',
   ACCOUNT_NOT_FOUND: 'Аккаунт ученика недоступен.',

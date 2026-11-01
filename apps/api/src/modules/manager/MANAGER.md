@@ -223,3 +223,9 @@ ManagerScopeService; никаких новых менеджерских фина
 [MGR-10 frontend](../../../../manager-web/README.md).
 Рабочая приёмка на чистой БД и общие gate-проверки остаются открыты;
 результаты моков не заменяют фактические публикации директора, PostgreSQL и доставку.
+
+## MGR-11 — заявки и пробные уроки
+
+Существующие Lead, AssignedManager и LeadStudentLink расширены для воронки.
+Таблица соответствий, решения владельца и границы Trial/Finance/CONTACT:
+[leads/MGR-11.md](leads/MGR-11.md).

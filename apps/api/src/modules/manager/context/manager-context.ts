@@ -9,6 +9,7 @@ export interface ManagerContext {
   readonly requestId: string;
 }
 export const MANAGER_CAPABILITIES = [
+  'LEADS_MANAGE',
   'STUDENTS_VIEW',
   'ACCOUNTS_CREATE',
   'PAYMENTS_CONFIRM',

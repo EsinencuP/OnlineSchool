@@ -2731,3 +2731,122 @@ main#main {
 .login-description {
   color: #536987;
 }
+
+.lead-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+}
+.lead-summary > a {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--text, #19273a);
+  padding: 16px;
+}
+.lead-summary strong {
+  font-size: 1.7rem;
+}
+.lead-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+.lead-column {
+  background: #eaf0f8;
+  border-radius: 14px;
+  padding: 14px;
+  min-width: 0;
+}
+.lead-column h2 {
+  font-size: 1rem;
+  margin: 0 0 14px;
+}
+.lead-tile {
+  margin: 0 0 12px;
+  padding: 15px;
+  overflow-wrap: anywhere;
+}
+.lead-history {
+  padding-left: 20px;
+}
+.lead-history li {
+  margin-bottom: 16px;
+}
+.lead-history p {
+  margin: 0 0 5px;
+}
+.lead-actions {
+  margin: 0 0 20px;
+}
+.status-trial,
+.status-awaiting_payment {
+  background: #e8efff;
+  color: #214c99;
+}
+.status-new {
+  background: #e7f2ff;
+  color: #164d88;
+}
+.status-converted {
+  background: #e3f3e9;
+  color: #225d3d;
+}
+.status-lost {
+  background: #f2e9ec;
+  color: #82394c;
+}
+@media (max-width: 1000px) {
+  .lead-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lead-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 639px) {
+  .lead-board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sidebar nav {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .lead-summary {
+    gap: 8px;
+  }
+  .lead-summary > a {
+    padding: 12px;
+  }
+}
+.table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #dce4ef;
+  border-radius: 14px;
+}
+.table-wrap table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+.table-wrap th {
+  padding: 14px 16px;
+  color: #526482;
+  background: #f5f8fc;
+  font-weight: 600;
+}
+.table-wrap td {
+  padding: 16px;
+  border-top: 1px solid #e7edf5;
+  vertical-align: top;
+}
+.table-wrap td a {
+  font-weight: 600;
+}

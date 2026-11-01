@@ -197,11 +197,11 @@ export default function Dashboard() {
           }> = [
             {
               title: ru.newLeads,
-              count: d.students.leads,
+              count: d.leads.countsByStage.NEW,
               icon: 'users',
               tone: 'blue',
-              to: `${routes.students}?status=LEAD`,
-              hint: ru.noAccount,
+              to: `${routes.leads}?stage=NEW`,
+              hint: ru.leads,
             },
             {
               title: ru.activeStudents,
@@ -471,6 +471,25 @@ export default function Dashboard() {
                 <Icon name="clock" size={14} />
                 {ru.generated}: {displayTime(d.generatedAt, me.timezone)}
               </p>
+              <section className="panel">
+                <div className="section-heading">
+                  <h2>{ru.pipeline}</h2>
+                  <Link to={routes.leads}>{ru.leads} →</Link>
+                </div>
+                <div className="lead-summary">
+                  {Object.entries(d.leads.countsByStage).map(([stage, count]) => (
+                    <Link key={stage} to={`${routes.leads}?stage=${stage}`}>
+                      <span>{label(stage)}</span>
+                      <strong>{count}</strong>
+                    </Link>
+                  ))}
+                </div>
+                <p className="hint">
+                  {ru.createdToday}: {d.leads.createdToday} · {ru.trialsToday}:{' '}
+                  {d.leads.trialsToday} · {ru.conversion30d}:{' '}
+                  {(d.leads.conversion30dBp / 100).toFixed(2).replace('.', ',')}%
+                </p>
+              </section>
             </>
           );
         }}

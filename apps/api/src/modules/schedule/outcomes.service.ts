@@ -31,6 +31,15 @@ export class OutcomesService {
       where: { id: lesson.enrollment_id },
     });
     if (en.status !== 'ACTIVE') return fail(domainError('ENROLLMENT_INACTIVE', 422));
+    if (lesson.kind === 'TRIAL') {
+      if (lesson.trial_started_at) return lesson;
+      const started = await ctx.tx.lessonOccurrence.update({
+        where: { id },
+        data: { trial_started_at: now },
+      });
+      await this.events.change(ctx, id, lesson, started, 'Пробный урок начат преподавателем');
+      return started;
+    }
     const allowed = await admission(ctx.tx, lesson.enrollment_id, now);
     if (!allowed.paid && !allowed.permissionId)
       return fail(domainError('PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED', 403));
@@ -75,7 +84,8 @@ export class OutcomesService {
       return fail(domainError('INVALID_INPUT', 400));
     if (start && duration && (+start + duration * 60000 > +now || start > now))
       return fail(domainError('INVALID_ACTUAL_INTERVAL', 422));
-    if (lesson.actual_start_at && start && lesson.actual_start_at.getTime() !== start.getTime())
+    const startedAt = lesson.kind === 'TRIAL' ? lesson.trial_started_at : lesson.actual_start_at;
+    if (startedAt && start && startedAt.getTime() !== start.getTime())
       return fail(domainError('ACTUAL_START_SNAPSHOT_MISMATCH', 422));
     const prior = await ctx.tx.lessonOutcomeReport.findFirst({
       where: { lesson_occurrence_id: id },
@@ -96,6 +106,15 @@ export class OutcomesService {
         source_operation_id: ctx.operationId,
       },
     });
+    if (lesson.kind === 'TRIAL') {
+      if (i.result === 'DISPUTED') return fail(domainError('INVALID_TRIAL_OUTCOME', 422));
+      await ctx.tx.lessonOccurrence.update({
+        where: { id },
+        data: { status: conducted ? 'CONDUCTED' : 'CANCELLED' },
+      });
+      await this.events.trialOutcome(ctx, id, report.id);
+      return { ...report, late: +now > +lesson.scheduled_end_at + 86400000 };
+    }
     const en = await ctx.tx.studentSubjectEnrollment.findUniqueOrThrow({
       where: { id: lesson.enrollment_id },
     });
@@ -116,6 +135,8 @@ export class OutcomesService {
     const lesson = await this.access.lesson(ctx, id),
       staff = await this.access.staff(ctx),
       now = await at(ctx.tx);
+    if (lesson.kind === 'TRIAL')
+      return fail(domainError('TRIAL_FINANCIAL_CONFIRMATION_FORBIDDEN', 409));
     if (lesson.confirmed_report_id || !['SCHEDULED', 'STAR_PENDING'].includes(lesson.status))
       return fail(domainError('LESSON_ALREADY_RESOLVED', 409));
     const report = await ctx.tx.lessonOutcomeReport.findUnique({ where: { id: uuid(i.reportId) } }),

@@ -55,6 +55,40 @@ export class ManagerScopeService {
     };
   }
 
+  leadWhere(ctx: ManagerContext, now = new Date()): Prisma.LeadWhereInput {
+    return {
+      manager_assignments: {
+        some: {
+          manager_id: ctx.managerId,
+          assigned_at: { lte: now },
+          OR: [{ ended_at: null }, { ended_at: { gt: now } }],
+        },
+      },
+    };
+  }
+
+  leadSql(ctx: ManagerContext, now: Date): Prisma.Sql {
+    const filter = this.leadWhere(ctx, now).manager_assignments!.some!;
+    return Prisma.sql`EXISTS(SELECT 1 FROM assigned_managers am WHERE am.lead_id=ld.id AND am.manager_id=${filter.manager_id as string}::uuid AND am.assigned_at<=${now} AND (am.ended_at IS NULL OR am.ended_at>${now}))`;
+  }
+
+  async assertLeadInPortfolio(
+    ctx: ManagerContext,
+    id: string,
+    tx: Prisma.TransactionClient,
+  ): Promise<Result<void, DomainError>> {
+    if (!UUID.test(id)) return err(domainError('LEAD_NOT_FOUND', 404));
+    try {
+      const row = await tx.lead.findFirst({
+        where: { AND: [{ id }, this.leadWhere(ctx)] },
+        select: { id: true },
+      });
+      return row ? ok(undefined) : err(domainError('LEAD_NOT_FOUND', 404));
+    } catch (error: unknown) {
+      return err(databaseError(error));
+    }
+  }
+
   // Fixed SQL identifier st is private to the manager read model; all values stay bound.
   portfolioSql(ctx: ManagerContext, now: Date): Prisma.Sql {
     // Use the very same canonical temporal predicate as Prisma callers.

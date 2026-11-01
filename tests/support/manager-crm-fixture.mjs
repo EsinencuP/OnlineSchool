@@ -71,6 +71,11 @@ export async function managerFixture(configuration = {}) {
   let state,
     tail = Promise.resolve();
   const client = {
+    lead: {
+      findFirst: jest.fn(async () => null),
+      findMany: jest.fn(async () => []),
+      count: jest.fn(async () => 0),
+    },
     $queryRaw: jest.fn(async (parts, ...values) => {
       if (parts.text) {
         state.businessQueries.push(parts);
@@ -116,7 +121,10 @@ export async function managerFixture(configuration = {}) {
       findFirst: jest.fn(async () => ({ deactivated_at: null })),
       create: jest.fn(),
     },
-    teacherAccount: { findFirst: jest.fn(async () => ({ deactivated_at: null })) },
+    teacherAccount: {
+      findFirst: jest.fn(async () => ({ deactivated_at: null })),
+      findMany: jest.fn(async () => []),
+    },
     authAccount: { create: jest.fn() },
     student: {
       findFirst: jest.fn(async ({ where }) => {

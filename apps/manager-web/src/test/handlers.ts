@@ -3,6 +3,7 @@ import type { HttpResponseResolver } from 'msw';
 import openapi from '../../../../packages/api-contracts/openapi/openapi.json';
 import {
   me,
+  lead,
   student,
   listItem,
   subscription,
@@ -19,6 +20,7 @@ import type {
   ManagerLessonDto,
   ManagerPaymentDto,
   ManagerNotificationDto,
+  LeadDto,
 } from '@online-school/api-contracts';
 // Operation paths and DTOs come from the same checked-in OpenAPI as the production client.
 const operations = Object.entries(openapi.paths).flatMap(([path, item]) =>
@@ -29,6 +31,7 @@ const operations = Object.entries(openapi.paths).flatMap(([path, item]) =>
   })),
 );
 export const mockState = {
+  leads: [structuredClone(lead)] as LeadDto[],
   student: structuredClone(student),
   subscriptions: [structuredClone(subscription)],
   payments: [structuredClone(receipt)],
@@ -44,6 +47,7 @@ export const mockState = {
   }[],
   session: 'active',
   conflict: false,
+  duplicateLead: false,
   empty: false,
   fail: false,
   accountDelay: 0,
@@ -112,7 +116,139 @@ const page = <T>(items: T[], request: Request) => {
   };
 };
 const json = (value: unknown) => HttpResponse.json(value as Record<string, unknown>);
+function leadSummary() {
+  const rows = mockState.empty ? [] : mockState.leads;
+  return {
+    countsByStage: Object.fromEntries(
+      ['NEW', 'IN_PROGRESS', 'TRIAL', 'AWAITING_PAYMENT'].map((stage) => [
+        stage,
+        rows.filter((l) => l.stage === stage).length,
+      ]),
+    ),
+    createdToday: rows.length,
+    trialsToday: rows.filter((l) => l.trial).length,
+    overdueFollowups: 0,
+    conversion30dBp: rows.length
+      ? Math.floor((rows.filter((l) => l.stage === 'CONVERTED').length * 10000) / rows.length)
+      : 0,
+  };
+}
+function mockLeadAction(op: string, to: LeadDto['stage']) {
+  return on(op, async ({ request, params }) => {
+    const body = (await request.json()) as {
+      version: number;
+      reason?: LeadDto['lostReason'];
+      comment?: string;
+    };
+    const row = mockState.leads.find((l) => l.leadId === params.leadId);
+    if (!row) return failure('LEAD_NOT_FOUND', 404);
+    if (body.version !== row.version) return failure('LEAD_VERSION_CONFLICT', 409);
+    const from = row.stage;
+    row.stage = to;
+    row.version++;
+    row.stageChangedAt = new Date().toISOString();
+    row.history.push({ from, to, at: row.stageChangedAt, byManager: true });
+    if (to === 'LOST') {
+      row.lostReason = body.reason ?? 'OTHER';
+      row.lostComment = body.comment ?? null;
+    }
+    return json(row);
+  });
+}
 export const handlers = [
+  on('getManagerLeadSummary', () => json(leadSummary())),
+  on('listManagerLeads', ({ request }) => {
+    const q = new URL(request.url).searchParams;
+    const rows = mockState.empty
+      ? []
+      : mockState.leads.filter(
+          (l) =>
+            (!q.get('stage') || q.get('stage')!.split(',').includes(l.stage)) &&
+            (!q.get('search') || l.contactName.includes(q.get('search')!)),
+        );
+    const keys = [
+      'leadId',
+      'stage',
+      'audience',
+      'contactName',
+      'subjectName',
+      'grade',
+      'maskedPhone',
+      'source',
+      'createdAt',
+      'stageChangedAt',
+      'trialAt',
+      'nextActionAt',
+      'isOverdue',
+    ] as const;
+    return json({
+      items: rows.map((l) => Object.fromEntries(keys.map((k) => [k, l[k]]))),
+      nextCursor: null,
+    });
+  }),
+  on('getManagerLead', ({ params }) => {
+    const row = mockState.leads.find((l) => l.leadId === params.leadId);
+    return row ? json(row) : failure('LEAD_NOT_FOUND', 404);
+  }),
+  on('createManagerLead', async ({ request }) => {
+    const body = (await request.json()) as Partial<LeadDto> & { forceCreate?: boolean };
+    if (mockState.duplicateLead && !body.forceCreate)
+      return HttpResponse.json(
+        { code: 'LEAD_DUPLICATE_SUSPECTED', details: { existingId: ids.lead } },
+        { status: 409 },
+      );
+    const row = {
+      ...structuredClone(lead),
+      ...body,
+      leadId: crypto.randomUUID(),
+      stage: 'NEW' as const,
+      version: 1,
+    };
+    mockState.leads.push(row);
+    return HttpResponse.json(row, { status: 201 });
+  }),
+  on('updateManagerLead', async ({ request, params }) => {
+    const body = (await request.json()) as Partial<LeadDto>;
+    const row = mockState.leads.find((l) => l.leadId === params.leadId);
+    if (!row) return failure('LEAD_NOT_FOUND', 404);
+    if (body.version !== row.version) return failure('LEAD_VERSION_CONFLICT', 409);
+    Object.assign(row, body, { version: row.version + 1 });
+    return json(row);
+  }),
+  mockLeadAction('claimManagerLead', 'IN_PROGRESS'),
+  mockLeadAction('loseManagerLead', 'LOST'),
+  mockLeadAction('reopenManagerLead', 'IN_PROGRESS'),
+  on('transitionManagerLead', async ({ request, params }) => {
+    const body = (await request.json()) as { to: LeadDto['stage']; version: number };
+    const row = mockState.leads.find((l) => l.leadId === params.leadId);
+    if (!row) return failure('LEAD_NOT_FOUND', 404);
+    if (body.version !== row.version) return failure('LEAD_VERSION_CONFLICT', 409);
+    row.stage = body.to;
+    row.version++;
+    row.studentId ??= ids.student;
+    return json(row);
+  }),
+  on('scheduleManagerTrial', async ({ request, params }) => {
+    const body = (await request.json()) as { startsAt: string; teacherId: string; version: number };
+    const row = mockState.leads.find((l) => l.leadId === params.leadId);
+    if (!row) return failure('LEAD_NOT_FOUND', 404);
+    if (body.version !== row.version) return failure('LEAD_VERSION_CONFLICT', 409);
+    row.version++;
+    row.stage = 'TRIAL';
+    row.studentId = ids.student;
+    row.trialAt = body.startsAt;
+    row.trial = {
+      lessonId: ids.lesson,
+      startsAt: body.startsAt,
+      endsAt: new Date(+new Date(body.startsAt) + 50 * 60000).toISOString(),
+      teacherName: lesson.teacherName,
+      meetLink: null,
+      outcome: 'PENDING',
+      feedbackStatus: 'PENDING',
+      feedbackSummary: null,
+    };
+    return json(row);
+  }),
   on('getCsrfToken', () => json({ csrfToken: 'fixture-csrf' })),
   on('getManagerMe', () => json({ ...me, portfolioSize: mockState.empty ? 0 : 1 })),
   on('deleteSession', () => json({ loggedOut: true })),
@@ -303,6 +439,7 @@ export const handlers = [
         : mockState.lessons.filter(
             (l) =>
               (!url.searchParams.get('status') || url.searchParams.get('status') === l.status) &&
+              (!url.searchParams.get('kind') || url.searchParams.get('kind') === l.kind) &&
               new Date(l.startsAt) >= new Date(url.searchParams.get('from')!) &&
               new Date(l.startsAt) < new Date(url.searchParams.get('to')!),
           ),
@@ -395,6 +532,7 @@ export const handlers = [
   }),
   on('getManagerDashboard', () =>
     json({
+      leads: leadSummary(),
       generatedAt: new Date().toISOString(),
       students: { active: mockState.empty ? 0 : 1, frozen: 0, leads: 0 },
       upcomingLessons: mockState.empty

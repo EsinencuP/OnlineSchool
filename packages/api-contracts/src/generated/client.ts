@@ -230,6 +230,67 @@ export interface ConfirmUploadResponseDto {
   status: ConfirmUploadResponseDtoStatus;
 }
 
+export type CreateLeadDtoAudience = typeof CreateLeadDtoAudience[keyof typeof CreateLeadDtoAudience];
+
+
+export const CreateLeadDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export type CreateLeadDtoSource = typeof CreateLeadDtoSource[keyof typeof CreateLeadDtoSource];
+
+
+export const CreateLeadDtoSource = {
+  SITE: 'SITE',
+  PHONE: 'PHONE',
+  MESSENGER: 'MESSENGER',
+  REFERRAL: 'REFERRAL',
+  OTHER: 'OTHER',
+} as const;
+
+export interface CreateLeadDto {
+  audience: CreateLeadDtoAudience;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  contactName: string;
+  /** @maxLength 120 */
+  guardianName?: string;
+  phone?: string;
+  /** @maxLength 254 */
+  email?: string;
+  subjectId: string;
+  /**
+     * @minimum 1
+     * @maximum 11
+     */
+  grade?: number;
+  /**
+     * @minimum 3
+     * @maximum 99
+     */
+  ageYears?: number;
+  /** @maxLength 10 */
+  level?: string;
+  source: CreateLeadDtoSource;
+  /** @maxLength 2000 */
+  comment?: string;
+  forceCreate?: boolean;
+}
+
+/**
+ * TRIAL is scheduled atomically through the lead trial endpoint.
+ */
+export type CreateManagerLessonDtoKind = typeof CreateManagerLessonDtoKind[keyof typeof CreateManagerLessonDtoKind];
+
+
+export const CreateManagerLessonDtoKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
+
 export type CreateManagerLessonDtoDurationMinutes = typeof CreateManagerLessonDtoDurationMinutes[keyof typeof CreateManagerLessonDtoDurationMinutes];
 
 
@@ -241,6 +302,8 @@ export const CreateManagerLessonDtoDurationMinutes = {
 } as const;
 
 export interface CreateManagerLessonDto {
+  /** TRIAL is scheduled atomically through the lead trial endpoint. */
+  kind?: CreateManagerLessonDtoKind;
   teacherId: string;
   startsAt: string;
   durationMinutes: CreateManagerLessonDtoDurationMinutes;
@@ -453,6 +516,8 @@ export type DashboardTaskDtoType = typeof DashboardTaskDtoType[keyof typeof Dash
 
 
 export const DashboardTaskDtoType = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
   RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
   CHARGE_DISPUTE: 'CHARGE_DISPUTE',
   SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
@@ -922,6 +987,259 @@ export interface HouseholdMemberResponse {
   householdId: string;
 }
 
+export type LeadDtoStage = typeof LeadDtoStage[keyof typeof LeadDtoStage];
+
+
+export const LeadDtoStage = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  TRIAL: 'TRIAL',
+  AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+  CONVERTED: 'CONVERTED',
+  LOST: 'LOST',
+} as const;
+
+export type LeadDtoAudience = typeof LeadDtoAudience[keyof typeof LeadDtoAudience];
+
+
+export const LeadDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export type LeadDtoSource = typeof LeadDtoSource[keyof typeof LeadDtoSource];
+
+
+export const LeadDtoSource = {
+  SITE: 'SITE',
+  PHONE: 'PHONE',
+  MESSENGER: 'MESSENGER',
+  REFERRAL: 'REFERRAL',
+  OTHER: 'OTHER',
+} as const;
+
+/**
+ * @nullable
+ */
+export type LeadDtoLostReason = typeof LeadDtoLostReason[keyof typeof LeadDtoLostReason] | null;
+
+
+export const LeadDtoLostReason = {
+  NOT_INTERESTED: 'NOT_INTERESTED',
+  PRICE: 'PRICE',
+  NO_CONTACT: 'NO_CONTACT',
+  COMPETITOR: 'COMPETITOR',
+  SCHEDULE_MISMATCH: 'SCHEDULE_MISMATCH',
+  TRIAL_NO_SHOW: 'TRIAL_NO_SHOW',
+  OTHER: 'OTHER',
+} as const;
+
+export type TrialLessonViewDtoOutcome = typeof TrialLessonViewDtoOutcome[keyof typeof TrialLessonViewDtoOutcome];
+
+
+export const TrialLessonViewDtoOutcome = {
+  PENDING: 'PENDING',
+  ATTENDED: 'ATTENDED',
+  NO_SHOW: 'NO_SHOW',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export type TrialLessonViewDtoFeedbackStatus = typeof TrialLessonViewDtoFeedbackStatus[keyof typeof TrialLessonViewDtoFeedbackStatus];
+
+
+export const TrialLessonViewDtoFeedbackStatus = {
+  PENDING: 'PENDING',
+  SUBMITTED: 'SUBMITTED',
+} as const;
+
+export interface TrialLessonViewDto {
+  lessonId: string;
+  startsAt: string;
+  endsAt: string;
+  teacherName: string;
+  /** @nullable */
+  meetLink: string | null;
+  outcome: TrialLessonViewDtoOutcome;
+  feedbackStatus: TrialLessonViewDtoFeedbackStatus;
+  /** @nullable */
+  feedbackSummary: string | null;
+}
+
+/**
+ * @nullable
+ */
+export type LeadHistoryDtoFrom = typeof LeadHistoryDtoFrom[keyof typeof LeadHistoryDtoFrom] | null;
+
+
+export const LeadHistoryDtoFrom = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  TRIAL: 'TRIAL',
+  AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+  CONVERTED: 'CONVERTED',
+  LOST: 'LOST',
+} as const;
+
+export type LeadHistoryDtoTo = typeof LeadHistoryDtoTo[keyof typeof LeadHistoryDtoTo];
+
+
+export const LeadHistoryDtoTo = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  TRIAL: 'TRIAL',
+  AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+  CONVERTED: 'CONVERTED',
+  LOST: 'LOST',
+} as const;
+
+export interface LeadHistoryDto {
+  /** @nullable */
+  from: LeadHistoryDtoFrom;
+  to: LeadHistoryDtoTo;
+  at: string;
+  byManager: boolean;
+}
+
+export type LeadTaskBriefDtoType = typeof LeadTaskBriefDtoType[keyof typeof LeadTaskBriefDtoType];
+
+
+export const LeadTaskBriefDtoType = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
+} as const;
+
+export interface LeadTaskBriefDto {
+  taskId: string;
+  type: LeadTaskBriefDtoType;
+  dueAt: string;
+}
+
+export interface LeadDto {
+  leadId: string;
+  stage: LeadDtoStage;
+  audience: LeadDtoAudience;
+  contactName: string;
+  subjectName: string;
+  /** @nullable */
+  grade: number | null;
+  /** @nullable */
+  maskedPhone: string | null;
+  source: LeadDtoSource;
+  createdAt: string;
+  stageChangedAt: string;
+  /** @nullable */
+  trialAt: string | null;
+  /** @nullable */
+  nextActionAt: string | null;
+  isOverdue: boolean;
+  version: number;
+  /** @nullable */
+  guardianName: string | null;
+  /** @nullable */
+  phone: string | null;
+  /** @nullable */
+  email: string | null;
+  /** @nullable */
+  ageYears: number | null;
+  /** @nullable */
+  level: string | null;
+  /** @nullable */
+  comment: string | null;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  subjectId: string | null;
+  /** @nullable */
+  lostReason: LeadDtoLostReason;
+  /** @nullable */
+  lostComment: string | null;
+  trial: TrialLessonViewDto | null;
+  history: LeadHistoryDto[];
+  openTasks: LeadTaskBriefDto[];
+}
+
+export type LeadListItemDtoStage = typeof LeadListItemDtoStage[keyof typeof LeadListItemDtoStage];
+
+
+export const LeadListItemDtoStage = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  TRIAL: 'TRIAL',
+  AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+  CONVERTED: 'CONVERTED',
+  LOST: 'LOST',
+} as const;
+
+export type LeadListItemDtoAudience = typeof LeadListItemDtoAudience[keyof typeof LeadListItemDtoAudience];
+
+
+export const LeadListItemDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export type LeadListItemDtoSource = typeof LeadListItemDtoSource[keyof typeof LeadListItemDtoSource];
+
+
+export const LeadListItemDtoSource = {
+  SITE: 'SITE',
+  PHONE: 'PHONE',
+  MESSENGER: 'MESSENGER',
+  REFERRAL: 'REFERRAL',
+  OTHER: 'OTHER',
+} as const;
+
+export interface LeadListItemDto {
+  leadId: string;
+  stage: LeadListItemDtoStage;
+  audience: LeadListItemDtoAudience;
+  contactName: string;
+  subjectName: string;
+  /** @nullable */
+  grade: number | null;
+  /** @nullable */
+  maskedPhone: string | null;
+  source: LeadListItemDtoSource;
+  createdAt: string;
+  stageChangedAt: string;
+  /** @nullable */
+  trialAt: string | null;
+  /** @nullable */
+  nextActionAt: string | null;
+  isOverdue: boolean;
+}
+
+export interface LeadPageDto {
+  items: LeadListItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface LeadStageCountsDto {
+  NEW: number;
+  IN_PROGRESS: number;
+  TRIAL: number;
+  AWAITING_PAYMENT: number;
+}
+
+export interface LeadSummaryDto {
+  countsByStage: LeadStageCountsDto;
+  createdToday: number;
+  trialsToday: number;
+  overdueFollowups: number;
+  /**
+     * Converted leads / leads created in the trailing 30-day cohort, in basis points
+     * @minimum 0
+     * @maximum 10000
+     */
+  conversion30dBp: number;
+}
+
+export interface LeadVersionDto {
+  /** @minimum 1 */
+  version: number;
+}
+
 export interface LearningGoalDto {
   goalId: string;
   text: string;
@@ -1236,12 +1554,34 @@ export interface LogoutResponse {
   loggedOut: true;
 }
 
+export type LoseLeadDtoReason = typeof LoseLeadDtoReason[keyof typeof LoseLeadDtoReason];
+
+
+export const LoseLeadDtoReason = {
+  NOT_INTERESTED: 'NOT_INTERESTED',
+  PRICE: 'PRICE',
+  NO_CONTACT: 'NO_CONTACT',
+  COMPETITOR: 'COMPETITOR',
+  SCHEDULE_MISMATCH: 'SCHEDULE_MISMATCH',
+  TRIAL_NO_SHOW: 'TRIAL_NO_SHOW',
+  OTHER: 'OTHER',
+} as const;
+
+export interface LoseLeadDto {
+  /** @minimum 1 */
+  version: number;
+  reason: LoseLeadDtoReason;
+  /** @maxLength 500 */
+  comment?: string;
+}
+
 export interface ManagerContactsDto {
   whatsapp: string;
   telegram: string;
 }
 
 export interface ManagerDashboardDto {
+  leads: LeadSummaryDto;
   generatedAt: string;
   students: DashboardStudentCountsDto;
   upcomingLessons: DashboardLessonDto[];
@@ -1303,6 +1643,14 @@ export interface ManagerFinancialSubscriptionOptionDto {
   startsAt: string;
 }
 
+export type ManagerLessonDtoKind = typeof ManagerLessonDtoKind[keyof typeof ManagerLessonDtoKind];
+
+
+export const ManagerLessonDtoKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
+
 export type ManagerLessonDtoStatus = typeof ManagerLessonDtoStatus[keyof typeof ManagerLessonDtoStatus];
 
 
@@ -1314,7 +1662,29 @@ export const ManagerLessonDtoStatus = {
   DISPUTED: 'DISPUTED',
 } as const;
 
+export type TrialBriefDtoAudience = typeof TrialBriefDtoAudience[keyof typeof TrialBriefDtoAudience];
+
+
+export const TrialBriefDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export interface TrialBriefDto {
+  leadId: string;
+  audience: TrialBriefDtoAudience;
+  /** @nullable */
+  ageYears: number | null;
+  /** @nullable */
+  grade: number | null;
+  /** @nullable */
+  level: string | null;
+  subjectName: string;
+}
+
 export interface ManagerLessonDto {
+  trialBrief?: TrialBriefDto | null;
+  kind: ManagerLessonDtoKind;
   lessonId: string;
   studentId: string;
   teacherId: string;
@@ -1346,6 +1716,7 @@ export type ManagerMeResponseDtoCapabilitiesItem = typeof ManagerMeResponseDtoCa
 
 
 export const ManagerMeResponseDtoCapabilitiesItem = {
+  LEADS_MANAGE: 'LEADS_MANAGE',
   STUDENTS_VIEW: 'STUDENTS_VIEW',
   ACCOUNTS_CREATE: 'ACCOUNTS_CREATE',
   PAYMENTS_CONFIRM: 'PAYMENTS_CONFIRM',
@@ -1377,6 +1748,7 @@ export type ManagerNotificationDtoTemplateCode = typeof ManagerNotificationDtoTe
 
 
 export const ManagerNotificationDtoTemplateCode = {
+  TRIAL_SCHEDULED: 'TRIAL_SCHEDULED',
   ACCOUNT_CREATED: 'ACCOUNT_CREATED',
   PAYMENT_CONFIRMED: 'PAYMENT_CONFIRMED',
   SUBSCRIPTION_CREATED: 'SUBSCRIPTION_CREATED',
@@ -1430,6 +1802,7 @@ export interface ManagerPlanOptionDto {
 }
 
 export interface ManagerOptionsDto {
+  teachers: ManagerNamedOptionDto[];
   students: ManagerNamedOptionDto[];
   subjects: ManagerNamedOptionDto[];
   plans: ManagerPlanOptionDto[];
@@ -1540,6 +1913,8 @@ export type ManagerTaskDetailDtoType = typeof ManagerTaskDetailDtoType[keyof typ
 
 
 export const ManagerTaskDetailDtoType = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
   RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
   CHARGE_DISPUTE: 'CHARGE_DISPUTE',
   SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
@@ -1571,6 +1946,19 @@ export const ManagerTaskDetailDtoApprovalStatus = {
  * @nullable
  */
 export type ManagerTaskDetailDtoResolution = { [key: string]: unknown } | null;
+
+export type TaskLeadPayloadDtoKind = typeof TaskLeadPayloadDtoKind[keyof typeof TaskLeadPayloadDtoKind];
+
+
+export const TaskLeadPayloadDtoKind = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
+} as const;
+
+export interface TaskLeadPayloadDto {
+  kind: TaskLeadPayloadDtoKind;
+  leadId: string;
+}
 
 export type TaskReschedulePayloadDtoKind = typeof TaskReschedulePayloadDtoKind[keyof typeof TaskReschedulePayloadDtoKind];
 
@@ -1645,7 +2033,10 @@ export interface ManagerTaskDetailDto {
   type: ManagerTaskDetailDtoType;
   status: ManagerTaskDetailDtoStatus;
   version: number;
-  studentId: string;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  leadId: string | null;
   studentName: string;
   createdAt: string;
   dueAt: string;
@@ -1653,7 +2044,7 @@ export interface ManagerTaskDetailDto {
   /** @nullable */
   escalatedAt: string | null;
   approvalStatus: ManagerTaskDetailDtoApprovalStatus;
-  payload: TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
+  payload: TaskLeadPayloadDto | TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
   /** @nullable */
   ledgerPublicationId: string | null;
   /**
@@ -1667,6 +2058,8 @@ export type ManagerTaskDtoType = typeof ManagerTaskDtoType[keyof typeof ManagerT
 
 
 export const ManagerTaskDtoType = {
+  LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
+  ASSIGN_TEACHER: 'ASSIGN_TEACHER',
   RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
   CHARGE_DISPUTE: 'CHARGE_DISPUTE',
   SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
@@ -1698,7 +2091,10 @@ export interface ManagerTaskDto {
   type: ManagerTaskDtoType;
   status: ManagerTaskDtoStatus;
   version: number;
-  studentId: string;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  leadId: string | null;
   studentName: string;
   createdAt: string;
   dueAt: string;
@@ -1706,7 +2102,7 @@ export interface ManagerTaskDto {
   /** @nullable */
   escalatedAt: string | null;
   approvalStatus: ManagerTaskDtoApprovalStatus;
-  payload: TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
+  payload: TaskLeadPayloadDto | TaskReschedulePayloadDto | TaskDisputePayloadDto | TaskExpiringPayloadDto | TaskGeneralPayloadDto;
   /** @nullable */
   ledgerPublicationId: string | null;
 }
@@ -2344,6 +2740,13 @@ export interface ScheduleReasonRequest {
   reason: string;
 }
 
+export interface ScheduleTrialDto {
+  /** @minimum 1 */
+  version: number;
+  teacherId: string;
+  startsAt: string;
+}
+
 export type SendManagerNotificationDtoChannel = typeof SendManagerNotificationDtoChannel[keyof typeof SendManagerNotificationDtoChannel];
 
 
@@ -2517,6 +2920,8 @@ export interface StudentContactsDto {
 }
 
 export interface StudentCardDto {
+  /** @nullable */
+  leadId: string | null;
   studentId: string;
   version: number;
   fullName: string;
@@ -2870,8 +3275,78 @@ export interface TemporaryAccessResponse {
   [key: string]: unknown;
  }
 
+export type TransitionLeadDtoTo = typeof TransitionLeadDtoTo[keyof typeof TransitionLeadDtoTo];
+
+
+export const TransitionLeadDtoTo = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  AWAITING_PAYMENT: 'AWAITING_PAYMENT',
+} as const;
+
+export interface TransitionLeadDto {
+  /** @minimum 1 */
+  version: number;
+  to: TransitionLeadDtoTo;
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  skipTrialReason?: string;
+}
+
 export interface UnreadCountDto {
   unreadCount: number;
+}
+
+export type UpdateLeadDtoAudience = typeof UpdateLeadDtoAudience[keyof typeof UpdateLeadDtoAudience];
+
+
+export const UpdateLeadDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export type UpdateLeadDtoSource = typeof UpdateLeadDtoSource[keyof typeof UpdateLeadDtoSource];
+
+
+export const UpdateLeadDtoSource = {
+  SITE: 'SITE',
+  PHONE: 'PHONE',
+  MESSENGER: 'MESSENGER',
+  REFERRAL: 'REFERRAL',
+  OTHER: 'OTHER',
+} as const;
+
+export interface UpdateLeadDto {
+  audience?: UpdateLeadDtoAudience;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  contactName?: string;
+  /** @maxLength 120 */
+  guardianName?: string;
+  phone?: string;
+  /** @maxLength 254 */
+  email?: string;
+  subjectId?: string;
+  /**
+     * @minimum 1
+     * @maximum 11
+     */
+  grade?: number;
+  /**
+     * @minimum 3
+     * @maximum 99
+     */
+  ageYears?: number;
+  /** @maxLength 10 */
+  level?: string;
+  source?: UpdateLeadDtoSource;
+  /** @maxLength 2000 */
+  comment?: string;
+  /** @minimum 1 */
+  version: number;
 }
 
 export interface UpdateProfileDto {
@@ -2969,6 +3444,41 @@ export const GetManagerDashboardExpiringDays = {
   NUMBER_14: 14,
 } as const;
 
+export type ListManagerLeadsParams = {
+/**
+ * Comma-separated stages
+ */
+stage?: string;
+/**
+ * @minLength 2
+ * @maxLength 100
+ */
+search?: string;
+subjectId?: string;
+source?: ListManagerLeadsSource;
+overdue?: boolean;
+/**
+ * @maxLength 200
+ */
+cursor?: string;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
+
+export type ListManagerLeadsSource = typeof ListManagerLeadsSource[keyof typeof ListManagerLeadsSource];
+
+
+export const ListManagerLeadsSource = {
+  SITE: 'SITE',
+  PHONE: 'PHONE',
+  MESSENGER: 'MESSENGER',
+  REFERRAL: 'REFERRAL',
+  OTHER: 'OTHER',
+} as const;
+
 export type ClearManagerLessonMeetLinkBody = { [key: string]: unknown };
 
 export type GetManagerOptionsParams = {
@@ -2978,12 +3488,21 @@ studentId?: string;
 export type ConfirmManagerPaymentBody = { [key: string]: unknown };
 
 export type ListManagerScheduleParams = {
+kind?: ListManagerScheduleKind;
 from: string;
 to: string;
 studentId?: string;
 teacherId?: string;
 status?: ListManagerScheduleStatus;
 };
+
+export type ListManagerScheduleKind = typeof ListManagerScheduleKind[keyof typeof ListManagerScheduleKind];
+
+
+export const ListManagerScheduleKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
 
 export type ListManagerScheduleStatus = typeof ListManagerScheduleStatus[keyof typeof ListManagerScheduleStatus];
 
@@ -3117,7 +3636,7 @@ export type ListManagerTasksParams = {
  */
 status?: string;
 /**
- * Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL
+ * Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL, LEAD_FOLLOWUP, ASSIGN_TEACHER
  */
 type?: string;
 overdue?: boolean;
@@ -4455,6 +4974,327 @@ export const getGetManagerDashboardUrl = (params?: GetManagerDashboardParams,) =
 export const getManagerDashboard = (params?: GetManagerDashboardParams, options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<ManagerDashboardDto>(getGetManagerDashboardUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListManagerLeadsUrl = (params?: ListManagerLeadsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/leads?${stringifiedParams}` : `/api/v1/manager/leads`
+}
+
+export const listManagerLeads = (params?: ListManagerLeadsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LeadPageDto>(getListManagerLeadsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateManagerLeadUrl = () => {
+
+
+
+
+  return `/api/v1/manager/leads`
+}
+
+export const createManagerLead = (createLeadDto: CreateLeadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getCreateManagerLeadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createLeadDto)
+  }
+);}
+
+
+
+export const getGetManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}`
+}
+
+export const getManagerLead = (leadId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LeadDto>(getGetManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getUpdateManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}`
+}
+
+export const updateManagerLead = (leadId: string,
+    updateLeadDto: UpdateLeadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getUpdateManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateLeadDto)
+  }
+);}
+
+
+
+export const getClaimManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}/claim`
+}
+
+export const claimManagerLead = (leadId: string,
+    leadVersionDto: LeadVersionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getClaimManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(leadVersionDto)
+  }
+);}
+
+
+
+export const getLoseManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}/lose`
+}
+
+export const loseManagerLead = (leadId: string,
+    loseLeadDto: LoseLeadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getLoseManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(loseLeadDto)
+  }
+);}
+
+
+
+export const getReopenManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}/reopen`
+}
+
+export const reopenManagerLead = (leadId: string,
+    leadVersionDto: LeadVersionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getReopenManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(leadVersionDto)
+  }
+);}
+
+
+
+export const getTransitionManagerLeadUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}/transition`
+}
+
+export const transitionManagerLead = (leadId: string,
+    transitionLeadDto: TransitionLeadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getTransitionManagerLeadUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(transitionLeadDto)
+  }
+);}
+
+
+
+export const getScheduleManagerTrialUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/manager/leads/${leadId}/trial`
+}
+
+export const scheduleManagerTrial = (leadId: string,
+    scheduleTrialDto: ScheduleTrialDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LeadDto>(getScheduleManagerTrialUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(scheduleTrialDto)
+  }
+);}
+
+
+
+export const getGetManagerLeadSummaryUrl = () => {
+
+
+
+
+  return `/api/v1/manager/leads/summary`
+}
+
+export const getManagerLeadSummary = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LeadSummaryDto>(getGetManagerLeadSummaryUrl(),
   {
     ...options,
     method: 'GET'

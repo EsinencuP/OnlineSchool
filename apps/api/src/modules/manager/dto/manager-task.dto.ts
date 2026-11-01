@@ -45,12 +45,12 @@ export class ListManagerTasksDto {
   @ApiPropertyOptional({
     type: String,
     description:
-      'Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL',
+      'Comma-separated RESCHEDULE_REQUEST, CHARGE_DISPUTE, SUBSCRIPTION_EXPIRING, GENERAL, LEAD_FOLLOWUP, ASSIGN_TEACHER',
   })
   @IsOptional()
   @Transform(csv)
   @IsArray()
-  @ArrayMaxSize(4)
+  @ArrayMaxSize(6)
   @IsIn(MANAGER_TASK_TYPES, { each: true })
   type?: ManagerTaskType[];
   @ApiPropertyOptional({ type: Boolean })
@@ -162,7 +162,13 @@ export class TaskGeneralPayloadDto {
   @ApiProperty({ enum: ['GENERAL'] }) kind!: 'GENERAL';
   @ApiProperty() text!: string;
 }
+export class TaskLeadPayloadDto {
+  @ApiProperty({ enum: ['LEAD_FOLLOWUP', 'ASSIGN_TEACHER'] }) kind!:
+    'LEAD_FOLLOWUP' | 'ASSIGN_TEACHER';
+  @ApiProperty({ format: 'uuid' }) leadId!: string;
+}
 @ApiExtraModels(
+  TaskLeadPayloadDto,
   TaskReschedulePayloadDto,
   TaskDisputePayloadDto,
   TaskExpiringPayloadDto,
@@ -173,7 +179,8 @@ export class ManagerTaskDto {
   @ApiProperty({ enum: MANAGER_TASK_TYPES }) type!: ManagerTaskType;
   @ApiProperty({ enum: TASK_STATUSES }) status!: ManagerTaskStatus;
   @ApiProperty({ type: 'integer' }) version!: number;
-  @ApiProperty({ format: 'uuid' }) studentId!: string;
+  @ApiProperty({ type: String, nullable: true, format: 'uuid' }) studentId!: string | null;
+  @ApiProperty({ type: String, nullable: true, format: 'uuid' }) leadId!: string | null;
   @ApiProperty() studentName!: string;
   @ApiProperty({ format: 'date-time' }) createdAt!: string;
   @ApiProperty({ format: 'date-time' }) dueAt!: string;
@@ -185,6 +192,7 @@ export class ManagerTaskDto {
   approvalStatus!: TaskView['approvalStatus'];
   @ApiProperty({
     oneOf: [
+      TaskLeadPayloadDto,
       TaskReschedulePayloadDto,
       TaskDisputePayloadDto,
       TaskExpiringPayloadDto,

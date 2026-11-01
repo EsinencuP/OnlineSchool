@@ -14,17 +14,19 @@ import { OutboxWorker } from '../../apps/worker/dist/outbox.js';
 import { standaloneNotificationStorage } from '../support/notification-storage.mjs';
 import { NotificationOutboxPublisher } from '../../apps/api/dist/modules/notifications/notification-outbox.publisher.js';
 const variables = (code) =>
-  code === 'ACCOUNT_CREATED'
-    ? { accountId: randomUUID(), loginEmail: 'student@example.invalid' }
-    : code === 'PAYMENT_CONFIRMED'
-      ? { paymentId: randomUUID(), receiptOnly: 'true' }
-      : code === 'MANUAL_MESSAGE'
-        ? { body: 'Здравствуйте, ученик' }
-        : code.startsWith('SUBSCRIPTION_')
-          ? { subscriptionId: randomUUID(), operationId: randomUUID() }
-          : code.startsWith('LESSON_')
-            ? { lessonId: randomUUID() }
-            : { taskId: randomUUID(), lessonId: randomUUID() };
+  code === 'TRIAL_SCHEDULED'
+    ? { lessonId: randomUUID(), startsAt: '2026-11-03T12:00:00Z' }
+    : code === 'ACCOUNT_CREATED'
+      ? { accountId: randomUUID(), loginEmail: 'student@example.invalid' }
+      : code === 'PAYMENT_CONFIRMED'
+        ? { paymentId: randomUUID(), receiptOnly: 'true' }
+        : code === 'MANUAL_MESSAGE'
+          ? { body: 'Здравствуйте, ученик' }
+          : code.startsWith('SUBSCRIPTION_')
+            ? { subscriptionId: randomUUID(), operationId: randomUUID() }
+            : code.startsWith('LESSON_')
+              ? { lessonId: randomUUID() }
+              : { taskId: randomUUID(), lessonId: randomUUID() };
 test.each(MANAGER_TEMPLATE_CODES)(
   '%s validates exact variables, ru/en and unknown locale fallback',
   (code) => {

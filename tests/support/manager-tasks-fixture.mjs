@@ -53,6 +53,7 @@ export async function managerTasksFixture() {
             lesson_id: null,
             payload: null,
             student_id: null,
+            lead_id: null,
             created_at: s().now,
             resolved_at: null,
             resolved_by_staff_id: null,

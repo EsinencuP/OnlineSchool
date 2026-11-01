@@ -2,6 +2,7 @@ import type { ClientError } from '@online-school/api-contracts';
 import { ERROR_MESSAGES } from '../i18n/error-messages.js';
 import { ru } from '../i18n/ru.js';
 export interface ApiErrorView {
+  existingId?: string;
   code: string;
   status: number;
   requestId?: string;
@@ -16,5 +17,6 @@ export function errorView(error: ClientError): ApiErrorView {
     status: error.status,
     message,
     ...(error.requestId ? { requestId: error.requestId } : {}),
+    ...(error.existingId ? { existingId: error.existingId } : {}),
   };
 }

@@ -4,6 +4,7 @@ import { domainError } from '../../core/errors/domain-error.js';
 import type { DomainError } from '../../core/errors/domain-error.js';
 import { UUID } from '../../core/http.js';
 export const MANAGER_TEMPLATE_CODES = [
+  'TRIAL_SCHEDULED',
   'ACCOUNT_CREATED',
   'PAYMENT_CONFIRMED',
   'SUBSCRIPTION_CREATED',
@@ -21,6 +22,13 @@ export const MANAGER_TEMPLATE_CODES = [
 ] as const;
 export type ManagerTemplateCode = (typeof MANAGER_TEMPLATE_CODES)[number];
 const registry = {
+  TRIAL_SCHEDULED: [
+    ['lessonId', 'startsAt'],
+    'Пробный урок назначен',
+    'Ваш пробный урок назначен на {startsAt}. Ссылку для подключения передаст менеджер.',
+    'Trial lesson scheduled',
+    'Your trial lesson is scheduled for {startsAt}. Your manager will share the meeting link.',
+  ],
   ACCOUNT_CREATED: [
     ['accountId', 'loginEmail'],
     'Кабинет ученика создан',
