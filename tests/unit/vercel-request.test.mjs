@@ -1,4 +1,4 @@
-import { test } from 'node:test';
+import { expect, test } from '@jest/globals';
 import assert from 'node:assert/strict';
 import { normalizeVercelRequest } from '../../apps/api/dist/vercel-request.js';
 test('Vercel rewrite metadata does not enter strict API query DTOs', () => {
@@ -17,10 +17,11 @@ test('embedded internal capture is removed only when it matches the routed path'
     url: '/api/v1/student/homework?__vercel_api_path=other&unexpected=x&page=1&page=2',
   };
   normalizeVercelRequest(invalid);
-  assert.deepEqual(
-    { ...invalid.query },
-    { __vercel_api_path: 'other', unexpected: 'x', page: ['1', '2'] },
-  );
+  expect({ ...invalid.query }).toEqual({
+    __vercel_api_path: 'other',
+    unexpected: 'x',
+    page: ['1', '2'],
+  });
 });
 test('ordinary unknown client query parameters remain visible to validators', () => {
   const req = { url: '/api/v1/student/skills?path=untrusted&subjectId=123' };

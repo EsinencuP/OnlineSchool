@@ -76,6 +76,8 @@ test('shared overdue predicate is strict, public types only; damaged legacy refe
   expect(taskOverdueSql(now).text).toContain('t.due_at<');
   const visible = taskVisibleSql();
   expect(visible.values).toEqual([
+    'LEAD_FOLLOWUP',
+    'ASSIGN_TEACHER',
     'RESCHEDULE_REQUEST',
     'ATTENDANCE_DISPUTE',
     'SUBSCRIPTION_EXPIRING',

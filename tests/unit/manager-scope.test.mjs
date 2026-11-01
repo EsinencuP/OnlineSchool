@@ -115,7 +115,13 @@ test('me is scoped, uses configured timezone and policy capabilities without fin
       role: 'MANAGER',
       portfolioSize: 2,
       timezone: 'Asia/Tokyo',
-      capabilities: ['STUDENTS_VIEW', 'ACCOUNTS_CREATE', 'SUBSCRIPTIONS_MANAGE', 'SCHEDULE_MANAGE'],
+      capabilities: [
+        'LEADS_MANAGE',
+        'STUDENTS_VIEW',
+        'ACCOUNTS_CREATE',
+        'SUBSCRIPTIONS_MANAGE',
+        'SCHEDULE_MANAGE',
+      ],
     });
     expect(db.student.count.mock.calls[0][0].where.manager_assignments.some.manager_id).toBe(
       ctx.managerId,

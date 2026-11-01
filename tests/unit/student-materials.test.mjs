@@ -168,7 +168,7 @@ test.each([{ kind: 'TEACHER', roles: ['TEACHER'] }, { accountId: randomUUID() },
   },
 );
 test.each([
-  { mustChangePassword: true, expected: 'PASSWORD_CHANGE_REQUIRED' },
+  { mustChangePassword: true, expected: 'MUST_CHANGE_PASSWORD' },
   { hasActiveAccess: false, expected: 'ACCESS_SUSPENDED' },
   { studentProfileId: randomUUID(), expected: 'FILE_ACCESS_DENIED' },
 ])('current student activation is revalidated: %j', async ({ expected, ...change }) => {

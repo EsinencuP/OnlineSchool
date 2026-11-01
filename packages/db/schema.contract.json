@@ -1009,6 +1009,15 @@
     "table": "crm_tasks",
     "fields": [
       {
+        "name": "system_resolved",
+        "column": "system_resolved",
+        "type": "Boolean",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "version",
         "column": "version",
         "type": "Int",
@@ -4374,6 +4383,100 @@
     ]
   },
   {
+    "name": "LeadStageEvent",
+    "table": "lead_stage_events",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "lead_id",
+        "column": "lead_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "from_stage",
+        "column": "from_stage",
+        "type": "LeadStage",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "to_stage",
+        "column": "to_stage",
+        "type": "LeadStage",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "actor",
+        "column": "actor",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "reason",
+        "column": "reason",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "created_at",
+        "column": "created_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "lead",
+        "type": "Lead",
+        "from": [
+          "lead_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ]
+    ]
+  },
+  {
     "name": "LeadStudentLink",
     "table": "lead_student_links",
     "fields": [
@@ -4525,6 +4628,145 @@
     "table": "leads",
     "fields": [
       {
+        "name": "archived_student_at",
+        "column": "archived_student_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "audience",
+        "column": "audience",
+        "type": "LeadAudience",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "guardian_name",
+        "column": "guardian_name",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "subject_id",
+        "column": "subject_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "grade",
+        "column": "grade",
+        "type": "Int",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "age_years",
+        "column": "age_years",
+        "type": "Int",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "level",
+        "column": "level",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "comment",
+        "column": "comment",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "lost_reason",
+        "column": "lost_reason",
+        "type": "LeadLostReason",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "lost_comment",
+        "column": "lost_comment",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "trial_lesson_id",
+        "column": "trial_lesson_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "version",
+        "column": "version",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "stage_changed_at",
+        "column": "stage_changed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "converted_at",
+        "column": "converted_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -4617,8 +4859,34 @@
         ]
       }
     ],
-    "relations": [],
+    "relations": [
+      {
+        "field": "subject",
+        "type": "Subject",
+        "from": [
+          "subject_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "trial_lesson",
+        "type": "LessonOccurrence",
+        "from": [
+          "trial_lesson_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
     "uniqueSets": [
+      [
+        "trial_lesson_id"
+      ],
       [
         "id"
       ]
@@ -5905,6 +6173,38 @@
     "table": "lesson_occurrences",
     "fields": [
       {
+        "name": "trial_lead_id",
+        "column": "trial_lead_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "trial_started_at",
+        "column": "trial_started_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "kind",
+        "column": "kind",
+        "type": "LessonKind",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "manager_subscription_id",
         "column": "manager_subscription_id",
         "type": "String",
@@ -6193,6 +6493,17 @@
       }
     ],
     "relations": [
+      {
+        "field": "trial_source_lead",
+        "type": "Lead",
+        "from": [
+          "trial_lead_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
       {
         "field": "manager_subscription",
         "type": "ManagerSubscription",
@@ -7006,6 +7317,17 @@
     "table": "notification_dispatches",
     "fields": [
       {
+        "name": "lead_id",
+        "column": "lead_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -7021,7 +7343,7 @@
         "column": "student_id",
         "type": "String",
         "list": false,
-        "nullable": false,
+        "nullable": true,
         "primary": false,
         "native": [
           "Uuid"
@@ -7186,6 +7508,17 @@
       }
     ],
     "relations": [
+      {
+        "field": "lead",
+        "type": "Lead",
+        "from": [
+          "lead_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
       {
         "field": "student",
         "type": "Student",

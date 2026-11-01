@@ -175,7 +175,13 @@ test('active managers get independent portfolio counts; query/path/body cannot s
     role: 'MANAGER',
     portfolioSize: 1,
     timezone: process.env.SCHOOL_TIMEZONE ?? 'Europe/Chisinau',
-    capabilities: ['STUDENTS_VIEW', 'ACCOUNTS_CREATE', 'SUBSCRIPTIONS_MANAGE', 'SCHEDULE_MANAGE'],
+    capabilities: [
+      'LEADS_MANAGE',
+      'STUDENTS_VIEW',
+      'ACCOUNTS_CREATE',
+      'SUBSCRIPTIONS_MANAGE',
+      'SCHEDULE_MANAGE',
+    ],
   });
   expect(b.body.managerId).toBe(staffIds[1]);
   expect(b.body.portfolioSize).toBe(2);

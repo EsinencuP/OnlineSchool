@@ -101,6 +101,7 @@ erDiagram
   representatives o|--o{ contact_logs : "fk_contact_representative"
   staff_accounts ||--o{ contact_logs : "fk_contact_staff"
   crm_tasks {
+    Boolean system_resolved
     Int version
     DateTime escalated_at
     Json decision
@@ -418,6 +419,16 @@ erDiagram
     DateTime updated_at
   }
   outbox_events o|--o{ job_records : "fk_t04_job_record_source_outbox_event"
+  lead_stage_events {
+    String id PK
+    String lead_id
+    LeadStage from_stage
+    LeadStage to_stage
+    String actor
+    String reason
+    DateTime created_at
+  }
+  leads ||--o{ lead_stage_events : "lead"
   lead_student_links {
     String id PK
     String lead_id
@@ -433,6 +444,20 @@ erDiagram
   students ||--o{ lead_student_links : "fk_lead_link_student"
   staff_accounts ||--o{ lead_student_links : "fk_lead_link_staff"
   leads {
+    DateTime archived_student_at
+    LeadAudience audience
+    String guardian_name
+    String subject_id
+    Int grade
+    Int age_years
+    String level
+    String comment
+    LeadLostReason lost_reason
+    String lost_comment
+    String trial_lesson_id
+    Int version
+    DateTime stage_changed_at
+    DateTime converted_at
     String id PK
     LeadStage stage
     String full_name
@@ -443,6 +468,8 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  subjects o|--o{ leads : "subject"
+  lesson_occurrences o|--o| leads : "trial_lesson"
   learning_goal_history {
     String id PK
     String goal_id
@@ -562,6 +589,9 @@ erDiagram
   lesson_occurrences ||--o{ lesson_change_events : "fk_t03_lesson_change_event_lesson_occurrence"
   auth_accounts ||--o{ lesson_change_events : "fk_t03_lesson_change_event_author"
   lesson_occurrences {
+    String trial_lead_id
+    DateTime trial_started_at
+    LessonKind kind
     String manager_subscription_id
     String google_meet_link
     Boolean meet_link_overridden
@@ -590,6 +620,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  leads o|--o{ lesson_occurrences : "trial_source_lead"
   manager_subscriptions o|--o{ lesson_occurrences : "manager_subscription"
   lesson_outcome_reports o|--o| lesson_occurrences : "fk_lesson_confirmed_report"
   teacher_accounts o|--o{ lesson_occurrences : "fk_t03_lesson_start_teacher"
@@ -666,6 +697,7 @@ erDiagram
   auth_accounts ||--o{ mfa_challenges : "fk_challenge_account"
   sessions o|--o{ mfa_challenges : "fk_challenge_session_owner"
   notification_dispatches {
+    String lead_id
     String id PK
     String student_id
     String manager_id
@@ -685,7 +717,8 @@ erDiagram
     String failure_reason
     String provider_reference
   }
-  students ||--o{ notification_dispatches : "student"
+  leads o|--o{ notification_dispatches : "lead"
+  students o|--o{ notification_dispatches : "student"
   staff_accounts o|--o{ notification_dispatches : "manager"
   student_notification_sources o|--o| notification_dispatches : "source"
   outbox_events {
