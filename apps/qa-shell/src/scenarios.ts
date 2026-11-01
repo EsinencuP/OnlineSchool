@@ -14,7 +14,7 @@ import {
 } from './api.js';
 import type { Result } from '@online-school/shared';
 
-export type Role = SessionResponse['account']['roles'][number];
+type Role = SessionResponse['account']['roles'][number];
 export type Values = Record<string, string>;
 export type Field = {
   name: string;

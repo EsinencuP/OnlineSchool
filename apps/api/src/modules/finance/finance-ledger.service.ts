@@ -25,7 +25,7 @@ const accounts = [
   'REFUND_PAYABLE',
   'CORRECTION',
 ];
-export const pair = (
+const pair = (
   amount: Prisma.Decimal,
   unit: string,
   debit: LedgerAccountType,

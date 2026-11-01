@@ -14,7 +14,7 @@ export const LOGIN_COOKIE = '__Host-school_webauthn_login';
 export const tokenHash = (value: string): string =>
   createHash('sha256').update(value).digest('hex');
 export const randomToken = (): string => randomBytes(32).toString('base64url');
-export const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+const SESSION_TTL_MS = 8 * 60 * 60 * 1000;
 export const SESSION_IDLE_MS = 30 * 60 * 1000;
 type Connection = Prisma.TransactionClient | PrismaClient;
 export type IssuedSession = {
