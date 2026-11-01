@@ -496,7 +496,7 @@ export function App() {
                 <div>
                   <dt>Применена в БД</dt>
                   <dd className="mono break-word">
-                    {components?.migrationVersion ?? 'Доступно после MFA и проверки БД'}
+                    {components?.migrationVersion ?? 'Доступно после входа и проверки БД'}
                   </dd>
                 </div>
               </dl>
@@ -574,7 +574,7 @@ export function App() {
               <p className="hint">
                 {components
                   ? `Проверено: ${stamp(components.checkedAt)}. Worker: ${components.workerLastSeenAt ? stamp(components.workerLastSeenAt) : 'heartbeat ещё не поступал'}.`
-                  : 'Детали БД и worker доступны сотрудникам после MFA.'}{' '}
+                  : 'Детали БД и worker доступны сотрудникам после входа.'}{' '}
                 Liveness не подтверждает готовность релиза.
               </p>
               {componentError && (
