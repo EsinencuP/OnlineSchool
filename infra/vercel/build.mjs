@@ -57,6 +57,9 @@ run(
   true,
 );
 console.log('Working database migrations applied; deployment may be published');
+if (process.env.PLATFORM_DEMO_SETUP_UNTIL) {
+  run(['exec', 'node', 'scripts/provision-platform-demo.mjs'], { ...buildEnv, DIRECT_URL: direct });
+}
 if (process.env.QA_ACCESS_SETUP_UNTIL) {
   run(['exec', 'node', 'scripts/provision-qa-access.mjs'], { ...buildEnv, DIRECT_URL: direct });
 }

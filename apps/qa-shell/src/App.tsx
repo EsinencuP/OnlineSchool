@@ -414,6 +414,14 @@ export function App() {
                       <option value="qa.teacher@onlineschool.test">Преподаватель</option>
                       <option value="themrack26@gmail.com">Ученик</option>
                       <option value="qa.tech@onlineschool.test">Технический оператор</option>
+                      <optgroup label="Демонстрационная школа">
+                        <option value="tamara.demo@onlineschool.test">Тамара — менеджер</option>
+                        <option value="pasha.demo@onlineschool.test">Паша — директор</option>
+                        <option value="andrei.demo@onlineschool.test">
+                          Андрей — преподаватель
+                        </option>
+                        <option value="elena.demo@onlineschool.test">Елена — преподаватель</option>
+                      </optgroup>
                     </select>
                   </label>
                   <label className="field">
