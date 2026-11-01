@@ -41,6 +41,7 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm --filter @online-school/worker build
       - run: pnpm test:unit
+      - run: pnpm test:qa-password
 
   integration-test:
     # Owner decision, TASK-14: one working environment, no additional test databases.

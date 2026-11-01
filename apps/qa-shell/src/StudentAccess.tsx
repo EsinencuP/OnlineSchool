@@ -112,6 +112,7 @@ export function StudentAccess({
         <a className="brand" href="/">
           Online Academy
         </a>
+        <a href="/student">Открыть кабинет ученика</a>
         <button className="quiet" disabled={busy} onClick={() => void onLogout()}>
           Выйти
         </button>

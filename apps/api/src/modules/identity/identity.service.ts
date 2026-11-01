@@ -25,6 +25,7 @@ import {
 } from '../../core/session/session.store.js';
 import type { IssuedSession } from '../../core/session/session.store.js';
 import { managerPasswordOnlyLogin } from '../../core/session/manager-password-policy.js';
+import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 import {
   clientChallenge,
   WebAuthnChallengeStore,
@@ -182,6 +183,9 @@ export class IdentityService {
     return {
       account: { id: account.id, kind: account.kind, roles },
       mfa_completed: mfa,
+      ...(qaPasswordOnlyLogin({ kind: account.kind, roles, recoveryOnly })
+        ? { password_only: true }
+        : {}),
       ...(managerPasswordOnlyLogin({ kind: account.kind, roles, recoveryOnly })
         ? { manager_password_only: true }
         : {}),

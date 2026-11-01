@@ -8,6 +8,7 @@ import { DatabaseService } from '../database/database.module.js';
 import { domainError } from '../errors/domain-error.js';
 import type { DomainError } from '../errors/domain-error.js';
 import { managerPasswordOnlyLogin } from '../session/manager-password-policy.js';
+import { qaPasswordOnlyLogin } from '../session/qa-password-policy.js';
 
 // Explicit command permissions. Tech operations confer no financial or scheduling authority.
 const permissions: Record<RoleCode, readonly string[]> = {
@@ -86,7 +87,10 @@ export class PolicyService {
   ): Promise<Result<void, DomainError>> {
     if (
       !UUID.test(studentId) ||
-      (!actor.mfaCompleted && actor.kind !== 'STUDENT' && !managerPasswordOnlyLogin(actor))
+      (!actor.mfaCompleted &&
+        actor.kind !== 'STUDENT' &&
+        !managerPasswordOnlyLogin(actor) &&
+        !qaPasswordOnlyLogin(actor))
     )
       return err(domainError('FORBIDDEN', 403));
     const client = tx ?? this.db.client;

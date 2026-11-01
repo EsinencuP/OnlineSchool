@@ -264,6 +264,7 @@ const OBSERVED_TOPICS = [
   'manager.student.created.v1',
   'manager.student.contacts-updated.v1',
   'identity.manager.provisioned.v1',
+  'identity.qa-access.provisioned.v1',
   'student.profile.updated.v1',
   'student.email.request.v1',
   'student.email.change.v1',

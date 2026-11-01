@@ -40,8 +40,12 @@ const amount: Field = { name: 'amount', label: 'Сумма', kind: 'money' };
 const currency: Field = { name: 'currency', label: 'Валюта', value: 'MDL' };
 const iso = (value: string) => new Date(value).toISOString();
 
+export const sessionAuthorized = (session: SessionResponse | null): boolean =>
+  !!session && !session.recovery_only && (session.mfa_completed || session.password_only === true);
+
 export const canRun = (session: SessionResponse | null, action: Action): boolean =>
-  !!session?.mfa_completed &&
+  !!session &&
+  sessionAuthorized(session) &&
   !session.recovery_only &&
   action.roles.some((role) => session.account.roles.includes(role));
 

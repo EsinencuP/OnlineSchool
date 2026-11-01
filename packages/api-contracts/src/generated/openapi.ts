@@ -4032,6 +4032,8 @@ export interface components {
             mfa_completed: boolean;
             /** @description Temporary server-authorized password-only manager access; MFA remains unverified. */
             manager_password_only?: boolean;
+            /** @description Temporary owner-authorized password login for QA roles; MFA remains unverified. */
+            password_only?: boolean;
             recovery_only: boolean;
             /** Format: date-time */
             expires_at: string;

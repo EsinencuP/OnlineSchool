@@ -9,6 +9,7 @@
     "pnpm": ">=9 <13"
   },
   "scripts": {
+    "test:qa-password": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/qa-password-login.test.mjs tests/unit/manager-password-login.test.mjs --runInBand",
     "test:mgr11": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/manager-leads.test.mjs tests/unit/manager-leads-http.test.mjs tests/unit/manager-leads-sdk.test.mjs --runInBand",
     "postinstall": "pnpm run generate",
     "generate": "pnpm --filter @online-school/db generate && pnpm --filter @online-school/api-contracts generate",

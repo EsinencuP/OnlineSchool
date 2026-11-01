@@ -226,6 +226,10 @@ export class SessionResponse {
   @IsOptional()
   @IsBoolean()
   'manager_password_only'?: boolean;
+  @ApiProperty({ type: 'boolean', required: false, description: 'Temporary owner-authorized password login for QA roles; MFA remains unverified.' } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
+  'password_only'?: boolean;
   @ApiProperty({ type: 'boolean', required: true } as ApiPropertyOptions)
   @IsDefined()
   @IsBoolean()
@@ -2313,6 +2317,10 @@ export class CreateSessionResponse {
   @IsOptional()
   @IsBoolean()
   'manager_password_only'?: boolean;
+  @ApiProperty({ type: 'boolean', required: false } as ApiPropertyOptions)
+  @IsOptional()
+  @IsBoolean()
+  'password_only'?: boolean;
   @ApiProperty({ type: 'boolean', required: false } as ApiPropertyOptions)
   @IsOptional()
   @IsBoolean()

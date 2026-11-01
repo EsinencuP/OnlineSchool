@@ -22291,6 +22291,10 @@
             "type": "boolean",
             "description": "Temporary server-authorized password-only manager access; MFA remains unverified."
           },
+          "password_only": {
+            "type": "boolean",
+            "description": "Temporary owner-authorized password login for QA roles; MFA remains unverified."
+          },
           "recovery_only": {
             "type": "boolean"
           },

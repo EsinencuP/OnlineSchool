@@ -11,9 +11,8 @@ import {
 } from './api.js';
 import type { ClientError, ComponentStatusResponse, SessionResponse } from './api.js';
 import type { Result } from '@online-school/shared';
-import { passkey } from './auth.js';
 import { StudentAccess } from './StudentAccess.js';
-import { canRun, scenarios } from './scenarios.js';
+import { canRun, scenarios, sessionAuthorized } from './scenarios.js';
 import type { Action, Field, Values } from './scenarios.js';
 
 const roleLabels = {
@@ -133,7 +132,7 @@ function CommandForm({
           error: {
             code: 'SESSION_NOT_AUTHORIZED',
             status: 403,
-            message: 'Сессия или права изменились. Выполните вход и MFA.',
+            message: 'Сессия или права изменились. Выполните вход заново.',
           },
         });
         return;
@@ -250,7 +249,6 @@ export function App() {
   const [componentError, setComponentError] = useState('');
   const [checking, setChecking] = useState(false);
   const statusSequence = useRef(0);
-  const securityHeading = useRef<HTMLHeadingElement>(null);
   const refresh = useCallback(async () => {
     const response = await currentSession(requestOptions());
     const value = response.ok ? response.value : null;
@@ -275,22 +273,17 @@ export function App() {
     setChecking(true);
     const [api, detail] = await Promise.all([
       getHealth(requestOptions()),
-      session?.mfa_completed && !session.recovery_only
-        ? getComponentStatus(requestOptions())
-        : Promise.resolve(null),
+      sessionAuthorized(session) ? getComponentStatus(requestOptions()) : Promise.resolve(null),
     ]);
     if (sequence !== statusSequence.current) return;
     setHealth(api.ok ? 'ok' : 'unavailable');
     setComponents(detail?.ok ? detail.value : null);
     setComponentError(detail && !detail.ok ? errorText(detail.error) : '');
     setChecking(false);
-  }, [session?.account.id, session?.mfa_completed, session?.recovery_only]);
+  }, [session?.account.id, session?.mfa_completed, session?.password_only, session?.recovery_only]);
   useEffect(() => {
     void checkComponents();
   }, [checkComponents]);
-  useEffect(() => {
-    if (session && !session.mfa_completed) securityHeading.current?.focus();
-  }, [session?.account.id, session?.mfa_completed]);
   async function authWork(command: () => Promise<Result<unknown, ClientError>>, success: string) {
     if (busy) return;
     setBusy(true);
@@ -311,7 +304,7 @@ export function App() {
     event.currentTarget.reset();
     await authWork(
       () => mutation((options) => createSession({ email, password }, options)),
-      'Пароль принят. Завершите вход с помощью passkey.',
+      'Вход выполнен. Доступы определены вашей ролью.',
     );
   }
   const available = session
@@ -324,8 +317,7 @@ export function App() {
     : [];
   const current = available.find((scenario) => scenario.id === selected) ?? available[0];
   const action = current?.actions.find((item) => item.id === actionId) ?? current?.actions[0];
-  const mfa = !!session?.mfa_completed && !session.recovery_only;
-  const canRegister = !!session && ['STAFF', 'TEACHER'].includes(session.account.kind);
+  const authorized = sessionAuthorized(session);
 
   if (session?.account.kind === 'STUDENT')
     return (
@@ -368,13 +360,13 @@ export function App() {
             <h1>Проверка платформы</h1>
             <p className="intro">Вход, состояние компонентов и разрешённые API-сценарии.</p>
           </div>
-          <span className={`session-badge ${mfa ? 'badge-ok' : ''}`}>
+          <span className={`session-badge ${authorized ? 'badge-ok' : ''}`}>
             {sessionLoading
               ? 'Проверяем сессию…'
-              : mfa
+              : authorized
                 ? 'Сессия подтверждена'
                 : session
-                  ? 'Ожидается passkey'
+                  ? 'Вход ограничен'
                   : 'Вход не выполнен'}
           </span>
         </div>
@@ -409,13 +401,29 @@ export function App() {
               ) : (
                 <form onSubmit={(event) => void login(event)} className="login-form">
                   <label className="field">
-                    <span>Email</span>
+                    <span>Учётная запись</span>
+                    <select
+                      aria-label="Учётная запись"
+                      value={email}
+                      disabled={busy}
+                      onChange={(event) => setEmail(event.target.value)}
+                    >
+                      <option value="">Выберите роль или введите email</option>
+                      <option value="qa.director@onlineschool.test">Директор</option>
+                      <option value="manager@onlineschool.test">Менеджер</option>
+                      <option value="qa.teacher@onlineschool.test">Преподаватель</option>
+                      <option value="themrack26@gmail.com">Ученик</option>
+                      <option value="qa.tech@onlineschool.test">Технический оператор</option>
+                    </select>
+                  </label>
+                  <label className="field">
+                    <span>Логин (email)</span>
                     <input
                       name="email"
                       type="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      autoComplete="username webauthn"
+                      autoComplete="username"
                       required
                       disabled={busy}
                     />
@@ -437,46 +445,22 @@ export function App() {
                 </form>
               )}
             </section>
-            <section className="panel enter security-panel" aria-labelledby="security-heading">
+            <section className="panel enter" aria-labelledby="cabinet-heading">
               <div className="section-label">
-                <span>02 / Подтверждение</span>
-                <span className="tiny-label">WEBAUTHN</span>
+                <span>02 / Кабинеты</span>
               </div>
-              <h2 id="security-heading" tabIndex={-1} ref={securityHeading}>
-                Passkey
-              </h2>
-              <p>
-                {session?.recovery_only
-                  ? 'Восстановление: зарегистрируйте новый ключ, затем выполните аутентификацию.'
-                  : 'Регистрация создаёт ключ. Аутентификация подтверждает текущую сессию.'}
+              <h2 id="cabinet-heading">Открыть кабинет</h2>
+              <nav className="stack-actions" aria-label="Кабинеты академии">
+                <a className="secondary cabinet-link" href="/student">
+                  Кабинет ученика
+                </a>
+                <a className="secondary cabinet-link" href="/manager">
+                  Кабинет менеджера
+                </a>
+              </nav>
+              <p className="hint">
+                Кабинет использует ту же сессию. Для другой роли выйдите и войдите с нужным логином.
               </p>
-              <div className="stack-actions">
-                <button
-                  className="secondary"
-                  disabled={busy || !canRegister}
-                  onClick={() =>
-                    void authWork(
-                      () => passkey('register'),
-                      'Ключ зарегистрирован. Выполните аутентификацию для завершения MFA.',
-                    )
-                  }
-                >
-                  Зарегистрировать passkey
-                </button>
-                <button
-                  className="secondary"
-                  disabled={busy || !session || session.recovery_only}
-                  onClick={() =>
-                    void authWork(
-                      () => passkey('authenticate'),
-                      'Аутентификация выполнена. Сессия обновлена.',
-                    )
-                  }
-                >
-                  Войти с passkey
-                </button>
-              </div>
-              {!session && <p className="hint">Сначала войдите по email и паролю.</p>}
               {authMessage && (
                 <p
                   role="status"
@@ -677,13 +661,13 @@ export function App() {
                       ? 'Проверяем права доступа'
                       : !session
                         ? 'Начните со входа'
-                        : !mfa
-                          ? 'Завершите подтверждение passkey'
+                        : !authorized
+                          ? 'Сессия требует повторного входа'
                           : 'Для этой роли нет бизнес-команд'}
                   </h3>
                   <p>
-                    {!mfa
-                      ? 'После входа и MFA здесь появятся сценарии, разрешённые текущей роли.'
+                    {!authorized
+                      ? 'После входа по логину и паролю здесь появятся сценарии вашей роли.'
                       : 'Можно проверить компоненты и текущие файловые разрешения. Дополнительные роли выдаёт администратор.'}
                   </p>
                 </div>

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 import type { Prisma, TeacherEngagement } from '@online-school/db';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import type { CriticalContext } from '../../core/http.js';
@@ -113,7 +114,7 @@ export class TeacherRateService {
     ) {
       const teacher = await ctx.tx.teacherAccount.findUnique({ where: { id: actualTeacherId } });
       if (
-        !ctx.actor.mfaCompleted ||
+        (!ctx.actor.mfaCompleted && !qaPasswordOnlyLogin(ctx.actor)) ||
         ctx.actor.recoveryOnly ||
         !teacher ||
         teacher.deactivated_at ||

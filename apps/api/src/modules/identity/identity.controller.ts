@@ -19,6 +19,7 @@ import {
 } from '../../core/rbac/decorators.js';
 import { LOGIN_COOKIE, SessionStore } from '../../core/session/session.store.js';
 import { managerPasswordOnlyLogin } from '../../core/session/manager-password-policy.js';
+import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 import { IdentityService } from './identity.service.js';
 import type { IdentityOutcome } from './identity.service.js';
 import { RecoveryService } from './recovery.service.js';
@@ -126,6 +127,7 @@ export class IdentityController {
     return {
       account: { id: actor.accountId, kind: actor.kind, role: actor.role, roles: actor.roles },
       mfa_completed: actor.mfaCompleted,
+      ...(qaPasswordOnlyLogin(actor) ? { password_only: true } : {}),
       ...(managerPasswordOnlyLogin(actor) ? { manager_password_only: true } : {}),
       recovery_only: actor.recoveryOnly ?? false,
       expires_at: actor.expiresAt.toISOString(),

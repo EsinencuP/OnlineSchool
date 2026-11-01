@@ -1,5 +1,26 @@
 # Онлайн-академия
 
+## Вход в рабочую платформу Vercel
+
+[QA](https://onlineschool-xi.vercel.app/) · [Кабинет ученика](https://onlineschool-xi.vercel.app/student) · [Кабинет менеджера](https://onlineschool-xi.vercel.app/manager)
+
+По решению владельца от 01.11.2026 вход выполняется **по логину и паролю, без passkey**. Публикация этих доступов в README явно подтверждена владельцем.
+
+| Роль | Логин | Пароль | Куда войти |
+| --- | --- | --- | --- |
+| Директор | `qa.director@onlineschool.test` | `QaDirector!iodJUyv_EqMLgvTD` | [QA](https://onlineschool-xi.vercel.app/) |
+| Менеджер | `manager@onlineschool.test` | `AcM-KH3I-LtLRwkjWcTbGhRK7` | [QA](https://onlineschool-xi.vercel.app/) → [Кабинет менеджера](https://onlineschool-xi.vercel.app/manager) |
+| Преподаватель | `qa.teacher@onlineschool.test` | `QaTeacher!P8zDOsmx6Rd_iv2A` | [QA](https://onlineschool-xi.vercel.app/) |
+| Ученик | `themrack26@gmail.com` | `Aa1JltHCIlBxrnVfFVsS28Y7gJP9cShQbgo` | [QA](https://onlineschool-xi.vercel.app/) → [Кабинет ученика](https://onlineschool-xi.vercel.app/student) |
+| Технический оператор | `qa.tech@onlineschool.test` | `QaTech!x8Voos3d22vxRK3i` | [QA](https://onlineschool-xi.vercel.app/) |
+
+В QA выберите учётную запись, вставьте её пароль и нажмите «Войти по паролю». Менеджер может сразу перейти по ссылке «Кабинет менеджера», ученик — «Открыть кабинет ученика». Используется общая сессия на одном домене; для другой роли нажмите «Выйти» и войдите с её логином. Выбор роли в форме не меняет права аккаунта.
+
+У директора, преподавателя и техоператора вход ведёт в QA; отдельных кабинетов этих ролей пока нет. Их права различаются: директор подтверждает финансы, менеджер работает только со своим портфолио, преподаватель — со своими назначениями, техоператор видит диагностику. Новый преподаватель QA пока без назначенных уроков.
+
+Серверная настройка `QA_PASSWORD_ONLY_LOGIN=true` разрешает временный парольный режим; `mfa_completed` остаётся false. Сохранены CSRF, проверка роли, назначений, состояния аккаунта и отзыв сессий. Подробности проверки будут записаны в `tests/evidence/qa-password-production.json` после публикации.
+
+
 ## Разработка: TASK-01
 
 Создан начальный ESM-monorepo: Node.js 24 LTS, pnpm 10.34.9, TypeScript 6.0.3

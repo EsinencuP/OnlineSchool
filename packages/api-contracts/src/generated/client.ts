@@ -391,6 +391,8 @@ export interface SessionResponse {
   mfa_completed: boolean;
   /** Temporary server-authorized password-only manager access; MFA remains unverified. */
   manager_password_only?: boolean;
+  /** Temporary owner-authorized password login for QA roles; MFA remains unverified. */
+  password_only?: boolean;
   recovery_only: boolean;
   expires_at: string;
   csrfToken?: string;
