@@ -31,6 +31,8 @@
 !packages/api-contracts/openapi/**
 !packages/api-contracts/src/
 !packages/api-contracts/src/**
+!packages/api-contracts/scripts/
+!packages/api-contracts/scripts/generate-openapi.mjs
 !packages/db/
 !packages/db/package.json
 !packages/db/tsconfig.json
@@ -48,6 +50,8 @@
 !packages/db/prisma/migrations/**
 !infra/
 !infra/worker-health.mjs
+!scripts/
+!scripts/write-generated.mjs
 packages/db/src/generated/
 **/.env
 **/.env.*
