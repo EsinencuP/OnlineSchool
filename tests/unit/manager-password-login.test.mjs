@@ -7,6 +7,8 @@ import { Passwords } from '../../apps/api/dist/modules/identity/passwords.js';
 import { managerPasswordOnlyLogin } from '../../apps/api/dist/core/session/manager-password-policy.js';
 import { AccessService } from '../../apps/api/dist/core/rbac/rbac.guard.js';
 import { ACCESS } from '../../apps/api/dist/core/rbac/decorators.js';
+import { FinanceAccess } from '../../apps/api/dist/modules/finance/finance-access.service.js';
+import { ScheduleAccess } from '../../apps/api/dist/modules/schedule/schedule-access.service.js';
 
 const previous = process.env.MANAGER_PASSWORD_ONLY_LOGIN;
 const previousCsrf = process.env.CSRF_SIGNING_SECRET;
@@ -135,4 +137,21 @@ test('temporary policy rejects mixed roles, recovery and non-exact configuration
   }
   delete process.env.MANAGER_PASSWORD_ONLY_LOGIN;
   expect(managerPasswordOnlyLogin(actor)).toBe(false);
+});
+
+test('manager workflow staff checks allow password mode while director and teacher checks still deny', async () => {
+  const actor = { kind: 'STAFF', roles: ['MANAGER'], mfaCompleted: false };
+  const ctx = {
+    actor,
+    tx: { staffAccount: { findFirst: async () => ({ id: 'manager-profile' }) } },
+  };
+  const finance = new FinanceAccess({}),
+    schedule = new ScheduleAccess({});
+  expect(await finance.staff(ctx)).toBe('manager-profile');
+  expect(await schedule.staff(ctx)).toBe('manager-profile');
+  await expect(finance.staff(ctx, true)).rejects.toThrow();
+  await expect(schedule.teacher(ctx)).rejects.toThrow();
+  process.env.MANAGER_PASSWORD_ONLY_LOGIN = 'false';
+  await expect(finance.staff(ctx)).rejects.toThrow();
+  await expect(schedule.staff(ctx)).rejects.toThrow();
 });

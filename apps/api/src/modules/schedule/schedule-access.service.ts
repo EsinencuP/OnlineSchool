@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import { PolicyService } from '../../core/policy/policy.service.js';
+import { managerPasswordOnlyLogin } from '../../core/session/manager-password-policy.js';
 import { uuid } from '../identity/input.js';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class ScheduleAccess {
   constructor(private readonly policy: PolicyService) {}
   async staff(ctx: CriticalContext) {
     if (
-      !ctx.actor.mfaCompleted ||
+      (!ctx.actor.mfaCompleted && !managerPasswordOnlyLogin(ctx.actor)) ||
       !ctx.actor.roles.some((r) => ['DIRECTOR', 'MANAGER'].includes(r))
     )
       return fail(domainError('FORBIDDEN', 403));
