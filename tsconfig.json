@@ -1,13 +1,33 @@
 {
   "extends": "./tsconfig.base.json",
-  "compilerOptions": { "strict": true },
+  "compilerOptions": {
+    "strict": true
+  },
   "files": [],
   "references": [
-    { "path": "packages/shared" },
-    { "path": "packages/api-contracts" },
-    { "path": "packages/db" },
-    { "path": "apps/api" },
-    { "path": "apps/worker" },
-    { "path": "apps/qa-shell" }
+    {
+      "path": "packages/shared"
+    },
+    {
+      "path": "packages/api-contracts"
+    },
+    {
+      "path": "packages/db"
+    },
+    {
+      "path": "packages/server-kernel"
+    },
+    {
+      "path": "packages/jobs"
+    },
+    {
+      "path": "apps/api"
+    },
+    {
+      "path": "apps/worker"
+    },
+    {
+      "path": "apps/qa-shell"
+    }
   ]
 }

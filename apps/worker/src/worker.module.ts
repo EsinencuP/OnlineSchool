@@ -1,8 +1,8 @@
 import { Inject, Injectable, Logger, Module } from '@nestjs/common';
 import type { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ok, SERVICE_NAMES } from '@online-school/shared';
-import { ScheduleDeadlineModule, ScheduleDeadlines } from '@online-school/api/schedule-deadlines';
-import { FinanceExpiryModule, TemporaryAccessExpiry } from '@online-school/api/finance-expiry';
+import { ScheduleDeadlineModule, ScheduleDeadlines } from '@online-school/jobs';
+import { FinanceExpiryModule, TemporaryAccessExpiry } from '@online-school/jobs';
 import { createPoolClient } from '@online-school/db';
 import type { PrismaClient } from '@online-school/db';
 import { readOptions, rollback } from './contracts.js';

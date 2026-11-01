@@ -10,8 +10,17 @@
   },
   "include": ["src/**/*.ts"],
   "references": [
-    { "path": "../api" },
-    { "path": "../../packages/shared" },
-    { "path": "../../packages/db" }
+    {
+      "path": "../../packages/shared"
+    },
+    {
+      "path": "../../packages/db"
+    },
+    {
+      "path": "../../packages/server-kernel"
+    },
+    {
+      "path": "../../packages/jobs"
+    }
   ]
 }

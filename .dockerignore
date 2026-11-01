@@ -59,3 +59,14 @@ packages/db/src/generated/
 **/dist/
 **/dist-tools/
 **/*.tsbuildinfo
+
+!packages/server-kernel/
+!packages/server-kernel/package.json
+!packages/server-kernel/tsconfig.json
+!packages/server-kernel/src/
+!packages/server-kernel/src/**
+!packages/jobs/
+!packages/jobs/package.json
+!packages/jobs/tsconfig.json
+!packages/jobs/src/
+!packages/jobs/src/**

@@ -59,6 +59,12 @@ importers:
       '@online-school/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@online-school/jobs':
+        specifier: workspace:*
+        version: link:../../packages/jobs
+      '@online-school/server-kernel':
+        specifier: workspace:*
+        version: link:../../packages/server-kernel
       '@online-school/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -120,12 +126,15 @@ importers:
       '@nestjs/core':
         specifier: 12.2.0
         version: 12.2.0(@nestjs/common@12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@12.2.0)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@online-school/api':
-        specifier: workspace:*
-        version: link:../api
       '@online-school/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@online-school/jobs':
+        specifier: workspace:*
+        version: link:../../packages/jobs
+      '@online-school/server-kernel':
+        specifier: workspace:*
+        version: link:../../packages/server-kernel
       '@online-school/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -173,6 +182,45 @@ importers:
       prisma:
         specifier: 7.10.1
         version: 7.10.1(@types/node@24.19.2)(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@6.0.3)
+
+  packages/jobs:
+    dependencies:
+      '@nestjs/common':
+        specifier: 12.2.0
+        version: 12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@online-school/db':
+        specifier: workspace:*
+        version: link:../db
+      '@online-school/server-kernel':
+        specifier: workspace:*
+        version: link:../server-kernel
+      '@online-school/shared':
+        specifier: workspace:*
+        version: link:../shared
+      reflect-metadata:
+        specifier: 0.2.2
+        version: 0.2.2
+      rxjs:
+        specifier: 7.8.2
+        version: 7.8.2
+
+  packages/server-kernel:
+    dependencies:
+      '@nestjs/common':
+        specifier: 12.2.0
+        version: 12.2.0(class-transformer@0.5.1)(class-validator@0.15.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
+      '@online-school/db':
+        specifier: workspace:*
+        version: link:../db
+      '@online-school/shared':
+        specifier: workspace:*
+        version: link:../shared
+      reflect-metadata:
+        specifier: 0.2.2
+        version: 0.2.2
+      rxjs:
+        specifier: 7.8.2
+        version: 7.8.2
 
   packages/shared: {}
 

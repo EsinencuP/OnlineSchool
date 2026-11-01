@@ -38,7 +38,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['apps/api/src/core/errors/domain-error.ts'],
+    files: ['packages/server-kernel/src/errors/domain-error.ts'],
     rules: { 'no-restricted-syntax': 'off' },
   },
   prettier,

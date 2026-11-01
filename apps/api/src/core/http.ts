@@ -1,19 +1,10 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { Prisma, RoleCode } from '@online-school/db';
+import type { Prisma } from '@online-school/db';
 import type { Result } from '@online-school/shared';
 import type { DomainError } from './errors/domain-error.js';
 
-export interface AccountContext {
-  accountId: string;
-  sessionId: string;
-  roles: RoleCode[];
-  role: RoleCode;
-  kind: 'STAFF' | 'TEACHER' | 'STUDENT';
-  mfaCompleted: boolean;
-  lastActiveAt: Date;
-  expiresAt: Date;
-  recoveryOnly?: boolean;
-}
+export type { AccountContext } from '@online-school/server-kernel';
+import type { AccountContext } from '@online-school/server-kernel';
 export interface CriticalContext {
   tx: Prisma.TransactionClient;
   actor: AccountContext;
