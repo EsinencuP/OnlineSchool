@@ -445,7 +445,7 @@ export function App() {
                 </form>
               )}
             </section>
-            <section className="panel enter" aria-labelledby="cabinet-heading">
+            <section className="panel enter cabinet-panel" aria-labelledby="cabinet-heading">
               <div className="section-label">
                 <span>02 / Кабинеты</span>
               </div>
