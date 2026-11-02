@@ -1,0 +1,157 @@
+{
+  "source": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f",
+  "comparedProductFiles": 83,
+  "productDifferences": [],
+  "sdkSharedSourceMatchesMain": true,
+  "screens": 100,
+  "requiredPositions": 400,
+  "captured": 398,
+  "notApplicable": 2,
+  "overflowPositions": [
+    {
+      "id": "mgr-student-detail",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1318
+      }
+    },
+    {
+      "id": "mgr-student-subscriptions",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1121
+      }
+    },
+    {
+      "id": "mgr-student-payments",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-student-schedule",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1822
+      }
+    },
+    {
+      "id": "mgr-student-tasks",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1078
+      }
+    },
+    {
+      "id": "mgr-student-notifications",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1000
+      }
+    },
+    {
+      "id": "mgr-student-contacts",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1318
+      }
+    },
+    {
+      "id": "mgr-student-enrollment",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1318
+      }
+    },
+    {
+      "id": "mgr-subscription-create",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1121
+      }
+    },
+    {
+      "id": "mgr-subscription-renew",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1121
+      }
+    },
+    {
+      "id": "mgr-subscription-freeze",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1121
+      }
+    },
+    {
+      "id": "mgr-subscription-unfreeze",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1121
+      }
+    },
+    {
+      "id": "mgr-payment-create",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-payment-director",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-payment-reject",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-payment-prepare",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-payment-allocate",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1387
+      }
+    },
+    {
+      "id": "mgr-notification-compose",
+      "width": 360,
+      "png": {
+        "width": 364,
+        "height": 1000
+      }
+    }
+  ],
+  "authority": "Visual/source audit only; no backend integration, financial operations or production GO."
+}

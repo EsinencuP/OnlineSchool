@@ -1,0 +1,69 @@
+{
+  "source": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f:apps/api/src/modules/identity/demo-accounts.ts",
+  "sha256": "8a3ada674a02e860dbe0a9e5044a7de360a8555e883ef47ddffd78cd3a6e59a3",
+  "items": [
+    {
+      "key": "anna",
+      "name": "Анна Волкова",
+      "role": "STUDENT",
+      "login": "anna.demo@onlineschool.test",
+      "home": "/student"
+    },
+    {
+      "key": "maksim",
+      "name": "Максим Русу",
+      "role": "STUDENT",
+      "login": "maksim.demo@onlineschool.test",
+      "home": "/student"
+    },
+    {
+      "key": "sofia",
+      "name": "София Ионеску",
+      "role": "STUDENT",
+      "login": "sofia.demo@onlineschool.test",
+      "home": "/student"
+    },
+    {
+      "key": "daniil",
+      "name": "Даниил Марин",
+      "role": "STUDENT",
+      "login": "daniil.demo@onlineschool.test",
+      "home": "/student"
+    },
+    {
+      "key": "andrei",
+      "name": "Андрей Мельник",
+      "role": "TEACHER",
+      "login": "andrei.demo@onlineschool.test",
+      "home": "/teacher"
+    },
+    {
+      "key": "elena",
+      "name": "Елена Попеску",
+      "role": "TEACHER",
+      "login": "elena.demo@onlineschool.test",
+      "home": "/teacher"
+    },
+    {
+      "key": "tamara",
+      "name": "Тамара",
+      "role": "MANAGER",
+      "login": "tamara.demo@onlineschool.test",
+      "home": "/manager"
+    },
+    {
+      "key": "pasha",
+      "name": "Паша",
+      "role": "DIRECTOR",
+      "login": "pasha.demo@onlineschool.test",
+      "home": "/director"
+    },
+    {
+      "key": "tech",
+      "name": "Технический оператор",
+      "role": "TECH_OPERATOR",
+      "login": "qa.tech@onlineschool.test",
+      "home": "/operator"
+    }
+  ]
+}

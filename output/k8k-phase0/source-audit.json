@@ -1,0 +1,324 @@
+{
+  "source": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f",
+  "results": {
+    "apps/student-cabinet": {
+      "dependencies": {
+        "@online-school/api-contracts": "workspace:*",
+        "@online-school/shared": "workspace:*",
+        "@tanstack/react-query": "5.105.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "react-router-dom": "7.18.5",
+        "zustand": "5.0.16",
+        "@online-school/account-ui": "workspace:*"
+      },
+      "devDependencies": {
+        "@types/react": "18.3.31",
+        "@types/react-dom": "18.3.7",
+        "@vitejs/plugin-react": "5.2.0",
+        "lighthouse": "13.6.0",
+        "vite": "7.3.7"
+      },
+      "css": {
+        "lines": 1281,
+        "hexOccurrences": 77,
+        "uniqueHex": 69,
+        "rawFontSizes": [
+          "14px",
+          "12px",
+          "28px",
+          "17px",
+          "15px",
+          "13px",
+          "11px",
+          "22px",
+          "42px",
+          "20px",
+          "18px",
+          "38px",
+          "10px",
+          "32px",
+          "16px",
+          "25px"
+        ],
+        "fonts": [
+          "Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif"
+        ],
+        "rootTokens": [
+          {
+            "name": "--blue",
+            "value": "#1463df"
+          },
+          {
+            "name": "--ink",
+            "value": "#15234d"
+          },
+          {
+            "name": "--muted",
+            "value": "#5e6d8c"
+          },
+          {
+            "name": "--line",
+            "value": "#e1eaf5"
+          },
+          {
+            "name": "--pale",
+            "value": "#edf5ff"
+          }
+        ]
+      }
+    },
+    "apps/manager-web": {
+      "dependencies": {
+        "@online-school/api-contracts": "workspace:*",
+        "@online-school/shared": "workspace:*",
+        "@tanstack/react-query": "5.105.0",
+        "react": "18.3.1",
+        "react-dom": "18.3.1",
+        "react-router-dom": "7.18.5",
+        "zustand": "5.0.16",
+        "decimal.js": "10.6.0",
+        "@js-temporal/polyfill": "0.5.1",
+        "@simplewebauthn/browser": "14.0.0",
+        "@online-school/account-ui": "workspace:*"
+      },
+      "devDependencies": {
+        "@types/react": "18.3.31",
+        "@types/react-dom": "18.3.7",
+        "@vitejs/plugin-react": "5.2.0",
+        "vite": "7.3.7",
+        "vitest": "4.1.12",
+        "@testing-library/react": "16.3.3",
+        "@testing-library/dom": "10.4.2",
+        "@testing-library/user-event": "14.6.8",
+        "jsdom": "30.1.3",
+        "msw": "2.15.0",
+        "@axe-core/playwright": "4.14.0",
+        "@playwright/test": "1.64.1"
+      },
+      "css": {
+        "lines": 2853,
+        "hexOccurrences": 228,
+        "uniqueHex": 199,
+        "rawFontSizes": [
+          "15px",
+          "13px",
+          "30px",
+          "19px",
+          "16px",
+          "14px",
+          "10px",
+          "22px",
+          "12px",
+          "38px",
+          "28px",
+          "11px",
+          "26px",
+          "27px",
+          "23px",
+          "32px",
+          "9px",
+          "25px",
+          "8px",
+          "20px",
+          "37px",
+          "29px",
+          "24px"
+        ],
+        "fonts": [
+          "Manrope, system-ui, -apple-system, 'Segoe UI', sans-serif",
+          "ui-monospace, monospace",
+          "inherit"
+        ],
+        "rootTokens": [
+          {
+            "name": "--ink",
+            "value": "#15234d"
+          },
+          {
+            "name": "--blue",
+            "value": "#125ccc"
+          },
+          {
+            "name": "--muted",
+            "value": "#536582"
+          },
+          {
+            "name": "--line",
+            "value": "#dce5f1"
+          },
+          {
+            "name": "--pale",
+            "value": "#edf5ff"
+          },
+          {
+            "name": "--danger",
+            "value": "#a62d34"
+          },
+          {
+            "name": "--ink",
+            "value": "#172544"
+          },
+          {
+            "name": "--blue",
+            "value": "#2164e8"
+          },
+          {
+            "name": "--muted",
+            "value": "#596d8d"
+          },
+          {
+            "name": "--line",
+            "value": "#e2eaf5"
+          },
+          {
+            "name": "--pale",
+            "value": "#edf4ff"
+          }
+        ]
+      }
+    },
+    "apps/platform": {
+      "dependencies": {
+        "@online-school/account-ui": "workspace:*",
+        "@online-school/api-contracts": "workspace:*",
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+      },
+      "devDependencies": {
+        "@types/react": "18.3.31",
+        "@types/react-dom": "18.3.7",
+        "@vitejs/plugin-react": "5.2.0",
+        "vite": "7.3.7"
+      },
+      "css": {
+        "lines": 638,
+        "hexOccurrences": 72,
+        "uniqueHex": 50,
+        "rawFontSizes": [
+          "32px",
+          "20px",
+          "15px",
+          "34px",
+          "24px",
+          "12px",
+          "11px",
+          "17px",
+          "13px",
+          "10px",
+          "14px",
+          "23px",
+          "43px",
+          "18px",
+          "27px",
+          "40px",
+          "9px"
+        ],
+        "fonts": [
+          "'Segoe UI', Arial, sans-serif"
+        ],
+        "rootTokens": []
+      }
+    },
+    "packages/account-ui": {
+      "dependencies": {
+        "@online-school/api-contracts": "workspace:*",
+        "react": "18.3.1",
+        "@online-school/shared": "workspace:*"
+      },
+      "devDependencies": {
+        "@types/react": "18.3.31",
+        "typescript": "6.0.3"
+      },
+      "css": {
+        "lines": 137,
+        "hexOccurrences": 16,
+        "uniqueHex": 13,
+        "rawFontSizes": [
+          "14px",
+          "12px",
+          "16px",
+          "13px"
+        ],
+        "fonts": [],
+        "rootTokens": []
+      }
+    }
+  },
+  "scannedFiles": 49,
+  "hits": [
+    {
+      "file": "apps/student-cabinet/src/Layout.tsx",
+      "line": 35,
+      "categories": [
+        "notifications-copy"
+      ],
+      "text": "['notifications', '/notifications', 'Уведомления'],"
+    },
+    {
+      "file": "apps/student-cabinet/src/Layout.tsx",
+      "line": 294,
+      "categories": [
+        "notifications-copy"
+      ],
+      "text": "aria-label={`Уведомления${unread.data?.unreadCount ? `, непрочитанных ${unread.data.unreadCount}` : ''}`}"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "line": 100,
+      "categories": [
+        "quantified-learning-visual"
+      ],
+      "text": "<progress"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Learning.tsx",
+      "line": 336,
+      "categories": [
+        "notifications-copy"
+      ],
+      "text": "<h1>Уведомления</h1>"
+    },
+    {
+      "file": "apps/manager-web/src/components/ui.tsx",
+      "line": 151,
+      "categories": [
+        "checkbox"
+      ],
+      "text": "<input id={id} type=\"checkbox\" name={name} {...props} />"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/error-messages.ts",
+      "line": 122,
+      "categories": [
+        "network-or-link"
+      ],
+      "text": "INVALID_MEET_LINK: 'Используйте ссылку вида https://meet.google.com/abc-defg-hij.',"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/ru.ts",
+      "line": 105,
+      "categories": [
+        "notifications-copy"
+      ],
+      "text": "notifications: 'Уведомления',"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Dashboard.tsx",
+      "line": 490,
+      "categories": [
+        "percent"
+      ],
+      "text": "{(d.leads.conversion30dBp / 100).toFixed(2).replace('.', ',')}%"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Leads.tsx",
+      "line": 63,
+      "categories": [
+        "percent"
+      ],
+      "text": "{ru.conversion30d}: {(s.conversion30dBp / 100).toFixed(2).replace('.', ',')}%"
+    }
+  ],
+  "interpretation": "Hits are evidence candidates, not automatically violations. Human classifications are in REDESIGN_AUDIT.md."
+}

@@ -1,0 +1,779 @@
+{
+  "source": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f",
+  "base": "origin/main",
+  "snapshot": "git archive, exact git blobs verified",
+  "fixtureOnly": true,
+  "configs": [
+    {
+      "app": "student-cabinet",
+      "configFile": "D:\\OnlineSchool\\.codex\\k8k-phase0-student-cabinet.vite.mjs",
+      "port": 55174
+    },
+    {
+      "app": "manager-web",
+      "configFile": "D:\\OnlineSchool\\.codex\\k8k-phase0-manager-web.vite.mjs",
+      "port": 55177
+    },
+    {
+      "app": "platform",
+      "configFile": "D:\\OnlineSchool\\.codex\\k8k-phase0-platform.vite.mjs",
+      "port": 55173
+    }
+  ],
+  "files": [
+    {
+      "file": "apps/manager-web/README.md",
+      "gitBlob": "0be7540b8633fe7154854b288cf7e549cf3c1a7d",
+      "sha256": "00597d3fe07827531ba968551827ca77211ef877cec714e392e42c6ae70ff234"
+    },
+    {
+      "file": "apps/manager-web/index.html",
+      "gitBlob": "53945bc90914c1f62da0d50099ddf334502c8a5a",
+      "sha256": "9111f52b08786b7f1c4692318a17609eaaeb15459aadeb26193a32e64b327afa"
+    },
+    {
+      "file": "apps/manager-web/package.json",
+      "gitBlob": "361d249b880014d90c497eb6f6a51f3e8c430896",
+      "sha256": "855dfc48684c31d908abd1b0e978f73ef72105cbbbbf6230a993a5b00c0653c0"
+    },
+    {
+      "file": "apps/manager-web/playwright.config.mjs",
+      "gitBlob": "9645fa0decffe8cd02cae9396403b94fa4e25097",
+      "sha256": "b5e8fccb8cfa5db640d629da92fd08518beaded3db6259ed14faedf346664803"
+    },
+    {
+      "file": "apps/manager-web/src/api/client.ts",
+      "gitBlob": "e7721a29155b6a7418e01b4505020a2a6edbeefa",
+      "sha256": "5b83d0b1c917a0786fefbac25d5046e8d122f41c09f2d07454123fc40836e11c"
+    },
+    {
+      "file": "apps/manager-web/src/api/error-view.ts",
+      "gitBlob": "be103bba3e7cac738d6d6ce172fc5a3d37c999a5",
+      "sha256": "1b59842318c95f619ec82a9e4a7bbfee50e64373c6d5a752916232fca16455d6"
+    },
+    {
+      "file": "apps/manager-web/src/components/business-forms.tsx",
+      "gitBlob": "b698d51b00d2e0773dcbf7839fce6f72a6bb80c7",
+      "sha256": "107197323aeb8fba96ffe7827247149ff07a9b91b88de9c35c57a47c9cf5b239"
+    },
+    {
+      "file": "apps/manager-web/src/components/error-boundary.tsx",
+      "gitBlob": "9738198a94c1ba63182b4317088f6645c91ca317",
+      "sha256": "c6e5116a53fdfaacac822238ab7f585b9002e17e2ad36c6e2b66e688955c0c68"
+    },
+    {
+      "file": "apps/manager-web/src/components/icon.tsx",
+      "gitBlob": "3a8cd5a5e31d9aeeaaa2217020133cdc5c9b281f",
+      "sha256": "499568722fd558d64cc6f46f2cdec51c0824428e7abdfc33a0ceb0f9ff7591e5"
+    },
+    {
+      "file": "apps/manager-web/src/components/layout.tsx",
+      "gitBlob": "f6e3d0a32eb4e97e0ff70dd4cf3ef6cee6432f2c",
+      "sha256": "c421ef4ac0ba8c2fe0a97a649a638e137217ad32da70e615e23b6b0e994898fb"
+    },
+    {
+      "file": "apps/manager-web/src/components/lead-form.tsx",
+      "gitBlob": "a4dfd0006c0f261ffc77d7186073480bd011b723",
+      "sha256": "8ac173ad9cd0822851434651f92ffffaa3b2b58403331a8f3f9d89f62ded4595"
+    },
+    {
+      "file": "apps/manager-web/src/components/ui.tsx",
+      "gitBlob": "338942a6d4ba38ef672ed1b4c3ae53a8efa922af",
+      "sha256": "9cd7e53e6527364e2189cffcf57da3c9da6d026f22d4b27e0e1c4a76ec6240f9"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-command.ts",
+      "gitBlob": "bb1b0c2eca37e698a06accafd628abfb75916893",
+      "sha256": "821d43cb6ce600dd0522774be9e0a2816f39df09186cb6845b77ab249e256636"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-idempotency-key.ts",
+      "gitBlob": "bab8efb205f71085bd686a689e5b587421581b22",
+      "sha256": "069b96dbac3f99ee2fa247adbc774366f688a591ddf6b3a83b9e8799518b2452"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-options.ts",
+      "gitBlob": "9ab0522580278771bd1313949538b6add1ff43cc",
+      "sha256": "7e13821c30792dc73d327751270a2d37f88e96f4810ad0cf42828a6e50b9ab72"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/error-messages.ts",
+      "gitBlob": "57d385fb2a13cabb2ebb420b69269746bbde8271",
+      "sha256": "6b352d1863e0fa956b26bdf13fa0d8f04ae11c13cbb3def5dd472b240bb95957"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/ru.ts",
+      "gitBlob": "fed475aaf8d778239cd179adf38b746bc45cf660",
+      "sha256": "54236a02425299968f99f6c28bd0b4d3fc3ff219ef9516bbf8617b9a9ee08bb3"
+    },
+    {
+      "file": "apps/manager-web/src/lib/money.ts",
+      "gitBlob": "594c2feb66a19e5e5f57ddcc0ed24f44d0ec7923",
+      "sha256": "ddfcfec9368352fa9c9b82aaf0106cd1a89680df0d77694cd36517d595f7af80"
+    },
+    {
+      "file": "apps/manager-web/src/lib/time.ts",
+      "gitBlob": "bb5ac757c887811f461d209685695ab18204f951",
+      "sha256": "702533a69b29c038b3e3eb9c407383c3de27951b2a97b71da642e3cd2028b7ef"
+    },
+    {
+      "file": "apps/manager-web/src/main.tsx",
+      "gitBlob": "0e7dfaba161c23089ae671e72fd996fc272ca9ee",
+      "sha256": "12f5d4db0abf74bd892230c2e8087112b8cb07cf143d6dbd42656f0cbfa1ad5b"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Account.tsx",
+      "gitBlob": "061797e7ee313976eb2cfac394bf04951fc1be61",
+      "sha256": "29e66b882ec04258f93232031b31a86bbcf4f205c03a4f9562e7cd39c4762d9b"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Dashboard.tsx",
+      "gitBlob": "e1ee2e3cb9b7cf6f4dca8004dee50641f96e9c98",
+      "sha256": "74eed16a59068f8877b8a314f9649a4d64d93dc3142285437426279fd1ff5a69"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Lead.tsx",
+      "gitBlob": "e89b8837b27b8ebb64f8ec14e82b51cb38a5e9f5",
+      "sha256": "740bd100d633207d3f85afaf8ff56065bc8ccad14d4613f4544f8e436e1b3951"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Leads.tsx",
+      "gitBlob": "f23e6bce6d9fbfee67ac3b588d275c580b965ef9",
+      "sha256": "0c3ebe621d12de0776b9f387f6b8694dc99c911af687b22d56a685627d10db16"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Login.tsx",
+      "gitBlob": "73f6a5c8b206f39056fd2b369e8bfee77bd4f7cc",
+      "sha256": "43128c24b87ad41e814979eea880200a274487a3d9a0589526802c0b706873ce"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Schedule.tsx",
+      "gitBlob": "6dcc1124032cca4ac69408aea59eaca56c11f71a",
+      "sha256": "3d2f32e693559a90d36043a072dbfecbc7e4ff74896f2d52b3e96182cd613623"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Student.tsx",
+      "gitBlob": "43a1a8fc856e3b678fe17d7935daf3d78349fe0b",
+      "sha256": "ad6ed034087ce88009a1dd756fb10d644448c695c35ea13a1f712f4ca1d87398"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Students.tsx",
+      "gitBlob": "13263ed44c2d3e9ee7d3d6021e9d6c8db6f56b02",
+      "sha256": "377ae9d5c46a1896368e760a57edaf372a3fab627ccc3a7ee02e272f6b65220f"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Task.tsx",
+      "gitBlob": "66e1d8966be73bbf4fbc44f22ac3e028d887fca2",
+      "sha256": "19d7ac1d2ea50d05f92eb03b7a9358236b06b30b0a0bb26891466b9979fd63cb"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Tasks.tsx",
+      "gitBlob": "e52f8b7f29315ca5b2e070b0184f9c02e68f8074",
+      "sha256": "ae8f490300ff01c6b686fb25cf4c659a27ebce0ab5bcdc729bb8a242b010f73a"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Notifications.tsx",
+      "gitBlob": "262376864045327630be9c78a23a8bc22a643e9e",
+      "sha256": "08840f32bb3df7d54ce1de3336cde1bb92cf77af7433d76978ba3f35d6209cc8"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Payments.tsx",
+      "gitBlob": "93145c35c3818448ef34980cb163fc45917a1629",
+      "sha256": "e4b75d4ce7aae5707be37b1a5f3dfea38026788cb4249ff6c5f359d5f7e5b058"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Subscriptions.tsx",
+      "gitBlob": "85fb454ee43c71ce789dc2c8f375d8c768ec7693",
+      "sha256": "5b3a4142e43eedf183bcc19bf337c151833458d6ed6183c68c35a063dbd9e55a"
+    },
+    {
+      "file": "apps/manager-web/src/routes.ts",
+      "gitBlob": "2c2e48b1959086f38e68dfc7ab6d30d1bdb7804b",
+      "sha256": "a25f574fbbce07eecd52d2ef184e37132080ee40ebbf0cbd9358511fc88e2a74"
+    },
+    {
+      "file": "apps/manager-web/src/session.tsx",
+      "gitBlob": "ae2c7944c8be0b96d17cbf7def98cadfa23ed631",
+      "sha256": "8a970dc7252a051902656a4f281d6ffff91a8359efc5af6eeb5b2e2c3c7cf01c"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "gitBlob": "98e430041ba4698361a3ec47984ee0b4250489de",
+      "sha256": "1f0caf4bb8caa52a04c62885a50d0ffdaedb8ea46108d31aaa398ac5bca703de"
+    },
+    {
+      "file": "apps/manager-web/src/test/browser.ts",
+      "gitBlob": "2c6f329631401b1cd458ff86054a5e86fc929f61",
+      "sha256": "b863c4a91754e396de8c65622ed0ae4e974cede882e622d43c8b9b9ba3c0cac0"
+    },
+    {
+      "file": "apps/manager-web/src/test/fixtures.ts",
+      "gitBlob": "8a41739ed0c2fa97fc4d6ccf1ddf132a1475c14e",
+      "sha256": "e8be77fc94cff1b9815ab1bd8d73671d6019d11f9009fdddfbf1c27e13f7ae9c"
+    },
+    {
+      "file": "apps/manager-web/src/test/forms.test.tsx",
+      "gitBlob": "d089dfb7d03cf9c11f45f46e9183c7048215859b",
+      "sha256": "2c4aa2acd011ae033b79d9f90354513f5c29923106188f36eb28aabcd4710cf0"
+    },
+    {
+      "file": "apps/manager-web/src/test/handlers.ts",
+      "gitBlob": "c37c7e8772ed478c96a37d41d3bd74718d2ea840",
+      "sha256": "5fcaf470e5da2c5f8695a13a4ccecdca09d302d154903567184d04c86ee38d1f"
+    },
+    {
+      "file": "apps/manager-web/src/test/session.test.tsx",
+      "gitBlob": "0ae784d6484032e6d356c24b5c69299c5ec35230",
+      "sha256": "cf1a4d9bb93e4e47864a185ef64f55e03175014b29130f7de6a45fa95e01059d"
+    },
+    {
+      "file": "apps/manager-web/src/test/setup.ts",
+      "gitBlob": "4d9e59c9276b4fceabf37b5093c497085bfb0f81",
+      "sha256": "c19656644ed3a5a2f82838b66418a8bfa294e0e263e1da665ae756d6347d7b92"
+    },
+    {
+      "file": "apps/manager-web/test/leads.spec.mjs",
+      "gitBlob": "9a83d1f758f2aa542504b4fa6135d55ccd5babf9",
+      "sha256": "588509e68ffb1dedd8aae2e8ccab0ce8b25e2e11357b2d564025e9d57021d121"
+    },
+    {
+      "file": "apps/manager-web/test/manager.spec.mjs",
+      "gitBlob": "404c2ca46aa81a7806a29b18f5651aaa08f6fd05",
+      "sha256": "4d4cfc73fb61f15ca1e37e03827940b331fec982ea7dc945962cf044250fa764"
+    },
+    {
+      "file": "apps/manager-web/test/public/mockServiceWorker.js",
+      "gitBlob": "0c970efc963c4096cae4fba9e70b7c881ad03ddd",
+      "sha256": "26171599d94d5445297303f3a1f1cedec26835ea3d0057dcfa92ec520cb35cca"
+    },
+    {
+      "file": "apps/manager-web/tsconfig.json",
+      "gitBlob": "92f85527f68ae4f8d068943863fc8eae7194a86b",
+      "sha256": "0abbd5005beb0b2bce94d5e8813ac06791238ba2ea0a36fb8c6f6f90ba950ab6"
+    },
+    {
+      "file": "apps/manager-web/vite.config.ts",
+      "gitBlob": "00109b7347f05b83fb886739d7c82fc42e5e05c6",
+      "sha256": "903d015c7a4c089de8809ed963a0a819a53832eacd2ae2accb421eddffd1d453"
+    },
+    {
+      "file": "apps/manager-web/vitest.config.ts",
+      "gitBlob": "58cc271afc9d71ca005878fb8a37f3047b78f607",
+      "sha256": "f79c28cf77f7b961ccf68add88b8e52e3ad3bc03e2245d7f66d018e99b6b9086"
+    },
+    {
+      "file": "apps/platform/index.html",
+      "gitBlob": "6eeacb911a3d1da9d0ec377cfe19382f03a6e3cc",
+      "sha256": "e5783973c2e36b709092cde6fdcab872dbaabe6f91bb100634b78e56cf9f090f"
+    },
+    {
+      "file": "apps/platform/package.json",
+      "gitBlob": "8ffa7ccd64e6ee6633f035fb38b1d1574f57c63e",
+      "sha256": "7d74785b8b7037cc3ae44ab51dfe8cfb29bec6c9d868a10cbf8a8ef43e80840a"
+    },
+    {
+      "file": "apps/platform/src/App.tsx",
+      "gitBlob": "a4a3753079dfd49ff6a352eef51b668adfe7d270",
+      "sha256": "5973ff93708fa40b8d629ed8b5a1a26e79456a494dd31961aec71a7d718d97dc"
+    },
+    {
+      "file": "apps/platform/src/main.tsx",
+      "gitBlob": "f3dae6b305ef2a7bb3c687154f685e0002240eea",
+      "sha256": "018be1ac1bf31df14495256fb3a627557515d89068445688df7f7b7c2af1be49"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "gitBlob": "a460d64485c5ab500c00eb108c37dc069ca79d98",
+      "sha256": "391af856392e92473c3f3a5266b35df95d12fcc074cc0fe9e31e45fc6d4d9e2f"
+    },
+    {
+      "file": "apps/platform/tsconfig.json",
+      "gitBlob": "270379258fc6b34bf311b5f54af7bcd84efcb74c",
+      "sha256": "a0046b70c25dd7b8893d98bd212fe9dc6cf8c125391c034d5e19714e8896adeb"
+    },
+    {
+      "file": "apps/platform/vite.config.ts",
+      "gitBlob": "fe9f8f18ae41f7403d3e76bc2f5239ec12546d6f",
+      "sha256": "be69d9569ab9f6a8faba00f9aa0caa32da3f00ba5eafe2caa287ee3ad5ad0c3f"
+    },
+    {
+      "file": "apps/student-cabinet/PR_DESCRIPTION.md",
+      "gitBlob": "66cc7696c9601a62b1ef873f602d223e65c99cec",
+      "sha256": "d486beecc8513f8f5de8bd3cd8064efb6254884e21948c91190824428f9e38fa"
+    },
+    {
+      "file": "apps/student-cabinet/README.md",
+      "gitBlob": "eaac149ddbb225a06c5485b240a7ffb6d475612b",
+      "sha256": "d070f5ca5196a9928a81e8a2085f320991320e09c3a00a84af27bb16f47de36a"
+    },
+    {
+      "file": "apps/student-cabinet/index.html",
+      "gitBlob": "6a0902840de5ceb099890c9be4cc87dfc595c75e",
+      "sha256": "8c050af365bcbe7118759674024dbe9ec375f6ddf652d56b61690039d3b8be78"
+    },
+    {
+      "file": "apps/student-cabinet/package.json",
+      "gitBlob": "c515eb580d7e382e379b27373de255a209f34eeb",
+      "sha256": "4e8e364cdd955f4b7748cacde7c4f13106b691489f16ddae053d87bd3f358cf9"
+    },
+    {
+      "file": "apps/student-cabinet/playwright.config.mjs",
+      "gitBlob": "497def199658efc5e2120d541481cf7cc32bb590",
+      "sha256": "80df829729096f83f868cb96278a2fcdb7a961399b73876077b478020c074444"
+    },
+    {
+      "file": "apps/student-cabinet/src/Layout.tsx",
+      "gitBlob": "82d19ea2c01049ffe0e4dd6c8da2dba267c1c0ba",
+      "sha256": "b158dfdd042a9cac9e0a540faef149ecf68f9d95e24001baa61ac7699cc0bce6"
+    },
+    {
+      "file": "apps/student-cabinet/src/api.ts",
+      "gitBlob": "fb4af34efd8b8836427c812f984cdaf3c59b2e09",
+      "sha256": "48b3d483ef77446c23b06eab70791050cac47ea0fb2d978fc3b7a45cb114631c"
+    },
+    {
+      "file": "apps/student-cabinet/src/components.tsx",
+      "gitBlob": "0154412299b3a56c57d4c2c1b6601502e6e7e48b",
+      "sha256": "53a0bcfa3fe2720fa731a117b991262ed518fbe5f813333a0d25ad84ba35c646"
+    },
+    {
+      "file": "apps/student-cabinet/src/main.tsx",
+      "gitBlob": "0244a7581e9f5d6cd81f8cd35b2e1bf0ff63a858",
+      "sha256": "c115c9b3e4012e3c60e54e2dfae26707d42e3e9fdb7ea6491f58cd7e16c5bbe2"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Account.tsx",
+      "gitBlob": "66402adfec13ff8d25322b3587c387c9295ac5bc",
+      "sha256": "2dededddd0f7028aae6f9d4103352aab989b6f6802ee971b7a8d532602eb64aa"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "gitBlob": "c0316d48cefbd4205cdceee9246674e31ce9fdeb",
+      "sha256": "d264c3aff4b894c1677b68d0c4b767616f60673d6b2d5dc9f02020f4a170bac4"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Homework.tsx",
+      "gitBlob": "7f6ab87da68ea88fad3a2cb315ee3eb4fb8ceabd",
+      "sha256": "f5976e83afedb74db2ace7b74986829ef6a705a9d2d7e1d2e9b24b3953ba15db"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Learning.tsx",
+      "gitBlob": "28b63a9257d94648deaefbb972fa4881124afa7c",
+      "sha256": "65c246411e702d8b1a23d04955d390c21f7cdb551a18f3b26f69cda0507b61da"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Lessons.tsx",
+      "gitBlob": "86347292a1b7416f54eec666590fe6c94c6a84c6",
+      "sha256": "78e9d869332191bd940e3e8e9287c2e727ddf71cdac86c8344ee35fbdb6f5c1d"
+    },
+    {
+      "file": "apps/student-cabinet/src/router.tsx",
+      "gitBlob": "eb69a87591cf3266644ff96b9dcdcf2c7384bb25",
+      "sha256": "e8d32fd17670a36f089e2722f7e09ec8a2e0f25a65293b2e19a6dd78bac7ee84"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "gitBlob": "2a2b5043721de90b0560706ed859ee208bff0f60",
+      "sha256": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf"
+    },
+    {
+      "file": "apps/student-cabinet/src/ui-store.ts",
+      "gitBlob": "944273c4634a2f57943c87d4147b1cd10fd59c42",
+      "sha256": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86"
+    },
+    {
+      "file": "apps/student-cabinet/tests/accessibility.mjs",
+      "gitBlob": "301b1fc4053623333cc8f8ad73acc89fc37fe84b",
+      "sha256": "e5a87bcaf87791bd7af1470167f05ff693dd4cf73e5232b500d26ce81c8bcccb"
+    },
+    {
+      "file": "apps/student-cabinet/tests/fixture-server.mjs",
+      "gitBlob": "a480e75a29075b0fec4e4b0e318c73aef64b3d8e",
+      "sha256": "1cd654d9aad5cc6ba6436978abfa687672a5c443feaf16fd4421b0aa54ecda87"
+    },
+    {
+      "file": "apps/student-cabinet/tests/mgr03-password.spec.mjs",
+      "gitBlob": "dcb54d9c02764425f58ce520759326836f34abce",
+      "sha256": "04856c2d32e4c564dba5aa303b6f02d57f4a6e9e4e7915c4a3826575465689b9"
+    },
+    {
+      "file": "apps/student-cabinet/tests/student.spec.mjs",
+      "gitBlob": "17da8ea4dee816e710a6738b2283562cea9144fb",
+      "sha256": "cdbb1ff006d9988e2016b4942f6eb8881c5f6f9383dac7ce1b6437017b18d871"
+    },
+    {
+      "file": "apps/student-cabinet/tsconfig.json",
+      "gitBlob": "df7149c9568e7fcc125c8b1ad94898929b5c48bd",
+      "sha256": "ae6efb7e1d454b6d52b41d020c6d6abeaf46bd16a882e088077df39f8633e479"
+    },
+    {
+      "file": "apps/student-cabinet/vite.config.ts",
+      "gitBlob": "f458f62f0b8faf45a3b99e96fb00a1f48d2baffd",
+      "sha256": "f2e8e3fe5776dd0ffd82ff362422b50fd3d2deaca655da3a642477580e427053"
+    },
+    {
+      "file": "packages/account-ui/package.json",
+      "gitBlob": "bd92fd3237341b7c45efd3b1c38efd0a2d7b5348",
+      "sha256": "a1f5372fcc9bf0d50a0ec07e6a57b65bb5ad24ec909d9af065561c69bbc20d03"
+    },
+    {
+      "file": "packages/account-ui/src/index.tsx",
+      "gitBlob": "51d0856c34efc6e42cae584fc5129576c8290e69",
+      "sha256": "2172243501ba1802400c5f76c2c8f39e8c0a1c5ba2a8347d6b68ce677791fa60"
+    },
+    {
+      "file": "packages/account-ui/src/style.css",
+      "gitBlob": "5bd6d09d748865c34316d63e6a2c351580e5434e",
+      "sha256": "eda2a746fa351e049ca042555fa50e3d0fb57127eb16bfeab72c41d5e6c3e2be"
+    },
+    {
+      "file": "packages/account-ui/tsconfig.json",
+      "gitBlob": "aa220aca19eb0918fdb81a54289d5fa1b4fa1cde",
+      "sha256": "e33c4107ad2826c40f94fa1416a59c0fcc46b5bbb510ca8265dbfbfa0d8f381c"
+    },
+    {
+      "file": "packages/api-contracts/openapi/openapi.json",
+      "gitBlob": "0a05fd67d451347f2316a106bfb538ee83010548",
+      "sha256": "13d6591d5e3fe1bc4ff37162bc4d07fe3c21533d63628c65456c6e20d50ca126"
+    },
+    {
+      "file": "tsconfig.base.json",
+      "gitBlob": "1cc8d7af06a340b933c89fc1e25839ff67296bb2",
+      "sha256": "301f8b4b89bedc62b544e84af1de092d83dc171df026cbe55fa09b5ef7779771"
+    }
+  ],
+  "workingTreeAtStart": [
+    {
+      "file": "apps/manager-web/README.md",
+      "sha256": "4953537de4d3e5497fb3e71271a140c81c690a08197f75462651ca10c377e7e5"
+    },
+    {
+      "file": "apps/manager-web/index.html",
+      "sha256": "f5b0fe862914564c2611d995a92fbf0b66fe3d0a9157b265a8ce443b6a65abdc"
+    },
+    {
+      "file": "apps/manager-web/package.json",
+      "sha256": "855dfc48684c31d908abd1b0e978f73ef72105cbbbbf6230a993a5b00c0653c0"
+    },
+    {
+      "file": "apps/manager-web/playwright.config.mjs",
+      "sha256": "b5e8fccb8cfa5db640d629da92fd08518beaded3db6259ed14faedf346664803"
+    },
+    {
+      "file": "apps/manager-web/src/api/client.ts",
+      "sha256": "5b83d0b1c917a0786fefbac25d5046e8d122f41c09f2d07454123fc40836e11c"
+    },
+    {
+      "file": "apps/manager-web/src/api/error-view.ts",
+      "sha256": "1b59842318c95f619ec82a9e4a7bbfee50e64373c6d5a752916232fca16455d6"
+    },
+    {
+      "file": "apps/manager-web/src/components/business-forms.tsx",
+      "sha256": "107197323aeb8fba96ffe7827247149ff07a9b91b88de9c35c57a47c9cf5b239"
+    },
+    {
+      "file": "apps/manager-web/src/components/error-boundary.tsx",
+      "sha256": "c6e5116a53fdfaacac822238ab7f585b9002e17e2ad36c6e2b66e688955c0c68"
+    },
+    {
+      "file": "apps/manager-web/src/components/icon.tsx",
+      "sha256": "6c3bc8efbfb2011ae4602ace4372a19dd7f44bfffbfd3bb8a6a349102d43198b"
+    },
+    {
+      "file": "apps/manager-web/src/components/layout.tsx",
+      "sha256": "22098d9e370a2551d2461a2d210dee030b294bf3b483e79566acd4a0b6b45a2e"
+    },
+    {
+      "file": "apps/manager-web/src/components/lead-form.tsx",
+      "sha256": "8ac173ad9cd0822851434651f92ffffaa3b2b58403331a8f3f9d89f62ded4595"
+    },
+    {
+      "file": "apps/manager-web/src/components/ui.tsx",
+      "sha256": "9cd7e53e6527364e2189cffcf57da3c9da6d026f22d4b27e0e1c4a76ec6240f9"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-command.ts",
+      "sha256": "821d43cb6ce600dd0522774be9e0a2816f39df09186cb6845b77ab249e256636"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-idempotency-key.ts",
+      "sha256": "069b96dbac3f99ee2fa247adbc774366f688a591ddf6b3a83b9e8799518b2452"
+    },
+    {
+      "file": "apps/manager-web/src/hooks/use-options.ts",
+      "sha256": "7e13821c30792dc73d327751270a2d37f88e96f4810ad0cf42828a6e50b9ab72"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/error-messages.ts",
+      "sha256": "6b352d1863e0fa956b26bdf13fa0d8f04ae11c13cbb3def5dd472b240bb95957"
+    },
+    {
+      "file": "apps/manager-web/src/i18n/ru.ts",
+      "sha256": "1fe0bf1e7bc425e4c7a9719cb73cbeb9f6e2779125f951a002cd834883370f38"
+    },
+    {
+      "file": "apps/manager-web/src/lib/money.ts",
+      "sha256": "ddfcfec9368352fa9c9b82aaf0106cd1a89680df0d77694cd36517d595f7af80"
+    },
+    {
+      "file": "apps/manager-web/src/lib/time.ts",
+      "sha256": "702533a69b29c038b3e3eb9c407383c3de27951b2a97b71da642e3cd2028b7ef"
+    },
+    {
+      "file": "apps/manager-web/src/main.tsx",
+      "sha256": "14238f2cd778f061caffc488574dfa9a0b5fed3dd23ba6fc9897936be1f74dc9"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Account.tsx",
+      "sha256": "29e66b882ec04258f93232031b31a86bbcf4f205c03a4f9562e7cd39c4762d9b"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Dashboard.tsx",
+      "sha256": "97995c96a67a31263a7770f20a4dac0194749d471a4199a3fcffa148caf1a65c"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Lead.tsx",
+      "sha256": "740bd100d633207d3f85afaf8ff56065bc8ccad14d4613f4544f8e436e1b3951"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Leads.tsx",
+      "sha256": "0c3ebe621d12de0776b9f387f6b8694dc99c911af687b22d56a685627d10db16"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Login.tsx",
+      "sha256": "e3a9b28fb2103a3e6f64c8f92098b7f8fd7f3e7305e00c71b1c4b04442c98b50"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Schedule.tsx",
+      "sha256": "3d2f32e693559a90d36043a072dbfecbc7e4ff74896f2d52b3e96182cd613623"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Student.tsx",
+      "sha256": "ad6ed034087ce88009a1dd756fb10d644448c695c35ea13a1f712f4ca1d87398"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Students.tsx",
+      "sha256": "377ae9d5c46a1896368e760a57edaf372a3fab627ccc3a7ee02e272f6b65220f"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Task.tsx",
+      "sha256": "19d7ac1d2ea50d05f92eb03b7a9358236b06b30b0a0bb26891466b9979fd63cb"
+    },
+    {
+      "file": "apps/manager-web/src/pages/Tasks.tsx",
+      "sha256": "ae8f490300ff01c6b686fb25cf4c659a27ebce0ab5bcdc729bb8a242b010f73a"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Notifications.tsx",
+      "sha256": "08840f32bb3df7d54ce1de3336cde1bb92cf77af7433d76978ba3f35d6209cc8"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Payments.tsx",
+      "sha256": "e4b75d4ce7aae5707be37b1a5f3dfea38026788cb4249ff6c5f359d5f7e5b058"
+    },
+    {
+      "file": "apps/manager-web/src/pages/student/Subscriptions.tsx",
+      "sha256": "5b3a4142e43eedf183bcc19bf337c151833458d6ed6183c68c35a063dbd9e55a"
+    },
+    {
+      "file": "apps/manager-web/src/routes.ts",
+      "sha256": "a25f574fbbce07eecd52d2ef184e37132080ee40ebbf0cbd9358511fc88e2a74"
+    },
+    {
+      "file": "apps/manager-web/src/session.tsx",
+      "sha256": "8a970dc7252a051902656a4f281d6ffff91a8359efc5af6eeb5b2e2c3c7cf01c"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "sha256": "8e0778d28cfe0916cc79a446d3743025fa6617c55d56228456cc59145c4446fb"
+    },
+    {
+      "file": "apps/manager-web/src/test/browser.ts",
+      "sha256": "b863c4a91754e396de8c65622ed0ae4e974cede882e622d43c8b9b9ba3c0cac0"
+    },
+    {
+      "file": "apps/manager-web/src/test/fixtures.ts",
+      "sha256": "e8be77fc94cff1b9815ab1bd8d73671d6019d11f9009fdddfbf1c27e13f7ae9c"
+    },
+    {
+      "file": "apps/manager-web/src/test/forms.test.tsx",
+      "sha256": "2c4aa2acd011ae033b79d9f90354513f5c29923106188f36eb28aabcd4710cf0"
+    },
+    {
+      "file": "apps/manager-web/src/test/handlers.ts",
+      "sha256": "25053aa00fe7f004c9d95d3c20192db558a491a40e326818042c1e0b2a6b02be"
+    },
+    {
+      "file": "apps/manager-web/src/test/session.test.tsx",
+      "sha256": "cf1a4d9bb93e4e47864a185ef64f55e03175014b29130f7de6a45fa95e01059d"
+    },
+    {
+      "file": "apps/manager-web/src/test/setup.ts",
+      "sha256": "c19656644ed3a5a2f82838b66418a8bfa294e0e263e1da665ae756d6347d7b92"
+    },
+    {
+      "file": "apps/manager-web/test/leads.spec.mjs",
+      "sha256": "588509e68ffb1dedd8aae2e8ccab0ce8b25e2e11357b2d564025e9d57021d121"
+    },
+    {
+      "file": "apps/manager-web/test/manager.spec.mjs",
+      "sha256": "4d4cfc73fb61f15ca1e37e03827940b331fec982ea7dc945962cf044250fa764"
+    },
+    {
+      "file": "apps/manager-web/test/public/mockServiceWorker.js",
+      "sha256": "26171599d94d5445297303f3a1f1cedec26835ea3d0057dcfa92ec520cb35cca"
+    },
+    {
+      "file": "apps/manager-web/tsconfig.json",
+      "sha256": "0abbd5005beb0b2bce94d5e8813ac06791238ba2ea0a36fb8c6f6f90ba950ab6"
+    },
+    {
+      "file": "apps/manager-web/vite.config.ts",
+      "sha256": "903d015c7a4c089de8809ed963a0a819a53832eacd2ae2accb421eddffd1d453"
+    },
+    {
+      "file": "apps/manager-web/vitest.config.ts",
+      "sha256": "f79c28cf77f7b961ccf68add88b8e52e3ad3bc03e2245d7f66d018e99b6b9086"
+    },
+    {
+      "file": "apps/platform/index.html",
+      "sha256": "bc605f87d899635ab0cbf499c261b38278025da5f39a241b48d1fb3e9f221984"
+    },
+    {
+      "file": "apps/platform/package.json",
+      "sha256": "7d74785b8b7037cc3ae44ab51dfe8cfb29bec6c9d868a10cbf8a8ef43e80840a"
+    },
+    {
+      "file": "apps/platform/src/App.tsx",
+      "sha256": "d3676ef82935634d70faded94d2ce26e3a2d5917061d52bcea7924824c9df44b"
+    },
+    {
+      "file": "apps/platform/src/main.tsx",
+      "sha256": "ea804847d0c8899cc7b2ae069d976373325d73b93c70fbaf1ade6c2e6744b26b"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "sha256": "391af856392e92473c3f3a5266b35df95d12fcc074cc0fe9e31e45fc6d4d9e2f"
+    },
+    {
+      "file": "apps/platform/tsconfig.json",
+      "sha256": "a0046b70c25dd7b8893d98bd212fe9dc6cf8c125391c034d5e19714e8896adeb"
+    },
+    {
+      "file": "apps/platform/vite.config.ts",
+      "sha256": "be69d9569ab9f6a8faba00f9aa0caa32da3f00ba5eafe2caa287ee3ad5ad0c3f"
+    },
+    {
+      "file": "apps/student-cabinet/PR_DESCRIPTION.md",
+      "sha256": "a19c9216be47e849f85284727d980f2f0256492009b2cda358731d6474bbdfb7"
+    },
+    {
+      "file": "apps/student-cabinet/README.md",
+      "sha256": "e6371c26f5b5f11112134fcd6c0288e9f17dd49f908200a950c0a15ac9f7e3e5"
+    },
+    {
+      "file": "apps/student-cabinet/index.html",
+      "sha256": "6c80904068f9c2716d4751f7df76fd4b8b9d813b6ad51db310a246abb7bf059c"
+    },
+    {
+      "file": "apps/student-cabinet/package.json",
+      "sha256": "4e8e364cdd955f4b7748cacde7c4f13106b691489f16ddae053d87bd3f358cf9"
+    },
+    {
+      "file": "apps/student-cabinet/playwright.config.mjs",
+      "sha256": "80df829729096f83f868cb96278a2fcdb7a961399b73876077b478020c074444"
+    },
+    {
+      "file": "apps/student-cabinet/src/Layout.tsx",
+      "sha256": "0e1b99e1d26efa975fced1eed143a65392447ad3db24215d084d842de7ecef33"
+    },
+    {
+      "file": "apps/student-cabinet/src/api.ts",
+      "sha256": "48b3d483ef77446c23b06eab70791050cac47ea0fb2d978fc3b7a45cb114631c"
+    },
+    {
+      "file": "apps/student-cabinet/src/components.tsx",
+      "sha256": "fdd825035d2889563439f18d2041bc11684787e184816314bd41a0db387b69d4"
+    },
+    {
+      "file": "apps/student-cabinet/src/main.tsx",
+      "sha256": "060ba6efbb18e46b996321570b37d06408688f8b7d6bdff885673265c881bf28"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Account.tsx",
+      "sha256": "8dc41aafb31cf3f4c0967ed86e335538a233a43cccc06459ea3b0bd525f43db5"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "sha256": "4d490c26a6fe89dec90864f22056f3466b7f24fac796fc6ad28d6f0b9bbefde5"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Homework.tsx",
+      "sha256": "f5976e83afedb74db2ace7b74986829ef6a705a9d2d7e1d2e9b24b3953ba15db"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Learning.tsx",
+      "sha256": "65c246411e702d8b1a23d04955d390c21f7cdb551a18f3b26f69cda0507b61da"
+    },
+    {
+      "file": "apps/student-cabinet/src/pages/Lessons.tsx",
+      "sha256": "78e9d869332191bd940e3e8e9287c2e727ddf71cdac86c8344ee35fbdb6f5c1d"
+    },
+    {
+      "file": "apps/student-cabinet/src/router.tsx",
+      "sha256": "e8d32fd17670a36f089e2722f7e09ec8a2e0f25a65293b2e19a6dd78bac7ee84"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "sha256": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf"
+    },
+    {
+      "file": "apps/student-cabinet/src/ui-store.ts",
+      "sha256": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86"
+    },
+    {
+      "file": "apps/student-cabinet/tests/accessibility.mjs",
+      "sha256": "e5a87bcaf87791bd7af1470167f05ff693dd4cf73e5232b500d26ce81c8bcccb"
+    },
+    {
+      "file": "apps/student-cabinet/tests/fixture-server.mjs",
+      "sha256": "38534bab6f053807ef31bc356df6c7e8d967e7e1b4376bdabc885a8c1d2aeb56"
+    },
+    {
+      "file": "apps/student-cabinet/tests/mgr03-password.spec.mjs",
+      "sha256": "04856c2d32e4c564dba5aa303b6f02d57f4a6e9e4e7915c4a3826575465689b9"
+    },
+    {
+      "file": "apps/student-cabinet/tests/student.spec.mjs",
+      "sha256": "cdbb1ff006d9988e2016b4942f6eb8881c5f6f9383dac7ce1b6437017b18d871"
+    },
+    {
+      "file": "apps/student-cabinet/tsconfig.json",
+      "sha256": "ae6efb7e1d454b6d52b41d020c6d6abeaf46bd16a882e088077df39f8633e479"
+    },
+    {
+      "file": "apps/student-cabinet/vite.config.ts",
+      "sha256": "f2e8e3fe5776dd0ffd82ff362422b50fd3d2deaca655da3a642477580e427053"
+    },
+    {
+      "file": "packages/account-ui/package.json",
+      "sha256": "e51f2f7631975c1f185be1cd8d6c8b32161bbe26465f633e4535137184b00be0"
+    },
+    {
+      "file": "packages/account-ui/src/index.tsx",
+      "sha256": "259b78e6763123c187ed3ca6bf0b7a59eb83602605e8e85d65d31d5c5930492e"
+    },
+    {
+      "file": "packages/account-ui/src/style.css",
+      "sha256": "eda2a746fa351e049ca042555fa50e3d0fb57127eb16bfeab72c41d5e6c3e2be"
+    },
+    {
+      "file": "packages/account-ui/tsconfig.json",
+      "sha256": "e33c4107ad2826c40f94fa1416a59c0fcc46b5bbb510ca8265dbfbfa0d8f381c"
+    },
+    {
+      "file": "pnpm-lock.yaml",
+      "sha256": "052e0da07c64d615e79136cfdabd4c1369ef1923770f48c120bbad5537708bd7"
+    }
+  ]
+}

@@ -1,0 +1,746 @@
+{
+  "source": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f",
+  "method": "Isolated production Vite builds; recursive JS+CSS gzip per route, no fonts in baseline; no TypeScript/DB generation.",
+  "rows": [
+    {
+      "app": "student-cabinet",
+      "route": "index.html",
+      "bytes": 110504,
+      "files": [
+        {
+          "file": "assets/index-CmGhiFKE.js",
+          "gzip": 105610
+        },
+        {
+          "file": "assets/index-BZj4skZa.css",
+          "gzip": 4894
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "index.html",
+      "bytes": 102062,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Account.tsx",
+      "bytes": 148549,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Account-MAedvJ8D.js",
+          "gzip": 1128
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Dashboard.tsx",
+      "bytes": 163174,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Dashboard-CotcOfvM.js",
+          "gzip": 3165
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Lead.tsx",
+      "bytes": 151149,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Lead-CW9J0cIi.js",
+          "gzip": 2352
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/lead-form-BD4CAsxd.js",
+          "gzip": 1181
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Leads.tsx",
+      "bytes": 150610,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Leads-CKk_6aS_.js",
+          "gzip": 1813
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/lead-form-BD4CAsxd.js",
+          "gzip": 1181
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Login.tsx",
+      "bytes": 103882,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Login-xSm9xJrs.js",
+          "gzip": 1313
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Schedule.tsx",
+      "bytes": 165344,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Schedule-RhhyqOHh.js",
+          "gzip": 3132
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/business-forms-D2i438v4.js",
+          "gzip": 1501
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Student.tsx",
+      "bytes": 117903,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Student-BSqwy-OI.js",
+          "gzip": 2044
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Students.tsx",
+      "bytes": 162284,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Students-Si5ZfLTJ.js",
+          "gzip": 1768
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Task.tsx",
+      "bytes": 164028,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Task-8pZTf-xT.js",
+          "gzip": 1816
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/business-forms-D2i438v4.js",
+          "gzip": 1501
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Tasks.tsx",
+      "bytes": 147950,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Tasks-BXFuXpqr.js",
+          "gzip": 1036
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Notifications.tsx",
+      "bytes": 148645,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Notifications-CLrkiyQn.js",
+          "gzip": 1224
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Payments.tsx",
+      "bytes": 164321,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Payments-COUlpov3.js",
+          "gzip": 2109
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/business-forms-D2i438v4.js",
+          "gzip": 1501
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Subscriptions.tsx",
+      "bytes": 163839,
+      "files": [
+        {
+          "file": "assets/index-BOII5VvK.js",
+          "gzip": 47974
+        },
+        {
+          "file": "assets/index-2qwc5gx3.css",
+          "gzip": 9162
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "gzip": 654
+        },
+        {
+          "file": "assets/ui-BfkxvzZi.js",
+          "gzip": 39806
+        },
+        {
+          "file": "assets/useQuery-CSG1NMsz.js",
+          "gzip": 3043
+        },
+        {
+          "file": "assets/session-cqmcdBQO.js",
+          "gzip": 525
+        },
+        {
+          "file": "assets/icon-B_btdBBp.js",
+          "gzip": 898
+        },
+        {
+          "file": "assets/Subscriptions-Cpxcj3SO.js",
+          "gzip": 1627
+        },
+        {
+          "file": "assets/use-command-CRnWWi_u.js",
+          "gzip": 507
+        },
+        {
+          "file": "assets/use-options-BUtUa6HV.js",
+          "gzip": 195
+        },
+        {
+          "file": "assets/business-forms-D2i438v4.js",
+          "gzip": 1501
+        },
+        {
+          "file": "assets/money-Bp_Elg0h.js",
+          "gzip": 13095
+        },
+        {
+          "file": "assets/time-CQZCmubO.js",
+          "gzip": 44852
+        }
+      ]
+    },
+    {
+      "app": "platform",
+      "route": "index.html",
+      "bytes": 54958,
+      "files": [
+        {
+          "file": "assets/index-Bq26BP54.js",
+          "gzip": 52132
+        },
+        {
+          "file": "assets/index-uAS9C2fj.css",
+          "gzip": 2826
+        }
+      ]
+    }
+  ]
+}
