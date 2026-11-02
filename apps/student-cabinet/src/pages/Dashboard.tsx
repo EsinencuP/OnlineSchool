@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { k8kEnabled } from '@online-school/ui';
 import {
   getStudentDashboard,
   getStudentHomework,
@@ -49,7 +50,7 @@ export function Dashboard() {
           <i>⚑</i>
         </div>
       </section>
-      <QueryState query={dashboard}>
+      <QueryState operational query={dashboard}>
         {data && (
           <div className="summary-grid">
             <section className="summary">
@@ -97,11 +98,13 @@ export function Dashboard() {
               <div>
                 <h2>Мой путь знаний</h2>
                 <strong className="summary-value">{progress?.applying ?? 0} применяю</strong>
-                <progress
-                  aria-label="Навыки на уровне «Применяю»"
-                  value={progress?.applying ?? 0}
-                  max={total || 1}
-                />
+                {!k8kEnabled && (
+                  <progress
+                    aria-label="Навыки на уровне «Применяю»"
+                    value={progress?.applying ?? 0}
+                    max={total || 1}
+                  />
+                )}
                 <small>{total} навыков в карте</small>
               </div>
             </Link>
@@ -125,7 +128,7 @@ export function Dashboard() {
         )}
       </QueryState>
       <Panel title="Ближайшие уроки" to="/student/lessons">
-        <QueryState query={lessons}>
+        <QueryState operational query={lessons}>
           <LessonList
             items={
               lessons.data?.items

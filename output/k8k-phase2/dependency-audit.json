@@ -1,0 +1,11 @@
+{
+  "command": "pnpm audit --prod --audit-level critical",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 1,
+    "critical": 0
+  },
+  "note": "Whole existing production graph; no automatic dependency upgrades. Prior preview audit also reported one high and zero critical."
+}

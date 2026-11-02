@@ -8,6 +8,7 @@ import { Layout } from './components/layout.js';
 import { ErrorBoundary } from './components/error-boundary.js';
 import { ru } from './i18n/ru.js';
 import './style.css';
+import '@online-school/ui/style.css';
 const Login = lazy(() => import('./pages/Login.js'));
 const Dashboard = lazy(() => import('./pages/Dashboard.js'));
 const Students = lazy(() => import('./pages/Students.js'));

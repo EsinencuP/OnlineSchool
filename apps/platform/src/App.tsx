@@ -17,6 +17,15 @@ import {
   roleLabels,
 } from '@online-school/account-ui';
 import type { DemoAccount } from '@online-school/account-ui';
+import {
+  AppShell,
+  k8kEnabled,
+  queryBoundaryState,
+  StateBoundary,
+  useContextRefresh,
+  useDataAge,
+} from '@online-school/ui';
+import type { CabinetRole } from '@online-school/ui';
 
 interface Workspace {
   name: string;
@@ -187,6 +196,9 @@ function Login() {
     </main>
   );
 }
+function StateBoundaryAdapter(props: Parameters<typeof StateBoundary>[0] & { enabled: boolean }) {
+  return props.enabled ? <StateBoundary {...props} /> : <>{props.children}</>;
+}
 function Staff({ session }: { session: SessionResponse }) {
   const role = session.account.roles[0] ?? '';
   const director = role === 'DIRECTOR';
@@ -198,6 +210,17 @@ function Staff({ session }: { session: SessionResponse }) {
   const [health, setHealth] = useState<string>('Проверяем состояние…');
   const [busy, setBusy] = useState(false);
   const [reload, setReload] = useState(0);
+  const [updatedAt, setUpdatedAt] = useState(0);
+  const [readStatus, setReadStatus] = useState<number | undefined>();
+  const [readFailed, setReadFailed] = useState(false);
+  const tooOld = useDataAge(updatedAt, 120_000);
+  useContextRefresh({
+    enabled: k8kEnabled && !loading,
+    context: 'operational',
+    refresh: async () => {
+      setReload((value) => value + 1);
+    },
+  });
   useEffect(() => {
     const abort = new AbortController();
     setLoading(true);
@@ -205,17 +228,32 @@ function Staff({ session }: { session: SessionResponse }) {
     if (operator)
       void getComponentStatus(requestOptions(abort.signal)).then((r) => {
         if (abort.signal.aborted) return;
-        if (r.ok)
+        if (r.ok) {
           setHealth(`API: ${r.value.api} · База данных: ${r.value.db} · Worker: ${r.value.worker}`);
-        else setError('Не удалось проверить состояние платформы.');
+          setUpdatedAt(Date.now());
+          setReadStatus(undefined);
+          setReadFailed(false);
+        } else {
+          setReadFailed(true);
+          setReadStatus(r.error.status);
+          setError('Не удалось проверить состояние платформы.');
+        }
         setLoading(false);
       });
     else
       void getPlatformWorkspace(requestOptions(abort.signal)).then((r) => {
         if (abort.signal.aborted) return;
-        if (r.ok) setData(r.value);
-        else if (r.error.status === 401) window.location.replace('/account');
-        else setError('Не удалось загрузить кабинет. Повторите попытку.');
+        if (r.ok) {
+          setData(r.value);
+          setUpdatedAt(Date.now());
+          setReadStatus(undefined);
+          setReadFailed(false);
+        } else if (r.error.status === 401) window.location.replace('/account');
+        else {
+          setReadFailed(true);
+          setReadStatus(r.error.status);
+          setError('Не удалось загрузить кабинет. Повторите попытку.');
+        }
         setLoading(false);
       });
     return () => abort.abort();
@@ -239,6 +277,247 @@ function Staff({ session }: { session: SessionResponse }) {
       setBusy(false);
     }
   }
+  const content = (
+    <>
+      {' '}
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">
+            {director ? 'Школа в деталях' : operator ? 'Технический кабинет' : 'Ваш учебный день'}
+          </p>
+          <h1>
+            {tab === 'overview'
+              ? `Здравствуйте, ${name.replace('[ДЕМО] ', '').split(' ')[0]}`
+              : tabs.find((t) => t[0] === tab)?.[1]}
+          </h1>
+          <p className="muted">
+            {director
+              ? 'Расписание школы, ученики и текущие задачи команды.'
+              : operator
+                ? 'Состояние работающих компонентов платформы.'
+                : 'Ближайшие занятия, ваши ученики и домашние задания.'}
+          </p>
+        </div>
+        <button
+          type="button"
+          className="refresh"
+          disabled={!k8kEnabled && loading}
+          aria-disabled={k8kEnabled && loading}
+          onClick={() => {
+            if (!loading) setReload((v) => v + 1);
+          }}
+        >
+          ↻ Обновить
+        </button>
+      </div>
+      {(!k8kEnabled || !readFailed) && error && (
+        <p role="alert" className="error">
+          {error}
+        </p>
+      )}
+      {!k8kEnabled && loading && !data && <p role="status">Загружаем данные…</p>}
+      <StateBoundaryAdapter
+        enabled={k8kEnabled}
+        state={queryBoundaryState({
+          isPending: loading,
+          hasData: operator ? updatedAt > 0 : !!data,
+          error: readFailed,
+          errorStatus: readStatus,
+          tooOld,
+        })}
+        at={updatedAt}
+        refreshing={loading}
+        retryRead={() => setReload((value) => value + 1)}
+      >
+        {operator ? (
+          <section className="panel">
+            <h2>Состояние платформы</h2>
+            <p role="status">{health}</p>
+          </section>
+        ) : (
+          data && (
+            <>
+              {tab === 'overview' && (
+                <div className="stats">
+                  <section>
+                    <span>Предстоящих уроков</span>
+                    <strong>
+                      {
+                        data.lessons.filter(
+                          (l) => l.status === 'SCHEDULED' && +new Date(l.startsAt) > Date.now(),
+                        ).length
+                      }
+                    </strong>
+                    <small>В расписании</small>
+                  </section>
+                  <section>
+                    <span>{director ? 'Учеников с преподавателем' : 'Моих учеников'}</span>
+                    <strong>{new Set(data.students.map((s) => s.id)).size}</strong>
+                    <small>Активные назначения</small>
+                  </section>
+                  <section>
+                    <span>{director ? 'Открытых задач' : 'Домашних заданий'}</span>
+                    <strong>{director ? data.tasks.length : data.homework.length}</strong>
+                    <small>{director ? 'Работа команды' : 'Учебная практика'}</small>
+                  </section>
+                </div>
+              )}
+              {(tab === 'overview' || tab === 'lessons') && (
+                <section className="panel">
+                  <div className="section-heading">
+                    <h2>{tab === 'overview' ? 'Ближайшие занятия' : 'Расписание занятий'}</h2>
+                    <span>Время Кишинёва</span>
+                  </div>
+                  {data.lessons.length ? (
+                    <div className="lesson-list">
+                      {data.lessons.slice(0, tab === 'overview' ? 4 : 100).map((l) => (
+                        <article className="lesson" key={l.id}>
+                          <div className="lesson-date">
+                            <strong>
+                              {new Date(l.startsAt).toLocaleDateString('ru-RU', {
+                                timeZone: 'Europe/Chisinau',
+                                day: 'numeric',
+                              })}
+                            </strong>
+                            <span>
+                              {new Date(l.startsAt).toLocaleDateString('ru-RU', {
+                                timeZone: 'Europe/Chisinau',
+                                month: 'short',
+                              })}
+                            </span>
+                          </div>
+                          <div>
+                            <h3>{l.subject}</h3>
+                            <p>
+                              {l.student}
+                              {director ? ` · ${l.teacher}` : ''}
+                            </p>
+                            <time dateTime={l.startsAt}>
+                              {date(l.startsAt)} ·{' '}
+                              {Math.round((+new Date(l.endsAt) - +new Date(l.startsAt)) / 60000)}{' '}
+                              мин
+                            </time>
+                          </div>
+                          <span className="badge">{lessonStatus[l.status] ?? l.status}</span>
+                        </article>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="empty">Запланированных уроков пока нет.</p>
+                  )}
+                  {tab === 'overview' && data.lessons.length > 4 && (
+                    <button className="text-button" onClick={() => setTab('lessons')}>
+                      Всё расписание →
+                    </button>
+                  )}
+                </section>
+              )}
+              {tab === 'students' && (
+                <section className="panel">
+                  <h2>{director ? 'Ученики и направления' : 'Ваши ученики'}</h2>
+                  {data.students.length ? (
+                    data.students.map((s, i) => (
+                      <article className="simple-row" key={`${s.id}:${i}`}>
+                        <span className="pupil-avatar" aria-hidden="true">
+                          {s.name.replace('[ДЕМО] ', '').slice(0, 1)}
+                        </span>
+                        <div>
+                          <h3>{s.name}</h3>
+                          <p>{s.subject}</p>
+                        </div>
+                      </article>
+                    ))
+                  ) : (
+                    <p className="empty">Ученики появятся после назначения преподавателя.</p>
+                  )}
+                </section>
+              )}
+              {(tab === 'tasks' || (director && tab === 'overview')) && (
+                <section className="panel">
+                  <h2>Задачи менеджеров</h2>
+                  {data.tasks.length ? (
+                    data.tasks.map((t) => (
+                      <article className="simple-row" key={t.id}>
+                        <span
+                          className={
+                            +new Date(t.dueAt) < Date.now() ? 'task-dot overdue' : 'task-dot'
+                          }
+                          aria-hidden="true"
+                        />
+                        <div>
+                          <h3>{t.title}</h3>
+                          <p>
+                            {t.manager} · {date(t.dueAt)}
+                          </p>
+                        </div>
+                        <span className="badge">
+                          {t.status === 'IN_PROGRESS'
+                            ? 'В работе'
+                            : +new Date(t.dueAt) < Date.now()
+                              ? 'Просрочена'
+                              : 'Открыта'}
+                        </span>
+                      </article>
+                    ))
+                  ) : (
+                    <p className="empty">Открытых задач нет.</p>
+                  )}
+                </section>
+              )}
+              {(tab === 'homework' || (!director && tab === 'overview')) && (
+                <section className="panel">
+                  <h2>Домашние задания</h2>
+                  {data.homework.length ? (
+                    data.homework.map((h) => (
+                      <article className="simple-row" key={h.id}>
+                        <div>
+                          <h3>{h.title}</h3>
+                          <p>
+                            {h.subject} · {h.dueAt ? `до ${date(h.dueAt)}` : 'Без срока'}
+                          </p>
+                        </div>
+                      </article>
+                    ))
+                  ) : (
+                    <p className="empty">Выданных заданий пока нет.</p>
+                  )}
+                </section>
+              )}
+            </>
+          )
+        )}
+      </StateBoundaryAdapter>
+    </>
+  );
+  if (k8kEnabled && ['TEACHER', 'DIRECTOR', 'TECH_OPERATOR'].includes(role))
+    return (
+      <AppShell
+        role={role as CabinetRole}
+        activeId={tab}
+        renderNavigation={(item, label, props) => (
+          <button
+            type="button"
+            {...props}
+            onClick={() => {
+              props.onClick();
+              setTab(item.id);
+              document.getElementById('content')?.focus();
+            }}
+          >
+            {label}
+          </button>
+        )}
+        account={<AccountMenu name={name} role={role} />}
+        sidebarFooter={
+          <button type="button" disabled={busy} onClick={() => void logout()}>
+            Выйти из аккаунта
+          </button>
+        }
+        footer="K8K Academy · Часовой пояс Europe/Chisinau"
+      >
+        {content}
+      </AppShell>
+    );
   return (
     <div className="staff-app">
       <a className="skip" href="#content">
@@ -283,200 +562,7 @@ function Staff({ session }: { session: SessionResponse }) {
           <AccountMenu name={name} role={role} />
         </header>
         <main id="content" tabIndex={-1}>
-          <div className="page-heading">
-            <div>
-              <p className="eyebrow">
-                {director
-                  ? 'Школа в деталях'
-                  : operator
-                    ? 'Технический кабинет'
-                    : 'Ваш учебный день'}
-              </p>
-              <h1>
-                {tab === 'overview'
-                  ? `Здравствуйте, ${name.replace('[ДЕМО] ', '').split(' ')[0]}`
-                  : tabs.find((t) => t[0] === tab)?.[1]}
-              </h1>
-              <p className="muted">
-                {director
-                  ? 'Расписание школы, ученики и текущие задачи команды.'
-                  : operator
-                    ? 'Состояние работающих компонентов платформы.'
-                    : 'Ближайшие занятия, ваши ученики и домашние задания.'}
-              </p>
-            </div>
-            <button
-              type="button"
-              className="refresh"
-              disabled={loading}
-              onClick={() => setReload((v) => v + 1)}
-            >
-              ↻ Обновить
-            </button>
-          </div>
-          {error && (
-            <p role="alert" className="error">
-              {error}
-            </p>
-          )}
-          {loading && !data && <p role="status">Загружаем данные…</p>}
-          {operator ? (
-            <section className="panel">
-              <h2>Состояние платформы</h2>
-              <p role="status">{health}</p>
-            </section>
-          ) : (
-            data && (
-              <>
-                {tab === 'overview' && (
-                  <div className="stats">
-                    <section>
-                      <span>Предстоящих уроков</span>
-                      <strong>
-                        {
-                          data.lessons.filter(
-                            (l) => l.status === 'SCHEDULED' && +new Date(l.startsAt) > Date.now(),
-                          ).length
-                        }
-                      </strong>
-                      <small>В расписании</small>
-                    </section>
-                    <section>
-                      <span>{director ? 'Учеников с преподавателем' : 'Моих учеников'}</span>
-                      <strong>{new Set(data.students.map((s) => s.id)).size}</strong>
-                      <small>Активные назначения</small>
-                    </section>
-                    <section>
-                      <span>{director ? 'Открытых задач' : 'Домашних заданий'}</span>
-                      <strong>{director ? data.tasks.length : data.homework.length}</strong>
-                      <small>{director ? 'Работа команды' : 'Учебная практика'}</small>
-                    </section>
-                  </div>
-                )}
-                {(tab === 'overview' || tab === 'lessons') && (
-                  <section className="panel">
-                    <div className="section-heading">
-                      <h2>{tab === 'overview' ? 'Ближайшие занятия' : 'Расписание занятий'}</h2>
-                      <span>Время Кишинёва</span>
-                    </div>
-                    {data.lessons.length ? (
-                      <div className="lesson-list">
-                        {data.lessons.slice(0, tab === 'overview' ? 4 : 100).map((l) => (
-                          <article className="lesson" key={l.id}>
-                            <div className="lesson-date">
-                              <strong>
-                                {new Date(l.startsAt).toLocaleDateString('ru-RU', {
-                                  timeZone: 'Europe/Chisinau',
-                                  day: 'numeric',
-                                })}
-                              </strong>
-                              <span>
-                                {new Date(l.startsAt).toLocaleDateString('ru-RU', {
-                                  timeZone: 'Europe/Chisinau',
-                                  month: 'short',
-                                })}
-                              </span>
-                            </div>
-                            <div>
-                              <h3>{l.subject}</h3>
-                              <p>
-                                {l.student}
-                                {director ? ` · ${l.teacher}` : ''}
-                              </p>
-                              <time dateTime={l.startsAt}>
-                                {date(l.startsAt)} ·{' '}
-                                {Math.round((+new Date(l.endsAt) - +new Date(l.startsAt)) / 60000)}{' '}
-                                мин
-                              </time>
-                            </div>
-                            <span className="badge">{lessonStatus[l.status] ?? l.status}</span>
-                          </article>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="empty">Запланированных уроков пока нет.</p>
-                    )}
-                    {tab === 'overview' && data.lessons.length > 4 && (
-                      <button className="text-button" onClick={() => setTab('lessons')}>
-                        Всё расписание →
-                      </button>
-                    )}
-                  </section>
-                )}
-                {tab === 'students' && (
-                  <section className="panel">
-                    <h2>{director ? 'Ученики и направления' : 'Ваши ученики'}</h2>
-                    {data.students.length ? (
-                      data.students.map((s, i) => (
-                        <article className="simple-row" key={`${s.id}:${i}`}>
-                          <span className="pupil-avatar" aria-hidden="true">
-                            {s.name.replace('[ДЕМО] ', '').slice(0, 1)}
-                          </span>
-                          <div>
-                            <h3>{s.name}</h3>
-                            <p>{s.subject}</p>
-                          </div>
-                        </article>
-                      ))
-                    ) : (
-                      <p className="empty">Ученики появятся после назначения преподавателя.</p>
-                    )}
-                  </section>
-                )}
-                {(tab === 'tasks' || (director && tab === 'overview')) && (
-                  <section className="panel">
-                    <h2>Задачи менеджеров</h2>
-                    {data.tasks.length ? (
-                      data.tasks.map((t) => (
-                        <article className="simple-row" key={t.id}>
-                          <span
-                            className={
-                              +new Date(t.dueAt) < Date.now() ? 'task-dot overdue' : 'task-dot'
-                            }
-                            aria-hidden="true"
-                          />
-                          <div>
-                            <h3>{t.title}</h3>
-                            <p>
-                              {t.manager} · {date(t.dueAt)}
-                            </p>
-                          </div>
-                          <span className="badge">
-                            {t.status === 'IN_PROGRESS'
-                              ? 'В работе'
-                              : +new Date(t.dueAt) < Date.now()
-                                ? 'Просрочена'
-                                : 'Открыта'}
-                          </span>
-                        </article>
-                      ))
-                    ) : (
-                      <p className="empty">Открытых задач нет.</p>
-                    )}
-                  </section>
-                )}
-                {(tab === 'homework' || (!director && tab === 'overview')) && (
-                  <section className="panel">
-                    <h2>Домашние задания</h2>
-                    {data.homework.length ? (
-                      data.homework.map((h) => (
-                        <article className="simple-row" key={h.id}>
-                          <div>
-                            <h3>{h.title}</h3>
-                            <p>
-                              {h.subject} · {h.dueAt ? `до ${date(h.dueAt)}` : 'Без срока'}
-                            </p>
-                          </div>
-                        </article>
-                      ))
-                    ) : (
-                      <p className="empty">Выданных заданий пока нет.</p>
-                    )}
-                  </section>
-                )}
-              </>
-            )
-          )}
+          {content}
         </main>
         <footer>Academy · Часовой пояс Europe/Chisinau</footer>
       </div>

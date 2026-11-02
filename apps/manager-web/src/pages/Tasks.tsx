@@ -81,7 +81,7 @@ export default function Tasks({ studentId }: { studentId?: string }) {
           }}
         />
       </div>
-      <State query={query} empty={query.data?.items.length === 0}>
+      <State operational query={query} empty={query.data?.items.length === 0}>
         {(d) => (
           <>
             <ul className="record-cards">

@@ -1,10 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { AccountMenu } from '@online-school/account-ui';
+import {
+  AppShell,
+  activeNavigation,
+  k8kEnabled,
+  roleNavigation,
+  operationalQueryInterval,
+  useContextRefresh,
+} from '@online-school/ui';
 import '@online-school/account-ui/style.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { deleteSession } from '@online-school/api-contracts';
 import { create } from 'zustand';
-import { clearSession, write } from '../api/client.js';
+import { clearSession, queryClient, write } from '../api/client.js';
 import { useManager } from '../session.js';
 import { ru } from '../i18n/ru.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
@@ -28,6 +36,16 @@ export function Layout() {
   const location = useLocation();
   const [busy, setBusy] = useState(false);
   const search = useRef<HTMLInputElement>(null);
+  useContextRefresh({
+    enabled: k8kEnabled,
+    context: 'operational',
+    refresh: () =>
+      queryClient.refetchQueries({
+        type: 'active',
+        predicate: (query) =>
+          query.queryKey[0] === 'manager' && operationalQueryInterval(query.queryKey) !== false,
+      }),
+  });
   useEffect(() => {
     const keyboard = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
@@ -49,6 +67,65 @@ export function Layout() {
       state: !result.ok && result.error.status !== 401 ? { sessionError: result.error } : null,
     });
   }
+  if (k8kEnabled)
+    return (
+      <AppShell
+        role="MANAGER"
+        timeZone={me.timezone}
+        activeId={activeNavigation(roleNavigation.MANAGER, location.pathname)}
+        renderNavigation={(item, content, props) => (
+          <Link to={item.href!} {...props}>
+            {content}
+          </Link>
+        )}
+        mainId="main"
+        account={<AccountMenu name={me.displayName} role="MANAGER" />}
+        header={
+          <form
+            role="search"
+            className="global-search"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const value = search.current?.value.trim() ?? '';
+              if (value.length >= 2)
+                navigate(`${routes.students}?search=${encodeURIComponent(value)}`);
+            }}
+          >
+            <Icon name="search" />
+            <input
+              ref={search}
+              name="search"
+              type="search"
+              minLength={2}
+              maxLength={100}
+              aria-label={ru.globalSearch}
+              placeholder={ru.globalSearch}
+            />
+            <kbd aria-hidden="true">⌘ K</kbd>
+          </form>
+        }
+        sidebarFooter={
+          <>
+            <Link to={`${routes.leads}?stage=NEW`}>{ru.newLeads}</Link>
+            <Link to={`${routes.students}?expiring=true`}>{ru.expiring}</Link>
+            <details>
+              <summary>{ru.howToWork}</summary>
+              <p>{ru.helpCaption}</p>
+            </details>
+            <button type="button" disabled={busy} onClick={() => void logout()}>
+              {ru.logout}
+            </button>
+          </>
+        }
+        footer={
+          <>
+            {ru.localTime} {me.timezone}
+          </>
+        }
+      >
+        <Outlet />
+      </AppShell>
+    );
   return (
     <div className={`workspace ${nav.expanded ? 'nav-expanded' : ''}`}>
       <a className="skip" href="#main">

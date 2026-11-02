@@ -2,6 +2,7 @@ import { useEffect, useId, useRef } from 'react';
 import type { ReactNode, FormEvent } from 'react';
 import type { ApiErrorView } from '../api/error-view.js';
 import { label, ru } from '../i18n/ru.js';
+import { k8kEnabled, queryBoundaryState, StateBoundary, useDataAge } from '@online-school/ui';
 
 export type ScreenState<T> =
   | { status: 'loading' }
@@ -28,6 +29,7 @@ export function ErrorBox({ error, retry }: { error: ApiErrorView | null; retry?:
 export function State<T>({
   query,
   empty = false,
+  operational = false,
   children,
 }: {
   query: {
@@ -35,10 +37,37 @@ export function State<T>({
     error: Error | ApiErrorView | null;
     refetch: () => unknown;
     data: T | undefined;
+    dataUpdatedAt?: number;
+    isFetching?: boolean;
   };
   empty?: boolean;
+  operational?: boolean;
   children: (data: T) => ReactNode;
 }) {
+  const tooOld = useDataAge(query.dataUpdatedAt, operational ? 120_000 : false);
+  if (k8kEnabled) {
+    const error = query.error && 'code' in query.error ? query.error : null;
+    const state = queryBoundaryState({
+      isPending: query.isPending,
+      hasData: query.data !== undefined,
+      error: !!query.error,
+      errorStatus: error?.status,
+      empty,
+      tooOld,
+    });
+    return (
+      <StateBoundary
+        state={
+          state.status === 'error' && error ? { status: 'error', message: error.message } : state
+        }
+        at={query.dataUpdatedAt}
+        refreshing={query.isFetching ?? false}
+        retryRead={() => void query.refetch()}
+      >
+        {query.data !== undefined ? children(query.data) : null}
+      </StateBoundary>
+    );
+  }
   if (query.isPending)
     return (
       <p role="status" className="state">

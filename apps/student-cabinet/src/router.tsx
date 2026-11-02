@@ -7,6 +7,7 @@ import {
   useRouteError,
 } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { k8kEnabled } from '@online-school/ui';
 import { setRedirect } from './api.js';
 import { StudentLayout } from './Layout.js';
 import { Dashboard } from './pages/Dashboard.js';
@@ -22,7 +23,7 @@ function Root() {
     if (location.pathname !== path) void navigate(path, { replace: true });
   });
   useEffect(() => {
-    document.title = `${location.pathname === '/student' ? 'Главная' : 'Кабинет ученика'} — Academy`;
+    document.title = `${location.pathname === '/student' ? 'Главная' : 'Кабинет ученика'} — ${k8kEnabled ? 'K8K Academy' : 'Academy'}`;
     main.current?.focus();
   }, [location.pathname]);
   return (

@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { k8kEnabled, queryBoundaryState, StateBoundary, useDataAge } from '@online-school/ui';
 import type { LessonCardDto, NextLessonDto } from '@online-school/api-contracts';
 import { errorMessage } from './api.js';
 
@@ -150,10 +151,46 @@ export function ErrorNotice({ error }: { error: unknown }) {
 export function QueryState({
   query,
   children,
+  operational = false,
 }: {
-  query: { isPending: boolean; error: unknown; refetch(): unknown };
+  query: {
+    isPending: boolean;
+    error: unknown;
+    refetch(): unknown;
+    data?: unknown;
+    dataUpdatedAt?: number;
+    isFetching?: boolean;
+  };
   children: ReactNode;
+  operational?: boolean;
 }) {
+  const tooOld = useDataAge(query.dataUpdatedAt, operational ? 120_000 : false);
+  if (k8kEnabled) {
+    const errorStatus =
+      query.error && typeof query.error === 'object' && 'status' in query.error
+        ? Number(query.error.status)
+        : undefined;
+    const state = queryBoundaryState({
+      isPending: query.isPending,
+      hasData: query.data !== undefined,
+      error: !!query.error,
+      errorStatus,
+      tooOld,
+    });
+    return (
+      <StateBoundary
+        state={
+          state.status === 'error' ? { status: 'error', message: errorMessage(query.error) } : state
+        }
+        at={query.dataUpdatedAt}
+        timeZone={studentTimeZone}
+        refreshing={query.isFetching ?? false}
+        retryRead={() => void query.refetch()}
+      >
+        {children}
+      </StateBoundary>
+    );
+  }
   if (query.isPending)
     return (
       <p role="status" className="empty">

@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { AccountMenu } from '@online-school/account-ui';
+import {
+  AppShell,
+  NotificationBell,
+  activeNavigation,
+  k8kEnabled,
+  roleNavigation,
+  useContextRefresh,
+} from '@online-school/ui';
 import '@online-school/account-ui/style.css';
 import { Link, NavLink, Navigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
 import {
@@ -121,7 +129,7 @@ function MiniCalendar() {
           );
         })}
       </div>
-      <QueryState query={lessons}>
+      <QueryState operational query={lessons}>
         {lessons.data?.items
           .filter((l) => dayKey(l.scheduledAt) === selected)
           .map((l) => (
@@ -153,7 +161,7 @@ function RightSidebar({ me, inline = false }: { me: StudentMeResponseDto; inline
     >
       <MiniCalendar />
       <Panel title="Абонемент" to="/student/subscription">
-        <QueryState query={dashboard}>
+        <QueryState operational query={dashboard}>
           {dashboard.data?.subscription ? (
             <>
               <div className="balance">
@@ -210,6 +218,16 @@ export function StudentLayout() {
   );
   const [logoutError, setLogoutError] = useState<unknown>(null),
     [loggingOut, setLoggingOut] = useState(false);
+  useContextRefresh({
+    enabled: k8kEnabled && !!me.data,
+    context: /^\/student\/lessons\/[^/]+/.test(location.pathname) ? 'live-lesson' : 'operational',
+    refresh: () =>
+      queryClient.refetchQueries({
+        type: 'active',
+        predicate: (query) =>
+          query.queryKey[0] === 'student' && query.meta?.k8kOperational === true,
+      }),
+  });
   useEffect(() => {
     close();
     heading.current?.focus();
@@ -240,6 +258,71 @@ export function StudentLayout() {
     );
   const profile = me.data;
   setDateZone(profile.timeZone);
+  if (k8kEnabled)
+    return (
+      <AppShell
+        role="STUDENT"
+        timeZone={profile.timeZone}
+        activeId={
+          location.pathname.startsWith('/student/security')
+            ? 'profile'
+            : activeNavigation(roleNavigation.STUDENT, location.pathname)
+        }
+        renderNavigation={(item, content, props) => (
+          <Link to={item.href!} {...props}>
+            {content}
+          </Link>
+        )}
+        mainId="main-content"
+        mainRef={heading}
+        header={<>Кабинет ученика · {date(new Date().toISOString())}</>}
+        account={<AccountMenu name={profile.displayName} role="STUDENT" />}
+        notifications={
+          <NotificationBell
+            count={unread.error ? undefined : unread.data?.unreadCount}
+            renderLink={(content, label) => (
+              <Link to="/student/notifications" className="k8k-bell" aria-label={label}>
+                {content}
+              </Link>
+            )}
+          />
+        }
+        sidebarFooter={
+          <>
+            <a
+              href="#manager-contacts"
+              onClick={(event) => {
+                if (!window.matchMedia('(max-width: 1279px)').matches) return;
+                event.preventDefault();
+                const details = document.querySelector<HTMLDetailsElement>(
+                  '.k8k-main .inline-widgets',
+                );
+                if (details) details.open = true;
+                const contacts = document.getElementById('mobile-manager');
+                if (contacts) {
+                  contacts.tabIndex = -1;
+                  contacts.focus();
+                  contacts.scrollIntoView({ block: 'start' });
+                }
+              }}
+            >
+              Контакты менеджера
+            </a>
+            <button type="button" onClick={() => void logout()} disabled={loggingOut}>
+              {loggingOut ? 'Выходим…' : 'Выйти'}
+            </button>
+            <ErrorNotice error={logoutError} />
+          </>
+        }
+        aside={<RightSidebar me={profile} />}
+      >
+        <Outlet context={profile} />
+        <details className="inline-widgets">
+          <summary>Календарь, абонемент и контакты</summary>
+          <RightSidebar me={profile} inline />
+        </details>
+      </AppShell>
+    );
   const nav = navigation.map(([icon, path, label]) => (
     <NavLink key={icon} end={path === ''} to={`/student${path}`}>
       <Icon name={icon} />

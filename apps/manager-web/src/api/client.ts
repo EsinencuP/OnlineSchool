@@ -1,4 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
+import { k8kEnabled, operationalQueryInterval } from '@online-school/ui';
 import { getCsrfToken } from '@online-school/api-contracts';
 import type { SchoolRequestOptions, ClientError } from '@online-school/api-contracts';
 import { err } from '@online-school/shared';
@@ -9,7 +10,13 @@ import { MANAGER_ROUTES } from '../routes.js';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
-    queries: { retry: false, staleTime: 0, gcTime: 0, refetchOnWindowFocus: true },
+    queries: {
+      retry: false,
+      staleTime: 0,
+      gcTime: 0,
+      refetchOnWindowFocus: (query) =>
+        !k8kEnabled || operationalQueryInterval(query.queryKey) === false,
+    },
     mutations: { retry: false, gcTime: 0 },
   },
 });

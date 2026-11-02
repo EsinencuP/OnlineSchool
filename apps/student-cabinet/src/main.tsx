@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router-dom';
 import { queryClient } from './api.js';
 import { router } from './router.js';
 import './style.css';
+import '@online-school/ui/style.css';
 const root = document.getElementById('root');
 if (root)
   createRoot(root).render(

@@ -125,13 +125,12 @@ export function AccountMenu({ name, role }: { name: string; role: string }) {
   }
   return (
     <details className="account-menu" ref={details}>
-      <summary aria-label={`Аккаунт: ${name}. Сменить пользователя`}>
+      <summary>
         <span className="account-avatar" aria-hidden="true">
           {name.replace('[ДЕМО] ', '').slice(0, 1)}
         </span>
         <span className="account-caption">
-          {name}
-          <small>{roleLabels[role] ?? role}</small>
+          {name} <small>{roleLabels[role] ?? role}</small>
         </span>
         <span aria-hidden="true">⌄</span>
       </summary>

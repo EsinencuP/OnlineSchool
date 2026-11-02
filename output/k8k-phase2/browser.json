@@ -1,0 +1,476 @@
+{
+  "fixtureOnly": true,
+  "rows": [
+    {
+      "role": "student",
+      "width": 360,
+      "enabled": true,
+      "file": "student-k8k-360.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Главная",
+          "Уроки",
+          "Домашние задания",
+          "Мой путь знаний",
+          "Материалы",
+          "Абонемент",
+          "Профиль и настройки"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "student",
+      "width": 768,
+      "enabled": true,
+      "file": "student-k8k-768.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Главная",
+          "Уроки",
+          "Домашние задания",
+          "Мой путь знаний",
+          "Материалы",
+          "Абонемент",
+          "Профиль и настройки"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "student",
+      "width": 1024,
+      "enabled": true,
+      "file": "student-k8k-1024.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Главная",
+          "Уроки",
+          "Домашние задания",
+          "Мой путь знаний",
+          "Материалы",
+          "Абонемент",
+          "Профиль и настройки"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "student",
+      "width": 1280,
+      "enabled": true,
+      "file": "student-k8k-1280.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Главная",
+          "Уроки",
+          "Домашние задания",
+          "Мой путь знаний",
+          "Материалы",
+          "Абонемент",
+          "Профиль и настройки"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "student",
+      "width": 360,
+      "enabled": false,
+      "file": "student-legacy-360.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "Manrope, system-ui, -apple-system, \"Segoe UI\", sans-serif"
+      }
+    },
+    {
+      "role": "student",
+      "width": 1280,
+      "enabled": false,
+      "file": "student-legacy-1280.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "Manrope, system-ui, -apple-system, \"Segoe UI\", sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 360,
+      "enabled": true,
+      "file": "manager-k8k-360.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Заявки",
+          "Ученики",
+          "Расписание",
+          "Задачи"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 768,
+      "enabled": true,
+      "file": "manager-k8k-768.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Заявки",
+          "Ученики",
+          "Расписание",
+          "Задачи"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 1024,
+      "enabled": true,
+      "file": "manager-k8k-1024.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Заявки",
+          "Ученики",
+          "Расписание",
+          "Задачи"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 1280,
+      "enabled": true,
+      "file": "manager-k8k-1280.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Заявки",
+          "Ученики",
+          "Расписание",
+          "Задачи"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 360,
+      "enabled": false,
+      "file": "manager-legacy-360.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "Manrope, system-ui, -apple-system, \"Segoe UI\", sans-serif"
+      }
+    },
+    {
+      "role": "manager",
+      "width": 1280,
+      "enabled": false,
+      "file": "manager-legacy-1280.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "Manrope, system-ui, -apple-system, \"Segoe UI\", sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 360,
+      "enabled": true,
+      "file": "teacher-k8k-360.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Мои ученики",
+          "Домашние задания"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 768,
+      "enabled": true,
+      "file": "teacher-k8k-768.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Мои ученики",
+          "Домашние задания"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 1024,
+      "enabled": true,
+      "file": "teacher-k8k-1024.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Мои ученики",
+          "Домашние задания"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 1280,
+      "enabled": true,
+      "file": "teacher-k8k-1280.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Мои ученики",
+          "Домашние задания"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 360,
+      "enabled": false,
+      "file": "teacher-legacy-360.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    },
+    {
+      "role": "teacher",
+      "width": 1280,
+      "enabled": false,
+      "file": "teacher-legacy-1280.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 360,
+      "enabled": true,
+      "file": "director-k8k-360.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Ученики школы",
+          "Задачи менеджеров"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 768,
+      "enabled": true,
+      "file": "director-k8k-768.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Ученики школы",
+          "Задачи менеджеров"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 1024,
+      "enabled": true,
+      "file": "director-k8k-1024.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Ученики школы",
+          "Задачи менеджеров"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 1280,
+      "enabled": true,
+      "file": "director-k8k-1280.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Обзор",
+          "Расписание",
+          "Ученики школы",
+          "Задачи менеджеров"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 360,
+      "enabled": false,
+      "file": "director-legacy-360.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    },
+    {
+      "role": "director",
+      "width": 1280,
+      "enabled": false,
+      "file": "director-legacy-1280.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 360,
+      "enabled": true,
+      "file": "operator-k8k-360.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Состояние платформы"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 768,
+      "enabled": true,
+      "file": "operator-k8k-768.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Состояние платформы"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 1024,
+      "enabled": true,
+      "file": "operator-k8k-1024.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Состояние платформы"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 1280,
+      "enabled": true,
+      "file": "operator-k8k-1280.png",
+      "dom": {
+        "k8k": "provisional",
+        "overflow": false,
+        "nav": [
+          "Состояние платформы"
+        ],
+        "font": "\"Golos Text Variable\", system-ui, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 360,
+      "enabled": false,
+      "file": "operator-legacy-360.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    },
+    {
+      "role": "operator",
+      "width": 1280,
+      "enabled": false,
+      "file": "operator-legacy-1280.png",
+      "dom": {
+        "k8k": null,
+        "overflow": false,
+        "nav": [],
+        "font": "\"Segoe UI\", Arial, sans-serif"
+      }
+    }
+  ],
+  "checks": [
+    "student: mobile menu Escape returns focus; flag persists through navigation",
+    "teacher: background error retains last-known content/nav/focus; 403 removes private content",
+    "components: stable input DOM/value/focus in stale and unknown-result; no command retry; nine states pass axe",
+    "refresh: editing defers; blur resumes; hidden tab stops polling; return refreshes once"
+  ],
+  "failures": []
+}

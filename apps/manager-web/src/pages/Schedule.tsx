@@ -141,7 +141,7 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
         </button>
       </div>
       <p className="hint">{ru.leadHelp}</p>
-      <State query={query} empty={query.data?.length === 0}>
+      <State operational query={query} empty={query.data?.length === 0}>
         {(items) => (
           <div className={view === 'week' ? 'calendar week-view' : 'calendar list-view'}>
             {days.map((day) => (

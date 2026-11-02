@@ -185,7 +185,7 @@ export default function Dashboard() {
           />
         </div>
       </div>
-      <State query={query}>
+      <State operational query={query}>
         {(d) => {
           const metrics: Array<{
             title: string;

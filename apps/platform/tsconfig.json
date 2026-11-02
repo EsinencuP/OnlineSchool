@@ -10,7 +10,14 @@
   },
   "include": ["src", "vite.config.ts"],
   "references": [
-    { "path": "../../packages/api-contracts" },
-    { "path": "../../packages/account-ui" }
+    {
+      "path": "../../packages/api-contracts"
+    },
+    {
+      "path": "../../packages/account-ui"
+    },
+    {
+      "path": "../../packages/ui"
+    }
   ]
 }

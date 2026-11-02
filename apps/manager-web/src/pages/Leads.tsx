@@ -47,7 +47,7 @@ export default function Leads() {
           + {ru.newLead}
         </button>
       </div>
-      <State query={summary}>
+      <State operational query={summary}>
         {(s) => (
           <>
             <div className="lead-summary">
@@ -119,7 +119,7 @@ export default function Leads() {
         </button>
       </div>
       <p className="hint">{ru.leadPageHint}</p>
-      <State query={query} empty={query.data?.items.length === 0}>
+      <State operational query={query} empty={query.data?.items.length === 0}>
         {(d) => (
           <>
             {board ? (

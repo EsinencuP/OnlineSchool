@@ -1,5 +1,6 @@
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
+import { k8kEnabled, operationalQueryInterval } from '@online-school/ui';
 import { getCsrfToken } from '@online-school/api-contracts';
 import type { ClientError, SchoolRequestOptions } from '@online-school/api-contracts';
 import type { Result } from '@online-school/shared';
@@ -92,11 +93,18 @@ export function useStudentQuery<T>(
   enabled = true,
   poll: number | false = false,
 ) {
+  const archive = key[0] === 'lessons' && key[1] === 'archive' && key[2] !== 'calendar';
+  const operational =
+    key[0] !== 'me' &&
+    !archive &&
+    (poll !== false || operationalQueryInterval(['student', ...key]) !== false);
   return useQuery({
     queryKey: ['student', ...key],
     queryFn: ({ signal }) => read(command, signal),
     enabled,
-    refetchInterval: poll,
+    refetchInterval: k8kEnabled && key[0] !== 'me' ? false : poll,
+    refetchOnWindowFocus: k8kEnabled && operational ? false : true,
+    meta: { k8kOperational: operational },
   });
 }
 export function useIntentKey() {
