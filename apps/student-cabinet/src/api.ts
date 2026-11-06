@@ -1,6 +1,12 @@
 import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
-import { k8kEnabled, operationalQueryInterval } from '@online-school/ui';
+import {
+  describeError,
+  errorText,
+  initializeLocale,
+  k8kEnabled,
+  operationalQueryInterval,
+} from '@online-school/ui';
 import { getCsrfToken } from '@online-school/api-contracts';
 import type { ClientError, SchoolRequestOptions } from '@online-school/api-contracts';
 import type { Result } from '@online-school/shared';
@@ -60,7 +66,7 @@ export function inspect<T>(result: Result<T, ClientError>, allow401 = false): Pr
           : '/student/login',
     );
   }
-  return Promise.reject(error);
+  return Promise.reject(allow401 ? { ...error, operation: 'write' as const } : error);
 }
 export function read<T>(command: Command<T>, signal?: AbortSignal) {
   return command(options(signal)).then((result) => inspect(result));
@@ -119,26 +125,20 @@ export function useIntentKey() {
 export function useCommand<T, V>(command: (variables: V, key: string) => Promise<T>) {
   const client = useQueryClient();
   const keyFor = useIntentKey();
+  const unresolved = useRef<unknown>(null);
   return useMutation({
-    mutationFn: (variables: V) => command(variables, keyFor(variables)),
+    mutationFn: async (variables: V) => {
+      if (unresolved.current) return Promise.reject(unresolved.current);
+      try {
+        return await command(variables, keyFor(variables));
+      } catch (error) {
+        if (describeError(error).outcome === 'unknown') unresolved.current = error;
+        return Promise.reject(error);
+      }
+    },
     onSuccess: () => client.invalidateQueries({ queryKey: ['student'] }),
   });
 }
 export function errorMessage(error: unknown) {
-  const code = error && typeof error === 'object' && 'code' in error ? String(error.code) : '';
-  const messages: Record<string, string> = {
-    CURRENT_PASSWORD_INVALID: 'Текущий пароль указан неверно.',
-    INVALID_CREDENTIALS: 'Проверьте email и пароль.',
-    PASSWORD_CHANGE_REQUIRED: 'Замените временный пароль на собственный.',
-    PASSWORD_UNCHANGED: 'Новый пароль должен отличаться от временного.',
-    TEMPORARY_PASSWORD_EXPIRED: 'Срок временного пароля истёк. Обратитесь к менеджеру за новым.',
-    NETWORK_ERROR: 'Нет связи с сервером. Проверьте подключение и повторите попытку.',
-    OTP_INVALID: 'Код не подошёл или истёк. Проверьте код либо запросите новый.',
-    RESCHEDULE_TOO_LATE: 'Для переноса осталось меньше 24 часов. Свяжитесь с менеджером.',
-    RESCHEDULE_WINDOW_CLOSED: 'Для переноса осталось меньше 24 часов. Свяжитесь с менеджером.',
-    INVALID_FILE: 'Выбери непустой файл размером до 50 МБ. Можно приложить до 20 файлов.',
-    UPLOAD_EXPIRED: 'Ссылка на загрузку истекла. Выбери файл заново.',
-    UPLOAD_FAILED: 'Не удалось загрузить файл. Повтори загрузку.',
-  };
-  return messages[code] ?? 'Не удалось выполнить запрос. Повторите попытку.';
+  return errorText(error, initializeLocale());
 }

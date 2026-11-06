@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { StaffActorContextDto } from '../../core/actor/actor-context.dto.js';
 export class SwitchUserRequest {
   @ApiProperty({
     enum: ['anna', 'maksim', 'sofia', 'daniil', 'andrei', 'elena', 'tamara', 'pasha', 'tech'],
@@ -49,7 +50,36 @@ export class WorkspaceTaskDto {
   @ApiProperty() dueAt!: string;
   @ApiProperty() manager!: string;
 }
+export class WorkspacePageInfoDto {
+  @ApiProperty({ type: 'integer' }) limit!: number;
+  @ApiProperty({ type: 'integer' }) returned!: number;
+  @ApiProperty() hasMore!: boolean;
+  @ApiProperty({ type: Number, nullable: true, description: 'Unknown total; never a global KPI' })
+  total!: number | null;
+}
+export class WorkspaceCoverageDto {
+  @ApiProperty({ enum: ['OWN_TEACHER', 'SCHOOL', 'NOT_APPLICABLE'] }) scope!:
+    'OWN_TEACHER' | 'SCHOOL' | 'NOT_APPLICABLE';
+  @ApiProperty({ type: String, format: 'date-time', nullable: true }) windowFrom!: string | null;
+  @ApiProperty({ type: String, format: 'date-time', nullable: true }) windowTo!: string | null;
+  @ApiProperty({
+    type: String,
+    format: 'date-time',
+    nullable: true,
+    description: 'Latest updated_at among returned source rows only, not a global watermark',
+  })
+  sourceUpdatedAt!: string | null;
+  @ApiProperty({ type: WorkspacePageInfoDto }) pageInfo!: WorkspacePageInfoDto;
+}
+export class WorkspaceCoverageSetDto {
+  @ApiProperty({ type: WorkspaceCoverageDto }) lessons!: WorkspaceCoverageDto;
+  @ApiProperty({ type: WorkspaceCoverageDto }) students!: WorkspaceCoverageDto;
+  @ApiProperty({ type: WorkspaceCoverageDto }) homework!: WorkspaceCoverageDto;
+  @ApiProperty({ type: WorkspaceCoverageDto }) tasks!: WorkspaceCoverageDto;
+}
 export class PlatformWorkspaceDto {
+  @ApiProperty({ type: StaffActorContextDto }) actorContext!: StaffActorContextDto;
+  @ApiProperty({ type: WorkspaceCoverageSetDto }) coverage!: WorkspaceCoverageSetDto;
   @ApiProperty() name!: string;
   @ApiProperty() role!: string;
   @ApiProperty({ type: [WorkspaceLessonDto] }) lessons!: WorkspaceLessonDto[];

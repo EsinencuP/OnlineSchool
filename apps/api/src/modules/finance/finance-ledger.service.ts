@@ -41,10 +41,14 @@ export class FinanceLedger {
     private readonly access: FinanceAccess,
     private readonly events: FinanceEvents,
   ) {}
-  async period(tx: Prisma.TransactionClient, time: Date, id?: string) {
-    const rows = await tx.$queryRaw<
-      { id: string; closed_at: Date | null }[]
-    >`SELECT id,closed_at FROM financial_periods WHERE starts_at<=${time} AND ends_at>${time} FOR UPDATE`;
+  async period(tx: Prisma.TransactionClient, time: Date, id?: string, lock = true) {
+    const rows = lock
+      ? await tx.$queryRaw<
+          { id: string; closed_at: Date | null }[]
+        >`SELECT id,closed_at FROM financial_periods WHERE starts_at<=${time} AND ends_at>${time} FOR UPDATE`
+      : await tx.$queryRaw<
+          { id: string; closed_at: Date | null }[]
+        >`SELECT id,closed_at FROM financial_periods WHERE starts_at<=${time} AND ends_at>${time}`;
     if (!rows.length || rows[0]!.closed_at || (id && id !== rows[0]!.id))
       return fail(domainError('CLOSED_PERIOD', 422));
     return rows[0]!.id;

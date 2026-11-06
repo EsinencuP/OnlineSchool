@@ -1,7 +1,9 @@
+import { useLocale } from './locale.js';
+import type { MessageKey } from './locale.js';
 import { FreshnessTimeZone } from './freshness.js';
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 import type { ReactNode, RefObject } from 'react';
-import { cabinetLabels, roleNavigation } from './navigation.js';
+import { roleNavigation } from './navigation.js';
 import type { CabinetRole, NavigationItem } from './navigation.js';
 import { Icon } from './icon.js';
 import { PriorityEvents } from './priority.js';
@@ -12,6 +14,14 @@ export type NavigationRenderer = (
   content: ReactNode,
   props: { className: string; 'aria-current': 'page' | undefined; onClick: () => void },
 ) => ReactNode;
+const cabinetTitle = {
+  STUDENT: 'cabinetStudent',
+  MANAGER: 'cabinetManager',
+  TEACHER: 'cabinetTeacher',
+  DIRECTOR: 'cabinetDirector',
+  TECH_OPERATOR: 'cabinetOperator',
+} as const satisfies Record<CabinetRole, MessageKey>;
+
 export function Sidebar({
   role,
   navigation,
@@ -21,23 +31,25 @@ export function Sidebar({
   navigation: ReactNode;
   footer?: ReactNode;
 }) {
+  const { t } = useLocale();
   return (
     <aside className="k8k-sidebar">
       <div className="k8k-brand">
         <Icon name="brand" />
         <span>
-          K8K Academy<small>{cabinetLabels[role]}</small>
+          K8K Academy<small>{t(cabinetTitle[role])}</small>
         </span>
       </div>
-      <p className="k8k-sidebar-label">Рабочее пространство</p>
-      <nav aria-label="Основная навигация">{navigation}</nav>
+      <p className="k8k-sidebar-label">{t('workspace')}</p>
+      <nav aria-label={t('primaryNavigation')}>{navigation}</nav>
       <div className="k8k-sidebar-footer">{footer}</div>
     </aside>
   );
 }
 export function BottomNav({ children }: { children: ReactNode }) {
+  const { t } = useLocale();
   return (
-    <nav className="k8k-bottom-nav" aria-label="Мобильная навигация">
+    <nav className="k8k-bottom-nav" aria-label={t('mobileNavigation')}>
       {children}
     </nav>
   );
@@ -72,6 +84,7 @@ export function NotificationBell({
   renderLink: (content: ReactNode, label: string) => ReactNode;
 }) {
   const known = count !== undefined;
+  const { t } = useLocale();
   return renderLink(
     <>
       <Icon name="bell" />
@@ -81,7 +94,7 @@ export function NotificationBell({
         </span>
       )}
     </>,
-    `Уведомления${known ? `, непрочитанных: ${count}` : ', счётчик недоступен'}`,
+    `${t('notifications')}, ${known ? `${t('bellUnread')}: ${count}` : t('bellCountUnavailable')}`,
   );
 }
 export function AppShell({
@@ -117,6 +130,7 @@ export function AppShell({
   priorityEnabled?: boolean;
   timeZone?: string;
 }) {
+  const { t } = useLocale();
   const [expanded, setExpanded] = useState(false);
   const mobileId = useId();
   const menu = useRef<HTMLDivElement>(null);
@@ -130,14 +144,14 @@ export function AppShell({
     trigger.current = button;
     setExpanded((value) => !value);
   };
-  const nav = (subset: readonly NavigationItem[], compact = false) =>
+  const nav = (subset: typeof items, compact = false) =>
     subset.map((item) => (
       <div className="k8k-nav-item" key={item.id}>
         {renderNavigation(
           item,
           <>
             <Icon name={item.icon} />
-            <span>{compact ? (item.shortLabel ?? item.label) : item.label}</span>
+            <span>{t(compact ? (item.compactLabelKey ?? item.labelKey) : item.labelKey)}</span>
           </>,
           {
             className: 'k8k-nav-link',
@@ -151,7 +165,7 @@ export function AppShell({
     <FreshnessTimeZone.Provider value={timeZone}>
       <div className={`k8k-shell k8k-role-${role.toLowerCase()}`}>
         <a className="k8k-skip" href={`#${mainId}`}>
-          Перейти к содержимому
+          {t('skip')}
         </a>
         <Sidebar role={role} navigation={nav(items)} footer={sidebarFooter} />
         <div className="k8k-shell-body">
@@ -162,7 +176,7 @@ export function AppShell({
               <button
                 className="k8k-menu-button"
                 type="button"
-                aria-label="Все разделы"
+                aria-label={t('sections')}
                 aria-expanded={expanded}
                 aria-controls={mobileId}
                 onClick={(event) => toggle(event.currentTarget)}
@@ -171,7 +185,7 @@ export function AppShell({
               </button>
             }
           >
-            {header ?? cabinetLabels[role]}
+            {header ?? t(cabinetTitle[role])}
           </Header>
           <div
             id={mobileId}
@@ -190,7 +204,7 @@ export function AppShell({
               }
             }}
           >
-            <nav aria-label="Все разделы кабинета">{nav(items)}</nav>
+            <nav aria-label={t('sections')}>{nav(items)}</nav>
             {sidebarFooter}
             <button
               type="button"
@@ -199,7 +213,7 @@ export function AppShell({
                 trigger.current?.focus();
               }}
             >
-              Закрыть меню
+              {t('close')}
             </button>
           </div>
           <div className={`k8k-shell-columns${aside ? ' k8k-has-aside' : ''}`}>
@@ -222,7 +236,7 @@ export function AppShell({
               onClick={(event) => toggle(event.currentTarget)}
             >
               <Icon name="more" />
-              <span>Ещё</span>
+              <span>{t('more')}</span>
             </button>
           )}
         </BottomNav>

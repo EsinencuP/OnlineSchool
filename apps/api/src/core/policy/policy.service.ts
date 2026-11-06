@@ -58,19 +58,21 @@ export class PolicyService {
   hasPermission(actor: AccountContext, permission: string): boolean {
     return actor.roles.some((role) => permissions[role].includes(permission));
   }
+  canRequestPaymentApproval(actor: AccountContext): boolean {
+    return (
+      actor.kind === 'STAFF' &&
+      actor.roles.length === 1 &&
+      actor.roles[0] === 'MANAGER' &&
+      (actor.mfaCompleted || managerPasswordOnlyLogin(actor)) &&
+      !actor.recoveryOnly
+    );
+  }
   async managerPaymentPublication(
     actor: AccountContext,
     contactStudentId: string,
     tx: Prisma.TransactionClient,
   ): Promise<Result<void, DomainError>> {
-    if (
-      actor.kind !== 'STAFF' ||
-      actor.roles.length !== 1 ||
-      actor.roles[0] !== 'MANAGER' ||
-      (!actor.mfaCompleted && !managerPasswordOnlyLogin(actor)) ||
-      actor.recoveryOnly
-    )
-      return err(domainError('FORBIDDEN_ROLE', 403));
+    if (!this.canRequestPaymentApproval(actor)) return err(domainError('FORBIDDEN_ROLE', 403));
     const scoped = await this.canAccessStudent(actor, contactStudentId, tx);
     if (!scoped.ok)
       return err(

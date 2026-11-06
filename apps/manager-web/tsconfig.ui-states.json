@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.ui-tables.json",
+  "include": ["test/ui-states/**/*.tsx"],
+  "references": [
+    { "path": "../../packages/shared" },
+    { "path": "../../packages/api-contracts" },
+    { "path": "../../packages/account-ui" },
+    { "path": "../../packages/ui" }
+  ]
+}

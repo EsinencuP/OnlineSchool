@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
+import { initializeLocale } from '@online-school/ui';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { queryClient } from './api/client.js';
@@ -19,6 +20,7 @@ const Tasks = lazy(() => import('./pages/Tasks.js'));
 const Task = lazy(() => import('./pages/Task.js'));
 const Leads = lazy(() => import('./pages/Leads.js'));
 const Lead = lazy(() => import('./pages/Lead.js'));
+initializeLocale();
 if (import.meta.env.MODE === 'mock') await (await import('./test/browser.js')).startMocks();
 // BFCache must not restore a privileged screen or an aborted one-time-secret command.
 window.addEventListener('pageshow', (event) => {

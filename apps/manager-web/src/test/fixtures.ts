@@ -57,12 +57,25 @@ export const lead: LeadDto = {
   openTasks: [],
 };
 export const me: ManagerMeResponseDto = {
+  actorContext: {
+    accountId: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
+    role: 'MANAGER',
+    staffProfileId: ids.manager,
+    teacherProfileId: null,
+    displayName: 'Елена Попеску',
+    timezone: 'Europe/Chisinau',
+    timezoneSource: 'SCHOOL_DEFAULT',
+    asOf: now.toISOString(),
+    accountUpdatedAt: null,
+    profileUpdatedAt: null,
+  },
   managerId: ids.manager,
   displayName: 'Елена Попеску',
   role: 'MANAGER',
   portfolioSize: 1,
   timezone: 'Europe/Chisinau',
   capabilities: [
+    'PAYMENTS_REQUEST_APPROVAL',
     'STUDENTS_VIEW',
     'ACCOUNTS_CREATE',
     'SUBSCRIPTIONS_MANAGE',

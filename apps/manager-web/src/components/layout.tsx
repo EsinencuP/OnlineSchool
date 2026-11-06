@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { AccountMenu } from '@online-school/account-ui';
+import type { AccountLogoutOutcome } from '@online-school/account-ui';
 import {
   AppShell,
   activeNavigation,
@@ -7,34 +8,35 @@ import {
   roleNavigation,
   operationalQueryInterval,
   useContextRefresh,
+  useLocale,
 } from '@online-school/ui';
+import type { PlainMessageKey } from '@online-school/ui';
 import '@online-school/account-ui/style.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { deleteSession } from '@online-school/api-contracts';
 import { create } from 'zustand';
 import { clearSession, queryClient, write } from '../api/client.js';
 import { useManager } from '../session.js';
-import { ru } from '../i18n/ru.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
-import { Icon, Initials } from './icon.js';
+import { Icon } from './icon.js';
 import type { IconName } from './icon.js';
 const useNavigation = create<{ expanded: boolean; toggle: () => void }>((set) => ({
   expanded: false,
   toggle: () => set((s) => ({ expanded: !s.expanded })),
 }));
-const links: Array<{ to: string; label: string; icon: IconName }> = [
-  { to: routes.dashboard, label: ru.dashboard, icon: 'home' },
-  { to: routes.leads, label: ru.leads, icon: 'mail' },
-  { to: routes.students, label: ru.students, icon: 'users' },
-  { to: routes.schedule, label: ru.schedule, icon: 'calendar' },
-  { to: routes.tasks, label: ru.tasks, icon: 'tasks' },
+const links: Array<{ to: string; label: PlainMessageKey; icon: IconName }> = [
+  { to: routes.dashboard, label: 'overview', icon: 'home' },
+  { to: routes.leads, label: 'leads', icon: 'mail' },
+  { to: routes.students, label: 'students', icon: 'users' },
+  { to: routes.schedule, label: 'schedule', icon: 'calendar' },
+  { to: routes.tasks, label: 'tasks', icon: 'tasks' },
 ];
 export function Layout() {
+  const { t, intlLocale } = useLocale();
   const me = useManager();
   const nav = useNavigation();
   const navigate = useNavigate();
   const location = useLocation();
-  const [busy, setBusy] = useState(false);
   const search = useRef<HTMLInputElement>(null);
   useContextRefresh({
     enabled: k8kEnabled,
@@ -56,16 +58,14 @@ export function Layout() {
     window.addEventListener('keydown', keyboard);
     return () => window.removeEventListener('keydown', keyboard);
   }, []);
-  async function logout() {
-    if (busy) return;
-    setBusy(true);
+  async function logout(): Promise<AccountLogoutOutcome> {
     const result = await write((o) => deleteSession({}, o), crypto.randomUUID());
     clearSession();
-    setBusy(false);
     navigate(routes.login, {
       replace: true,
       state: !result.ok && result.error.status !== 401 ? { sessionError: result.error } : null,
     });
+    return result.ok || result.error.status === 401 ? 'ended' : 'rejected';
   }
   if (k8kEnabled)
     return (
@@ -79,7 +79,7 @@ export function Layout() {
           </Link>
         )}
         mainId="main"
-        account={<AccountMenu name={me.displayName} role="MANAGER" />}
+        account={<AccountMenu name={me.displayName} role="MANAGER" onLogout={logout} />}
         header={
           <form
             role="search"
@@ -98,28 +98,25 @@ export function Layout() {
               type="search"
               minLength={2}
               maxLength={100}
-              aria-label={ru.globalSearch}
-              placeholder={ru.globalSearch}
+              aria-label={t('chrome.managerSearch')}
+              placeholder={t('chrome.managerSearch')}
             />
             <kbd aria-hidden="true">⌘ K</kbd>
           </form>
         }
         sidebarFooter={
           <>
-            <Link to={`${routes.leads}?stage=NEW`}>{ru.newLeads}</Link>
-            <Link to={`${routes.students}?expiring=true`}>{ru.expiring}</Link>
+            <Link to={`${routes.leads}?stage=NEW`}>{t('chrome.newLeads')}</Link>
+            <Link to={`${routes.students}?expiring=true`}>{t('chrome.expiring')}</Link>
             <details>
-              <summary>{ru.howToWork}</summary>
-              <p>{ru.helpCaption}</p>
+              <summary>{t('chrome.howToWork')}</summary>
+              <p>{t('chrome.managerHelp')}</p>
             </details>
-            <button type="button" disabled={busy} onClick={() => void logout()}>
-              {ru.logout}
-            </button>
           </>
         }
         footer={
           <>
-            {ru.localTime} {me.timezone}
+            {t('chrome.schoolTime')} {me.timezone}
           </>
         }
       >
@@ -129,23 +126,23 @@ export function Layout() {
   return (
     <div className={`workspace ${nav.expanded ? 'nav-expanded' : ''}`}>
       <a className="skip" href="#main">
-        {ru.skip}
+        {t('skip')}
       </a>
       <aside className="sidebar">
-        <Link className="brand" to={routes.dashboard} aria-label={ru.academy}>
+        <Link className="brand" to={routes.dashboard} aria-label="K8K Academy">
           <span className="brand-mark">
             <Icon name="academy" size={33} />
           </span>
           <span>
-            {ru.brandShort}
-            <small>{ru.managerPanel}</small>
+            Academy
+            <small>{t('cabinetManager')}</small>
           </span>
         </Link>
-        <div className="sidebar-section-label">{ru.workspace}</div>
-        <nav aria-label={ru.menu}>
+        <div className="sidebar-section-label">{t('workspace')}</div>
+        <nav aria-label={t('chrome.menu')}>
           {links.map((link) => (
             <Link
-              aria-label={link.label}
+              aria-label={t(link.label)}
               key={link.to}
               aria-current={
                 (
@@ -161,48 +158,30 @@ export function Layout() {
               <span>
                 <Icon name={link.icon} size={21} />
               </span>
-              <span>{link.label}</span>
+              <span>{t(link.label)}</span>
             </Link>
           ))}
         </nav>
         <div className="sidebar-subsection">
-          <span className="sidebar-section-label">{ru.myPortfolio}</span>
+          <span className="sidebar-section-label">{t('chrome.myPortfolio')}</span>
           <Link to={`${routes.leads}?stage=NEW`}>
             <Icon name="plus" size={17} />
-            {ru.newLeads}
+            {t('chrome.newLeads')}
             <Icon name="chevron" size={13} />
           </Link>
           <Link to={`${routes.students}?expiring=true`}>
             <Icon name="wallet" size={17} />
-            {ru.expiring}
+            {t('chrome.expiring')}
             <Icon name="chevron" size={13} />
           </Link>
         </div>
         <details className="sidebar-help">
           <summary>
             <Icon name="book" size={23} />
-            <span>{ru.howToWork}</span>
+            <span>{t('chrome.howToWork')}</span>
           </summary>
-          <p>{ru.helpCaption}</p>
+          <p>{t('chrome.managerHelp')}</p>
         </details>
-        <div className="sidebar-foot">
-          <Initials name={me.displayName} />
-          <div>
-            <p>{me.displayName}</p>
-            <small>{ru.managerPanel}</small>
-          </div>
-          <button
-            className="icon-button"
-            type="button"
-            disabled={busy}
-            onClick={() => {
-              void logout();
-            }}
-            aria-label={ru.logout}
-          >
-            <Icon name="logout" />
-          </button>
-        </div>
       </aside>
       <div className="content">
         <header className="topbar">
@@ -212,7 +191,7 @@ export function Layout() {
             aria-expanded={nav.expanded}
             onClick={nav.toggle}
           >
-            {ru.menu}
+            {t('chrome.menu')}
           </button>
           <form
             className="global-search"
@@ -231,20 +210,24 @@ export function Layout() {
               name="search"
               minLength={2}
               maxLength={100}
-              aria-label={ru.globalSearch}
-              placeholder={ru.globalSearch}
+              aria-label={t('chrome.managerSearch')}
+              placeholder={t('chrome.managerSearch')}
             />
             <kbd aria-hidden="true">⌘ K</kbd>
           </form>
           <div className="topbar-tools">
-            <Link className="icon-button" to={routes.tasks} aria-label={ru.openQueue}>
+            <Link className="icon-button" to={routes.tasks} aria-label={t('chrome.openQueue')}>
               <Icon name="tasks" />
             </Link>
-            <Link className="icon-button" to={routes.schedule} aria-label={ru.workingCalendar}>
+            <Link
+              className="icon-button"
+              to={routes.schedule}
+              aria-label={t('chrome.workingCalendar')}
+            >
               <Icon name="calendar" />
             </Link>
             <time className="topbar-date">
-              {new Intl.DateTimeFormat('ru-RU', {
+              {new Intl.DateTimeFormat(intlLocale, {
                 timeZone: me.timezone,
                 weekday: 'long',
                 day: 'numeric',
@@ -253,25 +236,14 @@ export function Layout() {
               <small>{me.timezone}</small>
             </time>
           </div>
-          <AccountMenu name={me.displayName} role="MANAGER" />
-          <button
-            className="mobile-logout icon-button"
-            type="button"
-            disabled={busy}
-            onClick={() => {
-              void logout();
-            }}
-            aria-label={ru.logout}
-          >
-            <Icon name="logout" />
-          </button>
+          <AccountMenu name={me.displayName} role="MANAGER" onLogout={logout} />
         </header>
         <main id="main" tabIndex={-1}>
           <Outlet />
         </main>
         <footer className="page-foot">
           <Icon name="shield" size={13} />
-          {ru.localTime} {me.timezone}
+          {t('chrome.schoolTime')} {me.timezone}
         </footer>
       </div>
     </div>

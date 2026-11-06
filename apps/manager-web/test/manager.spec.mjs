@@ -299,7 +299,8 @@ test('leaving account page before completion suppresses a late password; logout 
   await expect.poll(() => page.evaluate(() => window.__managerMock.student.hasAccount)).toBe(true);
   await expect(page.getByRole('heading', { name: 'Передайте пароль ученику' })).toHaveCount(0);
   await noLeaks(page);
-  await page.getByRole('button', { name: 'Выйти', exact: true }).first().click();
+  await page.locator('.account-menu > summary').click();
+  await page.getByRole('button', { name: 'Выйти из аккаунта', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Вход в кабинет' })).toBeVisible();
   expect(await page.evaluate(() => window.__managerMock.cacheEmpty())).toBe(true);
 });

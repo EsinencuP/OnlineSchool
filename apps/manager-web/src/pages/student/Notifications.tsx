@@ -21,9 +21,10 @@ import {
 } from '../../components/ui.js';
 import { displayTime } from '../../lib/time.js';
 import { ru, label } from '../../i18n/ru.js';
-import { ERROR_MESSAGES } from '../../i18n/error-messages.js';
+import { errorText, useLocale } from '@online-school/ui';
 export default function Notifications({ studentId }: { studentId: string }) {
   const me = useManager();
+  const { locale } = useLocale();
   const [status, setStatus] = useState('');
   const [cursor, setCursor] = useState<string | undefined>();
   const [compose, setCompose] = useState(false);
@@ -96,10 +97,7 @@ export default function Notifications({ studentId }: { studentId: string }) {
                   )}
                   {n.failureReason && (
                     <p>
-                      {ru.notificationFailure}:{' '}
-                      {Object.hasOwn(ERROR_MESSAGES, n.failureReason)
-                        ? ERROR_MESSAGES[n.failureReason as keyof typeof ERROR_MESSAGES]
-                        : ru.error}
+                      {ru.notificationFailure}: {errorText({ code: n.failureReason }, locale)}
                     </p>
                   )}
                 </li>
@@ -125,6 +123,7 @@ export default function Notifications({ studentId }: { studentId: string }) {
   );
 }
 function Compose({ studentId, close }: { studentId: string; close: () => void }) {
+  const { t } = useLocale();
   const command = useCommand();
   const [channel, setChannel] = useState<'EMAIL' | 'IN_APP'>('IN_APP');
   const [sent, setSent] = useState(false);
@@ -137,7 +136,7 @@ function Compose({ studentId, close }: { studentId: string; close: () => void })
     >
       {sent ? (
         <>
-          <p role="status">{ru.queued}</p>
+          <p role="status">{t('errors.queued')}</p>
           <button type="button" onClick={close}>
             {ru.done}
           </button>

@@ -20,9 +20,9 @@ import {
   TextArea,
   text,
 } from '../components/ui.js';
-import { formatMoney } from '../lib/money.js';
 import { ru } from '../i18n/ru.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
+const BalanceSummary = lazy(() => import('./student/BalanceSummary.js'));
 const Payments = lazy(() => import('./student/Payments.js'));
 const Subscriptions = lazy(() => import('./student/Subscriptions.js'));
 const Notifications = lazy(() => import('./student/Notifications.js'));
@@ -103,20 +103,7 @@ export default function Student() {
                       <h3>{ru.managerNote}</h3>
                       <p className="plain-text">{s.managerNote ?? ru.dash}</p>
                     </section>
-                    <section className="panel">
-                      <h2>{ru.balance}</h2>
-                      <p className="hint">{ru.balanceHelp}</p>
-                      {s.balances.length ? (
-                        s.balances.map((b) => (
-                          <p className="money-total" key={b.currency}>
-                            {formatMoney(b.amount, b.currency)}
-                          </p>
-                        ))
-                      ) : (
-                        <p>{ru.dash}</p>
-                      )}
-                      <Link to="?tab=payments">{ru.payments} →</Link>
-                    </section>
+                    <BalanceSummary balances={s.balances} />
                   </div>
                   <Directions studentId={id} add={() => setAction('enrollment')} />
                 </>

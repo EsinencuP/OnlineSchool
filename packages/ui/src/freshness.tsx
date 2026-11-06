@@ -1,37 +1,64 @@
+import { useLocale } from './locale.js';
+import { formatDateTime, instantMilliseconds } from './format.js';
 import { createContext, useContext } from 'react';
 export const FreshnessTimeZone = createContext('Europe/Chisinau');
+export type FreshnessSourceProps = {
+  asOf?: string | number | null | undefined;
+  receivedAt?: number | undefined;
+  /** Compatibility alias for receipt time. New consumers should name the source. */
+  at?: number | undefined;
+};
+function timestamp(value: string | number | null | undefined) {
+  const at = value == null ? null : instantMilliseconds(value);
+  return at !== null && at > 0 ? at : undefined;
+}
 export function FreshnessLabel({
+  asOf,
+  receivedAt,
   at,
   timeZone,
   refreshing = false,
-}: {
-  at?: number | undefined;
+}: FreshnessSourceProps & {
   timeZone?: string;
   refreshing?: boolean;
 }) {
+  const { t, locale } = useLocale();
   const defaultZone = useContext(FreshnessTimeZone);
   const zone = timeZone ?? defaultZone;
-  const valid = at && Number.isFinite(at) && !Number.isNaN(new Date(at).getTime());
+  const server = timestamp(asOf);
+  const receipt = timestamp(receivedAt ?? at);
+  const time = (value: number | undefined, source: 'server' | 'client') => {
+    if (value === undefined) return null;
+    const formatted = formatDateTime(value, locale, zone);
+    return formatted === null ? null : (
+      <time data-time-source={source} dateTime={new Date(value).toISOString()}>
+        {formatted}
+      </time>
+    );
+  };
+  const serverTime = time(server, 'server');
+  const receiptTime = time(receipt, 'client');
   return (
     <p className="k8k-freshness">
-      {valid ? (
+      {serverTime || receiptTime ? (
         <>
-          Загружено{' '}
-          <time dateTime={new Date(at).toISOString()}>
-            {new Intl.DateTimeFormat('ru-RU', {
-              timeZone: zone,
-              day: 'numeric',
-              month: 'long',
-              hour: '2-digit',
-              minute: '2-digit',
-            }).format(at)}
-          </time>{' '}
+          {serverTime && (
+            <span>
+              {t('serverAsOf')} {serverTime}
+            </span>
+          )}
+          {serverTime && receiptTime && ' · '}
+          {receiptTime && (
+            <span>
+              {t('receivedAt')} {receiptTime}
+            </span>
+          )}{' '}
           · {zone}
         </>
       ) : (
-        'Время последней успешной загрузки неизвестно'
+        t('unknownTime')
       )}
-      {refreshing && <span> · Обновляем…</span>}
+      {refreshing && <span> · {t('refreshing')}</span>}
     </p>
   );
 }

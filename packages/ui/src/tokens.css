@@ -45,6 +45,18 @@
   --k8k-nav-hover: #ffffff12;
   --k8k-nav-soft: #ffffff08;
   --k8k-action-hover: #023849;
+  --k8k-danger-hover: #8e1d18;
+  --k8k-control-touch: 44px;
+  --k8k-control-primary: 48px;
+  --k8k-control-desktop: 36px;
+  --k8k-disabled-text: var(--text-muted);
+  --k8k-disabled-bg: var(--surface-warm);
+  --k8k-disabled-border: var(--text-muted);
+  --k8k-overlay-backdrop: #02384999;
+  --k8k-overlay-width: 560px;
+  --k8k-drawer-width: 480px;
+  --k8k-popover-width: 360px;
+  --k8k-overlay-layer: 100;
   /* Aliases let the existing applications keep their own component structure. */
   --k8k-brand-bg: var(--k8k-sand);
   --k8k-text: var(--k8k-ink);

@@ -2,8 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsIn, IsInt, IsString, IsTimeZone, IsUUID, Min } from 'class-validator';
 import { MANAGER_CAPABILITIES } from '../context/manager-context.js';
 import type { ManagerCapability } from '../context/manager-context.js';
+import { StaffActorContextDto } from '../../../core/actor/actor-context.dto.js';
 
 export class ManagerMeResponseDto {
+  @ApiProperty({ type: StaffActorContextDto }) actorContext!: StaffActorContextDto;
   @ApiProperty({ format: 'uuid' }) @IsUUID() managerId!: string;
   @ApiProperty() @IsString() displayName!: string;
   @ApiProperty({ enum: ['MANAGER'] }) @IsIn(['MANAGER']) role!: 'MANAGER';

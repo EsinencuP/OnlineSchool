@@ -1,16 +1,20 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import type { ReactNode } from 'react';
 import { FreshnessLabel } from './freshness.js';
+import type { FreshnessSourceProps } from './freshness.js';
+import { Icon } from './icon.js';
+import type { IconName } from './icon.js';
+import { useLocale } from './locale.js';
 
 export type BoundaryState =
   | { status: 'loading' }
   | { status: 'empty'; message?: string }
   | { status: 'ready' }
-  | { status: 'stale'; message?: string }
+  | { status: 'stale'; message?: string; empty?: true }
   | { status: 'error'; message?: string }
   | { status: 'pending'; outcome: 'pending' | 'unknown' }
   | { status: 'forbidden' }
-  | { status: 'subscription-limited'; message: string }
+  | { status: 'subscription-limited'; message?: string }
   | { status: 'session-expired' };
 
 // Render-only classification. Existing API/session handling retains ownership of redirects.
@@ -33,7 +37,8 @@ export function queryBoundaryState({
   if (errorStatus === 403) return { status: 'forbidden' };
   if (isPending && !hasData) return { status: 'loading' };
   if (error && !hasData) return { status: 'error' };
-  if (hasData && (error || tooOld)) return { status: 'stale' };
+  if (hasData && (error || tooOld))
+    return empty ? { status: 'stale', empty: true } : { status: 'stale' };
   if (!hasData || empty) return { status: 'empty' };
   return { status: 'ready' };
 }
@@ -71,72 +76,165 @@ export function useDataAge(at: number | undefined, maxAgeMs: number | false = fa
   return offline || !!(at && maxAgeMs !== false && Math.max(now, Date.now()) - at >= maxAgeMs);
 }
 
+type NoticeProps = { message?: string | undefined };
+type ReadNoticeProps = NoticeProps & { retryRead?: (() => void) | undefined; refreshing?: boolean };
+
+function Notice({
+  text,
+  icon,
+  urgent = false,
+}: {
+  text: string;
+  icon: IconName;
+  urgent?: boolean;
+}) {
+  return (
+    <p className="k8k-state-notice" role={urgent ? 'alert' : 'status'}>
+      <Icon name={icon} size={18} />
+      {text}
+    </p>
+  );
+}
+function ReadRetry({ retryRead, refreshing }: ReadNoticeProps) {
+  const { t } = useLocale();
+  return retryRead ? (
+    <button
+      type="button"
+      aria-disabled={refreshing || undefined}
+      onClick={() => {
+        if (!refreshing) retryRead();
+      }}
+    >
+      {t('retry')}
+    </button>
+  ) : null;
+}
+export function Skeleton({ lines = 3 }: { lines?: 1 | 2 | 3 }) {
+  return (
+    <div className="k8k-skeleton" aria-hidden="true">
+      {Array.from({ length: lines }, (_, index) => (
+        <span key={index} />
+      ))}
+    </div>
+  );
+}
+export function EmptyState({ message }: NoticeProps) {
+  const { t } = useLocale();
+  return <Notice icon="info" text={message ?? t('empty')} />;
+}
+export function ErrorState({ message, retryRead, refreshing = false }: ReadNoticeProps) {
+  const { t } = useLocale();
+  return (
+    <>
+      <Notice icon="warning" text={message ?? t('error')} urgent />
+      <ReadRetry retryRead={retryRead} refreshing={refreshing} />
+    </>
+  );
+}
+export function StaleBanner({
+  message,
+  empty,
+  retryRead,
+  refreshing = false,
+}: ReadNoticeProps & { empty?: boolean | undefined }) {
+  const { t } = useLocale();
+  return (
+    <>
+      <Notice icon="warning" text={message ?? t(empty ? 'staleEmpty' : 'stale')} />
+      <ReadRetry retryRead={retryRead} refreshing={refreshing} />
+    </>
+  );
+}
+
 export function StateBoundary({
   state,
   children,
   at,
+  asOf,
+  receivedAt,
   timeZone,
   refreshing = false,
   retryRead,
   action,
-}: {
+}: FreshnessSourceProps & {
   state: BoundaryState;
   children?: ReactNode;
-  at?: number | undefined;
   timeZone?: string | undefined;
   refreshing?: boolean;
   retryRead?: (() => void) | undefined;
   action?: ReactNode;
 }) {
+  const { t } = useLocale();
   const { status } = state;
   const showData =
     status === 'ready' ||
     status === 'stale' ||
     status === 'pending' ||
     status === 'subscription-limited';
-  const text =
-    status === 'loading'
-      ? 'Загружаем данные…'
-      : status === 'empty'
-        ? (state.message ?? 'Пока нет данных для этого раздела.')
-        : status === 'stale'
-          ? (state.message ??
-            'Данные могли устареть. Проверяйте актуальный статус перед действием.')
-          : status === 'error'
-            ? (state.message ??
-              'Не удалось загрузить данные. Проверьте соединение и повторите чтение.')
-            : status === 'pending'
-              ? state.outcome === 'unknown'
-                ? 'Результат действия пока неизвестен. Проверьте его в исходном объекте, прежде чем повторять.'
-                : 'Ожидаем ответ сервера. Действие ещё не подтверждено.'
-              : status === 'forbidden'
-                ? 'Этот раздел недоступен для текущего аккаунта.'
-                : status === 'subscription-limited'
-                  ? state.message
-                  : status === 'session-expired'
-                    ? 'Сессия завершена. Войдите снова, чтобы продолжить.'
-                    : '';
+  let notice: ReactNode = null;
+  switch (state.status) {
+    case 'loading':
+      notice = (
+        <>
+          <Notice icon="clock" text={t('loading')} />
+          <Skeleton />
+        </>
+      );
+      break;
+    case 'empty':
+      notice = <EmptyState message={state.message} />;
+      break;
+    case 'error':
+      notice = <ErrorState message={state.message} retryRead={retryRead} refreshing={refreshing} />;
+      break;
+    case 'stale':
+      notice = (
+        <StaleBanner
+          message={state.message}
+          empty={state.empty}
+          retryRead={retryRead}
+          refreshing={refreshing}
+        />
+      );
+      break;
+    case 'pending':
+      notice = (
+        <Notice
+          icon="clock"
+          text={t(state.outcome === 'unknown' ? 'boundaryUnknown' : 'boundaryPending')}
+        />
+      );
+      break;
+    case 'forbidden':
+      notice = <Notice icon="warning" text={t('forbidden')} urgent />;
+      break;
+    case 'session-expired':
+      notice = <Notice icon="warning" text={t('session')} urgent />;
+      break;
+    case 'subscription-limited':
+      notice = <Notice icon="info" text={state.message ?? t('boundaryLimited')} />;
+      break;
+  }
+  const showAction =
+    status === 'empty' ||
+    status === 'error' ||
+    status === 'stale' ||
+    status === 'subscription-limited';
   return (
     <div className="k8k-state" data-state={status}>
-      <div
-        className="k8k-state-message"
-        role={
-          status === 'error' || status === 'forbidden' || status === 'session-expired'
-            ? 'alert'
-            : 'status'
-        }
-      >
-        {text && <p>{text}</p>}
-        {(status === 'stale' || status === 'error') && retryRead && (
-          <button type="button" onClick={retryRead}>
-            Повторить загрузку
-          </button>
-        )}
-        {status !== 'ready' && status !== 'loading' && action}
+      <div className="k8k-state-message">
+        {notice}
+        {showAction && action}
       </div>
       <div className="k8k-state-meta">
-        {showData && (
-          <FreshnessLabel at={at} {...(timeZone ? { timeZone } : {})} refreshing={refreshing} />
+        {(showData || status === 'empty') && (
+          <FreshnessLabel
+            asOf={asOf}
+            receivedAt={receivedAt}
+            at={at}
+            {...(timeZone ? { timeZone } : {})}
+            refreshing={refreshing}
+          />
         )}
       </div>
       <div

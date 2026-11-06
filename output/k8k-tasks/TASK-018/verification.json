@@ -1,0 +1,39 @@
+{
+  "status": "PASS scoped TASK-018",
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "3ff74dab64bfca9fc63a877c571c8df4a02ed30b51ff66eadceb74ba04ba8a0f",
+  "sourceHashesRechecked": 539,
+  "prerequisite": "TASK-017 DONE; output artifacts retained",
+  "newServiceHttpTests": 12,
+  "newSdkTests": 4,
+  "existingManagerFinanceTests": 92,
+  "browserCases": 20,
+  "browserPng": 16,
+  "accountRegressionCases": 15,
+  "newOperations": 4,
+  "oldOperationsPreserved": 140,
+  "platformClosureBytes": 145928,
+  "fontBytes": 63492,
+  "documentation": [
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "ca8def96f83b739e4ac8334f673641c3bd3ca1170340cc7c3f1fb7ce87de4a36"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "5aa0e024278b27d90f2b05a20bdd7bb7ebf324fbee14c778d0f6e133299b2f13"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "8ddb2a8e794051a7e5bafca4cc30ad33665e7b601ca5451e4a5855a47358f868"
+    },
+    {
+      "path": "docs/ui-stack.md",
+      "sha256": "679e3aad267a85fdae53a469b5068ce70a40d2ab39ca6f08357aa56de7159005"
+    }
+  ],
+  "localLinksChecked": 30,
+  "dbProviderProduction": "NOT_RUN; no live DB access, migrations or deploy",
+  "fullRegressionWcagAtFndLegalMeetGate": "NOT_RUN; separate tasks",
+  "nextTaskStarted": false
+}

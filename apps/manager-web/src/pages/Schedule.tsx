@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { skipToken, useQuery } from '@tanstack/react-query';
 import {
   listManagerSchedule,
   listManagerSubscriptions,
@@ -11,6 +11,8 @@ import {
   clearManagerLessonMeetLink,
 } from '@online-school/api-contracts';
 import type { ManagerLessonDto, ListManagerScheduleParams } from '@online-school/api-contracts';
+import { Calendar, DatePicker, calendarDate, k8kEnabled, useLocale } from '@online-school/ui';
+import type { CalendarEvent } from '@online-school/ui';
 import { read } from '../api/client.js';
 import { useCommand } from '../hooks/use-command.js';
 import { useOptions } from '../hooks/use-options.js';
@@ -45,32 +47,125 @@ type Action =
   | { kind: 'reschedule' | 'cancel' | 'meet'; lesson: ManagerLessonDto };
 export default function Schedule({ studentId: fixedStudent }: { studentId?: string }) {
   const me = useManager();
-  const [params] = useSearchParams();
-  const [date, setDate] = useState(schoolDate(me.timezone));
-  const [view, setView] = useState('list');
-  const [studentId, setStudentId] = useState(fixedStudent ?? params.get('studentId') ?? '');
-  const [status, setStatus] = useState('SCHEDULED');
-  const [kind, setKind] = useState('');
+  const { locale } = useLocale();
+  const ro = locale === 'ro';
+  const [params, setParams] = useSearchParams();
+  const [defaultDate] = useState(() => schoolDate(me.timezone));
+  const date = calendarDate(params.get('date') ?? '') ?? defaultDate;
+  const requestedView = params.get('view');
+  const view = requestedView === 'day' || requestedView === 'week' ? requestedView : 'list';
+  const studentId = fixedStudent ?? params.get('studentId') ?? '';
+  const kindParam = params.get('kind');
+  const kind = kindParam === 'REGULAR' || kindParam === 'TRIAL' ? kindParam : '';
+  const statusParam = params.get('status');
+  const statuses = ['SCHEDULED', 'STAR_PENDING', 'CONDUCTED', 'CANCELLED', 'DISPUTED'] as const;
+  const status =
+    statusParam === '' ? '' : (statuses.find((item) => item === statusParam) ?? 'SCHEDULED');
+  function setFilter(name: string, value: string) {
+    const next = new URLSearchParams(params);
+    if (value || name === 'status') next.set(name, value);
+    else next.delete(name);
+    setParams(next);
+  }
+  const setDate = (value: string) => setFilter('date', value);
   const [action, setAction] = useState<Action | null>(null);
   const [choosing, setChoosing] = useState(params.get('create') === 'true');
   const options = useOptions(fixedStudent);
   const start = view === 'week' ? weekStart(date) : date;
   const length = view === 'day' ? 1 : 7;
-  const q: ListManagerScheduleParams = {
-    ...(kind ? { kind: kind as 'REGULAR' | 'TRIAL' } : {}),
-    from: localToIso(`${start}T00:00`, me.timezone)!,
-    to: localToIso(`${dateShift(start, length)}T00:00`, me.timezone)!,
-    ...(studentId ? { studentId } : {}),
-    ...(status ? { status: status as NonNullable<ListManagerScheduleParams['status']> } : {}),
-  };
+  const from = localToIso(`${start}T00:00`, me.timezone);
+  const to = localToIso(`${dateShift(start, length)}T00:00`, me.timezone);
+  const horizon = from && to ? { from, to } : null;
+  const q: ListManagerScheduleParams | null = horizon
+    ? {
+        ...horizon,
+        ...(kind ? { kind } : {}),
+        ...(studentId ? { studentId } : {}),
+        ...(status ? { status } : {}),
+      }
+    : null;
   const query = useQuery({
     queryKey: ['manager', 'schedule', q],
-    queryFn: ({ signal }) => read((o) => listManagerSchedule(q, o), signal),
+    queryFn: q ? ({ signal }) => read((o) => listManagerSchedule(q, o), signal) : skipToken,
   });
   const days = Array.from({ length }, (_, i) => dateShift(start, i));
   function newLesson() {
     if (studentId) setAction({ kind: 'create', studentId });
     else setChoosing(true);
+  }
+  function renderLesson(l: ManagerLessonDto, showTime: boolean) {
+    return (
+      <article className="lesson-card" key={l.lessonId}>
+        {showTime && <time>{displayTime(l.startsAt, me.timezone)}</time>}
+        <Link className="record-title" to={routes.student(l.studentId)}>
+          {options.data?.students.find((s) => s.id === l.studentId)?.label ?? ru.student}
+        </Link>
+        <p>{l.teacherName}</p>
+        <Badge value={l.status} />
+        {l.kind === 'TRIAL' && (
+          <>
+            <Badge value="TRIAL" />
+            {l.trialBrief && (
+              <p>
+                <Link to={routes.lead(l.trialBrief.leadId)}>{ru.openLead}</Link> ·{' '}
+                {l.trialBrief.subjectName} · {l.trialBrief.level ?? ru.dash} ·{' '}
+                {label(l.trialBrief.audience)}
+                {l.trialBrief.ageYears ? ` · ${ru.ageYears}: ${l.trialBrief.ageYears}` : ''}
+                {l.trialBrief.grade ? ` · ${ru.grade}: ${l.trialBrief.grade}` : ''}
+              </p>
+            )}
+          </>
+        )}
+        {l.requiresApproval && <p className="warning">{ru.pendingApproval}</p>}
+        {l.meetLink && MEET.test(l.meetLink) && (
+          <a className="button small" href={l.meetLink} target="_blank" rel="noreferrer">
+            {ru.joinMeet}
+          </a>
+        )}
+        <div className="actions">
+          {l.status === 'SCHEDULED' && (
+            <>
+              <button type="button" onClick={() => setAction({ kind: 'reschedule', lesson: l })}>
+                {ru.reschedule}
+              </button>
+              <button type="button" onClick={() => setAction({ kind: 'cancel', lesson: l })}>
+                {ru.cancelLesson}
+              </button>
+              <button type="button" onClick={() => setAction({ kind: 'meet', lesson: l })}>
+                {ru.meet}
+              </button>
+            </>
+          )}
+        </div>
+      </article>
+    );
+  }
+  function renderCalendar(items: ManagerLessonDto[]) {
+    const byId = new Map(items.map((item) => [item.lessonId, item]));
+    const events: CalendarEvent[] = items.map((item) => ({
+      id: item.lessonId,
+      revision: null,
+      startsAt: item.startsAt,
+      endsAt: item.endsAt,
+      title: item.teacherName,
+      resourceId: item.teacherId,
+      state: item.status === 'SCHEDULED' ? 'busy' : 'unknown',
+    }));
+    return (
+      <Calendar
+        label={ro ? 'Orarul lecțiilor' : ru.schedule}
+        timeZone={me.timezone}
+        view={view}
+        days={days}
+        events={events}
+        horizon={horizon}
+        refreshing={query.isFetching}
+        renderEvent={(event) => {
+          const lesson = byId.get(event.id);
+          return lesson ? renderLesson(lesson, false) : null;
+        }}
+      />
+    );
   }
   return (
     <>
@@ -81,15 +176,24 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
         </button>
       </div>
       <div className="filters">
-        <Input
-          name="calendarDate"
-          label={ru.date}
-          type="date"
-          value={date}
-          onChange={(e) => {
-            if (/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)) setDate(e.target.value);
-          }}
-        />
+        {k8kEnabled ? (
+          <DatePicker
+            name="calendarDate"
+            label={ro ? 'Data' : ru.date}
+            value={date}
+            onValueChange={setDate}
+          />
+        ) : (
+          <Input
+            name="calendarDate"
+            label={ru.date}
+            type="date"
+            value={date}
+            onChange={(e) => {
+              if (/^\d{4}-\d{2}-\d{2}$/.test(e.target.value)) setDate(e.target.value);
+            }}
+          />
+        )}
         <Select
           name="view"
           label={ru.schedule}
@@ -100,7 +204,7 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
             { id: 'week', label: ru.week },
             { id: 'list', label: ru.list },
           ]}
-          onChange={(e) => setView(e.target.value)}
+          onChange={(e) => setFilter('view', e.target.value)}
         />
         {!fixedStudent && (
           <Select
@@ -108,14 +212,14 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
             label={ru.student}
             options={options.data?.students ?? []}
             value={studentId}
-            onChange={(e) => setStudentId(e.target.value)}
+            onChange={(e) => setFilter('studentId', e.target.value)}
           />
         )}
         <Select
           name="kind"
           label={ru.type}
           value={kind}
-          onChange={(e) => setKind(e.target.value)}
+          onChange={(e) => setFilter('kind', e.target.value)}
           options={enumOptions(['REGULAR', 'TRIAL'])}
         />
         <Select
@@ -123,7 +227,7 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
           label={ru.status}
           options={enumOptions(['SCHEDULED', 'STAR_PENDING', 'CONDUCTED', 'CANCELLED', 'DISPUTED'])}
           value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          onChange={(e) => setFilter('status', e.target.value)}
         />
         <button type="button" onClick={() => setDate(schoolDate(me.timezone))}>
           {ru.today}
@@ -141,88 +245,39 @@ export default function Schedule({ studentId: fixedStudent }: { studentId?: stri
         </button>
       </div>
       <p className="hint">{ru.leadHelp}</p>
-      <State operational query={query} empty={query.data?.length === 0}>
-        {(items) => (
-          <div className={view === 'week' ? 'calendar week-view' : 'calendar list-view'}>
-            {days.map((day) => (
-              <section className="calendar-day" key={day}>
-                <h2>
-                  {new Intl.DateTimeFormat('ru-RU', {
-                    timeZone: me.timezone,
-                    weekday: 'short',
-                    day: 'numeric',
-                    month: 'short',
-                  }).format(new Date(localToIso(`${day}T12:00`, me.timezone)!))}
-                </h2>
-                {items
-                  .filter((l) => localInput(l.startsAt, me.timezone).slice(0, 10) === day)
-                  .map((l) => (
-                    <article className="lesson-card" key={l.lessonId}>
-                      <time>{displayTime(l.startsAt, me.timezone)}</time>
-                      <Link className="record-title" to={routes.student(l.studentId)}>
-                        {options.data?.students.find((s) => s.id === l.studentId)?.label ??
-                          ru.student}
-                      </Link>
-                      <p>{l.teacherName}</p>
-                      <Badge value={l.status} />
-                      {l.kind === 'TRIAL' && (
-                        <>
-                          <Badge value="TRIAL" />
-                          {l.trialBrief && (
-                            <p>
-                              <Link to={routes.lead(l.trialBrief.leadId)}>{ru.openLead}</Link> ·{' '}
-                              {l.trialBrief.subjectName} · {l.trialBrief.level ?? ru.dash} ·{' '}
-                              {label(l.trialBrief.audience)}
-                              {l.trialBrief.ageYears
-                                ? ` · ${ru.ageYears}: ${l.trialBrief.ageYears}`
-                                : ''}
-                              {l.trialBrief.grade ? ` · ${ru.grade}: ${l.trialBrief.grade}` : ''}
-                            </p>
-                          )}
-                        </>
-                      )}
-                      {l.requiresApproval && <p className="warning">{ru.pendingApproval}</p>}
-                      {l.meetLink && MEET.test(l.meetLink) && (
-                        <a
-                          className="button small"
-                          href={l.meetLink}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {ru.joinMeet}
-                        </a>
-                      )}
-                      <div className="actions">
-                        {l.status === 'SCHEDULED' && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => setAction({ kind: 'reschedule', lesson: l })}
-                            >
-                              {ru.reschedule}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setAction({ kind: 'cancel', lesson: l })}
-                            >
-                              {ru.cancelLesson}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setAction({ kind: 'meet', lesson: l })}
-                            >
-                              {ru.meet}
-                            </button>
-                          </>
-                        )}
-                      </div>
-                    </article>
-                  ))}
-              </section>
-            ))}
-          </div>
-        )}
-      </State>
+      {!horizon ? (
+        <p role="alert">
+          {ro
+            ? 'Intervalul nu poate fi interpretat în fusul orar al contului.'
+            : 'Диапазон нельзя однозначно определить в часовом поясе аккаунта.'}
+        </p>
+      ) : (
+        <State operational query={query} empty={!k8kEnabled && query.data?.length === 0}>
+          {(items) =>
+            k8kEnabled ? (
+              renderCalendar(items)
+            ) : (
+              <div className={view === 'week' ? 'calendar week-view' : 'calendar list-view'}>
+                {days.map((day) => (
+                  <section className="calendar-day" key={day}>
+                    <h2>
+                      {new Intl.DateTimeFormat('ru-RU', {
+                        timeZone: me.timezone,
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'short',
+                      }).format(new Date(localToIso(`${day}T12:00`, me.timezone)!))}
+                    </h2>
+                    {items
+                      .filter((l) => localInput(l.startsAt, me.timezone).slice(0, 10) === day)
+                      .map((l) => renderLesson(l, true))}
+                  </section>
+                ))}
+              </div>
+            )
+          }
+        </State>
+      )}
       {choosing && (
         <Dialog title={ru.selectStudent} close={() => setChoosing(false)}>
           <State query={options}>

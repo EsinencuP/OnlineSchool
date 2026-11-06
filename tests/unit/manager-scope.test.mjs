@@ -5,6 +5,7 @@ import { ManagerScopeService } from '../../apps/api/dist/modules/manager/scope/m
 import { ManagerMeService } from '../../apps/api/dist/modules/manager/me/manager-me.service.js';
 import { ManagerContextGuard } from '../../apps/api/dist/modules/manager/guards/manager-context.guard.js';
 import { PolicyService } from '../../apps/api/dist/core/policy/policy.service.js';
+import { StaffActorContextService } from '../../apps/api/dist/core/actor/actor-context.service.js';
 
 const principal = {
   accountId: randomUUID(),
@@ -19,6 +20,8 @@ let profile, db, scope, ctx;
 beforeEach(async () => {
   profile = { id: randomUUID(), full_name: 'Manager A', deactivated_at: null };
   db = {
+    authAccount: { findUnique: jest.fn(async () => ({ disabled_at: null })) },
+    $queryRaw: jest.fn(async () => [{ now: new Date() }]),
     staffAccount: { findFirst: jest.fn(async () => profile) },
     student: { findFirst: jest.fn(async () => null), count: jest.fn(async () => 2) },
   };
@@ -107,9 +110,26 @@ test('me is scoped, uses configured timezone and policy capabilities without fin
   const old = process.env.SCHOOL_TIMEZONE;
   try {
     process.env.SCHOOL_TIMEZONE = 'Asia/Tokyo';
-    const me = new ManagerMeService({ client: db }, scope, new PolicyService({ client: db }));
+    const me = new ManagerMeService(
+      { client: db },
+      scope,
+      new PolicyService({ client: db }),
+      new StaffActorContextService({ client: db }),
+    );
     const result = await me.get(ctx, principal);
     expect(result.value).toEqual({
+      actorContext: {
+        accountId: principal.accountId,
+        role: 'MANAGER',
+        staffProfileId: profile.id,
+        teacherProfileId: null,
+        displayName: 'Manager A',
+        timezone: 'Asia/Tokyo',
+        timezoneSource: 'SCHOOL_CONFIGURATION',
+        asOf: expect.any(String),
+        accountUpdatedAt: null,
+        profileUpdatedAt: null,
+      },
       managerId: ctx.managerId,
       displayName: 'Manager A',
       role: 'MANAGER',
@@ -121,6 +141,7 @@ test('me is scoped, uses configured timezone and policy capabilities without fin
         'ACCOUNTS_CREATE',
         'SUBSCRIPTIONS_MANAGE',
         'SCHEDULE_MANAGE',
+        'PAYMENTS_REQUEST_APPROVAL',
       ],
     });
     expect(db.student.count.mock.calls[0][0].where.manager_assignments.some.manager_id).toBe(

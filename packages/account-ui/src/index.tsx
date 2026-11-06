@@ -7,14 +7,25 @@ import {
 } from '@online-school/api-contracts';
 import type { ClientError, SchoolRequestOptions } from '@online-school/api-contracts';
 import type { Result } from '@online-school/shared';
+import { LanguageSelector, translate, useLocale } from '@online-school/ui';
+import type { CabinetRole, Locale, PlainMessageKey } from '@online-school/ui';
 
-export const roleLabels: Record<string, string> = {
-  STUDENT: 'Ученик',
-  TEACHER: 'Преподаватель',
-  MANAGER: 'Менеджер',
-  DIRECTOR: 'Руководитель',
-  TECH_OPERATOR: 'Технический оператор',
-};
+const roleKeys = {
+  STUDENT: 'account.role.STUDENT',
+  TEACHER: 'account.role.TEACHER',
+  MANAGER: 'account.role.MANAGER',
+  DIRECTOR: 'account.role.DIRECTOR',
+  TECH_OPERATOR: 'account.role.TECH_OPERATOR',
+} as const satisfies Record<CabinetRole, PlainMessageKey>;
+export function accountRoleLabel(locale: Locale, role: string) {
+  return translate(
+    locale,
+    Object.hasOwn(roleKeys, role) ? roleKeys[role as CabinetRole] : 'account.role.unknown',
+  );
+}
+export const roleLabels: Record<string, string> = Object.fromEntries(
+  Object.entries(roleKeys).map(([role, key]) => [role, translate('ru', key)]),
+);
 const homes: Record<string, string> = {
   STUDENT: '/student',
   TEACHER: '/teacher',
@@ -48,79 +59,106 @@ export interface AccountList {
   items: DemoAccount[];
 }
 export const getAccounts = (signal?: AbortSignal) => getPlatformAccounts(requestOptions(signal));
-export function AccountMenu({ name, role }: { name: string; role: string }) {
+export type AccountLogoutOutcome = 'ended' | 'rejected' | 'unknown';
+type AccountError = 'account.switchFailed' | 'account.logoutFailed' | 'account.unknownOutcome';
+function unknownOutcome(status: number) {
+  return status === 0 || status >= 500;
+}
+async function logoutAccount(): Promise<AccountLogoutOutcome> {
+  const result = await mutation((o) => deleteSession({}, o));
+  if (result.ok || result.error.status === 401) return 'ended';
+  return unknownOutcome(result.error.status) ? 'unknown' : 'rejected';
+}
+export function AccountMenu({
+  name,
+  role,
+  onLogout,
+}: {
+  name: string;
+  role: string;
+  onLogout?: () => Promise<AccountLogoutOutcome>;
+}) {
+  const { locale, t } = useLocale();
+  const roleName = accountRoleLabel(locale, role);
   const [accounts, setAccounts] = useState<AccountList | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
+  const [catalogFailed, setCatalogFailed] = useState(false);
+  const [pending, setPending] = useState<'switch' | 'logout' | null>(null);
+  const [error, setError] = useState<AccountError | null>(null);
+  const blocked = pending !== null || error === 'account.unknownOutcome';
   const details = useRef<HTMLDetailsElement>(null);
+  const sessionChannel = useRef<BroadcastChannel | null>(null);
   useEffect(() => {
     const abort = new AbortController();
     const channel =
       typeof BroadcastChannel === 'function' ? new BroadcastChannel('school-account') : null;
+    sessionChannel.current = channel;
     if (channel) channel.onmessage = () => window.location.replace('/');
     void getAccounts(abort.signal).then((result) => {
-      if (!abort.signal.aborted && result.ok) setAccounts(result.value);
+      if (abort.signal.aborted) return;
+      if (result.ok) setAccounts(result.value);
+      else setCatalogFailed(true);
     });
     const outside = (event: PointerEvent) => {
       if (details.current && !details.current.contains(event.target as Node))
         details.current.open = false;
     };
     const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && details.current?.open) {
-        details.current.open = false;
-        details.current.querySelector('summary')?.focus();
+      const menu = details.current;
+      if (event.key === 'Escape' && menu?.open && menu.contains(event.target as Node)) {
+        event.preventDefault();
+        event.stopPropagation();
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
       }
     };
     document.addEventListener('pointerdown', outside);
     document.addEventListener('keydown', escape);
     return () => {
       abort.abort();
+      sessionChannel.current = null;
       channel?.close();
       document.removeEventListener('pointerdown', outside);
       document.removeEventListener('keydown', escape);
     };
   }, []);
+  function announceSessionEnd() {
+    // The sending channel does not receive its own event.
+    sessionChannel.current?.postMessage('session-replaced');
+  }
   async function change(key: string) {
-    if (busy) return;
-    setBusy(true);
-    setError('');
+    if (blocked) return;
+    setPending('switch');
+    setError(null);
     const result = await mutation((o) =>
       switchDemoUser({ key: key as Parameters<typeof switchDemoUser>[0]['key'] }, o),
     );
     if (result.ok && Object.values(homes).includes(result.value.home)) {
-      if (typeof BroadcastChannel === 'function') {
-        const channel = new BroadcastChannel('school-account');
-        channel.postMessage('session-replaced');
-        channel.close();
-      }
+      announceSessionEnd();
       // Full navigation discards every role's cached queries and in-memory forms.
       window.location.replace(result.value.home);
+    } else if (!result.ok && result.error.status === 401) {
+      announceSessionEnd();
+      window.location.replace('/account');
     } else {
       setError(
-        result.ok
-          ? 'Не удалось открыть кабинет.'
-          : result.error.status === 401
-            ? 'Сессия истекла. Войдите заново.'
-            : 'Не удалось сменить пользователя. Попробуйте ещё раз.',
+        result.ok || unknownOutcome(result.error.status)
+          ? 'account.unknownOutcome'
+          : 'account.switchFailed',
       );
-      setBusy(false);
+      setPending(null);
     }
   }
   async function logout() {
-    if (busy) return;
-    setBusy(true);
-    setError('');
-    const result = await mutation((o) => deleteSession({}, o));
-    if (result.ok || result.error.status === 401) {
-      if (typeof BroadcastChannel === 'function') {
-        const channel = new BroadcastChannel('school-account');
-        channel.postMessage('session-replaced');
-        channel.close();
-      }
-      window.location.replace('/account');
+    if (blocked) return;
+    setPending('logout');
+    setError(null);
+    const outcome = await (onLogout ?? logoutAccount)().catch(() => 'unknown' as const);
+    if (outcome === 'ended') {
+      announceSessionEnd();
+      if (!onLogout) window.location.replace('/account');
     } else {
-      setError('Не удалось выйти. Попробуйте ещё раз.');
-      setBusy(false);
+      setError(outcome === 'unknown' ? 'account.unknownOutcome' : 'account.logoutFailed');
+      setPending(null);
     }
   }
   return (
@@ -130,60 +168,60 @@ export function AccountMenu({ name, role }: { name: string; role: string }) {
           {name.replace('[ДЕМО] ', '').slice(0, 1)}
         </span>
         <span className="account-caption">
-          {name} <small>{roleLabels[role] ?? role}</small>
+          {name} <small>{roleName}</small>
         </span>
         <span aria-hidden="true">⌄</span>
       </summary>
       <div className="account-popover">
-        <strong>Аккаунт</strong>
+        <strong>{t('account.heading')}</strong>
         <p>
-          {name} · {roleLabels[role]}
+          {name} · {roleName}
         </p>
-        <h2>Сменить пользователя</h2>
-        {accounts?.enabled ? (
+        <LanguageSelector />
+        {!accounts ? (
+          <p role="status">{t(catalogFailed ? 'account.catalogUnavailable' : 'loading')}</p>
+        ) : accounts.enabled && accounts.items.length > 0 ? (
           <>
-            <p className="account-hint">
-              Тестовая школа · роль и кабинет изменятся вместе с пользователем.
-            </p>
+            <h2>{t('account.switchUser')}</h2>
+            <p className="account-hint">{t('account.demoHint')}</p>
             <div className="account-choices">
               {accounts.items.map((a) => (
                 <button
                   type="button"
                   key={a.key}
-                  disabled={busy || accounts.currentKey === a.key}
+                  disabled={blocked || accounts.currentKey === a.key}
                   onClick={() => void change(a.key)}
                   aria-current={accounts.currentKey === a.key ? 'true' : undefined}
                 >
                   <span>
                     {a.name}
-                    <small>{roleLabels[a.role]}</small>
+                    <small>{accountRoleLabel(locale, a.role)}</small>
                   </span>
                   <span aria-hidden="true">{accounts.currentKey === a.key ? '✓' : '→'}</span>
                 </button>
               ))}
             </div>
           </>
-        ) : (
-          <p>
-            Для другого аккаунта <a href="/account">войдите с его логином и паролем</a>.
-          </p>
+        ) : null}
+        {pending && (
+          <p role="status">{t(pending === 'logout' ? 'account.loggingOut' : 'auth.opening')}</p>
         )}
-        {busy && <p role="status">Открываем кабинет…</p>}
-        {error && (
-          <p role="alert">
-            {error} <a href="/account">Войти</a>
-          </p>
-        )}
-        <a className="account-login-link" href="/account">
-          Войти в другой аккаунт по паролю
+        {error && <p role="alert">{t(error)}</p>}
+        <a
+          className="account-login-link"
+          href={error === 'account.unknownOutcome' ? '/' : '/account'}
+        >
+          {t(
+            error === 'account.unknownOutcome' ? 'account.verifySession' : 'account.signInAnother',
+          )}
         </a>
         <button
           type="button"
           className="account-logout"
-          disabled={busy}
+          disabled={blocked}
           onClick={() => void logout()}
         >
-          Выйти из аккаунта
+          {t('account.logout')}
         </button>
       </div>
     </details>

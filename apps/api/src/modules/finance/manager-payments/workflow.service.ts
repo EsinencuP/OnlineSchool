@@ -6,6 +6,8 @@ import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
 import type { DomainError } from '../../../core/errors/domain-error.js';
 import { domainError } from '../../../core/errors/domain-error.js';
+import { fail, unwrap } from '../../../core/errors/domain-error.js';
+import { actionEligibility } from '../../../core/actor/action-eligibility.js';
 import { AuditService } from '../../../core/audit/audit.service.js';
 import { PolicyService } from '../../../core/policy/policy.service.js';
 import type { CriticalContext } from '../../../core/http.js';
@@ -178,6 +180,34 @@ export class ManagerPaymentWorkflow {
       return err(subscriptionFailure(error));
     }
   }
+  private approvalState(row: ReceiptRow): void {
+    if (row.confirmed_by_director_at) return fail(domainError('PAYMENT_IMMUTABLE', 409));
+    if (this.project(row).status !== 'PENDING')
+      return fail(domainError('PAYMENT_NOT_PENDING', 409));
+  }
+  async approvalEligibility(ctx: CriticalContext, id: string) {
+    const now = await at(ctx.tx);
+    return actionEligibility(
+      'payment.request-approval',
+      now,
+      async () => {
+        const row = await ctx.tx.paymentReceipt.findUnique({
+          where: { id },
+          include: includeReceipt,
+        });
+        if (!row?.student_id) return fail(domainError('PAYMENT_NOT_FOUND', 404));
+        const decision = await this.policy.managerPaymentPublication(
+          ctx.actor,
+          row.student_id,
+          ctx.tx,
+        );
+        if (decision.ok) return fail(domainError('FINANCE_POLICY_CONFIGURATION_ERROR', 503));
+        if (decision.error.code !== 'APPROVAL_REQUIRED') unwrap(decision);
+        return row;
+      },
+      async (row) => this.approvalState(row),
+    );
+  }
   async publishPayment(
     ctx: CriticalContext,
     studentId: string,
@@ -190,9 +220,7 @@ export class ManagerPaymentWorkflow {
         include: includeReceipt,
       });
       if (!row) return err(domainError('PAYMENT_NOT_FOUND', 404));
-      if (row.confirmed_by_director_at) return err(domainError('PAYMENT_IMMUTABLE', 409));
-      if (this.project(row).status !== 'PENDING')
-        return err(domainError('PAYMENT_NOT_PENDING', 409));
+      this.approvalState(row);
       const decision = await this.policy.managerPaymentPublication(ctx.actor, studentId, ctx.tx);
       if (decision.ok) return err(domainError('FINANCE_POLICY_CONFIGURATION_ERROR', 503));
       if (decision.error.code !== 'APPROVAL_REQUIRED') return decision;

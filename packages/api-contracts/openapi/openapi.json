@@ -6130,6 +6130,113 @@
         ]
       }
     },
+    "/api/v1/manager/payments/{paymentId}/approval-eligibility": {
+      "get": {
+        "operationId": "getManagerPaymentApprovalEligibility",
+        "parameters": [
+          {
+            "name": "paymentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffActionEligibilityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own approval request policy; never director receipt confirmation",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/payments/{paymentId}/confirm": {
       "post": {
         "description": "Submits director approval under current Finance policy. Never grants the manager director publication authority.",
@@ -10721,6 +10828,227 @@
         ]
       }
     },
+    "/api/v1/platform/actor-context": {
+      "get": {
+        "operationId": "getStaffActorContext",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffActorContextDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN or MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store or configuration unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own active staff identity; manager context is served by getManagerMe",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
+    "/api/v1/platform/lessons/{id}/start-eligibility": {
+      "get": {
+        "operationId": "getTeacherLessonStartEligibility",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffActionEligibilityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN or MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store or configuration unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Advisory only; startLesson repeats the same policy inside the command transaction",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
+    "/api/v1/platform/payments/{id}/confirm-eligibility": {
+      "get": {
+        "operationId": "getDirectorPaymentConfirmationEligibility",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffActionEligibilityDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN or MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store or configuration unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Director receipt confirmation policy; no allocation or ledger write",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
     "/api/v1/platform/workspace": {
       "get": {
         "operationId": "getPlatformWorkspace",
@@ -10735,8 +11063,53 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN or MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store or configuration unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
           }
         },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
         "summary": "Teacher own lessons and assignments, or director school overview",
         "tags": [
           "Platform"
@@ -20094,6 +20467,9 @@
       "ManagerMeResponseDto": {
         "type": "object",
         "properties": {
+          "actorContext": {
+            "$ref": "#/components/schemas/StaffActorContextDto"
+          },
           "managerId": {
             "type": "string",
             "format": "uuid"
@@ -20124,6 +20500,7 @@
                 "STUDENTS_VIEW",
                 "ACCOUNTS_CREATE",
                 "PAYMENTS_CONFIRM",
+                "PAYMENTS_REQUEST_APPROVAL",
                 "SUBSCRIPTIONS_MANAGE",
                 "SCHEDULE_MANAGE",
                 "TASKS_PROCESS",
@@ -20133,6 +20510,7 @@
           }
         },
         "required": [
+          "actorContext",
           "managerId",
           "displayName",
           "role",
@@ -21623,6 +22001,12 @@
       "PlatformWorkspaceDto": {
         "type": "object",
         "properties": {
+          "actorContext": {
+            "$ref": "#/components/schemas/StaffActorContextDto"
+          },
+          "coverage": {
+            "$ref": "#/components/schemas/WorkspaceCoverageSetDto"
+          },
           "name": {
             "type": "string"
           },
@@ -21655,6 +22039,8 @@
           }
         },
         "required": [
+          "actorContext",
+          "coverage",
           "name",
           "role",
           "lessons",
@@ -22798,6 +23184,139 @@
           "occurrences"
         ],
         "additionalProperties": true
+      },
+      "StaffActionEligibilityDto": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "lesson.start",
+              "payment.request-approval",
+              "payment.confirm"
+            ]
+          },
+          "objectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Null when command has no revision precondition; updated_at is not a revision"
+          },
+          "allowed": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Stable code; unavailable does not disclose foreign object state"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "sourceUpdatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "action",
+          "objectId",
+          "revision",
+          "allowed",
+          "reason",
+          "asOf",
+          "sourceUpdatedAt"
+        ]
+      },
+      "StaffActorContextDto": {
+        "type": "object",
+        "properties": {
+          "accountId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "TEACHER",
+              "MANAGER",
+              "DIRECTOR",
+              "TECH_OPERATOR"
+            ]
+          },
+          "staffProfileId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "teacherProfileId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "timezone": {
+            "type": "string"
+          },
+          "timezoneSource": {
+            "type": "string",
+            "enum": [
+              "SCHOOL_CONFIGURATION",
+              "SCHOOL_DEFAULT"
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Server DB clock, not a ledger confirmation"
+          },
+          "accountUpdatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "profileUpdatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "accountId",
+          "role",
+          "staffProfileId",
+          "teacherProfileId",
+          "displayName",
+          "timezone",
+          "timezoneSource",
+          "asOf",
+          "accountUpdatedAt",
+          "profileUpdatedAt"
+        ]
       },
       "StartLessonRequest": {
         "type": "object",
@@ -24540,6 +25059,74 @@
         ],
         "additionalProperties": false
       },
+      "WorkspaceCoverageDto": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "string",
+            "enum": [
+              "OWN_TEACHER",
+              "SCHOOL",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "windowFrom": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "windowTo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "sourceUpdatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Latest updated_at among returned source rows only, not a global watermark"
+          },
+          "pageInfo": {
+            "$ref": "#/components/schemas/WorkspacePageInfoDto"
+          }
+        },
+        "required": [
+          "scope",
+          "windowFrom",
+          "windowTo",
+          "sourceUpdatedAt",
+          "pageInfo"
+        ]
+      },
+      "WorkspaceCoverageSetDto": {
+        "type": "object",
+        "properties": {
+          "lessons": {
+            "$ref": "#/components/schemas/WorkspaceCoverageDto"
+          },
+          "students": {
+            "$ref": "#/components/schemas/WorkspaceCoverageDto"
+          },
+          "homework": {
+            "$ref": "#/components/schemas/WorkspaceCoverageDto"
+          },
+          "tasks": {
+            "$ref": "#/components/schemas/WorkspaceCoverageDto"
+          }
+        },
+        "required": [
+          "lessons",
+          "students",
+          "homework",
+          "tasks"
+        ]
+      },
       "WorkspaceHomeworkDto": {
         "type": "object",
         "properties": {
@@ -24606,6 +25193,33 @@
           "student",
           "teacher",
           "meetUrl"
+        ]
+      },
+      "WorkspacePageInfoDto": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer"
+          },
+          "returned": {
+            "type": "integer"
+          },
+          "hasMore": {
+            "type": "boolean"
+          },
+          "total": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "Unknown total; never a global KPI"
+          }
+        },
+        "required": [
+          "limit",
+          "returned",
+          "hasMore",
+          "total"
         ]
       },
       "WorkspaceStudentDto": {

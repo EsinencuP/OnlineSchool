@@ -3,6 +3,8 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getManagerLeadSummary, listManagerLeads } from '@online-school/api-contracts';
 import type { ListManagerLeadsParams } from '@online-school/api-contracts';
+import { k8kEnabled } from '@online-school/ui';
+import { LeadTable } from '../components/lead-table.js';
 import { read } from '../api/client.js';
 import { useManager } from '../session.js';
 import { useOptions } from '../hooks/use-options.js';
@@ -68,6 +70,13 @@ export default function Leads() {
       </State>
       <form
         className="filters"
+        key={
+          k8kEnabled
+            ? JSON.stringify(
+                ['search', 'stage', 'source', 'subjectId', 'overdue'].map((key) => params.get(key)),
+              )
+            : undefined
+        }
         onSubmit={(e) => {
           e.preventDefault();
           const f = new FormData(e.currentTarget),
@@ -149,6 +158,20 @@ export default function Leads() {
                   </section>
                 ))}
               </div>
+            ) : k8kEnabled ? (
+              <LeadTable
+                rows={d.items}
+                timeZone={me.timezone}
+                nextCursor={d.nextCursor}
+                canFirst={params.has('cursor')}
+                onPageChange={(intent) => {
+                  const next = new URLSearchParams(params);
+                  if (intent === 'first') next.delete('cursor');
+                  else if (intent === 'next' && d.nextCursor) next.set('cursor', d.nextCursor);
+                  else return;
+                  setParams(next);
+                }}
+              />
             ) : (
               <div className="table-wrap">
                 <table>
@@ -191,32 +214,34 @@ export default function Leads() {
                 </table>
               </div>
             )}
-            <div className="pagination">
-              {params.has('cursor') && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const p = new URLSearchParams(params);
-                    p.delete('cursor');
-                    setParams(p);
-                  }}
-                >
-                  {ru.firstPage}
-                </button>
-              )}
-              {d.nextCursor && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const p = new URLSearchParams(params);
-                    p.set('cursor', d.nextCursor!);
-                    setParams(p);
-                  }}
-                >
-                  {ru.next}
-                </button>
-              )}
-            </div>
+            {(!k8kEnabled || board) && (
+              <div className="pagination">
+                {params.has('cursor') && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const p = new URLSearchParams(params);
+                      p.delete('cursor');
+                      setParams(p);
+                    }}
+                  >
+                    {ru.firstPage}
+                  </button>
+                )}
+                {d.nextCursor && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const p = new URLSearchParams(params);
+                      p.set('cursor', d.nextCursor!);
+                      setParams(p);
+                    }}
+                  >
+                    {ru.next}
+                  </button>
+                )}
+              </div>
+            )}
           </>
         )}
       </State>

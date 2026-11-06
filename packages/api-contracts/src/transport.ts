@@ -7,6 +7,7 @@ export type SchoolRequestOptions = RequestInit & {
   binaryResponse?: boolean;
 };
 export type ClientError = {
+  details?: Record<string, unknown>;
   existingId?: string;
   code: string;
   status: number;
@@ -70,6 +71,7 @@ export async function schoolFetch<T>(
             : typeof error.detail === 'string'
               ? error.detail
               : 'Request failed',
+        ...(Object.keys(details).length ? { details } : {}),
         ...(contacts &&
         typeof contacts.whatsapp === 'string' &&
         typeof contacts.telegram === 'string'

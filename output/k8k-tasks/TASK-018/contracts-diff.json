@@ -1,0 +1,42 @@
+{
+  "oldOperations": 140,
+  "newOperations": 144,
+  "added": [
+    {
+      "path": "/api/v1/manager/payments/{paymentId}/approval-eligibility",
+      "method": "get",
+      "operationId": "getManagerPaymentApprovalEligibility"
+    },
+    {
+      "path": "/api/v1/platform/actor-context",
+      "method": "get",
+      "operationId": "getStaffActorContext"
+    },
+    {
+      "path": "/api/v1/platform/lessons/{id}/start-eligibility",
+      "method": "get",
+      "operationId": "getTeacherLessonStartEligibility"
+    },
+    {
+      "path": "/api/v1/platform/payments/{id}/confirm-eligibility",
+      "method": "get",
+      "operationId": "getDirectorPaymentConfirmationEligibility"
+    }
+  ],
+  "removed": [],
+  "changedInputs": [],
+  "removedProperties": [],
+  "newSchemas": [
+    "StaffActionEligibilityDto",
+    "StaffActorContextDto",
+    "WorkspaceCoverageDto",
+    "WorkspaceCoverageSetDto",
+    "WorkspacePageInfoDto"
+  ],
+  "generatedBy": [
+    "api export:openapi with DatabaseService.client hard denied",
+    "api-contracts generate:client",
+    "api-contracts build"
+  ],
+  "compatibility": "Old operation IDs, paths, methods, request body and parameter metadata retained; additive response fields and capability enum."
+}

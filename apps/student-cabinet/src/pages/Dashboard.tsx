@@ -20,7 +20,11 @@ import {
 } from '../components.js';
 import { useMe } from '../Layout.js';
 import { LessonList } from './Lessons.js';
+import { StudentHome } from './StudentHome.js';
 export function Dashboard() {
+  return k8kEnabled ? <StudentHome /> : <LegacyDashboard />;
+}
+function LegacyDashboard() {
   const me = useMe(),
     dashboard = useStudentQuery(['dashboard'], getStudentDashboard, true, 60_000);
   const lessons = useStudentQuery(['upcoming'], getStudentUpcomingLessons, true, 30_000);

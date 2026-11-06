@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LanguageSelector, useLocale } from '@online-school/ui';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   createSession,
@@ -18,6 +19,7 @@ import { Icon } from '../components/icon.js';
 import { ru } from '../i18n/ru.js';
 import type { ApiErrorView } from '../api/error-view.js';
 export default function Login() {
+  const { t } = useLocale();
   const [mfa, setMfa] = useState(false);
   const [passkeyError, setPasskeyError] = useState<ApiErrorView | null>(null);
   const [keyBusy, setKeyBusy] = useState(false);
@@ -133,6 +135,7 @@ export default function Login() {
             <Icon name="academy" size={31} />
           </div>
           <p className="eyebrow">{ru.academy}</p>
+          <LanguageSelector />
           <h1>{mfa ? ru.mfa : ru.login}</h1>
           <p className="login-description">{mfa ? ru.firstKeyHelp : ru.loginFormHelp}</p>
           {sessionError && <ErrorBox error={sessionError} />}
@@ -163,10 +166,15 @@ export default function Login() {
               </div>
             </>
           ) : (
-            <FormShell busy={command.busy} error={command.error} submit={login} button={ru.enter}>
+            <FormShell
+              busy={command.busy}
+              error={command.error}
+              submit={login}
+              button={t('auth.enter')}
+            >
               <Input
                 name="email"
-                label={ru.email}
+                label={t('auth.email')}
                 type="email"
                 autoComplete="username"
                 required
@@ -174,7 +182,7 @@ export default function Login() {
               />
               <Input
                 name="password"
-                label={ru.password}
+                label={t('auth.password')}
                 type="password"
                 autoComplete="current-password"
                 required

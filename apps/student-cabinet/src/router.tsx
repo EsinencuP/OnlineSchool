@@ -1,5 +1,7 @@
+import { Reports } from './pages/Reports.js';
 import {
   createBrowserRouter,
+  Navigate,
   Link,
   Outlet,
   useLocation,
@@ -62,9 +64,13 @@ export const router = createBrowserRouter([
           { path: '/student/homework', element: <Homework /> },
           { path: '/student/homework/:id', element: <HomeworkDetail /> },
           { path: '/student/skills', element: <SkillMap /> },
+          { path: '/student/reports', element: <Reports /> },
           { path: '/student/materials', element: <Materials /> },
           { path: '/student/subscription', element: <Subscription /> },
-          { path: '/student/notifications', element: <Notifications /> },
+          {
+            path: '/student/notifications',
+            element: k8kEnabled ? <Navigate replace to="/student?events=1" /> : <Notifications />,
+          },
           { path: '/student/profile', element: <Profile /> },
           { path: '/student/security', element: <Security /> },
         ],

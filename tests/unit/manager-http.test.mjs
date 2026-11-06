@@ -69,6 +69,7 @@ beforeAll(async () => {
       recovery_registration_required: false,
     });
   db = {
+    authAccount: { findUnique: jest.fn(async ({ where }) => accounts.get(where.id) ?? null) },
     $queryRaw: jest.fn(async (parts, ...values) =>
       parts.join('?').includes('SELECT r.code')
         ? [{ code: roles[ids.indexOf(values[0])] }]
@@ -170,6 +171,19 @@ test('active managers get independent portfolio counts; query/path/body cannot s
   const b = await get(1);
   expect(a.status).toBe(200);
   expect(a.body).toEqual({
+    actorContext: {
+      accountId: ids[0],
+      role: 'MANAGER',
+      staffProfileId: staffIds[0],
+      teacherProfileId: null,
+      displayName: 'Manager 0',
+      timezone: process.env.SCHOOL_TIMEZONE ?? 'Europe/Chisinau',
+      timezoneSource:
+        process.env.SCHOOL_TIMEZONE === undefined ? 'SCHOOL_DEFAULT' : 'SCHOOL_CONFIGURATION',
+      asOf: expect.any(String),
+      accountUpdatedAt: null,
+      profileUpdatedAt: null,
+    },
     managerId: staffIds[0],
     displayName: 'Manager 0',
     role: 'MANAGER',
@@ -181,6 +195,7 @@ test('active managers get independent portfolio counts; query/path/body cannot s
       'ACCOUNTS_CREATE',
       'SUBSCRIPTIONS_MANAGE',
       'SCHEDULE_MANAGE',
+      'PAYMENTS_REQUEST_APPROVAL',
     ],
   });
   expect(b.body.managerId).toBe(staffIds[1]);

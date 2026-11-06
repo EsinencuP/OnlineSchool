@@ -7,6 +7,8 @@ import { TeacherRateService } from '../finance/teacher-rate.service.js';
 import { ScheduleAccess } from './schedule-access.service.js';
 import { ScheduleEvents } from './schedule-events.service.js';
 import { admission } from './booking.service.js';
+import type { LessonOccurrence } from '@online-school/db';
+import { actionEligibility } from '../../core/actor/action-eligibility.js';
 
 @Injectable()
 export class OutcomesService {
@@ -21,16 +23,7 @@ export class OutcomesService {
     await ctx.tx.$queryRaw`SELECT id FROM lesson_occurrences WHERE id=${id}::uuid FOR UPDATE`;
     const lesson = await this.access.lesson(ctx, id, true),
       now = await at(ctx.tx);
-    if (
-      !['SCHEDULED', 'STAR_PENDING'].includes(lesson.status) ||
-      now < lesson.scheduled_at ||
-      now >= lesson.scheduled_end_at
-    )
-      return fail(domainError('LESSON_NOT_IN_START_WINDOW', 422));
-    const en = await ctx.tx.studentSubjectEnrollment.findUniqueOrThrow({
-      where: { id: lesson.enrollment_id },
-    });
-    if (en.status !== 'ACTIVE') return fail(domainError('ENROLLMENT_INACTIVE', 422));
+    await this.startPolicy(ctx, lesson, now);
     if (lesson.kind === 'TRIAL') {
       if (lesson.trial_started_at) return lesson;
       const started = await ctx.tx.lessonOccurrence.update({
@@ -40,9 +33,6 @@ export class OutcomesService {
       await this.events.change(ctx, id, lesson, started, 'Пробный урок начат преподавателем');
       return started;
     }
-    const allowed = await admission(ctx.tx, lesson.enrollment_id, now);
-    if (!allowed.paid && !allowed.permissionId)
-      return fail(domainError('PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED', 403));
     const started = await this.rates.snapshotAtStart(ctx, id, lesson.scheduled_teacher_id, now);
     const updated =
       lesson.status === 'STAR_PENDING'
@@ -56,6 +46,35 @@ export class OutcomesService {
       'Actual lesson start recorded by assigned teacher',
     );
     return updated;
+  }
+  async startEligibility(ctx: CriticalContext, id: string) {
+    const now = await at(ctx.tx);
+    return actionEligibility(
+      'lesson.start',
+      now,
+      () => this.access.lesson(ctx, uuid(id), true),
+      (lesson) => this.startPolicy(ctx, lesson, now),
+    );
+  }
+  private async startPolicy(
+    ctx: CriticalContext,
+    lesson: LessonOccurrence,
+    now: Date,
+  ): Promise<void> {
+    if (
+      !['SCHEDULED', 'STAR_PENDING'].includes(lesson.status) ||
+      now < lesson.scheduled_at ||
+      now >= lesson.scheduled_end_at
+    )
+      return fail(domainError('LESSON_NOT_IN_START_WINDOW', 422));
+    const en = await ctx.tx.studentSubjectEnrollment.findUniqueOrThrow({
+      where: { id: lesson.enrollment_id },
+    });
+    if (en.status !== 'ACTIVE') return fail(domainError('ENROLLMENT_INACTIVE', 422));
+    if (lesson.kind === 'TRIAL') return;
+    const allowed = await admission(ctx.tx, lesson.enrollment_id, now);
+    if (!allowed.paid && !allowed.permissionId)
+      return fail(domainError('PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED', 403));
   }
   async report(ctx: CriticalContext, id: string, body: unknown) {
     const i = object(body, ['result', 'actualStartedAt', 'durationMin', 'note', 'studentNoShow']);

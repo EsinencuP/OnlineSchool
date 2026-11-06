@@ -17,8 +17,9 @@
   },
   "dependencies": {
     "@online-school/api-contracts": "workspace:*",
-    "react": "18.3.1",
-    "@online-school/shared": "workspace:*"
+    "@online-school/shared": "workspace:*",
+    "@online-school/ui": "workspace:*",
+    "react": "18.3.1"
   },
   "devDependencies": {
     "@types/react": "18.3.31",

@@ -145,6 +145,8 @@ export function startFixture(port = 4175) {
         return json({ ok: true });
       }
       if (path.startsWith('/api/')) {
+        if (path === '/api/v1/platform/accounts' && req.method === 'GET')
+          return json({ enabled: false, currentKey: null, items: [] });
         state.calls.push({
           path,
           query: url.search,
@@ -366,6 +368,34 @@ export function startFixture(port = 4175) {
               url,
             ),
           );
+        if (path.endsWith('/student/reports'))
+          return json(
+            list(
+              [
+                {
+                  reportId: '80000000-0000-4000-8000-000000000001',
+                  subjectName: 'Математика',
+                  createdAt: now(),
+                  periodFrom: '2026-10-01',
+                  periodTo: '2026-11-01',
+                  lessonCount: 8,
+                  teacherName: 'Преподаватель ДЕМО',
+                  isNew: true,
+                  content: {
+                    achievements: 'Решает задачи',
+                    growthAreas: 'Проверка ответа',
+                    recommendations: 'Практиковаться',
+                    teacherSignature: 'Подтверждено преподавателем',
+                  },
+                },
+              ],
+              url,
+            ),
+          );
+        if (path.match(/\/reports\/[^/]+\/read$/)) {
+          res.writeHead(204);
+          return res.end();
+        }
         if (path.endsWith('/notifications/count')) return json({ unreadCount: state.unread });
         if (
           path.endsWith('/notifications/read-all') ||

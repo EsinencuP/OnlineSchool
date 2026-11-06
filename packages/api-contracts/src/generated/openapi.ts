@@ -844,6 +844,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/payments/{paymentId}/approval-eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Own approval request policy; never director receipt confirmation */
+        get: operations["getManagerPaymentApprovalEligibility"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/payments/{paymentId}/confirm": {
         parameters: {
             query?: never;
@@ -1367,6 +1384,57 @@ export interface paths {
         };
         /** Public demo names and current switching eligibility; no credentials */
         get: operations["getPlatformAccounts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/actor-context": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Own active staff identity; manager context is served by getManagerMe */
+        get: operations["getStaffActorContext"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/lessons/{id}/start-eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Advisory only; startLesson repeats the same policy inside the command transaction */
+        get: operations["getTeacherLessonStartEligibility"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/payments/{id}/confirm-eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Director receipt confirmation policy; no allocation or ledger write */
+        get: operations["getDirectorPaymentConfirmationEligibility"];
         put?: never;
         post?: never;
         delete?: never;
@@ -3451,6 +3519,7 @@ export interface components {
             requiresApproval: boolean;
         };
         ManagerMeResponseDto: {
+            actorContext: components["schemas"]["StaffActorContextDto"];
             /** Format: uuid */
             managerId: string;
             displayName: string;
@@ -3459,7 +3528,7 @@ export interface components {
             portfolioSize: number;
             /** @example Europe/Chisinau */
             timezone: string;
-            capabilities: ("LEADS_MANAGE" | "STUDENTS_VIEW" | "ACCOUNTS_CREATE" | "PAYMENTS_CONFIRM" | "SUBSCRIPTIONS_MANAGE" | "SCHEDULE_MANAGE" | "TASKS_PROCESS" | "NOTIFICATIONS_SEND")[];
+            capabilities: ("LEADS_MANAGE" | "STUDENTS_VIEW" | "ACCOUNTS_CREATE" | "PAYMENTS_CONFIRM" | "PAYMENTS_REQUEST_APPROVAL" | "SUBSCRIPTIONS_MANAGE" | "SCHEDULE_MANAGE" | "TASKS_PROCESS" | "NOTIFICATIONS_SEND")[];
         };
         ManagerNamedOptionDto: {
             id: string;
@@ -3851,6 +3920,8 @@ export interface components {
             items: components["schemas"]["DemoAccountDto"][];
         };
         PlatformWorkspaceDto: {
+            actorContext: components["schemas"]["StaffActorContextDto"];
+            coverage: components["schemas"]["WorkspaceCoverageSetDto"];
             name: string;
             role: string;
             lessons: components["schemas"]["WorkspaceLessonDto"][];
@@ -4191,6 +4262,44 @@ export interface components {
             occurrences: components["schemas"]["LessonResponse"][];
         } & {
             [key: string]: unknown;
+        };
+        StaffActionEligibilityDto: {
+            /** @enum {string} */
+            action: "lesson.start" | "payment.request-approval" | "payment.confirm";
+            /** Format: uuid */
+            objectId: string | null;
+            /** @description Null when command has no revision precondition; updated_at is not a revision */
+            revision: string | null;
+            allowed: boolean;
+            /** @description Stable code; unavailable does not disclose foreign object state */
+            reason: string | null;
+            /** Format: date-time */
+            asOf: string;
+            /** Format: date-time */
+            sourceUpdatedAt: string | null;
+        };
+        StaffActorContextDto: {
+            /** Format: uuid */
+            accountId: string;
+            /** @enum {string} */
+            role: "TEACHER" | "MANAGER" | "DIRECTOR" | "TECH_OPERATOR";
+            /** Format: uuid */
+            staffProfileId: string | null;
+            /** Format: uuid */
+            teacherProfileId: string | null;
+            displayName: string;
+            timezone: string;
+            /** @enum {string} */
+            timezoneSource: "SCHOOL_CONFIGURATION" | "SCHOOL_DEFAULT";
+            /**
+             * Format: date-time
+             * @description Server DB clock, not a ledger confirmation
+             */
+            asOf: string;
+            /** Format: date-time */
+            accountUpdatedAt: string | null;
+            /** Format: date-time */
+            profileUpdatedAt: string | null;
         };
         StartLessonRequest: Record<string, never>;
         StudentAccountIssuedDto: {
@@ -4696,6 +4805,26 @@ export interface components {
             challengeId: string;
             options: components["schemas"]["WebAuthnOptions"];
         };
+        WorkspaceCoverageDto: {
+            /** @enum {string} */
+            scope: "OWN_TEACHER" | "SCHOOL" | "NOT_APPLICABLE";
+            /** Format: date-time */
+            windowFrom: string | null;
+            /** Format: date-time */
+            windowTo: string | null;
+            /**
+             * Format: date-time
+             * @description Latest updated_at among returned source rows only, not a global watermark
+             */
+            sourceUpdatedAt: string | null;
+            pageInfo: components["schemas"]["WorkspacePageInfoDto"];
+        };
+        WorkspaceCoverageSetDto: {
+            lessons: components["schemas"]["WorkspaceCoverageDto"];
+            students: components["schemas"]["WorkspaceCoverageDto"];
+            homework: components["schemas"]["WorkspaceCoverageDto"];
+            tasks: components["schemas"]["WorkspaceCoverageDto"];
+        };
         WorkspaceHomeworkDto: {
             id: string;
             title: string;
@@ -4711,6 +4840,13 @@ export interface components {
             student: string;
             teacher: string;
             meetUrl: string | null;
+        };
+        WorkspacePageInfoDto: {
+            limit: number;
+            returned: number;
+            hasMore: boolean;
+            /** @description Unknown total; never a global KPI */
+            total: number | null;
         };
         WorkspaceStudentDto: {
             id: string;
@@ -8722,6 +8858,89 @@ export interface operations {
             };
         };
     };
+    getManagerPaymentApprovalEligibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                paymentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffActionEligibilityDto"];
+                };
+            };
+            /** @description INVALID_INPUT, IDEMPOTENCY_KEY_REQUIRED */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_NOT_FOUND, STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYMENT_DUPLICATE, PAYMENT_IMMUTABLE, PAYMENT_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_MONEY, CURRENCY_NOT_SUPPORTED, INVALID_RECEIVED_AT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     confirmManagerPayment: {
         parameters: {
             query?: never;
@@ -11693,6 +11912,175 @@ export interface operations {
             };
         };
     };
+    getStaffActorContext: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffActorContextDto"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN or MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherLessonStartEligibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffActionEligibilityDto"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN or MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorPaymentConfirmationEligibility: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffActionEligibilityDto"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN or MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     getPlatformWorkspace: {
         parameters: {
             query?: never;
@@ -11708,6 +12096,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PlatformWorkspaceDto"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN or MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
                 };
             };
         };

@@ -14,6 +14,15 @@ import {
   UserRound,
   UsersRound,
   X,
+  Video,
+  Clock,
+  ArrowRight,
+  Check,
+  Circle,
+  CircleAlert,
+  Info,
+  Headphones,
+  ExternalLink,
 } from 'lucide-react';
 const glyphs = {
   home: House,
@@ -31,8 +40,28 @@ const glyphs = {
   more: Ellipsis,
   close: X,
   brand: BookOpen,
+  video: Video,
+  clock: Clock,
+  arrow: ArrowRight,
+  check: Check,
+  circle: Circle,
+  warning: CircleAlert,
+  info: Info,
+  manager: Headphones,
+  external: ExternalLink,
 };
-export function Icon({ name }: { name: keyof typeof glyphs }) {
+export type IconName = keyof typeof glyphs;
+export type IconProps = { name: IconName; size?: number; className?: string };
+// Decorative by contract. Name the enclosing control, never duplicate its announcement.
+export function Icon({ name, size = 22, className }: IconProps) {
   const Glyph = glyphs[name];
-  return <Glyph size={22} strokeWidth={1.7} aria-hidden="true" focusable="false" />;
+  return (
+    <Glyph
+      className={className}
+      size={size}
+      strokeWidth={1.7}
+      aria-hidden="true"
+      focusable="false"
+    />
+  );
 }

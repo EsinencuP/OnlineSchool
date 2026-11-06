@@ -15,11 +15,24 @@ import type { StudentMeResponseDto } from '@online-school/api-contracts';
 import { queryClient, read, resetAccess, useCommand, useStudentQuery, write } from '../api.js';
 import { date, ErrorNotice, Panel, QueryState } from '../components.js';
 import { ManagerContacts, useMe } from '../Layout.js';
+import {
+  k8kEnabled,
+  Icon as UIIcon,
+  Button,
+  Card,
+  Field,
+  LanguageSelector,
+  useLocale,
+  ErrorForm,
+} from '@online-school/ui';
+import { StudentManagerCard } from '../student-widgets.js';
+import { ProfileHelp } from '../profile-help.js';
 function formValues(event: FormEvent<HTMLFormElement>) {
   event.preventDefault();
   return new FormData(event.currentTarget);
 }
 export function Login() {
+  const { t } = useLocale();
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false),
     [bootstrapError, setBootstrapError] = useState<unknown>(null);
@@ -58,36 +71,44 @@ export function Login() {
   return (
     <main className="standalone">
       <section className="panel auth-card">
-        <p className="eyebrow">Academy · Кабинет ученика</p>
-        <h1>С возвращением</h1>
-        <p className="muted">Войди, чтобы продолжить обучение.</p>
-        <form onSubmit={(e) => void submit(e)}>
+        <p className="eyebrow">Academy · {t('cabinetStudent')}</p>
+        <h1>{t('auth.welcome')}</h1>
+        <p className="muted">{t('auth.studentPrompt')}</p>
+        <LanguageSelector />
+        <ErrorForm
+          error={bootstrapError ?? login.error}
+          busy={busy}
+          onSubmit={(e) => void submit(e)}
+        >
           <fieldset disabled={busy}>
-            <label>
-              Email
-              <input name="email" type="email" autoComplete="username" required maxLength={254} />
-            </label>
-            <label>
-              Пароль
-              <input
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                maxLength={256}
-              />
-            </label>
+            <Field
+              label={t('auth.email')}
+              name="email"
+              type="email"
+              autoComplete="username"
+              required
+              maxLength={254}
+            />
+            <Field
+              label={t('auth.password')}
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              maxLength={256}
+            />
             <ErrorNotice error={bootstrapError ?? login.error} />
             <button className="primary" type="submit">
-              {busy ? 'Входим…' : 'Войти'}
+              {t(busy ? 'auth.signingIn' : 'auth.enter')}
             </button>
           </fieldset>
-        </form>
+        </ErrorForm>
       </section>
     </main>
   );
 }
 export function ChangePassword() {
+  const { t } = useLocale();
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false),
     [bootstrapError, setBootstrapError] = useState<unknown>(null);
@@ -126,47 +147,47 @@ export function ChangePassword() {
         <p className="eyebrow">Безопасность аккаунта</p>
         <h1>Задайте новый пароль</h1>
         <p>Для первого входа замени временный пароль на собственный.</p>
-        <form onSubmit={(e) => void submit(e)}>
+        <LanguageSelector />
+        <ErrorForm
+          error={bootstrapError ?? change.error}
+          busy={busy}
+          onSubmit={(e) => void submit(e)}
+        >
           <fieldset disabled={busy}>
-            <label>
-              Текущий пароль
-              <input
-                name="currentPassword"
-                type="password"
-                autoComplete="current-password"
-                required
-                maxLength={256}
-              />
-            </label>
-            <label>
-              Новый пароль
-              <input
-                name="newPassword"
-                type="password"
-                autoComplete="new-password"
-                minLength={8}
-                maxLength={128}
-                pattern="(?=.*[A-Za-z])(?=.*\d).+"
-                required
-                aria-describedby="password-hint"
-              />
-            </label>
+            <Field
+              label={t('errors.currentPassword')}
+              name="currentPassword"
+              type="password"
+              autoComplete="current-password"
+              required
+              maxLength={256}
+            />
+            <Field
+              label={t('errors.newPassword')}
+              name="newPassword"
+              type="password"
+              autoComplete="new-password"
+              minLength={8}
+              maxLength={128}
+              pattern="(?=.*[A-Za-z])(?=.*[0-9]).+"
+              required
+              aria-describedby="password-hint"
+            />
             <p className="muted" id="password-hint">
-              От 8 до 128 символов, латинские буквы и цифры.
+              {t('errors.passwordHint')}
             </p>
-            <label>
-              Повторите новый пароль
-              <input
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                maxLength={128}
-              />
-            </label>
+            <Field
+              label={t('errors.confirmPassword')}
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              maxLength={128}
+              error={mismatch ? t('errors.passwordMismatch') : undefined}
+            />
             {mismatch && (
               <p className="error" role="alert">
-                Новые пароли не совпадают.
+                {t('errors.passwordMismatch')}
               </p>
             )}
             <ErrorNotice error={bootstrapError ?? change.error} />
@@ -174,7 +195,7 @@ export function ChangePassword() {
               {busy ? 'Сохраняем…' : 'Изменить пароль'}
             </button>
           </fieldset>
-        </form>
+        </ErrorForm>
       </section>
     </main>
   );
@@ -185,6 +206,29 @@ export function AccessSuspended() {
       !result.ok && result.error.status === 401 ? { ok: true as const, value: null } : result,
     ),
   );
+  if (k8kEnabled)
+    return (
+      <main className="k8k-access-screen">
+        <section className="k8k-student-card">
+          <p className="k8k-access-brand">
+            <UIIcon name="brand" /> K8K Academy
+          </p>
+          <h1>Доступ приостановлен</h1>
+          <p>
+            Учебный доступ сейчас недоступен. По вопросам продолжения обучения свяжись с менеджером.
+          </p>
+          <QueryState query={me}>
+            {me.data ? (
+              <StudentManagerCard contacts={me.data.managerContacts} />
+            ) : (
+              <Link className="k8k-main-action" to="/student/login">
+                Войти в аккаунт
+              </Link>
+            )}
+          </QueryState>
+        </section>
+      </main>
+    );
   return (
     <main className="standalone">
       <section className="panel auth-card">
@@ -199,6 +243,30 @@ export function AccessSuspended() {
 }
 export function Profile() {
   const me = useMe();
+  const { locale } = useLocale();
+  const copy =
+    k8kEnabled && locale === 'ro'
+      ? {
+          title: 'Profil și setări',
+          panel: 'Date personale',
+          name: 'Cum să ne adresăm',
+          hint: 'Acest nume apare în cabinet. Datele din documentele școlii nu se modifică.',
+          save: 'Salvează profilul',
+          pending: 'Se salvează profilul…',
+          saved: 'Profilul a fost salvat',
+          security: 'Securitatea contului →',
+        }
+      : {
+          title: 'Профиль и настройки',
+          panel: 'Личные данные',
+          name: 'Как к тебе обращаться',
+          hint: 'Это имя отображается в кабинете. Данные в документах школы не меняются.',
+          save: 'Сохранить профиль',
+          pending: 'Сохраняем профиль…',
+          saved: 'Профиль сохранён',
+          security: 'Безопасность аккаунта →',
+        };
+  const ProfilePanel = k8kEnabled ? Card : Panel;
   const update = useCommand((displayName: string, key) =>
     write((o) => updateStudentProfile({ displayName }, o), key),
   );
@@ -208,40 +276,62 @@ export function Profile() {
   }
   return (
     <>
-      <h1>Профиль и настройки</h1>
-      <Panel title="Личные данные">
-        <form onSubmit={save}>
+      <h1>{copy.title}</h1>
+      <ProfilePanel title={copy.panel}>
+        {k8kEnabled && <ProfileHelp />}
+        <ErrorForm error={update.error} busy={update.isPending} onSubmit={save}>
           <fieldset disabled={update.isPending}>
-            <label>
-              Как к тебе обращаться
-              <input
+            {k8kEnabled ? (
+              <Field
                 key={me.displayName}
+                id="student-profile-name"
+                label={copy.name}
                 name="displayName"
                 defaultValue={me.displayName}
                 required
                 minLength={1}
                 maxLength={100}
+                autoComplete="nickname"
+                inputMode="text"
+                hint={copy.hint}
               />
-            </label>
-            <p className="muted">
-              Это имя отображается в кабинете. Данные в документах школы не меняются.
-            </p>
+            ) : (
+              <>
+                <Field
+                  label={copy.name}
+                  key={me.displayName}
+                  name="displayName"
+                  defaultValue={me.displayName}
+                  required
+                  minLength={1}
+                  maxLength={100}
+                />
+                <p className="muted">{copy.hint}</p>
+              </>
+            )}
             <p>Email: {me.email}</p>
             <ErrorNotice error={update.error} />
-            {update.isSuccess && <p role="status">Профиль сохранён</p>}
-            <button className="primary" type="submit">
-              Сохранить профиль
-            </button>
+            {update.isSuccess && <p role="status">{copy.saved}</p>}
+            {k8kEnabled ? (
+              <Button type="submit" pending={update.isPending} disabledReason={copy.pending}>
+                {copy.save}
+              </Button>
+            ) : (
+              <button className="primary" type="submit">
+                {copy.save}
+              </button>
+            )}
           </fieldset>
-        </form>
+        </ErrorForm>
         <Link className="button" to="/student/security">
-          Безопасность аккаунта →
+          {copy.security}
         </Link>
-      </Panel>
+      </ProfilePanel>
     </>
   );
 }
 export function Security() {
+  const { t } = useLocale();
   const [newEmail, setNewEmail] = useState(''),
     [otpRequested, setOtpRequested] = useState(false);
   const sessions = useStudentQuery(['sessions'], getStudentSessions);
@@ -281,21 +371,19 @@ export function Security() {
         {confirm.isSuccess ? (
           <p role="status">Email изменён: {confirm.data.email}</p>
         ) : otpRequested ? (
-          <form onSubmit={verify}>
+          <ErrorForm error={confirm.error} busy={confirm.isPending} onSubmit={verify}>
             <fieldset disabled={confirm.isPending}>
               <p>Введи код, отправленный на {newEmail}.</p>
-              <label>
-                Код подтверждения
-                <input
-                  name="otp"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  pattern="[0-9]{6}"
-                  minLength={6}
-                  maxLength={6}
-                  required
-                />
-              </label>
+              <Field
+                label={t('errors.otp')}
+                name="otp"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9]{6}"
+                minLength={6}
+                maxLength={6}
+                required
+              />
               <ErrorNotice error={confirm.error} />
               <button className="primary" type="submit">
                 Подтвердить email
@@ -304,37 +392,34 @@ export function Security() {
                 Запросить новый код
               </button>
             </fieldset>
-          </form>
+          </ErrorForm>
         ) : (
-          <form onSubmit={(e) => void send(e)}>
+          <ErrorForm error={request.error} busy={request.isPending} onSubmit={(e) => void send(e)}>
             <fieldset disabled={request.isPending}>
-              <label>
-                Новый email
-                <input
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
-                  type="email"
-                  autoComplete="email"
-                  maxLength={254}
-                  required
-                />
-              </label>
-              <label>
-                Текущий пароль
-                <input
-                  name="currentPassword"
-                  type="password"
-                  autoComplete="current-password"
-                  maxLength={256}
-                  required
-                />
-              </label>
+              <Field
+                label={t('errors.newEmail')}
+                name="newEmail"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                type="email"
+                autoComplete="email"
+                maxLength={254}
+                required
+              />
+              <Field
+                label={t('errors.currentPassword')}
+                name="currentPassword"
+                type="password"
+                autoComplete="current-password"
+                maxLength={256}
+                required
+              />
               <ErrorNotice error={request.error} />
               <button className="primary" type="submit">
                 Получить код
               </button>
             </fieldset>
-          </form>
+          </ErrorForm>
         )}
       </Panel>
       <Panel title="Активные устройства">

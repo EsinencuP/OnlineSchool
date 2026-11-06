@@ -44,13 +44,22 @@ export function requestOptions(signal?: AbortSignal): SchoolRequestOptions {
     ]),
   };
 }
-function inspect<T>(result: Result<T, ClientError>): Result<T, ApiErrorView> {
+function inspect<T>(
+  result: Result<T, ClientError>,
+  operation: 'read' | 'write' = 'read',
+): Result<T, ApiErrorView> {
   if (result.ok) return result;
-  if (result.error.status === 401) {
+  if (
+    result.error.status === 401 &&
+    !(
+      operation === 'write' &&
+      ['CURRENT_PASSWORD_INVALID', 'INVALID_CREDENTIALS'].includes(result.error.code)
+    )
+  ) {
     clearSession();
     onUnauthorized();
   }
-  return err(errorView(result.error));
+  return err(errorView(result.error, operation));
 }
 export async function read<T>(command: Command<T>, signal?: AbortSignal): Promise<T> {
   const options = requestOptions(signal);
@@ -74,8 +83,9 @@ export async function write<T>(
       ...options,
       headers: { 'X-CSRF-Token': csrf.value.csrfToken, 'Idempotency-Key': key },
     }),
+    'write',
   );
   return options.signal?.aborted && result.ok
-    ? err(errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }))
+    ? err(errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }, 'write'))
     : result;
 }

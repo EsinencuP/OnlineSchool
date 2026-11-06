@@ -31,6 +31,8 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm -r lint
       - run: pnpm exec eslint infra scripts --max-warnings 0
+      # Local CSS/token tests only; no credentials, app/server, database or provider.
+      - run: pnpm --filter @online-school/ui test:design
 
   unit-test:
     runs-on: ubuntu-24.04

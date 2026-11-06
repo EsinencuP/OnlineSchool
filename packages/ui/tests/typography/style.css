@@ -1,0 +1,42 @@
+.specimen {
+  max-width: 1000px;
+  margin-inline: auto;
+  padding: var(--k8k-space-4);
+  overflow-wrap: anywhere;
+}
+.specimen .k8k-card {
+  margin-bottom: var(--k8k-space-4);
+}
+.specimen-person {
+  display: flex;
+  gap: var(--k8k-space-3);
+  align-items: center;
+}
+.specimen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--k8k-space-3);
+  align-items: center;
+  margin-block: var(--k8k-space-4);
+}
+.specimen-xs {
+  font-size: var(--k8k-font-xs);
+}
+.specimen-sm {
+  font-size: var(--k8k-font-sm);
+}
+.specimen-body {
+  font-size: var(--k8k-font-body);
+}
+.specimen-lg {
+  font-size: var(--k8k-font-lg);
+}
+.specimen-xl {
+  font-size: var(--k8k-font-xl);
+}
+.specimen-2xl {
+  font-size: var(--k8k-font-2xl);
+}
+.specimen-3xl {
+  font-size: var(--k8k-font-3xl);
+}

@@ -4,6 +4,7 @@ import type { Result } from '@online-school/shared';
 import { write, queryClient } from '../api/client.js';
 import type { ApiErrorView } from '../api/error-view.js';
 import { useIdempotencyKey } from './use-idempotency-key.js';
+import { describeError } from '@online-school/ui';
 
 /** Commands deliberately bypass MutationCache: one-time credentials never enter a shared cache. */
 export function useCommand() {
@@ -11,6 +12,7 @@ export function useCommand() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ApiErrorView | null>(null);
   const pending = useRef(false);
+  const unresolved = useRef(false);
   const intent = useRef<string>();
   const lifetime = useRef<AbortController>();
   useEffect(() => {
@@ -27,7 +29,7 @@ export function useCommand() {
     payload: unknown,
     command: (options: SchoolRequestOptions) => Promise<Result<T, ClientError>>,
   ): Promise<T | undefined> {
-    if (pending.current || lifetime.current?.signal.aborted) return undefined;
+    if (pending.current || unresolved.current || lifetime.current?.signal.aborted) return undefined;
     const fingerprint = JSON.stringify(payload);
     if (intent.current !== undefined && intent.current !== fingerprint) idempotency.rotate();
     intent.current = fingerprint;
@@ -40,6 +42,7 @@ export function useCommand() {
     if (controller?.signal.aborted) return undefined;
     setBusy(false);
     if (!result.ok) {
+      unresolved.current = describeError(result.error).outcome === 'unknown';
       setError(result.error);
       return undefined;
     }

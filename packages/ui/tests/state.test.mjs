@@ -10,6 +10,7 @@ import {
   activeNavigation,
   operationalQueryInterval,
   FreshnessLabel,
+  StagesTrack,
 } from '../dist/index.js';
 const privateContent = h('p', null, 'PRIVATE_LESSON');
 const render = (state) =>
@@ -118,4 +119,59 @@ test('operational refresh never polls financial, published or archived data', ()
 test('unknown freshness is explicit and invalid dates cannot crash rendering', () => {
   for (const at of [undefined, 0, NaN, Infinity, 1e100])
     assert.match(renderToStaticMarkup(h(FreshnessLabel, { at })), /неизвестно/);
+});
+test('server asOf and client receipt have independent labels and instants', () => {
+  const html = renderToStaticMarkup(
+    h(FreshnessLabel, { asOf: '2026-11-04T09:00:00+02:00', receivedAt: Date.UTC(2026, 10, 4, 8) }),
+  );
+  assert.match(
+    html,
+    /Данные сервера на <time data-time-source="server"[^>]*2026-11-04T07:00:00\.000Z/,
+  );
+  assert.match(html, /Получено в <time data-time-source="client"[^>]*2026-11-04T08:00:00\.000Z/);
+  const receiptOnly = renderToStaticMarkup(
+    h(FreshnessLabel, { asOf: '2026-11-04T09:00:00', at: Date.UTC(2026, 10, 4, 8) }),
+  );
+  assert.doesNotMatch(receiptOnly, /data-time-source="server"/);
+  assert.match(receiptOnly, /data-time-source="client"/);
+  assert.match(
+    renderToStaticMarkup(
+      h(FreshnessLabel, { asOf: '2026-11-04T09:00:00Z', timeZone: 'Invalid/Zone' }),
+    ),
+    /неизвестно/,
+  );
+});
+test('stale empty describes the old response without presenting a fresh empty state', () => {
+  const state = queryBoundaryState({ isPending: false, hasData: true, tooOld: true, empty: true });
+  assert.deepEqual(state, { status: 'stale', empty: true });
+  assert.match(render(state), /Последняя загрузка не вернула записей/);
+});
+test('denial and unknown result suppress contextual actions and retries', () => {
+  for (const state of [
+    { status: 'forbidden' },
+    { status: 'session-expired' },
+    { status: 'pending', outcome: 'unknown' },
+  ]) {
+    const html = renderToStaticMarkup(
+      h(
+        StateBoundary,
+        {
+          state,
+          retryRead: () => assert.fail('unexpected retry'),
+          action: h('button', null, 'Context action'),
+        },
+        privateContent,
+      ),
+    );
+    assert.doesNotMatch(html, /<button|Context action/);
+  }
+});
+test('the track displays exactly three qualitative stages without treating NOT_STUDIED as a stage', () => {
+  const html = renderToStaticMarkup(h(StagesTrack, { label: 'Fixture', stage: 'PRACTICING' }));
+  assert.equal(html.match(/<li\b/g).length, 3);
+  assert.match(html, /aria-current="step">Практикую/);
+  assert.doesNotMatch(html, /%|progressbar|button/);
+  const neutral = renderToStaticMarkup(h(StagesTrack, { label: 'Fixture', stage: 'NOT_STUDIED' }));
+  assert.match(neutral, /Ещё не изучали/);
+  assert.doesNotMatch(neutral, /aria-current/);
 });

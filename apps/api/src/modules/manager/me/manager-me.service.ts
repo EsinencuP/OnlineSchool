@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
 import { DatabaseService } from '../../../core/database/database.module.js';
-import { domainError } from '../../../core/errors/domain-error.js';
+import { AppException, domainError } from '../../../core/errors/domain-error.js';
 import type { DomainError } from '../../../core/errors/domain-error.js';
 import { PolicyService } from '../../../core/policy/policy.service.js';
 import type { AccountContext } from '../../../core/http.js';
 import type { ManagerCapability, ManagerContext } from '../context/manager-context.js';
 import type { ManagerMeResponseDto } from '../dto/manager-me.response.dto.js';
 import { ManagerScopeService } from '../scope/manager-scope.service.js';
+import { StaffActorContextService } from '../../../core/actor/actor-context.service.js';
 
 @Injectable()
 export class ManagerMeService {
@@ -16,6 +17,7 @@ export class ManagerMeService {
     private readonly db: DatabaseService,
     private readonly scope: ManagerScopeService,
     private readonly policy: PolicyService,
+    private readonly actors: StaffActorContextService,
   ) {}
 
   async get(
@@ -42,9 +44,9 @@ export class ManagerMeService {
         ['ACCOUNTS_CREATE', 'student:create'],
         ['SUBSCRIPTIONS_MANAGE', 'subscription:create'],
         ['SCHEDULE_MANAGE', 'schedule:manage'],
-        ['PAYMENTS_CONFIRM', 'payment:confirm'],
       ];
       return ok({
+        actorContext: await this.actors.get(actor),
         managerId: ctx.managerId,
         displayName: profile.full_name,
         role: 'MANAGER',
@@ -54,10 +56,13 @@ export class ManagerMeService {
         timezone,
         capabilities: permissions
           .filter(([, permission]) => this.policy.hasPermission(actor, permission))
-          .map(([capability]) => capability),
+          .map(([capability]) => capability)
+          .concat(
+            this.policy.canRequestPaymentApproval(actor) ? ['PAYMENTS_REQUEST_APPROVAL'] : [],
+          ),
       });
-    } catch {
-      return err(domainError('DATABASE_ERROR', 503));
+    } catch (error: unknown) {
+      return err(error instanceof AppException ? error.domain : domainError('DATABASE_ERROR', 503));
     }
   }
 }

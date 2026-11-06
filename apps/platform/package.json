@@ -7,7 +7,9 @@
     "build": "tsc -b --pretty false && vite build",
     "typecheck": "tsc -b --pretty false",
     "dev": "vite --host 127.0.0.1",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "test:account-chrome": "node test/account-chrome/smoke.mjs",
+    "test:staff-context": "node test/staff-context/smoke.mjs"
   },
   "dependencies": {
     "@online-school/account-ui": "workspace:*",

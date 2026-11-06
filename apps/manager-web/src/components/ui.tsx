@@ -2,7 +2,18 @@ import { useEffect, useId, useRef } from 'react';
 import type { ReactNode, FormEvent } from 'react';
 import type { ApiErrorView } from '../api/error-view.js';
 import { label, ru } from '../i18n/ru.js';
-import { k8kEnabled, queryBoundaryState, StateBoundary, useDataAge } from '@online-school/ui';
+import {
+  k8kEnabled,
+  queryBoundaryState,
+  StateBoundary,
+  useDataAge,
+  useLocale,
+  ErrorFeedback,
+  ErrorForm,
+  describeError,
+  errorText,
+  useFieldError,
+} from '@online-school/ui';
 
 export type ScreenState<T> =
   | { status: 'loading' }
@@ -10,22 +21,9 @@ export type ScreenState<T> =
   | { status: 'error'; error: ApiErrorView }
   | { status: 'ready'; data: T };
 export function ErrorBox({ error, retry }: { error: ApiErrorView | null; retry?: () => void }) {
-  return error ? (
-    <div className="error-box" role="alert">
-      <p>{error.message}</p>
-      {error.requestId && (
-        <small>
-          {ru.requestId}: {error.requestId}
-        </small>
-      )}
-      {retry && (
-        <button type="button" onClick={retry}>
-          {ru.retry}
-        </button>
-      )}
-    </div>
-  ) : null;
+  return <ErrorFeedback error={error} {...(retry ? { retryRead: retry } : {})} />;
 }
+
 export function State<T>({
   query,
   empty = false,
@@ -45,22 +43,29 @@ export function State<T>({
   children: (data: T) => ReactNode;
 }) {
   const tooOld = useDataAge(query.dataUpdatedAt, operational ? 120_000 : false);
+  const { locale, t } = useLocale();
+  const errorStatus =
+    query.error && 'status' in query.error && typeof query.error.status === 'number'
+      ? query.error.status
+      : undefined;
   if (k8kEnabled) {
     const error = query.error && 'code' in query.error ? query.error : null;
     const state = queryBoundaryState({
       isPending: query.isPending,
       hasData: query.data !== undefined,
       error: !!query.error,
-      errorStatus: error?.status,
+      errorStatus,
       empty,
       tooOld,
     });
     return (
       <StateBoundary
         state={
-          state.status === 'error' && error ? { status: 'error', message: error.message } : state
+          state.status === 'error' && error
+            ? { status: 'error', message: errorText(error, locale) }
+            : state
         }
-        at={query.dataUpdatedAt}
+        receivedAt={query.dataUpdatedAt}
         refreshing={query.isFetching ?? false}
         retryRead={() => void query.refetch()}
       >
@@ -71,7 +76,7 @@ export function State<T>({
   if (query.isPending)
     return (
       <p role="status" className="state">
-        {ru.loading}
+        {t('loading')}
       </p>
     );
   const error = query.error
@@ -79,6 +84,10 @@ export function State<T>({
       ? query.error
       : { code: 'UNKNOWN', status: 0, message: ru.error }
     : null;
+  if (errorStatus === 401 || errorStatus === 403)
+    return (
+      <StateBoundary state={{ status: errorStatus === 401 ? 'session-expired' : 'forbidden' }} />
+    );
   if (error && !query.data)
     return (
       <ErrorBox
@@ -88,7 +97,7 @@ export function State<T>({
         }}
       />
     );
-  if (!query.data || empty) return <p className="state">{ru.empty}</p>;
+  if (!query.data || empty) return <p className="state">{t('empty')}</p>;
   return (
     <>
       <ErrorBox
@@ -123,15 +132,38 @@ export function Field({
     </div>
   );
 }
+function errorIds(...values: (string | undefined)[]) {
+  return values.filter(Boolean).join(' ') || undefined;
+}
 export function Input({
   name,
   label: text,
   hint,
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement> & { name: string; label: string; hint?: string }) {
+  const error = useFieldError(name);
   return (
     <Field label={text} {...(hint ? { hint } : {})}>
-      {(id, hintId) => <input id={id} name={name} aria-describedby={hintId} {...props} />}
+      {(id, hintId) => (
+        <>
+          <input
+            id={id}
+            name={name}
+            {...props}
+            aria-invalid={!!error || props['aria-invalid']}
+            aria-describedby={errorIds(
+              hintId,
+              props['aria-describedby'],
+              error ? `${id}-error` : undefined,
+            )}
+          />
+          {error && (
+            <p role="alert" id={`${id}-error`}>
+              {error}
+            </p>
+          )}
+        </>
+      )}
     </Field>
   );
 }
@@ -140,7 +172,30 @@ export function TextArea({
   label: text,
   ...props
 }: React.TextareaHTMLAttributes<HTMLTextAreaElement> & { name: string; label: string }) {
-  return <Field label={text}>{(id) => <textarea id={id} name={name} {...props} />}</Field>;
+  const error = useFieldError(name);
+  return (
+    <Field label={text}>
+      {(id) => (
+        <>
+          <textarea
+            id={id}
+            name={name}
+            {...props}
+            aria-invalid={!!error || props['aria-invalid']}
+            aria-describedby={errorIds(
+              props['aria-describedby'],
+              error ? `${id}-error` : undefined,
+            )}
+          />
+          {error && (
+            <p role="alert" id={`${id}-error`}>
+              {error}
+            </p>
+          )}
+        </>
+      )}
+    </Field>
+  );
 }
 export function Select({
   name,
@@ -154,17 +209,35 @@ export function Select({
   options: ReadonlyArray<{ id: string; label: string }>;
   placeholder?: boolean;
 }) {
+  const error = useFieldError(name);
+  const { t } = useLocale();
   return (
     <Field label={text}>
       {(id) => (
-        <select id={id} name={name} {...props}>
-          {placeholder && <option value="">{ru.choose}</option>}
-          {options.map((o) => (
-            <option key={o.id} value={o.id}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <>
+          <select
+            id={id}
+            name={name}
+            {...props}
+            aria-invalid={!!error || props['aria-invalid']}
+            aria-describedby={errorIds(
+              props['aria-describedby'],
+              error ? `${id}-error` : undefined,
+            )}
+          >
+            {placeholder && <option value="">{t('errors.choose')}</option>}
+            {options.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          {error && (
+            <p role="alert" id={`${id}-error`}>
+              {error}
+            </p>
+          )}
+        </>
       )}
     </Field>
   );
@@ -175,11 +248,26 @@ export function Check({
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement> & { name: string; label: string }) {
   const id = useId();
+  const error = useFieldError(name);
   return (
-    <label className="check" htmlFor={id}>
-      <input id={id} type="checkbox" name={name} {...props} />
-      <span>{text}</span>
-    </label>
+    <div>
+      <label className="check" htmlFor={id}>
+        <input
+          id={id}
+          type="checkbox"
+          name={name}
+          {...props}
+          aria-invalid={!!error || props['aria-invalid']}
+          aria-describedby={errorIds(props['aria-describedby'], error ? `${id}-error` : undefined)}
+        />
+        <span>{text}</span>
+      </label>
+      {error && (
+        <p role="alert" id={`${id}-error`}>
+          {error}
+        </p>
+      )}
+    </div>
   );
 }
 export function Dialog({
@@ -191,6 +279,7 @@ export function Dialog({
   children: ReactNode;
   close: () => void;
 }) {
+  const { t } = useLocale();
   const ref = useRef<HTMLDialogElement>(null);
   const id = useId();
   useEffect(() => {
@@ -214,7 +303,7 @@ export function Dialog({
     >
       <div className="dialog-head">
         <h2 id={id}>{title}</h2>
-        <button type="button" onClick={close} aria-label={ru.close}>
+        <button type="button" onClick={close} aria-label={t('closeOverlay')}>
           ×
         </button>
       </div>
@@ -229,23 +318,24 @@ export function Conflict({
   error: ApiErrorView | null;
   reload?: () => Promise<unknown>;
 }) {
+  const { t } = useLocale();
   const visible =
     error?.status === 409 && ['VERSION_CONFLICT', 'TASK_VERSION_CONFLICT'].includes(error.code);
   return visible && reload ? (
     <Dialog
-      title={ru.conflictTitle}
+      title={t('errors.conflict')}
       close={() => {
         void reload();
       }}
     >
-      <p>{ru.conflictHelp}</p>
+      <p>{t('errors.conflict')}</p>
       <button
         type="button"
         onClick={() => {
           void reload();
         }}
       >
-        {ru.reloadVersion}
+        {t('errors.reload')}
       </button>
     </Dialog>
   ) : null;
@@ -255,8 +345,9 @@ export function FormShell({
   busy,
   error,
   submit,
-  button = ru.save,
+  button,
   reload,
+  amount,
 }: {
   children: ReactNode;
   busy: boolean;
@@ -264,28 +355,33 @@ export function FormShell({
   submit: (data: FormData) => Promise<unknown>;
   button?: string;
   reload?: () => Promise<unknown>;
+  amount?: { value: string; currency: string } | undefined;
 }) {
+  const { t } = useLocale();
+  const unresolved = !!error && describeError(error, 'write').outcome === 'unknown';
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!busy) await submit(new FormData(event.currentTarget));
+    if (!busy && !unresolved) await submit(new FormData(event.currentTarget));
   }
   return (
-    <form
+    <ErrorForm
+      error={error}
+      busy={busy}
       onSubmit={(event) => {
         void onSubmit(event);
       }}
     >
       <fieldset disabled={busy}>
         {children}
-        <ErrorBox error={error} />
+        <ErrorFeedback error={error} amount={amount} />
         <div className="actions">
-          <button className="primary" type="submit" disabled={busy}>
-            {busy ? ru.loading : button}
+          <button className="primary" type="submit" disabled={busy || unresolved}>
+            {busy ? t('loading') : (button ?? t('errors.save'))}
           </button>
         </div>
       </fieldset>
       <Conflict error={error} {...(reload ? { reload } : {})} />
-    </form>
+    </ErrorForm>
   );
 }
 export const text = (data: FormData, name: string) => String(data.get(name) ?? '').trim();

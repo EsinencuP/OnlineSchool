@@ -1,0 +1,24 @@
+:root[data-k8k] body {
+  margin: var(--k8k-space-4);
+  color: var(--k8k-ink);
+  background: var(--bg-page);
+}
+:root[data-k8k] #root {
+  max-width: 40rem;
+}
+:root[data-k8k] fieldset {
+  min-width: 0;
+  margin-block: var(--k8k-space-4);
+  display: grid;
+  gap: var(--k8k-space-3);
+  border: 1px solid var(--border);
+}
+:root[data-k8k] input {
+  min-height: var(--k8k-control-touch);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+:root[data-k8k] .field {
+  display: grid;
+  gap: var(--k8k-space-2);
+}

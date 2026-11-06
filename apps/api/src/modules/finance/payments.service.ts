@@ -13,6 +13,8 @@ import { FinanceAccess } from './finance-access.service.js';
 import { FinanceEvents } from './finance-events.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';
 import { positiveReceiptAmount, receiptCurrency } from './receipt-policy.js';
+import type { PaymentReceipt } from '@online-school/db';
+import { actionEligibility } from '../../core/actor/action-eligibility.js';
 import type { ReceiptMetadata } from './manager-payments/contracts.js';
 
 @Injectable()
@@ -56,18 +58,42 @@ export class PaymentsService {
     });
     return { ...receipt, status: 'REGISTERED' as const };
   }
+  async confirmationEligibility(ctx: CriticalContext, id: string) {
+    const now = await at(ctx.tx);
+    return actionEligibility(
+      'payment.confirm',
+      now,
+      async () => {
+        await this.access.staff(ctx, true);
+        return this.access.payment(ctx, uuid(id));
+      },
+      (receipt) => this.confirmationPolicy(ctx, receipt, now, false),
+    );
+  }
+  private async confirmationPolicy(
+    ctx: CriticalContext,
+    receipt: PaymentReceipt,
+    now: Date,
+    lock: boolean,
+  ): Promise<void> {
+    this.confirmationState(receipt);
+    await this.ledger.period(ctx.tx, now, undefined, lock);
+  }
+  private confirmationState(receipt: PaymentReceipt): void {
+    if (receipt.rejected_at) return fail(domainError('PAYMENT_NOT_PENDING', 409));
+    if (receipt.confirmed_by_director_at)
+      return fail(domainError('PAYMENT_ALREADY_CONFIRMED', 409));
+  }
   async confirm(ctx: CriticalContext, id: string, body: unknown) {
     object(body ?? {}, []);
     const staff = await this.access.staff(ctx, true);
     id = uuid(id);
     await ctx.tx.$queryRaw`SELECT id FROM payment_receipts WHERE id=${id}::uuid FOR UPDATE`;
     const receipt = await this.access.payment(ctx, id);
-    if (receipt.rejected_at) return fail(domainError('PAYMENT_NOT_PENDING', 409));
-    if (receipt.confirmed_by_director_at)
-      return fail(domainError('PAYMENT_ALREADY_CONFIRMED', 409));
+    this.confirmationState(receipt);
     try {
       const now = await at(ctx.tx);
-      await this.ledger.period(ctx.tx, now);
+      await this.confirmationPolicy(ctx, receipt, now, true);
       const confirmed = await ctx.tx.paymentReceipt.update({
         where: { id },
         data: {

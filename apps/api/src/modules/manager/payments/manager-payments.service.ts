@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import type { Result } from '@online-school/shared';
 import type { DomainError } from '../../../core/errors/domain-error.js';
-import type { CriticalContext } from '../../../core/http.js';
+import type { AccountContext, CriticalContext } from '../../../core/http.js';
+import { StaffActorContextService } from '../../../core/actor/actor-context.service.js';
+import type { StaffActionEligibilityDto } from '../../../core/actor/actor-context.dto.js';
 import { TransactionService } from '../../../core/transaction/transaction.service.js';
 import { ManagerFinanceFacade } from '../finance/manager-finance.facade.js';
 import type { ManagerContext } from '../context/manager-context.js';
@@ -20,7 +22,24 @@ export class ManagerPaymentsService {
   constructor(
     private readonly finance: ManagerFinanceFacade,
     private readonly transactions: TransactionService,
+    private readonly actors: StaffActorContextService,
   ) {}
+  approvalEligibility(
+    ctx: ManagerContext,
+    id: string,
+    actor: AccountContext,
+    requestId: string,
+  ): Promise<Result<StaffActionEligibilityDto, DomainError>> {
+    return this.transactions.runReadOnly(async (tx) => {
+      await this.actors.get(actor, tx);
+      return this.finance.paymentApprovalEligibility(ctx, id, {
+        tx,
+        actor,
+        requestId,
+        operationId: requestId,
+      });
+    });
+  }
   create(
     ctx: ManagerContext,
     student: string,

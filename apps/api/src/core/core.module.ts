@@ -21,6 +21,7 @@ import {
 import { AppExceptionFilter } from './errors/app-exception.filter.js';
 import { ErrorMapper } from './errors/error-mapper.js';
 import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
+import { StaffActorContextService } from './actor/actor-context.service.js';
 
 @Global()
 @Module({
@@ -36,6 +37,7 @@ import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
     IdempotencyModule,
   ],
   providers: [
+    StaffActorContextService,
     ErrorMapper,
     { provide: APP_PIPE, useClass: DtoValidationPipe },
     RequestIdMiddleware,
@@ -48,6 +50,7 @@ import { RequestIdMiddleware } from './request-id/request-id.middleware.js';
     { provide: APP_INTERCEPTOR, useExisting: CriticalCommandInterceptor },
   ],
   exports: [
+    StaffActorContextService,
     ErrorMapper,
     DatabaseModule,
     AuditModule,

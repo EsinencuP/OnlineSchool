@@ -1,15 +1,123 @@
-import { Controller, Get, Module, Req, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Module, Param, Req, Res, Header, applyDecorators } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags, ApiCookieAuth, ApiParam } from '@nestjs/swagger';
 import { Authenticated, Public, RequireRole } from '../../core/rbac/decorators.js';
 import { DatabaseService } from '../../core/database/database.module.js';
 import type { HttpRequest, HttpResponse } from '../../core/http.js';
 import { demoAccounts, demoSwitchAllowed } from '../identity/demo-accounts.js';
 import { PlatformAccountsDto, PlatformWorkspaceDto } from './platform.dto.js';
+import {
+  StaffActorContextDto,
+  StaffActionEligibilityDto,
+} from '../../core/actor/actor-context.dto.js';
+import { StaffActorContextService } from '../../core/actor/actor-context.service.js';
+import { CoreModule } from '../../core/core.module.js';
+import { TransactionService } from '../../core/transaction/transaction.service.js';
+import { unwrap } from '../../core/errors/domain-error.js';
+import { ok } from '@online-school/shared';
+import { uuid } from '../identity/input.js';
+import { ScheduleModule } from '../schedule/schedule.module.js';
+import { OutcomesService } from '../schedule/outcomes.service.js';
+import { FinanceInfrastructureModule } from '../finance/finance-infrastructure.module.js';
+import { PaymentsService } from '../finance/payments.service.js';
+import { PlatformWorkspaceService } from './workspace.service.js';
+import { ApiError } from '../../openapi/dtos.js';
+
+const staffRead = () =>
+  applyDecorators(
+    ApiCookieAuth('sessionCookie'),
+    Header('Cache-Control', 'private, no-store'),
+    ApiResponse({ status: 400, type: ApiError, description: 'INVALID_INPUT' }),
+    ApiResponse({ status: 401, type: ApiError, description: 'UNAUTHENTICATED' }),
+    ApiResponse({ status: 403, type: ApiError, description: 'FORBIDDEN or MFA_REQUIRED' }),
+    ApiResponse({
+      status: 503,
+      type: ApiError,
+      description: 'Data store or configuration unavailable',
+    }),
+  );
 
 @Controller('api/v1/platform')
 @ApiTags('Platform')
 export class PlatformController {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly actors: StaffActorContextService,
+    private readonly transactions: TransactionService,
+    private readonly workspaces: PlatformWorkspaceService,
+    private readonly outcomes: OutcomesService,
+    private readonly payments: PaymentsService,
+  ) {}
+
+  @Get('actor-context')
+  @Authenticated()
+  @RequireRole('TEACHER', 'DIRECTOR', 'TECH_OPERATOR')
+  @staffRead()
+  @ApiResponse({ status: 200, type: StaffActorContextDto })
+  @ApiOperation({
+    operationId: 'getStaffActorContext',
+    summary: 'Own active staff identity; manager context is served by getManagerMe',
+  })
+  async actorContext(@Req() req: HttpRequest): Promise<StaffActorContextDto> {
+    return unwrap(
+      await this.transactions.runReadOnly(async (tx) =>
+        ok(await this.actors.get(req.account!, tx)),
+      ),
+    );
+  }
+
+  @Get('lessons/:id/start-eligibility')
+  @RequireRole('TEACHER')
+  @staffRead()
+  @ApiParam({ name: 'id', schema: { type: 'string', format: 'uuid' } })
+  @ApiResponse({ status: 200, type: StaffActionEligibilityDto })
+  @ApiOperation({
+    operationId: 'getTeacherLessonStartEligibility',
+    summary: 'Advisory only; startLesson repeats the same policy inside the command transaction',
+  })
+  async lessonEligibility(
+    @Req() req: HttpRequest,
+    @Param('id') id: string,
+  ): Promise<StaffActionEligibilityDto> {
+    id = uuid(id);
+    return unwrap(
+      await this.transactions.runReadOnly(async (tx) => {
+        await this.actors.get(req.account!, tx);
+        return ok(
+          await this.outcomes.startEligibility(
+            { tx, actor: req.account!, requestId: req.requestId!, operationId: req.requestId! },
+            id,
+          ),
+        );
+      }),
+    );
+  }
+
+  @Get('payments/:id/confirm-eligibility')
+  @RequireRole('DIRECTOR')
+  @staffRead()
+  @ApiParam({ name: 'id', schema: { type: 'string', format: 'uuid' } })
+  @ApiResponse({ status: 200, type: StaffActionEligibilityDto })
+  @ApiOperation({
+    operationId: 'getDirectorPaymentConfirmationEligibility',
+    summary: 'Director receipt confirmation policy; no allocation or ledger write',
+  })
+  async paymentEligibility(
+    @Req() req: HttpRequest,
+    @Param('id') id: string,
+  ): Promise<StaffActionEligibilityDto> {
+    id = uuid(id);
+    return unwrap(
+      await this.transactions.runReadOnly(async (tx) => {
+        await this.actors.get(req.account!, tx);
+        return ok(
+          await this.payments.confirmationEligibility(
+            { tx, actor: req.account!, requestId: req.requestId!, operationId: req.requestId! },
+            id,
+          ),
+        );
+      }),
+    );
+  }
 
   @Get('accounts')
   @Public()
@@ -39,6 +147,7 @@ export class PlatformController {
   @Get('workspace')
   @Authenticated()
   @RequireRole('TEACHER', 'DIRECTOR')
+  @staffRead()
   @ApiResponse({ status: 200, type: PlatformWorkspaceDto })
   @ApiOperation({
     operationId: 'getPlatformWorkspace',
@@ -49,85 +158,12 @@ export class PlatformController {
     @Res({ passthrough: true }) res: HttpResponse,
   ): Promise<PlatformWorkspaceDto> {
     res.setHeader('Cache-Control', 'no-store');
-    const actor = req.account!;
-    const director = actor.role === 'DIRECTOR';
-    const db = this.db.client;
-    const profile = director
-      ? await db.staffAccount.findFirstOrThrow({
-          where: { account_id: actor.accountId, deactivated_at: null },
-        })
-      : await db.teacherAccount.findFirstOrThrow({
-          where: { account_id: actor.accountId, deactivated_at: null },
-        });
-    const lessons = await db.lessonOccurrence.findMany({
-      where: {
-        ...(director ? {} : { scheduled_teacher_id: profile.id }),
-        scheduled_at: { gte: new Date(Date.now() - 86400000) },
-      },
-      orderBy: { scheduled_at: 'asc' },
-      take: 100,
-      include: {
-        enrollment_ref: { include: { student_ref: true, subject_ref: true } },
-        scheduled_teacher_ref: true,
-      },
-    });
-    const assignments = await db.teachingAssignment.findMany({
-      where: {
-        ...(director ? {} : { teacher_id: profile.id }),
-        valid_from: { lte: new Date() },
-        OR: [{ valid_to: null }, { valid_to: { gt: new Date() } }],
-      },
-      take: 100,
-      include: { enrollment_ref: { include: { student_ref: true, subject_ref: true } } },
-    });
-    const homework = await db.homeworkAssignment.findMany({
-      where: director ? {} : { issued_by: profile.id },
-      orderBy: { due_at: 'asc' },
-      take: 50,
-      include: { subject_ref: true },
-    });
-    const tasks = director
-      ? await db.crmTask.findMany({
-          where: { status: { in: ['OPEN', 'IN_PROGRESS'] } },
-          orderBy: { due_at: 'asc' },
-          take: 50,
-          include: { assigned_to: true },
-        })
-      : [];
-    return {
-      name: profile.full_name,
-      role: actor.role,
-      lessons: lessons.map((l) => ({
-        id: l.id,
-        startsAt: l.scheduled_at.toISOString(),
-        endsAt: l.scheduled_end_at.toISOString(),
-        status: l.status,
-        subject: l.enrollment_ref.subject_ref.name,
-        student:
-          l.enrollment_ref.student_ref.display_name ?? l.enrollment_ref.student_ref.full_name,
-        teacher: l.scheduled_teacher_ref.full_name,
-        meetUrl: l.google_meet_link,
-      })),
-      students: assignments.map((a) => ({
-        id: a.enrollment_ref.student_id,
-        name: a.enrollment_ref.student_ref.display_name ?? a.enrollment_ref.student_ref.full_name,
-        subject: a.enrollment_ref.subject_ref.name,
-      })),
-      homework: homework.map((h) => ({
-        id: h.id,
-        title: h.title,
-        subject: h.subject_ref.name,
-        dueAt: h.due_at?.toISOString() ?? null,
-      })),
-      tasks: tasks.map((t) => ({
-        id: t.id,
-        title: t.title,
-        status: t.status,
-        dueAt: t.due_at.toISOString(),
-        manager: t.assigned_to?.full_name ?? 'Не назначен',
-      })),
-    };
+    return this.workspaces.get(req.account!);
   }
 }
-@Module({ controllers: [PlatformController] })
+@Module({
+  imports: [CoreModule, ScheduleModule, FinanceInfrastructureModule],
+  controllers: [PlatformController],
+  providers: [PlatformWorkspaceService],
+})
 export class PlatformModule {}

@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { AccountMenu } from '@online-school/account-ui';
+import type { AccountLogoutOutcome } from '@online-school/account-ui';
 import {
   AppShell,
-  NotificationBell,
   activeNavigation,
   k8kEnabled,
+  formatDate,
   roleNavigation,
   useContextRefresh,
+  useLocale,
 } from '@online-school/ui';
 import '@online-school/account-ui/style.css';
 import { Link, NavLink, Navigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
@@ -24,7 +26,6 @@ import {
   date,
   dayKey,
   Empty,
-  ErrorNotice,
   Icon,
   Modal,
   Panel,
@@ -33,6 +34,8 @@ import {
   setDateZone,
 } from './components.js';
 import { useUI } from './ui-store.js';
+import { StudentAside } from './student-widgets.js';
+import { StudentNotificationMenu } from './StudentNotificationMenu.js';
 export const navigation = [
   ['home', '', 'Главная'],
   ['lessons', '/lessons', 'Уроки'],
@@ -51,6 +54,7 @@ export function ManagerContacts({
 }: {
   contacts?: StudentMeResponseDto['managerContacts'];
 }) {
+  const { t } = useLocale();
   const whatsapp = safeUrl(contacts?.whatsapp, 'whatsapp'),
     telegram = safeUrl(contacts?.telegram, 'telegram');
   return (
@@ -65,9 +69,7 @@ export function ManagerContacts({
           Telegram ↗
         </a>
       )}
-      {!whatsapp && !telegram && (
-        <p className="muted">Контакты пока не указаны. Обратитесь в школу привычным способом.</p>
-      )}
+      {!whatsapp && !telegram && <p className="muted">{t('chrome.noManagerContacts')}</p>}
     </div>
   );
 }
@@ -206,6 +208,7 @@ function RightSidebar({ me, inline = false }: { me: StudentMeResponseDto; inline
   );
 }
 export function StudentLayout() {
+  const { locale, t } = useLocale();
   const me = useStudentQuery(['me'], getStudentMe, true, 60_000);
   const location = useLocation(),
     heading = useRef<HTMLElement>(null);
@@ -216,8 +219,6 @@ export function StudentLayout() {
     !!me.data && !me.data.mustChangePassword && me.data.hasActiveAccess,
     60_000,
   );
-  const [logoutError, setLogoutError] = useState<unknown>(null),
-    [loggingOut, setLoggingOut] = useState(false);
   useContextRefresh({
     enabled: k8kEnabled && !!me.data,
     context: /^\/student\/lessons\/[^/]+/.test(location.pathname) ? 'live-lesson' : 'operational',
@@ -233,17 +234,17 @@ export function StudentLayout() {
     heading.current?.focus();
     window.scrollTo(0, 0);
   }, [location.pathname, close]);
-  async function logout() {
-    setLoggingOut(true);
+  async function logout(): Promise<AccountLogoutOutcome> {
     try {
       await write((o) => deleteSession({}, o));
       queryClient.clear();
       resetAccess();
       window.location.replace('/student/login');
+      return 'ended';
     } catch (error) {
-      setLogoutError(error);
-    } finally {
-      setLoggingOut(false);
+      const status = error && typeof error === 'object' && 'status' in error ? error.status : null;
+      if (status === 401) return 'ended';
+      return typeof status !== 'number' || status === 0 || status >= 500 ? 'unknown' : 'rejected';
     }
   }
   if (me.data?.mustChangePassword)
@@ -252,7 +253,7 @@ export function StudentLayout() {
   if (!me.data)
     return (
       <main className="standalone">
-        <h1>Кабинет ученика</h1>
+        <h1>{t('cabinetStudent')}</h1>
         <QueryState query={me}>{null}</QueryState>
       </main>
     );
@@ -275,17 +276,9 @@ export function StudentLayout() {
         )}
         mainId="main-content"
         mainRef={heading}
-        header={<>Кабинет ученика · {date(new Date().toISOString())}</>}
-        account={<AccountMenu name={profile.displayName} role="STUDENT" />}
+        account={<AccountMenu name={profile.displayName} role="STUDENT" onLogout={logout} />}
         notifications={
-          <NotificationBell
-            count={unread.error ? undefined : unread.data?.unreadCount}
-            renderLink={(content, label) => (
-              <Link to="/student/notifications" className="k8k-bell" aria-label={label}>
-                {content}
-              </Link>
-            )}
-          />
+          <StudentNotificationMenu count={unread.error ? undefined : unread.data?.unreadCount} />
         }
         sidebarFooter={
           <>
@@ -306,29 +299,27 @@ export function StudentLayout() {
                 }
               }}
             >
-              Контакты менеджера
+              {t('chrome.managerContacts')}
             </a>
-            <button type="button" onClick={() => void logout()} disabled={loggingOut}>
-              {loggingOut ? 'Выходим…' : 'Выйти'}
-            </button>
-            <ErrorNotice error={logoutError} />
           </>
         }
-        aside={<RightSidebar me={profile} />}
+        aside={<StudentAside contacts={profile.managerContacts} />}
       >
         <Outlet context={profile} />
         <details className="inline-widgets">
-          <summary>Календарь, абонемент и контакты</summary>
-          <RightSidebar me={profile} inline />
+          <summary>{t('chrome.managerContacts')}</summary>
+          <StudentAside contacts={profile.managerContacts} inline />
         </details>
       </AppShell>
     );
-  const nav = navigation.map(([icon, path, label]) => (
+  const nav = navigation.map(([icon, path]) => (
     <NavLink key={icon} end={path === ''} to={`/student${path}`}>
       <Icon name={icon} />
-      <span>{label}</span>
+      <span>
+        {t(icon === 'lessons' ? 'lessonsShort' : icon === 'homework' ? 'nav.homework' : icon)}
+      </span>
       {icon === 'notifications' && !!unread.data?.unreadCount && (
-        <span className="badge" aria-label={`${unread.data.unreadCount} непрочитанных`}>
+        <span className="badge" aria-label={`${unread.data.unreadCount} ${t('bellUnread')}`}>
           {unread.data.unreadCount}
         </span>
       )}
@@ -337,7 +328,7 @@ export function StudentLayout() {
   return (
     <div className="student-app">
       <a className="skip-link" href="#main-content">
-        Перейти к содержимому
+        {t('skip')}
       </a>
       <aside className="left-sidebar">
         <Link className="brand" to="/student">
@@ -345,82 +336,70 @@ export function StudentLayout() {
             <Icon name="academy" />
           </span>
           <span>
-            Academy<small>Кабинет ученика</small>
+            Academy<small>{t('cabinetStudent')}</small>
           </span>
         </Link>
-        <nav aria-label="Основная навигация">{nav}</nav>
+        <nav aria-label={t('primaryNavigation')}>{nav}</nav>
         <a className="manager-shortcut" href="#manager-contacts">
           <Icon name="manager" />
-          Связаться с менеджером
+          {t('chrome.contactManager')}
         </a>
-        <button className="logout" onClick={() => void logout()} disabled={loggingOut}>
-          {loggingOut ? 'Выходим…' : 'Выйти'}
-        </button>
-        <ErrorNotice error={logoutError} />
       </aside>
       <div className="workspace">
         <header className="topbar">
           <button
             className="menu-toggle"
             onClick={toggle}
-            aria-label="Открыть меню"
+            aria-label={t('sections')}
             aria-expanded={sidebar}
           >
             <Icon name="menu" />
           </button>
-          <strong>Личный кабинет</strong>
-          <time className="header-date">{date(new Date().toISOString())}</time>
+          <strong>{t('auth.cabinet')}</strong>
+          <time className="header-date">{formatDate(Date.now(), locale, profile.timeZone)}</time>
           <div className="topbar-profile">
             <Link
               className="bell"
               to="/student/notifications"
-              aria-label={`Уведомления${unread.data?.unreadCount ? `, непрочитанных ${unread.data.unreadCount}` : ''}`}
+              aria-label={`${t('notifications')}${unread.data?.unreadCount ? `, ${t('bellUnread')} ${unread.data.unreadCount}` : ''}`}
             >
               <Icon name="notifications" />
               {!!unread.data?.unreadCount && (
                 <span className="badge">{unread.data.unreadCount}</span>
               )}
             </Link>
-            <AccountMenu name={profile.displayName} role="STUDENT" />
+            <AccountMenu name={profile.displayName} role="STUDENT" onLogout={logout} />
           </div>
         </header>
         <div className="content-grid">
           <main id="main-content" ref={heading} tabIndex={-1}>
             <Outlet context={profile} />
             <details className="inline-widgets">
-              <summary>Календарь, абонемент и контакты</summary>
+              <summary>{t('chrome.studentWidgets')}</summary>
               <RightSidebar me={profile} inline />
             </details>
           </main>
           <RightSidebar me={profile} />
         </div>
       </div>
-      <nav className="bottom-nav" aria-label="Мобильная навигация">
-        {navigation.slice(0, 4).map(([icon, path, label]) => (
+      <nav className="bottom-nav" aria-label={t('mobileNavigation')}>
+        {navigation.slice(0, 4).map(([icon, path]) => (
           <NavLink key={icon} end={path === ''} to={`/student${path}`}>
             <Icon name={icon} />
             <span>
-              {label === 'Домашние задания'
-                ? 'Задания'
-                : label === 'Мой путь знаний'
-                  ? 'Мой путь'
-                  : label}
+              {t(icon === 'lessons' ? 'lessonsShort' : icon === 'skills' ? 'skillsShort' : icon)}
             </span>
           </NavLink>
         ))}
-        <button onClick={toggle} aria-label="Все разделы" aria-expanded={sidebar}>
+        <button onClick={toggle} aria-label={t('sections')} aria-expanded={sidebar}>
           <Icon name="more" />
-          <span>Ещё</span>
+          <span>{t('more')}</span>
         </button>
       </nav>
       {sidebar && (
-        <Modal title="Все разделы" close={close} className="navigation-drawer">
+        <Modal title={t('sections')} close={close} className="navigation-drawer">
           <nav>{nav}</nav>
           <ManagerContacts contacts={profile.managerContacts} />
-          <button onClick={() => void logout()} disabled={loggingOut}>
-            Выйти
-          </button>
-          <ErrorNotice error={logoutError} />
         </Modal>
       )}
     </div>

@@ -1732,13 +1732,51 @@ export const ManagerMeResponseDtoCapabilitiesItem = {
   STUDENTS_VIEW: 'STUDENTS_VIEW',
   ACCOUNTS_CREATE: 'ACCOUNTS_CREATE',
   PAYMENTS_CONFIRM: 'PAYMENTS_CONFIRM',
+  PAYMENTS_REQUEST_APPROVAL: 'PAYMENTS_REQUEST_APPROVAL',
   SUBSCRIPTIONS_MANAGE: 'SUBSCRIPTIONS_MANAGE',
   SCHEDULE_MANAGE: 'SCHEDULE_MANAGE',
   TASKS_PROCESS: 'TASKS_PROCESS',
   NOTIFICATIONS_SEND: 'NOTIFICATIONS_SEND',
 } as const;
 
+export type StaffActorContextDtoRole = typeof StaffActorContextDtoRole[keyof typeof StaffActorContextDtoRole];
+
+
+export const StaffActorContextDtoRole = {
+  TEACHER: 'TEACHER',
+  MANAGER: 'MANAGER',
+  DIRECTOR: 'DIRECTOR',
+  TECH_OPERATOR: 'TECH_OPERATOR',
+} as const;
+
+export type StaffActorContextDtoTimezoneSource = typeof StaffActorContextDtoTimezoneSource[keyof typeof StaffActorContextDtoTimezoneSource];
+
+
+export const StaffActorContextDtoTimezoneSource = {
+  SCHOOL_CONFIGURATION: 'SCHOOL_CONFIGURATION',
+  SCHOOL_DEFAULT: 'SCHOOL_DEFAULT',
+} as const;
+
+export interface StaffActorContextDto {
+  accountId: string;
+  role: StaffActorContextDtoRole;
+  /** @nullable */
+  staffProfileId: string | null;
+  /** @nullable */
+  teacherProfileId: string | null;
+  displayName: string;
+  timezone: string;
+  timezoneSource: StaffActorContextDtoTimezoneSource;
+  /** Server DB clock, not a ledger confirmation */
+  asOf: string;
+  /** @nullable */
+  accountUpdatedAt: string | null;
+  /** @nullable */
+  profileUpdatedAt: string | null;
+}
+
 export interface ManagerMeResponseDto {
+  actorContext: StaffActorContextDto;
   managerId: string;
   displayName: string;
   role: ManagerMeResponseDtoRole;
@@ -2441,6 +2479,47 @@ export interface PlatformAccountsDto {
   items: DemoAccountDto[];
 }
 
+export type WorkspaceCoverageDtoScope = typeof WorkspaceCoverageDtoScope[keyof typeof WorkspaceCoverageDtoScope];
+
+
+export const WorkspaceCoverageDtoScope = {
+  OWN_TEACHER: 'OWN_TEACHER',
+  SCHOOL: 'SCHOOL',
+  NOT_APPLICABLE: 'NOT_APPLICABLE',
+} as const;
+
+export interface WorkspacePageInfoDto {
+  limit: number;
+  returned: number;
+  hasMore: boolean;
+  /**
+     * Unknown total; never a global KPI
+     * @nullable
+     */
+  total: number | null;
+}
+
+export interface WorkspaceCoverageDto {
+  scope: WorkspaceCoverageDtoScope;
+  /** @nullable */
+  windowFrom: string | null;
+  /** @nullable */
+  windowTo: string | null;
+  /**
+     * Latest updated_at among returned source rows only, not a global watermark
+     * @nullable
+     */
+  sourceUpdatedAt: string | null;
+  pageInfo: WorkspacePageInfoDto;
+}
+
+export interface WorkspaceCoverageSetDto {
+  lessons: WorkspaceCoverageDto;
+  students: WorkspaceCoverageDto;
+  homework: WorkspaceCoverageDto;
+  tasks: WorkspaceCoverageDto;
+}
+
 export interface WorkspaceLessonDto {
   id: string;
   startsAt: string;
@@ -2476,6 +2555,8 @@ export interface WorkspaceTaskDto {
 }
 
 export interface PlatformWorkspaceDto {
+  actorContext: StaffActorContextDto;
+  coverage: WorkspaceCoverageSetDto;
   name: string;
   role: string;
   lessons: WorkspaceLessonDto[];
@@ -2944,6 +3025,35 @@ export interface SlotGenerationResponse {
   occurrences: LessonResponse[];
   [key: string]: unknown;
  }
+
+export type StaffActionEligibilityDtoAction = typeof StaffActionEligibilityDtoAction[keyof typeof StaffActionEligibilityDtoAction];
+
+
+export const StaffActionEligibilityDtoAction = {
+  lessonstart: 'lesson.start',
+  'paymentrequest-approval': 'payment.request-approval',
+  paymentconfirm: 'payment.confirm',
+} as const;
+
+export interface StaffActionEligibilityDto {
+  action: StaffActionEligibilityDtoAction;
+  /** @nullable */
+  objectId: string | null;
+  /**
+     * Null when command has no revision precondition; updated_at is not a revision
+     * @nullable
+     */
+  revision: string | null;
+  allowed: boolean;
+  /**
+     * Stable code; unavailable does not disclose foreign object state
+     * @nullable
+     */
+  reason: string | null;
+  asOf: string;
+  /** @nullable */
+  sourceUpdatedAt: string | null;
+}
 
 export interface StartLessonRequest { [key: string]: unknown }
 
@@ -5662,6 +5772,30 @@ export const getManagerPayment = (paymentId: string, options?: Parameters<typeof
 
 
 
+export const getGetManagerPaymentApprovalEligibilityUrl = (paymentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/payments/${paymentId}/approval-eligibility`
+}
+
+/**
+ * @summary Own approval request policy; never director receipt confirmation
+ */
+export const getManagerPaymentApprovalEligibility = (paymentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffActionEligibilityDto>(getGetManagerPaymentApprovalEligibilityUrl(paymentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getConfirmManagerPaymentUrl = (paymentId: string,) => {
 
 
@@ -6841,6 +6975,78 @@ export const getGetPlatformAccountsUrl = () => {
 export const getPlatformAccounts = ( options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<PlatformAccountsDto>(getGetPlatformAccountsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStaffActorContextUrl = () => {
+
+
+
+
+  return `/api/v1/platform/actor-context`
+}
+
+/**
+ * @summary Own active staff identity; manager context is served by getManagerMe
+ */
+export const getStaffActorContext = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffActorContextDto>(getGetStaffActorContextUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherLessonStartEligibilityUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/platform/lessons/${id}/start-eligibility`
+}
+
+/**
+ * @summary Advisory only; startLesson repeats the same policy inside the command transaction
+ */
+export const getTeacherLessonStartEligibility = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffActionEligibilityDto>(getGetTeacherLessonStartEligibilityUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorPaymentConfirmationEligibilityUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/platform/payments/${id}/confirm-eligibility`
+}
+
+/**
+ * @summary Director receipt confirmation policy; no allocation or ledger write
+ */
+export const getDirectorPaymentConfirmationEligibility = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffActionEligibilityDto>(getGetDirectorPaymentConfirmationEligibilityUrl(id),
   {
     ...options,
     method: 'GET'

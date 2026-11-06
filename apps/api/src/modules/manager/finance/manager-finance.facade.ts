@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { Prisma } from '@online-school/db';
-import { err } from '@online-school/shared';
+import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
 import { domainError } from '../../../core/errors/domain-error.js';
 import type { DomainError } from '../../../core/errors/domain-error.js';
@@ -31,6 +31,7 @@ import type {
 import { subscriptionFailure } from '../../finance/manager-subscriptions/finance-facade.js';
 import { ManagerScopeService } from '../scope/manager-scope.service.js';
 import type { ManagerContext } from '../context/manager-context.js';
+import type { StaffActionEligibilityDto } from '../../../core/actor/actor-context.dto.js';
 @Injectable()
 export class ManagerFinanceFacade {
   constructor(
@@ -69,6 +70,21 @@ export class ManagerFinanceFacade {
             ? domainError('PAYMENT_NOT_FOUND', 404)
             : allowed.error,
         );
+  }
+  async paymentApprovalEligibility(
+    ctx: ManagerContext,
+    id: string,
+    command: CriticalContext,
+  ): Promise<Result<StaffActionEligibilityDto, DomainError>> {
+    const contact = await this.receiptScope(ctx, id, command.tx);
+    if (!contact.ok) return contact;
+    const authorized = await this.authorize(ctx, contact.value, command);
+    if (!authorized.ok) return authorized;
+    try {
+      return ok(await this.payments.approvalEligibility(command, id));
+    } catch (error: unknown) {
+      return err(subscriptionFailure(error));
+    }
   }
   async getPayment(
     ctx: ManagerContext,

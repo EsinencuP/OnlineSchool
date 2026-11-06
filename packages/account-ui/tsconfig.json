@@ -7,5 +7,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "references": [{ "path": "../api-contracts" }]
+  "references": [{ "path": "../api-contracts" }, { "path": "../ui" }]
 }

@@ -1,0 +1,302 @@
+# K8K — карта источников пакета
+
+## Как читать приоритет
+
+Последняя явная воля владельца и действующие специальные решения выше исторических формулировок. K8K-раздел8 исторический; раздел7/план03.11.2026 разрешают необходимые API-инкременты. RU/RO и пять кабинетов утверждены; сайт отдельно. Отдельные TASK содержат повторённые нормы, соответствующие ссылки и точно ограниченное изменение. Не требуется загружать весь каталог в каждый чат.
+
+## Локальные источники и фактический код
+
+- [AGENTS.md](../../AGENTS.md).
+- [PHASE0_CHECKS.md](../../PHASE0_CHECKS.md).
+- [apps/api/src/core/errors/error-mapper.ts](../../apps/api/src/core/errors/error-mapper.ts).
+- [apps/api/src/core/policy/policy.service.ts](../../apps/api/src/core/policy/policy.service.ts).
+- [apps/api/src/core/rbac/decorators.ts](../../apps/api/src/core/rbac/decorators.ts).
+- [apps/api/src/core/session/manager-password-policy.ts](../../apps/api/src/core/session/manager-password-policy.ts).
+- [apps/api/src/core/session/qa-password-policy.ts](../../apps/api/src/core/session/qa-password-policy.ts).
+- [apps/api/src/core/session/session.service.ts](../../apps/api/src/core/session/session.service.ts).
+- [apps/api/src/modules/education/education.module.ts](../../apps/api/src/modules/education/education.module.ts).
+- [apps/api/src/modules/finance/entitlements.service.ts](../../apps/api/src/modules/finance/entitlements.service.ts).
+- [apps/api/src/modules/finance/finance-access.service.ts](../../apps/api/src/modules/finance/finance-access.service.ts).
+- [apps/api/src/modules/finance/finance-common.ts](../../apps/api/src/modules/finance/finance-common.ts).
+- [apps/api/src/modules/finance/finance-ledger.service.ts](../../apps/api/src/modules/finance/finance-ledger.service.ts).
+- [apps/api/src/modules/finance/finance-scope.guard.ts](../../apps/api/src/modules/finance/finance-scope.guard.ts).
+- [apps/api/src/modules/finance/finance.controller.ts](../../apps/api/src/modules/finance/finance.controller.ts).
+- [apps/api/src/modules/finance/manager-disputes/director.controller.ts](../../apps/api/src/modules/finance/manager-disputes/director.controller.ts).
+- [apps/api/src/modules/finance/manager-disputes/dispute.service.ts](../../apps/api/src/modules/finance/manager-disputes/dispute.service.ts).
+- [apps/api/src/modules/finance/payments.service.ts](../../apps/api/src/modules/finance/payments.service.ts).
+- [apps/api/src/modules/finance/payroll.service.ts](../../apps/api/src/modules/finance/payroll.service.ts).
+- [apps/api/src/modules/finance/periods.service.ts](../../apps/api/src/modules/finance/periods.service.ts).
+- [apps/api/src/modules/finance/teacher-rate.service.ts](../../apps/api/src/modules/finance/teacher-rate.service.ts).
+- [apps/api/src/modules/identity/demo-accounts.ts](../../apps/api/src/modules/identity/demo-accounts.ts).
+- [apps/api/src/modules/identity/identity.controller.ts](../../apps/api/src/modules/identity/identity.controller.ts).
+- [apps/api/src/modules/identity/identity.service.ts](../../apps/api/src/modules/identity/identity.service.ts).
+- [apps/api/src/modules/identity/recovery.service.ts](../../apps/api/src/modules/identity/recovery.service.ts).
+- [apps/api/src/modules/manager/MANAGER.md](../../apps/api/src/modules/manager/MANAGER.md).
+- [apps/api/src/modules/manager/accounts/MGR-03.md](../../apps/api/src/modules/manager/accounts/MGR-03.md).
+- [apps/api/src/modules/manager/context/manager-context.ts](../../apps/api/src/modules/manager/context/manager-context.ts).
+- [apps/api/src/modules/manager/dashboard/dashboard.sql.ts](../../apps/api/src/modules/manager/dashboard/dashboard.sql.ts).
+- [apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts](../../apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts).
+- [apps/api/src/modules/manager/dto/manager-dashboard.dto.ts](../../apps/api/src/modules/manager/dto/manager-dashboard.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-lead.dto.ts](../../apps/api/src/modules/manager/dto/manager-lead.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-me.response.dto.ts](../../apps/api/src/modules/manager/dto/manager-me.response.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-payment.dto.ts](../../apps/api/src/modules/manager/dto/manager-payment.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-schedule.dto.ts](../../apps/api/src/modules/manager/dto/manager-schedule.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-subscription.dto.ts](../../apps/api/src/modules/manager/dto/manager-subscription.dto.ts).
+- [apps/api/src/modules/manager/dto/manager-task.dto.ts](../../apps/api/src/modules/manager/dto/manager-task.dto.ts).
+- [apps/api/src/modules/manager/dto/student-crm.dto.ts](../../apps/api/src/modules/manager/dto/student-crm.dto.ts).
+- [apps/api/src/modules/manager/finance/manager-finance.facade.ts](../../apps/api/src/modules/manager/finance/manager-finance.facade.ts).
+- [apps/api/src/modules/manager/guards/manager-route.decorator.ts](../../apps/api/src/modules/manager/guards/manager-route.decorator.ts).
+- [apps/api/src/modules/manager/leads/MGR-11.md](../../apps/api/src/modules/manager/leads/MGR-11.md).
+- [apps/api/src/modules/manager/leads/lead-cursor.ts](../../apps/api/src/modules/manager/leads/lead-cursor.ts).
+- [apps/api/src/modules/manager/leads/manager-leads.controller.ts](../../apps/api/src/modules/manager/leads/manager-leads.controller.ts).
+- [apps/api/src/modules/manager/leads/manager-leads.service.ts](../../apps/api/src/modules/manager/leads/manager-leads.service.ts).
+- [apps/api/src/modules/manager/leads/policy.ts](../../apps/api/src/modules/manager/leads/policy.ts).
+- [apps/api/src/modules/manager/leads/summary.sql.ts](../../apps/api/src/modules/manager/leads/summary.sql.ts).
+- [apps/api/src/modules/manager/manager.module.ts](../../apps/api/src/modules/manager/manager.module.ts).
+- [apps/api/src/modules/manager/me/manager-me.service.ts](../../apps/api/src/modules/manager/me/manager-me.service.ts).
+- [apps/api/src/modules/manager/options/manager-options.dto.ts](../../apps/api/src/modules/manager/options/manager-options.dto.ts).
+- [apps/api/src/modules/manager/options/manager-options.service.ts](../../apps/api/src/modules/manager/options/manager-options.service.ts).
+- [apps/api/src/modules/manager/payments/MGR-05.md](../../apps/api/src/modules/manager/payments/MGR-05.md).
+- [apps/api/src/modules/manager/payments/manager-payments.service.ts](../../apps/api/src/modules/manager/payments/manager-payments.service.ts).
+- [apps/api/src/modules/manager/schedule/MGR-06.md](../../apps/api/src/modules/manager/schedule/MGR-06.md).
+- [apps/api/src/modules/manager/schedule/manager-schedule.service.ts](../../apps/api/src/modules/manager/schedule/manager-schedule.service.ts).
+- [apps/api/src/modules/manager/scope/manager-scope.service.ts](../../apps/api/src/modules/manager/scope/manager-scope.service.ts).
+- [apps/api/src/modules/manager/students/manager-students.controller.ts](../../apps/api/src/modules/manager/students/manager-students.controller.ts).
+- [apps/api/src/modules/manager/students/manager-students.service.ts](../../apps/api/src/modules/manager/students/manager-students.service.ts).
+- [apps/api/src/modules/manager/subscriptions/MGR-04.md](../../apps/api/src/modules/manager/subscriptions/MGR-04.md).
+- [apps/api/src/modules/manager/subscriptions/manager-subscriptions.service.ts](../../apps/api/src/modules/manager/subscriptions/manager-subscriptions.service.ts).
+- [apps/api/src/modules/manager/tasks/MGR-07.md](../../apps/api/src/modules/manager/tasks/MGR-07.md).
+- [apps/api/src/modules/manager/tasks/contracts.ts](../../apps/api/src/modules/manager/tasks/contracts.ts).
+- [apps/api/src/modules/manager/tasks/manager-tasks.service.ts](../../apps/api/src/modules/manager/tasks/manager-tasks.service.ts).
+- [apps/api/src/modules/manager/tasks/task-cursor.ts](../../apps/api/src/modules/manager/tasks/task-cursor.ts).
+- [apps/api/src/modules/notifications/notification-outbox.publisher.ts](../../apps/api/src/modules/notifications/notification-outbox.publisher.ts).
+- [apps/api/src/modules/notifications/notification.service.ts](../../apps/api/src/modules/notifications/notification.service.ts).
+- [apps/api/src/modules/notifications/templates.ts](../../apps/api/src/modules/notifications/templates.ts).
+- [apps/api/src/modules/platform/platform.dto.ts](../../apps/api/src/modules/platform/platform.dto.ts).
+- [apps/api/src/modules/platform/platform.module.ts](../../apps/api/src/modules/platform/platform.module.ts).
+- [apps/api/src/modules/qa/qa.dto.ts](../../apps/api/src/modules/qa/qa.dto.ts).
+- [apps/api/src/modules/qa/qa.module.ts](../../apps/api/src/modules/qa/qa.module.ts).
+- [apps/api/src/modules/qa/worker-health.controller.ts](../../apps/api/src/modules/qa/worker-health.controller.ts).
+- [apps/api/src/modules/schedule/deadline.module.ts](../../apps/api/src/modules/schedule/deadline.module.ts).
+- [apps/api/src/modules/schedule/manager/approval.controller.ts](../../apps/api/src/modules/schedule/manager/approval.controller.ts).
+- [apps/api/src/modules/schedule/manager/workflow.service.ts](../../apps/api/src/modules/schedule/manager/workflow.service.ts).
+- [apps/api/src/modules/schedule/outcomes.service.ts](../../apps/api/src/modules/schedule/outcomes.service.ts).
+- [apps/api/src/modules/schedule/registry.service.ts](../../apps/api/src/modules/schedule/registry.service.ts).
+- [apps/api/src/modules/schedule/schedule-access.service.ts](../../apps/api/src/modules/schedule/schedule-access.service.ts).
+- [apps/api/src/modules/schedule/schedule-scope.guard.ts](../../apps/api/src/modules/schedule/schedule-scope.guard.ts).
+- [apps/api/src/modules/schedule/schedule.controller.ts](../../apps/api/src/modules/schedule/schedule.controller.ts).
+- [apps/api/src/student/active-subscription.guard.ts](../../apps/api/src/student/active-subscription.guard.ts).
+- [apps/api/src/student/dashboard/dashboard-cache.interceptor.ts](../../apps/api/src/student/dashboard/dashboard-cache.interceptor.ts).
+- [apps/api/src/student/dashboard/dashboard.dto.ts](../../apps/api/src/student/dashboard/dashboard.dto.ts).
+- [apps/api/src/student/dashboard/dashboard.service.ts](../../apps/api/src/student/dashboard/dashboard.service.ts).
+- [apps/api/src/student/history/README.md](../../apps/api/src/student/history/README.md).
+- [apps/api/src/student/history/dispute.service.ts](../../apps/api/src/student/history/dispute.service.ts).
+- [apps/api/src/student/history/history.dto.ts](../../apps/api/src/student/history/history.dto.ts).
+- [apps/api/src/student/homework/README.md](../../apps/api/src/student/homework/README.md).
+- [apps/api/src/student/homework/homework.dto.ts](../../apps/api/src/student/homework/homework.dto.ts).
+- [apps/api/src/student/homework/homework.service.ts](../../apps/api/src/student/homework/homework.service.ts).
+- [apps/api/src/student/lessons/README.md](../../apps/api/src/student/lessons/README.md).
+- [apps/api/src/student/lessons/lesson-period.ts](../../apps/api/src/student/lessons/lesson-period.ts).
+- [apps/api/src/student/lessons/lessons.dto.ts](../../apps/api/src/student/lessons/lessons.dto.ts).
+- [apps/api/src/student/lessons/lessons.service.ts](../../apps/api/src/student/lessons/lessons.service.ts).
+- [apps/api/src/student/manager-contacts.ts](../../apps/api/src/student/manager-contacts.ts).
+- [apps/api/src/student/materials/README.md](../../apps/api/src/student/materials/README.md).
+- [apps/api/src/student/materials/materials.dto.ts](../../apps/api/src/student/materials/materials.dto.ts).
+- [apps/api/src/student/me/me.dto.ts](../../apps/api/src/student/me/me.dto.ts).
+- [apps/api/src/student/me/me.service.ts](../../apps/api/src/student/me/me.service.ts).
+- [apps/api/src/student/notifications/README.md](../../apps/api/src/student/notifications/README.md).
+- [apps/api/src/student/notifications/notifications.dto.ts](../../apps/api/src/student/notifications/notifications.dto.ts).
+- [apps/api/src/student/notifications/notifications.service.ts](../../apps/api/src/student/notifications/notifications.service.ts).
+- [apps/api/src/student/profile/profile.controller.ts](../../apps/api/src/student/profile/profile.controller.ts).
+- [apps/api/src/student/reports/README.md](../../apps/api/src/student/reports/README.md).
+- [apps/api/src/student/reports/export-data.ts](../../apps/api/src/student/reports/export-data.ts).
+- [apps/api/src/student/reports/reports.controller.ts](../../apps/api/src/student/reports/reports.controller.ts).
+- [apps/api/src/student/reports/reports.dto.ts](../../apps/api/src/student/reports/reports.dto.ts).
+- [apps/api/src/student/reports/reports.service.ts](../../apps/api/src/student/reports/reports.service.ts).
+- [apps/api/src/student/reports/reports.sql.ts](../../apps/api/src/student/reports/reports.sql.ts).
+- [apps/api/src/student/security/README.md](../../apps/api/src/student/security/README.md).
+- [apps/api/src/student/security/security.controller.ts](../../apps/api/src/student/security/security.controller.ts).
+- [apps/api/src/student/security/security.dto.ts](../../apps/api/src/student/security/security.dto.ts).
+- [apps/api/src/student/skills/README.md](../../apps/api/src/student/skills/README.md).
+- [apps/api/src/student/skills/skills.dto.ts](../../apps/api/src/student/skills/skills.dto.ts).
+- [apps/api/src/student/skills/skills.service.ts](../../apps/api/src/student/skills/skills.service.ts).
+- [apps/api/src/student/skills/skills.sql.ts](../../apps/api/src/student/skills/skills.sql.ts).
+- [apps/api/src/student/student.module.ts](../../apps/api/src/student/student.module.ts).
+- [apps/api/src/student/subscription/README.md](../../apps/api/src/student/subscription/README.md).
+- [apps/api/src/student/subscription/subscription.dto.ts](../../apps/api/src/student/subscription/subscription.dto.ts).
+- [apps/api/src/student/subscription/subscription.sql.ts](../../apps/api/src/student/subscription/subscription.sql.ts).
+- [apps/manager-web/playwright.config.mjs](../../apps/manager-web/playwright.config.mjs).
+- [apps/manager-web/src/api/client.ts](../../apps/manager-web/src/api/client.ts).
+- [apps/manager-web/src/api/error-view.ts](../../apps/manager-web/src/api/error-view.ts).
+- [apps/manager-web/src/components/business-forms.tsx](../../apps/manager-web/src/components/business-forms.tsx).
+- [apps/manager-web/src/components/layout.tsx](../../apps/manager-web/src/components/layout.tsx).
+- [apps/manager-web/src/components/lead-form.tsx](../../apps/manager-web/src/components/lead-form.tsx).
+- [apps/manager-web/src/components/ui.tsx](../../apps/manager-web/src/components/ui.tsx).
+- [apps/manager-web/src/hooks/use-command.ts](../../apps/manager-web/src/hooks/use-command.ts).
+- [apps/manager-web/src/hooks/use-idempotency-key.ts](../../apps/manager-web/src/hooks/use-idempotency-key.ts).
+- [apps/manager-web/src/hooks/use-options.ts](../../apps/manager-web/src/hooks/use-options.ts).
+- [apps/manager-web/src/i18n/error-messages.ts](../../apps/manager-web/src/i18n/error-messages.ts).
+- [apps/manager-web/src/i18n/ru.ts](../../apps/manager-web/src/i18n/ru.ts).
+- [apps/manager-web/src/lib/money.ts](../../apps/manager-web/src/lib/money.ts).
+- [apps/manager-web/src/lib/time.ts](../../apps/manager-web/src/lib/time.ts).
+- [apps/manager-web/src/pages/Account.tsx](../../apps/manager-web/src/pages/Account.tsx).
+- [apps/manager-web/src/pages/Dashboard.tsx](../../apps/manager-web/src/pages/Dashboard.tsx).
+- [apps/manager-web/src/pages/Lead.tsx](../../apps/manager-web/src/pages/Lead.tsx).
+- [apps/manager-web/src/pages/Leads.tsx](../../apps/manager-web/src/pages/Leads.tsx).
+- [apps/manager-web/src/pages/Schedule.tsx](../../apps/manager-web/src/pages/Schedule.tsx).
+- [apps/manager-web/src/pages/Student.tsx](../../apps/manager-web/src/pages/Student.tsx).
+- [apps/manager-web/src/pages/Task.tsx](../../apps/manager-web/src/pages/Task.tsx).
+- [apps/manager-web/src/pages/Tasks.tsx](../../apps/manager-web/src/pages/Tasks.tsx).
+- [apps/manager-web/src/pages/student/Notifications.tsx](../../apps/manager-web/src/pages/student/Notifications.tsx).
+- [apps/manager-web/src/pages/student/Payments.tsx](../../apps/manager-web/src/pages/student/Payments.tsx).
+- [apps/manager-web/src/pages/student/Subscriptions.tsx](../../apps/manager-web/src/pages/student/Subscriptions.tsx).
+- [apps/manager-web/src/routes.ts](../../apps/manager-web/src/routes.ts).
+- [apps/manager-web/src/session.tsx](../../apps/manager-web/src/session.tsx).
+- [apps/manager-web/src/test/fixtures.ts](../../apps/manager-web/src/test/fixtures.ts).
+- [apps/manager-web/src/test/forms.test.tsx](../../apps/manager-web/src/test/forms.test.tsx).
+- [apps/manager-web/src/test/handlers.ts](../../apps/manager-web/src/test/handlers.ts).
+- [apps/manager-web/src/test/session.test.tsx](../../apps/manager-web/src/test/session.test.tsx).
+- [apps/manager-web/test/leads.spec.mjs](../../apps/manager-web/test/leads.spec.mjs).
+- [apps/platform/src/App.tsx](../../apps/platform/src/App.tsx).
+- [apps/platform/src/main.tsx](../../apps/platform/src/main.tsx).
+- [apps/platform/src/style.css](../../apps/platform/src/style.css).
+- [apps/student-cabinet/package.json](../../apps/student-cabinet/package.json).
+- [apps/student-cabinet/playwright.config.mjs](../../apps/student-cabinet/playwright.config.mjs).
+- [apps/student-cabinet/src/Layout.tsx](../../apps/student-cabinet/src/Layout.tsx).
+- [apps/student-cabinet/src/StudentNotificationMenu.tsx](../../apps/student-cabinet/src/StudentNotificationMenu.tsx).
+- [apps/student-cabinet/src/api.ts](../../apps/student-cabinet/src/api.ts).
+- [apps/student-cabinet/src/components.tsx](../../apps/student-cabinet/src/components.tsx).
+- [apps/student-cabinet/src/pages/Account.tsx](../../apps/student-cabinet/src/pages/Account.tsx).
+- [apps/student-cabinet/src/pages/Dashboard.tsx](../../apps/student-cabinet/src/pages/Dashboard.tsx).
+- [apps/student-cabinet/src/pages/Homework.tsx](../../apps/student-cabinet/src/pages/Homework.tsx).
+- [apps/student-cabinet/src/pages/Learning.tsx](../../apps/student-cabinet/src/pages/Learning.tsx).
+- [apps/student-cabinet/src/pages/Lessons.tsx](../../apps/student-cabinet/src/pages/Lessons.tsx).
+- [apps/student-cabinet/src/pages/Reports.tsx](../../apps/student-cabinet/src/pages/Reports.tsx).
+- [apps/student-cabinet/src/pages/StudentHome.tsx](../../apps/student-cabinet/src/pages/StudentHome.tsx).
+- [apps/student-cabinet/src/router.tsx](../../apps/student-cabinet/src/router.tsx).
+- [apps/student-cabinet/src/student-presentation.ts](../../apps/student-cabinet/src/student-presentation.ts).
+- [apps/student-cabinet/src/student-widgets.tsx](../../apps/student-cabinet/src/student-widgets.tsx).
+- [apps/student-cabinet/src/student.css](../../apps/student-cabinet/src/student.css).
+- [apps/student-cabinet/tests/accessibility.mjs](../../apps/student-cabinet/tests/accessibility.mjs).
+- [apps/student-cabinet/tests/fixture-server.mjs](../../apps/student-cabinet/tests/fixture-server.mjs).
+- [apps/student-cabinet/tests/k8k-presentation.test.mjs](../../apps/student-cabinet/tests/k8k-presentation.test.mjs).
+- [apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx](../../apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx).
+- [apps/student-cabinet/tests/student.spec.mjs](../../apps/student-cabinet/tests/student.spec.mjs).
+- [apps/worker/src/education-pdf.ts](../../apps/worker/src/education-pdf.ts).
+- [apps/worker/src/main.ts](../../apps/worker/src/main.ts).
+- [apps/worker/src/notifications.ts](../../apps/worker/src/notifications.ts).
+- [docs/AI Coder Tasks — Модуль 2 — MGR-11.md](../AI%20Coder%20Tasks%20%E2%80%94%20%D0%9C%D0%BE%D0%B4%D1%83%D0%BB%D1%8C%202%20%E2%80%94%20MGR-11.md).
+- [docs/K8K_Academy_UX_decision_register_v0.9.md](../K8K_Academy_UX_decision_register_v0.9.md).
+- [docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md](../K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md).
+- [docs/K8K_DESIGN_INSTRUCTIONS.md](../K8K_DESIGN_INSTRUCTIONS.md).
+- [docs/K8K_IMPLEMENTATION_STATUS.md](../K8K_IMPLEMENTATION_STATUS.md).
+- [docs/K8K_REDESIGN_PLAN.md](../K8K_REDESIGN_PLAN.md).
+- [docs/K8K_REQUIREMENTS_MATRIX.md](../K8K_REQUIREMENTS_MATRIX.md).
+- [docs/manager_password_login_owner_decision_2026_11_01.md](../manager_password_login_owner_decision_2026_11_01.md).
+- [docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md](../online_academy_CON_01_11_owner_decisions_addendum_v1.0.md).
+- [docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md](../online_academy_MVP_full_release_architecture_roadmap_v9.7.md).
+- [docs/online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md](../online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md).
+- [docs/online_academy_block_13_final_architecture_handoff_v1.0.md](../online_academy_block_13_final_architecture_handoff_v1.0.md).
+- [docs/online_academy_detailed_technical_design_part_01_v1.9.md](../online_academy_detailed_technical_design_part_01_v1.9.md).
+- [docs/online_academy_economics_11_3_final_register_v1_0.md](../online_academy_economics_11_3_final_register_v1_0.md).
+- [docs/online_academy_financial_operational_exceptions_part_01_v1.0.md](../online_academy_financial_operational_exceptions_part_01_v1.0.md).
+- [docs/online_academy_manager_dashboard_decisions_2026_11_01.md](../online_academy_manager_dashboard_decisions_2026_11_01.md).
+- [docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md](../online_academy_manager_finance_distribution_clarification_2026_10_31.md).
+- [docs/online_academy_manager_frontend_implementation_2026_11_01.md](../online_academy_manager_frontend_implementation_2026_11_01.md).
+- [docs/online_academy_manager_notification_decisions_2026_11_01.md](../online_academy_manager_notification_decisions_2026_11_01.md).
+- [docs/online_academy_manager_payment_decisions_2026_10_31.md](../online_academy_manager_payment_decisions_2026_10_31.md).
+- [docs/online_academy_manager_schedule_decisions_2026_10_31.md](../online_academy_manager_schedule_decisions_2026_10_31.md).
+- [docs/online_academy_manager_subscription_decisions_2026_10_31.md](../online_academy_manager_subscription_decisions_2026_10_31.md).
+- [docs/online_academy_manager_task_decisions_2026_11_01.md](../online_academy_manager_task_decisions_2026_11_01.md).
+- [docs/online_academy_student_architecture_full_decision_log_v2.md](../online_academy_student_architecture_full_decision_log_v2.md).
+- [docs/online_academy_technical_architecture_part_01_v3.2.md](../online_academy_technical_architecture_part_01_v3.2.md).
+- [docs/platform_account_switching_2026_11_01.md](../platform_account_switching_2026_11_01.md).
+- [docs/platform_demo_dataset_2026_11_01.md](../platform_demo_dataset_2026_11_01.md).
+- [docs/regul/online_academy_manager_regulations_v1.0.md](../regul/online_academy_manager_regulations_v1.0.md).
+- [docs/regul/online_academy_teacher_regulations_v1.0.md](../regul/online_academy_teacher_regulations_v1.0.md).
+- [docs/scheduling_logistics_part_1_modules_01-05_v0.1 (1).md](../scheduling_logistics_part_1_modules_01-05_v0.1%20%281%29.md).
+- [docs/ui-stack.md](../ui-stack.md).
+- [infra/vercel/README.md](../../infra/vercel/README.md).
+- [output/k8k-implementation/baseline/manifest.json](../../output/k8k-implementation/baseline/manifest.json).
+- [output/k8k-implementation/bundle.json](../../output/k8k-implementation/bundle.json).
+- [package.json](../../package.json).
+- [packages/account-ui/package.json](../../packages/account-ui/package.json).
+- [packages/account-ui/src/index.tsx](../../packages/account-ui/src/index.tsx).
+- [packages/account-ui/src/style.css](../../packages/account-ui/src/style.css).
+- [packages/api-contracts/openapi/openapi.json](../../packages/api-contracts/openapi/openapi.json).
+- [packages/api-contracts/orval.config.mjs](../../packages/api-contracts/orval.config.mjs).
+- [packages/api-contracts/src/generated/client.ts](../../packages/api-contracts/src/generated/client.ts).
+- [packages/api-contracts/src/index.ts](../../packages/api-contracts/src/index.ts).
+- [packages/db/EDUCATION_INFRA.md](../../packages/db/EDUCATION_INFRA.md).
+- [packages/db/prisma/baseline-parts/task04-invariants.sql](../../packages/db/prisma/baseline-parts/task04-invariants.sql).
+- [packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql](../../packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql).
+- [packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql](../../packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql).
+- [packages/db/prisma/schema.prisma](../../packages/db/prisma/schema.prisma).
+- [packages/ui/package.json](../../packages/ui/package.json).
+- [packages/ui/src/controls.tsx](../../packages/ui/src/controls.tsx).
+- [packages/ui/src/feature.ts](../../packages/ui/src/feature.ts).
+- [packages/ui/src/freshness.tsx](../../packages/ui/src/freshness.tsx).
+- [packages/ui/src/icon.tsx](../../packages/ui/src/icon.tsx).
+- [packages/ui/src/index.ts](../../packages/ui/src/index.ts).
+- [packages/ui/src/locale.tsx](../../packages/ui/src/locale.tsx).
+- [packages/ui/src/navigation.ts](../../packages/ui/src/navigation.ts).
+- [packages/ui/src/priority.tsx](../../packages/ui/src/priority.tsx).
+- [packages/ui/src/refresh.ts](../../packages/ui/src/refresh.ts).
+- [packages/ui/src/shell.tsx](../../packages/ui/src/shell.tsx).
+- [packages/ui/src/state.tsx](../../packages/ui/src/state.tsx).
+- [packages/ui/src/style.css](../../packages/ui/src/style.css).
+- [packages/ui/src/tokens.css](../../packages/ui/src/tokens.css).
+- [packages/ui/tests/browser/fixture.tsx](../../packages/ui/tests/browser/fixture.tsx).
+- [packages/ui/tests/contrast.test.mjs](../../packages/ui/tests/contrast.test.mjs).
+- [packages/ui/tests/controls.test.mjs](../../packages/ui/tests/controls.test.mjs).
+- [packages/ui/tests/state.test.mjs](../../packages/ui/tests/state.test.mjs).
+- [playwright.config.mjs](../../playwright.config.mjs).
+- [scripts/k8k-design-check.mjs](../../scripts/k8k-design-check.mjs).
+- [scripts/k8k-implementation-smoke.mjs](../../scripts/k8k-implementation-smoke.mjs).
+- [scripts/k8k-phase2-browser.mjs](../../scripts/k8k-phase2-browser.mjs).
+- [scripts/k8k-phase2-bundle.mjs](../../scripts/k8k-phase2-bundle.mjs).
+- [scripts/k8k-size-check.mjs](../../scripts/k8k-size-check.mjs).
+- [template/newtemp.png](../../template/newtemp.png).
+- [tests/FOUNDATION_STATUS.json](../../tests/FOUNDATION_STATUS.json).
+- [tests/unit/http-transport.test.mjs](../../tests/unit/http-transport.test.mjs).
+- [tests/unit/manager-dashboard-http.test.mjs](../../tests/unit/manager-dashboard-http.test.mjs).
+- [tests/unit/manager-schedule-http.test.mjs](../../tests/unit/manager-schedule-http.test.mjs).
+- [tests/unit/manager-tasks-http.test.mjs](../../tests/unit/manager-tasks-http.test.mjs).
+- [tests/unit/platform-switch-http.test.mjs](../../tests/unit/platform-switch-http.test.mjs).
+- [tests/unit/rates.test.mjs](../../tests/unit/rates.test.mjs).
+- [tests/unit/student-context.test.mjs](../../tests/unit/student-context.test.mjs).
+- [tests/unit/student-dashboard.test.mjs](../../tests/unit/student-dashboard.test.mjs).
+- [tests/unit/student-homework-http.test.mjs](../../tests/unit/student-homework-http.test.mjs).
+- [tests/unit/student-homework.test.mjs](../../tests/unit/student-homework.test.mjs).
+- [tests/unit/student-reports.test.mjs](../../tests/unit/student-reports.test.mjs).
+- [tests/unit/student-skills-http.test.mjs](../../tests/unit/student-skills-http.test.mjs).
+- [tests/unit/student-skills.test.mjs](../../tests/unit/student-skills.test.mjs).
+- [tests/unit/student-subscription.test.mjs](../../tests/unit/student-subscription.test.mjs).
+- [tests/unit/target-guards.test.mjs](../../tests/unit/target-guards.test.mjs).
+
+## Официальные сайты
+
+Проверены на открытие03.11.2026. Это не подтверждение совместимости любой latest-версии с проектом. Задача добавления зависимости отдельно проверяет `pnpm view`, license, peers, дату релиза и вес. API-пример сайта не новое бизнес-разрешение.
+
+- [React 18.3.1](https://18.react.dev/reference/react) — API текущей major-версии; не обновлять проект до React19 по latest-примеру.
+- [TanStack Query v5](https://tanstack.com/query/latest/docs/framework/react/overview) — Чтения, query keys, invalidation, cancellation; выбранную minor сверять с package.json.
+- [Radix Primitives](https://www.radix-ui.com/primitives/docs/overview/introduction) — Доступные низкоуровневые примитивы; конкретные версии проверить перед установкой.
+- [Storybook](https://storybook.js.org/docs) — Локальные истории/состояния; текущий сайт latest не основание обновлять React/Vite.
+- [WCAG 2.2](https://www.w3.org/WAI/WCAG22/quickref/) — Рабочая accessibility-рамка; axe не заменяет ручные проверки.
+- [Playwright visual comparisons](https://playwright.dev/docs/test-snapshots) — Воспроизводимые снимки и контролируемые fixtures.
+- [Orval](https://orval.dev/) — Генерация SDK только штатным способом проекта.
+- [TanStack Table v8](https://tanstack.com/table/v8/docs/introduction) — Headless таблицы, server-controlled pagination/sort.
+- [EventCalendar](https://github.com/vkurko/calendar) — Официальный исходник @event-calendar/core; license/peer/версию перепроверить.
+- [dnd-kit](https://dndkit.com/) — Официальная документация; выбрать совместимую версию/API, а не слепо latest.
+- [culori](https://culorijs.org/api/) — Независимая проверка цветовых вычислений.
+- [Stylelint](https://stylelint.io/user-guide/get-started/) — Правила токенов и CSS, без глобального отключения legacy ошибок.
+- [Google Meet API](https://developers.google.com/workspace/meet/api/guides/overview) — Provider/OAuth ограничения отдельно от права открыть урок; не разрешение собирать все доступные Google данные.
+- [CNPDCP — закон195/2024](https://datepersonale.md/despre-legea-nr-195-2024/) — Официальный правовой источник Молдовы для отдельной legal-проверки. Задание не подменяет юридическое заключение.
+- [React Aria](https://react-aria.adobe.com/) — Сложные DatePicker/Combobox при реальной необходимости, с проверкой React18 peers выбранного выпуска.
+- [Lucide React](https://lucide.dev/guide/react) — Поштучный импорт; сайт latest не основание мигрировать установленный v0 до v1.
+- [Golos Text / Fontsource](https://fontsource.org/fonts/golos-text) — Локальные font assets; сверять реальные exports закреплённой версии.
+- [ECMA-402 / Intl](https://tc39.es/ecma402/) — Первичный стандарт форматирования locale; money representation по-прежнему точная строка/существующий Decimal.
+
+## Не подменять источники
+
+Старые roadmap3.8/7.6, старые QA-approval заявления, read-only staff screenshots и прошлые reports — история. Их предложения не отменяют поздние решения. Упомянутые в корпусе отсутствующие block14 handoff/implementation backlogs/findings нельзя восстановить догадкой. Template PNG/WebP задают язык, но не числа, формулы, состояния и полномочия. Юридические открытые вопросы не закрываются taskpack.

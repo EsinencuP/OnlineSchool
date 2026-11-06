@@ -66,7 +66,7 @@ it('idempotency hook remains stable over rerenders and explicitly rotates', () =
   act(() => result.current.rotate());
   expect(result.current.key).not.toBe(first);
 });
-it('command reuses key on retry, blocks concurrent submit, rotates changed intent and never caches a secret', async () => {
+it('command keeps the key after a confirmed rejection and rotates changed intent without caching a secret', async () => {
   clearSession();
   const { result } = renderHook(() => useCommand());
   const keys: string[] = [];
@@ -76,7 +76,7 @@ it('command reuses key on retry, blocks concurrent submit, rotates changed inten
       keys.push(new Headers(options.headers).get('Idempotency-Key')!);
       calls++;
       return calls < 3
-        ? err({ code: 'NETWORK_ERROR', status: 0, message: 'internal' })
+        ? err({ code: 'CALENDAR_CONFLICT', status: 409, message: 'internal' })
         : ok({ temporaryPassword: 'example-one-time-secret' });
     },
   );

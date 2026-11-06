@@ -1,24 +1,39 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useContext, useEffect, useId, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { k8kEnabled, queryBoundaryState, StateBoundary, useDataAge } from '@online-school/ui';
+import {
+  Icon as UIIcon,
+  k8kEnabled,
+  queryBoundaryState,
+  StateBoundary,
+  useDataAge,
+  useLocale,
+  ErrorFeedback,
+  errorText,
+} from '@online-school/ui';
+import {
+  formatStudentDate,
+  meetPresentation,
+  StudentReadFreshness,
+} from './student-presentation.js';
 import type { LessonCardDto, NextLessonDto } from '@online-school/api-contracts';
-import { errorMessage } from './api.js';
 
 let studentTimeZone = 'Europe/Chisinau';
 export function setDateZone(zone: string) {
   studentTimeZone = zone;
 }
 export const date = (value: string | null | undefined, time = false) =>
-  value
-    ? new Intl.DateTimeFormat('ru-RU', {
-        day: 'numeric',
-        month: 'long',
-        ...(time ? { hour: '2-digit', minute: '2-digit' } : {}),
-        timeZone: studentTimeZone,
-      }).format(new Date(value))
-    : 'Не указан';
+  k8kEnabled
+    ? formatStudentDate(value, studentTimeZone, time)
+    : value
+      ? new Intl.DateTimeFormat('ru-RU', {
+          day: 'numeric',
+          month: 'long',
+          ...(time ? { hour: '2-digit', minute: '2-digit' } : {}),
+          timeZone: studentTimeZone,
+        }).format(new Date(value))
+      : 'Не указан';
 export const dayKey = (value: string) =>
   new Intl.DateTimeFormat('en-CA', {
     timeZone: studentTimeZone,
@@ -97,6 +112,24 @@ const icons: Record<string, ReactNode> = {
   ),
 };
 export function Icon({ name }: { name: string }) {
+  if (k8kEnabled) {
+    const names: Record<string, Parameters<typeof UIIcon>[0]['name']> = {
+      academy: 'brand',
+      home: 'home',
+      lessons: 'calendar',
+      homework: 'tasks',
+      skills: 'skills',
+      materials: 'materials',
+      subscription: 'wallet',
+      notifications: 'bell',
+      profile: 'profile',
+      manager: 'manager',
+      menu: 'menu',
+      more: 'more',
+      video: 'video',
+    };
+    return <UIIcon name={names[name] ?? 'materials'} />;
+  }
   return (
     <svg
       width="22"
@@ -142,16 +175,14 @@ export function Empty({
   return <p className="empty">{children}</p>;
 }
 export function ErrorNotice({ error }: { error: unknown }) {
-  return error ? (
-    <p className="error" role="alert">
-      {errorMessage(error)}
-    </p>
-  ) : null;
+  return <ErrorFeedback error={error} />;
 }
 export function QueryState({
   query,
   children,
   operational = false,
+  sourceTimestamp,
+  empty = false,
 }: {
   query: {
     isPending: boolean;
@@ -163,45 +194,61 @@ export function QueryState({
   };
   children: ReactNode;
   operational?: boolean;
+  sourceTimestamp?: string | undefined;
+  empty?: boolean;
 }) {
   const tooOld = useDataAge(query.dataUpdatedAt, operational ? 120_000 : false);
+  const { locale, t } = useLocale();
+  const errorStatus =
+    query.error &&
+    typeof query.error === 'object' &&
+    'status' in query.error &&
+    typeof query.error.status === 'number'
+      ? query.error.status
+      : undefined;
   if (k8kEnabled) {
-    const errorStatus =
-      query.error && typeof query.error === 'object' && 'status' in query.error
-        ? Number(query.error.status)
-        : undefined;
     const state = queryBoundaryState({
       isPending: query.isPending,
       hasData: query.data !== undefined,
       error: !!query.error,
       errorStatus,
       tooOld,
+      empty,
     });
     return (
       <StateBoundary
         state={
-          state.status === 'error' ? { status: 'error', message: errorMessage(query.error) } : state
+          state.status === 'error'
+            ? { status: 'error', message: errorText(query.error, locale) }
+            : state
         }
-        at={query.dataUpdatedAt}
+        asOf={sourceTimestamp}
+        receivedAt={query.dataUpdatedAt}
         timeZone={studentTimeZone}
         refreshing={query.isFetching ?? false}
         retryRead={() => void query.refetch()}
       >
-        {children}
+        <StudentReadFreshness.Provider value={state.status === 'ready'}>
+          {children}
+        </StudentReadFreshness.Provider>
       </StateBoundary>
     );
   }
+  if (errorStatus === 401 || errorStatus === 403)
+    return (
+      <StateBoundary state={{ status: errorStatus === 401 ? 'session-expired' : 'forbidden' }} />
+    );
   if (query.isPending)
     return (
       <p role="status" className="empty">
-        Загружаем…
+        {t('loading')}
       </p>
     );
   if (query.error)
     return (
       <div>
         <ErrorNotice error={query.error} />
-        <button onClick={() => void query.refetch()}>Повторить загрузку</button>
+        <button onClick={() => void query.refetch()}>{t('retry')}</button>
       </div>
     );
   return <>{children}</>;
@@ -227,6 +274,33 @@ export const statusLabels: Record<string, string> = {
   NONE: 'Нет абонемента',
 };
 export function Status({ value }: { value: string }) {
+  if (k8kEnabled) {
+    const tone = ['ACTIVE', 'APPLYING', 'COMPLETED', 'REVIEWED'].includes(value)
+      ? 'success'
+      : ['NEEDS_REVISION', 'PRACTICING', 'STAR_PENDING', 'DISPUTED'].includes(value)
+        ? 'warning'
+        : ['EXPIRED', 'CANCELLED', 'NO_SHOW'].includes(value)
+          ? 'danger'
+          : ['FROZEN', 'FAMILIARIZING', 'SUBMITTED', 'SCHEDULED'].includes(value)
+            ? 'info'
+            : 'neutral';
+    return (
+      <span className={`k8k-student-status k8k-status-${tone}`}>
+        <UIIcon
+          name={
+            tone === 'success'
+              ? 'check'
+              : tone === 'warning' || tone === 'danger'
+                ? 'warning'
+                : tone === 'info'
+                  ? 'info'
+                  : 'circle'
+          }
+        />
+        {statusLabels[value] ?? value}
+      </span>
+    );
+  }
   return (
     <span className={`status status-${value.toLowerCase()}`}>{statusLabels[value] ?? value}</span>
   );
@@ -248,9 +322,20 @@ export function safeUrl(
   };
   return patterns[kind].test(value) ? value : undefined;
 }
-export function JoinButton({ lesson }: { lesson: NextLessonDto | LessonCardDto }) {
+export function JoinButton({
+  lesson,
+  serverNow,
+  status,
+}: {
+  lesson: NextLessonDto | LessonCardDto;
+  serverNow?: number | null;
+  status?: string | undefined;
+}) {
   const client = useQueryClient();
+  const fresh = useContext(StudentReadFreshness);
+  const reasonId = useId();
   useEffect(() => {
+    if (k8kEnabled) return;
     const wait = new Date(lesson.scheduledAt).getTime() - 600_000 - Date.now();
     if (lesson.canJoin || wait < 0 || wait > 2_147_483_647) return;
     const timer = setTimeout(() => {
@@ -259,6 +344,41 @@ export function JoinButton({ lesson }: { lesson: NextLessonDto | LessonCardDto }
     return () => clearTimeout(timer);
   }, [client, lesson.scheduledAt, lesson.canJoin]);
   const url = safeUrl(lesson.meetLink, 'meet');
+  if (k8kEnabled) {
+    const presentation = meetPresentation(
+      status ? { ...lesson, status } : lesson,
+      url,
+      fresh,
+      serverNow,
+    );
+    return (
+      <div className="k8k-meet-entry">
+        {presentation.kind !== 'unavailable' && (
+          <a
+            className="button primary k8k-meet-action"
+            href={presentation.kind === 'ready' ? presentation.url : undefined}
+            target="_blank"
+            rel="noreferrer"
+            role="link"
+            tabIndex={0}
+            aria-disabled={presentation.kind === 'disabled' || undefined}
+            aria-describedby={presentation.kind === 'disabled' ? reasonId : undefined}
+            onClick={(event) => {
+              if (presentation.kind !== 'ready') event.preventDefault();
+            }}
+          >
+            <UIIcon name="video" />
+            Войти в Google Meet
+          </a>
+        )}
+        {presentation.kind !== 'ready' && (
+          <p className="k8k-join-reason" id={reasonId}>
+            {presentation.reason}
+          </p>
+        )}
+      </div>
+    );
+  }
   return lesson.canJoin && url ? (
     <a className="button primary" href={url} target="_blank" rel="noreferrer">
       <Icon name="video" />
@@ -274,9 +394,11 @@ export function JoinButton({ lesson }: { lesson: NextLessonDto | LessonCardDto }
 export function Countdown({ at }: { at: string }) {
   const [now, setNow] = useState(Date.now);
   useEffect(() => {
+    if (k8kEnabled) return;
     const timer = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(timer);
   }, []);
+  if (k8kEnabled) return null;
   const minutes = Math.max(0, Math.ceil((new Date(at).getTime() - now) / 60_000));
   return (
     <small>
@@ -301,17 +423,16 @@ export function Pager({
   pageSize: number;
   change(page: number): void;
 }) {
+  const { t } = useLocale();
   if (total <= pageSize) return null;
   return (
-    <nav className="pager" aria-label="Страницы списка">
+    <nav className="pager" aria-label={t('tablePages')}>
       <button disabled={page === 1} onClick={() => change(page - 1)}>
-        Назад
+        {t('chrome.previous')}
       </button>
-      <span>
-        Страница {page} из {Math.ceil(total / pageSize)}
-      </span>
+      <span>{t('chrome.page', { page, total: Math.ceil(total / pageSize) })}</span>
       <button disabled={page * pageSize >= total} onClick={() => change(page + 1)}>
-        Далее
+        {t('chrome.next')}
       </button>
     </nav>
   );
@@ -329,6 +450,7 @@ export function Modal({
   busy?: boolean;
   className?: string;
 }) {
+  const { t } = useLocale();
   const titleId = useId();
   const ref = useRef<HTMLDialogElement>(null);
   const closeRef = useRef(close);
@@ -354,7 +476,7 @@ export function Modal({
     >
       <div className="section-heading">
         <h2 id={titleId}>{title}</h2>
-        <button aria-label="Закрыть окно" disabled={busy} onClick={close}>
+        <button aria-label={t('closeOverlay')} disabled={busy} onClick={close}>
           ×
         </button>
       </div>

@@ -19,6 +19,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiParam,
   ApiServiceUnavailableResponse,
   ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
@@ -45,6 +46,7 @@ import {
 } from '../dto/manager-payment.dto.js';
 import { ManagerPaymentsGuard } from './manager-payments.guard.js';
 import { ManagerPaymentsService } from './manager-payments.service.js';
+import { StaffActionEligibilityDto } from '../../../core/actor/actor-context.dto.js';
 const command = (type: string, topic: string, status: 200 | 201 = 200) =>
   applyDecorators(
     ApiHeader({
@@ -81,6 +83,23 @@ const command = (type: string, topic: string, status: 200 | 201 = 200) =>
 @Controller('api/v1/manager')
 export class ManagerPaymentsController {
   constructor(private readonly payments: ManagerPaymentsService) {}
+
+  @Get('payments/:paymentId/approval-eligibility')
+  @ApiParam({ name: 'paymentId', schema: { type: 'string', format: 'uuid' } })
+  @Header('Cache-Control', 'private, no-store')
+  @ApiOperation({
+    operationId: 'getManagerPaymentApprovalEligibility',
+    summary: 'Own approval request policy; never director receipt confirmation',
+  })
+  @ApiOkResponse({ type: StaffActionEligibilityDto })
+  async approvalEligibility(
+    @Req() req: ManagerRequest,
+    @Param('paymentId') id: string,
+  ): Promise<StaffActionEligibilityDto> {
+    return unwrap(
+      await this.payments.approvalEligibility(req.managerCtx!, id, req.account!, req.requestId!),
+    );
+  }
   @Post('students/:studentId/payments')
   @ApiOperation({ operationId: 'createManagerPayment' })
   @ApiCreatedResponse({ type: ManagerPaymentDto })

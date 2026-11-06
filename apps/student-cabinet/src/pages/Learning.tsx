@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { k8kEnabled } from '@online-school/ui';
 import {
   getStudentMaterialUrl,
   getStudentMaterials,
@@ -62,6 +64,7 @@ export function SkillMap() {
   return (
     <>
       <h1>Мой путь знаний</h1>
+      <Link to="/student/reports">Опубликованные отчёты</Link>
       <p className="lead">Каждый навык — ещё один шаг к твоей цели</p>
       <label className="filter">
         Предмет
@@ -239,20 +242,29 @@ export function Materials() {
   );
 }
 export function Subscription() {
+  const [searchParams] = useSearchParams();
+  const subscriptionId = k8kEnabled ? (searchParams.get('subscriptionId') ?? undefined) : undefined;
+  const selection = subscriptionId ? { subscriptionId } : {};
   const [paymentsPage, setPaymentsPage] = useState(1),
     [ledgerPage, setLedgerPage] = useState(1);
-  const query = useStudentQuery(['subscription'], (o) => getStudentSubscription(undefined, o));
-  const payments = useStudentQuery(['payments', paymentsPage], (o) =>
-    getStudentSubscriptionPayments({ page: paymentsPage }, o),
+  useEffect(() => {
+    setPaymentsPage(1);
+    setLedgerPage(1);
+  }, [subscriptionId]);
+  const query = useStudentQuery(['subscription', ...Object.values(selection)], (o) =>
+    getStudentSubscription(selection, o),
   );
-  const ledger = useStudentQuery(['ledger', ledgerPage], (o) =>
-    getStudentSubscriptionLedger({ page: ledgerPage }, o),
+  const payments = useStudentQuery(['payments', paymentsPage, ...Object.values(selection)], (o) =>
+    getStudentSubscriptionPayments({ page: paymentsPage, ...selection }, o),
+  );
+  const ledger = useStudentQuery(['ledger', ledgerPage, ...Object.values(selection)], (o) =>
+    getStudentSubscriptionLedger({ page: ledgerPage, ...selection }, o),
   );
   return (
     <>
       <h1>Абонемент</h1>
       <p className="lead">Занятия, срок действия и история операций</p>
-      <Panel title="Твой абонемент">
+      <Panel title={k8kEnabled ? 'Текущий абонемент' : 'Твой абонемент'}>
         <QueryState query={query}>
           {query.data && (
             <>

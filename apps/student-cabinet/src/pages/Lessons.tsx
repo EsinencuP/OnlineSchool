@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import {
   getStudentLesson,
   getStudentLessons,
   requestStudentLessonReschedule,
 } from '@online-school/api-contracts';
 import type { LessonCardDto } from '@online-school/api-contracts';
+import { k8kEnabled, Segmented, useLocale } from '@online-school/ui';
 import { useCommand, useStudentQuery, write } from '../api.js';
 import {
   date,
@@ -115,10 +116,26 @@ export function LessonList({ items }: { items: LessonCardDto[] }) {
   );
 }
 export function Lessons() {
-  const [period, setPeriod] = useState<'today' | 'week' | 'month' | 'archive'>('month'),
-    [view, setView] = useState('list'),
-    [page, setPage] = useState(1),
-    [month, setMonth] = useState(() => dayKey(new Date().toISOString()).slice(0, 7));
+  const { locale } = useLocale();
+  const ro = locale === 'ro';
+  const [params, setParams] = useSearchParams();
+  const [defaultMonth] = useState(() => dayKey(new Date().toISOString()).slice(0, 7));
+  const monthParam = params.get('month') ?? '';
+  const month = /^[1-9]\d{3}-(0[1-9]|1[0-2])$/.test(monthParam) ? monthParam : defaultMonth;
+  const periodParam = params.get('period');
+  const period =
+    periodParam === 'today' || periodParam === 'week' || periodParam === 'archive'
+      ? periodParam
+      : 'month';
+  const view = params.get('view') === 'calendar' ? 'calendar' : 'list';
+  const pageParam = params.get('page') ?? '';
+  const page =
+    /^[1-9]\d*$/.test(pageParam) && Number.isSafeInteger(Number(pageParam)) ? Number(pageParam) : 1;
+  function change(changes: Record<string, string>) {
+    const next = new URLSearchParams(params);
+    for (const [key, value] of Object.entries(changes)) next.set(key, value);
+    setParams(next);
+  }
   const calendar = view === 'calendar';
   const query = useStudentQuery(
     ['lessons', period, view, page, month],
@@ -144,32 +161,43 @@ export function Lessons() {
               key={key}
               aria-pressed={period === key && !calendar}
               onClick={() => {
-                setPeriod(key);
-                setPage(1);
-                setView('list');
+                change({ period: key, page: '1', view: 'list' });
               }}
             >
               {label}
             </button>
           ))}
         </div>
-        <div className="tabs" aria-label="Вид расписания">
-          {[
-            ['list', 'Список'],
-            ['calendar', 'Календарь'],
-          ].map(([key, label]) => (
-            <button
-              key={key}
-              aria-pressed={view === key}
-              onClick={() => {
-                setView(key!);
-                setPage(1);
-              }}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        {k8kEnabled ? (
+          <Segmented
+            label={ro ? 'Mod de afișare a orarului' : 'Вид расписания'}
+            value={view}
+            options={[
+              { value: 'list', label: ro ? 'Listă' : 'Список' },
+              { value: 'calendar', label: ro ? 'Calendar' : 'Календарь' },
+            ]}
+            onValueChange={(mode) => {
+              change({ view: mode, page: '1' });
+            }}
+          />
+        ) : (
+          <div className="tabs" aria-label="Вид расписания">
+            {[
+              ['list', 'Список'],
+              ['calendar', 'Календарь'],
+            ].map(([key, label]) => (
+              <button
+                key={key}
+                aria-pressed={view === key}
+                onClick={() => {
+                  if (key) change({ view: key, page: '1' });
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       {calendar && (
         <label className="month-picker">
@@ -179,7 +207,7 @@ export function Lessons() {
             value={month}
             required
             onChange={(e) => {
-              if (e.target.value) setMonth(e.target.value);
+              if (e.target.value) change({ month: e.target.value });
             }}
           />
         </label>
@@ -204,7 +232,9 @@ export function Lessons() {
             <LessonList items={query.data?.items ?? []} />
           )}
         </QueryState>
-        {query.data && !calendar && <Pager {...query.data} change={setPage} />}
+        {query.data && !calendar && (
+          <Pager {...query.data} change={(next) => change({ page: String(next) })} />
+        )}
       </Panel>
     </>
   );

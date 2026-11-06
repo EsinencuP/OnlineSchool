@@ -12,5 +12,6 @@ import { ScheduleChangeApprovalController } from './manager/approval.controller.
   imports: [FinanceModule, ScheduleDeadlineModule, ScheduleInfrastructureModule, TransactionModule],
   controllers: [ScheduleController, ScheduleChangeApprovalController],
   providers: [ScheduleRegistry, OutcomesService, ScheduleScopeGuard],
+  exports: [OutcomesService],
 })
 export class ScheduleModule {}

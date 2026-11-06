@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocale } from '@online-school/ui';
 import type {
   CreateManagerPaymentDto,
   FreezeManagerSubscriptionDto,
@@ -7,14 +8,15 @@ import type {
 } from '@online-school/api-contracts';
 import type { ApiErrorView } from '../api/error-view.js';
 import { ru } from '../i18n/ru.js';
-import { MONEY_REGEX, validMoney } from '../lib/money.js';
+import { MONEY_REGEX, validMoney } from '../lib/money-validation.js';
 import { localToIso } from '../lib/time.js';
 import { Check, FormShell, Input, Select, TextArea, text, enumOptions } from './ui.js';
 type Base = { busy: boolean; error: ApiErrorView | null; reload?: () => Promise<unknown> };
-const validation = (message: string): ApiErrorView => ({
-  code: 'VALIDATION_FAILED',
+const validation = (code: string, field: string): ApiErrorView => ({
+  code,
   status: 422,
-  message,
+  message: '',
+  details: { fields: [field] },
 });
 export function MoneyInput({
   name = 'amount',
@@ -25,6 +27,7 @@ export function MoneyInput({
   label?: string;
   required?: boolean;
 }) {
+  const { t } = useLocale();
   return (
     <Input
       name={name}
@@ -34,7 +37,7 @@ export function MoneyInput({
       pattern={MONEY_REGEX.source}
       required={required}
       maxLength={17}
-      hint={ru.moneyHelp}
+      hint={t('errors.INVALID_MONEY')}
     />
   );
 }
@@ -44,15 +47,17 @@ export function PaymentForm({
   ...base
 }: Base & { timezone: string; submit: (payload: CreateManagerPaymentDto) => Promise<unknown> }) {
   const [error, setError] = useState<ApiErrorView | null>(null);
+  const [amount, setAmount] = useState<string>();
   async function send(data: FormData) {
     const amount = text(data, 'amount');
+    setAmount(amount);
     const receivedAt = localToIso(text(data, 'receivedAt'), timezone);
     if (!validMoney(amount)) {
-      setError(validation(ru.invalidMoney));
+      setError(validation('INVALID_MONEY', 'amount'));
       return;
     }
     if (!receivedAt) {
-      setError(validation(ru.invalidTime));
+      setError(validation('INVALID_RECEIVED_AT', 'receivedAt'));
       return;
     }
     setError(null);
@@ -67,7 +72,13 @@ export function PaymentForm({
     });
   }
   return (
-    <FormShell {...base} error={error ?? base.error} submit={send} button={ru.registerPayment}>
+    <FormShell
+      {...base}
+      error={error ?? base.error}
+      amount={amount ? { value: amount, currency: 'MDL' } : undefined}
+      submit={send}
+      button={ru.registerPayment}
+    >
       <p className="hint">{ru.directorOnly}</p>
       <MoneyInput />
       <Select
@@ -143,7 +154,7 @@ export function RescheduleForm({
       submit={async (data) => {
         const newStartsAt = localToIso(text(data, 'newStartsAt'), timezone);
         if (!newStartsAt) {
-          setError(validation(ru.invalidTime));
+          setError(validation('INVALID_LESSON_INTERVAL', 'newStartsAt'));
           return;
         }
         setError(null);
@@ -195,7 +206,7 @@ export function DisputeForm({
         const amount = text(data, 'refundAmount');
         const lessons = text(data, 'refundLessons');
         if (decision === 'ACCEPT' && amount && !MONEY_REGEX.test(amount)) {
-          setError(validation(ru.invalidMoney));
+          setError(validation('INVALID_MONEY', 'refundAmount'));
           return;
         }
         setError(null);

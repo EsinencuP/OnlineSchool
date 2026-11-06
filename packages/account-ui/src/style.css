@@ -23,6 +23,21 @@
   outline: 3px solid #36857c;
   outline-offset: 3px;
 }
+.account-menu select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.account-menu .k8k-language {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k8k-space-2);
+}
+.account-menu .k8k-language select {
+  min-height: var(--k8k-control-touch);
+  max-width: 100%;
+  font: inherit;
+}
 .account-avatar {
   display: grid;
   place-items: center;
@@ -48,6 +63,7 @@
   margin-top: 3px;
 }
 .account-popover {
+  box-sizing: border-box;
   position: absolute;
   right: 0;
   top: calc(100% + 10px);
@@ -83,6 +99,7 @@
   align-items: center;
   text-align: left;
   width: 100%;
+  min-height: var(--k8k-control-touch);
   padding: 10px 12px;
   border: 1px solid transparent;
   border-radius: 9px;
@@ -111,6 +128,7 @@
 .account-menu .account-logout {
   display: block;
   margin-top: 14px;
+  min-height: var(--k8k-control-touch);
   padding: 10px 0;
   border: 0;
   background: transparent;
