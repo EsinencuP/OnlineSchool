@@ -82,14 +82,27 @@ export const roleNavigation: Record<CabinetRole, readonly LocalizedNavigationIte
       href: '/manager/schedule',
       label: 'Расписание',
       labelKey: 'schedule',
+      compactLabelKey: 'lessonsShort',
       icon: 'calendar',
     },
     { id: 'tasks', href: '/manager/tasks', label: 'Задачи', labelKey: 'tasks', icon: 'tasks' },
   ],
   TEACHER: [
     { id: 'overview', label: 'Обзор', labelKey: 'overview', icon: 'home' },
-    { id: 'lessons', label: 'Расписание', labelKey: 'lessons', icon: 'calendar' },
-    { id: 'students', label: 'Мои ученики', labelKey: 'nav.teacherStudents', icon: 'users' },
+    {
+      id: 'lessons',
+      label: 'Расписание',
+      labelKey: 'lessons',
+      compactLabelKey: 'lessonsShort',
+      icon: 'calendar',
+    },
+    {
+      id: 'students',
+      label: 'Мои ученики',
+      labelKey: 'nav.teacherStudents',
+      compactLabelKey: 'students',
+      icon: 'users',
+    },
     {
       id: 'homework',
       label: 'Домашние задания',
@@ -101,7 +114,13 @@ export const roleNavigation: Record<CabinetRole, readonly LocalizedNavigationIte
   ],
   DIRECTOR: [
     { id: 'overview', label: 'Обзор', labelKey: 'overview', icon: 'home' },
-    { id: 'lessons', label: 'Расписание', labelKey: 'lessons', icon: 'calendar' },
+    {
+      id: 'lessons',
+      label: 'Расписание',
+      labelKey: 'lessons',
+      compactLabelKey: 'lessonsShort',
+      icon: 'calendar',
+    },
     {
       id: 'students',
       label: 'Ученики школы',

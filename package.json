@@ -9,6 +9,7 @@
     "pnpm": ">=9 <13"
   },
   "scripts": {
+    "preview:visual": "node scripts/k8k-visual-preview.mjs",
     "test:vercel-review": "node scripts/vercel-review-smoke.mjs",
     "test:k8k-staff-context": "node --test apps/api/test/staff-context.test.mjs apps/api/test/staff-context-sdk.test.mjs",
     "test:k8k-student-subjects": "node --experimental-vm-modules node_modules/jest/bin/jest.js --roots tests --runInBand --runTestsByPath tests/unit/student-subjects.test.mjs tests/unit/student-subscription-http.test.mjs",

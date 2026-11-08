@@ -64,7 +64,7 @@
   }
   :is(.k8k-overlay-surface[data-state='open'], .account-menu[open] .account-popover)
     > :not(header) {
-    animation: k8k-reveal var(--k8k-motion-enter) var(--k8k-motion-out) backwards;
+    animation: k8k-detail-in var(--k8k-motion-enter) var(--k8k-motion-out) backwards;
     animation-delay: var(--k8k-motion-stagger);
   }
   :is(.k8k-overlay-surface[data-state='open'], .account-menu[open] .account-popover)
@@ -83,7 +83,7 @@
     min-width: 0;
   }
   .k8k-tab-panel[data-state='active'] {
-    animation: k8k-reveal var(--k8k-motion-enter) var(--k8k-motion-out) both;
+    animation: k8k-detail-in var(--k8k-motion-enter) var(--k8k-motion-out) both;
   }
   .k8k-tab-panel[data-motion-exiting='true'] {
     animation: k8k-conceal var(--k8k-motion-exit) var(--k8k-motion-in) both;
@@ -106,21 +106,21 @@
     .account-menu .account-popover {
       transform-origin: 100% 0%;
       scale: 0.95;
-      clip-path: inset(0 0 100% 0);
+      opacity: 0;
       transition:
         scale var(--k8k-motion-exit) var(--k8k-motion-in),
-        clip-path var(--k8k-motion-exit) var(--k8k-motion-in);
+        opacity var(--k8k-motion-exit) var(--k8k-motion-in);
     }
     .account-menu[open] .account-popover {
       scale: 1;
-      clip-path: inset(0);
+      opacity: 1;
       transition-duration: var(--k8k-motion-enter);
       transition-timing-function: var(--k8k-motion-out);
     }
     @starting-style {
       .account-menu[open] .account-popover {
         scale: 0.95;
-        clip-path: inset(0 0 100% 0);
+        opacity: 0;
       }
     }
   }
@@ -161,12 +161,22 @@
 }
 @keyframes k8k-row-in {
   from {
-    translate: 0 4px;
-    clip-path: inset(0 0 100% 0);
+    translate: 0 3px;
+    opacity: 0;
   }
   to {
     translate: 0 0;
-    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+@keyframes k8k-detail-in {
+  from {
+    opacity: 0;
+    translate: 0 2px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 @keyframes k8k-backdrop-in {

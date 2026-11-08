@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { lazy } from 'react';
 import { k8kEnabled } from '@online-school/ui';
 import {
   getStudentDashboard,
@@ -19,8 +20,10 @@ import {
   Status,
 } from '../components.js';
 import { useMe } from '../Layout.js';
-import { LessonList } from './Lessons.js';
 import { StudentHome } from './StudentHome.js';
+const LessonList = lazy(() =>
+  import('./Lessons.js').then((page) => ({ default: page.LessonList })),
+);
 export function Dashboard() {
   return k8kEnabled ? <StudentHome /> : <LegacyDashboard />;
 }

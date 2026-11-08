@@ -33,11 +33,11 @@ for (const [fg, bg, expected] of measured)
     assert.equal(actual.toFixed(2), expected.toFixed(2));
     assert.ok(Math.abs(actual - wcagContrast(tokens[fg], tokens[bg])) < 1e-10);
   });
-test('accent text/button white and sand graphics are known failures, including 2.78', () => {
+test('accent remains unsuitable for normal text and sand graphics', () => {
   assert.ok(contrast(tokens['--k8k-accent'], tokens['--surface']) < 4.5);
   assert.ok(contrast(tokens['--surface'], tokens['--k8k-accent']) < 4.5);
   const sand = contrast(tokens['--k8k-accent'], tokens['--k8k-sand']);
-  assert.equal(sand.toFixed(2), '2.78');
+  assert.equal(sand.toFixed(2), '2.89');
   assert.ok(sand < 3);
 });
 test('mutating brand-text to accent fails normal-text contract on every supported surface', () => {
@@ -72,12 +72,15 @@ test('hover, disabled without alpha fade, field error and two-layer sidebar focu
   assert.ok(contrast(tokens['--focus'], tokens['--surface']) >= 3);
 });
 test('solid navigation and translucent modal backdrop keep contrast', () => {
-  for (const background of ['--k8k-nav-hover', '--k8k-nav-soft']) {
-    assert.ok(contrast(tokens['--brand-text'], tokens[background]) >= 4.5);
+  for (const [foreground, background] of [
+    ['--surface', '--k8k-nav-hover'],
+    ['--brand-text', '--k8k-nav-soft'],
+  ]) {
+    assert.ok(contrast(tokens[foreground], tokens[background]) >= 4.5);
     assert.ok(
       Math.abs(
-        contrast(tokens['--brand-text'], tokens[background]) -
-          wcagContrast(tokens['--brand-text'], tokens[background]),
+        contrast(tokens[foreground], tokens[background]) -
+          wcagContrast(tokens[foreground], tokens[background]),
       ) < 1e-10,
     );
   }

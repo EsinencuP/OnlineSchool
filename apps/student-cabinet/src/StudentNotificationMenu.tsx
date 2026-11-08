@@ -9,6 +9,7 @@ import {
   StatusChip,
   StateBoundary,
   describeError,
+  Icon,
 } from '@online-school/ui';
 import {
   getStudentNotifications,
@@ -21,6 +22,48 @@ import { ErrorNotice, Pager, QueryState } from './components.js';
 import { notificationTarget } from './student-presentation.js';
 import { formatSkillDate } from './skill-copy.js';
 import { useNotificationCopy } from './notification-copy.js';
+
+/** Read-only home preview; all read commands remain in the existing drawer. */
+export function StudentNotificationPreview() {
+  const { t, locale, text, typeLabel } = useNotificationCopy();
+  const query = useStudentQuery(['notifications-home-preview', locale], (options) =>
+    getStudentNotifications({ page: 1, pageSize: 5, locale }, options),
+  );
+  return (
+    <section className="k8k-student-card k8k-home-events">
+      <h2>{t('chrome.recentEvents')}</h2>
+      <QueryState query={query} empty={query.data?.items.length === 0} emptyMessage={text('empty')}>
+        {query.data && (
+          <ul>
+            {query.data.items.slice(0, 2).map((item) => {
+              const target = notificationTarget(item.payload, item.type, locale);
+              return (
+                <li
+                  key={item.notificationId}
+                  data-event-kind={item.type.startsWith('LESSON') ? 'lesson' : 'info'}
+                >
+                  <Icon name={item.type.startsWith('LESSON') ? 'calendar' : 'info'} />
+                  <div>
+                    <h3>{item.title || typeLabel(item.type)}</h3>
+                    <p>{item.body}</p>
+                    {target && (
+                      <Link to={target.href}>
+                        {target.label} <Icon name="arrow" />
+                      </Link>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </QueryState>
+      <Link className="k8k-student-link" to="/student?events=1">
+        {t('chrome.recentEvents')} <Icon name="arrow" />
+      </Link>
+    </section>
+  );
+}
 
 export function StudentNotificationMenu({
   count,

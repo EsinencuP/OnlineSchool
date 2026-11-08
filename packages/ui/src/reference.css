@@ -1,0 +1,922 @@
+/* Latest owner direction: recreate template/newtemp.png in the existing cabinets.
+   Presentation only. Values live in tokens.css; domain states remain authoritative. */
+:root[data-k8k] {
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+}
+:root[data-k8k] .k8k-shell {
+  grid-template-columns: 234px minmax(0, 1fr);
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-sidebar {
+  background: var(--brand-900);
+  padding: var(--k8k-space-5) 14px;
+  gap: var(--k8k-space-6);
+}
+:root[data-k8k] .k8k-brand {
+  min-height: 70px;
+  padding-inline: var(--k8k-space-3);
+  gap: var(--k8k-space-3);
+  font-size: var(--k8k-font-xl);
+  line-height: 1.1;
+}
+:root[data-k8k] .k8k-brand > svg {
+  width: 42px;
+  height: 42px;
+}
+:root[data-k8k] .k8k-brand small {
+  font-size: var(--k8k-font-xs);
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--sidebar-muted);
+}
+:root[data-k8k] .k8k-sidebar nav {
+  gap: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-sidebar .k8k-nav-link {
+  min-height: 52px;
+  border-radius: var(--k8k-tile-radius);
+  padding: var(--k8k-space-3) var(--k8k-space-4);
+  gap: var(--k8k-space-4);
+  font-size: var(--k8k-font-body);
+  font-weight: 500;
+}
+:root[data-k8k] .k8k-sidebar .k8k-nav-link > svg {
+  width: 26px;
+  height: 26px;
+}
+:root[data-k8k] .k8k-sidebar .k8k-nav-link:hover {
+  color: var(--surface);
+  background: var(--k8k-nav-hover);
+}
+:root[data-k8k] .k8k-sidebar .k8k-nav-link[aria-current] {
+  color: var(--surface);
+  background: var(--brand-700);
+}
+:root[data-k8k] .k8k-sidebar-footer {
+  color: var(--sidebar-muted);
+}
+:root[data-k8k] .k8k-header {
+  min-height: 84px;
+  background: var(--surface);
+  border-block-end: 1px solid var(--k8k-card-line);
+  padding-inline: 28px;
+}
+:root[data-k8k] .k8k-header-context {
+  font-size: var(--k8k-font-body);
+  color: var(--text-2);
+  font-weight: 500;
+}
+:root[data-k8k] .k8k-header .account-caption {
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-header .account-caption small {
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-header .account-avatar {
+  width: 46px;
+  height: 46px;
+  background: var(--brand-700);
+  color: var(--surface);
+  font-size: var(--k8k-font-xl);
+}
+:root[data-k8k] .k8k-bell {
+  background: var(--surface-warm);
+  border: 0;
+  width: 50px;
+  height: 50px;
+  color: var(--brand-900);
+}
+:root[data-k8k] .k8k-bell svg {
+  width: 27px;
+  height: 27px;
+}
+:root[data-k8k] .k8k-bell .k8k-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 24px;
+  min-height: 24px;
+  background: var(--danger);
+  color: var(--surface);
+  border: 2px solid var(--surface);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-shell-columns {
+  padding: 28px;
+}
+:root[data-k8k] .k8k-main {
+  font-size: var(--k8k-font-body);
+  line-height: 1.55;
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-main :is(h1, h2, h3, h4) {
+  color: var(--k8k-ink);
+  letter-spacing: normal;
+  text-transform: none;
+}
+:root[data-k8k] .k8k-main h1 {
+  font-size: var(--k8k-font-2xl);
+  font-weight: 700;
+  line-height: 1.25;
+}
+:root[data-k8k] .k8k-main h2 {
+  font-size: var(--k8k-font-xl);
+  font-weight: 650;
+  line-height: 1.3;
+}
+:root[data-k8k] .k8k-main h3 {
+  font-size: var(--k8k-font-lg);
+  line-height: 1.4;
+}
+:root[data-k8k]
+  .k8k-main
+  :is(.panel, .card, .k8k-card, .k8k-student-card, .dashboard-card, .lead-column) {
+  background: var(--surface);
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-radius);
+  box-shadow: var(--k8k-shadow);
+  padding: var(--k8k-space-5);
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-main :is(input, select, textarea) {
+  color: var(--k8k-ink);
+  background: var(--surface);
+  border-radius: var(--k8k-control-radius);
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-main :is(label, .hint, .muted, .help, .k8k-student-caption, .k8k-caption) {
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-main label {
+  color: var(--text-2);
+  font-weight: 550;
+}
+:root[data-k8k] .k8k-main :is(button, .button, .k8k-button) {
+  font-size: var(--k8k-font-sm);
+  border-radius: var(--k8k-control-radius);
+}
+:root[data-k8k] .k8k-main :is(.primary, .k8k-button-primary) {
+  background: var(--brand-700);
+  color: var(--surface);
+  border-color: var(--brand-700);
+}
+:root[data-k8k] .k8k-main :is(.primary, .k8k-button-primary):hover {
+  background: var(--k8k-action-hover);
+}
+:root[data-k8k] .k8k-main :is(a, button):focus-visible {
+  outline-color: var(--focus);
+}
+:root[data-k8k] .k8k-status-chip {
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-1) var(--k8k-space-2);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-state-message:not(:empty) {
+  border-radius: var(--k8k-tile-radius);
+}
+:root[data-k8k] .k8k-main :is(.k8k-freshness, .k8k-freshness-label, .k8k-timestamp, .freshness) {
+  font-size: var(--k8k-font-xs);
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+/* Student composition: hero + shortcuts, subjects and lesson/homework cards, right rail. */
+:root[data-k8k] .k8k-student-home {
+  gap: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-student-focus {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--k8k-space-4);
+  align-items: stretch;
+}
+:root[data-k8k] .k8k-student-focus > .k8k-state {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-student-focus .k8k-state-data {
+  height: auto;
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero {
+  min-height: 304px;
+  height: auto;
+  padding: 28px 32px;
+  border: 0;
+  border-radius: var(--k8k-radius);
+  background-color: var(--brand-hero);
+  background-image: url('./assets/lesson-hero-reference.webp');
+  background-position: center;
+  background-size: cover;
+  color: var(--surface);
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero h2 {
+  display: flex;
+  gap: var(--k8k-space-3);
+  align-items: center;
+  margin: 0 0 var(--k8k-space-4);
+  font-size: var(--k8k-font-xl);
+  color: var(--surface);
+}
+:root[data-k8k] .k8k-lesson-hero h2 svg {
+  width: 28px;
+  height: 28px;
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero h3 {
+  font-size: var(--k8k-font-2xl);
+  font-weight: 650;
+  color: var(--surface);
+  margin: 0 0 var(--k8k-space-4);
+  max-width: 85%;
+}
+:root[data-k8k] .k8k-lesson-hero p {
+  color: var(--surface);
+  max-width: 87%;
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-hero-teacher {
+  display: flex;
+  gap: var(--k8k-space-2);
+  align-items: center;
+}
+:root[data-k8k] .k8k-hero-actions {
+  margin-top: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero :is(.primary, .k8k-main-action) {
+  min-height: 54px;
+  padding-inline: var(--k8k-space-5);
+  border-radius: var(--k8k-radius);
+  border-color: var(--surface);
+  background: var(--surface);
+  color: var(--brand-900);
+  font-size: var(--k8k-font-body);
+  font-weight: 650;
+  box-shadow: var(--k8k-shadow);
+}
+:root[data-k8k] .k8k-student-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--k8k-space-3);
+  align-content: start;
+  padding-block: 18px;
+}
+:root[data-k8k] .k8k-student-shortcuts a {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: var(--k8k-space-5);
+  min-height: 210px;
+  padding: var(--k8k-space-5) 10px;
+  border: 0;
+  border-radius: var(--k8k-tile-radius);
+  background: var(--surface-warm);
+  color: var(--k8k-ink);
+  font-size: var(--k8k-font-sm);
+  font-weight: 550;
+}
+:root[data-k8k] .k8k-student-shortcuts span {
+  overflow-wrap: normal;
+}
+:root[data-k8k] .k8k-student-homepage .k8k-student-list > li {
+  gap: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-student-homepage .k8k-student-list h3 a {
+  min-height: 28px;
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-student-homepage .k8k-student-list p {
+  font-size: var(--k8k-font-sm);
+}
+:root[data-k8k] .k8k-student-homepage [data-module='DASH-STU-03'] .k8k-student-list > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-student-homepage [data-module='DASH-STU-03'] .k8k-student-list p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+:root[data-k8k] .k8k-student-homepage [data-module='DASH-STU-03'] .k8k-status-chip {
+  justify-self: start;
+}
+:root[data-k8k] .k8k-student-homepage [data-module='DASH-STU-02'] .k8k-student-list > li {
+  flex-direction: column;
+}
+:root[data-k8k] .k8k-student-shortcuts a:hover {
+  background: var(--info-bg);
+}
+:root[data-k8k] .k8k-student-shortcuts a > svg:first-child {
+  width: 36px;
+  height: 36px;
+  color: var(--brand-900);
+}
+:root[data-k8k] .k8k-student-shortcuts a > svg:last-child {
+  margin-top: auto;
+  margin-inline-start: auto;
+  color: var(--brand-900);
+}
+:root[data-k8k] .k8k-home-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-home-secondary > * {
+  width: 100%;
+}
+:root[data-k8k] .k8k-home-secondary > [data-module='DASH-STU-05'] {
+  order: 0;
+}
+:root[data-k8k] .k8k-home-events {
+  order: -1;
+}
+:root[data-k8k] .k8k-manager-card {
+  order: 1;
+}
+:root[data-k8k] .k8k-home-events ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--k8k-space-3) 0;
+  display: grid;
+  gap: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-home-events li {
+  display: flex;
+  gap: var(--k8k-space-3);
+  padding: var(--k8k-space-4);
+  border-radius: var(--k8k-tile-radius);
+  background: var(--info-bg);
+}
+:root[data-k8k] .k8k-home-events li[data-event-kind='lesson'] {
+  background: var(--danger-bg);
+}
+:root[data-k8k] .k8k-home-events li > svg {
+  color: var(--brand-text);
+  flex-shrink: 0;
+}
+:root[data-k8k] .k8k-home-events li[data-event-kind='lesson'] > svg {
+  color: var(--danger);
+}
+:root[data-k8k] .k8k-home-events li > div {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-main .k8k-home-events h3 {
+  margin: 0;
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-home-events li p {
+  margin-block: var(--k8k-space-1);
+  font-size: var(--k8k-font-xs);
+  overflow-wrap: anywhere;
+}
+:root[data-k8k] .k8k-home-events li a {
+  display: inline-flex;
+  gap: var(--k8k-space-2);
+  align-items: center;
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-home-secondary .k8k-subscription-summary {
+  padding: var(--k8k-space-4);
+  border-radius: var(--k8k-tile-radius);
+  margin-block: var(--k8k-space-3);
+  background: var(--info-bg);
+  border: 0;
+}
+:root[data-k8k] .k8k-home-secondary .k8k-subscription-summary:has(.k8k-status-success) {
+  background: var(--success-bg);
+}
+:root[data-k8k] .k8k-subject-card {
+  border-inline-start: 5px solid var(--success);
+}
+:root[data-k8k] .k8k-subject-card:has(.k8k-status-warning) {
+  border-inline-start-color: var(--warning);
+}
+:root[data-k8k] .k8k-subject-card:has(.k8k-status-danger) {
+  border-inline-start-color: var(--danger);
+}
+:root[data-k8k] .k8k-main .k8k-subscription-subject {
+  padding: var(--k8k-space-4);
+  border-radius: var(--k8k-tile-radius);
+  background: var(--success-bg);
+  margin-block: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-main .k8k-student-card .k8k-student-list > li {
+  border-block-start: 1px solid var(--k8k-card-line);
+}
+:root[data-k8k] .k8k-main .k8k-student-card .k8k-student-list > li:first-child {
+  border: 0;
+}
+:root[data-k8k] .k8k-manager-identity {
+  gap: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-manager-identity .k8k-avatar {
+  width: 48px;
+  height: 48px;
+  background: var(--info-bg);
+  color: var(--brand-text);
+}
+
+/* CRM typography and surfaces. Tiny legacy sizes never govern the current shell. */
+:root[data-k8k] .k8k-header {
+  padding-block: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-shell-columns {
+  padding-block-start: var(--k8k-space-6);
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero {
+  padding: var(--k8k-space-5) 32px;
+}
+:root[data-k8k] .k8k-main .k8k-lesson-hero h3 {
+  margin-block-end: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-lesson-hero p {
+  margin-block-end: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-hero-actions {
+  margin-block-start: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-freshness-compact {
+  margin-block: var(--k8k-space-1) 0;
+}
+:root[data-k8k] .metric-card strong {
+  font-size: var(--k8k-font-2xl);
+  color: var(--k8k-ink);
+  line-height: 1.2;
+}
+:root[data-k8k] .k8k-main .metric-icon.tone-green {
+  color: var(--success);
+  background: var(--success-bg);
+}
+:root[data-k8k] .k8k-main .metric-icon.tone-purple {
+  color: var(--k8k-purple);
+  background: var(--k8k-purple-bg);
+}
+:root[data-k8k] .k8k-main .metric-icon:is(.tone-amber, .tone-orange) {
+  color: var(--warning);
+  background: var(--warning-bg);
+}
+:root[data-k8k] .k8k-main :is(.dashboard-main, .dashboard-bottom) {
+  gap: var(--k8k-space-5);
+  align-items: start;
+}
+:root[data-k8k] .k8k-header .account-menu {
+  padding: 0;
+  border: 0;
+  margin: 0;
+}
+:root[data-k8k] .k8k-home-greeting {
+  margin: 0;
+  font-size: var(--k8k-font-3xl);
+  line-height: 1.2;
+  color: var(--k8k-ink);
+  font-weight: 650;
+}
+:root[data-k8k] .k8k-student-focus > .k8k-state {
+  display: flex;
+  flex-direction: column;
+}
+:root[data-k8k] .k8k-student-focus .k8k-state-data {
+  order: 1;
+}
+:root[data-k8k] .k8k-student-focus .k8k-state-meta {
+  order: 2;
+}
+:root[data-k8k] .k8k-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-hero-meta .k8k-hero-countdown {
+  font-size: var(--k8k-font-sm);
+  margin: 0;
+}
+:root[data-k8k] .k8k-main .k8k-subject-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-4);
+  padding: var(--k8k-space-4);
+  min-height: 96px;
+  border-inline-start: 5px solid var(--success);
+}
+:root[data-k8k] .k8k-subject-summary[data-status='FROZEN'] {
+  border-inline-start-color: var(--info);
+}
+:root[data-k8k] .k8k-subject-summary[data-status='EXPIRED'] {
+  border-inline-start-color: var(--warning);
+}
+:root[data-k8k] .k8k-subject-summary > svg {
+  color: var(--brand-text);
+  background: var(--info-bg);
+  flex-shrink: 0;
+}
+:root[data-k8k] .k8k-subject-summary > div {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-main .k8k-subject-summary h3 {
+  margin: 0 0 var(--k8k-space-1);
+  font-size: var(--k8k-font-lg);
+}
+:root[data-k8k] .k8k-main .k8k-subject-summary h3 a {
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-subject-summary > a {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+:root[data-k8k]
+  .k8k-role-manager
+  .k8k-main
+  :is(
+    p,
+    td,
+    .row-main > a,
+    .record-title,
+    .table-row,
+    .table-wrap table,
+    .lead-summary > a,
+    .lesson-time,
+    .task-row,
+    .selected-day strong
+  ) {
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k]
+  .k8k-role-manager
+  .k8k-main
+  :is(
+    small,
+    label,
+    .metric-label,
+    .row-main > span,
+    .due-time,
+    .subtle-link,
+    .dashboard-updated,
+    .dashboard-empty p,
+    .dashboard-empty strong,
+    .lesson-time small,
+    .table-head,
+    .table-wrap th,
+    .table-row small,
+    .lead-stats,
+    .month-nav strong,
+    .mini-lessons time,
+    .subscription-summary-list time,
+    .portfolio-summary > div > span,
+    .pagination > span,
+    .pagination > strong,
+    .hint
+  ) {
+  font-size: var(--k8k-font-xs);
+  line-height: 1.5;
+}
+:root[data-k8k] .k8k-role-manager .k8k-main :is(.row-main > a, .table-row strong, .record-title) {
+  color: var(--k8k-ink);
+  font-weight: 600;
+}
+:root[data-k8k] .k8k-main .dashboard-metrics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--k8k-space-4);
+  margin-block: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-role-manager .k8k-main :is(a, span, small, .count) {
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-role-manager .k8k-main :is(.row-main > a, .record-title) {
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-main .metric-card {
+  background: var(--surface);
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  padding: var(--k8k-space-4);
+  gap: var(--k8k-space-3);
+  box-shadow: var(--k8k-shadow);
+  min-width: 0;
+}
+:root[data-k8k] .metric-card :is(.metric-label, small) {
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-main .metric-value {
+  display: block;
+  font-size: var(--k8k-font-2xl);
+  color: var(--k8k-ink);
+  line-height: 1.2;
+  margin-block: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-main .metric-icon {
+  display: grid;
+  place-items: center;
+  border-radius: var(--k8k-control-radius);
+  width: 46px;
+  height: 46px;
+  color: var(--brand-text);
+  background: var(--info-bg);
+}
+:root[data-k8k] .metric-icon.green {
+  color: var(--success);
+  background: var(--success-bg);
+}
+:root[data-k8k] .metric-icon.purple {
+  color: var(--k8k-purple);
+  background: var(--k8k-purple-bg);
+}
+:root[data-k8k] .metric-icon:is(.amber, .orange) {
+  color: var(--warning);
+  background: var(--warning-bg);
+}
+:root[data-k8k] .k8k-main .dashboard-content {
+  gap: var(--k8k-space-5);
+  align-items: start;
+}
+:root[data-k8k] .k8k-main .dashboard-empty {
+  min-height: 190px;
+  padding: var(--k8k-space-5) var(--k8k-space-4);
+  color: var(--text-2);
+  gap: var(--k8k-space-3);
+}
+:root[data-k8k] .dashboard-empty .empty-icon {
+  color: var(--brand-text);
+  background: var(--info-bg);
+  border-radius: var(--k8k-tile-radius);
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+}
+:root[data-k8k] .k8k-main :is(.data-table, .table-wrap, .k8k-table-scroll) {
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  background: var(--surface);
+}
+:root[data-k8k] .k8k-main :is(.table-head, .table-wrap th, .k8k-dense-table th) {
+  background: var(--surface-warm);
+  color: var(--text-2);
+  padding-block: var(--k8k-space-4);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-main :is(.table-row, .table-wrap td, .k8k-dense-table td) {
+  border-color: var(--k8k-card-line);
+  padding-block: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-main .table-row:hover {
+  background: var(--info-bg);
+}
+:root[data-k8k] .k8k-main .filters {
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  padding: var(--k8k-space-5);
+  background: var(--surface);
+  gap: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-main .filters .field {
+  min-width: 220px;
+}
+:root[data-k8k] .k8k-main .lead-summary > a {
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  background: var(--surface);
+  padding: var(--k8k-space-5);
+  color: var(--text-2);
+}
+:root[data-k8k] .k8k-main .lead-summary > a strong {
+  font-size: var(--k8k-font-2xl);
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-main .lead-summary > a:first-child {
+  background: var(--info-bg);
+}
+:root[data-k8k] .k8k-main .lead-summary > a:nth-child(2) {
+  background: var(--k8k-purple-bg);
+}
+:root[data-k8k] .k8k-main .lead-summary > a:nth-child(4) {
+  background: var(--warning-bg);
+}
+:root[data-k8k] .k8k-main :is(.row-avatar, .avatar) {
+  background: var(--info-bg);
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-main .avatar-green {
+  background: var(--success-bg);
+  color: var(--success);
+}
+:root[data-k8k] .k8k-main .avatar-purple {
+  background: var(--k8k-purple-bg);
+  color: var(--k8k-purple);
+}
+:root[data-k8k] .k8k-main .avatar-orange {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+:root[data-k8k] .k8k-main .quick-actions a {
+  background: var(--info-bg);
+  color: var(--brand-text);
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-4);
+  font-size: var(--k8k-font-xs);
+  min-height: 66px;
+}
+:root[data-k8k] .k8k-main .month-grid {
+  gap: var(--k8k-space-1);
+}
+:root[data-k8k] .k8k-main .month-day {
+  font-size: var(--k8k-font-xs);
+  min-height: 36px;
+}
+:root[data-k8k] .k8k-main .weekday {
+  font-size: var(--k8k-font-xs);
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-main .stats > section {
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  padding: var(--k8k-space-5);
+  background: var(--surface);
+}
+:root[data-k8k] .k8k-main .stats span {
+  font-size: var(--k8k-font-sm);
+  color: var(--text-2);
+}
+:root[data-k8k] .k8k-main .stats strong {
+  font-size: var(--k8k-font-3xl);
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-main :is(.lesson, .simple-row) {
+  border-color: var(--k8k-card-line);
+}
+:root[data-k8k] .k8k-main .lesson-date {
+  background: var(--info-bg);
+  color: var(--brand-text);
+  border-radius: var(--k8k-control-radius);
+}
+:root[data-k8k] .k8k-main :is(.lesson p, .simple-row p, .stats small, .staff-detail p) {
+  font-size: var(--k8k-font-sm);
+}
+
+@media (min-width: 1440px) {
+  :root[data-k8k] .k8k-student-homepage {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-areas: 'focus aside' 'content aside';
+    align-items: start;
+  }
+  :root[data-k8k] .k8k-student-focus {
+    grid-area: focus;
+  }
+  :root[data-k8k] .k8k-home-columns {
+    display: contents;
+  }
+  :root[data-k8k] .k8k-home-columns > .k8k-student-home {
+    grid-area: content;
+  }
+  :root[data-k8k] .k8k-home-secondary {
+    grid-area: aside;
+  }
+}
+@media (max-width: 1439px) {
+  :root[data-k8k] .k8k-main .dashboard-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  :root[data-k8k] .k8k-student-focus {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-home-secondary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-k8k] .k8k-home-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-has-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 1023px) {
+  :root[data-k8k] .k8k-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-shell-columns {
+    padding: var(--k8k-space-5);
+  }
+  :root[data-k8k] .k8k-student-focus {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-student-shortcuts {
+    padding-block: 0;
+  }
+  :root[data-k8k] .k8k-student-shortcuts a {
+    min-height: 140px;
+  }
+  :root[data-k8k] .k8k-main .k8k-lesson-hero {
+    min-height: 280px;
+  }
+}
+@media (max-width: 639px) {
+  :root[data-k8k] .k8k-main .page-heading {
+    flex-wrap: wrap;
+  }
+  :root[data-k8k] .k8k-main .page-heading > div {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  :root[data-k8k] .k8k-main .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-main .stats > section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--k8k-space-4);
+  }
+  :root[data-k8k] .k8k-bottom-nav > button {
+    padding: var(--k8k-space-1);
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-bottom-nav .k8k-nav-link {
+    padding-inline: 0;
+    overflow-wrap: normal;
+    white-space: nowrap;
+  }
+  :root[data-k8k] .k8k-header {
+    min-height: 72px;
+    padding-inline: var(--k8k-space-4);
+    gap: var(--k8k-space-2);
+  }
+  :root[data-k8k] .k8k-header-context {
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-home-greeting {
+    font-size: var(--k8k-font-xl);
+  }
+  :root[data-k8k] .k8k-header .account-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: var(--k8k-font-lg);
+  }
+  :root[data-k8k] .k8k-shell-columns {
+    padding: var(--k8k-space-4);
+  }
+  :root[data-k8k] .k8k-main h1 {
+    font-size: var(--k8k-font-2xl);
+  }
+  :root[data-k8k]
+    .k8k-main
+    :is(.panel, .card, .k8k-card, .k8k-student-card, .dashboard-card, .lead-column) {
+    padding: var(--k8k-space-4);
+  }
+  :root[data-k8k] .k8k-main .k8k-lesson-hero {
+    min-height: 300px;
+    padding: var(--k8k-space-5);
+  }
+  :root[data-k8k] .k8k-main .k8k-lesson-hero h3 {
+    font-size: var(--k8k-font-2xl);
+    max-width: 100%;
+  }
+  :root[data-k8k] .k8k-lesson-hero p {
+    max-width: 100%;
+    font-size: var(--k8k-font-sm);
+  }
+  :root[data-k8k] .k8k-hero-date {
+    flex-wrap: nowrap;
+    gap: var(--k8k-space-2);
+  }
+  :root[data-k8k] .k8k-hero-meta .k8k-hero-countdown {
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-student-shortcuts {
+    gap: var(--k8k-space-2);
+  }
+  :root[data-k8k] .k8k-student-shortcuts a {
+    padding: var(--k8k-space-3) var(--k8k-space-2);
+    min-height: 146px;
+    gap: var(--k8k-space-3);
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-student-shortcuts a > svg:first-child {
+    width: 28px;
+    height: 28px;
+  }
+  :root[data-k8k] .k8k-home-secondary {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-main .dashboard-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--k8k-space-3);
+  }
+  :root[data-k8k] .k8k-main .metric-card {
+    padding: var(--k8k-space-3);
+    flex-direction: column;
+    align-items: start;
+  }
+  :root[data-k8k] .k8k-main .metric-value {
+    font-size: var(--k8k-font-2xl);
+  }
+  :root[data-k8k] .k8k-main .filters {
+    padding: var(--k8k-space-4);
+  }
+  :root[data-k8k] .k8k-main .filters .field {
+    min-width: 0;
+  }
+  :root[data-k8k] .k8k-main .lead-summary > a {
+    padding: var(--k8k-space-4);
+  }
+}

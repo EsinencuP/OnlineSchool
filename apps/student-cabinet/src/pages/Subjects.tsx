@@ -82,10 +82,12 @@ function SubjectCard({
   item,
   detail = false,
   showSubscriptions = false,
+  compact = false,
 }: {
   item: StudentSubjectDto;
   detail?: boolean;
   showSubscriptions?: boolean;
+  compact?: boolean;
 }) {
   const { copy, reasons } = useStudentCopy();
   const { timeZone } = useMe();
@@ -120,6 +122,25 @@ function SubjectCard({
   const other = [materials, homework, lessons, skills, help].filter(
     (link) => link && link !== next,
   );
+  if (compact)
+    return (
+      <article className="k8k-student-card k8k-subject-summary" data-status={item.displayStatus}>
+        <Icon name="materials" size={32} />
+        <div>
+          <h3>
+            <Link to={subjectHref(subjectHub, subjectId)}>{item.subjectName}</Link>
+          </h3>
+          <Status value={item.displayStatus} />
+        </div>
+        <Link
+          className="k8k-student-link"
+          to={next.href}
+          aria-label={`${next.label}: ${item.subjectName}`}
+        >
+          <Icon name="arrow" />
+        </Link>
+      </article>
+    );
   return (
     <article className="k8k-student-card k8k-subject-card">
       <div className="k8k-card-heading">
@@ -170,14 +191,21 @@ function SubjectCard({
 export function SubjectCards({
   items,
   showSubscriptions = false,
+  compact = false,
 }: {
   items: readonly StudentSubjectDto[];
   showSubscriptions?: boolean;
+  compact?: boolean;
 }) {
   return (
     <div className="k8k-subject-grid">
       {items.map((item) => (
-        <SubjectCard key={item.subjectId} item={item} showSubscriptions={showSubscriptions} />
+        <SubjectCard
+          key={item.subjectId}
+          item={item}
+          showSubscriptions={showSubscriptions}
+          compact={compact}
+        />
       ))}
     </div>
   );

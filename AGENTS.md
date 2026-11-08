@@ -2,6 +2,12 @@
 
 ## Источники проекта
 
+- Latest owner visual request, 2026-11-08: recreate `template/newtemp.png` closely
+  using image-to-code, improving typography, color, cards and motion across the
+  existing cabinets. Frontend presentation only; preserve all domain behavior.
+  Current direction: `docs/UI_TEMPLATE_RECREATION_2026_11_08.md`. This overrides
+  incompatible borderless/monochrome choices in the earlier simplification below.
+
 - Owner motion direction, 2026-11-08: follow `docs/UI_MOTION_2026_11_08.md` for cabinet
   transitions. Entrances ease out at 200 ms, exits at 160 ms, dropdowns stay within
   150–250 ms; trigger origins, 30 ms row stagger, 0.97 press scale, no spring bounce,

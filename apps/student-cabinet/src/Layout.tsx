@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { AccountMenu, leaveSession } from '@online-school/account-ui';
 import type { AccountLogoutOutcome } from '@online-school/account-ui';
 import {
@@ -285,6 +285,13 @@ export function StudentLayout() {
         )}
         mainId="main-content"
         mainRef={heading}
+        header={
+          location.pathname === '/student' ? (
+            <h1 className="k8k-home-greeting">
+              {copy.greeting}, {profile.displayName}!
+            </h1>
+          ) : undefined
+        }
         account={
           <AccountMenu
             name={profile.displayName}
@@ -316,7 +323,9 @@ export function StudentLayout() {
         }
       >
         <StudentDeadlineRead.Provider value={liveLesson ? requestLiveRead : requestOperationalRead}>
-          <Outlet context={profile} />
+          <Suspense fallback={<p role="status">{t('loading')}</p>}>
+            <Outlet context={profile} />
+          </Suspense>
         </StudentDeadlineRead.Provider>
       </AppShell>
     );
@@ -386,7 +395,9 @@ export function StudentLayout() {
         </header>
         <div className="content-grid">
           <main id="main-content" ref={heading} tabIndex={-1}>
-            <Outlet context={profile} />
+            <Suspense fallback={<p role="status">{t('loading')}</p>}>
+              <Outlet context={profile} />
+            </Suspense>
             <details className="inline-widgets">
               <summary>{t('chrome.studentWidgets')}</summary>
               <RightSidebar me={profile} inline />

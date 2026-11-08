@@ -2,6 +2,7 @@ import { useLocale } from './locale.js';
 import { formatDateTime, instantMilliseconds } from './format.js';
 import { createContext, useContext } from 'react';
 export const FreshnessTimeZone = createContext('Europe/Chisinau');
+export const FreshnessDisplay = createContext<'full' | 'compact'>('full');
 export type FreshnessSourceProps = {
   asOf?: string | number | null | undefined;
   receivedAt?: number | undefined;
@@ -23,6 +24,7 @@ export function FreshnessLabel({
   refreshing?: boolean;
 }) {
   const { t, locale } = useLocale();
+  const compact = useContext(FreshnessDisplay) === 'compact';
   const defaultZone = useContext(FreshnessTimeZone);
   const zone = timeZone ?? defaultZone;
   const server = timestamp(asOf);
@@ -38,6 +40,28 @@ export function FreshnessLabel({
   };
   const serverTime = time(server, 'server');
   const receiptTime = time(receipt, 'client');
+  const fullLabel = [
+    server && `${t('serverAsOf')} ${formatDateTime(server, locale, zone)}`,
+    receipt && `${t('receivedAt')} ${formatDateTime(receipt, locale, zone)}`,
+    zone,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  if (compact && (serverTime || receiptTime))
+    return (
+      <p className="k8k-freshness k8k-freshness-compact" title={fullLabel} aria-label={fullLabel}>
+        {serverTime ? (
+          <span>
+            {t('serverAsOf')} {serverTime}
+          </span>
+        ) : (
+          <span>
+            {t('receivedAt')} {receiptTime}
+          </span>
+        )}
+        {refreshing && <span> · {t('refreshing')}</span>}
+      </p>
+    );
   return (
     <p className="k8k-freshness">
       {serverTime || receiptTime ? (

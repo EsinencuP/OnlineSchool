@@ -1,6 +1,5 @@
 import { useStudentLocale } from './student-locale.js';
 import type { PlainMessageKey } from '@online-school/ui';
-import { Reports } from './pages/Reports.js';
 import {
   createBrowserRouter,
   Navigate,
@@ -11,18 +10,30 @@ import {
   useNavigate,
   useRouteError,
 } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { lazy, useEffect, useRef } from 'react';
 import type { Location } from 'react-router-dom';
 import { k8kEnabled, LanguageSelector } from '@online-school/ui';
 import { setRedirect } from './api.js';
 import { StudentLayout } from './Layout.js';
-import { Dashboard } from './pages/Dashboard.js';
-import { Lessons, LessonDetail } from './pages/Lessons.js';
 import { Homework, HomeworkDetail } from './pages/Homework.js';
 import { SkillMap, Materials, Notifications } from './pages/Learning.js';
 import { Subscription } from './pages/Subscription.js';
 import { AccessSuspended, ChangePassword, Login, Profile, Security } from './pages/Account.js';
 import { StudentHelp, StudentSubjects } from './pages/Subjects.js';
+
+// Load view code when needed, keeping the cabinet shell and editor lifecycle stable.
+const Dashboard = lazy(() =>
+  import('./pages/Dashboard.js').then((page) => ({ default: page.Dashboard })),
+);
+const Reports = lazy(() =>
+  import('./pages/Reports.js').then((page) => ({ default: page.Reports })),
+);
+const Lessons = lazy(() =>
+  import('./pages/Lessons.js').then((page) => ({ default: page.Lessons })),
+);
+const LessonDetail = lazy(() =>
+  import('./pages/Lessons.js').then((page) => ({ default: page.LessonDetail })),
+);
 
 function scrollKey(location: Location) {
   if (
