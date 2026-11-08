@@ -6,7 +6,8 @@ import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const out = path.join(root, 'output/vercel-release-2026-11-08');
+const evidenceRoot = path.join(root, '.vercel/release/review-smoke');
+const out = path.join(evidenceRoot, 'runs', new Date().toISOString().replaceAll(':', '-'));
 await mkdir(out, { recursive: true });
 const origin = 'https://onlineschool-xi.vercel.app';
 const readme = await readFile(path.join(root, 'README.md'), 'utf8');
@@ -52,10 +53,21 @@ page.on('response', (response) => {
 async function visit(role, url, screenshot = false) {
   const response = await page.goto(origin + url, { waitUntil: 'networkidle', timeout: 60000 });
   await expect(page.locator('main')).toBeVisible();
+  if (role !== 'LOGIN') {
+    await expect(page.locator('.account-menu')).toBeVisible();
+    const identity = await page.evaluate(async () => {
+      const response = await fetch('/api/v1/auth/session', { cache: 'no-store' });
+      const session = await response.json();
+      return { status: response.status, roles: session.account?.roles };
+    });
+    assert.equal(identity.status, 200);
+    assert(identity.roles?.includes(role), 'Authenticated role must match the cabinet');
+  }
   const ui = await page.evaluate(() => ({
     path: globalThis.location.pathname + globalThis.location.search,
     theme: globalThis.document.documentElement.dataset.k8k,
     locale: globalThis.document.documentElement.lang,
+    viewport: globalThis.innerWidth,
     headings: [...globalThis.document.querySelectorAll('h1')].map((n) => n.textContent),
     overflow: globalThis.document.documentElement.scrollWidth > globalThis.innerWidth,
   }));
@@ -79,6 +91,10 @@ try {
   await visit('MANAGER', '/manager?ui.k8k=1', true);
   for (const section of ['leads', 'students', 'schedule', 'tasks'])
     await visit('MANAGER', '/manager/' + section + '?ui.k8k=1');
+  await page.setViewportSize({ width: 360, height: 800 });
+  await visit('MANAGER', '/manager?ui.k8k=1');
+  await page.screenshot({ path: path.join(out, 'manager-360.png'), fullPage: true });
+  await page.setViewportSize({ width: 1280, height: 900 });
   const catalog = await page.evaluate(async () =>
     (await fetch('/api/v1/platform/accounts', { cache: 'no-store' })).json(),
   );
@@ -144,6 +160,14 @@ try {
   process.exitCode = 1;
 } finally {
   await writeFile(path.join(out, 'live-smoke.json'), JSON.stringify(evidence, null, 2) + '\n');
+  await writeFile(
+    path.join(evidenceRoot, 'latest-smoke.json'),
+    JSON.stringify(
+      { run: path.relative(root, out).replaceAll('\\', '/'), status: evidence.status },
+      null,
+      2,
+    ) + '\n',
+  );
   await browser.close();
 }
 console.log({

@@ -102,7 +102,7 @@ export class DashboardService {
         JOIN subjects s ON s.id=e.subject_id JOIN teaching_assignments a ON a.id=l.teaching_assignment_id
         JOIN teacher_accounts t ON t.id=l.scheduled_teacher_id
         WHERE e.student_id=${studentId}::uuid AND l.status='SCHEDULED'
-          AND l.scheduled_at>=${time} - interval '60 minutes' AND ${scheduledLessonScopeSql(time)}
+          AND l.scheduled_at>=${time}::timestamptz - interval '60 minutes' AND ${scheduledLessonScopeSql(time)}
       )
       SELECT * FROM candidates
       WHERE scheduled_at>${time} OR google_meet_link~${MEET_URL_PATTERN}

@@ -1,0 +1,415 @@
+{
+  "origin": "https://onlineschool-xi.vercel.app",
+  "scope": "Published real UI/API + synthetic accounts; read-only except login/switch/logout",
+  "routes": [
+    {
+      "role": "LOGIN",
+      "path": "/account?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Вход в кабинет"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Обзор"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager/leads?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Заявки"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager/students?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Ученики"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager/schedule?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Расписание"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager/tasks?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Задачи"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 360,
+      "headings": [
+        "Обзор"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Привет, [ДЕМО] Анна Волкова!"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/subjects?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Мои предметы"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/lessons?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Уроки"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/homework?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Домашние задания"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/skills?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Мой путь знаний"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/reports?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Опубликованные отчёты"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/materials?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Материалы"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/subscription?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Абонемент"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/help?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Помощь"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/profile?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Профиль и настройки"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student/security?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Безопасность аккаунта"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 360,
+      "headings": [
+        "Привет, [ДЕМО] Анна Волкова!"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Здравствуйте, Андрей"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher?section=lessons&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Расписание"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher?section=students&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Мои ученики"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher?section=homework&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Домашние задания"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 360,
+      "headings": [
+        "Здравствуйте, Андрей"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Здравствуйте, Паша"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director?section=lessons&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Расписание"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director?section=students&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Ученики школы"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director?section=tasks&ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Задачи менеджеров"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 360,
+      "headings": [
+        "Здравствуйте, Паша"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 1280,
+      "headings": [
+        "Состояние платформы"
+      ],
+      "overflow": false,
+      "status": 200
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator?ui.k8k=1",
+      "theme": "provisional",
+      "locale": "ru",
+      "viewport": 360,
+      "headings": [
+        "Состояние платформы"
+      ],
+      "overflow": false,
+      "status": 200
+    }
+  ],
+  "switches": [
+    {
+      "role": "STUDENT",
+      "key": "anna",
+      "status": "PASS"
+    },
+    {
+      "role": "TEACHER",
+      "key": "andrei",
+      "status": "PASS"
+    },
+    {
+      "role": "DIRECTOR",
+      "key": "pasha",
+      "status": "PASS"
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "key": "tech",
+      "status": "PASS"
+    }
+  ],
+  "apiErrors": [
+    {
+      "path": "/api/v1/student/dashboard",
+      "status": 503
+    },
+    {
+      "path": "/api/v1/student/dashboard",
+      "status": 503
+    }
+  ],
+  "pageErrors": [],
+  "blockedBusinessMutations": [],
+  "status": "FAIL",
+  "logout": "PASS",
+  "error": "AssertionError: Server API error\n\n2 !== 0\n"
+}

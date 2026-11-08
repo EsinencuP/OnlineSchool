@@ -32,5 +32,25 @@ Provisioning/seed окна ранее выключены; повторно их 
 Allowlist Docker build context дополнен manifest `packages/ui/package.json`, чтобы
 worker мог установить актуальный workspace dependency graph.
 
-Фактические commit/deployment IDs и результаты проверки опубликованной версии
-будут зафиксированы в `output/vercel-release-2026-11-08/`.
+Первый source commit: `d08d501dd5c0e0c588ceecf600028a4b3ff53b63`, Vercel deployment
+`dpl_HSGx8Dpjs6DNBgUPBUiRUNka4uAP` получил READY. Реальный browser smoke прошёл31
+просмотр/viewport, смену на все4 остальные роли и logout; исключений браузера нет.
+Обнаружены два503 от student dashboard; первый результат и снимки сохранены в
+`output/vercel-release-2026-11-08/`, этот прогон явно имеет FAIL.
+
+Исправление: параметр server time перед вычитанием interval явно приведён к
+`timestamptz`, как тип scheduled_at. Это сохраняет60-минутное окно и все own-scope,
+access и Meet guards; данные, права и providers не подменяются. К штатному
+`student-cabinet-runtime-check.mjs` добавлена настоящая параметризованная проекция
+nextLesson для nil profile под ограниченным runtime role в READ ONLY transaction.
+Она проверяет PostgreSQL operators/permissions до публикации. Подключённые Neon
+accounts не предоставляют рабочий проект, поэтому проверка использует существующие
+protected environment credentials внутри Vercel, не извлекая их локально.
+
+Повторяемая проверка опубликованного UI/API: `pnpm test:vercel-review`.
+Она проверяет реальную роль каждой сессии,31 маршрутов/viewport, мобильный вид пяти
+кабинетов, switching/logout и отсутствие API5xx/JS exceptions. Business mutations
+заблокированы. Новые runtime outputs пишутся в стандартно ignored
+`.vercel/release/review-smoke/runs/`, latest-smoke.json указывает результат; секреты,
+cookies/storage state, trace и video не сохраняются. Финальный статус проверяется
+после исправления и завершения повторной публикации.
