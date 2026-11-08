@@ -32,7 +32,12 @@ import {
   ListRow,
   Select,
   StateBoundary,
+  FreshnessDisplay,
+  k8kEnabled,
 } from '@online-school/ui';
+import { HomeworkOverview, HomeworkCard } from '../homework-list-view.js';
+import { StudentPageHeading, StudentHelpCard, HomeworkHelpCard } from '../student-chrome.js';
+import { useIdentityCopy } from '../identity-copy.js';
 import { useMe } from '../Layout.js';
 import { HomeworkStatus, useHomeworkCopy } from '../homework-copy.js';
 import { homeworkReturn } from '../homework-navigation.js';
@@ -43,6 +48,8 @@ import { SubjectBack, subjectHref, useSubjectReturn } from './Subjects.js';
 
 export function Homework() {
   const { text, locale, statusLabel } = useHomeworkCopy();
+  const identity = useIdentityCopy();
+  const [subject, setSubject] = useState('');
   const { timeZone } = useMe();
   const location = useLocation();
   const [params, setParams] = useSearchParams();
@@ -83,6 +90,86 @@ export function Homework() {
       o,
     ),
   );
+  if (k8kEnabled)
+    return (
+      <FreshnessDisplay.Provider value="compact">
+        <div className="k8k-student-page k8k-homework-page">
+          <StudentPageHeading
+            title={text('homework')}
+            lead={identity('homeworkLead')}
+            actions={
+              <Select
+                label={identity('currentPageSubjects')}
+                value={subject}
+                onChange={(event) => setSubject(event.target.value)}
+              >
+                <option value="">{identity('allSubjects')}</option>
+                {subject && !query.data?.items.some((item) => item.subjectName === subject) && (
+                  <option value={subject}>{subject}</option>
+                )}
+                {Array.from(new Set(query.data?.items.map((item) => item.subjectName))).map(
+                  (name) => (
+                    <option key={name} value={name}>
+                      {name}
+                    </option>
+                  ),
+                )}
+              </Select>
+            }
+          />
+          <SubjectBack id={fromSubject} />
+          <div className="k8k-page-columns">
+            <div className="k8k-page-primary">
+              <HomeworkOverview
+                lessonId={lessonId}
+                status={status}
+                change={(value) => {
+                  setSubject('');
+                  change({ status: value, page: '1' });
+                }}
+              />
+              {subject && <p className="k8k-student-caption">{identity('pageFilter')}</p>}
+              <QueryState
+                query={query}
+                empty={query.data?.items.length === 0}
+                emptyMessage={text('empty')}
+              >
+                <div className="k8k-homework-cards">
+                  {subject &&
+                    !!query.data?.items.length &&
+                    !query.data.items.some((item) => item.subjectName === subject) && (
+                      <Empty>{identity('noPageHomework')}</Empty>
+                    )}
+                  {query.data?.items
+                    .filter((item) => !subject || item.subjectName === subject)
+                    .map((item) => (
+                      <HomeworkCard
+                        key={item.homeworkId}
+                        item={item}
+                        href={detailHref(item.homeworkId)}
+                        date={date}
+                      />
+                    ))}
+                </div>
+              </QueryState>
+              {query.data && (
+                <Pager
+                  {...query.data}
+                  change={(next) => {
+                    setSubject('');
+                    change({ page: String(next) });
+                  }}
+                />
+              )}
+            </div>
+            <aside className="k8k-page-aside k8k-homework-aside">
+              <HomeworkHelpCard />
+              <StudentHelpCard />
+            </aside>
+          </div>
+        </div>
+      </FreshnessDisplay.Provider>
+    );
   return (
     <>
       <h1>{text('homework')}</h1>

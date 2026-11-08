@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
+import { StudentBreadcrumbs } from './student-chrome.js';
 import { AccountMenu, leaveSession } from '@online-school/account-ui';
 import type { AccountLogoutOutcome } from '@online-school/account-ui';
 import {
@@ -290,7 +291,9 @@ export function StudentLayout() {
             <h1 className="k8k-home-greeting">
               {copy.greeting}, {profile.displayName}!
             </h1>
-          ) : undefined
+          ) : (
+            <StudentBreadcrumbs />
+          )
         }
         account={
           <AccountMenu

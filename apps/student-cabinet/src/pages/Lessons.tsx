@@ -8,7 +8,22 @@ import {
   getStudentMaterials,
 } from '@online-school/api-contracts';
 import type { LessonCardDto, LessonHistoryItemDto } from '@online-school/api-contracts';
-import { Button, Field, ListRow, Segmented, StateBoundary } from '@online-school/ui';
+import {
+  Button,
+  Field,
+  ListRow,
+  Segmented,
+  StateBoundary,
+  Icon,
+  FreshnessDisplay,
+  formatTime,
+  formatDateOnly,
+  k8kEnabled,
+} from '@online-school/ui';
+import { StudentNextLessonHero } from '../lesson-hero.js';
+import { StudentPageHeading } from '../student-chrome.js';
+import { StudentMonthCalendar } from '../student-calendar.js';
+import { useIdentityCopy } from '../identity-copy.js';
 import { useStudentQuery } from '../api.js';
 import { dayKey, Empty, JoinButton, Pager, Panel, QueryState, Status } from '../components.js';
 import { useMe } from '../Layout.js';
@@ -35,6 +50,74 @@ export function LessonList({
   const { timeZone } = useMe();
   const fresh = useContext(StudentReadFreshness);
   const { verifying } = useContext(StudentMeetClock);
+  if (k8kEnabled)
+    return items.length ? (
+      <div className="k8k-schedule-rows">
+        {items.map((lesson) => (
+          <article className="k8k-schedule-row" key={lesson.lessonId}>
+            <Link
+              className="k8k-date-tile"
+              aria-label={formatStudentDate(lesson.scheduledAt, timeZone, true, locale)}
+              to={lessonHref(lesson.lessonId, backTo, fromSubject)}
+            >
+              <strong>
+                {new Intl.DateTimeFormat(locale, { day: '2-digit', timeZone }).format(
+                  new Date(lesson.scheduledAt),
+                )}
+              </strong>
+              <span>
+                {new Intl.DateTimeFormat(locale, { month: 'short', timeZone }).format(
+                  new Date(lesson.scheduledAt),
+                )}
+              </span>
+            </Link>
+            <div className="k8k-schedule-subject">
+              <h3>
+                <Link to={lessonHref(lesson.lessonId, backTo, fromSubject)}>
+                  {lesson.subjectName}
+                </Link>
+              </h3>
+              <p title={lesson.teacherName}>{lesson.teacherName}</p>
+            </div>
+            <div className="k8k-schedule-time">
+              <strong>
+                <time dateTime={lesson.scheduledAt}>
+                  {formatTime(lesson.scheduledAt, locale, timeZone)}–
+                  {formatTime(
+                    Date.parse(lesson.scheduledAt) + lesson.durationMinutes * 60000,
+                    locale,
+                    timeZone,
+                  )}
+                </time>
+              </strong>
+              <Status value={lesson.status} />
+              <small>
+                {lesson.durationMinutes} {text('minutes')}
+              </small>
+            </div>
+            <div className="k8k-schedule-actions">
+              <JoinButton lesson={lesson} compact />
+              <StudentReadFreshness.Provider value={fresh && !verifying}>
+                <LessonCommands
+                  lesson={lesson}
+                  kind="reschedule"
+                  allowed={lesson.canRequestReschedule}
+                />
+              </StudentReadFreshness.Provider>
+            </div>
+            <Link
+              className="k8k-row-arrow"
+              aria-label={text('openLesson') + ': ' + lesson.subjectName}
+              to={lessonHref(lesson.lessonId, backTo, fromSubject)}
+            >
+              <Icon name="arrow" />
+            </Link>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <Empty>{text('emptySchedule')}</Empty>
+    );
   return items.length ? (
     <div className="lesson-table">
       <div className="lesson-table-head">
@@ -152,7 +235,7 @@ function History({
   const query = useStudentQuery(['lesson-history', subjectId ?? null, page], (o) =>
     getStudentLessonHistory({ page, pageSize: 20, ...(subjectId ? { subjectId } : {}) }, o),
   );
-  return (
+  const content = (
     <Panel title={text('history')} className="k8k-lesson-history">
       <p>{text('historyHint')}</p>
       <QueryState
@@ -183,10 +266,24 @@ function History({
       )}
     </Panel>
   );
+  return k8kEnabled ? (
+    <details className="k8k-history-disclosure">
+      <summary>
+        <Icon name="clock" />
+        <strong>{text('history')}</strong>
+        {query.data?.total === 0 && <span>{text('emptyHistory')}</span>}
+        <Icon name="arrow" />
+      </summary>
+      {content}
+    </details>
+  ) : (
+    content
+  );
 }
 
 export function Lessons() {
   const { locale, text } = useLessonCopy();
+  const identity = useIdentityCopy();
   const { timeZone } = useMe();
   const fromSubject = useSubjectReturn();
   const [params, setParams] = useSearchParams();
@@ -230,108 +327,174 @@ export function Lessons() {
   );
   const limit =
     !!query.error && 'code' in query.error && query.error.code === 'CALENDAR_MONTH_LIMIT_EXCEEDED';
+  const miniCalendar = useStudentQuery(
+    ['lessons', 'month-preview', month, subjectId ?? null],
+    (o) => getStudentLessons({ month, ...(subjectId ? { subjectId } : {}) }, o),
+    k8kEnabled,
+    30_000,
+  );
   return (
-    <>
-      <h1>{text('lessons')}</h1>
-      <SubjectBack id={fromSubject} />
-      <p className="lead">{text('lead')}</p>
-      <div className="toolbar">
-        <div className="tabs" aria-label={text('period')}>
-          {(['today', 'week', 'month'] as const).map((value) => (
-            <Button
-              key={value}
-              variant="secondary"
-              aria-pressed={!calendar && period === value}
-              onClick={() => change({ period: value, view: 'list', page: '1' })}
-            >
-              {text(value)}
-            </Button>
-          ))}
-        </div>
-        <Segmented
-          label={text('view')}
-          value={view}
-          options={[
-            { value: 'list', label: text('list') },
-            { value: 'calendar', label: text('calendar') },
-          ]}
-          onValueChange={(value) => change({ view: value, page: '1' })}
+    <FreshnessDisplay.Provider value={k8kEnabled ? 'compact' : 'full'}>
+      <div className="k8k-student-page k8k-schedule-page">
+        <StudentPageHeading
+          title={text(k8kEnabled ? 'schedule' : 'lessons')}
+          lead={k8kEnabled ? identity('scheduleLead') : text('lead')}
         />
-      </div>
-      {(calendar || period === 'month') && (
-        <Field
-          containerClassName="month-picker"
-          label={text('month')}
-          type="month"
-          value={month}
-          required
-          onChange={(event) => {
-            if (event.target.value) change({ month: event.target.value, page: '1' });
-          }}
-        />
-      )}
-      <Panel title={text(calendar ? 'calendarTitle' : 'schedule')}>
-        {limit ? (
-          <div role="status">
-            <p>{text('calendarLimit')}</p>
-            <Button
-              variant="secondary"
-              onClick={() => change({ period: 'month', view: 'list', page: '1', month })}
-            >
-              {text('openMonthList')}
-            </Button>
-          </div>
-        ) : (
-          <QueryState
-            query={query}
-            operational={calendar || period !== 'archive'}
-            empty={query.data?.items.length === 0}
-            emptyMessage={text('emptySchedule')}
-            meet={{ lessons: query.data?.items ?? [] }}
-          >
-            {calendar ? (
-              <div className="lesson-calendar">
-                {Array.from(new Set(query.data?.items.map((item) => dayKey(item.scheduledAt))))
-                  .sort()
-                  .map((day) => (
-                    <section key={day}>
-                      <h3>{formatStudentDate(day, timeZone, false, locale)}</h3>
-                      <LessonList
-                        items={
-                          query.data?.items.filter((item) => dayKey(item.scheduledAt) === day) ?? []
-                        }
-                        fromSubject={fromSubject}
-                        backTo={backTo}
-                      />
-                    </section>
-                  ))}
+        <SubjectBack id={fromSubject} />
+        <div className="k8k-page-columns">
+          <div className="k8k-page-primary">
+            {k8kEnabled && (
+              <div className="k8k-schedule-hero">
+                <StudentNextLessonHero />
               </div>
-            ) : (
-              <LessonList
-                items={query.data?.items ?? []}
-                fromSubject={fromSubject}
-                backTo={backTo}
+            )}
+            <div className="toolbar">
+              <div className="tabs" aria-label={text('period')}>
+                {(['today', 'week', 'month'] as const).map((value) => (
+                  <Button
+                    key={value}
+                    variant="secondary"
+                    aria-pressed={!calendar && period === value}
+                    onClick={() => change({ period: value, view: 'list', page: '1' })}
+                  >
+                    {text(value)}
+                  </Button>
+                ))}
+              </div>
+              <Segmented
+                label={text('view')}
+                value={view}
+                options={[
+                  { value: 'list', label: text('list') },
+                  { value: 'calendar', label: text('calendar') },
+                ]}
+                onValueChange={(value) => change({ view: value, page: '1' })}
+              />
+            </div>
+            {!k8kEnabled && (calendar || period === 'month') && (
+              <Field
+                label={text('month')}
+                type="month"
+                value={month}
+                required
+                onChange={(event) => {
+                  if (event.target.value) change({ month: event.target.value, page: '1' });
+                }}
               />
             )}
-          </QueryState>
-        )}
-        {query.data && !calendar && (
-          <>
-            <p>
-              {text('total')} {query.data.total}
-            </p>
-            <Pager {...query.data} change={(next) => change({ page: String(next) })} />
-          </>
-        )}
-      </Panel>
-      <History
-        page={historyPage}
-        subjectId={subjectId}
-        fromSubject={fromSubject}
-        backTo={backTo}
-        change={(next) => change({ historyPage: String(next) })}
-      />
-    </>
+            <Panel
+              title={
+                period === 'month' || calendar
+                  ? (formatDateOnly(month + '-01', locale, { month: 'long', year: 'numeric' }) ??
+                    text('schedule'))
+                  : text('schedule')
+              }
+              className="k8k-schedule-list"
+              headerAside={
+                k8kEnabled && query.data ? (
+                  <span className="k8k-section-meta">
+                    {identity('lessons')}: {query.data.total}
+                  </span>
+                ) : undefined
+              }
+            >
+              {limit ? (
+                <div role="status">
+                  <p>{text('calendarLimit')}</p>
+                  <Button
+                    variant="secondary"
+                    onClick={() => change({ period: 'month', view: 'list', page: '1', month })}
+                  >
+                    {text('openMonthList')}
+                  </Button>
+                </div>
+              ) : (
+                <QueryState
+                  query={query}
+                  operational={calendar || period !== 'archive'}
+                  empty={query.data?.items.length === 0}
+                  emptyMessage={text('emptySchedule')}
+                  meet={{ lessons: query.data?.items ?? [] }}
+                >
+                  {calendar ? (
+                    <div className="lesson-calendar">
+                      {Array.from(
+                        new Set(query.data?.items.map((item) => dayKey(item.scheduledAt))),
+                      )
+                        .sort()
+                        .map((day) => (
+                          <section key={day}>
+                            <h3>{formatStudentDate(day, timeZone, false, locale)}</h3>
+                            <LessonList
+                              items={
+                                query.data?.items.filter(
+                                  (item) => dayKey(item.scheduledAt) === day,
+                                ) ?? []
+                              }
+                              fromSubject={fromSubject}
+                              backTo={backTo}
+                            />
+                          </section>
+                        ))}
+                    </div>
+                  ) : (
+                    <LessonList
+                      items={query.data?.items ?? []}
+                      fromSubject={fromSubject}
+                      backTo={backTo}
+                    />
+                  )}
+                </QueryState>
+              )}
+              {query.data && !calendar && (
+                <>
+                  {!k8kEnabled && (
+                    <p>
+                      {text('total')} {query.data.total}
+                    </p>
+                  )}
+                  <Pager {...query.data} change={(next) => change({ page: String(next) })} />
+                </>
+              )}
+            </Panel>
+            <History
+              page={historyPage}
+              subjectId={subjectId}
+              fromSubject={fromSubject}
+              backTo={backTo}
+              change={(next) => change({ historyPage: String(next) })}
+            />
+          </div>
+          {k8kEnabled && (
+            <aside className="k8k-page-aside">
+              <section className="k8k-student-card k8k-calendar-card">
+                <StudentMonthCalendar
+                  month={month}
+                  items={miniCalendar.error ? [] : (miniCalendar.data?.items ?? [])}
+                  eventsKnown={!!miniCalendar.data && !miniCalendar.error}
+                  change={(value) => change({ month: value, period: 'month', page: '1' })}
+                  backTo={backTo}
+                  fromSubject={fromSubject}
+                />
+                <QueryState query={miniCalendar} operational>
+                  {null}
+                </QueryState>
+              </section>
+              <section className="k8k-support-card k8k-support-warm">
+                <h2>
+                  <Icon name="clock" />
+                  {identity('lessonTime')}
+                </h2>
+                <p>
+                  {identity('timeZone')}: {timeZone}
+                </p>
+                <p>{identity('meetHint')}</p>
+              </section>
+            </aside>
+          )}
+        </div>
+      </div>
+    </FreshnessDisplay.Provider>
   );
 }
 

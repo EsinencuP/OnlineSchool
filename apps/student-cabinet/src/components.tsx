@@ -151,17 +151,20 @@ export function Panel({
   children,
   to,
   className = '',
+  headerAside,
 }: {
   title: string;
   children: ReactNode;
   to?: string;
   className?: string;
+  headerAside?: ReactNode;
 }) {
   const { t } = useStudentLocale();
   return (
     <section className={`panel ${className}`}>
       <div className="section-heading">
         <h2>{title}</h2>
+        {headerAside}
         {to && <Link to={to}>{t('student.all')}</Link>}
       </div>
       {children}
@@ -369,10 +372,12 @@ export function JoinButton({
   lesson,
   fallback,
   secondary,
+  compact = false,
 }: {
   lesson: NextLessonDto | LessonCardDto;
   fallback?: ReactNode;
   secondary?: ReactNode;
+  compact?: boolean;
 }) {
   const { locale, copy } = useStudentCopy();
   const { t } = useStudentLocale();
@@ -398,7 +403,8 @@ export function JoinButton({
         {presentation.kind !== 'ready' && fallback}
         {(presentation.kind === 'ready' || (!fallback && presentation.kind === 'disabled')) && (
           <a
-            className="button primary k8k-meet-action"
+            className={'button primary k8k-meet-action' + (compact ? ' k8k-meet-compact' : '')}
+            aria-label={compact ? copy.meet : undefined}
             href={presentation.kind === 'ready' ? presentation.url : undefined}
             target="_blank"
             rel="noopener noreferrer"
@@ -411,12 +417,17 @@ export function JoinButton({
             }}
           >
             <UIIcon name="video" />
-            {copy.meet}
+            {!compact && copy.meet}
           </a>
         )}
         {presentation.kind === 'ready' && secondary}
         {presentation.kind !== 'ready' && (
-          <p className="k8k-join-reason" id={reasonId} data-reason={presentation.reasonKey}>
+          <p
+            className="k8k-join-reason"
+            id={reasonId}
+            title={compact ? presentation.reason : undefined}
+            data-reason={presentation.reasonKey}
+          >
             {presentation.reason}
           </p>
         )}

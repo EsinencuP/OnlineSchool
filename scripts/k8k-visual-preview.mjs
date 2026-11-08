@@ -2,7 +2,7 @@
 // No database, credentials, external API/provider calls or production mutations.
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
-import { writeFile, mkdir } from 'node:fs/promises';
+import { writeFile, mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { managerData, managerResponse, operationFor, uuid } from './k8k-baseline-fixtures.mjs';
@@ -58,6 +58,8 @@ for (const [app, base] of [
       'src/pages/Dashboard.tsx',
       'src/pages/Reports.tsx',
       'src/pages/Lessons.tsx',
+      'src/pages/Homework.tsx',
+      'src/pages/Learning.tsx',
     ]) {
       const routeBudget = evaluateRoute({
         manifest,
@@ -85,6 +87,30 @@ const studentServer = startFixture(0);
 if (!studentServer.listening)
   await new Promise((resolve) => studentServer.once('listening', resolve));
 const studentOrigin = `http://127.0.0.1:${studentServer.address().port}`;
+// Complete only this loopback preview's published skill history. No working data.
+const previewSkillMaps = await (await fetch(studentOrigin + '/api/v1/student/skills')).json();
+const previewSkill = previewSkillMaps[0]?.skills.find((item) => item.status === 'FAMILIARIZING');
+await fetch(studentOrigin + '/__fixture/state', {
+  method: 'PATCH',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({
+    skillMaps: previewSkillMaps,
+    skillAudit: previewSkill
+      ? [
+          {
+            auditId: uuid('visual-skill-feedback'),
+            skillId: previewSkill.skillId,
+            skillName: previewSkill.name,
+            changedAt: new Date().toISOString(),
+            teacherName: previewSkill.lastUpdatedByTeacherName,
+            fromStatus: 'NOT_STUDIED',
+            toStatus: previewSkill.status,
+            comment: 'Добавь ещё один пример в рассказ о путешествии.',
+          },
+        ]
+      : [],
+  }),
+});
 const manager = await managerData();
 const catalog = [
   {
@@ -218,7 +244,7 @@ const server = createServer(async (request, response) => {
       role = documentRole.role;
       response.setHeader('set-cookie', `visual-role=${role}; Path=/; SameSite=Strict`);
     }
-    if (pathname === '/api/v1/auth/csrf') return json({ csrfToken: 'local-visual-fixture' });
+    if (pathname === '/api/v1/auth/csrf') return json({ csrfToken: 'fixture-csrf' });
     if (pathname === '/api/v1/auth/session')
       return json({
         account: {
@@ -250,7 +276,11 @@ const server = createServer(async (request, response) => {
     if (pathname.startsWith('/api/v1/student/')) {
       const upstream = await fetch(studentOrigin + pathname + url.search, {
         method: request.method,
-        headers: { 'content-type': 'application/json' },
+        headers: {
+          'content-type': 'application/json',
+          'x-csrf-token': request.headers['x-csrf-token'] ?? '',
+          'idempotency-key': request.headers['idempotency-key'] ?? '',
+        },
         ...(request.method !== 'GET' && request.method !== 'HEAD'
           ? {
               body: await (async () => {
@@ -262,6 +292,22 @@ const server = createServer(async (request, response) => {
           : {}),
       });
       let data = await upstream.json();
+      if (
+        pathname === '/api/v1/student/lessons' &&
+        Array.isArray(data.items) &&
+        url.searchParams.has('month')
+      ) {
+        const month = url.searchParams.get('month');
+        data.items = data.items.filter(
+          (item) =>
+            new Intl.DateTimeFormat('en-CA', {
+              timeZone: 'Europe/Chisinau',
+              year: 'numeric',
+              month: '2-digit',
+            }).format(new Date(item.scheduledAt)) === month,
+        );
+        data.total = data.items.length;
+      }
       if (pathname === '/api/v1/student/me') data = { ...data, displayName: 'Маша К.' };
       return json(data, upstream.status);
     }
@@ -286,6 +332,31 @@ const server = createServer(async (request, response) => {
           ? '/manager/index.html'
           : '/index.html';
     if (path.extname(pathname) && !files.has(pathname)) {
+      // Retain previous hashed chunks during review-server rebuilds; never serve outside build assets.
+      const owner = pathname.startsWith('/student/assets/')
+        ? ['student-cabinet', '/student/']
+        : pathname.startsWith('/manager/assets/')
+          ? ['manager-web', '/manager/']
+          : pathname.startsWith('/assets/')
+            ? ['platform', '/']
+            : null;
+      if (owner) {
+        const directory = path.join(output, 'build', owner[0]);
+        const previous = path.resolve(directory, pathname.slice(owner[1].length));
+        const relative = path.relative(directory, previous);
+        if (!relative.startsWith('..') && !path.isAbsolute(relative)) {
+          try {
+            const bytes = await readFile(previous);
+            response.writeHead(200, {
+              'content-type': contentTypes[path.extname(previous)] ?? 'application/octet-stream',
+              'cache-control': 'no-store',
+            });
+            return response.end(bytes);
+          } catch {
+            /* Unknown prior hash: normal 404 below. */
+          }
+        }
+      }
       response.writeHead(404);
       return response.end();
     }

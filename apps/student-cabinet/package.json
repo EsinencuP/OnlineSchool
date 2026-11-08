@@ -11,7 +11,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "pnpm run test:presentation && pnpm run build && playwright test --config playwright.config.mjs",
     "test:a11y": "pnpm run build && node tests/accessibility.mjs",
-    "test:presentation": "node --test tests/k8k-presentation.test.mjs",
+    "test:presentation": "node --test tests/k8k-presentation.test.mjs tests/calendar-presentation.test.mjs",
     "test:subject-hub": "playwright test --config playwright.subject-hub.config.mjs subject-hub.spec.mjs --grep-invert subject-baseline",
     "test:subject-baseline": "playwright test --config playwright.subject-hub.config.mjs --grep subject-baseline",
     "test:subject-subscriptions": "playwright test --config playwright.subject-subscriptions.config.mjs subject-subscriptions.spec.mjs",

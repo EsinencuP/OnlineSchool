@@ -15,13 +15,26 @@ import type { Location } from 'react-router-dom';
 import { k8kEnabled, LanguageSelector } from '@online-school/ui';
 import { setRedirect } from './api.js';
 import { StudentLayout } from './Layout.js';
-import { Homework, HomeworkDetail } from './pages/Homework.js';
-import { SkillMap, Materials, Notifications } from './pages/Learning.js';
 import { Subscription } from './pages/Subscription.js';
 import { AccessSuspended, ChangePassword, Login, Profile, Security } from './pages/Account.js';
 import { StudentHelp, StudentSubjects } from './pages/Subjects.js';
 
 // Load view code when needed, keeping the cabinet shell and editor lifecycle stable.
+const Homework = lazy(() =>
+  import('./pages/Homework.js').then((page) => ({ default: page.Homework })),
+);
+const HomeworkDetail = lazy(() =>
+  import('./pages/Homework.js').then((page) => ({ default: page.HomeworkDetail })),
+);
+const SkillMap = lazy(() =>
+  import('./pages/Learning.js').then((page) => ({ default: page.SkillMap })),
+);
+const Materials = lazy(() =>
+  import('./pages/Learning.js').then((page) => ({ default: page.Materials })),
+);
+const Notifications = lazy(() =>
+  import('./pages/Learning.js').then((page) => ({ default: page.Notifications })),
+);
 const Dashboard = lazy(() =>
   import('./pages/Dashboard.js').then((page) => ({ default: page.Dashboard })),
 );

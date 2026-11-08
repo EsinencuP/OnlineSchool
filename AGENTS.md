@@ -2,6 +2,13 @@
 
 ## Источники проекта
 
+- Latest owner identity request, 2026-11-08 (after the home recreation): implement
+  `template/schedule.png`, `template/homework.png`, `template/путьзнаний.png` via
+  image-to-code and continue the same identity across other pages. Canonical visual
+  system: `DESIGN.md`; shared patterns: `packages/ui/src/identity.css` and student
+  chrome/widgets. Preserve domain behavior; source mock data do not grant new facts.
+  Read `DESIGN.md` before future cabinet UI changes. This extends the home direction below.
+
 - Latest owner visual request, 2026-11-08: recreate `template/newtemp.png` closely
   using image-to-code, improving typography, color, cards and motion across the
   existing cabinets. Frontend presentation only; preserve all domain behavior.

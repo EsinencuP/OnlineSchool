@@ -54,6 +54,9 @@
       .workspace-list,
       .record-list,
       .lesson-list,
+      .k8k-schedule-rows,
+      .k8k-homework-cards,
+      .k8k-skill-list,
       .k8k-toast-list,
       .k8k-notification-scroll ul
     )
@@ -222,33 +225,33 @@
 }
 
 /* Bound the cascade to the first visible group, so long pages never wait seconds. */
-:is(li, tr, .lesson):nth-child(2) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(2) {
   --k8k-row-index: 1;
 }
-:is(li, tr, .lesson):nth-child(3) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(3) {
   --k8k-row-index: 2;
 }
-:is(li, tr, .lesson):nth-child(4) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(4) {
   --k8k-row-index: 3;
 }
-:is(li, tr, .lesson):nth-child(5) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(5) {
   --k8k-row-index: 4;
 }
-:is(li, tr, .lesson):nth-child(6) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(6) {
   --k8k-row-index: 5;
 }
-:is(li, tr, .lesson):nth-child(7) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(7) {
   --k8k-row-index: 6;
 }
-:is(li, tr, .lesson):nth-child(8) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(8) {
   --k8k-row-index: 7;
 }
-:is(li, tr, .lesson):nth-child(9) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(9) {
   --k8k-row-index: 8;
 }
-:is(li, tr, .lesson):nth-child(10) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(10) {
   --k8k-row-index: 9;
 }
-:is(li, tr, .lesson):nth-child(n + 11) {
+:is(li, tr, .lesson, .k8k-schedule-row, .k8k-homework-card):nth-child(n + 11) {
   --k8k-row-index: 9;
 }

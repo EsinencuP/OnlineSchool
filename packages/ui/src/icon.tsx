@@ -24,6 +24,7 @@ import {
   Info,
   Headphones,
   ExternalLink,
+  RefreshCw,
 } from 'lucide-react';
 const glyphs = {
   home: House,
@@ -50,6 +51,7 @@ const glyphs = {
   info: Info,
   manager: Headphones,
   external: ExternalLink,
+  refresh: RefreshCw,
 };
 export type IconName = keyof typeof glyphs;
 export type IconProps = { name: IconName; size?: number; className?: string };

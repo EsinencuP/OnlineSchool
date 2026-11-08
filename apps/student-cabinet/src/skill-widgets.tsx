@@ -28,3 +28,14 @@ export function StagesTrack() {
     </div>
   );
 }
+
+/** A supplied teacher assessment; never a computed percentage or a fourth learning step. */
+export function SkillProgress({ status }: { status: SkillDto['status'] }) {
+  return (
+    <ol className="k8k-skill-progress" aria-hidden="true">
+      {(['FAMILIARIZING', 'PRACTICING', 'APPLYING'] as const).map((step) => (
+        <li key={step} data-current={step === status ? 'true' : undefined} />
+      ))}
+    </ol>
+  );
+}

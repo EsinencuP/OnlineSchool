@@ -1,0 +1,1085 @@
+/* Canonical patterns: DESIGN.md; owner templates schedule/homework/путьзнаний. */
+:root[data-k8k] .k8k-shell {
+  grid-template-columns: 240px minmax(0, 1fr);
+}
+:root[data-k8k] .k8k-role-student {
+  --k8k-font-body: var(--k8k-font-lg);
+  --k8k-font-sm: var(--k8k-font-lg);
+}
+:root[data-k8k] .k8k-brand {
+  font-size: var(--k8k-font-section);
+}
+:root[data-k8k] .k8k-role-student .k8k-sidebar nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+:root[data-k8k] .k8k-role-student .k8k-sidebar .k8k-nav-item:last-child {
+  margin-block-start: auto;
+}
+:root[data-k8k] .k8k-role-student .k8k-sidebar-footer:empty {
+  display: none;
+}
+:root[data-k8k] .k8k-student-shortcuts a {
+  font-size: var(--k8k-font-compact);
+}
+:root[data-k8k] .k8k-homework-card {
+  overflow-wrap: anywhere;
+}
+:root[data-k8k] .k8k-title-subline {
+  display: block;
+}
+:root[data-k8k] .k8k-section-meta {
+  color: var(--text-2);
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-homework-feedback > div {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-support-action svg {
+  flex-shrink: 0;
+}
+:root[data-k8k] .k8k-schedule-subject {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-shell-columns {
+  padding: var(--k8k-space-6);
+  padding-block-start: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-header {
+  min-height: 76px;
+}
+:root[data-k8k] .k8k-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  font-size: var(--k8k-font-body);
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-breadcrumbs a {
+  color: var(--k8k-ink);
+  text-decoration: none;
+}
+:root[data-k8k] .k8k-breadcrumbs svg {
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-role-student .k8k-main > h1,
+:root[data-k8k] .k8k-main .k8k-page-heading h1 {
+  margin: 0;
+  font-size: var(--k8k-font-page);
+  line-height: 1.15;
+  font-weight: 700;
+}
+:root[data-k8k] .k8k-student-page {
+  display: grid;
+  gap: var(--k8k-space-5);
+  min-width: 0;
+}
+:root[data-k8k] .k8k-page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-page-heading > div {
+  min-width: 0;
+}
+:root[data-k8k] .k8k-main .lead {
+  margin: var(--k8k-space-1) 0 0;
+  color: var(--text-2);
+  font-size: var(--k8k-font-xl);
+  line-height: 1.25;
+}
+:root[data-k8k] .k8k-page-tools {
+  display: flex;
+  align-items: end;
+  gap: var(--k8k-space-3);
+  flex-shrink: 0;
+  max-width: 40%;
+}
+:root[data-k8k] .k8k-page-tools .k8k-state-meta {
+  display: none;
+}
+:root[data-k8k] .k8k-page-tools .k8k-field {
+  margin: 0;
+  min-width: 0;
+}
+:root[data-k8k] .k8k-page-tools .k8k-field label {
+  margin: 0;
+}
+:root[data-k8k] .k8k-page-tools select {
+  width: 320px;
+}
+:root[data-k8k] .k8k-role-student .k8k-main .panel h2 {
+  font-size: var(--k8k-font-section);
+}
+:root[data-k8k] .k8k-page-tools select {
+  min-width: 220px;
+  max-width: 320px;
+}
+:root[data-k8k] .k8k-page-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+  gap: var(--k8k-space-5);
+  align-items: start;
+  min-width: 0;
+}
+:root[data-k8k] :is(.k8k-page-primary, .k8k-page-aside) {
+  display: grid;
+  gap: var(--k8k-space-5);
+  min-width: 0;
+  align-items: start;
+}
+:root[data-k8k] .k8k-student-page .panel {
+  margin: 0;
+}
+:root[data-k8k] .k8k-student-page h2 {
+  font-size: var(--k8k-font-section);
+}
+:root[data-k8k] .k8k-support-card {
+  padding: var(--k8k-space-5);
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-radius);
+}
+:root[data-k8k] .k8k-support-warm {
+  background: var(--warning-bg);
+}
+:root[data-k8k] .k8k-support-info {
+  background: var(--info-bg);
+}
+:root[data-k8k] .k8k-main .k8k-support-card h2 {
+  display: flex;
+  gap: var(--k8k-space-3);
+  align-items: center;
+  margin: 0 0 var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-support-card h2 svg {
+  flex-shrink: 0;
+}
+:root[data-k8k] .k8k-support-card p {
+  color: var(--text-2);
+  margin: var(--k8k-space-2) 0;
+}
+:root[data-k8k] .k8k-support-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--k8k-space-4);
+  margin-top: var(--k8k-space-5);
+  padding: var(--k8k-space-3) var(--k8k-space-4);
+  color: var(--brand-text);
+  border: 1px solid var(--brand-text);
+  border-radius: var(--k8k-control-radius);
+  font-weight: 600;
+  text-decoration: none;
+}
+:root[data-k8k] .k8k-help-steps {
+  counter-reset: help-step;
+  list-style: none;
+  padding: 0;
+  margin: var(--k8k-space-4) 0 0;
+  display: grid;
+  gap: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-help-steps li {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-5);
+  counter-increment: help-step;
+}
+:root[data-k8k] .k8k-help-steps li::before {
+  content: counter(help-step);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-radius: 50%;
+  color: var(--warning);
+  font-weight: 700;
+}
+
+/* Schedule: one server-authoritative hero, monthly index and existing commands. */
+:root[data-k8k] .k8k-schedule-hero .k8k-state {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-state:has(.k8k-lesson-hero) .k8k-state-meta {
+  position: absolute;
+  bottom: 12px;
+  right: 24px;
+  max-width: 45%;
+  z-index: 1;
+  background: var(--brand-900);
+  padding: var(--k8k-space-1) var(--k8k-space-2);
+  border-radius: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-state:has(.k8k-lesson-hero) .k8k-freshness {
+  color: var(--surface);
+}
+:root[data-k8k] .k8k-schedule-page .k8k-segmented legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+:root[data-k8k] .k8k-schedule-page .k8k-segment-option {
+  margin: 0;
+  min-height: 44px;
+  height: 44px;
+}
+:root[data-k8k] .k8k-schedule-page .k8k-segment-option input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+:root[data-k8k] .k8k-schedule-page .k8k-segment-option:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+:root[data-k8k] .k8k-calendar-card .k8k-state {
+  display: flex;
+  flex-direction: column;
+}
+:root[data-k8k] .k8k-calendar-card .k8k-state-meta {
+  order: 2;
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-state-meta {
+  order: 2;
+}
+:root[data-k8k] .k8k-main .k8k-schedule-hero .k8k-lesson-hero {
+  position: relative;
+  min-height: 290px;
+  padding: 24px 36px;
+  background-image: url('./assets/schedule-hero-reference.webp');
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-lesson-hero h2 {
+  font-size: var(--k8k-font-xl);
+  margin-bottom: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-main .k8k-schedule-hero h3 {
+  font-size: var(--k8k-font-page);
+  line-height: 1.2;
+  max-width: 75%;
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-hero-meta {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  max-width: 48%;
+  justify-content: end;
+}
+:root[data-k8k] .k8k-schedule-hero .k8k-hero-countdown {
+  background: var(--surface-warm);
+  color: var(--brand-900);
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-2) var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-schedule-page .toolbar {
+  justify-content: space-between;
+  gap: var(--k8k-space-4);
+  flex-wrap: wrap;
+  margin: 0;
+}
+:root[data-k8k] .k8k-schedule-page .toolbar button[aria-pressed='true'] {
+  background: var(--brand-700);
+  color: var(--surface);
+  border-color: var(--brand-700);
+}
+:root[data-k8k] .k8k-schedule-rows {
+  display: grid;
+}
+:root[data-k8k] .k8k-schedule-row {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr) max-content minmax(0, 185px) 32px;
+  align-items: center;
+  gap: var(--k8k-space-4);
+  padding-block: var(--k8k-space-3);
+  border-top: 1px solid var(--k8k-card-line);
+}
+:root[data-k8k] .k8k-date-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  background: var(--info-bg);
+  border-radius: var(--k8k-control-radius);
+  text-decoration: none;
+  color: var(--brand-900);
+  line-height: 1.15;
+}
+:root[data-k8k] .k8k-date-tile strong {
+  font-size: var(--k8k-font-2xl);
+}
+:root[data-k8k] .k8k-date-tile span {
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-main .k8k-schedule-subject h3 {
+  font-size: var(--k8k-font-lg);
+  margin: 0;
+  line-height: 1.35;
+}
+:root[data-k8k] .k8k-schedule-subject a {
+  color: var(--k8k-ink);
+  text-decoration: none;
+}
+:root[data-k8k] .k8k-schedule-subject p {
+  font-size: var(--k8k-font-sm);
+  color: var(--text-2);
+  margin: var(--k8k-space-1) 0 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+:root[data-k8k] .k8k-schedule-time {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  align-items: center;
+  gap: var(--k8k-space-1) var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-schedule-time > strong {
+  font-size: var(--k8k-font-lg);
+  white-space: nowrap;
+  grid-column: 1 / -1;
+}
+:root[data-k8k] .k8k-schedule-time small {
+  color: var(--text-muted);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-schedule-actions {
+  display: grid;
+  gap: var(--k8k-space-1);
+  min-width: 0;
+}
+:root[data-k8k] .k8k-schedule-actions p {
+  font-size: var(--k8k-font-xs);
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+:root[data-k8k] .k8k-schedule-actions .k8k-meet-compact {
+  min-height: 44px;
+  width: 52px;
+  padding: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-month-jump {
+  padding: 0;
+  border: 0;
+}
+:root[data-k8k] .k8k-month-jump summary {
+  cursor: pointer;
+  color: var(--brand-text);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-schedule-actions .k8k-button {
+  background: transparent;
+  border: 0;
+  padding-inline: 0;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+:root[data-k8k] .k8k-row-arrow {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  color: var(--k8k-ink);
+}
+:root[data-k8k] :is(.k8k-history-disclosure, .k8k-snapshots-disclosure) {
+  background: var(--surface);
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-radius);
+  padding: var(--k8k-space-4) var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-history-disclosure > summary {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+:root[data-k8k] .k8k-history-disclosure > summary strong {
+  font-size: var(--k8k-font-xl);
+}
+:root[data-k8k] .k8k-history-disclosure > summary span {
+  font-size: var(--k8k-font-xs);
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-history-disclosure > summary svg:last-child {
+  margin-left: auto;
+  rotate: 90deg;
+}
+:root[data-k8k] .k8k-history-disclosure[open] > summary svg:last-child {
+  rotate: -90deg;
+}
+:root[data-k8k] .k8k-main :is(.k8k-history-disclosure, .k8k-snapshots-disclosure) > .panel {
+  margin-top: var(--k8k-space-4);
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+:root[data-k8k] .k8k-month-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--k8k-space-2);
+  margin-bottom: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-main .k8k-month-heading h2 {
+  font-size: var(--k8k-font-xl);
+  margin: 0;
+  text-transform: capitalize;
+}
+:root[data-k8k] .k8k-month-heading button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  padding: var(--k8k-space-2);
+  min-width: 36px;
+  min-height: 44px;
+}
+:root[data-k8k] .k8k-arrow-back {
+  rotate: 180deg;
+}
+:root[data-k8k] .k8k-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--k8k-space-2) var(--k8k-space-1);
+  text-align: center;
+}
+:root[data-k8k] .k8k-month-weekday {
+  color: var(--text-2);
+  font-size: var(--k8k-font-sm);
+  padding-block: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-month-day {
+  display: grid;
+  place-items: center;
+  min-height: 36px;
+  color: var(--k8k-ink);
+  text-decoration: none;
+  border-radius: 50%;
+  position: relative;
+}
+:root[data-k8k] .k8k-month-day[aria-current='date'] {
+  background: var(--brand-700);
+  color: var(--surface);
+}
+:root[data-k8k] .k8k-month-day[data-has-lesson]::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand-700);
+  position: absolute;
+  bottom: 0;
+}
+:root[data-k8k] .k8k-month-day[aria-current='date']::after {
+  background: var(--surface);
+}
+:root[data-k8k] .k8k-month-legend {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  border-top: 1px solid var(--k8k-card-line);
+  padding-top: var(--k8k-space-4);
+  margin-block: var(--k8k-space-4);
+  color: var(--text-2);
+  font-size: var(--k8k-font-sm);
+}
+:root[data-k8k] .k8k-month-legend > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-700);
+}
+:root[data-k8k] .k8k-month-input label {
+  font-size: var(--k8k-font-xs);
+}
+
+/* Homework cards expose existing revision comments without changing the editor. */
+:root[data-k8k] .k8k-homework-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-homework-stat {
+  display: flex;
+  gap: var(--k8k-space-5);
+  align-items: center;
+  border: 1px solid var(--k8k-card-line);
+  border-radius: var(--k8k-tile-radius);
+  background: var(--surface);
+  padding: var(--k8k-space-4) var(--k8k-space-5);
+  min-height: 94px;
+}
+:root[data-k8k] .k8k-homework-stat-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border-color: var(--warning-bg);
+}
+:root[data-k8k] .k8k-homework-stat svg {
+  flex-shrink: 0;
+}
+:root[data-k8k] .k8k-homework-stat > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+:root[data-k8k] .k8k-homework-stat strong {
+  font-size: var(--k8k-font-2xl);
+  color: var(--k8k-ink);
+  line-height: 1.2;
+}
+:root[data-k8k] .k8k-homework-stat span {
+  font-size: var(--k8k-font-body);
+}
+:root[data-k8k] .k8k-homework-tabs {
+  display: flex;
+  gap: var(--k8k-space-2);
+  border-bottom: 1px solid var(--k8k-card-line);
+  padding-bottom: var(--k8k-space-3);
+  overflow-x: auto;
+}
+:root[data-k8k] .k8k-homework-tabs .k8k-button {
+  flex-shrink: 0;
+  padding-inline: var(--k8k-space-3);
+  gap: var(--k8k-space-2);
+  background: transparent;
+  border: 0;
+  color: var(--text-2);
+}
+:root[data-k8k] .k8k-homework-tabs .k8k-button[aria-pressed='true'] {
+  background: var(--brand-700);
+  color: var(--surface);
+}
+:root[data-k8k] .k8k-homework-tabs button span {
+  background: var(--surface-warm);
+  color: var(--text-2);
+  border-radius: var(--k8k-space-2);
+  padding-inline: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-homework-cards {
+  display: grid;
+  gap: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-homework-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-subject-label {
+  display: inline-flex;
+  color: var(--brand-text);
+  background: var(--info-bg);
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-1) var(--k8k-space-3);
+  font-weight: 600;
+}
+:root[data-k8k] .k8k-main .k8k-homework-card h2 {
+  font-size: var(--k8k-font-2xl);
+  margin: var(--k8k-space-3) 0 var(--k8k-space-2);
+  line-height: 1.2;
+}
+:root[data-k8k] .k8k-homework-card h2 a {
+  color: var(--k8k-ink);
+  text-decoration: none;
+}
+:root[data-k8k] .k8k-homework-byline {
+  margin: 0 0 var(--k8k-space-3);
+  color: var(--text-2);
+}
+:root[data-k8k] .k8k-homework-deadline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k8k-space-2);
+  width: fit-content;
+  background: var(--surface-warm);
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-2) var(--k8k-space-3);
+  margin-bottom: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-homework-deadline svg {
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-homework-feedback {
+  display: flex;
+  align-items: start;
+  gap: var(--k8k-space-4);
+  background: var(--info-bg);
+  padding: var(--k8k-space-4);
+  border-radius: var(--k8k-tile-radius);
+}
+:root[data-k8k] .k8k-homework-feedback > svg {
+  color: var(--brand-text);
+  flex-shrink: 0;
+  margin-top: var(--k8k-space-1);
+}
+:root[data-k8k] .k8k-main .k8k-homework-feedback h3 {
+  font-size: var(--k8k-font-lg);
+  margin: 0 0 var(--k8k-space-1);
+}
+:root[data-k8k] .k8k-homework-feedback p {
+  margin: 0;
+}
+:root[data-k8k] .k8k-homework-feedback li {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  background: var(--surface);
+  padding: var(--k8k-space-3);
+  border-radius: var(--k8k-control-radius);
+}
+:root[data-k8k] .k8k-homework-card-actions {
+  border-top: 1px solid var(--k8k-card-line);
+  margin-top: var(--k8k-space-5);
+  padding-top: var(--k8k-space-4);
+  display: flex;
+  align-items: start;
+  flex-wrap: wrap;
+  gap: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-homework-card-actions .k8k-main-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  text-decoration: none;
+  background: var(--brand-700);
+  color: var(--surface);
+  border-color: var(--brand-700);
+}
+:root[data-k8k] .k8k-submission-history {
+  min-width: 0;
+  max-width: 100%;
+}
+:root[data-k8k] .k8k-submission-history summary {
+  color: var(--brand-text);
+  text-decoration: underline;
+  cursor: pointer;
+  padding-block: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-submission-history li {
+  padding-block: var(--k8k-space-3);
+  border-bottom: 1px solid var(--k8k-card-line);
+}
+:root[data-k8k] .k8k-submission-history time {
+  display: block;
+  color: var(--text-2);
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-homework-aside {
+  padding-top: 190px;
+}
+:root[data-k8k]
+  .k8k-homework-editor
+  :is(.k8k-homework-instruction, .k8k-homework-form, section[aria-label]) {
+  border-radius: var(--k8k-radius);
+  padding: var(--k8k-space-5);
+  background: var(--bg-page);
+  border: 1px solid var(--k8k-card-line);
+}
+:root[data-k8k] .k8k-homework-editor {
+  display: grid;
+  gap: var(--k8k-space-5);
+}
+
+/* Knowledge: four technical states, three educational stages, actual history. */
+:root[data-k8k] .k8k-stages-banner {
+  border-radius: var(--k8k-radius);
+  background: var(--info-bg);
+  padding: var(--k8k-space-5) var(--k8k-space-6);
+}
+:root[data-k8k] .k8k-main .k8k-stages-banner h2 {
+  margin: 0 0 var(--k8k-space-1);
+}
+:root[data-k8k] .k8k-stages-banner > p {
+  margin: 0;
+  color: var(--text-2);
+}
+:root[data-k8k] .k8k-stages-banner .k8k-stages {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--k8k-space-4);
+  counter-reset: learning-stage;
+  margin: var(--k8k-space-5) 0 var(--k8k-space-3);
+  padding: 0;
+  list-style: none;
+}
+:root[data-k8k] .k8k-stages-banner .k8k-stages li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--k8k-space-2);
+  counter-increment: learning-stage;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  min-width: 0;
+}
+:root[data-k8k] .k8k-stages-banner .k8k-stages li::before {
+  content: counter(learning-stage);
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  background: var(--surface);
+  border: 1px solid var(--k8k-card-line);
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: var(--k8k-font-lg);
+  font-weight: 600;
+}
+:root[data-k8k] .k8k-stages-banner .k8k-stages li span {
+  border-radius: var(--k8k-radius);
+  padding: var(--k8k-space-2) var(--k8k-space-3);
+  background: var(--surface);
+  color: var(--k8k-ink);
+  font-weight: 500;
+}
+:root[data-k8k] .k8k-stages-banner .k8k-student-caption {
+  font-size: var(--k8k-font-xs);
+  margin: 0;
+}
+:root[data-k8k] .k8k-skill-actions:empty {
+  display: none;
+}
+:root[data-k8k] .k8k-skill-map-card {
+  position: relative;
+}
+:root[data-k8k] .k8k-skill-map-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-skill-map-meta p {
+  margin: 0;
+}
+:root[data-k8k] .k8k-skill-map-meta a {
+  font-size: var(--k8k-font-xs);
+}
+:root[data-k8k] .k8k-skill-map-card > .k8k-field {
+  max-width: 190px;
+  margin-bottom: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-skill-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--k8k-space-5) 0 0;
+}
+:root[data-k8k] .k8k-skill-list > li {
+  border-inline-start: 3px solid var(--brand-700);
+  border-top: 1px solid var(--k8k-card-line);
+  padding: var(--k8k-space-4);
+  margin-bottom: var(--k8k-space-4);
+  border-radius: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-skill-list > li[data-skill-status='NOT_STUDIED'] {
+  border-inline-start-color: var(--warning);
+}
+:root[data-k8k] .k8k-main .k8k-skill-heading h3 {
+  font-size: var(--k8k-font-xl);
+  margin: 0;
+}
+:root[data-k8k] .k8k-skill-heading {
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-skill-heading p {
+  margin: var(--k8k-space-1) 0;
+  color: var(--text-2);
+  font-size: var(--k8k-font-sm);
+}
+:root[data-k8k] .k8k-skill-list > li > p {
+  color: var(--text-muted);
+  font-size: var(--k8k-font-sm);
+  margin-block: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-skill-progress {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+  margin: var(--k8k-space-3) 0;
+}
+:root[data-k8k] .k8k-skill-progress li {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 50%;
+  margin-inline-end: 62px;
+  position: relative;
+}
+:root[data-k8k] .k8k-skill-progress li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 6px;
+  width: 62px;
+  border-top: 1px solid var(--border);
+}
+:root[data-k8k] .k8k-skill-progress li[data-current] {
+  background: var(--brand-700);
+  border-color: var(--brand-700);
+}
+:root[data-k8k] .k8k-skill-progress li:last-child {
+  margin-inline-end: 0;
+}
+:root[data-k8k] .k8k-skill-list > li > button {
+  float: right;
+  background: transparent;
+  color: var(--brand-text);
+  border: 0;
+  padding-inline: 0;
+}
+:root[data-k8k] .k8k-skill-list > li > div[id] {
+  clear: both;
+}
+:root[data-k8k] .k8k-skill-goals-disclosure {
+  border-top: 1px solid var(--k8k-card-line);
+  padding-top: var(--k8k-space-4);
+}
+:root[data-k8k] :is(.k8k-skill-goals-disclosure, .k8k-snapshots-disclosure) > summary {
+  color: var(--brand-text);
+  font-weight: 600;
+  cursor: pointer;
+}
+:root[data-k8k] .k8k-knowledge-feature {
+  min-height: 295px;
+  border-radius: var(--k8k-radius);
+  color: var(--surface);
+  padding: var(--k8k-space-5) var(--k8k-space-6);
+  background: var(--brand-hero) url('./assets/knowledge-hero-reference.webp') center / cover
+    no-repeat;
+}
+:root[data-k8k] .k8k-main .k8k-knowledge-feature h2 {
+  display: flex;
+  gap: var(--k8k-space-3);
+  align-items: center;
+  color: var(--surface);
+  font-size: var(--k8k-font-xl);
+  margin: 0 0 var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-main .k8k-knowledge-feature h3 {
+  color: var(--surface);
+  font-size: var(--k8k-font-3xl);
+  line-height: 1.2;
+  margin: 0 0 var(--k8k-space-3);
+}
+:root[data-k8k] .k8k-knowledge-feature p {
+  color: var(--surface);
+  max-width: 90%;
+  margin-bottom: var(--k8k-space-5);
+}
+:root[data-k8k] .k8k-knowledge-feature .k8k-main-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  background: var(--surface);
+  color: var(--brand-text);
+  border-color: var(--surface);
+  text-decoration: none;
+}
+:root[data-k8k] .k8k-feedback-card h2 {
+  margin-top: 0;
+}
+:root[data-k8k] .k8k-feedback-author {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-4);
+}
+:root[data-k8k] .k8k-feedback-author time {
+  display: block;
+  font-size: var(--k8k-font-xs);
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-feedback-card blockquote {
+  background: var(--success-bg);
+  border-radius: var(--k8k-tile-radius);
+  padding: var(--k8k-space-4);
+  margin: var(--k8k-space-4) 0 0;
+}
+
+@media (min-width: 1600px) {
+  :root[data-k8k] .k8k-skill-map-card > .k8k-field {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+  :root[data-k8k] .k8k-skill-map-card > .section-heading {
+    max-width: 65%;
+  }
+}
+@media (min-width: 1440px) {
+  :root[data-k8k] .k8k-skills-page .k8k-page-columns {
+    grid-template-columns: minmax(0, 1.85fr) minmax(340px, 1fr);
+  }
+}
+@media (max-width: 1439px) {
+  :root[data-k8k] .k8k-page-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-page-aside {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-k8k] .k8k-homework-aside {
+    padding-top: 0;
+  }
+  :root[data-k8k] .k8k-homework-stat {
+    gap: var(--k8k-space-3);
+    padding: var(--k8k-space-4);
+  }
+}
+@media (max-width: 1023px) {
+  :root[data-k8k] .k8k-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-shell-columns {
+    padding: var(--k8k-space-5);
+  }
+  :root[data-k8k] .k8k-page-tools select {
+    min-width: 170px;
+  }
+}
+@media (max-width: 767px) {
+  :root[data-k8k] .k8k-role-student .k8k-header-context:has(.k8k-home-greeting) {
+    display: block;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  :root[data-k8k] .k8k-schedule-actions p {
+    display: block;
+    -webkit-line-clamp: unset;
+  }
+  :root[data-k8k] .k8k-schedule-hero .k8k-state:has(.k8k-lesson-hero) .k8k-state-meta {
+    position: static;
+    max-width: 100%;
+    background: transparent;
+    padding: 0;
+  }
+  :root[data-k8k] .k8k-schedule-hero .k8k-state:has(.k8k-lesson-hero) .k8k-freshness {
+    color: var(--text-muted);
+  }
+  :root[data-k8k] .k8k-main .k8k-page-heading h1,
+  :root[data-k8k] .k8k-role-student .k8k-main > h1 {
+    font-size: var(--k8k-font-2xl);
+  }
+  :root[data-k8k] .k8k-page-heading {
+    flex-wrap: wrap;
+  }
+  :root[data-k8k] .k8k-page-tools {
+    max-width: 100%;
+    width: 100%;
+  }
+  :root[data-k8k] .k8k-page-tools > .k8k-state {
+    flex: 1;
+    min-width: 0;
+  }
+  :root[data-k8k] .k8k-page-tools select {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  :root[data-k8k] .k8k-main .lead {
+    font-size: var(--k8k-font-lg);
+  }
+  :root[data-k8k] .k8k-schedule-row {
+    grid-template-columns: 56px minmax(0, 1fr) 32px;
+    gap: var(--k8k-space-3);
+  }
+  :root[data-k8k] .k8k-schedule-time {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+  }
+  :root[data-k8k] .k8k-schedule-actions {
+    grid-column: 2;
+  }
+  :root[data-k8k] .k8k-row-arrow {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  :root[data-k8k] .k8k-page-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-k8k] .k8k-homework-overview {
+    gap: var(--k8k-space-2);
+  }
+  :root[data-k8k] .k8k-homework-stat {
+    flex-direction: column;
+    align-items: start;
+    gap: var(--k8k-space-2);
+    padding: var(--k8k-space-3);
+  }
+  :root[data-k8k] .k8k-homework-stat svg {
+    width: 26px;
+    height: 26px;
+  }
+  :root[data-k8k] .k8k-homework-stat span {
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-stages-banner {
+    padding: var(--k8k-space-5);
+  }
+  :root[data-k8k] .k8k-stages-banner .k8k-stages {
+    flex-direction: column;
+    align-items: start;
+  }
+  :root[data-k8k] .k8k-skill-list > li > button {
+    float: none;
+    display: block;
+  }
+  :root[data-k8k] .k8k-main .k8k-schedule-hero .k8k-lesson-hero {
+    padding: var(--k8k-space-5);
+    background-image: url('./assets/lesson-hero-reference.webp');
+  }
+  :root[data-k8k] .k8k-main .k8k-schedule-hero h3 {
+    font-size: var(--k8k-font-2xl);
+    max-width: 100%;
+  }
+  :root[data-k8k] .k8k-schedule-hero .k8k-hero-meta {
+    position: static;
+    justify-content: start;
+    max-width: 100%;
+  }
+}
+@media (max-width: 639px) {
+  :root[data-k8k] .k8k-student-shortcuts a {
+    font-size: var(--k8k-font-xs);
+  }
+  :root[data-k8k] .k8k-shell-columns {
+    padding: var(--k8k-space-4);
+  }
+  :root[data-k8k] .k8k-student-page h2 {
+    font-size: var(--k8k-font-xl);
+  }
+  :root[data-k8k] .k8k-main .k8k-homework-card h2 {
+    font-size: var(--k8k-font-xl);
+  }
+  :root[data-k8k] .k8k-main .k8k-skill-heading h3 {
+    font-size: var(--k8k-font-lg);
+  }
+}
