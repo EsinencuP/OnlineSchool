@@ -1,0 +1,38 @@
+{
+  "command": "pnpm audit --json",
+  "exitCode": 1,
+  "workspace": {
+    "info": 0,
+    "low": 1,
+    "moderate": 4,
+    "high": 1,
+    "critical": 0
+  },
+  "catalogFindings": [],
+  "workspaceFindings": [
+    {
+      "package": "multer",
+      "severity": "high",
+      "url": "https://github.com/advisories/GHSA-q7qp-rjg7-q26m",
+      "catalogPaths": []
+    },
+    {
+      "package": "deepmerge",
+      "severity": "low",
+      "url": "https://github.com/advisories/GHSA-gcqx-w48m-w2h4",
+      "catalogPaths": []
+    },
+    {
+      "package": "glob",
+      "severity": "moderate",
+      "url": "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4",
+      "catalogPaths": []
+    },
+    {
+      "package": "minimatch",
+      "severity": "moderate",
+      "url": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+      "catalogPaths": []
+    }
+  ]
+}

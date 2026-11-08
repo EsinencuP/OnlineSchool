@@ -1,0 +1,26 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "beforeCopiesVerified": 497,
+  "protectedArtifactsVerified": 9,
+  "changedExistingInputs": [
+    "apps/manager-web/package.json",
+    "apps/manager-web/src/pages/Schedule.tsx",
+    "apps/student-cabinet/src/pages/Lessons.tsx",
+    "docs/K8K_IMPLEMENTATION_STATUS.md",
+    "docs/K8K_REQUIREMENTS_MATRIX.md",
+    "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/package.json",
+    "packages/ui/src/index.ts",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/style.css",
+    "pnpm-lock.yaml"
+  ],
+  "unchangedExistingInputs": 484,
+  "acceptedSourceFilesVerified": 501,
+  "acceptedSourceDigest": "329827c0436b0c0c21cf6ab16732944424727693515290c80f33a1f5dcec2b5a",
+  "acceptedBuildTimeDirtyDigest": "ec13d68e673e737b62e94dfd42bc05364988d9fec39ea2635e2d697fc821c5ed",
+  "finalTrackedPatchSha256": "440978bda571197a6f1a78719bdb8008631fcd5dae3557e959e3a4fd3470a3a2"
+}

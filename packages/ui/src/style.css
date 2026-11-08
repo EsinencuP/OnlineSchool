@@ -3,6 +3,8 @@
 @import './composites.css';
 @import './tables.css';
 @import './calendar.css';
+@import './quiet.css';
+@import './motion.css';
 .k8k-error-feedback {
   display: grid;
   gap: var(--k8k-space-2);
@@ -107,11 +109,6 @@
   font-weight: 400;
   color: var(--sidebar-muted);
   margin-top: var(--k8k-space-2);
-}
-.k8k-sidebar-label {
-  font-size: var(--k8k-font-xs);
-  color: var(--sidebar-muted);
-  margin: 0;
 }
 .k8k-sidebar nav,
 .k8k-mobile-menu nav {
@@ -413,6 +410,7 @@
 .k8k-critical:not(:empty) {
   background: var(--danger-bg);
   color: var(--danger);
+  overflow-wrap: anywhere;
 }
 .k8k-priority-label {
   font-size: var(--k8k-font-sm);
@@ -524,6 +522,8 @@
   .k8k-header-account {
     margin-left: auto;
     gap: var(--k8k-space-2);
+    min-inline-size: 0;
+    flex-shrink: 1;
   }
   .k8k-role-manager .k8k-header {
     flex-wrap: wrap;

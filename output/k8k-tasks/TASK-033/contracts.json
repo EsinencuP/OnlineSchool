@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "operationsBefore": 149,
+  "operationsAfter": 149,
+  "addedOperations": [],
+  "newParameter": {
+    "operationId": "getStudentNotifications",
+    "name": "locale",
+    "in": "query",
+    "required": false,
+    "default": "ru",
+    "enum": [
+      "ru",
+      "ro"
+    ]
+  },
+  "existingRequestResponseSecurity": "unchanged",
+  "existingSchemas": "unchanged (including all18 NotificationItemDto types)",
+  "unchanged": [
+    {
+      "path": "apps/api/src/modules/notifications/notification.service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/modules/notifications/templates.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/modules/notifications/notification-outbox.publisher.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/worker/src/notifications.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "unchanged": true
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "apps/student-cabinet/tests/student.spec.mjs",
+      "unchanged": true
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "unchanged": true
+    }
+  ],
+  "standardGeneration": true,
+  "studentMutationRoutesAdded": 0,
+  "migrationsAdded": 0,
+  "migrationsExecuted": false,
+  "dependenciesAdded": 0
+}

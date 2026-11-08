@@ -1,0 +1,25 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "beforeCopiesVerified": 488,
+  "protectedArtifactsVerified": 9,
+  "changedExistingInputs": [
+    "apps/manager-web/package.json",
+    "apps/manager-web/src/pages/Leads.tsx",
+    "docs/K8K_IMPLEMENTATION_STATUS.md",
+    "docs/K8K_REQUIREMENTS_MATRIX.md",
+    "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/package.json",
+    "packages/ui/src/index.ts",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/style.css",
+    "pnpm-lock.yaml"
+  ],
+  "unchangedExistingInputs": 476,
+  "acceptedSourceFilesVerified": 493,
+  "acceptedSourceDigest": "fbd751408a9cf8d6aae497e4a15708917198e0630dc8bc65a5bc20b9fc206357",
+  "acceptedBuildTimeDirtyDigest": "df3bdc81b880102b798d569c8a52ba481f4c163cb7ed3b6ee57030726347b0d6",
+  "finalTrackedPatchSha256": "bab9e1a4c67b51017b6ff20a09ee10f77e21b049edb4827085c13286db3767ef"
+}

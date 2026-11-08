@@ -1,6 +1,6 @@
 # STU-10 — внутренний колокольчик ученика
 
-Состояние на 2026-10-28: код и адресные проверки готовы. PostgreSQL-проверка
+Историческая основа STU-10 на 2026-10-28: код и адресные проверки готовы. PostgreSQL-проверка
 отложена по решению владельца, принятому в STU-08. Миграция подготовлена после
 STU-01–09, в рабочую БД не применялась. Деплой и сквозная приёмка не выполнялись.
 
@@ -8,7 +8,7 @@ STU-01–09, в рабочую БД не применялась. Деплой и
 
 | Маршрут                                                | Результат                                                                                       |
 | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| `GET /api/v1/student/notifications?page=1&pageSize=30` | items/total/unreadCount/page/pageSize; newest first (`created_at DESC,id DESC`), pageSize 1–100 |
+| `GET /api/v1/student/notifications?page=1&pageSize=30&locale=ru` | items/total/unreadCount/page/pageSize; newest first (`created_at DESC,id DESC`), pageSize 1–100 |
 | `GET /api/v1/student/notifications/count`              | `{unreadCount}`; один COUNT по таблице уведомлений, без JOIN или загрузки title/body/payload    |
 | `POST /api/v1/student/notifications/read-all`          | 204, пустое тело ответа, включая повтор и cached replay                                         |
 | `PATCH /api/v1/student/notifications/:id/read`         | 204; неизвестный, чужой, архивный или истёкший id — одинаковый 404                              |
@@ -20,10 +20,14 @@ CSRF и UUID `Idempotency-Key`, допускают только пустое т�
 в общей critical transaction с audit/outbox/idempotency; ошибка откатывает всё.
 Контроллеров создания, удаления, редактирования текста или сброса read нет.
 
-Типы ровно: HOMEWORK_REVIEWED, HOMEWORK_NEEDS_REVISION, LESSON_RESCHEDULED,
-LESSON_CANCELLED, REPORT_READY, SUBSCRIPTION_EXPIRING, PAYMENT_CONFIRMED.
-API возвращает общую временную ленту; клиент группирует её по `type`, сохраняя
-newest-first контракт. unreadCount относится ко всем видимым уведомлениям,
+Текущий enum DTO содержит18 типов: LESSON_SCHEDULED, RESCHEDULE_DECLINED,
+DISPUTE_ACCEPTED, DISPUTE_REJECTED, MANUAL_MESSAGE, SUBSCRIPTION_CREATED,
+SUBSCRIPTION_RENEWED, SUBSCRIPTION_FROZEN, SUBSCRIPTION_UNFROZEN,
+SUBSCRIPTION_EXPIRED, ACCOUNT_CREATED, HOMEWORK_REVIEWED, HOMEWORK_NEEDS_REVISION,
+LESSON_RESCHEDULED, LESSON_CANCELLED, REPORT_READY, SUBSCRIPTION_EXPIRING,
+PAYMENT_CONFIRMED. Исторические7 типов STU-10 не ограничивают последующие
+утверждённые расширения. API возвращает общую временную ленту newest-first;
+Drawer сохраняет порядок и подписывает тип. unreadCount относится ко всем видимым уведомлениям,
 а не текущей странице. Пустая страница сохраняет total/unreadCount.
 
 Владелец и единый `read_at` определяются по Student.id (`studentProfileId`),
@@ -117,3 +121,36 @@ Prisma validate/generate, API/worker/SDK build и целевой lint прошл
 source triggers, конкурентные create/read-all и worker claims, 500/TTL/expiry на
 PostgreSQL и end-to-end на рабочей среде. Полный FND-GATE остаётся открытым.
 Дополнительные БД/ветки Neon/контейнеры и production-записи не создавались.
+
+
+## TASK-033 — актуальное представление, 2026-11-08
+
+GET list принимает optional `locale=ru|ro` (default ru); неизвестные query keys,
+массивы/другие локали отвергаются400. page/pageSize/response shape и остальные
+149 операций совместимы. Count остаётся одним COUNT без metadata JOIN.
+
+Только list выбирает explicit catalog key/params собственного canonical source
+(id/student/type) либо IN_APP dispatch (source_id/student). Existing source.type
+является ключом notificationContent; dispatch.template_code — renderNotification.
+Полные public params проверяются существующими registry validators. Внутренняя
+metadata удаляется до ответа. Если metadata отсутствует/неполна/несовместима,
+возвращаются stored title/body без догадок. MANUAL_MESSAGE всегда сохраняет
+человеческий текст. Переключение языка не пишет inbox/source/read_at/event_key/payload
+и не восстанавливает params из caption или приватных записей.
+
+K8K использует единственный общий Drawer из bell и legacy redirect к events=1.
+Preview только при open, count независимо; закрытие удаляет только events.
+Тип+валидный публичный UUID определяют существующий route, payload.url игнорируется.
+Целевой API отдельно авторизует объект. Read/read-all не означает report read,
+учебное действие, платёж или CRM command. При unknown сначала GET-сверка, затем
+retry с тем же UUID; новый read-all — отдельное явное намерение.
+
+Свежие локальные проверки: 86 API/HTTP/SDK mocks (baseline65 до изменений),
+12 presentation tests, 13 Chromium, 29 screenshots RU/RO × 360/768/1024/1280,
+axe360 без нарушений, 50/50 route budgets включая шрифты. 149 операций/response
+schemas сохранены, новой миграции/зависимости нет. Producer/template/outbox/worker
+SHA сохранены. PostgreSQL/triggers/projector/реальная конкуренция/500/TTL не
+выполнялись; это отдельная приёмка. Предыдущие counts в разделе STU-10 исторические.
+
+[Отчёт TASK-033](../../../../../output/k8k-tasks/TASK-033/report.md) ·
+[Матрица источников](../../../../../output/k8k-tasks/TASK-033/source-audit.md).

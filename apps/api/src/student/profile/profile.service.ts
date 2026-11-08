@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
 import { DatabaseService } from '../../core/database/database.module.js';
@@ -31,11 +32,7 @@ export class StudentProfileService {
     if (current.studentProfileId !== student.studentProfileId)
       return fail(domainError('FORBIDDEN', 403));
     if (current.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-    if (!current.hasActiveAccess)
-      return fail({
-        ...domainError('ACCESS_SUSPENDED', 402),
-        details: { managerContacts: current.managerContacts ?? { whatsapp: '', telegram: '' } },
-      });
+    if (!current.hasActiveAccess) return fail(studentAccessSuspended(current.managerContacts));
     await ctx.tx
       .$queryRaw`SELECT id FROM students WHERE id=${student.studentProfileId}::uuid FOR UPDATE`;
     if (avatar_file_id) {

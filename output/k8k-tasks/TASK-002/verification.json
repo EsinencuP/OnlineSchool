@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "errors": [],
+  "sourceDigest": "fa97181d4ba7502ed001cf335e88bf4594bde1802316b4e9bad64a2f9d5d2822",
+  "dirtyDigest": "7004c02408417244f0008373cd1be12d2835a70ab32f577bd1a9324019648bc2",
+  "counts": {
+    "screens": 48,
+    "declaredRouteAndQuerySurfaces": 46,
+    "sdkOperations": 140,
+    "calledSdkOperations": 89,
+    "runtimeWriteSdkReferences": 59,
+    "mappedWriteSdkReferences": 59,
+    "uniqueFormSources": 32,
+    "uniqueDialogSources": 19,
+    "canonicalVis12Modules": 28,
+    "inputFiles": 394
+  },
+  "checks": {
+    "allRoutesInventoried": true,
+    "everyWriteSdkReferenceHasScreen": true,
+    "noInventedExistingEndpoint": true,
+    "noButtonOnlyDoneClaim": true,
+    "cappedListsNotSchoolKpi": true,
+    "allFileReferencesExist": true
+  },
+  "runtimeTests": "NOT_RUN"
+}

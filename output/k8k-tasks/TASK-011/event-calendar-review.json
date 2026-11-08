@@ -1,0 +1,13 @@
+{
+  "candidate": "@event-calendar/core@5.5.1",
+  "archiveSha256": "762c4173da3e8523089ea7c50abbf9885ff5b6aad83f947fc7fea88d96ae6f41",
+  "source": "package/src/lib/date.js _fromISOString and package/src/lib/options.js",
+  "findings": [
+    "ISO parser reads the first six numeric components into UTC Date; ISO offsets are not applied by this parser",
+    "Candidate has Svelte 5 runtime dependency and no React peer requirement",
+    "Upstream timezone docs list local/UTC/fixed UTC offsets rather than IANA zones",
+    "Manager Schedule DTO supplies lessons, not an authorized resource-availability horizon"
+  ],
+  "decision": "Keep read-only Temporal calendar with account IANA zone. Re-evaluate resource integration with explicit read-model and IANA support.",
+  "installed": false
+}

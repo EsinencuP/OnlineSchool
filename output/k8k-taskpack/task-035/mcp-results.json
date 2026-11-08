@@ -1,0 +1,17 @@
+{
+  "taskId": "TASK-035",
+  "scope": "loopback synthetic current source-built student",
+  "locale": "ro",
+  "viewport": 360,
+  "menuOpened": true,
+  "menuFocusReturned": true,
+  "bellFocusAfterExit": true,
+  "drawerEntranceDuration": "0.2s",
+  "overflow": false,
+  "console": {
+    "applicationErrors": 0,
+    "syntheticFavicon403": true
+  },
+  "evidence": "output/k8k-taskpack/task-035/mcp-student-ro-360.png",
+  "limitation": "focus sampled after exit/unmount; native physical screen reader not tested"
+}

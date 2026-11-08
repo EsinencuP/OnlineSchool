@@ -1,335 +1,264 @@
-import { useEffect, useState } from 'react';
+import { sessionSignal } from '@online-school/account-ui';
+import { useMe } from '../Layout.js';
+import { useStudentLocale } from '../student-locale.js';
+import { formatStudentDate } from '../student-presentation.js';
+import type { ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { k8kEnabled } from '@online-school/ui';
+import { Button, k8kEnabled } from '@online-school/ui';
 import {
   getStudentMaterialUrl,
   getStudentMaterials,
-  getStudentSkillAudit,
   getStudentSkillMaps,
-  getStudentSkillSnapshots,
-  getStudentSubscription,
-  getStudentSubscriptionLedger,
-  getStudentSubscriptionPayments,
   getStudentNotifications,
   markAllStudentNotificationsRead,
   markStudentNotificationRead,
 } from '@online-school/api-contracts';
 import { read, useCommand, useStudentQuery, write } from '../api.js';
-import {
-  date,
-  Empty,
-  ErrorNotice,
-  Pager,
-  Panel,
-  QueryState,
-  safeUrl,
-  Status,
-} from '../components.js';
-function SkillHistory({ id }: { id: string }) {
-  const [page, setPage] = useState(1);
-  const query = useStudentQuery(['skill-history', id, page], (o) =>
-    getStudentSkillAudit({ skillId: id, page }, o),
-  );
+import { scheduleReturn } from '../lesson-navigation.js';
+import { useLessonCopy } from '../lesson-copy.js';
+import { date, Empty, ErrorNotice, Pager, Panel, QueryState } from '../components.js';
+import { SubjectBack, SubjectUnavailable, useSubjectSelection } from './Subjects.js';
+import { useStudentCopy } from '../student-copy.js';
+
+function SubjectFilter({
+  selection,
+  materials = false,
+}: {
+  selection: ReturnType<typeof useSubjectSelection>;
+  materials?: boolean;
+}) {
+  const { copy } = useStudentCopy();
+  const { query, selected, setSubject } = selection;
   return (
     <QueryState query={query}>
-      {query.data?.items.length ? (
-        <ol className="versions">
-          {query.data.items.map((e) => (
-            <li key={e.auditId}>
-              <strong>
-                {date(e.changedAt, true)} · {e.teacherName}
-              </strong>
-              <p>
-                <Status value={e.fromStatus} /> → <Status value={e.toStatus} />
-              </p>
-              <p>{e.comment}</p>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <Empty>Изменений пока нет.</Empty>
+      {query.data && (
+        <label className="filter">
+          {copy.subject}
+          <select
+            value={selected?.subjectId ?? ''}
+            onChange={(event) => setSubject(event.target.value)}
+          >
+            <option value="">{copy.allSubjects}</option>
+            {query.data.items
+              .filter((item) => !materials || item.capabilities.canViewMaterials)
+              .map((item) => (
+                <option key={item.subjectId} value={item.subjectId}>
+                  {item.subjectName}
+                </option>
+              ))}
+          </select>
+        </label>
       )}
-      {query.data && <Pager {...query.data} change={setPage} />}
     </QueryState>
   );
 }
-export function SkillMap() {
-  const [subject, setSubject] = useState(''),
-    [skill, setSkill] = useState(''),
-    [page, setPage] = useState(1);
-  const maps = useStudentQuery(['skills'], (o) => getStudentSkillMaps(undefined, o));
-  const snapshots = useStudentQuery(['snapshots', page], (o) =>
-    getStudentSkillSnapshots({ page }, o),
-  );
+
+function SubjectResult({
+  selection,
+  allowed,
+  children,
+}: {
+  selection: ReturnType<typeof useSubjectSelection>;
+  allowed: boolean;
+  children: ReactNode;
+}) {
+  if (!selection.requested) return <>{children}</>;
   return (
-    <>
-      <h1>Мой путь знаний</h1>
-      <Link to="/student/reports">Опубликованные отчёты</Link>
-      <p className="lead">Каждый навык — ещё один шаг к твоей цели</p>
-      <label className="filter">
-        Предмет
-        <select
-          value={subject}
-          onChange={(e) => {
-            setSubject(e.target.value);
-            setSkill('');
-          }}
-        >
-          <option value="">Все предметы</option>
-          {maps.data?.map((m) => (
-            <option key={m.subjectId} value={m.subjectId}>
-              {m.subjectName}
-            </option>
-          ))}
-        </select>
-      </label>
-      <QueryState query={maps}>
-        {maps.data?.length ? (
-          maps.data
-            .filter((m) => !subject || m.subjectId === subject)
-            .map((m) => (
-              <Panel key={m.subjectId} title={m.subjectName}>
-                <ul className="skill-list">
-                  {m.skills.map((s) => (
-                    <li key={s.skillId}>
-                      <div>
-                        <strong>{s.name}</strong>
-                        <small>{s.category}</small>
-                      </div>
-                      <div>
-                        <Status value={s.status} />
-                        <button
-                          className="quiet"
-                          onClick={() => setSkill(skill === s.skillId ? '' : s.skillId)}
-                          aria-expanded={skill === s.skillId}
-                        >
-                          История навыка
-                        </button>
-                      </div>
-                      {skill === s.skillId && (
-                        <div className="full-width">
-                          <SkillHistory id={skill} />
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-                {!m.skills.length && <Empty>Навыки ещё не добавлены.</Empty>}
-                <h3>Цели обучения</h3>
-                {m.learningGoals.length ? (
-                  <ul className="goals">
-                    {m.learningGoals.map((g) => (
-                      <li key={g.goalId}>
-                        <span aria-hidden="true">{g.isAchieved ? '✓' : '○'}</span>
-                        <div>
-                          {g.text}
-                          <small>
-                            {g.isAchieved ? 'Достигнута' : `Срок: ${date(g.targetDate)}`}
-                          </small>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <Empty>Обсудите цели с преподавателем.</Empty>
-                )}
-                <p className="muted">
-                  Последний срез: {date(m.lastSnapshotAt)}
-                  {m.nextSnapshotIn !== null
-                    ? ` · Следующий через ${m.nextSnapshotIn} занятий`
-                    : ''}
-                </p>
-              </Panel>
-            ))
+    <QueryState query={selection.query}>
+      {selection.query.data &&
+        (allowed ? (
+          <>
+            <SubjectBack id={selection.selected?.subjectId} />
+            {children}
+          </>
         ) : (
-          <Empty>Предметы пока не назначены.</Empty>
-        )}
-      </QueryState>
-      <Panel title="История срезов">
-        <QueryState query={snapshots}>
-          {snapshots.data?.items.length ? (
-            snapshots.data.items.map((s) => (
-              <details key={s.snapshotId}>
-                <summary>
-                  {s.subjectName} · {date(s.createdAt)} · Урок {s.lessonNumber}
-                </summary>
-                <p>{s.teacherSummary}</p>
-                <ul className="skill-list">
-                  {s.skills.map((k, i) => (
-                    <li key={i}>
-                      <span>{k.skillName}</span>
-                      <Status value={k.status} />
-                      {k.teacherComment && <p className="full-width">{k.teacherComment}</p>}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ))
-          ) : (
-            <Empty>Подтверждённых срезов пока нет.</Empty>
-          )}
-        </QueryState>
-        {snapshots.data && <Pager {...snapshots.data} change={setPage} />}
-      </Panel>
-    </>
+          <SubjectUnavailable />
+        ))}
+    </QueryState>
   );
 }
+
+export { SkillMap } from './SkillMap.js';
 export function Materials() {
-  const [page, setPage] = useState(1),
-    [subject, setSubject] = useState('');
-  const maps = useStudentQuery(['skills'], (o) => getStudentSkillMaps(undefined, o));
-  const query = useStudentQuery(['materials', page, subject], (o) =>
-    getStudentMaterials({ page, ...(subject ? { subjectId: subject } : {}) }, o),
+  const { t, locale, intlLocale } = useStudentLocale();
+  const me = useMe();
+  const { copy } = useStudentCopy();
+  const { text } = useLessonCopy();
+  const selection = useSubjectSelection();
+  const [legacyPage, setLegacyPage] = useState(1);
+  const [legacySubject, setLegacySubject] = useState('');
+  const [params, setParams] = useSearchParams();
+  const lessonId = params.get('lessonId') ?? undefined;
+  const pageParam = params.get('page') ?? '';
+  const page = k8kEnabled
+    ? /^[1-9]\d*$/.test(pageParam) && Number.isSafeInteger(Number(pageParam))
+      ? Number(pageParam)
+      : 1
+    : legacyPage;
+  const subject = k8kEnabled ? selection.selected?.subjectId : legacySubject;
+  const allowed =
+    !selection.requested || selection.selected?.capabilities.canViewMaterials === true;
+  const maps = useStudentQuery(['skills'], (o) => getStudentSkillMaps(undefined, o), !k8kEnabled);
+  const query = useStudentQuery(
+    ['materials', page, subject, lessonId],
+    (o) =>
+      getStudentMaterials(
+        { page, ...(subject ? { subjectId: subject } : {}), ...(lessonId ? { lessonId } : {}) },
+        o,
+      ),
+    allowed,
   );
-  const download = useCommand(async (fileId: string) => {
-    const result = await read((o) => getStudentMaterialUrl(fileId, o));
-    const url = safeUrl(result.url);
-    if (!url) return Promise.reject({ code: 'INVALID_URL' });
-    window.location.assign(url);
-  });
-  return (
-    <>
-      <h1>Материалы</h1>
-      <p className="lead">Всё необходимое для уроков и самостоятельной работы</p>
-      <label className="filter">
-        Предмет
-        <select
-          value={subject}
-          onChange={(e) => {
-            setSubject(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="">Все предметы</option>
-          {maps.data?.map((s) => (
-            <option key={s.subjectId} value={s.subjectId}>
-              {s.subjectName}
-            </option>
-          ))}
-        </select>
-      </label>
-      <Panel title="Библиотека">
-        <ErrorNotice error={download.error} />
-        <QueryState query={query}>
-          {query.data?.items.length ? (
-            <ul className="homework-list">
-              {query.data.items.map((m) => (
-                <li key={m.fileId}>
-                  <div>
-                    <small>
-                      {m.subjectName} · {m.sharedByTeacherName}
-                    </small>
-                    <h3>{m.fileName}</h3>
-                    <p className="muted">
-                      {m.mimeType} · {(m.fileSizeBytes / 1024 / 1024).toFixed(1)} МБ ·{' '}
-                      {date(m.sharedAt)}
-                    </p>
-                    {m.lessonTitle && <p>{m.lessonTitle}</p>}
-                  </div>
-                  <button disabled={download.isPending} onClick={() => download.mutate(m.fileId)}>
-                    Скачать
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <Empty>Преподаватель ещё не поделился материалами.</Empty>
-          )}
-        </QueryState>
-        {query.data && <Pager {...query.data} change={setPage} />}
-      </Panel>
-    </>
-  );
-}
-export function Subscription() {
-  const [searchParams] = useSearchParams();
-  const subscriptionId = k8kEnabled ? (searchParams.get('subscriptionId') ?? undefined) : undefined;
-  const selection = subscriptionId ? { subscriptionId } : {};
-  const [paymentsPage, setPaymentsPage] = useState(1),
-    [ledgerPage, setLedgerPage] = useState(1);
+  function changePage(next: number) {
+    if (!k8kEnabled) return setLegacyPage(next);
+    const updated = new URLSearchParams(params);
+    updated.set('page', String(next));
+    setParams(updated, { preventScrollReset: true });
+  }
+  const [pendingId, setPendingId] = useState<string>();
+  const [fileError, setFileError] = useState<unknown>(null);
+  const [expired, setExpired] = useState(false);
+  const actionLock = useRef(false),
+    lease = useRef(sessionSignal()),
+    mounted = useRef(true);
   useEffect(() => {
-    setPaymentsPage(1);
-    setLedgerPage(1);
-  }, [subscriptionId]);
-  const query = useStudentQuery(['subscription', ...Object.values(selection)], (o) =>
-    getStudentSubscription(selection, o),
-  );
-  const payments = useStudentQuery(['payments', paymentsPage, ...Object.values(selection)], (o) =>
-    getStudentSubscriptionPayments({ page: paymentsPage, ...selection }, o),
-  );
-  const ledger = useStudentQuery(['ledger', ledgerPage, ...Object.values(selection)], (o) =>
-    getStudentSubscriptionLedger({ page: ledgerPage, ...selection }, o),
-  );
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+  async function openFile(fileId: string) {
+    if (actionLock.current || lease.current.aborted) return;
+    actionLock.current = true;
+    setPendingId(fileId);
+    setFileError(null);
+    setExpired(false);
+    try {
+      const result = await read((o) => getStudentMaterialUrl(fileId, o), lease.current);
+      if (lease.current.aborted || !mounted.current) return;
+      const url = new URL(result.url);
+      if (url.protocol !== 'https:' || url.username || url.password) {
+        setFileError({ code: 'INVALID_URL', status: 400 });
+        return;
+      }
+      if (
+        !Number.isFinite(Date.parse(result.expiresAt)) ||
+        Date.parse(result.expiresAt) <= Date.now()
+      ) {
+        setExpired(true);
+        return;
+      }
+      window.location.assign(url.href);
+    } catch (error) {
+      if (!lease.current.aborted && mounted.current) setFileError(error);
+    } finally {
+      actionLock.current = false;
+      if (!lease.current.aborted && mounted.current) setPendingId(undefined);
+    }
+  }
   return (
     <>
-      <h1>Абонемент</h1>
-      <p className="lead">Занятия, срок действия и история операций</p>
-      <Panel title={k8kEnabled ? 'Текущий абонемент' : 'Твой абонемент'}>
-        <QueryState query={query}>
-          {query.data && (
-            <>
-              <Status value={query.data.status} />
-              <h3>{query.data.planName ?? 'Абонемент пока не оформлен'}</h3>
-              <div className="balance">
-                <strong>{query.data.lessonsRemaining ?? '—'}</strong>
-                <span>занятий осталось из {query.data.lessonsTotal ?? '—'}</span>
-              </div>
-              <p>
-                Период: {date(query.data.validFrom)} — {date(query.data.validUntil)}
-              </p>
-              {query.data.isFrozen && (
-                <p>
-                  Заморозка: {date(query.data.frozenFrom)} — {date(query.data.frozenUntil)}
-                </p>
-              )}
-              <p className="muted">По вопросам абонемента обращайся к менеджеру.</p>
-            </>
-          )}
-        </QueryState>
-      </Panel>
-      <Panel title="Подтверждённые платежи">
-        <QueryState query={payments}>
-          {payments.data?.items.length ? (
-            <ul className="history-list">
-              {payments.data.items.map((p) => (
-                <li key={p.paymentId}>
-                  <strong>
-                    {p.amount} {p.currency}
-                  </strong>
-                  <span>{p.description}</span>
-                  <small>
-                    {date(p.confirmedAt, true)}
-                    {p.lessonsAdded !== null ? ` · Добавлено занятий: ${p.lessonsAdded}` : ''}
-                  </small>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <Empty>Подтверждённых платежей пока нет.</Empty>
-          )}
-        </QueryState>
-        {payments.data && <Pager {...payments.data} change={setPaymentsPage} />}
-      </Panel>
-      <Panel title="История занятий и баланса">
-        <QueryState query={ledger}>
-          {ledger.data?.items.length ? (
-            <ul className="history-list">
-              {ledger.data.items.map((e) => (
-                <li key={e.entryId}>
-                  <strong>{e.description}</strong>
-                  <span>
-                    {e.balanceBefore} → {e.balanceAfter} занятий
-                  </span>
-                  <small>{date(e.entryDate)}</small>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <Empty>Операций пока нет.</Empty>
-          )}
-        </QueryState>
-        {ledger.data && <Pager {...ledger.data} change={setLedgerPage} />}
-      </Panel>
+      <h1>{copy.materials}</h1>
+      {lessonId && (
+        <Link
+          className="k8k-student-link"
+          to={
+            '/student/lessons/' +
+            encodeURIComponent(lessonId) +
+            '?' +
+            new URLSearchParams({ backTo: scheduleReturn(params.get('backTo')) })
+          }
+        >
+          ← {text('lesson')}
+        </Link>
+      )}
+      <p className="lead">{t('student.materialLead')}</p>
+      {k8kEnabled ? (
+        <SubjectFilter selection={selection} materials />
+      ) : (
+        <label className="filter">
+          Предмет
+          <select
+            value={subject}
+            onChange={(e) => {
+              setLegacySubject(e.target.value);
+              setLegacyPage(1);
+            }}
+          >
+            <option value="">Все предметы</option>
+            {maps.data?.map((s) => (
+              <option key={s.subjectId} value={s.subjectId}>
+                {s.subjectName}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
+      <SubjectResult selection={selection} allowed={allowed}>
+        <Panel title={t('student.library')}>
+          <Button
+            variant="secondary"
+            disabled={query.isFetching}
+            onClick={() => void query.refetch()}
+          >
+            {t('student.materialRefresh')}
+          </Button>
+          <p>{t('student.fileHelp')}</p>
+          <ErrorNotice error={fileError} />
+          {expired && <p role="alert">{t('student.fileExpired')}</p>}
+          <QueryState
+            query={query}
+            empty={query.data?.items.length === 0}
+            emptyMessage={t(
+              query.data?.total ? 'student.materialPageEmpty' : 'student.materialEmpty',
+            )}
+          >
+            {query.data?.items.length ? (
+              <ul className="homework-list k8k-material-list">
+                {query.data.items.map((m) => (
+                  <li key={m.fileId}>
+                    <div>
+                      <small>
+                        {m.subjectId === null ? t('student.noSubject') : m.subjectName} ·{' '}
+                        {m.sharedByTeacherName}
+                      </small>
+                      <h3>{m.fileNameIsFallback ? t('student.material') : m.fileName}</h3>
+                      <p className="muted">
+                        {m.mimeType} ·{' '}
+                        {t('student.megabytes', {
+                          size: new Intl.NumberFormat(intlLocale, {
+                            maximumFractionDigits: 1,
+                          }).format(m.fileSizeBytes / 1048576),
+                        })}{' '}
+                        · {formatStudentDate(m.sharedAt, me.timeZone, false, locale)}
+                      </p>
+                      <p>{m.lessonTitle ?? t('student.noLesson')}</p>
+                    </div>
+                    <Button
+                      variant="secondary"
+                      disabled={!!pendingId || !!query.error || query.isFetching}
+                      onClick={() => void openFile(m.fileId)}
+                    >
+                      {pendingId === m.fileId
+                        ? t('student.filePending')
+                        : t(
+                            m.canDownload === true
+                              ? 'student.download'
+                              : m.canDownload === false
+                                ? 'student.view'
+                                : 'student.fileOpen',
+                          )}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Empty>{t('student.materialEmpty')}</Empty>
+            )}
+          </QueryState>
+          {query.data && <Pager {...query.data} change={changePage} />}
+        </Panel>
+      </SubjectResult>
     </>
   );
 }

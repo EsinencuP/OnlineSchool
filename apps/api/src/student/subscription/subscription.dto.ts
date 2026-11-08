@@ -92,9 +92,18 @@ export class StudentSubscriptionLedgerEntryDto {
   @ApiProperty({ format: 'date' }) entryDate!: string;
   @ApiProperty({ enum: ['DEDUCTION', 'CREDIT', 'FREEZE', 'UNFREEZE'] }) type!:
     'DEDUCTION' | 'CREDIT' | 'FREEZE' | 'UNFREEZE';
-  @ApiProperty({ type: String, description: 'Lesson quantities, not monetary account totals' })
-  balanceBefore!: string;
-  @ApiProperty({ type: String }) balanceAfter!: string;
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    description: 'Lesson quantity. Null when a historical deduction snapshot was not recorded.',
+  })
+  balanceBefore!: string | null;
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    description: 'Lesson quantity. Null when a historical deduction snapshot was not recorded.',
+  })
+  balanceAfter!: string | null;
   @ApiProperty() description!: string;
   @ApiProperty({ type: String, nullable: true, format: 'uuid' }) lessonId!: string | null;
 }

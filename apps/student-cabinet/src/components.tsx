@@ -1,5 +1,5 @@
-import { useContext, useEffect, useId, useRef, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useStudentLocale } from './student-locale.js';
+import { useContext, useEffect, useId, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -11,29 +11,29 @@ import {
   useLocale,
   ErrorFeedback,
   errorText,
+  describeError,
+  initializeLocale,
 } from '@online-school/ui';
 import {
   formatStudentDate,
+  lessonCountdown,
+  MEET_FRESH_MS,
   meetPresentation,
+  meetTime,
+  StudentMeetClock,
   StudentReadFreshness,
 } from './student-presentation.js';
 import type { LessonCardDto, NextLessonDto } from '@online-school/api-contracts';
+import { studentStatusRo, useStudentCopy } from './student-copy.js';
+import { MeetScope, useMeetReadAge } from './meet-scope.js';
+import type { MeetScopeOptions } from './meet-scope.js';
 
 let studentTimeZone = 'Europe/Chisinau';
 export function setDateZone(zone: string) {
   studentTimeZone = zone;
 }
 export const date = (value: string | null | undefined, time = false) =>
-  k8kEnabled
-    ? formatStudentDate(value, studentTimeZone, time)
-    : value
-      ? new Intl.DateTimeFormat('ru-RU', {
-          day: 'numeric',
-          month: 'long',
-          ...(time ? { hour: '2-digit', minute: '2-digit' } : {}),
-          timeZone: studentTimeZone,
-        }).format(new Date(value))
-      : 'Не указан';
+  formatStudentDate(value, studentTimeZone, time, initializeLocale());
 export const dayKey = (value: string) =>
   new Intl.DateTimeFormat('en-CA', {
     timeZone: studentTimeZone,
@@ -157,24 +157,40 @@ export function Panel({
   to?: string;
   className?: string;
 }) {
+  const { t } = useStudentLocale();
   return (
     <section className={`panel ${className}`}>
       <div className="section-heading">
         <h2>{title}</h2>
-        {to && <Link to={to}>Все →</Link>}
+        {to && <Link to={to}>{t('student.all')}</Link>}
       </div>
       {children}
     </section>
   );
 }
-export function Empty({
-  children = 'Пока ничего нет. Новые данные появятся здесь.',
-}: {
-  children?: ReactNode;
-}) {
-  return <p className="empty">{children}</p>;
+export function Empty({ children }: { children?: ReactNode }) {
+  const { t } = useStudentLocale();
+  return <p className="empty">{children ?? t('student.empty')}</p>;
 }
 export function ErrorNotice({ error }: { error: unknown }) {
+  const { t } = useStudentLocale();
+  const code = error && typeof error === 'object' && 'code' in error ? String(error.code) : '';
+  const keys = {
+    TEMPORARY_PASSWORD_EXPIRED: 'errors.TEMPORARY_PASSWORD_EXPIRED',
+    EMAIL_OTP_INVALID: 'student.error.emailCodeInvalid',
+    EMAIL_UNAVAILABLE: 'student.error.emailUnavailable',
+    EMAIL_REQUEST_SUPERSEDED: 'student.error.emailSuperseded',
+    CURRENT_SESSION_CANNOT_BE_REVOKED: 'student.error.currentSession',
+    SESSION_NOT_FOUND: 'student.error.sessionUnavailable',
+  } as const;
+  if (Object.hasOwn(keys, code) && describeError(error).outcome !== 'unknown')
+    return (
+      <div role="alert" className="k8k-error-feedback">
+        <p>
+          <UIIcon name="warning" size={18} /> {t(keys[code as keyof typeof keys])}
+        </p>
+      </div>
+    );
   return <ErrorFeedback error={error} />;
 }
 export function QueryState({
@@ -183,6 +199,9 @@ export function QueryState({
   operational = false,
   sourceTimestamp,
   empty = false,
+  emptyMessage,
+  meet,
+  timeZone = studentTimeZone,
 }: {
   query: {
     isPending: boolean;
@@ -196,8 +215,12 @@ export function QueryState({
   operational?: boolean;
   sourceTimestamp?: string | undefined;
   empty?: boolean;
+  emptyMessage?: string;
+  meet?: MeetScopeOptions;
+  timeZone?: string | undefined;
 }) {
-  const tooOld = useDataAge(query.dataUpdatedAt, operational ? 120_000 : false);
+  const tooOld = useDataAge(query.dataUpdatedAt, operational && !meet ? 120_000 : false);
+  const meetTooOld = useMeetReadAge(query.data, operational && !!meet);
   const { locale, t } = useLocale();
   const errorStatus =
     query.error &&
@@ -206,13 +229,25 @@ export function QueryState({
     typeof query.error.status === 'number'
       ? query.error.status
       : undefined;
+  const content = meet ? (
+    <MeetScope
+      {...meet}
+      snapshot={query.data}
+      refreshing={query.isFetching ?? false}
+      refetch={query.refetch}
+    >
+      {children}
+    </MeetScope>
+  ) : (
+    children
+  );
   if (k8kEnabled) {
     const state = queryBoundaryState({
       isPending: query.isPending,
       hasData: query.data !== undefined,
       error: !!query.error,
       errorStatus,
-      tooOld,
+      tooOld: tooOld || meetTooOld,
       empty,
     });
     return (
@@ -220,16 +255,18 @@ export function QueryState({
         state={
           state.status === 'error'
             ? { status: 'error', message: errorText(query.error, locale) }
-            : state
+            : state.status === 'empty' && emptyMessage
+              ? { ...state, message: emptyMessage }
+              : state
         }
         asOf={sourceTimestamp}
         receivedAt={query.dataUpdatedAt}
-        timeZone={studentTimeZone}
+        timeZone={timeZone}
         refreshing={query.isFetching ?? false}
         retryRead={() => void query.refetch()}
       >
         <StudentReadFreshness.Provider value={state.status === 'ready'}>
-          {children}
+          {content}
         </StudentReadFreshness.Provider>
       </StateBoundary>
     );
@@ -251,7 +288,11 @@ export function QueryState({
         <button onClick={() => void query.refetch()}>{t('retry')}</button>
       </div>
     );
-  return <>{children}</>;
+  return (
+    <StudentReadFreshness.Provider value={!tooOld && !meetTooOld}>
+      {content}
+    </StudentReadFreshness.Provider>
+  );
 }
 export const statusLabels: Record<string, string> = {
   SCHEDULED: 'По расписанию',
@@ -272,12 +313,14 @@ export const statusLabels: Record<string, string> = {
   EXPIRED: 'Истёк',
   FROZEN: 'Заморожен',
   NONE: 'Нет абонемента',
+  LIMITED: 'Доступ ограничен',
 };
 export function Status({ value }: { value: string }) {
+  const { locale } = useLocale();
   if (k8kEnabled) {
     const tone = ['ACTIVE', 'APPLYING', 'COMPLETED', 'REVIEWED'].includes(value)
       ? 'success'
-      : ['NEEDS_REVISION', 'PRACTICING', 'STAR_PENDING', 'DISPUTED'].includes(value)
+      : ['NEEDS_REVISION', 'PRACTICING', 'STAR_PENDING', 'DISPUTED', 'LIMITED'].includes(value)
         ? 'warning'
         : ['EXPIRED', 'CANCELLED', 'NO_SHOW'].includes(value)
           ? 'danger'
@@ -297,7 +340,7 @@ export function Status({ value }: { value: string }) {
                   : 'circle'
           }
         />
-        {statusLabels[value] ?? value}
+        {(locale === 'ro' ? studentStatusRo[value] : statusLabels[value]) ?? value}
       </span>
     );
   }
@@ -315,7 +358,7 @@ export function safeUrl(
 ) {
   if (!value) return undefined;
   const patterns = {
-    meet: /^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}(?:\?[^\s]*)?$/,
+    meet: /^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$/,
     whatsapp: /^https:\/\/wa\.me\/[1-9]\d{6,14}\/?$/,
     telegram: /^https:\/\/t\.me\/[a-zA-Z0-9_]{5,32}\/?$/,
     https: /^https:\/\/[^\s]+$/,
@@ -324,93 +367,87 @@ export function safeUrl(
 }
 export function JoinButton({
   lesson,
-  serverNow,
-  status,
+  fallback,
+  secondary,
 }: {
   lesson: NextLessonDto | LessonCardDto;
-  serverNow?: number | null;
-  status?: string | undefined;
+  fallback?: ReactNode;
+  secondary?: ReactNode;
 }) {
-  const client = useQueryClient();
+  const { locale, copy } = useStudentCopy();
+  const { t } = useStudentLocale();
   const fresh = useContext(StudentReadFreshness);
+  const { clock, verifying } = useContext(StudentMeetClock);
   const reasonId = useId();
-  useEffect(() => {
-    if (k8kEnabled) return;
-    const wait = new Date(lesson.scheduledAt).getTime() - 600_000 - Date.now();
-    if (lesson.canJoin || wait < 0 || wait > 2_147_483_647) return;
-    const timer = setTimeout(() => {
-      void client.invalidateQueries({ queryKey: ['student'] });
-    }, wait + 100);
-    return () => clearTimeout(timer);
-  }, [client, lesson.scheduledAt, lesson.canJoin]);
   const url = safeUrl(lesson.meetLink, 'meet');
+  const decision = () => {
+    const now = performance.now();
+    const verified =
+      fresh &&
+      !verifying &&
+      !!clock &&
+      now - clock.receivedAt < MEET_FRESH_MS &&
+      document.visibilityState !== 'hidden' &&
+      navigator.onLine !== false;
+    return meetPresentation(lesson, url, verified, meetTime(clock, now, true), locale);
+  };
+  const presentation = decision();
   if (k8kEnabled) {
-    const presentation = meetPresentation(
-      status ? { ...lesson, status } : lesson,
-      url,
-      fresh,
-      serverNow,
-    );
     return (
       <div className="k8k-meet-entry">
-        {presentation.kind !== 'unavailable' && (
+        {presentation.kind !== 'ready' && fallback}
+        {(presentation.kind === 'ready' || (!fallback && presentation.kind === 'disabled')) && (
           <a
             className="button primary k8k-meet-action"
             href={presentation.kind === 'ready' ? presentation.url : undefined}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             role="link"
             tabIndex={0}
             aria-disabled={presentation.kind === 'disabled' || undefined}
             aria-describedby={presentation.kind === 'disabled' ? reasonId : undefined}
             onClick={(event) => {
-              if (presentation.kind !== 'ready') event.preventDefault();
+              if (decision().kind !== 'ready') event.preventDefault();
             }}
           >
             <UIIcon name="video" />
-            Войти в Google Meet
+            {copy.meet}
           </a>
         )}
+        {presentation.kind === 'ready' && secondary}
         {presentation.kind !== 'ready' && (
-          <p className="k8k-join-reason" id={reasonId}>
+          <p className="k8k-join-reason" id={reasonId} data-reason={presentation.reasonKey}>
             {presentation.reason}
           </p>
         )}
       </div>
     );
   }
-  return lesson.canJoin && url ? (
-    <a className="button primary" href={url} target="_blank" rel="noreferrer">
+  return presentation.kind === 'ready' ? (
+    <a
+      className="button primary"
+      href={presentation.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(event) => {
+        if (decision().kind !== 'ready') event.preventDefault();
+      }}
+    >
       <Icon name="video" />
-      Подключиться
+      {t('student.connect')}
     </a>
   ) : (
-    <button disabled title="Кнопка станет доступна за 10 минут до урока, если встреча готова">
+    <button disabled title={presentation.reason}>
       <Icon name="video" />
-      Подключиться
+      {t('student.connect')}
     </button>
   );
 }
 export function Countdown({ at }: { at: string }) {
-  const [now, setNow] = useState(Date.now);
-  useEffect(() => {
-    if (k8kEnabled) return;
-    const timer = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-  if (k8kEnabled) return null;
-  const minutes = Math.max(0, Math.ceil((new Date(at).getTime() - now) / 60_000));
-  return (
-    <small>
-      {minutes > 1440
-        ? `Через ${Math.ceil(minutes / 1440)} дн.`
-        : minutes > 60
-          ? `Через ${Math.floor(minutes / 60)} ч. ${minutes % 60} мин.`
-          : minutes > 0
-            ? `Через ${minutes} мин.`
-            : 'Время урока наступило'}
-    </small>
-  );
+  const { locale } = useLocale();
+  const { clock } = useContext(StudentMeetClock);
+  const text = lessonCountdown(at, meetTime(clock, performance.now()), locale);
+  return text && <small>{text}</small>;
 }
 export function Pager({
   page,

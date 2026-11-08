@@ -1,0 +1,45 @@
+{
+  "method": "Manual image inspection using view_image; representative sample only, not full manual WCAG acceptance",
+  "rows": [
+    {
+      "run": "runs/2026-11-03T20-50-31-027Z-8bc616",
+      "screenshot": "p1-ru-058-768.png",
+      "case": "manager:contact-version-conflict",
+      "locale": "ru",
+      "width": 768,
+      "observed": "Version-conflict dialog visible above contact editor; focused close control and reload action visible; underlying financial snapshot remains separate."
+    },
+    {
+      "run": "runs/2026-11-03T20-50-31-027Z-8bc616",
+      "screenshot": "p1-ru-131-1024.png",
+      "case": "common:forbidden",
+      "locale": "ru",
+      "width": 1024,
+      "observed": "Forbidden message rendered; synthetic private marker is absent; keyboard skip-link focus visible."
+    },
+    {
+      "run": "runs/2026-11-03T20-50-31-027Z-8bc616",
+      "screenshot": "p1-ru-055-360.png",
+      "case": "student:email-code-form",
+      "locale": "ru",
+      "width": 360,
+      "observed": "Empty OTP input, confirmation/resend controls visible; no OTP/password value. Horizontal overflow at top account area remains visible."
+    },
+    {
+      "run": "runs/2026-11-03T20-36-01-624Z-8e3c50",
+      "screenshot": "p1-ru-000-360.png",
+      "case": "student:/student",
+      "locale": "ru",
+      "width": 360,
+      "observed": "Preliminary mobile hero and long lesson list visible; account/header overflow is preserved. Not final-run evidence."
+    },
+    {
+      "run": "runs/2026-11-03T20-36-01-624Z-8e3c50",
+      "screenshot": "p1-ro-002-360.png",
+      "case": "manager:/manager",
+      "locale": "ro",
+      "width": 360,
+      "observed": "Preliminary RO navigation/freshness around Russian body copy; partial localization, no automatic translation. Not final-run evidence."
+    }
+  ]
+}

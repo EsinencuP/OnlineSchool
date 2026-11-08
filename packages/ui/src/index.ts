@@ -24,3 +24,7 @@ export * from './composites.js';
 export * from './tables.js';
 export * from './calendar.js';
 export * from './stages.js';
+
+export { studentMessages, translateStudent, studentLessonCount } from './student-messages.js';
+
+export { setOverlayOrigin } from './motion.js';

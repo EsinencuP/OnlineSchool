@@ -1,0 +1,20 @@
+{
+  "skill": "vercel:react-best-practices",
+  "scope": [
+    "packages/ui/src/controls.tsx",
+    "packages/ui/stories/controls.stories.tsx",
+    "apps/student-cabinet/src/pages/Account.tsx",
+    "apps/student-cabinet/tests/ui-controls/fixture.tsx"
+  ],
+  "checks": {
+    "hooksUnconditional": true,
+    "stableComponentIdentities": true,
+    "nativeSemanticsAndRefs": true,
+    "noDomainSDKInUIPrimitivesOrStories": true,
+    "noNewDataFetchOrCommandStateInUI": true,
+    "formValuesSurviveValidation": true,
+    "React18CompatibleTypes": true,
+    "bundleWithinLimit": true
+  },
+  "appliedWithProjectConstraints": "Existing React18/TanStack/UI exports/token CSS retained; no Tailwind/SWR/Next/React19 migration. Post-commit focus effect is confined to synthetic consumer story."
+}

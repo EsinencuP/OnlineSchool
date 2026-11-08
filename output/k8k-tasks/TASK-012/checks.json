@@ -1,0 +1,51 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "8bb7a93eb06760bade794be6cb2763bf4eb62ec6bc512b20053ed464e15d1b49",
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/ui build",
+      "exitCode": 0,
+      "log": null
+    },
+    {
+      "command": "pnpm --filter @online-school/ui test",
+      "exitCode": 0,
+      "log": "ui-test.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "exitCode": 0,
+      "log": "ui-lint.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/manager-web typecheck:ui-states",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/platform exec tsc -p tsconfig.json --pretty false",
+      "exitCode": 0,
+      "log": "platform-typecheck.log"
+    },
+    {
+      "command": "pnpm exec eslint apps/manager-web/src/components/ui.tsx apps/student-cabinet/src/components.tsx apps/platform/src/App.tsx apps/manager-web/test/ui-states/fixture.tsx scripts/k8k-states-evidence.mjs --max-warnings 0",
+      "exitCode": 0,
+      "log": "targeted-lint.log"
+    },
+    {
+      "command": "pnpm k8k:states:evidence",
+      "exitCode": 0,
+      "log": "evidence.log"
+    }
+  ],
+  "summary": {
+    "passed": true,
+    "browserCases": 34,
+    "screenshots": 16,
+    "routes": 48,
+    "maxTotal": 248669,
+    "sourceFiles": 508,
+    "mockReads": 60,
+    "unexpected": []
+  }
+}

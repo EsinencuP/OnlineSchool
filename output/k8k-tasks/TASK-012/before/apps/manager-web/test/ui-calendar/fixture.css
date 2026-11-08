@@ -1,0 +1,17 @@
+.calendar-fixture {
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--k8k-space-4);
+  max-width: 1160px;
+  padding: var(--k8k-space-4);
+  margin-inline: auto;
+}
+.calendar-fixture > * {
+  min-width: 0;
+}
+.calendar-fixture > .k8k-field {
+  max-width: 320px;
+}
+.calendar-fixture > button {
+  justify-self: start;
+}

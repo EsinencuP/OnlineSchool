@@ -4,7 +4,12 @@ import { Authenticated, Public, RequireRole } from '../../core/rbac/decorators.j
 import { DatabaseService } from '../../core/database/database.module.js';
 import type { HttpRequest, HttpResponse } from '../../core/http.js';
 import { demoAccounts, demoSwitchAllowed } from '../identity/demo-accounts.js';
-import { PlatformAccountsDto, PlatformWorkspaceDto } from './platform.dto.js';
+import {
+  PlatformAccountsDto,
+  PlatformWorkspaceDto,
+  WorkspaceDetailDto,
+  workspaceDetailSections,
+} from './platform.dto.js';
 import {
   StaffActorContextDto,
   StaffActionEligibilityDto,
@@ -159,6 +164,30 @@ export class PlatformController {
   ): Promise<PlatformWorkspaceDto> {
     res.setHeader('Cache-Control', 'no-store');
     return this.workspaces.get(req.account!);
+  }
+
+  @Get('workspace/:section/:id')
+  @Authenticated()
+  @RequireRole('TEACHER', 'DIRECTOR')
+  @staffRead()
+  @ApiParam({ name: 'section', enum: workspaceDetailSections })
+  @ApiParam({ name: 'id', schema: { type: 'string', format: 'uuid' } })
+  @ApiResponse({ status: 200, type: WorkspaceDetailDto })
+  @ApiResponse({
+    status: 404,
+    type: ApiError,
+    description: 'Object absent or outside visible scope',
+  })
+  @ApiOperation({
+    operationId: 'getPlatformWorkspaceDetail',
+    summary: 'Read a single object in the existing staff workspace scope',
+  })
+  workspaceDetail(
+    @Req() req: HttpRequest,
+    @Param('section') section: string,
+    @Param('id') id: string,
+  ) {
+    return this.workspaces.getDetail(req.account!, section, uuid(id));
   }
 }
 @Module({

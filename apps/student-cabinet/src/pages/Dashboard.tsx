@@ -41,20 +41,14 @@ function LegacyDashboard() {
     <>
       <section className="welcome">
         <div>
-          <p className="eyebrow">Твой следующий шаг</p>
-          <h1>
-            Привет, {me.displayName}! <span aria-hidden="true">👋</span>
-          </h1>
-          <p>Продолжаем идти к большим целям. Всё начинается с одного урока.</p>
-        </div>
-        <div className="mountains" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <i>⚑</i>
+          <h1>Привет, {me.displayName}!</h1>
         </div>
       </section>
-      <QueryState operational query={dashboard}>
+      <QueryState
+        operational
+        query={dashboard}
+        meet={{ lessons: data?.nextLesson ? [data.nextLesson] : [], countdown: true }}
+      >
         {data && (
           <div className="summary-grid">
             <section className="summary">
@@ -132,18 +126,8 @@ function LegacyDashboard() {
         )}
       </QueryState>
       <Panel title="Ближайшие уроки" to="/student/lessons">
-        <QueryState operational query={lessons}>
-          <LessonList
-            items={
-              lessons.data?.items
-                .filter(
-                  (l) =>
-                    new Date(l.scheduledAt).getTime() + l.durationMinutes * 60_000 > Date.now() &&
-                    l.status === 'SCHEDULED',
-                )
-                .slice(0, 5) ?? []
-            }
-          />
+        <QueryState operational query={lessons} meet={{ lessons: lessons.data?.items ?? [] }}>
+          <LessonList items={lessons.data?.items ?? []} />
         </QueryState>
       </Panel>
       <div className="dashboard-bottom">

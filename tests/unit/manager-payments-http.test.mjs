@@ -409,6 +409,23 @@ test('historical receipt keeps its currency and unknown metadata', async () => {
 test.each([2, 3, 4, 5])('non-manager role %i cannot use manager payment routes', async (index) => {
   expect((await create({}, own, index)).status).toBe(403);
 });
+test('director confirmation requires MFA even with a valid session and CSRF', async () => {
+  const receipt = await create();
+  expect(receipt.status).toBe(201);
+  const session = [...f.state.sessions.values()].find((row) => row.account_id === f.accounts[4].id);
+  const verifiedAt = session.mfa_verified_at;
+  session.mfa_verified_at = null;
+  const path = `payments/${receipt.body.id}/confirm`;
+  const key = randomUUID();
+
+  const denied = await director(path, {}, key);
+  expect(denied.status).toBe(403);
+  expect(denied.body.code).toBe('MFA_REQUIRED');
+
+  session.mfa_verified_at = verifiedAt;
+  expect((await director(path, {}, key)).status).toBe(200);
+});
+
 test('anonymous, missing CSRF/key, forged confirmation body and foreign receipt access are rejected', async () => {
   expect((await create({}, own, null)).status).toBe(401);
   const r = await create(),

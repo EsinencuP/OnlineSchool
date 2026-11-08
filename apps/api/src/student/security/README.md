@@ -124,11 +124,14 @@ Session хранит bounded очищенный user_agent и наблюдаем
 
 402 и неактивный `/me` содержат контакты текущего AssignedManager этого Student.id:
 действующее назначение, enabled staff/login, активная роль MANAGER/DIRECTOR.
-Публичные ссылки задаются в StaffAccount.student_whatsapp_url/student_telegram_url;
-скрытый личный phone не публикуется автоматически. Разрешены только HTTPS wa.me
-с номером и t.me с username. При отсутствии — пустые строки, без подстановки общего
-менеджера из env или другого ученика. Заполнение этих полей в рабочей среде ещё нужно
-проверить при её приёмке.
+Публичное имя берётся из `StaffAccount.full_name` действующего назначения.
+Официальные каналы хранятся в `student_whatsapp_url`, `student_telegram_url` и
+nullable `student_phone_e164`. Разрешены HTTPS wa.me, HTTPS t.me и номер E.164.
+Личный `StaffAccount.phone` остаётся PII. При отсутствии назначения или канала
+проекция возвращает пустые либо nullable поля. Для нового телефонного поля
+подготовлена additive миграция. Применение и явное заполнение владельцем среды
+относятся к rollout и конфигурации сотрудников. Первоначальная смена пароля
+по-прежнему предшествует выдаче контактов.
 
 В QA-оболочке добавлен отдельный StudentAccess: forced-password → suspended → active.
 Экран «Доступ приостановлен» показывает только валидные контакты; временный пароль
@@ -166,3 +169,29 @@ typed binding/constraints/grants и гонки на PostgreSQL, реальная
 DELETE /auth/session. Срок нового временного пароля 72 часа; повторная установка
 того же пароля запрещена. Ранее приведённые результаты STU-11 — исторический
 снимок; текущий контракт и проверки описаны в [MGR-03](../../modules/manager/accounts/MGR-03.md).
+
+
+## TASK-034 — актуальный RU/RO клиент, 2026-11-08
+
+Backend DTO/guards/password/email/session/profile whitelist и исходная auth-политика
+не изменены. Alias контролируется отдельным input state без key={me.displayName};
+фоновые /me и locale не стирают dirty input. PATCH по-прежнему только displayName
+(поддержанный сервером owned avatar API не расширялся; нового upload UI нет).
+
+Secret commands клиента используют прямые closures и existing CSRF/write transport,
+без generic query mutation variables/serialized secret intent. UUID — корреляция
+явной попытки, не replay cache для password/OTP. Поля очищаются после попытки;
+unknown request не означает отправку кода и не повторяется автоматически.
+Unknown login/password/email-confirm/logout использует существующий account-ui
+verifySessionOutcome: abort/clear/cache/private DOM и явная проверка сессии.
+verifySessionOutcome лишь публично re-exported, сам session boundary не менялся.
+Успешный confirm сбрасывает локальный session context, уведомляет другие вкладки,
+заново читает /me и открывает профиль с авторитетным email. Current revoke409,
+foreign/unknown404, own-other204 остаются прежними серверными правилами.
+
+Suspended содержит только безопасные контакты TASK-027, locale и logout;
+его freshness использует timeZone собственного /me. Initial password проверяется
+раньше suspended, отдельный subject limit не закрывает весь кабинет.
+73 свежих security API/HTTP/SDK mocks прошли;19 Chromium,65 screenshots и точное
+покрытие описаны в [TASK-034](../../../../../output/k8k-tasks/TASK-034/report.md).
+Настоящая почта/OTP/ротация cookies/S3/avatar и полный gate этим не приняты.

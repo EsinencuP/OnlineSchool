@@ -1,0 +1,1524 @@
+{
+  "parser": "Existing Playwright 1.64.1 bundled PNG decoder; no dependency installed",
+  "method": "Exact RGBA channel inequality, no tolerance, masking, cropping or image edits",
+  "totalPairs": 1064,
+  "exactPngPairs": 1010,
+  "nonidenticalPairs": 54,
+  "semanticTextAllEqual": true,
+  "allDimensionsEqual": true,
+  "maxDifferentPixelRatio": 0.0010944390663654943,
+  "rows": [
+    {
+      "caseId": "manager:/manager/students/:id/account",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-021-1280.png",
+      "second": "p2-ru-021-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          961
+        ],
+        [
+          1280,
+          961
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 0.000005690686784599376,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "manager:/manager/students/:id?tab=overview",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-026-1280.png",
+      "second": "p2-ru-026-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          962
+        ],
+        [
+          1280,
+          962
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 0.00000568477130977131,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "shared:/",
+      "locale": "ru",
+      "width": 360,
+      "first": "p1-ru-045-360.png",
+      "second": "p2-ru-045-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1033
+        ],
+        [
+          360,
+          1033
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 407,
+      "differentPixelRatio": 0.0010944390663654943,
+      "bbox": [
+        47,
+        526,
+        104,
+        540
+      ]
+    },
+    {
+      "caseId": "shared:/",
+      "locale": "ru",
+      "width": 768,
+      "first": "p1-ru-045-768.png",
+      "second": "p2-ru-045-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 390,
+      "differentPixelRatio": 0.0005642361111111111,
+      "bbox": [
+        581,
+        313,
+        638,
+        327
+      ]
+    },
+    {
+      "caseId": "shared:/",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-045-1024.png",
+      "second": "p2-ru-045-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          900
+        ],
+        [
+          1024,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 387,
+      "differentPixelRatio": 0.000419921875,
+      "bbox": [
+        744,
+        310,
+        801,
+        324
+      ]
+    },
+    {
+      "caseId": "shared:/",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-045-1280.png",
+      "second": "p2-ru-045-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          900
+        ],
+        [
+          1280,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 390,
+      "differentPixelRatio": 0.0003385416666666667,
+      "bbox": [
+        939,
+        310,
+        996,
+        324
+      ]
+    },
+    {
+      "caseId": "manager:edit-lead",
+      "locale": "ru",
+      "width": 360,
+      "first": "p1-ru-061-360.png",
+      "second": "p2-ru-061-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1966
+        ],
+        [
+          360,
+          1966
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 18,
+      "differentPixelRatio": 0.0000254323499491353,
+      "bbox": [
+        39,
+        571,
+        40,
+        783
+      ]
+    },
+    {
+      "caseId": "manager:await-payment",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-064-1024.png",
+      "second": "p2-ru-064-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1237
+        ],
+        [
+          1024,
+          1237
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 30,
+      "differentPixelRatio": 0.000023683811641067096,
+      "bbox": [
+        283,
+        23,
+        563,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:await-payment",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-064-1280.png",
+      "second": "p2-ru-064-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1130
+        ],
+        [
+          1280,
+          1130
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 12,
+      "differentPixelRatio": 0.000008296460176991151,
+      "bbox": [
+        378,
+        610,
+        505,
+        611
+      ]
+    },
+    {
+      "caseId": "manager:new-student",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-065-1024.png",
+      "second": "p2-ru-065-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          961
+        ],
+        [
+          1024,
+          961
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 29,
+      "differentPixelRatio": 0.00002946962799167534,
+      "bbox": [
+        283,
+        23,
+        563,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:subscription-renew",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-073-1280.png",
+      "second": "p2-ru-073-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          977
+        ],
+        [
+          1280,
+          977
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000015992835209825997,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:subscription-freeze",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-074-1024.png",
+      "second": "p2-ru-074-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1085
+        ],
+        [
+          1024,
+          1085
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 8,
+      "differentPixelRatio": 0.0000072004608294930876,
+      "bbox": [
+        557,
+        23,
+        563,
+        30
+      ]
+    },
+    {
+      "caseId": "manager:subscription-freeze",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-074-1280.png",
+      "second": "p2-ru-074-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          977
+        ],
+        [
+          1280,
+          977
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 8,
+      "differentPixelRatio": 0.000006397134083930399,
+      "bbox": [
+        283,
+        59,
+        374,
+        289
+      ]
+    },
+    {
+      "caseId": "manager:payment-create",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-076-1280.png",
+      "second": "p2-ru-076-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1265
+        ],
+        [
+          1280,
+          1265
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 29,
+      "differentPixelRatio": 0.0000179100790513834,
+      "bbox": [
+        373,
+        571,
+        906,
+        849
+      ]
+    },
+    {
+      "caseId": "manager:payment-prepare",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-079-1024.png",
+      "second": "p2-ru-079-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1309
+        ],
+        [
+          1024,
+          1309
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 30,
+      "differentPixelRatio": 0.0000223811115355233,
+      "bbox": [
+        283,
+        23,
+        563,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:compose",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-081-1280.png",
+      "second": "p2-ru-081-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          961
+        ],
+        [
+          1280,
+          961
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 12,
+      "differentPixelRatio": 0.000009755463059313215,
+      "bbox": [
+        378,
+        714,
+        558,
+        715
+      ]
+    },
+    {
+      "caseId": "TEACHER:account-menu",
+      "locale": "ru",
+      "width": 360,
+      "first": "p1-ru-089-360.png",
+      "second": "p2-ru-089-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1286
+        ],
+        [
+          360,
+          1286
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 8,
+      "differentPixelRatio": 0.000017280110592707793,
+      "bbox": [
+        37,
+        492,
+        38,
+        537
+      ]
+    },
+    {
+      "caseId": "TECH_OPERATOR:read-expired",
+      "locale": "ru",
+      "width": 360,
+      "first": "p1-ru-120-360.png",
+      "second": "p2-ru-120-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1033
+        ],
+        [
+          360,
+          1033
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 407,
+      "differentPixelRatio": 0.0010944390663654943,
+      "bbox": [
+        47,
+        526,
+        104,
+        540
+      ]
+    },
+    {
+      "caseId": "TECH_OPERATOR:read-expired",
+      "locale": "ru",
+      "width": 768,
+      "first": "p1-ru-120-768.png",
+      "second": "p2-ru-120-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 390,
+      "differentPixelRatio": 0.0005642361111111111,
+      "bbox": [
+        581,
+        313,
+        638,
+        327
+      ]
+    },
+    {
+      "caseId": "TECH_OPERATOR:read-expired",
+      "locale": "ru",
+      "width": 1024,
+      "first": "p1-ru-120-1024.png",
+      "second": "p2-ru-120-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          900
+        ],
+        [
+          1024,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 387,
+      "differentPixelRatio": 0.000419921875,
+      "bbox": [
+        744,
+        310,
+        801,
+        324
+      ]
+    },
+    {
+      "caseId": "TECH_OPERATOR:read-expired",
+      "locale": "ru",
+      "width": 1280,
+      "first": "p1-ru-120-1280.png",
+      "second": "p2-ru-120-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          900
+        ],
+        [
+          1280,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 390,
+      "differentPixelRatio": 0.0003385416666666667,
+      "bbox": [
+        939,
+        310,
+        996,
+        324
+      ]
+    },
+    {
+      "caseId": "manager:/manager/leads",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-017-1280.png",
+      "second": "p2-ro-017-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1026
+        ],
+        [
+          1280,
+          1026
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 0.000005330165692007798,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "shared:/account",
+      "locale": "ro",
+      "width": 768,
+      "first": "p1-ro-044-768.png",
+      "second": "p2-ro-044-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 282,
+      "differentPixelRatio": 0.00040798611111111114,
+      "bbox": [
+        451,
+        385,
+        497,
+        397
+      ]
+    },
+    {
+      "caseId": "shared:account-menu",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-046-1024.png",
+      "second": "p2-ro-046-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1999
+        ],
+        [
+          1024,
+          1999
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 10,
+      "differentPixelRatio": 0.000004885255127563782,
+      "bbox": [
+        977,
+        283,
+        978,
+        337
+      ]
+    },
+    {
+      "caseId": "manager:edit-lead",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-061-360.png",
+      "second": "p2-ro-061-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1966
+        ],
+        [
+          360,
+          1966
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 18,
+      "differentPixelRatio": 0.0000254323499491353,
+      "bbox": [
+        39,
+        571,
+        40,
+        783
+      ]
+    },
+    {
+      "caseId": "manager:edit-lead",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-061-1280.png",
+      "second": "p2-ro-061-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1130
+        ],
+        [
+          1280,
+          1130
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000013827433628318584,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:lose-lead",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-063-1280.png",
+      "second": "p2-ro-063-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1130
+        ],
+        [
+          1280,
+          1130
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 15,
+      "differentPixelRatio": 0.000010370575221238938,
+      "bbox": [
+        283,
+        59,
+        530,
+        583
+      ]
+    },
+    {
+      "caseId": "manager:await-payment",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-064-1280.png",
+      "second": "p2-ro-064-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1130
+        ],
+        [
+          1280,
+          1130
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000013827433628318584,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:new-student",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-065-1280.png",
+      "second": "p2-ro-065-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          961
+        ],
+        [
+          1280,
+          961
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 12,
+      "differentPixelRatio": 0.000009755463059313215,
+      "bbox": [
+        378,
+        789,
+        452,
+        790
+      ]
+    },
+    {
+      "caseId": "manager:enrollment",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-067-1024.png",
+      "second": "p2-ro-067-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          984
+        ],
+        [
+          1024,
+          984
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 13,
+      "differentPixelRatio": 0.000012901740345528456,
+      "bbox": [
+        283,
+        59,
+        574,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:reschedule",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-069-1280.png",
+      "second": "p2-ro-069-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1178
+        ],
+        [
+          1280,
+          1178
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000013264006791171478,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:meet",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-071-1024.png",
+      "second": "p2-ro-071-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1222
+        ],
+        [
+          1024,
+          1222
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 13,
+      "differentPixelRatio": 0.000010388962765957447,
+      "bbox": [
+        283,
+        59,
+        574,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:subscription-create",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-072-1280.png",
+      "second": "p2-ro-072-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          977
+        ],
+        [
+          1280,
+          977
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000015992835209825997,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:subscription-freeze",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-074-360.png",
+      "second": "p2-ro-074-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1427
+        ],
+        [
+          360,
+          1427
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 3,
+      "differentPixelRatio": 0.00000583975706610605,
+      "bbox": [
+        39,
+        267,
+        40,
+        269
+      ]
+    },
+    {
+      "caseId": "manager:subscription-freeze",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-074-1280.png",
+      "second": "p2-ro-074-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          977
+        ],
+        [
+          1280,
+          977
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000015992835209825997,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:subscription-unfreeze",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-075-1280.png",
+      "second": "p2-ro-075-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1009
+        ],
+        [
+          1280,
+          1009
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 2,
+      "differentPixelRatio": 0.0000015485629335976213,
+      "bbox": [
+        283,
+        59,
+        289,
+        62
+      ]
+    },
+    {
+      "caseId": "manager:payment-reject",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-078-1024.png",
+      "second": "p2-ro-078-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1309
+        ],
+        [
+          1024,
+          1309
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 13,
+      "differentPixelRatio": 0.00000969848166539343,
+      "bbox": [
+        283,
+        59,
+        574,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:payment-prepare",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-079-1024.png",
+      "second": "p2-ro-079-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          1309
+        ],
+        [
+          1024,
+          1309
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 13,
+      "differentPixelRatio": 0.00000969848166539343,
+      "bbox": [
+        283,
+        59,
+        574,
+        66
+      ]
+    },
+    {
+      "caseId": "manager:compose",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-081-1280.png",
+      "second": "p2-ro-081-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          961
+        ],
+        [
+          1280,
+          961
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 12,
+      "differentPixelRatio": 0.000009755463059313215,
+      "bbox": [
+        378,
+        714,
+        558,
+        715
+      ]
+    },
+    {
+      "caseId": "manager:board",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-084-1024.png",
+      "second": "p2-ro-084-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          8998
+        ],
+        [
+          1024,
+          8998
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 14,
+      "differentPixelRatio": 0.000001519434874416537,
+      "bbox": [
+        285,
+        62,
+        572,
+        63
+      ]
+    },
+    {
+      "caseId": "manager:board",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-084-1280.png",
+      "second": "p2-ro-084-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          6383
+        ],
+        [
+          1280,
+          6383
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 8.567679774400752e-7,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "manager:long-students",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-085-1280.png",
+      "second": "p2-ro-085-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          3340
+        ],
+        [
+          1280,
+          3340
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 0.0000016373502994011976,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "MANAGER:account-menu",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-088-1280.png",
+      "second": "p2-ro-088-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          1998
+        ],
+        [
+          1280,
+          1998
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 7,
+      "differentPixelRatio": 0.000002737112112112112,
+      "bbox": [
+        285,
+        62,
+        288,
+        63
+      ]
+    },
+    {
+      "caseId": "TEACHER:account-menu",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-089-360.png",
+      "second": "p2-ro-089-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1286
+        ],
+        [
+          360,
+          1286
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 8,
+      "differentPixelRatio": 0.000017280110592707793,
+      "bbox": [
+        37,
+        492,
+        38,
+        537
+      ]
+    },
+    {
+      "caseId": "DIRECTOR:account-menu",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-090-360.png",
+      "second": "p2-ro-090-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1294
+        ],
+        [
+          360,
+          1294
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 8,
+      "differentPixelRatio": 0.00001717327837884252,
+      "bbox": [
+        37,
+        678,
+        38,
+        723
+      ]
+    },
+    {
+      "caseId": "TEACHER:read-expired",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-108-360.png",
+      "second": "p2-ro-108-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1033
+        ],
+        [
+          360,
+          1033
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 373,
+      "differentPixelRatio": 0.0010030117242121113,
+      "bbox": [
+        47,
+        526,
+        100,
+        538
+      ]
+    },
+    {
+      "caseId": "TEACHER:read-expired",
+      "locale": "ro",
+      "width": 768,
+      "first": "p1-ro-108-768.png",
+      "second": "p2-ro-108-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 367,
+      "differentPixelRatio": 0.0005309606481481481,
+      "bbox": [
+        564,
+        313,
+        616,
+        325
+      ]
+    },
+    {
+      "caseId": "TEACHER:read-expired",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-108-1024.png",
+      "second": "p2-ro-108-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          900
+        ],
+        [
+          1024,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 373,
+      "differentPixelRatio": 0.0004047309027777778,
+      "bbox": [
+        726,
+        310,
+        779,
+        322
+      ]
+    },
+    {
+      "caseId": "TEACHER:read-expired",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-108-1280.png",
+      "second": "p2-ro-108-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          900
+        ],
+        [
+          1280,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 368,
+      "differentPixelRatio": 0.00031944444444444446,
+      "bbox": [
+        922,
+        310,
+        974,
+        322
+      ]
+    },
+    {
+      "caseId": "DIRECTOR:read-expired",
+      "locale": "ro",
+      "width": 360,
+      "first": "p1-ro-114-360.png",
+      "second": "p2-ro-114-360.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          360,
+          1033
+        ],
+        [
+          360,
+          1033
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 373,
+      "differentPixelRatio": 0.0010030117242121113,
+      "bbox": [
+        47,
+        526,
+        100,
+        538
+      ]
+    },
+    {
+      "caseId": "DIRECTOR:read-expired",
+      "locale": "ro",
+      "width": 768,
+      "first": "p1-ro-114-768.png",
+      "second": "p2-ro-114-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 649,
+      "differentPixelRatio": 0.0009389467592592593,
+      "bbox": [
+        451,
+        313,
+        616,
+        397
+      ]
+    },
+    {
+      "caseId": "DIRECTOR:read-expired",
+      "locale": "ro",
+      "width": 1024,
+      "first": "p1-ro-114-1024.png",
+      "second": "p2-ro-114-1024.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1024,
+          900
+        ],
+        [
+          1024,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 373,
+      "differentPixelRatio": 0.0004047309027777778,
+      "bbox": [
+        726,
+        310,
+        779,
+        322
+      ]
+    },
+    {
+      "caseId": "DIRECTOR:read-expired",
+      "locale": "ro",
+      "width": 1280,
+      "first": "p1-ro-114-1280.png",
+      "second": "p2-ro-114-1280.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          1280,
+          900
+        ],
+        [
+          1280,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 368,
+      "differentPixelRatio": 0.00031944444444444446,
+      "bbox": [
+        922,
+        310,
+        974,
+        322
+      ]
+    },
+    {
+      "caseId": "TECH_OPERATOR:read-expired",
+      "locale": "ro",
+      "width": 768,
+      "first": "p1-ro-120-768.png",
+      "second": "p2-ro-120-768.png",
+      "pngIdentical": false,
+      "semanticTextIdentical": true,
+      "dimensions": [
+        [
+          768,
+          900
+        ],
+        [
+          768,
+          900
+        ]
+      ],
+      "sameDimensions": true,
+      "differentPixels": 282,
+      "differentPixelRatio": 0.00040798611111111114,
+      "bbox": [
+        451,
+        385,
+        497,
+        397
+      ]
+    }
+  ]
+}

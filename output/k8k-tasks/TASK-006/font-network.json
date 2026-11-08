@@ -1,0 +1,21 @@
+{
+  "measurement": "Response body WOFF2 bytes; not HTTP headers/CDN transfer",
+  "run": "output/k8k-tasks/TASK-006/runs/2026-11-03T21-57-30.880Z",
+  "loadedCases": 16,
+  "perLoadedCase": {
+    "uniqueRequests": 3,
+    "requestsPerSubset": 1,
+    "bodyBytes": 63492
+  },
+  "blockedCases": 16,
+  "perBlockedCase": {
+    "attempts": 3,
+    "bodyBytes": 0
+  },
+  "externalSentinelsAborted": 32,
+  "assets": {
+    "cyrillic": 22032,
+    "latin": 37916,
+    "romanian": 3544
+  }
+}

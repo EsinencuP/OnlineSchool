@@ -1,0 +1,62 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "hashes": [
+    {
+      "path": "package.json",
+      "sha256": "5736011008c076a3223b090a52f20dc14f29bfbdb9611e5fce7630c961d15fb7"
+    },
+    {
+      "path": "apps/api/src/core/core.module.ts",
+      "sha256": "426084f6076671050b8356b01a1a5567e7aa2556efc8d7923531acf533133596"
+    },
+    {
+      "path": "apps/api/src/modules/platform/platform.dto.ts",
+      "sha256": "8f1bb36ec800bfcf4010c1cacef419e46094e2cca3cd9810e097c8d5e97ebb28"
+    },
+    {
+      "path": "apps/api/src/modules/platform/platform.module.ts",
+      "sha256": "a093daaee3eabf01163e7c6fa9f23d681a85819cb9968f902db73df4d708b678"
+    },
+    {
+      "path": "apps/api/src/modules/manager/me/manager-me.service.ts",
+      "sha256": "4c3bd63fc434737f83a39f24a1afbbc2b9c031904a6bd7663bd04b68def0bcab"
+    },
+    {
+      "path": "apps/api/src/modules/manager/dto/manager-me.response.dto.ts",
+      "sha256": "f420be717b55105cb9fc597b5218c1058f48134ae365d759549b88a0eaf091a4"
+    },
+    {
+      "path": "apps/api/src/modules/manager/context/manager-context.ts",
+      "sha256": "28fa4f08893eaf143d64d9f7f1b4d7af9e7fdb214a22b41da962b345faf6531c"
+    },
+    {
+      "path": "apps/api/src/modules/manager/payments/manager-payments.controller.ts",
+      "sha256": "7bc44c3b568cd19f83acbd24b7909b71002c515351ecb7a4b5ab57ad954b412b"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/outcomes.service.ts",
+      "sha256": "ad77b887a84c92b9862d7a4b3cfd1af5984a1bcf665cdedf6b9ec9df28aca3e0"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/schedule.module.ts",
+      "sha256": "88b22b7791b1ad8f878f786249d29a6b0f336dd57025037aefcd03e57d77d0ed"
+    },
+    {
+      "path": "apps/api/src/modules/finance/payments.service.ts",
+      "sha256": "653c7096db40d2dbb52f474f40516bcfe19efed670df4e4a1d04977a189e291d"
+    },
+    {
+      "path": "apps/api/src/modules/finance/finance-ledger.service.ts",
+      "sha256": "ea2cb3cbd7ff66e912171628497e1319c534803cce5856fe2af50d290de52689"
+    },
+    {
+      "path": "apps/api/src/modules/finance/manager-payments/workflow.service.ts",
+      "sha256": "77e9a0cea8e5bc8af6ba834cc8489330fe1763d942aedfbd662b4fe45d74279d"
+    },
+    {
+      "path": "tests/unit/manager-http.test.mjs",
+      "sha256": "3fbf5f2ba45404d1d951d1988721c9a7fbe92440bf5b67c0dead98e3e1e8f65c"
+    }
+  ]
+}

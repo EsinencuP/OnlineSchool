@@ -4,6 +4,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  IsUUID,
   Matches,
   Max,
   MaxLength,
@@ -31,6 +32,17 @@ export class LessonsQueryDto {
   @IsOptional()
   @Matches(/^(?!0000)\d{4}-(0[1-9]|1[0-2])$/)
   month?: string;
+  @ApiPropertyOptional({
+    enum: ['calendar', 'list'],
+    description: 'Explicit list permits pagination of month',
+  })
+  @IsOptional()
+  @IsIn(['calendar', 'list'])
+  view?: 'calendar' | 'list';
+  @ApiPropertyOptional({ format: 'uuid' })
+  @IsOptional()
+  @IsUUID()
+  subjectId?: string;
 }
 // Preserve real unresolved CRM states instead of fabricating completion/cancellation.
 export const STUDENT_LESSON_STATUSES = [
@@ -48,9 +60,12 @@ export class LessonCardDto {
   @ApiProperty() durationMinutes!: number;
   @ApiProperty() teacherName!: string;
   @ApiProperty() subjectName!: string;
+  @ApiPropertyOptional({ format: 'uuid' }) subjectId?: string;
+  @ApiPropertyOptional({ format: 'date-time' }) originalScheduledAt?: string;
   @ApiProperty({ enum: STUDENT_LESSON_STATUSES }) status!: StudentLessonStatus;
   @ApiProperty() canJoin!: boolean;
   @ApiProperty({ type: String, nullable: true }) meetLink!: string | null;
+  @ApiPropertyOptional({ format: 'date-time' }) meetAsOf?: string;
   @ApiProperty() canRequestReschedule!: boolean;
 }
 export class LessonsResponseDto {
@@ -73,4 +88,10 @@ export class RescheduleRequestDto {
 export class RescheduleRequestResponseDto {
   @ApiProperty({ format: 'uuid' }) crmTaskId!: string;
   @ApiProperty({ enum: ['CREATED'] }) status!: 'CREATED';
+}
+export class LessonRequestResultDto {
+  @ApiProperty({ enum: ['CREATED', 'UNKNOWN'] }) status!: 'CREATED' | 'UNKNOWN';
+  @ApiProperty({ type: String, nullable: true, format: 'uuid' }) crmTaskId!: string | null;
+  @ApiProperty({ type: String, nullable: true, enum: ['RESCHEDULE_REQUEST', 'ATTENDANCE_DISPUTE'] })
+  type!: 'RESCHEDULE_REQUEST' | 'ATTENDANCE_DISPUTE' | null;
 }

@@ -1,0 +1,36 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "beforeCopiesVerified": 479,
+  "unchangedExistingInputs": 467,
+  "changedExistingInputs": [
+    "apps/student-cabinet/package.json",
+    "apps/student-cabinet/src/pages/Lessons.tsx",
+    "docs/K8K_IMPLEMENTATION_STATUS.md",
+    "docs/K8K_REQUIREMENTS_MATRIX.md",
+    "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/package.json",
+    "packages/ui/src/index.ts",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/style.css",
+    "pnpm-lock.yaml"
+  ],
+  "newSourceInputs": [
+    "apps/student-cabinet/tests/ui-composites/fixture.tsx",
+    "apps/student-cabinet/tests/ui-composites/index.html",
+    "apps/student-cabinet/tsconfig.ui-composites.json",
+    "packages/ui/src/composites.css",
+    "packages/ui/src/composites.tsx",
+    "packages/ui/stories/composites.css",
+    "packages/ui/stories/composites.stories.tsx",
+    "packages/ui/tests/composites.test.mjs",
+    "scripts/k8k-composites-evidence.mjs"
+  ],
+  "protectedArtifactsVerified": 9,
+  "acceptedSourceInputsVerified": 484,
+  "acceptedSourceDigest": "f4020b54cbb4f47cc3da5e42171b697f2c604e432f09774c0c2a2c408f25c79d",
+  "buildTimeDirtyDigest": "90d3461a10826873673eb101d747dbd1ac9ac73454140362af7c0aa3a62078e7",
+  "finalTrackedPatchSha256": "df7ab1608795681d7c730248b75d556bae9b6794ebaf753e2f5277c434520688"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@online-school/manager-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b --pretty false && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test --grep accessibility",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@online-school/api-contracts": "workspace:*",
+    "@online-school/shared": "workspace:*",
+    "@tanstack/react-query": "5.105.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "7.18.5",
+    "zustand": "5.0.16",
+    "decimal.js": "10.6.0",
+    "@js-temporal/polyfill": "0.5.1",
+    "@simplewebauthn/browser": "14.0.0",
+    "@online-school/account-ui": "workspace:*",
+    "@online-school/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "5.2.0",
+    "vite": "7.3.7",
+    "vitest": "4.1.12",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/user-event": "14.6.8",
+    "jsdom": "30.1.3",
+    "msw": "2.15.0",
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1"
+  }
+}

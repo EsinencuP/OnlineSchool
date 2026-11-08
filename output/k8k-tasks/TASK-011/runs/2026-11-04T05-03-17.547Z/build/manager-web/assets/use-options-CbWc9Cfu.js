@@ -1,0 +1,1 @@
+import{u as o}from"./useQuery-87q9WEAG.js";import{H as s,as as n}from"./ui-Cg_9v_KN.js";function p(r){return o({queryKey:["manager","options",r],queryFn:({signal:a})=>s(e=>n(r?{studentId:r}:{},e),a)})}export{p as u};

@@ -36,3 +36,27 @@ Revocation blocks new URL issuance immediately at the API. An already issued sta
 Seventeen exact-source SELECT projection/policy cases were executed as app_runtime on the existing working PostgreSQL 18.6 using fictional CTE-only rows. They prove metadata/predicate behavior without DML, DDL or persistent fixtures. CTEs are not lockable base tables, so the predicate check removes `FOR SHARE`; actual lock/revocation races remain pending. An optional reproducible read-only test is `tests/integration/student-materials-readonly.test.mjs` with an explicitly supplied `STU_READONLY_DATABASE_URL`.
 
 The GET signer is verified using the actual AWS SDK with dummy credentials. No fresh working-object download/15-minute network expiry test is claimed by this increment. STU-05's earlier real private-storage smoke remains separate evidence. Full working-session material acceptance requires the prepared student migrations and real grants; no alternate database or destructive test suite is used to bypass FND-GATE.
+
+
+## TASK-034 — localized cabinet metadata, 2026-11-08
+
+MaterialItemDto adds optional subjectId (explicit educational subject or null),
+canDownload (existing attachment versus inline grant disposition), and
+fileNameIsFallback (only original file_name IS NULL). These are read-only existing
+permission/object facts. Existing fields, filters, pagination and149 operation
+definitions are unchanged. No table/migration or implicit enrollment grant was added.
+The UI can localize genuine contextless/fallback labels while preserving authored
+names that happen to match the old fallback strings. Older responses without these
+optional fields use raw text and a neutral open action.
+
+The K8K RU/RO UI requests a fresh URL only on explicit click, validates HTTPS/expiry,
+and hands it to the browser without query/mutation cache, React state or persistent
+storage. Inline READ remains readable bytes; no DRM claim. List refresh is manual,
+not a second polling policy. Permission predicates, FOR SHARE, signer and audit
+workflow are byte-preserved. A held late URL cannot navigate after session retirement.
+
+Fresh local evidence:48 material unit/HTTP mocks (46 baseline +2 metadata cases),
+19 cabinet Chromium cases,65 synthetic screenshots,2 locale cases and50/50 budgets.
+Historical PostgreSQL/CTE evidence above was not re-executed; actual S3/signature
+expiry/revocation races and PostgreSQL execution remain NOT_RUN for TASK-034.
+[Report](../../../../../output/k8k-tasks/TASK-034/report.md).

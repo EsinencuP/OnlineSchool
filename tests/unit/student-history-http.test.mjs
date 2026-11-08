@@ -65,7 +65,7 @@ beforeAll(async () => {
               row.scheduled_at <= time,
           };
         });
-        if (id) return rows;
+        if (id && !sql.includes('totals.total')) return rows;
         const total = rows.length,
           [limit, offset] = values.filter((value) => typeof value === 'number').slice(-2);
         const page = rows.slice(offset, offset + limit).map((row) => ({ ...row, total }));
@@ -273,6 +273,21 @@ const post = (index = 0, id = lessons[0], key = randomUUID(), body = { descripti
     .send(body);
 const get = (index = 0, path = '/api/v1/student/lessons/history') =>
   request(app.getHttpServer()).get(path).set('Cookie', cookie(index));
+test('TASK-029 addressed history does not enumerate another student or scan list pages', async () => {
+  const own = await get(0, `/api/v1/student/lessons/history?lessonId=${lessons[0]}&pageSize=1`);
+  expect(own.status).toBe(200);
+  expect(own.body).toMatchObject({
+    total: 1,
+    page: 1,
+    pageSize: 1,
+    items: [{ lessonId: lessons[0] }],
+  });
+  const foreign = await get(0, `/api/v1/student/lessons/history?lessonId=${lessons[1]}`);
+  expect(foreign.status).toBe(200);
+  expect(foreign.body.items).toEqual([]);
+  expect(JSON.stringify(foreign.body)).not.toContain(students[1]);
+  expect((await get(0, '/api/v1/student/lessons/history?lessonId=invalid')).status).toBe(400);
+});
 test('actual Nest history serializes Decimal balances as strings and isolates two authenticated students', async () => {
   const a = await get(0),
     b = await get(1);

@@ -1,5 +1,6 @@
 import { err, ok } from '@online-school/shared';
 import type { Result } from '@online-school/shared';
+import type { ManagerContactsDto } from './generated/client.js';
 
 export type SchoolRequestOptions = RequestInit & {
   baseUrl?: string;
@@ -13,7 +14,7 @@ export type ClientError = {
   status: number;
   requestId?: string;
   message: string;
-  managerContacts?: { whatsapp: string; telegram: string };
+  managerContacts?: ManagerContactsDto;
 };
 
 /** Caller supplies CSRF and Idempotency-Key explicitly. This transport never retries mutations. */
@@ -53,6 +54,7 @@ export async function schoolFetch<T>(
     if (!response.ok) {
       const error = body && typeof body === 'object' ? (body as Record<string, unknown>) : {};
       const contacts =
+        response.status === 402 &&
         error.code === 'ACCESS_SUSPENDED' &&
         error.managerContacts &&
         typeof error.managerContacts === 'object'
@@ -75,7 +77,18 @@ export async function schoolFetch<T>(
         ...(contacts &&
         typeof contacts.whatsapp === 'string' &&
         typeof contacts.telegram === 'string'
-          ? { managerContacts: { whatsapp: contacts.whatsapp, telegram: contacts.telegram } }
+          ? {
+              managerContacts: {
+                whatsapp: contacts.whatsapp,
+                telegram: contacts.telegram,
+                ...(typeof contacts.displayName === 'string' || contacts.displayName === null
+                  ? { displayName: contacts.displayName }
+                  : {}),
+                ...(typeof contacts.phoneE164 === 'string' || contacts.phoneE164 === null
+                  ? { phoneE164: contacts.phoneE164 }
+                  : {}),
+              },
+            }
           : {}),
         ...(requestId ? { requestId } : {}),
         ...(error.code === 'LEAD_DUPLICATE_SUSPECTED' &&

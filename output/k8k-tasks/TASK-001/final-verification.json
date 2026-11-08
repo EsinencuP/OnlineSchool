@@ -1,0 +1,47 @@
+{
+  "snapshot": "output/k8k-tasks/TASK-001/snapshots/20261103T194929.397313Z-086d9a29",
+  "manifestSha256": "04677083f6c6f5b395644f9229d9fdebf13a0ba890385eca9dc9b2859fa8543a",
+  "sourceCommit": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "d716b9262ca859e0048d46b563872d9690026089eb1cb53b28f453555044ee76",
+  "patches": {
+    "worktree": {
+      "emptyPatch": false,
+      "statReadExitCode": 0,
+      "applyCheckExitCode": 0,
+      "applyExitCode": 0,
+      "gitContentMatches": true
+    },
+    "index": {
+      "emptyPatch": true,
+      "statReadExitCode": null,
+      "applyCheckExitCode": null,
+      "applyExitCode": null,
+      "gitContentMatches": true
+    }
+  },
+  "exactByteRestoredFiles": 170,
+  "recoveryDirectory": "output/k8k-tasks/TASK-001/recovery-checks/20261103T194929.397313Z-086d9a29-f46a2edc",
+  "secretPatternScan": "PASS (bounded patterns; not a general secret audit)",
+  "passed": true,
+  "sourceAudit": {
+    "unchangedFiles": 167,
+    "intentionallyUpdated": [
+      {
+        "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+        "beforeSha256": "30be4bf01511c0cf4f5792f1226efe39b39fe65dcba1563aca36289c079300c8",
+        "afterSha256": "9dc37470ee7c595675a129cbaa3b999addb1cd383795e26b4a00427a91ecaaec"
+      },
+      {
+        "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+        "beforeSha256": "cbe3a992a1c1628876e404b25926408c1e0a303502c3f868d57a6df0009a3771",
+        "afterSha256": "d580a6749d69a5c8a9dc65025281e20b08dd6ead2b0e8dfd834657098f82bcc0"
+      },
+      {
+        "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+        "beforeSha256": "10c5d53cd51f2e11ba265f4859576ac696c3fc95f065e3a4cc9bebfbbad89c35",
+        "afterSha256": "c6954ed83bfc8a6ad92c38f32a54e559619b420608dfd372ae14745da7e535d3"
+      }
+    ],
+    "protectedInputsHeadBranchIndexUnchanged": true
+  }
+}

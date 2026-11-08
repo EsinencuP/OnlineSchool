@@ -71,18 +71,20 @@ test('hover, disabled without alpha fade, field error and two-layer sidebar focu
   assert.ok(contrast(tokens['--surface'], tokens['--brand-900']) >= 3);
   assert.ok(contrast(tokens['--focus'], tokens['--surface']) >= 3);
 });
-test('alpha overlays are composited; shadows do not excuse illegible foreground', () => {
-  for (const overlay of ['--k8k-nav-hover', '--k8k-nav-soft']) {
-    const bg = composite(tokens[overlay], tokens['--brand-900']);
-    assert.ok(contrast(tokens['--sidebar-text'], bg) >= 4.5);
+test('solid navigation and translucent modal backdrop keep contrast', () => {
+  for (const background of ['--k8k-nav-hover', '--k8k-nav-soft']) {
+    assert.ok(contrast(tokens['--brand-text'], tokens[background]) >= 4.5);
     assert.ok(
       Math.abs(
-        contrast(tokens['--sidebar-text'], bg) - wcagContrast(tokens['--sidebar-text'], bg),
+        contrast(tokens['--brand-text'], tokens[background]) -
+          wcagContrast(tokens['--brand-text'], tokens[background]),
       ) < 1e-10,
     );
   }
-  assert.throws(() => contrast(tokens['--k8k-nav-hover'], tokens['--brand-900']), /Opaque/);
-  assert.throws(() => composite(tokens['--k8k-nav-hover'], 'transparent'), /backdrop/);
+  const bg = composite(tokens['--k8k-overlay-backdrop'], tokens['--surface']);
+  assert.match(bg, /^#[\da-f]{6}$/i);
+  assert.throws(() => contrast(tokens['--k8k-overlay-backdrop'], tokens['--surface']), /Opaque/);
+  assert.throws(() => composite(tokens['--k8k-overlay-backdrop'], 'transparent'), /backdrop/);
 });
 test('aliases resolve with cycle/missing detection; controls consume size tokens', () => {
   assert.equal(tokens['--blue'], tokens['--brand-text']);

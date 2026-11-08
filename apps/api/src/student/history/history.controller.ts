@@ -22,11 +22,11 @@ import { StudentDisputeService } from './dispute.service.js';
 import {
   DisputeRequestDto,
   DisputeResponseDto,
-  HistoryQueryDto,
-  HistoryQueryPipe,
+  LessonHistoryQueryDto,
+  LessonHistoryQueryPipe,
   LessonHistoryResponseDto,
 } from './history.dto.js';
-import type { HistoryPage } from './history.dto.js';
+import type { LessonHistoryPage } from './history.dto.js';
 
 @ApiTags('Student')
 @ApiCookieAuth('sessionCookie')
@@ -54,9 +54,9 @@ export class StudentHistoryController {
   @ApiResponse({ status: 200, type: LessonHistoryResponseDto })
   async list(
     @StudentCtx() student: IStudentContext,
-    @Query(HistoryQueryPipe) page: HistoryQueryDto,
+    @Query(LessonHistoryQueryPipe) page: LessonHistoryQueryDto,
   ): Promise<LessonHistoryResponseDto> {
-    return unwrap(await this.history.list(student, page as HistoryPage));
+    return unwrap(await this.history.list(student, page as LessonHistoryPage));
   }
   @Post(':lessonId/dispute')
   @HttpCode(201)

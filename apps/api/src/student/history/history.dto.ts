@@ -1,8 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import type { PipeTransform } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, Min, Max, MinLength, MaxLength } from 'class-validator';
-import { object } from '../../modules/identity/input.js';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Min,
+  Max,
+  MinLength,
+  MaxLength,
+} from 'class-validator';
+import { object, uuid } from '../../modules/identity/input.js';
 import { LessonsQueryPipe } from '../lessons/lesson-period.js';
 
 export class HistoryQueryDto {
@@ -22,9 +31,39 @@ export type HistoryPage = { page: number; pageSize: number };
 @Injectable()
 export class HistoryQueryPipe implements PipeTransform {
   transform(value: unknown): HistoryPage {
-    const input = object(value, ['page', 'pageSize']),
-      parsed = new LessonsQueryPipe().transform({ ...input, period: 'archive' });
+    const input = object(value, ['page', 'pageSize']);
+    const parsed = new LessonsQueryPipe().transform({
+      ...(input.page === undefined ? {} : { page: input.page }),
+      ...(input.pageSize === undefined ? {} : { pageSize: input.pageSize }),
+      period: 'archive',
+    });
     return { page: parsed.page, pageSize: parsed.pageSize };
+  }
+}
+export class LessonHistoryQueryDto extends HistoryQueryDto {
+  @ApiPropertyOptional({ format: 'uuid' })
+  @IsOptional()
+  @IsUUID()
+  lessonId?: string;
+  @ApiPropertyOptional({ format: 'uuid' })
+  @IsOptional()
+  @IsUUID()
+  subjectId?: string;
+}
+export type LessonHistoryPage = HistoryPage & { lessonId?: string; subjectId?: string };
+@Injectable()
+export class LessonHistoryQueryPipe implements PipeTransform {
+  transform(value: unknown): LessonHistoryPage {
+    const input = object(value, ['page', 'pageSize', 'lessonId', 'subjectId']);
+    const page = new HistoryQueryPipe().transform({
+      ...(input.page === undefined ? {} : { page: input.page }),
+      ...(input.pageSize === undefined ? {} : { pageSize: input.pageSize }),
+    });
+    return {
+      ...page,
+      ...(input.lessonId === undefined ? {} : { lessonId: uuid(input.lessonId) }),
+      ...(input.subjectId === undefined ? {} : { subjectId: uuid(input.subjectId) }),
+    };
   }
 }
 export class LessonHistoryItemDto {

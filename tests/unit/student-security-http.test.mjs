@@ -69,10 +69,18 @@ beforeAll(async () => {
         return [{ code: values[0] === users[2] ? 'TEACHER' : 'STUDENT' }];
       if (sql.includes('AS has_active_access'))
         return [{ subject_ids: [], has_active_access: state.active }];
-      if (sql.includes('SELECT s.student_whatsapp_url'))
-        return [
-          { whatsapp: 'https://wa.me/37360000123', telegram: 'https://t.me/personal_manager' },
-        ];
+      if (sql.includes('SELECT s.student_whatsapp_url')) {
+        const assigned = state.managerAssignments.get(values[0]);
+        if (
+          !assigned ||
+          assigned.ended ||
+          assigned.disabledLogin ||
+          assigned.deactivated ||
+          !['MANAGER', 'DIRECTOR'].includes(assigned.role)
+        )
+          return [];
+        return [assigned.contacts];
+      }
       if (sql.includes('SELECT id FROM auth_accounts') || sql.includes('SELECT id FROM students'))
         return [{ id: values[0] }];
       return [{ now: clock(), locked: true }];
@@ -280,6 +288,22 @@ beforeEach(async () => {
   state = {
     time: new Date(),
     accounts: new Map(),
+    managerAssignments: new Map(
+      students.map((id, index) => [
+        id,
+        {
+          role: index ? 'DIRECTOR' : 'MANAGER',
+          contacts: {
+            displayName: index ? 'Second Director' : 'First Manager',
+            whatsapp: index ? 'https://wa.me/37360000456' : 'https://wa.me/37360000123',
+            telegram: index ? 'https://t.me/second_director' : 'https://t.me/personal_manager',
+            phoneE164: index ? '+37360000456' : null,
+            phone: '+37369999999',
+            staffId: 'unpublished-staff-id',
+          },
+        },
+      ]),
+    ),
     pupils: new Map(),
     files: new Map(),
     sessions: new Map(),
@@ -431,6 +455,62 @@ test('MGR-03 initial password also blocks me before inactive access is considere
     code: 'PASSWORD_CHANGE_REQUIRED',
     status: 403,
   });
+});
+test('TASK-027 /me and suspended contact project only the manager of the cookie student', async () => {
+  const first = await get('me?studentId=' + students[1]);
+  const second = await get('me?studentId=' + students[0], 1);
+  expect(first.status).toBe(200);
+  expect(second.status).toBe(200);
+  expect(first.headers['cache-control']).toBe('no-store');
+  expect(first.body.managerContacts).toEqual({
+    displayName: 'First Manager',
+    whatsapp: 'https://wa.me/37360000123',
+    telegram: 'https://t.me/personal_manager',
+    phoneE164: null,
+  });
+  expect(second.body.managerContacts).toEqual({
+    displayName: 'Second Director',
+    whatsapp: 'https://wa.me/37360000456',
+    telegram: 'https://t.me/second_director',
+    phoneE164: '+37360000456',
+  });
+  state.active = false;
+  const suspended = await get('security/sessions', 1);
+  expect(suspended.status).toBe(402);
+  expect(suspended.body.managerContacts).toEqual(second.body.managerContacts);
+  expect(suspended.text).not.toMatch(/unpublished-staff-id|37369999999|First Manager/);
+});
+test.each([
+  { ended: true },
+  { disabledLogin: true },
+  { deactivated: true },
+  { role: 'TECH_OPERATOR' },
+])('TASK-027 ineligible assigned employee yields no contact: %j', async (condition) => {
+  Object.assign(state.managerAssignments.get(students[0]), condition);
+  const response = await get('me');
+  expect(response.status).toBe(200);
+  expect(response.body.managerContacts).toEqual({ whatsapp: '', telegram: '' });
+});
+test('TASK-027 changing the assignment changes the contact on a new read', async () => {
+  expect((await get('me')).body.managerContacts.displayName).toBe('First Manager');
+  state.managerAssignments.set(students[0], state.managerAssignments.get(students[1]));
+  const updated = await get('me');
+  expect(updated.body.managerContacts.displayName).toBe('Second Director');
+  expect(updated.text).not.toContain('First Manager');
+});
+test('TASK-027 initial password and missing session expose no manager details', async () => {
+  state.mustChange = true;
+  const locked = await get('me');
+  const anonymous = await request(app.getHttpServer()).get('/api/v1/student/me');
+  expect(locked.status).toBe(403);
+  expect(anonymous.status).toBe(401);
+  expect(locked.body.managerContacts).toBeUndefined();
+  expect(anonymous.body.managerContacts).toBeUndefined();
+  expect(
+    db.$queryRaw.mock.calls.some(
+      ([query]) => Array.isArray(query) && query.join('').includes('SELECT s.student_whatsapp_url'),
+    ),
+  ).toBe(false);
 });
 test.each(['profile/avatar', 'security/sessions', 'subscription/payments', 'notifications/count'])(
   'inactive protected %s is402 with personal manager links',

@@ -1,0 +1,11 @@
+# TASK-011 — контракты до реализации
+
+Подтверждены 493 хеша TASK-010. Сохранены 497 файлов и бинарный diff. Вложение также содержит TASK-012, который является отдельным шагом после остановки TASK-011.
+
+- `DatePicker` принимает `label`, `value`, `onValueChange`, `id`, `name`, `disabled`, `min`, `max`. Это контролируемое нативное поле date с локализованной подписью выбранной календарной даты. Значение всегда YYYY-MM-DD. Часовой пояс в контракте поля отсутствует.
+- `Calendar` принимает `label`, `timeZone`, `view: day | week | list`, `days`, `horizon: {from,to} | null`, `events`, `refreshing` и опциональный `renderEvent`. `CalendarEvent` содержит `id`, `revision: string | number | null`, `startsAt`, `endsAt`, `title`, `state: protected | pending-renewal | busy | free | unknown` и опциональный `resourceId`. `revision: null` означает отсутствие ревизии в read DTO. UTC/offset instants остаются серверными. Отображение строится в переданном IANA zone. Подписи plain dates сохраняют календарную дату.
+- Horizon имеет исключительный конец. Неизвестная дата и отсутствие событий выводятся разными текстами. Free требует явного события полностью внутри горизонта. Пустая ячейка не является сигналом для бронирования. UI не вычисляет booking eligibility.
+- Manager Schedule получает date/view/studentId/kind/status из URL, валидирует date-only и использует существующие dateShift/weekStart/localToIso. Некорректные границы блокируют GET и показывают объяснение. K8K выводит DatePicker и Calendar. Адаптер ManagerLessonDto передаёт реальные id/instants, `revision: null` и отображает факт наличия занятия без вывода доступности слота. Существующие actions/forms и правила 60m/24h/revision остаются у приложения и сервера.
+- Student Lessons сохраняет month/view/period/page в URL и использует существующий лёгкий список и группировку. День по-прежнему определяется из student zone, полученного в Layout. Calendar/Temporal grid в этот route не добавляется.
+
+Для date-only и instants применяется уже используемый в workspace @js-temporal/polyfill 0.5.1. В UI добавляется объявление этой версии. DatePicker обходится нативным полем. EventCalendar 5.5.1 проверяется для staff resources. API менеджера пока возвращает занятия, а не полную карту доступности ресурсов. Фиксированный offset библиотеки нельзя подставлять вместо IANA пояса в DST диапазоне.

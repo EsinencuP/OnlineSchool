@@ -42,7 +42,6 @@ export default function Leads() {
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">{ru.pipeline}</p>
           <h1>{ru.leads}</h1>
         </div>
         <button type="button" className="primary" onClick={() => setCreating(true)}>

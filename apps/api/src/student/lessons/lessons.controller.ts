@@ -5,6 +5,7 @@ import {
   ApiHeader,
   ApiOperation,
   ApiParam,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -13,7 +14,7 @@ import type { CriticalContext } from '../../core/http.js';
 import { RequireRole } from '../../core/rbac/decorators.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import { ProblemDetails } from '../../core/errors/error-mapper.js';
-import { uuid } from '../../modules/identity/input.js';
+import { object, uuid } from '../../modules/identity/input.js';
 import { StudentCtx } from '../student-context.decorator.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import {
@@ -22,6 +23,7 @@ import {
   LessonsResponseDto,
   RescheduleRequestDto,
   RescheduleRequestResponseDto,
+  LessonRequestResultDto,
 } from './lessons.dto.js';
 import { LessonsQueryPipe } from './lesson-period.js';
 import type { ParsedLessonsQuery } from './lesson-period.js';
@@ -70,7 +72,7 @@ export class StudentLessonsController {
     operationId: 'getStudentLessons',
     summary: 'Student lesson list or monthly calendar',
     description:
-      'Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.',
+      'Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns a calendar capped at 62; overflow is 422. Explicit view=list permits pagination of that month. Optional subjectId narrows owned enrollments.',
   })
   @ApiResponse({ status: 200, type: LessonsResponseDto })
   async list(
@@ -78,6 +80,37 @@ export class StudentLessonsController {
     @Query(LessonsQueryPipe) query: LessonsQueryDto,
   ): Promise<LessonsResponseDto> {
     return unwrap(await this.lessons.list(student, query as ParsedLessonsQuery));
+  }
+  @Get(':lessonId/requests/:requestKey')
+  @UseGuards(StudentLessonScopeGuard)
+  @ApiOperation({
+    operationId: 'getStudentLessonRequestResult',
+    summary: 'Reconcile one owned lesson request after an uncertain command response',
+    description:
+      'Read-only lookup of an addressed student CRM task using its original idempotency key. Missing or still uncommitted task remains UNKNOWN.',
+  })
+  @ApiParam({ name: 'lessonId', format: 'uuid', type: String })
+  @ApiParam({ name: 'requestKey', format: 'uuid', type: String })
+  @ApiQuery({ name: 'type', required: false, enum: ['RESCHEDULE_REQUEST', 'ATTENDANCE_DISPUTE'] })
+  @ApiResponse({ status: 200, type: LessonRequestResultDto })
+  async requestResult(
+    @StudentCtx() student: IStudentContext,
+    @Param('lessonId') lessonId: string,
+    @Param('requestKey') key: string,
+    @Query() query: unknown,
+  ): Promise<LessonRequestResultDto> {
+    const input = object(query, ['type']);
+    if (
+      input.type !== undefined &&
+      !['RESCHEDULE_REQUEST', 'ATTENDANCE_DISPUTE'].includes(input.type as string)
+    )
+      return fail(domainError('INVALID_INPUT', 400));
+    return this.lessons.requestResult(
+      student,
+      uuid(lessonId),
+      uuid(key),
+      input.type as 'RESCHEDULE_REQUEST' | 'ATTENDANCE_DISPUTE' | undefined,
+    );
   }
   @Post(':lessonId/reschedule-request')
   @HttpCode(201)

@@ -1,0 +1,21 @@
+{
+  "status": "PASS scoped technical foundation",
+  "basis": "f5fd3becbc1f779edbd99b3af55618f1b74ec9bee74ca06d57bb3c3eb497acb3",
+  "requiredControls": 30,
+  "exports": 41,
+  "stories": 46,
+  "unit": 137,
+  "renders": 368,
+  "axeScans": 102,
+  "violationsReported": 0,
+  "incompleteReview": "a11y-review.md",
+  "routeBudgets": "48/48 PASS",
+  "maxBytes": 254567,
+  "repositoryAudit": "FAIL — existing API/Jest chains; audit-summary.json",
+  "actualAT": "NOT_RUN — TASK-071",
+  "provisionalApproval": "OPEN",
+  "productionDBProviderFndGate": "NOT_RUN",
+  "localReportLinksChecked": 35,
+  "acceptedSourceHashesRechecked": 224,
+  "nextTaskStarted": false
+}

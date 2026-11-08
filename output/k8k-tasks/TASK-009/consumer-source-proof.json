@@ -1,0 +1,15 @@
+{
+  "sameDateStateQueryKeysAndSDKRead": true,
+  "sameListCalendarRenderAndMonthPicker": true,
+  "sameLessonDetailRescheduleAndActionHooks": true,
+  "changedBeforeInputs": [
+    "apps/student-cabinet/package.json",
+    "apps/student-cabinet/src/pages/Lessons.tsx",
+    "package.json",
+    "packages/ui/package.json",
+    "packages/ui/src/index.ts",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/style.css",
+    "pnpm-lock.yaml"
+  ]
+}

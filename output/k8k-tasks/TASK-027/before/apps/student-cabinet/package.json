@@ -1,0 +1,39 @@
+{
+  "name": "@online-school/student-cabinet",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b --pretty false && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "typecheck:ui-controls": "tsc -p tsconfig.ui-controls.json --pretty false",
+    "lint": "eslint . --max-warnings 0",
+    "test": "pnpm run test:presentation && pnpm run build && playwright test --config playwright.config.mjs",
+    "test:a11y": "pnpm run build && node tests/accessibility.mjs",
+    "test:presentation": "node --test tests/k8k-presentation.test.mjs",
+    "test:subject-hub": "playwright test --config playwright.subject-hub.config.mjs subject-hub.spec.mjs --grep-invert subject-baseline",
+    "test:subject-baseline": "playwright test --config playwright.subject-hub.config.mjs --grep subject-baseline",
+    "test:subject-subscriptions": "playwright test --config playwright.subject-subscriptions.config.mjs subject-subscriptions.spec.mjs",
+    "typecheck:ui-overlays": "tsc -p tsconfig.ui-overlays.json --pretty false",
+    "typecheck:ui-composites": "tsc -p tsconfig.ui-composites.json --pretty false"
+  },
+  "dependencies": {
+    "@online-school/api-contracts": "workspace:*",
+    "@online-school/shared": "workspace:*",
+    "@tanstack/react-query": "5.105.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "7.18.5",
+    "zustand": "5.0.16",
+    "@online-school/account-ui": "workspace:*",
+    "@online-school/ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@vitejs/plugin-react": "5.2.0",
+    "lighthouse": "13.6.0",
+    "vite": "7.3.7"
+  }
+}

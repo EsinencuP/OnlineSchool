@@ -1,15 +1,18 @@
 # STU-02 — Dashboard
 
 `GET /api/v1/student/dashboard` uses all STU-01 guards before consulting the cache.
-It returns the nearest future SCHEDULED lesson, homework counts, one subscription
-summary, skill counts and a server `generatedAt` timestamp. Every source binds
+It returns the current eligible SCHEDULED lesson or the nearest future SCHEDULED
+lesson, homework counts, one subscription summary, skill counts and a server
+`generatedAt` timestamp. Every source binds
 `request.studentCtx.studentProfileId`; query parameters cannot select another pupil.
-The four source reads start together with `Promise.all`, sharing one as-of time.
+On a cache miss the four source reads start together with `Promise.all`, sharing
+one as-of time.
 
 ## Existing model mapping
 
-- Product `LessonAppointment` is the existing `LessonOccurrence`. Cancelled,
-  STAR_PENDING and past lessons are excluded. The active assignment must match the
+- Product `LessonAppointment` is the existing `LessonOccurrence`. Only SCHEDULED
+  lessons qualify, ordered by scheduled start and ID within the selection above.
+  The active assignment must match the
   enrollment and scheduled teacher; ended assignments and deactivated teachers
   cannot supply a Meet link.
 - Homework uses issued, non-cancelled `HomeworkDelivery`, the latest submitted
@@ -45,22 +48,23 @@ assignment. Existing manager/director assignment creation accepts optional
 audit/outbox pipeline. No new endpoint or MFA bypass is introduced. Only canonical
 `https://meet.google.com/xxx-xxxx-xxx` URLs are accepted; absent links remain null.
 
-The SQL additionally requires paid rights or a limited director admission for
+The shared student lesson SQL requires paid rights or a limited director admission for
 **this lesson's enrollment**, with no current freeze. Paid access to another
-subject cannot reveal the link. The response exposes it only when canJoin is true
-and the time difference is <=10 minutes, without truncating fractional minutes.
-The -60 minute lower bound is retained, but the next-lesson selector deliberately
-only selects future lessons as requested. Missing/unsafe links produce false/null.
+subject cannot reveal the link. The response exposes it from 10 minutes before
+through 60 minutes after scheduled start, with both endpoints included and
+millisecond precision. Missing or unsafe links produce false/null. The lesson
+has its own `status` and `meetAsOf` timestamp from the read that checked eligibility.
 Opening Meet does not confirm attendance or consume a right.
 
 ## Cache and invalidation
 
 `DashboardCacheInterceptor` extends Nest CacheInterceptor and uses CACHE_MANAGER
-with key `dashboard:{studentProfileId}` and a maximum 30,000ms TTL. HTTP responses
-remain `Cache-Control: no-store`; this is a private application cache. It expires
-early at the join-window opening and lesson start. Cache hits retain the actual
-snapshot's generatedAt (at most 30 seconds old), rather than pretending to rebuild
-data. In-flight loads for the same student/revision are coalesced.
+with key `dashboard:summary:{studentProfileId}` and a maximum 30,000ms TTL.
+HTTP responses remain `Cache-Control: no-store`. The private application cache
+holds homework, subscription and skill summaries with their actual `generatedAt`.
+In-flight summary loads for the same student and revision are coalesced. Every
+request reads its own lesson projection and verifies the revision before returning
+it. The summary cache never stores the lesson or its link.
 
 The same migration adds `student_dashboard_revisions`. AFTER row triggers bump
 the affected student's revision in the source-write transaction, covering homework,

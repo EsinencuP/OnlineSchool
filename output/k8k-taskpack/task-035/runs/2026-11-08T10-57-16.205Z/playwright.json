@@ -1,0 +1,405 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.student-gate.config.mjs",
+      "--grep=subject-hub independent|subject-hub homework context|TASK-035 keyboard"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.student-gate.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "studentGate": true,
+      "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/",
+      "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/evidence/TASK-025/",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "student-k8k",
+        "name": "student-k8k",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "editor-preservation",
+        "name": "editor-preservation",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "student.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": {},
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-57-16.205Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "student-k8k",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "student-k8k"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-57-16.205Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-57-16.205Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "editor-preservation",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "student.spec.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "editor-preservation"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-57-16.205Z\\playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet\\",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": false,
+      "env": {
+        "STUDENT_FIXTURE_DIST": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\build\\student"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "student-gate.spec.mjs",
+      "file": "student-gate.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-035 keyboard, 200% reflow and motion preference ru",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1718,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:57:21.750Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-24212b3077794823762c",
+          "file": "student-gate.spec.mjs",
+          "line": 137,
+          "column": 34
+        },
+        {
+          "title": "TASK-035 keyboard, 200% reflow and motion preference ro",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1006,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:57:23.558Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-34dadd8a17feea8a5d72",
+          "file": "student-gate.spec.mjs",
+          "line": 137,
+          "column": 34
+        }
+      ]
+    },
+    {
+      "title": "subject-hub.spec.mjs",
+      "file": "subject-hub.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "subject-hub independent permissions and scoped reads reject foreign or repeated selectors",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1423,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:57:24.600Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "05a46c8a4a4d2022fdda-492a58e36708bf8c6848",
+          "file": "subject-hub.spec.mjs",
+          "line": 173,
+          "column": 1
+        },
+        {
+          "title": "subject-hub homework context, scroll, guard and saved draft",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5500,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Черновик ещё не сохранён' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Черновик ещё не сохранён' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Черновик ещё не сохранён' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Черновик ещё не сохранён' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Черновик ещё не сохранён' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Черновик ещё не сохранён' })\u001b[22m\n\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs:314:24",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                      "column": 24,
+                      "line": 314
+                    },
+                    "snippet": "  312 |   await page.getByRole('link', { name: 'К предмету' }).click();\n  313 |   const dialog = page.getByRole('dialog', { name: 'Черновик ещё не сохранён' });\n> 314 |   await expect(dialog).toBeVisible();\n      |                        ^\n  315 |   await expect(dialog.getByRole('button', { name: 'Остаться' })).toBeInViewport();\n  316 |   await page.keyboard.press('Escape');\n  317 |   await expect(dialog).toHaveCount(0);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                        "column": 24,
+                        "line": 314
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('dialog', { name: 'Черновик ещё не сохранён' })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('dialog', { name: 'Черновик ещё не сохранён' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('dialog', { name: 'Черновик ещё не сохранён' })\u001b[22m\n\n\n  312 |   await page.getByRole('link', { name: 'К предмету' }).click();\n  313 |   const dialog = page.getByRole('dialog', { name: 'Черновик ещё не сохранён' });\n> 314 |   await expect(dialog).toBeVisible();\n      |                        ^\n  315 |   await expect(dialog.getByRole('button', { name: 'Остаться' })).toBeInViewport();\n  316 |   await page.keyboard.press('Escape');\n  317 |   await expect(dialog).toHaveCount(0);\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs:314:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:57:26.032Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-57-16.205Z\\test-results\\subject-hub-subject-hub-ho-edaea-croll-guard-and-saved-draft-student-k8k\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                    "column": 24,
+                    "line": 314
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "05a46c8a4a4d2022fdda-667468c63176e902112d",
+          "file": "subject-hub.spec.mjs",
+          "line": 288,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T10:57:20.583Z",
+    "duration": 11149.32,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

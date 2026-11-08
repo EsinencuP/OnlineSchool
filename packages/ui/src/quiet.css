@@ -1,0 +1,300 @@
+/* Owner visual direction, 2026-11-08: typography and space instead of decorative chrome. */
+:root[data-k8k] :is(h1, h2, h3, h4, th, dt) {
+  letter-spacing: normal;
+  text-transform: none;
+}
+:root[data-k8k]
+  .k8k-shell
+  .k8k-main
+  :is(
+    .panel,
+    .card,
+    .k8k-card,
+    .k8k-student-card,
+    .dashboard-card,
+    .metric-card,
+    .stats > section,
+    .lead-column,
+    .k8k-list-row,
+    .k8k-kanban-column
+  ) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  padding-inline: 0;
+}
+:root[data-k8k]
+  .k8k-shell
+  :is(.k8k-status-chip, .k8k-student-status, .status, .badge, .currency-tag),
+:root[data-k8k] .k8k-status-chip {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-weight: 500;
+}
+:root[data-k8k] .k8k-count {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--k8k-ink);
+  font-weight: 600;
+}
+:root[data-k8k] .k8k-sidebar .k8k-nav-link:is(:hover, [aria-current]) {
+  background: var(--surface);
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-shell :is(.k8k-lesson-hero, .k8k-shortcut) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--k8k-ink);
+  padding-inline: 0;
+}
+:root[data-k8k] .k8k-shell .k8k-main .k8k-lesson-hero h2 {
+  color: var(--k8k-ink);
+  font-size: var(--k8k-font-xl);
+}
+:root[data-k8k] .k8k-shell .k8k-main :is(.k8k-main-action, .k8k-lesson-hero .primary) {
+  color: var(--surface);
+  background: var(--brand-text);
+  border-color: var(--brand-text);
+}
+:root[data-k8k]
+  .k8k-shell
+  .k8k-main
+  :is(
+    .lesson,
+    .simple-row,
+    .k8k-student-list > li,
+    .homework-list > li,
+    .history-list > li,
+    .k8k-notification-drawer li
+  ) {
+  border-block: 0;
+}
+:root[data-k8k] :is(.k8k-state-message, .k8k-critical:not(:empty), .k8k-event-queue) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+}
+:root[data-k8k] .k8k-shell :is(.k8k-stages li, .k8k-stages-track li) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-stages-track li[aria-current='step'] {
+  color: var(--k8k-ink);
+}
+:root[data-k8k] .k8k-table-scroll {
+  border: 0;
+  border-radius: 0;
+}
+:root[data-k8k] .k8k-dense-table td {
+  border: 0;
+}
+:root[data-k8k] .k8k-dense-table th {
+  background: transparent;
+  border-block-end: 1px solid var(--border);
+}
+:root[data-k8k] :is(.k8k-tab-trigger, .k8k-segment-option) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-tab-trigger[data-state='active'],
+:root[data-k8k] .k8k-segment-option[data-selected='true'] {
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: var(--k8k-space-2);
+}
+:root[data-k8k] .k8k-shell .k8k-main :is(.k8k-button-secondary, .k8k-button-ghost) {
+  border-color: transparent;
+  background: transparent;
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-shell .k8k-main .k8k-button:disabled {
+  color: var(--text-muted);
+  background: transparent;
+}
+:root[data-k8k] .k8k-overlay-surface,
+:root[data-k8k] .k8k-header .account-popover {
+  border: 0;
+  box-shadow: var(--k8k-shadow);
+}
+:root .login,
+:root .login-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-content: center;
+  min-height: 100dvh;
+  padding: var(--k8k-space-5);
+  background: var(--bg-page);
+}
+:root .login :is(.login-form),
+:root .login-page :is(.login-form-side, .login-form-wrap) {
+  width: min(100%, var(--k8k-overlay-width));
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+:root .login :is(.brand, h1) {
+  color: var(--k8k-ink);
+}
+:root .login h1 {
+  font-size: var(--k8k-font-2xl);
+  margin-block: var(--k8k-space-5) var(--k8k-space-3);
+}
+
+:root[data-k8k] .k8k-header,
+:root[data-k8k] .k8k-header .account-menu summary {
+  border: 0;
+}
+:root[data-k8k] .k8k-button-ghost {
+  border-color: transparent;
+  background: transparent;
+}
+:root[data-k8k] .k8k-shell .k8k-student-shortcuts a {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+}
+:root[data-k8k] .k8k-shell :is(.metric-icon, .empty-icon, .lesson-date) {
+  border: 0;
+  background: transparent;
+  color: var(--brand-text);
+}
+:root[data-k8k] .k8k-shell :is(.metric-value, .stats strong) {
+  font-size: var(--k8k-font-xl);
+}
+
+/* The fallback cabinet keeps the same visual restraint without enabling K8K flows. */
+:root:not([data-k8k]) body {
+  background: var(--bg-page);
+  color: var(--k8k-ink);
+  font-family: var(--k8k-font);
+}
+:root:not([data-k8k]) :is(h1, h2, h3, h4, th, dt) {
+  letter-spacing: normal;
+  text-transform: none;
+}
+:root:not([data-k8k])
+  :is(.panel, .card, .metric-card, .stats > section, .dashboard-card, .lead-column) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+:root:not([data-k8k]) :is(.badge, .status, .currency-tag) {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+}
+
+:root[data-k8k] .k8k-shell .k8k-main .k8k-lesson-hero .k8k-student-link {
+  color: var(--brand-text);
+}
+:root
+  :is(.k8k-shell, .login, .login-page)
+  :is(
+    .field label,
+    .dashboard-empty p,
+    .calendar-note,
+    .dashboard-updated,
+    .section-heading > span,
+    .lesson-date span,
+    .lesson p,
+    .simple-row p,
+    .empty,
+    .login-help
+  ) {
+  color: var(--text-muted);
+}
+:root[data-k8k] .k8k-shell .k8k-header .account-menu > summary,
+:root[data-k8k] .k8k-shell .k8k-bell {
+  border: 0;
+  background: transparent;
+}
+
+:root .k8k-shell :is(.count, .meet-indicator, .panel-tabs a span, .panel-tabs span span) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding-inline: 0;
+  color: inherit;
+}
+:root .k8k-shell :is(.tabs, .panel-tabs) {
+  border: 0;
+  background: transparent;
+}
+:root .k8k-shell :is(.panel-tabs a, .panel-tabs > span) {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+:root .k8k-shell :is(.panel-tabs .active, .panel-tabs .selected, .tabs [aria-current='page']) {
+  text-decoration: underline;
+  text-underline-offset: var(--k8k-space-2);
+}
+:root :is(button, .button):disabled {
+  color: var(--text-muted);
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+:root[data-k8k] body :is(.k8k-card, .k8k-list-row, .k8k-toast, .k8k-calendar-day) {
+  border: 0;
+}
+
+:root[data-k8k] .k8k-shell .k8k-header .account-menu {
+  border: 0;
+  padding-block: 0;
+}
+
+:root body :is(.summary, .auth-card, .lesson-card, .portfolio-summary, .notice) {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+:root
+  body
+  :is(
+    .record-list li,
+    .record-cards > li,
+    .workspace-list li,
+    .table-row,
+    .lesson-row,
+    .notification-list > li,
+    .skill-list > li,
+    .k8k-skill-list > li,
+    .k8k-subscription-summary + .k8k-subscription-summary,
+    .k8k-calendar-day li
+  ) {
+  border-block: 0;
+}
+:root body :is(.summary-icon, .row-icon) {
+  border: 0;
+  background: transparent;
+  color: var(--brand-text);
+}
+
+:root[data-k8k] .k8k-bottom-nav .k8k-nav-link {
+  padding-inline: 0;
+}

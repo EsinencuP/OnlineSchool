@@ -1,0 +1,168 @@
+{
+  "task": "TASK-029",
+  "status": "DONE",
+  "scope": "Local implementation and scoped mock/browser verification",
+  "base": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "82e1b71a09fa429ab65f7ef6b10e2e51fa8846964985fa444c9ac4cb33d63bc7"
+  },
+  "checks": [
+    {
+      "id": "same_domain_calendar_list_and_url",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "One lesson domain, period/view/month/page/subject/historyPage preserved on back navigation"
+    },
+    {
+      "id": "calendar_overflow_selected_month",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "65-row fixture falls back to selected YYYY-MM with server total and paginated rows"
+    },
+    {
+      "id": "dst_and_midnight",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+      "detail": "Student local day, spring/autumn 23/25h and ISO weeks 167/169h, exclusive upper bound"
+    },
+    {
+      "id": "confirmed_fact_projection",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/history.log",
+      "detail": "History source requires confirmed outcome, explicit absence or existing approved-cancellation charge, mock result mapping"
+    },
+    {
+      "id": "actual_and_scheduled_context",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "Planned teacher/duration remain separate from actual history, original scheduled time shown"
+    },
+    {
+      "id": "lesson_resource_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/resources.log",
+      "detail": "Issued homework and explicit verified/unexpired file permissions remain scoped to owner and lesson"
+    },
+    {
+      "id": "history_targeted_read_and_nulls",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/history.log",
+      "detail": "Direct lesson filter before count, 9007199254740993 preserved, unknown snapshots null"
+    },
+    {
+      "id": "server_reschedule_24h",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+      "detail": "Exactly 24h admitted, minus 1ms rejected, student-zone preferredDate"
+    },
+    {
+      "id": "server_dispute_30days",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/history.log",
+      "detail": "Exactly 30 elapsed days admitted, plus 1ms rejected, restored or unpublished rights denied"
+    },
+    {
+      "id": "replay_conflict_csrf",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/history.log",
+      "detail": "201 same-key replay, changed-body 422, open-case 409 and normal CSRF"
+    },
+    {
+      "id": "one_intent_pending",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "Double submit creates one task and keeps lesson and balance unchanged"
+    },
+    {
+      "id": "unknown_reopen_reload",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "Only pending UUID stored by actor/lesson/type, reload stays UNKNOWN, receipt GET uses original key"
+    },
+    {
+      "id": "unknown_absent_no_retry",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "Absent task remains unknown, no new POST or success"
+    },
+    {
+      "id": "typed_receipt_owner_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+      "detail": "Receipt type disambiguates command namespace, foreign lesson denied, other actor key unknown, no-store"
+    },
+    {
+      "id": "auth_denial_and_late_response",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "403 removes cached snapshots/actions, session expiry clears private pending state and discards late response"
+    },
+    {
+      "id": "trimmed_input_validation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/browser.log",
+      "detail": "Whitespace-only description sends no request, local validation is localized"
+    },
+    {
+      "id": "no_financial_or_attendance_effect",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/history.log",
+      "detail": "Existing CRM task/audit/outbox only, no lesson confirmation, ledger/refund/right mutation"
+    },
+    {
+      "id": "ru_ro_four_widths_keyboard",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/playwright.json",
+      "detail": "40 matrix screenshots, 100-character names, 48px primary, focus restoration, no horizontal overflow"
+    },
+    {
+      "id": "meet_task028_preserved",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/dashboard.log",
+      "detail": "38 existing root Meet tests plus current T0/deadline Chromium case and 11 presentation tests"
+    },
+    {
+      "id": "backward_compatible_sdk",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/contracts.json",
+      "detail": "146 existing operations retained, one GET added, six scoped optional params, two optional metadata fields"
+    },
+    {
+      "id": "adjacent_api_isolation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/contracts.json",
+      "detail": "Reports and skills query parameters preserved with separate LessonHistoryQueryDto"
+    },
+    {
+      "id": "budgets_fonts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/budgets.json",
+      "detail": "50/50 routes under 256000 bytes by v2 method with local Golos subsets"
+    },
+    {
+      "id": "preservation_migrations",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-029/preservation.json",
+      "detail": "38 source snapshots valid, 31 migration checksums unchanged, original paths retained"
+    },
+    {
+      "id": "live_postgresql_execution",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-029/report.md",
+      "detail": "No authorized working DB target used for this TASK, SQL shape and mocked result checks only"
+    },
+    {
+      "id": "real_transaction_and_index_races",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-029/report.md",
+      "detail": "Storage simulations do not prove actual PostgreSQL concurrency or applied triggers"
+    },
+    {
+      "id": "production_and_full_role_phase_gate",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-029/report.md",
+      "detail": "Production CRM/Meet provider/OAuth/POC/G4 and FND-GATE require separately authorized acceptance"
+    }
+  ]
+}

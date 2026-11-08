@@ -1,0 +1,51 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "ec13d68e673e737b62e94dfd42bc05364988d9fec39ea2635e2d697fc821c5ed",
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/ui add --offline --save-exact --ignore-scripts @js-temporal/polyfill@0.5.1",
+      "exitCode": 0,
+      "log": null
+    },
+    {
+      "command": "pnpm --filter @online-school/ui build",
+      "exitCode": 0,
+      "log": null
+    },
+    {
+      "command": "pnpm --filter @online-school/ui test",
+      "exitCode": 0,
+      "log": "ui-test.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "exitCode": 0,
+      "log": "ui-lint.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/manager-web typecheck:ui-calendar",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "pnpm exec eslint apps/manager-web/src/pages/Schedule.tsx apps/student-cabinet/src/pages/Lessons.tsx apps/manager-web/test/ui-calendar/fixture.tsx scripts/k8k-calendar-evidence.mjs --max-warnings 0",
+      "exitCode": 0,
+      "log": "targeted-lint.log"
+    },
+    {
+      "command": "pnpm k8k:calendar:evidence",
+      "exitCode": 0,
+      "log": "evidence.log"
+    }
+  ],
+  "summary": {
+    "passed": true,
+    "browserCases": 20,
+    "screenshots": 10,
+    "routes": 48,
+    "maxTotal": 247590,
+    "sourceFiles": 501,
+    "mockReads": 20,
+    "unexpected": []
+  }
+}

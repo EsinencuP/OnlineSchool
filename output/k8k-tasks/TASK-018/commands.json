@@ -1,0 +1,104 @@
+[
+  {
+    "command": "pnpm --filter @online-school/api build",
+    "exit": 0,
+    "artifact": "api-build-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm test:k8k-staff-context",
+    "exit": 0,
+    "artifact": "staff-tests-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runTestsByPath tests/unit/manager-scope.test.mjs tests/unit/manager-http.test.mjs tests/unit/manager-payments.test.mjs tests/unit/manager-payments-http.test.mjs --roots tests --runInBand",
+    "exit": 0,
+    "artifact": "existing-targeted-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/api export:openapi",
+    "exit": 0,
+    "artifact": "openapi-export-final.log",
+    "target": "standard script with NODE_OPTIONS --import=file:///D:/OnlineSchool/output/k8k-tasks/TASK-018/no-db-export.mjs; DatabaseService.client access throws"
+  },
+  {
+    "command": "pnpm --filter @online-school/api-contracts generate:client",
+    "exit": 0,
+    "artifact": "sdk-generate-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/api-contracts build",
+    "exit": 0,
+    "artifact": "contracts-build-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/student-cabinet --filter @online-school/manager-web --filter @online-school/platform typecheck",
+    "exit": 0,
+    "artifact": "consumers-typecheck-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/platform typecheck",
+    "exit": 0,
+    "artifact": "platform-typecheck-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/platform test:staff-context",
+    "exit": 0,
+    "artifact": "browser-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm --filter @online-school/platform test:account-chrome",
+    "exit": 0,
+    "artifact": "account-regression.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec eslint apps/platform/src/App.tsx apps/platform/src/StaffCoverageNote.tsx apps/platform/test/staff-context/smoke.mjs --max-warnings 0",
+    "exit": 0,
+    "artifact": "frontend-lint-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec eslint apps/api/test/staff-context-sdk.test.mjs --max-warnings 0",
+    "exit": 0,
+    "artifact": "sdk-test-lint.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec eslint apps/api/test/staff-context.test.mjs --max-warnings 0",
+    "exit": 0,
+    "artifact": "final-test-lint.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec prettier --check apps/api/src/modules/platform/workspace.service.ts package.json",
+    "exit": 0,
+    "artifact": "format-check-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec stylelint apps/platform/src/staff-coverage.css --config stylelint.config.mjs",
+    "exit": 0,
+    "artifact": "css-lint.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "node output/k8k-tasks/TASK-018/contracts-evidence.mjs",
+    "exit": 0,
+    "artifact": "contracts-evidence.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  },
+  {
+    "command": "pnpm exec eslint apps/api/src/core/actor apps/api/src/core/core.module.ts apps/api/src/core/policy/policy.service.ts apps/api/src/modules/platform apps/api/src/modules/manager/me/manager-me.service.ts apps/api/src/modules/manager/context/manager-context.ts apps/api/src/modules/manager/dto/manager-me.response.dto.ts apps/api/src/modules/manager/payments/manager-payments.controller.ts apps/api/src/modules/manager/payments/manager-payments.service.ts apps/api/src/modules/manager/finance/manager-finance.facade.ts apps/api/src/modules/schedule/outcomes.service.ts apps/api/src/modules/schedule/schedule.module.ts apps/api/src/modules/finance/payments.service.ts apps/api/src/modules/finance/finance-ledger.service.ts apps/api/src/modules/finance/manager-payments/workflow.service.ts apps/api/test/staff-context.test.mjs tests/unit/manager-http.test.mjs tests/unit/manager-scope.test.mjs apps/manager-web/src/test/fixtures.ts --max-warnings 0",
+    "exit": 0,
+    "artifact": "lint-final.log",
+    "target": "local compilation, schemas, mocked HTTP/SDK or intercepted browser; no DB/provider"
+  }
+]

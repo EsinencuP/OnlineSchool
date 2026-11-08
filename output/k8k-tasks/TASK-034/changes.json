@@ -1,0 +1,608 @@
+{
+  "status": "PASS",
+  "basis": "task snapshots, not the whole pre-existing dirty diff",
+  "rows": [
+    {
+      "path": "apps/api/src/student/materials/README.md",
+      "before": "8a09c3aff4b051ae6ef292950cd0b84742aeff7199b000600719a5f3c8e4fa5b",
+      "after": "4391a06515340695df9cd685ec4f695ecf58db7e6d0f6a763fc2ed5fb7b87848",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.controller.ts",
+      "before": "ded7fe4aabfad1962b2850a5f3a5c2e89ade654c3520f470b657c9b182038dfc",
+      "after": "ded7fe4aabfad1962b2850a5f3a5c2e89ade654c3520f470b657c9b182038dfc",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.dto.ts",
+      "before": "29ffaa62337ca4dc2fd1b95afa8d97dbfc105c8c13c9fa28baf56cd2648a3b46",
+      "after": "bef1d4beb5cabe45ff6a1b6fe7cf0d7b6295d43ef7dc157a7865e1c0e09cabbf",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.service.ts",
+      "before": "64da67214e14f5ff93715f26c9773a589d1bd37025f6e2b420016e03f42e5804",
+      "after": "74c3f8d7a42b8893778231b2e09514fb89ac0ddfe459392a01171c1388ab51cd",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/README.md",
+      "before": "f5a64d7115985e08d8856681101a6904d0e5e31a1ddd5c89f7d176019694b907",
+      "after": "18588abe3cd3266a1bd61da31fc22e8c08114375f55c390f1afb6444247ff211",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.controller.ts",
+      "before": "31be3ed2fc76eb11b3e23816081c2598bfa90eaad5ceec60c58f256014607385",
+      "after": "31be3ed2fc76eb11b3e23816081c2598bfa90eaad5ceec60c58f256014607385",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.dto.ts",
+      "before": "c603da6357d47d9d6355adb9525edf88a1e8ed85f76f33c8e435f03267198629",
+      "after": "c603da6357d47d9d6355adb9525edf88a1e8ed85f76f33c8e435f03267198629",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.service.ts",
+      "before": "02a88664fc70dba9cc268347ad15c06bdb8e3c2d60a6a15388df57a3100e5fe7",
+      "after": "02a88664fc70dba9cc268347ad15c06bdb8e3c2d60a6a15388df57a3100e5fe7",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/email-otp.ts",
+      "before": "b7a5b77eec26ef87410d275455aa9eeed6c3b76662c9fd0b2025438b6a517861",
+      "after": "b7a5b77eec26ef87410d275455aa9eeed6c3b76662c9fd0b2025438b6a517861",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/email.service.ts",
+      "before": "0ef10ec4836753ef13abce5356cb05ae266e0ecfe1cae20fb2ce886a02550fa1",
+      "after": "0ef10ec4836753ef13abce5356cb05ae266e0ecfe1cae20fb2ce886a02550fa1",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/security-commands.ts",
+      "before": "689639a6c5f1dc6800ef6afbd22ab43361a15b7eecb899ccad4307e0f00ae89b",
+      "after": "689639a6c5f1dc6800ef6afbd22ab43361a15b7eecb899ccad4307e0f00ae89b",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/security.controller.ts",
+      "before": "2c7c3dc818710132e7b8ae36d2df5a76d47c64ba2264f25ac10f2f0b13e0f4d9",
+      "after": "2c7c3dc818710132e7b8ae36d2df5a76d47c64ba2264f25ac10f2f0b13e0f4d9",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/security.dto.ts",
+      "before": "f887e97d49a74502c439dca4963ff752bce64caa60ddb1fd4fd7e7b1c9295887",
+      "after": "f887e97d49a74502c439dca4963ff752bce64caa60ddb1fd4fd7e7b1c9295887",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/security/sessions.service.ts",
+      "before": "765fffca96d656a4bb633b3997eb285a81298ed6a62167f58d35c9d05c4712b6",
+      "after": "765fffca96d656a4bb633b3997eb285a81298ed6a62167f58d35c9d05c4712b6",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "before": "cf26f96ae6f8e852a7e208c75ea8d00defe17bdf83153dedf7869a4e41fdb0cb",
+      "after": "979f5d3e3305f476e7254332a49612482ab2f99c23010b4fb5acafdae4e60925",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "before": "68cea10e3e963e2699478a989892da7ca8b9645684d39dbdce857f4233c13f29",
+      "after": "68cea10e3e963e2699478a989892da7ca8b9645684d39dbdce857f4233c13f29",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "before": "d3af98bf345c453ea60bf615cbb17d4748d1135b21f365eda29ca0fe2c977f2d",
+      "after": "d3af98bf345c453ea60bf615cbb17d4748d1135b21f365eda29ca0fe2c977f2d",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/api.ts",
+      "before": "e2a815fd4feaebd7caeb202d02dec8e504bfb25d6a8832d0d9917785322917cf",
+      "after": "c3e05905a0132f4ffa7c244eb1771f5a736a46a5971130c626923f9d3a8bfd0b",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "before": "f648824aa18f8ad8d51b7fa19f5790cfceff7c65eabee3b3266ccd6c67a0da53",
+      "after": "dd67a11a71d849fdf4f983a11197c9f4b2f1f7020ad1156c8a72fda09f351fb3",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-copy.tsx",
+      "before": "604de95165f58397879525f108e92bf87f3bc645a542495492a11f6bac9cfc11",
+      "after": "604de95165f58397879525f108e92bf87f3bc645a542495492a11f6bac9cfc11",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-navigation.ts",
+      "before": "298061672c67cbfe99aeffaeda801bd690d4070950a9568c57b974082e431e70",
+      "after": "298061672c67cbfe99aeffaeda801bd690d4070950a9568c57b974082e431e70",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-copy.ts",
+      "before": "1ad7f30d636306ae460904ccaf822cfa71805738a980475c0ea7738b89bd3a9c",
+      "after": "1ad7f30d636306ae460904ccaf822cfa71805738a980475c0ea7738b89bd3a9c",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-navigation.ts",
+      "before": "8069fd02e581b0f27d15e6a279628bcbeae30940db424b5f767646a7bfc0c6db",
+      "after": "8069fd02e581b0f27d15e6a279628bcbeae30940db424b5f767646a7bfc0c6db",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-requests.tsx",
+      "before": "eed4ae449fd0deda58df23d74ea45113f6fca9948316265b2f38f157bd20eb8b",
+      "after": "eed4ae449fd0deda58df23d74ea45113f6fca9948316265b2f38f157bd20eb8b",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/main.tsx",
+      "before": "aabb59ccb2d8c7a406d05c4293d89979619a14a608637e84e19cc852a3ceff80",
+      "after": "aabb59ccb2d8c7a406d05c4293d89979619a14a608637e84e19cc852a3ceff80",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/meet-scope.tsx",
+      "before": "5736650cd0366729905f3017fa1e7642acd434d977d1a7ad913aa13366061c2b",
+      "after": "5736650cd0366729905f3017fa1e7642acd434d977d1a7ad913aa13366061c2b",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/notification-copy.ts",
+      "before": "579954224803220981fcd921e0e8e36c1560e993c2c7fbe2f9b86aeff15b85e7",
+      "after": "579954224803220981fcd921e0e8e36c1560e993c2c7fbe2f9b86aeff15b85e7",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Account.tsx",
+      "before": "31255e4124f7ba77ffeac274e0b94cddad45b1594b40f9c12cc47948d4f95e09",
+      "after": "70bf3b35862b3c99582f37b6f84908d39bbb969c2ce0f2ddc49aaa97d372c7d4",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "before": "55b33713f146cc81fb33ddd1bb18e6745f53095fb361581664b70ac13fac2978",
+      "after": "55b33713f146cc81fb33ddd1bb18e6745f53095fb361581664b70ac13fac2978",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Homework.tsx",
+      "before": "07c275ce1a678ddcce5454166f95902cdf58145ec72c159f23b2742fbdac6ffe",
+      "after": "07c275ce1a678ddcce5454166f95902cdf58145ec72c159f23b2742fbdac6ffe",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "before": "3e5383dfcf7d39adbb2abb3b70fa434df63c1abf24722019b8fd3b6002eec217",
+      "after": "ccc8ad83550028ad0c1bf1db1af7843ab3b2c3bfec7753797fe324f737cc5410",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Lessons.tsx",
+      "before": "5c309f1d793620bba7cfc2b7734b44d4641f497680c306f37ff764b7cc838ec0",
+      "after": "5c309f1d793620bba7cfc2b7734b44d4641f497680c306f37ff764b7cc838ec0",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Reports.tsx",
+      "before": "c2e1c3ecacd24a819e11606caea8ee384be12a061b3724d2fee0c366baa9bab8",
+      "after": "2c0df468e31d5edfef74cc5bb314f9b5ea597c174e8de56967865306032a7e22",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/SkillMap.tsx",
+      "before": "50e67abb54550a6707d0c94373f9f9cfc41758d2a77abd28e170ad6a7c38fd37",
+      "after": "50e67abb54550a6707d0c94373f9f9cfc41758d2a77abd28e170ad6a7c38fd37",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "before": "8fcba710c453914ef8d9458fc07520541565a4601026eafe966a83f4b350906c",
+      "after": "8fcba710c453914ef8d9458fc07520541565a4601026eafe966a83f4b350906c",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subjects.tsx",
+      "before": "68709f61321a8a04642501e41f5d5bc394b453a574b40e7a2a20ee939ba9b4a5",
+      "after": "68709f61321a8a04642501e41f5d5bc394b453a574b40e7a2a20ee939ba9b4a5",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subscription.tsx",
+      "before": "ff1ff99f8f30d50ba5edacd351dc3beb4287b564204f7c6af515af07a81ade9f",
+      "after": "ff1ff99f8f30d50ba5edacd351dc3beb4287b564204f7c6af515af07a81ade9f",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/profile-help.tsx",
+      "before": "d3fe9ce4867a705514a4cda9b36380f10fc95782aa3e2b2e3c68fd23ffa8d50e",
+      "after": "3aaf6ac968fd0861abde23225a7e92a92563e96c0ba3ce37ee6bf7a053fa7427",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/report-copy.ts",
+      "before": "f4c23f9d316be4e420cece63eb3f2e3e8f97eff78aa5c581607eaa85f31fd5b1",
+      "after": "f4c23f9d316be4e420cece63eb3f2e3e8f97eff78aa5c581607eaa85f31fd5b1",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/report-export.tsx",
+      "before": "6fa8ba55efbcfd401f8916b0f8a64bfdb54b5b7bcf67ce952ed8e8fd60cd6f20",
+      "after": "6fa8ba55efbcfd401f8916b0f8a64bfdb54b5b7bcf67ce952ed8e8fd60cd6f20",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "before": "78cfbd14d5ba6eb5401a0f3dfab72850a444ab4f739ec3f29755981b3b0fb20a",
+      "after": "de2800f1d393f0fde517749f44bfac56a128f719a48d60c355e8f37829767479",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-copy.ts",
+      "before": "bf8f637d08cccc5b50179b9df77c98fcc11291e8dadcfcabc9032f56628e43e1",
+      "after": "bf8f637d08cccc5b50179b9df77c98fcc11291e8dadcfcabc9032f56628e43e1",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-widgets.tsx",
+      "before": "0bf00c505f03709495ca2ab4168f6d5cf5b18d4716077ab0b7a93165531f65a4",
+      "after": "0bf00c505f03709495ca2ab4168f6d5cf5b18d4716077ab0b7a93165531f65a4",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-copy.ts",
+      "before": "7dfbc2253418a5f92cdf44ebaefd0f88d1404b1bd50e5d7ba54d3987a7572cf4",
+      "after": "7dfbc2253418a5f92cdf44ebaefd0f88d1404b1bd50e5d7ba54d3987a7572cf4",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "before": "3b274d4d7d7a6e9cd577f4df0e05a2abfd6564308a8db598b1dd5ef5e4b88508",
+      "after": "765f6944b0a7826087451d92a1916309b59384926cf0320269d3051a341a0070",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "before": "55408f4442bb190a32401c82bbe4c9e93222f3f8c212e2c679b62e3494e88576",
+      "after": "55408f4442bb190a32401c82bbe4c9e93222f3f8c212e2c679b62e3494e88576",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "before": "cf4207d53cf1caeb32ba9ff27415a2f3fe692489dc3b80b6e413e2ae21c3e56d",
+      "after": "5bf0849eaced2d2d57cb58e6ef51241a6f858345a79a6c8f1682ed6b1110d4d3",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/style.css",
+      "before": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf",
+      "after": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-copy.ts",
+      "before": "b862d1df9ae72f71641b7b1957a77e5ed039cf3bbf5b2ea979aabf2957336671",
+      "after": "b862d1df9ae72f71641b7b1957a77e5ed039cf3bbf5b2ea979aabf2957336671",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-presentation.ts",
+      "before": "25865a69f2d9b78985a9395b3ee866c3f136d39b4aaa367c5c6af542347cabb8",
+      "after": "25865a69f2d9b78985a9395b3ee866c3f136d39b4aaa367c5c6af542347cabb8",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/ui-store.ts",
+      "before": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86",
+      "after": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "before": "8e31db86f1f3804ce4af8a0eafb3883246f4f0f235de613c57c849772b81024e",
+      "after": "c4238ef674150ac6b6364cab86868fd4cdb3a4063b055dc433e3b5784ace3238",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/student.spec.mjs",
+      "before": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "after": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "before": "caa6b14f4872f396517f1e2fd18eaea2ffeada944dc232b976cf5abfe7a69017",
+      "after": "7e0c2015b0bb68ac9f43340dfff0d5275a47c3e09f813ec2bcb6f69286938905",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "before": "f2d3e9e0d7f7b345b736104dc1278dc2de95965df27d58e960d47ecf8cca56e7",
+      "after": "072e43eab833825f46ac467cc4af64bdadcc1d807840d67e08481718a4a71b55",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "before": "ff626860661dec38614ca479a82a7de8e855e3706aba9361494644ac49711e46",
+      "after": "d0ca8ea15e77349c6c0c40872b078c2828b301c7dbc1fe9f0a66cde5fe8a8794",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "package.json",
+      "before": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b",
+      "after": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/account-ui/package.json",
+      "before": "3448bd932d70f6f65ddb2dd22725eff6820d871400eb5ddfa5aab428d42e9166",
+      "after": "3448bd932d70f6f65ddb2dd22725eff6820d871400eb5ddfa5aab428d42e9166",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/account-ui/src/index.tsx",
+      "before": "82ef1da9305f342ae69e14cc1f28adc3a9a953d9a7595d2bbd50020d440dd222",
+      "after": "b5310ff908f84e073e2092523a358c5fc131e67d15432f498ac2936ced06fd84",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/account-ui/src/session.tsx",
+      "before": "b1478210e82da33790b4b048f5659fe91f7211dfd0ca14ef877816e4a4cb8ac5",
+      "after": "b1478210e82da33790b4b048f5659fe91f7211dfd0ca14ef877816e4a4cb8ac5",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/account-ui/src/style.css",
+      "before": "b2a8e37789784dc73ce059998571b4a48c1958fd535a7bb8a279dc25d542b1da",
+      "after": "b2a8e37789784dc73ce059998571b4a48c1958fd535a7bb8a279dc25d542b1da",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "before": "70a10fffbfefbb8cc608660dc40b0433d1b3d80c282e9486fff6180980258362",
+      "after": "345ccd24baefdbc2a007161af15fede76b937d28f89267c4adf3e09f5affb55d",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "before": "1ea0d0db7eeddff979c56084b37ec150d50bce18c367b61b50bcbe50fc083399",
+      "after": "7c5cd8ea9f3ed250bfe50cf80188a09cb75fd60fb01bd10f96c49a72fad0f275",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "before": "8bcdfb05d914fd087f94358a44bf616b5c416c3ab5bc7bda363ea0b1afffc5e0",
+      "after": "d0d01d916d8989ff0309646be30ae8ff4e9067243acd8cc67a759360b7cf9b5c",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "before": "13c56dd0c70778d654dff08e76d1634cbc3ac65e358395164ccc7559a1d55cf5",
+      "after": "13c56dd0c70778d654dff08e76d1634cbc3ac65e358395164ccc7559a1d55cf5",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/package.json",
+      "before": "5f4e542123733b837740205b6ca53590c78bd24d7cfa7144a6ff089c4e6a709d",
+      "after": "5f4e542123733b837740205b6ca53590c78bd24d7cfa7144a6ff089c4e6a709d",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/error-keys.ts",
+      "before": "45205e9c1c43c80b26f18a962364c422f1aa4e51561d315641b5a4769e438db1",
+      "after": "45205e9c1c43c80b26f18a962364c422f1aa4e51561d315641b5a4769e438db1",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/error-messages.ts",
+      "before": "659430cd317d6a8849244c465769a898f4f8f1c341ce4acc41f714d8ecbb2bb6",
+      "after": "659430cd317d6a8849244c465769a898f4f8f1c341ce4acc41f714d8ecbb2bb6",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "before": "d7463fa4dc44ac4a912a2bf62ff5764fa90fa824e49512508cffe4b185f6bec0",
+      "after": "d7463fa4dc44ac4a912a2bf62ff5764fa90fa824e49512508cffe4b185f6bec0",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/format.ts",
+      "before": "aaa5b184930b2cadf62529dc2546dd6d67755edb2f6740b34d755db4576a7fb3",
+      "after": "aaa5b184930b2cadf62529dc2546dd6d67755edb2f6740b34d755db4576a7fb3",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "before": "2ed88addf3d85178b06601a41c83e9be2348c4dbbb0ce8f111d34408eb3b4e18",
+      "after": "2ed88addf3d85178b06601a41c83e9be2348c4dbbb0ce8f111d34408eb3b4e18",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "before": "79a015333cfc0b5f0c017423639f81974c0da31b0c6d0258df25446bdfcb1f28",
+      "after": "df3a5fe3fce0f935132ac05c5fcd322ae1db6426ebdd5bf1bacc6c9f5e870605",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "before": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7",
+      "after": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "before": "83921ae346fa7ffd6a8627bae5b1d5b31141564ce2c5196d5431b3861b40480f",
+      "after": "c263fa7744da62a7aed9a962c26faa265509b8b92d624c9bd195cdd98acb4d5a",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-materials-http.test.mjs",
+      "before": "e4059d10a2b596c20d02189a3c8b9899522f19d23bb5a984eb0f17e1298992d1",
+      "after": "42b71962505ce5ab0ae8e4ac3154c501906c6eb9eb59791ba2f100e9e6ea3763",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-materials.test.mjs",
+      "before": "ff942809727b295b7a7553954bb5df9420d34fc75d2bc0e05b4f9e5271014a10",
+      "after": "ff942809727b295b7a7553954bb5df9420d34fc75d2bc0e05b4f9e5271014a10",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-security-http.test.mjs",
+      "before": "eae43bb123d7176ce0ef02e8f5f2f346df53f4c0a7124d97fbc906dd1d33dca2",
+      "after": "eae43bb123d7176ce0ef02e8f5f2f346df53f4c0a7124d97fbc906dd1d33dca2",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-security-sdk.test.mjs",
+      "before": "fe8a003fd700fb4f79169d225db68c279e79ad4e17b3445e29a982bc1849ea81",
+      "after": "fe8a003fd700fb4f79169d225db68c279e79ad4e17b3445e29a982bc1849ea81",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-security.test.mjs",
+      "before": "f552c86c247afbc00d57e76877972d8813ca4022ae94d465df125eaba96ade63",
+      "after": "f552c86c247afbc00d57e76877972d8813ca4022ae94d465df125eaba96ade63",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/student-messages.ts",
+      "before": null,
+      "after": "21cc0b3ca55035514196dfcfa281d7880fb19e1bf3e9c0b7d88538200d1f241f",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-locale.ts",
+      "before": null,
+      "after": "8453c3ad64da605c8e1675ec636ca7afdfa04744f35edf545b6e2b95ce772002",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/locales.spec.mjs",
+      "before": null,
+      "after": "21af526e8f5c13b68be09c14876a671a058a17212cfebda7b5ca188230155b8b",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/locales.test.mjs",
+      "before": null,
+      "after": "1bd9eb4c276ee1eca1bd3419971e083b7d56c6cb1e6d108d5ce12c3aecb37e81",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/locale-fixtures.mjs",
+      "before": null,
+      "after": "c7482d0779f51b1a14e9cc1ef800d3f4497ab253b99eaf82602b9b1989a2d198",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/playwright.locales.config.mjs",
+      "before": null,
+      "after": "9bfc8165f3c190398b1f6ac8242b5a2f0ee14114c6630c2bc6e9aaa0a8d2337d",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "before": null,
+      "after": "52ea3861f2cf3d741961fe8949aaab015486926b54eb4cb8088b9c2096e0d23b",
+      "changed": true,
+      "whitespace": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,953 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.student-gate-axe.config.mjs"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.student-gate-axe.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "studentGate": true,
+      "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/",
+      "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/evidence/TASK-025/",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/test-results-accessibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "student-state-accessibility",
+        "name": "student-state-accessibility",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "student-gate-extra.acceptance.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-07-40.429Z\\test-results-accessibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-07-40.429Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "student-state-accessibility",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "student-gate-extra.acceptance.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "student-state-accessibility"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-07-40.429Z\\playwright-accessibility.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet\\",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": false,
+      "env": {
+        "STUDENT_FIXTURE_DIST": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\build\\student"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "student-gate-extra.acceptance.mjs",
+      "file": "student-gate-extra.acceptance.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-035 composed-state accessibility ru loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1169,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:46.448Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-41063afe504c1f0830c6",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:47.735Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-85cc73fc75bc6f9e0196",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 990,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:48.621Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-27a7c0e25560c5e0fcea",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 760,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:49.623Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-25c2112d78effcfb1ae0",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 837,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:50.400Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-fefd17081d1ddbccc553",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:51.246Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-121b5b7a7f05eab391d5",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru subscription-limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:52.084Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-4474bafb1dc2c52046a1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1342,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:53.084Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-2d0f6ee8f311bdc32b01",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:54.443Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-0f79b3e3f8fea32bfd76",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 919,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:55.617Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-c4ab5b98b7e5a29e5f56",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 710,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:56.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-80cb057e3df4e830651e",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:57.265Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-0e6388b461e795cb48ba",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:58.023Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-3cf7bcc3ce0dbe189089",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 736,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:58.845Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-3a50e7ffbe3948128dd1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:07:59.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-39d6a4c12e14a022e8b6",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 714,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:00.423Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-f92b2e0cb7b7dba43e10",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro subscription-limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:01.146Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-46a51a1a2ed7f04e41f8",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 838,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:01.968Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-99498b1a1aec96124c05",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 965,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:02.819Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-ce96181f53600f59bcf1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1003,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:03.796Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-4461ae5849f88da4ad4b",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 actual third-page report link ru",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5176,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    2 × locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\u001b[2m    12 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    2 × locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\u001b[2m    12 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs:59:53",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                      "column": 53,
+                      "line": 59
+                    },
+                    "snippet": "  57 |   await setup({request,context},locale,{reportRows:rows});\n  58 |   await page.goto('/student/reports?page=3&ui.k8k=1');\n> 59 |   await expect(page.locator('.k8k-report-summary')).toHaveCount(15);\n     |                                                     ^\n  60 |   await page.locator('a[href*=\"reportId='+reportId(45)+'\"]').click();\n  61 |   await expect(page.getByRole('heading',{name:'Отчёт с третьей страницы',exact:true})).toBeFocused();\n  62 |   expect(new URL(page.url()).searchParams.get('page')).toBe('3');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                        "column": 53,
+                        "line": 59
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    2 × locator resolved to 0 elements\u001b[22m\n\u001b[2m      - unexpected value \"0\"\u001b[22m\n\u001b[2m    12 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n\n\n  57 |   await setup({request,context},locale,{reportRows:rows});\n  58 |   await page.goto('/student/reports?page=3&ui.k8k=1');\n> 59 |   await expect(page.locator('.k8k-report-summary')).toHaveCount(15);\n     |                                                     ^\n  60 |   await page.locator('a[href*=\"reportId='+reportId(45)+'\"]').click();\n  61 |   await expect(page.getByRole('heading',{name:'Отчёт с третьей страницы',exact:true})).toBeFocused();\n  62 |   expect(new URL(page.url()).searchParams.get('page')).toBe('3');\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs:59:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:04.808Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-07-40.429Z\\test-results-accessibility\\student-gate-extra.accepta-6013b-l-third-page-report-link-ru-student-state-accessibility\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                    "column": 53,
+                    "line": 59
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-f612dbdbb2061ae4cc5f",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 54,
+          "column": 34
+        },
+        {
+          "title": "TASK-035 actual third-page report link ro",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5178,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs:59:53",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                      "column": 53,
+                      "line": 59
+                    },
+                    "snippet": "  57 |   await setup({request,context},locale,{reportRows:rows});\n  58 |   await page.goto('/student/reports?page=3&ui.k8k=1');\n> 59 |   await expect(page.locator('.k8k-report-summary')).toHaveCount(15);\n     |                                                     ^\n  60 |   await page.locator('a[href*=\"reportId='+reportId(45)+'\"]').click();\n  61 |   await expect(page.getByRole('heading',{name:'Отчёт с третьей страницы',exact:true})).toBeFocused();\n  62 |   expect(new URL(page.url()).searchParams.get('page')).toBe('3');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                        "column": 53,
+                        "line": 59
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.k8k-report-summary')\nExpected: \u001b[32m15\u001b[39m\nReceived: \u001b[31m10\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.k8k-report-summary') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.k8k-report-summary')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 10 elements\u001b[22m\n\u001b[2m       - unexpected value \"10\"\u001b[22m\n\n\n  57 |   await setup({request,context},locale,{reportRows:rows});\n  58 |   await page.goto('/student/reports?page=3&ui.k8k=1');\n> 59 |   await expect(page.locator('.k8k-report-summary')).toHaveCount(15);\n     |                                                     ^\n  60 |   await page.locator('a[href*=\"reportId='+reportId(45)+'\"]').click();\n  61 |   await expect(page.getByRole('heading',{name:'Отчёт с третьей страницы',exact:true})).toBeFocused();\n  62 |   expect(new URL(page.url()).searchParams.get('page')).toBe('3');\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs:59:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:08:10.607Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-07-40.429Z\\test-results-accessibility\\student-gate-extra.accepta-e61dd-l-third-page-report-link-ro-student-state-accessibility\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate-extra.acceptance.mjs",
+                    "column": 53,
+                    "line": 59
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-eb92827be2fbb27ea4d9",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 54,
+          "column": 34
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T11:07:45.164Z",
+    "duration": 30957.517,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

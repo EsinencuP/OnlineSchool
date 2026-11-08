@@ -1,0 +1,67 @@
+.staff-filter {
+  display: grid;
+  gap: var(--k8k-space-2);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin-block-end: var(--k8k-space-4);
+}
+.staff-filter select {
+  min-block-size: var(--k8k-control-touch);
+  max-inline-size: 100%;
+  padding-inline: var(--k8k-space-3);
+  color: var(--k8k-ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--k8k-control-radius);
+  font: inherit;
+}
+.lesson h3 a,
+.simple-row h3 a,
+.staff-back,
+a.text-button {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--k8k-control-touch);
+  color: var(--brand-text);
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+  overflow-wrap: anywhere;
+}
+.lesson > div,
+.simple-row > div,
+.page-heading > div {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.staff-detail {
+  overflow-wrap: anywhere;
+}
+.staff-back {
+  margin-block-end: var(--k8k-space-3);
+}
+.staff-help summary {
+  display: list-item;
+  min-block-size: var(--k8k-control-touch);
+  padding-block: var(--k8k-space-3);
+  cursor: pointer;
+}
+.staff-app :is(a, select, button, h1):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.page-heading .refresh {
+  min-block-size: var(--k8k-control-touch);
+}
+.page-heading .refresh[aria-disabled='true'] {
+  cursor: default;
+}
+@media (max-width: 1023px) {
+  :is(.k8k-role-teacher, .k8k-role-director, .k8k-role-tech_operator)
+    .k8k-bottom-nav
+    .k8k-nav-link {
+    padding-inline: 0;
+  }
+  :is(.lesson h3 a, .simple-row h3 a, .staff-back, .staff-filter select) {
+    scroll-margin-block-end: calc(80px + env(safe-area-inset-bottom));
+  }
+}

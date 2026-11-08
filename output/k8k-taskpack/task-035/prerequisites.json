@@ -1,0 +1,1599 @@
+[
+  {
+    "task": "TASK-024",
+    "report": "output/k8k-tasks/TASK-024/report.md",
+    "reportSha256": "b212648fd39e6657f76b7aea0fdaf4213d4491013e1ff81a57335b86089e0f30",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-024",
+      "status": "DONE",
+      "scope": "API and SDK, local mock verification",
+      "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+      "dirtyDigest": "5da1852af7b2bcab938f52c9b1254c31b72a708669047de0d106ec129e46c3c0",
+      "criteria": [
+        {
+          "id": "subjects_openapi_sdk",
+          "status": "PASS",
+          "verification": "generated schema and SDK mock",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/contracts.json",
+            "../../k8k-tasks/TASK-024/subjects.log"
+          ]
+        },
+        {
+          "id": "own_subjects_and_legacy_detail_anchors",
+          "status": "PASS",
+          "verification": "Nest HTTP with in-memory database substitute",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/contracts.json"
+          ]
+        },
+        {
+          "id": "separate_live_math_and_expired_physics",
+          "status": "PASS",
+          "verification": "service and Nest HTTP fixtures",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/stu03.log"
+          ]
+        },
+        {
+          "id": "freeze_and_previously_issued_homework_materials",
+          "status": "PASS",
+          "verification": "service fixtures and shared SQL contract",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/resource-reads.log",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "partial_payment_and_director_admission",
+          "status": "PASS",
+          "verification": "service fixture and generated SQL predicates",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "limited_expiry_revocation_exhaustion_and_latest_allocation",
+          "status": "PASS",
+          "verification": "generated SQL structural checks; database execution tracked separately",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "last_payment_switches_to_normal_paid_rights",
+          "status": "PASS",
+          "verification": "read projection fixture; no grant writing",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log"
+          ]
+        },
+        {
+          "id": "zero_null_future_and_wrapper",
+          "status": "PASS",
+          "verification": "service fixtures and started-period SQL scope",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "401_402_403_other_session_password_and_invalid_query",
+          "status": "PASS",
+          "verification": "Nest HTTP fixtures and session guard tests",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/stu01.log"
+          ]
+        },
+        {
+          "id": "parallel_read_empty_and_source_outage",
+          "status": "PASS",
+          "verification": "Nest HTTP fixtures and SELECT-only query verification",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/subjects.log",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "old_dto_and_decimal_contracts_preserved",
+          "status": "PASS",
+          "verification": "OpenAPI diff and subscription/lesson regression tests",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/contracts.json",
+            "../../k8k-tasks/TASK-024/stu07.log",
+            "../../k8k-tasks/TASK-024/stu03.log"
+          ]
+        },
+        {
+          "id": "dirty_work_migrations_lockfile_and_prisma_preserved",
+          "status": "PASS",
+          "verification": "file hashes and working-tree status",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/preservation.json",
+            "../../k8k-tasks/TASK-024/basis.json"
+          ]
+        },
+        {
+          "id": "actual_postgresql_cte_and_query_plan",
+          "status": "NOT_RUN",
+          "verification": "no authorized PostgreSQL read-only target for this task",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/query.json",
+            "../../k8k-tasks/TASK-024/projection.sql"
+          ]
+        },
+        {
+          "id": "browser_and_production",
+          "status": "NOT_RUN",
+          "verification": "API/SDK increment; browser consumers are TASK-025/026",
+          "evidence": [
+            "../../k8k-tasks/TASK-024/report.md",
+            "../../k8k-tasks/TASK-024/handoff.md"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-025",
+    "report": "output/k8k-tasks/TASK-025/report.md",
+    "reportSha256": "0bc4953417cbd909b44ecf1febbd98644a912afad412e4291131cb1b5c8589c0",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-025",
+      "status": "DONE",
+      "scope": "K8K student cabinet, local synthetic fixture",
+      "checks": [
+        {
+          "id": "menu_desktop_mobile_active",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Six destinations at 360 and 1280, AccountMenu profile/security"
+        },
+        {
+          "id": "deep_links_and_bell",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/handoff.md",
+          "detail": "Original route inventory and legacy notifications browser test"
+        },
+        {
+          "id": "independent_subject_access",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Active English, expired Mathematics, independent materials and lessons"
+        },
+        {
+          "id": "foreign_invalid_repeated_selector",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Warm cache, invalid and repeated selectors, no foreign scoped GET"
+        },
+        {
+          "id": "loading_empty_error_stale_forbidden",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Five states and forbidden response after stale cache"
+        },
+        {
+          "id": "home_hero_and_shortcuts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Meet or lesson detail as primary, maximum two shortcuts"
+        },
+        {
+          "id": "ru_ro_four_widths_long_name",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/after/ro-360-home.png",
+          "detail": "24 screenshots, two locales, 360/768/1024/1280, name of 100 characters"
+        },
+        {
+          "id": "touch_bottom_navigation_dialog",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "48/44 px, mobile bottom bar, draft modal"
+        },
+        {
+          "id": "keyboard_and_focus",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Skip link, Escape and focus return"
+        },
+        {
+          "id": "refresh_stability",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Focus, scroll and order survive subject refetch"
+        },
+        {
+          "id": "draft_scroll_and_context",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "History and explicit return after saving, no false homework filter"
+        },
+        {
+          "id": "auth_guard_401_402_403_password",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Direct hub and help under private guard"
+        },
+        {
+          "id": "official_help_without_private_bootstrap",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "WhatsApp/Telegram only, no extra dashboard or subjects request"
+        },
+        {
+          "id": "server_filter_and_pagination",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+          "detail": "Materials and skill map use server subjectId, snapshots/lessons/homework keep global scope"
+        },
+        {
+          "id": "typed_sdk_and_no_migrations",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/preservation.json",
+          "detail": "SDK, OpenAPI and lockfile unchanged"
+        },
+        {
+          "id": "style_and_types",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/typecheck.log",
+          "detail": "TypeScript, ESLint and targeted Stylelint"
+        },
+        {
+          "id": "route_budget",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-025/budgets.json",
+          "detail": "50 routes within 256000 bytes, fonts included"
+        },
+        {
+          "id": "database_meet_production_and_full_gate",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-025/report.md",
+          "detail": "Local synthetic environment, provider checks outside task"
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-026",
+    "report": "output/k8k-tasks/TASK-026/report.md",
+    "reportSha256": "51184a2a1821d96854aea7f58ecd4b9bb8138c7882252317fa441565d442890d",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-026",
+      "status": "DONE",
+      "scope": "K8K student subscription read surfaces and nullable historical snapshot",
+      "checks": [
+        {
+          "id": "dashboard_hub_real_source",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Subject snapshots drive the dashboard and hub"
+        },
+        {
+          "id": "independent_subjects_active_expired",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Active Mathematics and expired Physics keep their own actions"
+        },
+        {
+          "id": "frozen_end_and_independent_work",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/after/ro-360-details.png",
+          "detail": "Freeze end, materials and homework from capabilities, no Meet"
+        },
+        {
+          "id": "partial_receipt_and_director_admission",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/states/partial-with-admission.png",
+          "detail": "Confirmed paid zero and remaining temporary two shown separately"
+        },
+        {
+          "id": "full_payment_no_double_count",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Updated source displays five and removes temporary block"
+        },
+        {
+          "id": "three_selected_queries_page_reset_and_late_read",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "All three anchor requests, both page states reset, late Math response isolated"
+        },
+        {
+          "id": "financial_anchor_and_wrapper_mapping",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/presentation.log",
+          "detail": "Explicit URL always uses financial anchor, wrapper used only to resolve default details"
+        },
+        {
+          "id": "exact_mdl_eur_usd_and_zero",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "600.1234 MDL, 1.005 EUR, 0.00 MDL, distinct USD"
+        },
+        {
+          "id": "date_only_and_user_zone",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Date-only retained, timestamp converted to America/New_York"
+        },
+        {
+          "id": "future_none_scoped_payments",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/states/future-none.png",
+          "detail": "Future period keeps selected confirmed history"
+        },
+        {
+          "id": "no_plan_zero_null_and_error",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/states-smoke.log",
+          "detail": "Loading, empty, error, NONE and unknown distinct"
+        },
+        {
+          "id": "freeze_unfreeze_correction_and_cancellation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Separate quantity history and cancellation credit"
+        },
+        {
+          "id": "nullable_published_snapshot",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/stu07.log",
+          "detail": "Unit and HTTP preserve missing snapshot without synthetic zero"
+        },
+        {
+          "id": "stale_readonly_403_cache_revocation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Independent 5xx, stale capabilities hidden, 403 removes selected group"
+        },
+        {
+          "id": "scope_no_store_session_guard",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/stu07.log",
+          "detail": "Mocked HTTP and browser guards, no-store headers"
+        },
+        {
+          "id": "ru_ro_four_widths_and_keyboard",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+          "detail": "Visual matrix, 6 axe checks, focus and touch evidence"
+        },
+        {
+          "id": "no_new_payment_actions_or_rights_calculation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/contracts.json",
+          "detail": "No operation added and read-only display verified"
+        },
+        {
+          "id": "sdk_and_route_compatibility",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/contracts.json",
+          "detail": "146 operations unchanged, 2 nullable response fields"
+        },
+        {
+          "id": "no_working_db_migration_or_production_changes",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/preservation.json",
+          "detail": "Scoped local commands, starting statuses and lockfile preserved"
+        },
+        {
+          "id": "report_separates_prior_and_fresh_evidence",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/report.md",
+          "detail": "Input artifacts, fresh commands and limitations recorded"
+        },
+        {
+          "id": "route_budget",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-026/budgets.json",
+          "detail": "50/50, fonts included"
+        },
+        {
+          "id": "postgres_live_payments_and_role_gate",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-026/report.md",
+          "detail": "No working environment accessed, TASK-035 role gate separate"
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-027",
+    "report": "output/k8k-tasks/TASK-027/report.md",
+    "reportSha256": "ce6d846c7302c4c1ee857ee4f81522abfe09b97544c24e3308d146bf4860f9e3",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-027",
+      "status": "DONE",
+      "scope": "Assigned student manager projection and contact card",
+      "checks": [
+        {
+          "id": "assigned_identity_and_two_sessions",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+          "detail": "Two cookie sessions, other pupil query cannot change owner"
+        },
+        {
+          "id": "temporal_assignment_role_login",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+          "detail": "SQL predicates and mock ended, disabled, deactivated, role; director case"
+        },
+        {
+          "id": "private_phone_and_staff_ids_excluded",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+          "detail": "Exact allowlisted DTO and error JSON"
+        },
+        {
+          "id": "explicit_public_e164_only",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+          "detail": "Valid tel, absent and malformed public numbers omitted"
+        },
+        {
+          "id": "canonical_channels_and_safe_external_links",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+          "detail": "Exact host, HTTPS, malicious values hidden, noreferrer and noopener"
+        },
+        {
+          "id": "missing_contact_no_fallback",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/states/ru-no-manager.png",
+          "detail": "No invented name, image, link or channel"
+        },
+        {
+          "id": "same_projection_three_surfaces",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+          "detail": "Dashboard, help, suspended, one direct /me read"
+        },
+        {
+          "id": "reassignment_and_stale",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/states/ro-refresh-error.png",
+          "detail": "New manager on revalidation and no previous actions on failure"
+        },
+        {
+          "id": "second_tab_and_late_actor",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+          "detail": "Demo switch retires both tabs and old response"
+        },
+        {
+          "id": "suspended_first_password_and_401",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/stu11.log",
+          "detail": "402 safe contacts, locked/anonymous denied, allowlist retained"
+        },
+        {
+          "id": "ru_ro_widths_long_name_keyboard",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/after/ro-360-suspended.png",
+          "detail": "RU/RO × 4 widths, 6 axe, Tab, 44 px"
+        },
+        {
+          "id": "sdk_additive_optional_contract",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/contracts.json",
+          "detail": "146 unchanged operations and two optional nullable fields"
+        },
+        {
+          "id": "additive_migration_only",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/preservation.json",
+          "detail": "30 prior checksums intact, no write/default/backfill"
+        },
+        {
+          "id": "report_separates_prior_and_fresh",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/report.md",
+          "detail": "Input artifacts, fresh results and explicit limitations"
+        },
+        {
+          "id": "route_budgets",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-027/budgets.json",
+          "detail": "50/50 under 256000 bytes incl fonts"
+        },
+        {
+          "id": "production_database_and_channel_provisioning",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-027/report.md",
+          "detail": "No production changes or external channels, authorized rollout prerequisite"
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-028",
+    "report": "output/k8k-tasks/TASK-028/report.md",
+    "reportSha256": "ca8fa6375f7bcf9d042156ee0cd3a33e346ccaa726d66c53d2b1da3d34bcec24",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-028",
+      "status": "DONE",
+      "scope": "Local implementation and scoped mock/browser verification",
+      "base": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "0b76ee06d0e6d9e60b61599e12caadd94ae8f6eeba47de9c19a9c6a384a84d1f"
+      },
+      "checks": [
+        {
+          "id": "hero_own_authoritative_status",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "Upstream upcoming CANCELLED cannot replace dashboard SCHEDULED"
+        },
+        {
+          "id": "hero_retains_current_T0",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+          "detail": "Current lesson regression and warm summary at T0"
+        },
+        {
+          "id": "exact_inclusive_ms_boundaries",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+          "detail": "Same dashboard/list/detail projection at T−600001, T−600000, T0, T+3600000 and +1ms"
+        },
+        {
+          "id": "own_enrollment_assignment_and_subject",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+          "detail": "Shared parameterized SQL scopes owner, slot/read assignment and enabled subject/teacher"
+        },
+        {
+          "id": "paid_rights_freeze_and_director_limit",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+          "detail": "SQL predicates for confirmed paid balance, consumption, freeze, current unrevoked unused admission limit"
+        },
+        {
+          "id": "warm_cache_fresh_authorization",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+          "detail": "Summary excludes lesson, revocation and cancellation reread without revision bump"
+        },
+        {
+          "id": "inflight_coalesces_summary_only",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+          "detail": "Waiters independently obtain lesson and revision"
+        },
+        {
+          "id": "canonical_url_only",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/presentation.log",
+          "detail": "Canonical allowlist and positive server canJoin required"
+        },
+        {
+          "id": "clock_skew_hidden_and_deadline_read",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "Visible/hidden T−10 triggers server read, Date.now skew cannot grant or shift eligibility"
+        },
+        {
+          "id": "stale_forbidden_terminal_no_link",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "503 stale, 403, cancelled, absent and invalid URL hide capability with distinct presentation"
+        },
+        {
+          "id": "two_subjects_independent",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "Denied first lesson stays denied while second subject can join"
+        },
+        {
+          "id": "reschedule_refresh",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "Updated slot is future and waits for new opening"
+        },
+        {
+          "id": "no_command_on_read_or_click",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+          "detail": "Intercepted provider GET, student API traffic remains GET only"
+        },
+        {
+          "id": "session_scope_and_no_store",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+          "detail": "Two actual Nest cookie sessions with mock database, spoofed owner, suspended/password/revoked session"
+        },
+        {
+          "id": "sdk_additive_compatibility",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/contracts.json",
+          "detail": "Three optional additive properties, 146 operations, standard generator"
+        },
+        {
+          "id": "RU_RO_four_widths_three_surfaces",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/playwright.json",
+          "detail": "24 matrix screenshots, 100 character names, keyboard focus, 48px primary, no horizontal overflow"
+        },
+        {
+          "id": "route_budgets_and_fonts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/budgets.json",
+          "detail": "50/50 routes under 256000 bytes using method v2"
+        },
+        {
+          "id": "preservation_and_migrations",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/preservation.json",
+          "detail": "32 snapshots, 31 unchanged migration checksums and original paths present"
+        },
+        {
+          "id": "targeted_build_and_lint",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-028/student-check.log",
+          "detail": "API/student/SDK targeted compilation, Vite and ESLint pass"
+        },
+        {
+          "id": "live_postgresql_execution",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-028/report.md",
+          "detail": "No authorized live DB target in this TASK, SQL shape and mocked results verified locally"
+        },
+        {
+          "id": "google_meet_provider_OAuth_POC_security_G4",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-028/report.md",
+          "detail": "Local synthetic fixture only, real provider credentials and separate approval needed"
+        },
+        {
+          "id": "full_phase_regression_FND_GATE",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-028/report.md",
+          "detail": "Deferred by owner Phase 0 validation policy"
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-029",
+    "report": "output/k8k-tasks/TASK-029/report.md",
+    "reportSha256": "2f934eab46b4944efb18cbe2e428d3009e1c254d7a75df5104e91e6edf09c4ed",
+    "reportStatus": null,
+    "acceptance": {
+      "task": "TASK-029",
+      "status": "DONE",
+      "scope": "Local implementation and scoped mock/browser verification",
+      "base": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "82e1b71a09fa429ab65f7ef6b10e2e51fa8846964985fa444c9ac4cb33d63bc7"
+      },
+      "checks": [
+        {
+          "id": "same_domain_calendar_list_and_url",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "One lesson domain, period/view/month/page/subject/historyPage preserved on back navigation"
+        },
+        {
+          "id": "calendar_overflow_selected_month",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "65-row fixture falls back to selected YYYY-MM with server total and paginated rows"
+        },
+        {
+          "id": "dst_and_midnight",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+          "detail": "Student local day, spring/autumn 23/25h and ISO weeks 167/169h, exclusive upper bound"
+        },
+        {
+          "id": "confirmed_fact_projection",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/history.log",
+          "detail": "History source requires confirmed outcome, explicit absence or existing approved-cancellation charge, mock result mapping"
+        },
+        {
+          "id": "actual_and_scheduled_context",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "Planned teacher/duration remain separate from actual history, original scheduled time shown"
+        },
+        {
+          "id": "lesson_resource_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/resources.log",
+          "detail": "Issued homework and explicit verified/unexpired file permissions remain scoped to owner and lesson"
+        },
+        {
+          "id": "history_targeted_read_and_nulls",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/history.log",
+          "detail": "Direct lesson filter before count, 9007199254740993 preserved, unknown snapshots null"
+        },
+        {
+          "id": "server_reschedule_24h",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+          "detail": "Exactly 24h admitted, minus 1ms rejected, student-zone preferredDate"
+        },
+        {
+          "id": "server_dispute_30days",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/history.log",
+          "detail": "Exactly 30 elapsed days admitted, plus 1ms rejected, restored or unpublished rights denied"
+        },
+        {
+          "id": "replay_conflict_csrf",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/history.log",
+          "detail": "201 same-key replay, changed-body 422, open-case 409 and normal CSRF"
+        },
+        {
+          "id": "one_intent_pending",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "Double submit creates one task and keeps lesson and balance unchanged"
+        },
+        {
+          "id": "unknown_reopen_reload",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "Only pending UUID stored by actor/lesson/type, reload stays UNKNOWN, receipt GET uses original key"
+        },
+        {
+          "id": "unknown_absent_no_retry",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "Absent task remains unknown, no new POST or success"
+        },
+        {
+          "id": "typed_receipt_owner_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/lessons.log",
+          "detail": "Receipt type disambiguates command namespace, foreign lesson denied, other actor key unknown, no-store"
+        },
+        {
+          "id": "auth_denial_and_late_response",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "403 removes cached snapshots/actions, session expiry clears private pending state and discards late response"
+        },
+        {
+          "id": "trimmed_input_validation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/browser.log",
+          "detail": "Whitespace-only description sends no request, local validation is localized"
+        },
+        {
+          "id": "no_financial_or_attendance_effect",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/history.log",
+          "detail": "Existing CRM task/audit/outbox only, no lesson confirmation, ledger/refund/right mutation"
+        },
+        {
+          "id": "ru_ro_four_widths_keyboard",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/playwright.json",
+          "detail": "40 matrix screenshots, 100-character names, 48px primary, focus restoration, no horizontal overflow"
+        },
+        {
+          "id": "meet_task028_preserved",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/dashboard.log",
+          "detail": "38 existing root Meet tests plus current T0/deadline Chromium case and 11 presentation tests"
+        },
+        {
+          "id": "backward_compatible_sdk",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/contracts.json",
+          "detail": "146 existing operations retained, one GET added, six scoped optional params, two optional metadata fields"
+        },
+        {
+          "id": "adjacent_api_isolation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/contracts.json",
+          "detail": "Reports and skills query parameters preserved with separate LessonHistoryQueryDto"
+        },
+        {
+          "id": "budgets_fonts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/budgets.json",
+          "detail": "50/50 routes under 256000 bytes by v2 method with local Golos subsets"
+        },
+        {
+          "id": "preservation_migrations",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-029/preservation.json",
+          "detail": "38 source snapshots valid, 31 migration checksums unchanged, original paths retained"
+        },
+        {
+          "id": "live_postgresql_execution",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-029/report.md",
+          "detail": "No authorized working DB target used for this TASK, SQL shape and mocked result checks only"
+        },
+        {
+          "id": "real_transaction_and_index_races",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-029/report.md",
+          "detail": "Storage simulations do not prove actual PostgreSQL concurrency or applied triggers"
+        },
+        {
+          "id": "production_and_full_role_phase_gate",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-029/report.md",
+          "detail": "Production CRM/Meet provider/OAuth/POC/G4 and FND-GATE require separately authorized acceptance"
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-030",
+    "report": "output/k8k-tasks/TASK-030/report.md",
+    "reportSha256": "81934bc0c50e1035d9fabaaccb33c8d96da2462207512471f1c1a57122d79a78",
+    "reportStatus": "Статус: DONE в локальном объёме задания  ",
+    "acceptance": {
+      "task": "TASK-030",
+      "status": "DONE",
+      "scope": "Local implementation and scoped mock/browser verification",
+      "base": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "e5c068927cc2802b231e6dc797f0ecda59f5d7823d8f4c301bdb4b7156acadf2"
+      },
+      "checks": [
+        {
+          "id": "baseline_and_serial_autosave",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/baseline.log",
+          "detail": "Пять исходных сценариев до JSX; те же пять в итоговых 16. Debounce 2s, serial queue и медленный старый save не затирают новый."
+        },
+        {
+          "id": "chronological_server_list",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "23 задания, серверные страницы по issued_at DESC/id DESC; nullable dueAt не переупорядочивает список; нет tabs/checkboxes и выдуманного global count."
+        },
+        {
+          "id": "editor_input_selection_refetch_expiry",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "Неизменный textarea DOM/selection и whitespace при failed save/refetch; expired draft не подменяет ввод и снимает saved claim."
+        },
+        {
+          "id": "route_unload_focus",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "Dirty/selected files/unknown защищены blocker; cancel возвращает focus к ответу; сохранён beforeunload."
+        },
+        {
+          "id": "confirmed_feedback_only",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "Saved после server draft/save response, attached file после VERIFIED с совпавшим ID, submitted после response или найденной версии."
+        },
+        {
+          "id": "unknown_result_safe_retry",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "Нет автоматического повтора; GET existing detail/version перед явным повтором. Потерянный committed ответ подтверждён без второго POST; replay использует исходные key/body."
+        },
+        {
+          "id": "queue_submit_double_click",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "Submit ждёт queue.current, синхронный lock блокирует double click; серверный replay покрыт API mocks."
+        },
+        {
+          "id": "revision_readonly_history",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "NEEDS_REVISION допускает новую версию; SUBMITTED/REVIEWED read-only после refresh; прежние версии и plain text comments сохранены."
+        },
+        {
+          "id": "file_bounds_and_verified_protocol",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "0 и 50MiB+1 не запрашивают upload; максимум 20 VERIFIED. PUT точных bytes, credentials omit, только MIME header; confirm retry без повторного PUT."
+        },
+        {
+          "id": "expired_upload_and_foreign_file",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/homework-api.log",
+          "detail": "Browser expired PUT создаёт новый upload intent с сохранённым File; server mocks отвергают pending/foreign file IDs."
+        },
+        {
+          "id": "soft_deadlines_and_server_status",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/homework-api.log",
+          "detail": "55 API mocks включают null/equal/late deadline; серверные status/isLate и Delivery.id сохранены; денежных и skill writes нет."
+        },
+        {
+          "id": "auth_revocation_private_dom",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/browser.log",
+          "detail": "403 скрывает cached private answer, 402/401 обходят dirty blocker и удаляют редактор; logout отбрасывает поздний save/следующую очередь."
+        },
+        {
+          "id": "ru_ro_keyboard_touch_long_text",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/playwright.json",
+          "detail": "RU/RO × 360/768/1024/1280, 24 matrix + 2 state screenshots. Long teacher name, focus, no horizontal overflow; CTA≥48px, file button≥44px, локализованная видимая кнопка файла."
+        },
+        {
+          "id": "authoritative_existing_contracts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/contracts.json",
+          "detail": "Homework DTO/service, OpenAPI и SDK byte-identical baseline; 147 operations; /me timezone, server pagination/status, UI-kit и штатные auth/CSRF границы."
+        },
+        {
+          "id": "route_budgets_fonts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/budgets.json",
+          "detail": "50/50 ≤256000 bytes по v2 с локальными Golos subsets; Storybook отсутствует в bundle."
+        },
+        {
+          "id": "preserve_dirty_migrations_production",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/preservation.json",
+          "detail": "21 before snapshot valid, 31 migration hashes неизменны, все исходные 423 status paths существуют; ветка/HEAD сохранены, production/DB не использовались."
+        },
+        {
+          "id": "current_sources_and_scoped_report",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-030/report.md",
+          "detail": "Применены актуальные owner decisions и STU-02/V12-AT-04/10/11; исходный lifecycle, новые изменения и свежие mock/browser доказательства разделены."
+        },
+        {
+          "id": "real_s3_cors",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-030/report.md",
+          "detail": "Только local intercepted upload. Реальные signing/PUT/HEAD/COPY/CORS/private provider и retention не проверялись."
+        },
+        {
+          "id": "postgresql_write_and_concurrency",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-030/report.md",
+          "detail": "Тесты mock Prisma/storage/Nest HTTP; реальные SERIALIZABLE/locks/index races и migration rehearsal не запускались."
+        },
+        {
+          "id": "physical_mobile_and_full_accessibility",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-030/report.md",
+          "detail": "Chromium viewport/focus измерения; физическая виртуальная клавиатура, нативный системный file picker и полный WCAG аудит требуют отдельной ручной приёмки."
+        },
+        {
+          "id": "full_role_gate_and_production",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-030/report.md",
+          "detail": "TASK-035 и общий FND-GATE, юридические/Meet provider gates и production GO вне локальной приёмки TASK-030."
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-031",
+    "report": "output/k8k-tasks/TASK-031/report.md",
+    "reportSha256": "73ee65030b4941dd1189e90f32fa639a7c194ec6c591368de22eb509c326d6d0",
+    "reportStatus": "Статус: DONE в локальном объёме задания  ",
+    "acceptance": {
+      "task": "TASK-031",
+      "status": "DONE",
+      "scope": "Local implementation and targeted mock/browser acceptance; PostgreSQL execution and full gates deferred",
+      "base": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "8a81d8dca255447507daf97667a44b7b8010a2c72162fb10806d061c42b85d02"
+      },
+      "checks": [
+        {
+          "id": "four_enums_three_stages",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Все 4 enum; NOT_STUDIED отдельно от трёхступенчатой read-only легенды. Исходный four skill states тест не изменён."
+        },
+        {
+          "id": "no_fabricated_assessment",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Пустой teacherName обозначает отсутствие опубликованной проверки; catalog date не называется assessment date и не берётся из now."
+        },
+        {
+          "id": "audit_public_downgrade_reset",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "From/to, автор, время и public_comment; downgrade/reset видны; private basis/notes отсутствуют. Pagination/total серверные."
+        },
+        {
+          "id": "snapshots4_reports8_separate",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Разные заголовки и /student/reports; snapshot ID не передаётся как reportId; открытие/чтение не создаёт report/checkpoint."
+        },
+        {
+          "id": "frozen_names_and_comments",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Frozen names/comments остаются старыми после переименования текущего навыка; источник ss.skills/ss.subject_name, не mutable catalog."
+        },
+        {
+          "id": "goals_null_dates_and_server_stage",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Teacher-authored text, targetDate/null, isAchieved из DTO. Нет оценок, процентов, рейтингов, badge, auto stage или вычисления достижения."
+        },
+        {
+          "id": "counter_source_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/api-tests.log",
+          "detail": "Структурная проверка сохранённого SQL: confirmed outcomes + CONDUCTED + subject across owned enrollments, без subscription/current teacher reset. Не PostgreSQL execution."
+        },
+        {
+          "id": "subject_url_and_historical_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Явный subjectId и исторический предмет вне active hub; не подменяется первым. Unknown/duplicated selection не показывает другую карту."
+        },
+        {
+          "id": "snapshot_filter_before_count",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/api-tests.log",
+          "detail": "Optional subjectId validated/bound до history count/page; unknown/foreign forbidden, beyond-end total сохраняется; service/HTTP mocks и SQL structure."
+        },
+        {
+          "id": "read_only_interactions",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Все skills вызовы GET; audit/expand/refresh не создают skill/checkpoint/report. Student mutation routes отсутствуют, HTTP tests проверяют 404."
+        },
+        {
+          "id": "initial_loading_empty_error_stale",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Loading, initial 503, owned empty list и cached stale различаются. Сохранённый stale снабжён явным предупреждением."
+        },
+        {
+          "id": "refresh_return_without_polling",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "Возврат на карту обновляет опубликованную стадию даже в cache freshness interval; явный refresh; без нового polling."
+        },
+        {
+          "id": "session_forbidden_late_read",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/browser.log",
+          "detail": "403 выше cached map/goal; 401 очищает DOM, поздний intercepted reply после session revocation не возвращает приватный контент."
+        },
+        {
+          "id": "ru_ro_four_widths_keyboard_dates",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/playwright.json",
+          "detail": "RU/RO × 360/768/1024/1280 × map/audit/snapshot/home; 32 matrix + 2 state screenshots. Long names, Enter/focus/collapse, controls≥44px; даты с годом, /me timezone; date-only без shift."
+        },
+        {
+          "id": "backward_compatible_sdk",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/contracts.json",
+          "detail": "147 операций и все прежние responses/request/security/schema неизменны. Единственное добавление — optional getStudentSkillSnapshots.subjectId; standard export/generate с DB-blocking preload."
+        },
+        {
+          "id": "budgets_fonts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/budgets.json",
+          "detail": "50/50 ≤256000 bytes по v2 с raw Golos subsets, skills route 245408 bytes. Storybook modules не попадают в bundle."
+        },
+        {
+          "id": "preservation_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/preservation.json",
+          "detail": "28 snapshots valid,31 migration hashes неизменны, все 431 исходных status paths существуют; HEAD/branch сохранены; working DB/production не использовались."
+        },
+        {
+          "id": "sources_reports_handoff",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-031/report.md",
+          "detail": "Текущие owner decisions, STU-04/TCHD-05/CON-07/B/№9.1–9.28; исходная основа, новые изменения и свежие checks разделены."
+        },
+        {
+          "id": "postgresql_execution_counter_and_isolation",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-031/report.md",
+          "detail": "Реальные counter values при no-show/cancelled/unconfirmed/смене enrollments и row isolation требуют разрешённого PostgreSQL execution. 21 старый source-exact CTE case не запускался."
+        },
+        {
+          "id": "teacher_publication_storage_hooks",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-031/report.md",
+          "detail": "Teacher confirmation/assessment/checkpoint/reminders — TASK-042/043/044; реальные trigger/immutability/transaction races и migrations не применялись."
+        },
+        {
+          "id": "full_role_accessibility_and_production_gate",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-031/report.md",
+          "detail": "Физический screen reader/mobile, полный WCAG, TASK-035/FND-GATE, legal/production GO не входят в локальную Chromium/mock приёмку."
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-032",
+    "report": "output/k8k-tasks/TASK-032/report.md",
+    "reportSha256": "34edf8f147a3272aa3a3a88191f7e6d74322f4e7e96d73321caa3e0637357cfc",
+    "reportStatus": "Статус: DONE в локальном объёме задания  ",
+    "acceptance": {
+      "task": "TASK-032",
+      "status": "DONE",
+      "scope": "Local implementation and targeted mocks/browser acceptance; real DB/worker/S3/gate deferred",
+      "base": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "d84e168474569deb1941daeb31b5a56248c356747c513a2cb35d186e8efa235c"
+      },
+      "checks": [
+        {
+          "id": "deep_link_independent_page",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Report25 со страницы3 читается одним detail GET без перебора списка; фокус заголовка и возврат page3. Нет подмены первым отчётом."
+        },
+        {
+          "id": "published_scope_public_projection",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+          "detail": "Detail использует publishedReportsCte/reportJson/normalizeReport; UUID, own/foreign/unknown/no-store проверены HTTP mocks. Draft/future/superseded predicates сохранены структурно; фактический PostgreSQL отдельно NOT_RUN."
+        },
+        {
+          "id": "four_fields_plain_text_dates",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Четыре публичных поля, точные пробелы/переводы строк, script отображается текстом; private notes исключены. RU/RO даты с годом, date-only без timezone shift."
+        },
+        {
+          "id": "explicit_read_empty_transport",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+          "detail": "204 first/200 repeat без body, прежний schoolEmptyFetch; чтение не публикует и не выполняет другую задачу."
+        },
+        {
+          "id": "read_confirmation_and_unknown",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "isNew меняется после ответа, новая версия снова unread; unknown read проверяет detail и не повторяет подтверждённый POST."
+        },
+        {
+          "id": "export_selection_and_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+          "detail": "Omitted body/all history и filtered subject/date-only; reverse400, foreign403, inclusive student-zone/DST. UI передаёт ту же selection и CSRF/UUID."
+        },
+        {
+          "id": "stable_intent_double_click",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Два synchronous clicks дают один POST. Same key/body retry после receipt UNKNOWN; server replay/conflict/limit покрыты API mocks."
+        },
+        {
+          "id": "lost_202_reconciliation",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Read-only receipt находит собственный committed job по исходному UUID. Lost response/reload восстанавливаются GET без второго POST. UNKNOWN не объявляется QUEUED."
+        },
+        {
+          "id": "four_job_states_no_false_ready",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "QUEUED/PROCESSING/READY/FAILED; без valid HTTPS URL и будущего expiresAt нет download или ready success. 429 объясняется отдельно."
+        },
+        {
+          "id": "poll_2s_bound_and_resume",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Нет дополнительного GET до раннего интервала, следующий появляется после2s; максимум30 automatic attempts/60s, затем пауза. Resume/route return читает тот же job без нового POST."
+        },
+        {
+          "id": "fixed_expiry_and_download_recheck",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+          "detail": "Server mock clock: expiry=ready_at+1h, repeat polling не продлевает, точная boundary FAILED без URL. Browser expiry hides download; каждый download делает fresh GET."
+        },
+        {
+          "id": "synthetic_download_path",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Fresh READY запускает перехваченный private fixture download; это синтетический HTTP body, не доказательство настоящего PDF/worker/S3."
+        },
+        {
+          "id": "session_revocation_and_switch",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "403/401 убирают download/DOM; logout прекращает polling; поздний READY после logout или смены actor во второй вкладке не возвращает приватные данные."
+        },
+        {
+          "id": "url_and_cache_privacy",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/browser.log",
+          "detail": "Signed URL только в памяти mounted UI, не в query cache/localStorage/sessionStorage/evidence. В URL страницы только UUID/page; invalid PDF IDs не подменяются предыдущим job."
+        },
+        {
+          "id": "ru_ro_keyboard_matrix",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/playwright.json",
+          "detail": "RU/RO × 360/768/1024/1280 × list/detail/form/queued/ready =40 matrix, ещё3 state screenshots. Long names/text, heading focus, keyboard controls, primary≥48px и no horizontal overflow."
+        },
+        {
+          "id": "backward_compatible_sdk",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/contracts.json",
+          "detail": "147 прежних операций/requests/responses/security/params и schemas сохранены; только2 GET и PdfExportRequestResultDto добавлены, standard export/generate."
+        },
+        {
+          "id": "budget_fonts",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/budgets.json",
+          "detail": "50/50 ≤256000 bytes v2 с raw local Golos; reports route249272 bytes, max255923."
+        },
+        {
+          "id": "preservation_and_scope",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/preservation.json",
+          "detail": "31 source snapshots,31 migration hashes, исходные445 status paths и HEAD/branch сохранены. Transport, worker/renderer/export-data/lockfile без изменений; no DB/deploy."
+        },
+        {
+          "id": "sources_handoff",
+          "status": "PASS",
+          "evidence": "../../k8k-tasks/TASK-032/report.md",
+          "detail": "TASK024/031 prerequisites и актуальные №9.25/B/9.26/B, VIS12 STU04/V12-AT04/10/11 применены. Новые student publications/рассылки не вводились."
+        },
+        {
+          "id": "live_postgresql_and_races",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-032/report.md",
+          "detail": "Нет разрешённого PostgreSQL execution/migration/transaction-race rehearsal; mocks и SQL structure не подтверждают реальные row binding/triggers."
+        },
+        {
+          "id": "real_worker_pdf_s3_delivery",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-032/report.md",
+          "detail": "Реальные queue worker, PDF renderer/fonts/layout, S3/CORS/private download/TTL и доставка не запускались; HTTP download mock не является provider evidence."
+        },
+        {
+          "id": "full_accessibility_role_and_gate",
+          "status": "NOT_RUN",
+          "evidence": "../../k8k-tasks/TASK-032/report.md",
+          "detail": "Физический mobile/screen reader, полный WCAG, TASK035/FND-GATE/LEGAL/Meet provider/production GO вне локального TASK032."
+        }
+      ]
+    }
+  },
+  {
+    "task": "TASK-033",
+    "report": "output/k8k-tasks/TASK-033/report.md",
+    "reportSha256": "2e228ac2cc070ec9b073e8f3d09250ab22ada4316b087d7f834f2474a7e53e05",
+    "reportStatus": "Статус: **DONE в локальном объёме задания**. Реальные PostgreSQL/projector/провайдеры и полный gate — NOT_RUN.",
+    "acceptance": {
+      "task": "TASK-033",
+      "status": "DONE",
+      "scope": "authorized local code, mock/browser and contract checks; external gates remain NOT_RUN",
+      "date": "2026-11-08",
+      "baseline": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "db66e7bed8949d9f9504c34973ebe224b6270183086934a6bea30b649686d6f2",
+        "statusEntries": 458
+      },
+      "checks": [
+        {
+          "id": "sole-surface",
+          "description": "Один bell/Drawer; legacy redirect, reload/back/close сохраняют URL params",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "page-global-count",
+          "description": "Page2 unread0/global7, page1, empty beyond-end total5/unread5, loading/empty различимы",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "read-replay",
+          "description": "Read/read-all204, CSRF/UUID/empty body, unknown reconciliation, arrival после committed read-all, same-key replay/new-key explicit command",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "immutable-read",
+          "description": "Первый read_at неизменен; existing service and critical-operation mock semantics preserved",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/api-tests.log"
+        },
+        {
+          "id": "target-scope",
+          "description": "Lesson/homework/financial subscription/старый report25; invalid UUID/URL omitted; report403/404 scoped",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "read-not-action",
+          "description": "Notification read/navigation не запускают report-read/lesson/homework/payment/CRM mutation",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "all18-types",
+          "description": "Все18 типов DTO/response schema сохранены; source audit основан на существующем коде",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/contracts.json"
+        },
+        {
+          "id": "catalog-locale",
+          "description": "Strict optional ru/ro, default ru, existing catalog/public params; manual/history/incomplete fallback, no metadata exposure or persisted rewrite",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/api-tests.log"
+        },
+        {
+          "id": "session-and-late",
+          "description": "Open-only query, cancellation, unavailable counter, stale503, count403 late preview, logout and cross-tab actor switch",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+        },
+        {
+          "id": "accessibility",
+          "description": "RU/RO axe360 zero violations; focus/ESC/outside/Tab/scroll/bottom-nav/touch-size assertions",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/axe-ru.json"
+        },
+        {
+          "id": "visual-matrix",
+          "description": "29 synthetic screenshots,24 matrix RU/RO×360/768/1024/1280, role STUDENT; reviewed actual render",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/screenshots.json"
+        },
+        {
+          "id": "route-budgets",
+          "description": "50/50 routes≤256000 bytes including all fonts; student251072, max255923",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/budgets.json"
+        },
+        {
+          "id": "contracts-generated",
+          "description": "149 operations/old schemas unchanged, single additive locale query; SDK generated through standard scripts",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/contracts.json"
+        },
+        {
+          "id": "preservation",
+          "description": "32 snapshots valid,458 initial paths present,31 migration paths/checksums intact, HEAD/branch unchanged",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/preservation.json"
+        },
+        {
+          "id": "targeted-quality",
+          "description": "API/consumer typechecks, scoped ESLint,12 presentation tests; incremental diff whitespace clean",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-033/verification.json"
+        },
+        {
+          "id": "pg-integration",
+          "description": "Actual PostgreSQL metadata SQL, source guards, triggers, lock concurrency, projector retention500/TTL",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-033/source-audit.md",
+          "reason": "No authorized isolated PostgreSQL integration environment used;10 prepared readonly checks were not executed."
+        },
+        {
+          "id": "live-producers",
+          "description": "Actual teacher/manager/finance facts and worker/provider delivery",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-033/source-audit.md",
+          "reason": "Synthetic fixture and static producer audit do not prove live delivery; no live provider/DB/worker calls authorized by local smoke."
+        },
+        {
+          "id": "complete-gate",
+          "description": "TASK-035/end-of-phase regression/FND-GATE/production GO",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-033/handoff.md",
+          "reason": "Outside TASK-033; phase policy requires separate final gate. TASK-034 not started."
+        },
+        {
+          "id": "screen-reader",
+          "description": "Human screen-reader and real-device acceptance",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-033/report.md",
+          "reason": "Automated axe/keyboard/render evidence only; no certification claimed."
+        }
+      ],
+      "artifacts": "../../k8k-tasks/TASK-033/artifacts-check.json",
+      "nextTask": "TASK-034",
+      "nextTaskStarted": false
+    }
+  },
+  {
+    "task": "TASK-034",
+    "report": "output/k8k-tasks/TASK-034/report.md",
+    "reportSha256": "bd4d0bd7c97bc587aeded8a33abcbb3a83f020ed445cdbe32e776ca57927afeb",
+    "reportStatus": "Статус: **DONE в локальном объёме задания**. Реальные PostgreSQL/S3/email/OTP/cookies и общий gate — NOT_RUN.",
+    "acceptance": {
+      "task": "TASK-034",
+      "status": "DONE",
+      "scope": "current K8K local code, typed contracts and synthetic/mock/browser verification; external gates remain NOT_RUN",
+      "date": "2026-11-08",
+      "baseline": {
+        "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+        "branch": "feat/k8k-design",
+        "dirtyDigest": "0523d72884192015f1c72655c282c0f72ecb191bfa3eddf215ecb47c98bffc4a",
+        "statusEntries": 15210
+      },
+      "checks": [
+        {
+          "id": "locale-one-store",
+          "description": "RU/RO current K8K routes, titles/aria/validation, one store and input retention",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+          "detail": "15 route variants, no reload/visible keys; cross-tab/reload/storage failure; typed parity/placeholders. Legacy flag-off is compatibility, not new redesign acceptance."
+        },
+        {
+          "id": "file-scope",
+          "description": "Existing own/foreign/revoked/expired grants and no-store preserved",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/materials-tests.log",
+          "detail": "48 material unit/HTTP mocks; new3 metadata fields only. Signature/permission source sections unchanged; real PostgreSQL/S3 not executed."
+        },
+        {
+          "id": "file-context",
+          "description": "Contextless/fallback versus authored labels, server filter/page/total",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+          "detail": "35 synthetic grants, default30/page2, filter resets page, same-named authored text remains raw."
+        },
+        {
+          "id": "capability-ephemeral",
+          "description": "Private capability explicit read, expiry/HTTPS and no app persistence",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+          "detail": "Synthetic intercepted handoff; expired/403 and late logout/switch blocked. No live storage URL in evidence."
+        },
+        {
+          "id": "profile",
+          "description": "Alias whitelist and stable dirty input, saved only after response",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+          "detail": "Background /me and locale do not remount alias; alias100; full_name/email remain unchanged, profile PATCH displayName only."
+        },
+        {
+          "id": "secret-state",
+          "description": "Password/OTP handling, no blind retry or false sent, safe localized errors",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+          "detail": "Provider unknown/current password/OTP/expired temporary password; direct closures not generic mutation state, fields clear; private diagnostic hidden."
+        },
+        {
+          "id": "session-rotation",
+          "description": "Existing session rotation and revoke contracts retained",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/security-tests.log",
+          "detail": "73 service/HTTP/SDK mocks; browser confirm/password /me bootstrap, current409/foreign404/own-other204 and unknown logout boundary. Actual cookies not live-tested."
+        },
+        {
+          "id": "gate-separation",
+          "description": "Full suspended/initial password and authoritative subject access remain separate",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/coverage.md",
+          "detail": "Browser full suspended/initial gate; existing /me hasActiveAccess and subject capabilities retained, TASK-024/027 prerequisites; no client-derived global suspension."
+        },
+        {
+          "id": "date-money",
+          "description": "Timezone separate from locale, New_York date-only, exact600.1234, plural category",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/browser.log",
+          "detail": "2 locale cases; suspended freshness uses its /me zone, countdown remains server-time based."
+        },
+        {
+          "id": "visual-accessibility",
+          "description": "RU/RO×4 widths, long text, keyboard/reduced motion and200% reflow",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/screenshots.json",
+          "detail": "65 images/48 matrix;10 axe360 scans with0 violations. 200% equivalent CSS640/DPR2, not physical-device certification."
+        },
+        {
+          "id": "contracts",
+          "description": "149 operations unchanged,3 optional MaterialItemDto fields and standard generation",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/contracts.json",
+          "detail": "Old schemas except additive MaterialItemDto, existing required/properties and request/security/operation definitions unchanged."
+        },
+        {
+          "id": "quality-budget",
+          "description": "Targeted typecheck/lint/tests and50/50 route budgets",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/verification.json",
+          "detail": "48+73 mocks,12 presentation,2 locale,19 Chromium; student255001/max255923 against256000 incl fonts."
+        },
+        {
+          "id": "preservation",
+          "description": "79 snapshots,31 migration checksums and15210 initial paths preserved",
+          "status": "PASS",
+          "passed": true,
+          "evidence": "../../k8k-tasks/TASK-034/preservation.json",
+          "detail": "HEAD/branch unchanged; no migrations/dependencies/env-file/live DB/provider/seed/deploy access. UI barrel append-only export noted."
+        },
+        {
+          "id": "postgresql",
+          "description": "Actual SQL metadata binding/permission locks/expiry races",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-034/report.md",
+          "detail": "No authorized working PostgreSQL integration action in TASK-034; existing CTE evidence is historical."
+        },
+        {
+          "id": "providers",
+          "description": "Live S3, OTP/email/provider acceptance and cookie/session rotation",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-034/report.md",
+          "detail": "Only mocks/local synthetic browser; actual provider/working object/credential workflows require separate acceptance."
+        },
+        {
+          "id": "physical-a11y",
+          "description": "Physical zoom/device/screen-reader validation",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-034/coverage.md",
+          "detail": "Local viewport/DPR equivalent, keyboard/axe and screenshots are not physical-device certification."
+        },
+        {
+          "id": "gate",
+          "description": "TASK-035, recursive regression, FND-GATE/production GO",
+          "status": "NOT_RUN",
+          "passed": null,
+          "evidence": "../../k8k-tasks/TASK-034/handoff.md",
+          "detail": "Separate owner-issued task; TASK-035 not started."
+        }
+      ],
+      "nextTask": "TASK-035",
+      "nextTaskStarted": false
+    }
+  }
+]

@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@online-school/db';
@@ -24,6 +25,10 @@ import type {
 } from './homework.dto.js';
 
 export const DRAFT_TTL_MS = 30 * 86400000;
+export function issuedHomeworkSql(now: Date | Prisma.Sql): Prisma.Sql {
+  return Prisma.sql`d.issued_at<=${now} AND a.archived_at IS NULL
+        AND (d.cancelled_at IS NULL OR d.cancelled_at>${now})`;
+}
 export function homeworkProjectionSql(
   studentId: string,
   query: HomeworkQuery,
@@ -32,6 +37,11 @@ export function homeworkProjectionSql(
 ): Prisma.Sql {
   const filter = query.status ? Prisma.sql`WHERE status=${query.status}` : Prisma.empty;
   const selected = homeworkId ? Prisma.sql`AND d.id=${homeworkId}::uuid` : Prisma.empty;
+  const lesson = query.lessonId
+    ? Prisma.sql`AND a.lesson_occurrence_id=${query.lessonId}::uuid
+    AND EXISTS (SELECT 1 FROM lesson_occurrences lesson JOIN student_subject_enrollments le ON le.id=lesson.enrollment_id
+      WHERE lesson.id=a.lesson_occurrence_id AND le.id=e.id AND le.student_id=${studentId}::uuid)`
+    : Prisma.empty;
   return Prisma.sql`
     WITH scoped AS (
       SELECT d.id,d.issued_at,d.due_at,d.assignment_id,a.title,a.content,s.name AS subject_name,t.full_name AS teacher_name,
@@ -48,8 +58,7 @@ export function homeworkProjectionSql(
         ORDER BY h.version DESC LIMIT 1) latest ON true
       LEFT JOIN LATERAL (SELECT r.result FROM submission_reviews r WHERE r.submission_id=latest.id
         AND r.reviewed_at<=${now} ORDER BY r.version DESC LIMIT 1) review ON true
-      WHERE e.student_id=${studentId}::uuid ${selected} AND d.issued_at<=${now} AND a.archived_at IS NULL
-        AND (d.cancelled_at IS NULL OR d.cancelled_at>${now})
+      WHERE e.student_id=${studentId}::uuid ${selected} ${lesson} AND ${issuedHomeworkSql(now)}
     ), filtered AS (SELECT * FROM scoped ${filter}), paged AS (
       SELECT * FROM filtered ORDER BY issued_at DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize}
     ), result AS (
@@ -124,7 +133,7 @@ export class StudentHomeworkService {
     if (loaded.studentProfileId !== studentId || !(await this.owns(tx, studentId, id)))
       return fail(domainError('HOMEWORK_FORBIDDEN', 403));
     if (loaded.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-    if (!loaded.hasActiveAccess) return fail(domainError('ACCESS_SUSPENDED', 402));
+    if (!loaded.hasActiveAccess) return fail(studentAccessSuspended(loaded.managerContacts));
     return ok(loaded);
   }
   private async editable(ctx: CriticalContext, student: IStudentContext, id: string) {

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "ui-build",
+    "command": "pnpm --filter @online-school/ui build",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-test",
+    "command": "pnpm --filter @online-school/ui test",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-lint",
+    "command": "pnpm --filter @online-school/ui lint",
+    "exitCode": 0
+  },
+  {
+    "name": "font-check",
+    "command": "pnpm k8k:fonts:check",
+    "exitCode": 0
+  },
+  {
+    "name": "eslint",
+    "command": "pnpm exec eslint scripts/k8k-typography-evidence.mjs scripts/k8k-route-budget-core.mjs scripts/k8k-design-evidence.mjs --max-warnings 0",
+    "exitCode": 0
+  },
+  {
+    "name": "format",
+    "command": "pnpm exec prettier --check package.json packages/ui/src/icon.tsx packages/ui/src/controls.tsx packages/ui/src/style.css packages/ui/src/fonts/provenance.json packages/ui/src/fonts/SOURCE.md packages/ui/tests/typography.test.mjs packages/ui/tests/typography scripts/k8k-typography-evidence.mjs scripts/k8k-route-budget-core.mjs scripts/k8k-design-evidence.mjs",
+    "exitCode": 1
+  },
+  {
+    "name": "font-check-final",
+    "command": "pnpm k8k:fonts:check",
+    "exitCode": 0
+  },
+  {
+    "name": "format-final",
+    "command": "pnpm exec prettier --check package.json packages/ui/src/icon.tsx packages/ui/src/controls.tsx packages/ui/src/style.css packages/ui/src/fonts/provenance.json packages/ui/src/fonts/SOURCE.md packages/ui/tests/typography.test.mjs packages/ui/tests/typography scripts/k8k-typography-evidence.mjs scripts/k8k-route-budget-core.mjs scripts/k8k-design-evidence.mjs",
+    "exitCode": 0
+  }
+]

@@ -56,6 +56,18 @@ export class DashboardPendingPaymentsDto {
   @ApiProperty({ type: [DashboardCurrencyTotalDto] })
   totalsByCurrency!: DashboardCurrencyTotalDto[];
 }
+export class DashboardPriorityTaskDto {
+  @ApiProperty({ format: 'uuid' }) taskId!: string;
+  @ApiProperty() title!: string;
+}
+export class DashboardPriorityDto {
+  @ApiProperty({ type: DashboardPriorityTaskDto, nullable: true })
+  primary!: DashboardPriorityTaskDto | null;
+  @ApiProperty({ type: 'integer', minimum: 0, description: 'Full authorized critical queue.' })
+  criticalCount!: number;
+  @ApiProperty({ enum: ['TASK_QUEUE'] }) queueAction!: 'TASK_QUEUE';
+  @ApiProperty({ format: 'date-time' }) sourceAsOf!: string;
+}
 export class ManagerDashboardDto {
   @ApiProperty({ type: LeadSummaryDto }) leads!: LeadSummaryDto;
   @ApiProperty({ format: 'date-time' }) generatedAt!: string;
@@ -65,4 +77,10 @@ export class ManagerDashboardDto {
   @ApiProperty({ type: [DashboardSubscriptionDto] })
   expiringSubscriptions!: DashboardSubscriptionDto[];
   @ApiProperty({ type: DashboardPendingPaymentsDto }) pendingPayments!: DashboardPendingPaymentsDto;
+  @ApiPropertyOptional({
+    type: DashboardPriorityDto,
+    nullable: true,
+    description: 'Omitted when the priority source is not configured; null if it is unavailable.',
+  })
+  priority?: DashboardPriorityDto | null;
 }

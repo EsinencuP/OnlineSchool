@@ -1,0 +1,270 @@
+{
+  "stage": "after",
+  "records": [
+    {
+      "role": "STUDENT",
+      "width": 360,
+      "file": "student-360.png",
+      "violations": []
+    },
+    {
+      "role": "STUDENT",
+      "width": 768,
+      "file": "student-768.png"
+    },
+    {
+      "role": "STUDENT",
+      "width": 1024,
+      "file": "student-1024.png"
+    },
+    {
+      "role": "STUDENT",
+      "width": 1280,
+      "file": "student-1280.png"
+    },
+    {
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "file": "student-ro-1280.png"
+    },
+    {
+      "role": "STUDENT",
+      "flag": 0,
+      "width": 360,
+      "file": "student-fallback-360.png"
+    },
+    {
+      "role": "STUDENT",
+      "flag": 0,
+      "width": 1280,
+      "file": "student-fallback-1280.png"
+    },
+    {
+      "role": "MANAGER",
+      "width": 360,
+      "file": "manager-360.png",
+      "violations": []
+    },
+    {
+      "role": "MANAGER",
+      "width": 768,
+      "file": "manager-768.png"
+    },
+    {
+      "role": "MANAGER",
+      "width": 1024,
+      "file": "manager-1024.png"
+    },
+    {
+      "role": "MANAGER",
+      "width": 1280,
+      "file": "manager-1280.png"
+    },
+    {
+      "role": "MANAGER",
+      "locale": "ro",
+      "width": 1280,
+      "file": "manager-ro-1280.png"
+    },
+    {
+      "role": "TEACHER",
+      "width": 360,
+      "file": "teacher-360.png",
+      "violations": []
+    },
+    {
+      "role": "TEACHER",
+      "width": 768,
+      "file": "teacher-768.png"
+    },
+    {
+      "role": "TEACHER",
+      "width": 1024,
+      "file": "teacher-1024.png"
+    },
+    {
+      "role": "TEACHER",
+      "width": 1280,
+      "file": "teacher-1280.png"
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "width": 1280,
+      "file": "teacher-ro-1280.png"
+    },
+    {
+      "role": "DIRECTOR",
+      "width": 360,
+      "file": "director-360.png",
+      "violations": []
+    },
+    {
+      "role": "DIRECTOR",
+      "width": 768,
+      "file": "director-768.png"
+    },
+    {
+      "role": "DIRECTOR",
+      "width": 1024,
+      "file": "director-1024.png"
+    },
+    {
+      "role": "DIRECTOR",
+      "width": 1280,
+      "file": "director-1280.png"
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "width": 1280,
+      "file": "director-ro-1280.png"
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "width": 360,
+      "file": "tech_operator-360.png",
+      "violations": []
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "width": 768,
+      "file": "tech_operator-768.png"
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "width": 1024,
+      "file": "tech_operator-1024.png"
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "width": 1280,
+      "file": "tech_operator-1280.png"
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "locale": "ro",
+      "width": 1280,
+      "file": "tech_operator-ro-1280.png"
+    },
+    {
+      "role": "LOGIN",
+      "width": 360,
+      "file": "login-360.png",
+      "violations": []
+    },
+    {
+      "role": "LOGIN",
+      "width": 768,
+      "file": "login-768.png"
+    },
+    {
+      "role": "LOGIN",
+      "width": 1024,
+      "file": "login-1024.png"
+    },
+    {
+      "role": "LOGIN",
+      "width": 1280,
+      "file": "login-1280.png"
+    },
+    {
+      "role": "LOGIN",
+      "locale": "ro",
+      "width": 1280,
+      "file": "login-ro-1280.png"
+    },
+    {
+      "role": "LOGIN",
+      "flag": 0,
+      "width": 360,
+      "file": "login-fallback-360.png"
+    },
+    {
+      "role": "LOGIN",
+      "flag": 0,
+      "width": 1280,
+      "file": "login-fallback-1280.png"
+    }
+  ],
+  "checks": [
+    {
+      "role": "STUDENT",
+      "check": "mobile navigation / Escape / focus return",
+      "pass": true
+    },
+    {
+      "role": "STUDENT",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "STUDENT",
+      "check": "flag-off presentation and viewport containment",
+      "pass": true
+    },
+    {
+      "role": "MANAGER",
+      "check": "selected task filter remains visible without pill",
+      "pass": true
+    },
+    {
+      "role": "MANAGER",
+      "check": "mobile navigation / Escape / focus return",
+      "pass": true
+    },
+    {
+      "role": "MANAGER",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "TEACHER",
+      "check": "mobile navigation / Escape / focus return",
+      "pass": true
+    },
+    {
+      "role": "TEACHER",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "DIRECTOR",
+      "check": "mobile navigation / Escape / focus return",
+      "pass": true
+    },
+    {
+      "role": "DIRECTOR",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "check": "mobile navigation / Escape / focus return",
+      "pass": true
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "LOGIN",
+      "check": "RU/RO selector",
+      "pass": true
+    },
+    {
+      "role": "LOGIN",
+      "check": "email validation stays local and returns focus",
+      "pass": true
+    },
+    {
+      "role": "LOGIN",
+      "check": "flag-off presentation and viewport containment",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "unknown": []
+}

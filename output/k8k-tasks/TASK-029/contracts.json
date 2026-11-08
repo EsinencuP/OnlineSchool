@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "operationsBefore": 146,
+  "operationsAfter": 147,
+  "newOperations": [
+    {
+      "path": "/api/v1/student/lessons/{lessonId}/requests/{requestKey}",
+      "method": "get",
+      "operationId": "getStudentLessonRequestResult"
+    }
+  ],
+  "addedParameters": [
+    {
+      "operation": "getStudentHomework",
+      "parameter": "lessonId"
+    },
+    {
+      "operation": "getStudentLessons",
+      "parameter": "view"
+    },
+    {
+      "operation": "getStudentLessons",
+      "parameter": "subjectId"
+    },
+    {
+      "operation": "getStudentLessonHistory",
+      "parameter": "lessonId"
+    },
+    {
+      "operation": "getStudentLessonHistory",
+      "parameter": "subjectId"
+    },
+    {
+      "operation": "getStudentMaterials",
+      "parameter": "lessonId"
+    }
+  ],
+  "schemaProperties": [
+    {
+      "schema": "LessonCardDto",
+      "property": "subjectId"
+    },
+    {
+      "schema": "LessonCardDto",
+      "property": "originalScheduledAt"
+    }
+  ],
+  "newSchemas": [
+    "LessonRequestResultDto"
+  ],
+  "existingRequestBodiesResponsesAndRequiredFields": "preserved",
+  "adjacentReportsAndSkillsParameters": "preserved",
+  "standardGeneration": true,
+  "migrationsAdded": 0,
+  "migrationsExecuted": 0
+}

@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@online-school/db';
 import { DatabaseService } from '../../core/database/database.module.js';
@@ -8,8 +9,9 @@ import { object } from '../../modules/identity/input.js';
 import {
   NOTIFICATION_TTL_MS,
   notificationLock,
-  notificationContent,
 } from '../../modules/notifications/notification.service.js';
+import { projectNotificationText } from './notification-locale.js';
+import type { NotificationsQuery } from './notifications.dto.js';
 import { MeService } from '../me/me.service.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import type { HistoryPage } from '../history/history.dto.js';
@@ -18,12 +20,13 @@ import type { NotificationsResponseDto, UnreadCountDto } from './notifications.d
 export function notificationsSql(studentId: string, query: HistoryPage, now: Date): Prisma.Sql {
   return Prisma.sql`WITH visible AS (
     SELECT id,type,title,body,payload,created_at,read_at,
-      (SELECT d.locale FROM notification_dispatches d WHERE d.source_id=student_notifications.id) AS delivery_locale FROM student_notifications
+      coalesce((SELECT jsonb_build_object('code',d.template_code,'params',d.variables,'kind','dispatch') FROM notification_dispatches d WHERE d.source_id=student_notifications.id AND d.student_id=student_notifications.student_id AND d.channel='IN_APP'),
+        (SELECT jsonb_build_object('code',s.type,'params',s.payload,'kind','source') FROM student_notification_sources s WHERE s.id=student_notifications.id AND s.student_id=student_notifications.student_id AND s.type=student_notifications.type)) AS catalog FROM student_notifications
     WHERE student_id=${studentId}::uuid AND archived_at IS NULL AND created_at>${new Date(+now - NOTIFICATION_TTL_MS)} AND created_at<=${now}
   ), paged AS(SELECT * FROM visible ORDER BY created_at DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
   SELECT (SELECT count(*)::int FROM visible) AS total,(SELECT count(*)::int FROM visible WHERE read_at IS NULL) AS "unreadCount",
     coalesce((SELECT jsonb_agg(jsonb_build_object('notificationId',id,'type',type,'title',title,'body',body,
-      'payload',payload,'createdAt',created_at,'isRead',read_at IS NOT NULL,'deliveryLocale',delivery_locale) ORDER BY created_at DESC,id DESC) FROM paged),'[]'::jsonb) AS items`;
+      'payload',payload,'createdAt',created_at,'isRead',read_at IS NOT NULL,'catalog',catalog) ORDER BY created_at DESC,id DESC) FROM paged),'[]'::jsonb) AS items`;
 }
 @Injectable()
 export class StudentNotificationsService {
@@ -31,7 +34,10 @@ export class StudentNotificationsService {
     private readonly database: DatabaseService,
     private readonly me: MeService,
   ) {}
-  async list(student: IStudentContext, query: HistoryPage): Promise<NotificationsResponseDto> {
+  async list(
+    student: IStudentContext,
+    query: NotificationsQuery,
+  ): Promise<NotificationsResponseDto> {
     const now = await at(this.database.client);
     const [row] = await this.database.client.$queryRaw<
       Pick<NotificationsResponseDto, 'items' | 'total' | 'unreadCount'>[]
@@ -40,14 +46,15 @@ export class StudentNotificationsService {
     return {
       ...row,
       items: row.items.map((item) => {
-        const { deliveryLocale, ...n } = item as typeof item & { deliveryLocale?: string | null };
+        const { catalog, ...n } = item as typeof item & { catalog?: unknown };
         return {
           ...n,
-          ...notificationContent(n.type, n.payload, deliveryLocale ?? undefined),
+          ...(projectNotificationText(n.type, catalog, query.locale ?? 'ru') ?? {}),
           createdAt: new Date(n.createdAt).toISOString(),
         };
       }),
-      ...query,
+      page: query.page,
+      pageSize: query.pageSize,
     };
   }
   async count(student: IStudentContext): Promise<UnreadCountDto> {
@@ -71,7 +78,7 @@ export class StudentNotificationsService {
     if (current.studentProfileId !== student.studentProfileId)
       return fail(domainError('NOTIFICATION_FORBIDDEN', 403));
     if (current.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-    if (!current.hasActiveAccess) return fail(domainError('ACCESS_SUSPENDED', 402));
+    if (!current.hasActiveAccess) return fail(studentAccessSuspended(current.managerContacts));
     await notificationLock(ctx.tx, student.studentProfileId);
     const now = await at(ctx.tx),
       where = {

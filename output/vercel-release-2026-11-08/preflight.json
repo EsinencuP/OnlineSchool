@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-08",
+  "request": "Commit and push current work; publish existing Vercel project for owner cabinet review",
+  "repository": "https://github.com/EsinencuP/OnlineSchool.git",
+  "targetBranch": "main",
+  "project": "onlineschool",
+  "projectId": "prj_XusYmdwL1Y0478T09RNKmBQMldgZ",
+  "teamId": "team_Ht3RiN2zfq6iuPrxaOnTG5s3",
+  "origin": "https://onlineschool-xi.vercel.app",
+  "previousDeployment": "dpl_S1xy2Fm8UEzPNPbiKYaqPwPnYi4p",
+  "previousCommit": "5f3c6f024a23f5e5f8fdf6434436481d8ac6895f",
+  "checks": [
+    {"command": "pnpm exec tsc -b packages/shared packages/db packages/api-contracts packages/ui packages/account-ui apps/api apps/worker apps/platform apps/student-cabinet apps/manager-web --force --pretty false", "exit": 0},
+    {"command": "pnpm exec eslint apps/platform apps/manager-web --max-warnings 0", "exit": 0},
+    {"command": "pnpm --filter @online-school/platform exec vite build", "exit": 0},
+    {"command": "pnpm --filter @online-school/student-cabinet exec vite build", "exit": 0},
+    {"command": "pnpm --filter @online-school/manager-web exec vite build", "exit": 0},
+    {"command": "pnpm exec eslint scripts/vercel-review-smoke.mjs --max-warnings 0", "exit": 0}
+  ],
+  "secretScan": {"textFiles": 10631, "findings": 0, "evidence": "secret-scan.json"},
+  "archiveChecks": {"appsArchiveEntries": 24087, "recoveryArchiveEntries": 1813, "recoveryGitMetadataEntries": 0, "actualSecretFilenames": 0},
+  "database": "Existing protected deployment build; additive pending official-phone migration only; no reset, seed, new DB, finance actions or fake provider results",
+  "reviewMode": "?ui.k8k=1; legacy ?ui.k8k=0 retained",
+  "fullProductionOrFoundationGate": false
+}

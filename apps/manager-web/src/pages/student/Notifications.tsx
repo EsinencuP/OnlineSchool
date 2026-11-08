@@ -21,7 +21,7 @@ import {
 } from '../../components/ui.js';
 import { displayTime } from '../../lib/time.js';
 import { ru, label } from '../../i18n/ru.js';
-import { errorText, useLocale } from '@online-school/ui';
+import { errorText, k8kEnabled, useContextRefresh, useLocale } from '@online-school/ui';
 export default function Notifications({ studentId }: { studentId: string }) {
   const me = useManager();
   const { locale } = useLocale();
@@ -47,7 +47,12 @@ export default function Notifications({ studentId }: { studentId: string }) {
         signal,
       ),
     refetchInterval: (q) =>
-      q.state.data?.items.some((n) => n.status === 'QUEUED') ? 10_000 : false,
+      !k8kEnabled && q.state.data?.items.some((n) => n.status === 'QUEUED') ? 10_000 : false,
+  });
+  useContextRefresh({
+    enabled: k8kEnabled && !!query.data?.items.some((item) => item.status === 'QUEUED'),
+    context: 'operational',
+    refresh: () => query.refetch({ cancelRefetch: false }),
   });
   return (
     <>
@@ -77,7 +82,7 @@ export default function Notifications({ studentId }: { studentId: string }) {
           {ru.refresh}
         </button>
       </div>
-      <State query={query} empty={query.data?.items.length === 0}>
+      <State operational query={query} empty={query.data?.items.length === 0}>
         {(d) => (
           <>
             <ul className="record-cards">

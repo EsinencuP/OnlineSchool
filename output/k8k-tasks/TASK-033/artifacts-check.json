@@ -1,0 +1,490 @@
+{
+  "status": "PASS",
+  "screenshots": 29,
+  "matrixScreenshots": 24,
+  "browserTests": 13,
+  "budgetsPassed": 50,
+  "studentRouteBytes": 251072,
+  "maxRouteBytes": 255923,
+  "acceptance": {
+    "pass": 15,
+    "notRun": 4
+  },
+  "links": [
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "before.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "preservation.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "changes.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "contracts.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "source-audit.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "design-note.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "verification.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "api-baseline.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "api-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "api-tests.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "generate.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "generate.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "student-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "build.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "presentation.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "student-lint.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "api-lint.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "browser.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "budget.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "budgets.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "contracts.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "preservation.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "diff-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "artifacts-check.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "browser-first.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "screenshots.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "after/ru-360-page1.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "after/ro-1280-page2.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "after/ro-360-short-keyboard.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "after/ru-unknown-read-all.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "axe-ru.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "axe-ro.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "../../k8k-taskpack/task-033/acceptance.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/report.md",
+      "link": "handoff.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "source-audit.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "verification.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "screenshots.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "contracts.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "preservation.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-tasks/TASK-033/handoff.md",
+      "link": "../../k8k-taskpack/task-033/acceptance.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/before.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/preservation.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/changes.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/contracts.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/source-audit.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/design-note.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/verification.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/api-baseline.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/api-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/api-tests.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/generate.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/generate.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/student-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/build.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/presentation.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/student-lint.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/api-lint.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/browser.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/budget.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/budgets.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/contracts.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/preservation.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/diff-check.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/artifacts-check.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/browser-first.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/screenshots.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/after/ru-360-page1.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/after/ro-1280-page2.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/after/ro-360-short-keyboard.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/after/ru-unknown-read-all.png",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/axe-ru.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/axe-ro.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "acceptance.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/report.md",
+      "link": "../../k8k-tasks/TASK-033/handoff.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/api-tests.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/contracts.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/api-tests.log",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/playwright.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/axe-ru.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/screenshots.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/budgets.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/contracts.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/preservation.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/verification.json",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/source-audit.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/source-audit.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/handoff.md",
+      "exists": true
+    },
+    {
+      "from": "output/k8k-taskpack/task-033/acceptance.json",
+      "link": "../../k8k-tasks/TASK-033/report.md",
+      "exists": true
+    }
+  ]
+}

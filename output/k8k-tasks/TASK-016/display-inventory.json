@@ -1,0 +1,2308 @@
+{
+  "manager": [
+    {
+      "code": "ACCESS_CONFIGURATION_ERROR",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACCOUNT_ALREADY_EXISTS",
+      "key": "errors.ACCOUNT_ALREADY_EXISTS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACCOUNT_NOT_FOUND",
+      "key": "errors.ACCOUNT_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACTIVE_CONSUMPTION_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACTIVE_SUBSCRIPTION_EXISTS",
+      "key": "errors.ACTIVE_SUBSCRIPTION_EXISTS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACTUAL_START_SNAPSHOT_MISMATCH",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ACTUAL_TEACHER_NOT_ASSIGNED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ADJUSTMENT_SOURCE_MISMATCH",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ADJUSTMENT_SOURCE_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "AMBIGUOUS_OR_INVALID_LOCAL_TIME",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "APPROVAL_REQUIRED",
+      "key": "errors.APPROVAL_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ASSIGNMENT_ALREADY_ENDED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ASSIGNMENT_INACTIVE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ASSIGNMENT_MISMATCH",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "AUDIT_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "AUTH_RATE_LIMITED",
+      "key": "errors.AUTH_RATE_LIMITED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "AVAILABILITY_ALREADY_CANCELLED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "AVAILABILITY_FUTURE_ONLY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CACHED_RESULT_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CALENDAR_CONFLICT",
+      "key": "errors.CALENDAR_CONFLICT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHANGE_REQUEST_ALREADY_APPROVED",
+      "key": "errors.CHANGE_REQUEST_ALREADY_APPROVED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHANGE_REQUEST_NOT_FOUND",
+      "key": "errors.CHANGE_REQUEST_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHANGE_REQUEST_STALE",
+      "key": "errors.CHANGE_REQUEST_STALE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHARGEABLE_CANCELLATION_NOT_ALLOWED",
+      "key": "errors.CHARGEABLE_CANCELLATION_NOT_ALLOWED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHARGE_ALREADY_REVERSED",
+      "key": "errors.CHARGE_ALREADY_REVERSED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CHARGE_NOT_FOUND",
+      "key": "errors.CHARGE_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CLOSED_PERIOD",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "COMMAND_CONFIGURATION_ERROR",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "COMMAND_CONTEXT_MISSING",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "COMMAND_IN_PROGRESS",
+      "key": "errors.COMMAND_IN_PROGRESS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CONFIRMED_LESSON_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CONFLICT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CONSUMPTION_CANCELLED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CONTACT_REQUIRED",
+      "key": "errors.CONTACT_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CORRECTION_CHAIN_REQUIRES_REVIEW",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CSRF_CONFIGURATION_MISSING",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CSRF_INVALID",
+      "key": "errors.CSRF_INVALID",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CURRENCY_NOT_SUPPORTED",
+      "key": "errors.CURRENCY_NOT_SUPPORTED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "CURSOR_CONFIGURATION_MISSING",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DASHBOARD_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DATABASE_ERROR",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DATABASE_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DEMO_ACCOUNT_UNAVAILABLE",
+      "key": "errors.DEMO_ACCOUNT_UNAVAILABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DEMO_SWITCH_FORBIDDEN",
+      "key": "errors.DEMO_SWITCH_FORBIDDEN",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DIRECTOR_PERMISSION_NOT_APPLICABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISPUTE_REFUND_EXCEEDS_CHARGE",
+      "key": "errors.DISPUTE_REFUND_EXCEEDS_CHARGE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISPUTE_SOURCE_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_ALREADY_APPROVED",
+      "key": "errors.DISTRIBUTION_ALREADY_APPROVED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_ALREADY_USED",
+      "key": "errors.DISTRIBUTION_ALREADY_USED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_AMOUNT_INVALID",
+      "key": "errors.DISTRIBUTION_AMOUNT_INVALID",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_NOT_APPROVED",
+      "key": "errors.DISTRIBUTION_NOT_APPROVED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_NOT_FOUND",
+      "key": "errors.DISTRIBUTION_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DISTRIBUTION_PLAN_MISMATCH",
+      "key": "errors.DISTRIBUTION_PLAN_MISMATCH",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "DRAFT_LINES_MISMATCH",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "EMAIL_ALREADY_USED",
+      "key": "errors.EMAIL_ALREADY_USED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": [
+        "newEmail"
+      ]
+    },
+    {
+      "code": "ENROLLMENT_INACTIVE",
+      "key": "errors.ENROLLMENT_INACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ENTITLEMENT_BALANCE_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "EXPLICIT_GENERATION_END_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FINANCE_POLICY_CONFIGURATION_ERROR",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FINANCIAL_PACKAGE_ALREADY_ATTACHED",
+      "key": "errors.FINANCIAL_PACKAGE_ALREADY_ATTACHED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FIRST_PAYMENT_NOT_CONFIRMED",
+      "key": "errors.FIRST_PAYMENT_NOT_CONFIRMED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FORBIDDEN",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FORBIDDEN_ROLE",
+      "key": "errors.FORBIDDEN_ROLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FREEZE_HAS_LESSONS",
+      "key": "errors.FREEZE_HAS_LESSONS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FREEZE_LIMIT_EXCEEDED",
+      "key": "errors.FREEZE_LIMIT_EXCEEDED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FULLY_PAID_USES_NORMAL_ACCESS",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FULL_CONFIRMED_PAYMENT_REQUIRED",
+      "key": "errors.FULL_CONFIRMED_PAYMENT_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "FUTURE_ASSIGNMENT_REQUIRES_REVIEW",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "GUARDIAN_REQUIRED",
+      "key": "errors.GUARDIAN_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "HTTP_ERROR",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDEMPOTENCY_KEY_INVALID",
+      "key": "errors.IDEMPOTENCY_KEY_INVALID",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDEMPOTENCY_KEY_REQUIRED",
+      "key": "errors.IDEMPOTENCY_KEY_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDEMPOTENCY_KEY_REUSED",
+      "key": "errors.IDEMPOTENCY_KEY_REUSED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDEMPOTENCY_PAYLOAD_MISMATCH",
+      "key": "errors.IDEMPOTENCY_PAYLOAD_MISMATCH",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDENTITY_CONFIGURATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "IDENTITY_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INSUFFICIENT_PAID_RIGHTS",
+      "key": "errors.INSUFFICIENT_PAID_RIGHTS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_ACCESS_EXPIRY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_ACTUAL_INTERVAL",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_ADJUSTMENT_KIND",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_ASSIGNMENT_PERIOD",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_AVAILABILITY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_BATCH_SIZE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_COMMAND_RESULT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_CREDENTIALS",
+      "key": "errors.INVALID_CREDENTIALS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_CURRENCY",
+      "key": "errors.INVALID_CURRENCY",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_CURSOR",
+      "key": "errors.INVALID_CURSOR",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_DATE",
+      "key": "errors.INVALID_DATE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_EXPIRY_JOB",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_FREEZE_CONFIGURATION",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_FREEZE_DATES",
+      "key": "errors.INVALID_FREEZE_DATES",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_INPUT",
+      "key": "errors.INVALID_INPUT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_LEDGER_LINES",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_LESSON_INTERVAL",
+      "key": "errors.INVALID_LESSON_INTERVAL",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_LESSON_KIND",
+      "key": "errors.INVALID_LESSON_KIND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_LESSON_STATUS",
+      "key": "errors.INVALID_LESSON_STATUS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_MEET_LINK",
+      "key": "errors.INVALID_MEET_LINK",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_MONEY",
+      "key": "errors.INVALID_MONEY",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_NOTIFICATION_SOURCE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_NO_SHOW_RESULT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_OUTCOME_RESULT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_QUANTITY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RANGE",
+      "key": "errors.INVALID_RANGE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RATE_INPUT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RECEIVED_AT",
+      "key": "errors.INVALID_RECEIVED_AT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RECURRENCE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_REFERENCE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RESPONSE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_RETRY_LIMIT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_SCHEDULE_CONFIGURATION",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_SCHEDULE_JOB",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_STAGE_TRANSITION",
+      "key": "errors.INVALID_STAGE_TRANSITION",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_STARTS_AT",
+      "key": "errors.INVALID_STARTS_AT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_STATE_TRANSITION",
+      "key": "errors.INVALID_STATE_TRANSITION",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_TIMEZONE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_TRIAL_INPUT",
+      "key": "errors.INVALID_TRIAL_INPUT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "INVALID_TRIAL_OUTCOME",
+      "key": "errors.INVALID_TRIAL_OUTCOME",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LATEST_MATCHING_REPORT_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LATE_RULE_OVERRIDE_REQUIRED",
+      "key": "errors.LATE_RULE_OVERRIDE_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_CONFIGURATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_DUPLICATE_SUSPECTED",
+      "key": "errors.LEAD_DUPLICATE_SUSPECTED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_LINK_AMBIGUOUS",
+      "key": "errors.LEAD_LINK_AMBIGUOUS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_NOT_FOUND",
+      "key": "errors.LEAD_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_RATE_LIMITED",
+      "key": "errors.LEAD_RATE_LIMITED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_SUBJECT_IMMUTABLE",
+      "key": "errors.LEAD_SUBJECT_IMMUTABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_TERMINAL",
+      "key": "errors.LEAD_TERMINAL",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_TIME_VIOLATION",
+      "key": "errors.LEAD_TIME_VIOLATION",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEAD_VERSION_CONFLICT",
+      "key": "errors.LEAD_VERSION_CONFLICT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEASE_EXPIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_ALREADY_CORRECTED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_ALREADY_PUBLISHED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_NO_CORRECTION_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_PUBLICATION_FAILED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_SOURCE_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_SOURCE_MISMATCH",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LEDGER_UNBALANCED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_ALREADY_RESOLVED",
+      "key": "errors.LESSON_ALREADY_RESOLVED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_CANCELLATION_NOT_AVAILABLE",
+      "key": "errors.LESSON_CANCELLATION_NOT_AVAILABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_CANCELLATION_NOT_COMPLETED",
+      "key": "errors.LESSON_CANCELLATION_NOT_COMPLETED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_CANNOT_START",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_HAS_REPORTED_FACT",
+      "key": "errors.LESSON_HAS_REPORTED_FACT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_IMMUTABLE_STATE",
+      "key": "errors.LESSON_IMMUTABLE_STATE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_NOT_FOUND",
+      "key": "errors.LESSON_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_NOT_IN_START_WINDOW",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_NOT_REPORTABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LESSON_SUBSCRIPTION_MISMATCH",
+      "key": "errors.LESSON_SUBSCRIPTION_MISMATCH",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "LINK_NOT_ALLOWED",
+      "key": "errors.LINK_NOT_ALLOWED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "MANAGER_CONFIGURATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "MANAGER_INACTIVE",
+      "key": "errors.MANAGER_INACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "MANAGER_PROFILE_NOT_FOUND",
+      "key": "errors.MANAGER_PROFILE_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "MANUAL_FINANCE_REVIEW_REQUIRED",
+      "key": "errors.MANUAL_FINANCE_REVIEW_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "MFA_REQUIRED",
+      "key": "errors.MFA_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NETWORK_ERROR",
+      "key": "errors.NETWORK_ERROR",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOTIFICATIONS_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOTIFICATION_CONFIGURATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOTIFICATION_DEDUPE_CONFLICT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOTIFICATION_RATE_LIMITED",
+      "key": "errors.NOTIFICATION_RATE_LIMITED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOTIFICATION_SOURCE_NOT_FOUND",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NOT_FOUND",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NO_DELIVERY_CHANNEL",
+      "key": "errors.NO_DELIVERY_CHANNEL",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NO_LESSONS_REMAINING",
+      "key": "errors.NO_LESSONS_REMAINING",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "NO_SCHEDULE_CHANGE",
+      "key": "errors.NO_SCHEDULE_CHANGE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "OCCUPIED_AVAILABILITY_REQUIRES_MANAGER",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ONE_SCHEDULE_TARGET_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED",
+      "key": "errors.PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PASSKEY_CANCELLED",
+      "key": "errors.PASSKEY_CANCELLED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PASSKEY_FAILED",
+      "key": "errors.PASSKEY_FAILED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PASSWORD_CHANGE_REQUIRED",
+      "key": "errors.PASSWORD_CHANGE_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PASSWORD_LENGTH_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PASSWORD_SERVICE_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_ALREADY_CONFIRMED",
+      "key": "errors.PAYMENT_ALREADY_CONFIRMED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_DUPLICATE",
+      "key": "errors.PAYMENT_DUPLICATE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_IMMUTABLE",
+      "key": "errors.PAYMENT_IMMUTABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_NOT_CONFIRMED",
+      "key": "errors.PAYMENT_NOT_CONFIRMED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_NOT_FOUND",
+      "key": "errors.PAYMENT_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_NOT_PENDING",
+      "key": "errors.PAYMENT_NOT_PENDING",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYMENT_OVER_ALLOCATED",
+      "key": "errors.PAYMENT_OVER_ALLOCATED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYOUT_EXCEEDS_OBLIGATION",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYOUT_RECONCILIATION_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PAYROLL_OBLIGATION_NOT_PUBLISHED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PERIOD_ALREADY_CLOSED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PERIOD_HAS_DRAFT_ENTRIES",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PERIOD_HAS_UNRESOLVED_FACTS",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PERIOD_NOT_FINISHED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PERMISSION_NOT_EXPIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PLAN_DURATION_REQUIRED",
+      "key": "errors.PLAN_DURATION_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PLAN_NOT_FOUND",
+      "key": "errors.PLAN_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PREPARED_TERM_MISMATCH",
+      "key": "errors.PREPARED_TERM_MISMATCH",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "PUBLISHED_SOURCE_REQUIRED",
+      "key": "errors.PUBLISHED_SOURCE_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RANGE_TOO_LARGE",
+      "key": "errors.RANGE_TOO_LARGE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "READ_QUERY_REJECTED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RECOVERY_ALREADY_INITIATED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RECOVERY_AUTHORIZATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RECOVERY_FORBIDDEN",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RECOVERY_REGISTRATION_ONLY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RECOVERY_TOKEN_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "REFUND_NOT_EXECUTED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "REFUND_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RESET_LIMIT_EXCEEDED",
+      "key": "errors.RESET_LIMIT_EXCEEDED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "RIGHTS_ALREADY_GRANTED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SALE_CONDITION_INACTIVE",
+      "key": "errors.SALE_CONDITION_INACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SALE_PRICE_ALLOCATION_REQUIRES_REVIEW",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SESSION_STORE_UNAVAILABLE",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SKIP_TRIAL_REASON_REQUIRED",
+      "key": "errors.SKIP_TRIAL_REASON_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SLOT_CONFLICT",
+      "key": "errors.SLOT_CONFLICT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SLOT_HAS_INDIVIDUAL_EXCEPTIONS",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "STUDENT_NOT_FOUND",
+      "key": "errors.STUDENT_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "STUDENT_PASSKEYS_NOT_ALLOWED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBJECT_INACTIVE",
+      "key": "errors.SUBJECT_INACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBJECT_NOT_FOUND",
+      "key": "errors.SUBJECT_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBSCRIPTION_NOT_ACTIVE",
+      "key": "errors.SUBSCRIPTION_NOT_ACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBSCRIPTION_NOT_FOUND",
+      "key": "errors.SUBSCRIPTION_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBSCRIPTION_OVER_ALLOCATED",
+      "key": "errors.SUBSCRIPTION_OVER_ALLOCATED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "SUBSCRIPTION_REQUIRED",
+      "key": "errors.SUBSCRIPTION_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TASK_ALREADY_RESOLVED",
+      "key": "errors.TASK_ALREADY_RESOLVED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TASK_NOT_FOUND",
+      "key": "errors.TASK_NOT_FOUND",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TASK_NOT_IN_PROGRESS",
+      "key": "errors.TASK_NOT_IN_PROGRESS",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TASK_TYPE_MISMATCH",
+      "key": "errors.TASK_TYPE_MISMATCH",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TASK_VERSION_CONFLICT",
+      "key": "errors.TASK_VERSION_CONFLICT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEACHER_INACTIVE",
+      "key": "errors.TEACHER_INACTIVE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEACHER_NOT_ASSIGNED",
+      "key": "errors.TEACHER_NOT_ASSIGNED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEACHER_NOT_AVAILABLE",
+      "key": "errors.TEACHER_NOT_AVAILABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEACHER_SERVICE_HISTORY_REQUIRED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEMPLATE_CHANGES_FUTURE_ONLY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEMPLATE_VARIABLES_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TEMPORARY_PASSWORD_EXPIRED",
+      "key": "errors.TEMPORARY_PASSWORD_EXPIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRANSACTION_CONFLICT",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRANSACTION_RETRY_EXHAUSTED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRIAL_ALREADY_SCHEDULED",
+      "key": "errors.TRIAL_ALREADY_SCHEDULED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRIAL_FINANCIAL_CONFIRMATION_FORBIDDEN",
+      "key": "errors.TRIAL_FINANCIAL_CONFIRMATION_FORBIDDEN",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRIAL_LEAD_REQUIRED",
+      "key": "errors.TRIAL_LEAD_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "TRIAL_OUTCOME_REQUIRED",
+      "key": "errors.TRIAL_OUTCOME_REQUIRED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "UNAUTHENTICATED",
+      "key": "errors.UNAUTHENTICATED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "UNPAID_LESSON_REQUIRES_DIRECTOR_DECISION",
+      "key": "errors.UNPAID_LESSON_REQUIRES_DIRECTOR_DECISION",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "VALIDATION_FAILED",
+      "key": "errors.VALIDATION_FAILED",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "VERSION_CONFLICT",
+      "key": "errors.VERSION_CONFLICT",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_CHALLENGE_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_CONFIGURATION_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_ORIGIN_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_RESPONSE_INVALID",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_UNAVAILABLE",
+      "key": "errors.WEBAUTHN_UNAVAILABLE",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "WEBAUTHN_VERIFICATION_FAILED",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    },
+    {
+      "code": "ZERO_ACCRUAL_HAS_NO_ENTRY",
+      "key": "errors.failed",
+      "severity": "error",
+      "nextAction": "edit",
+      "outcome": "rejected",
+      "fields": []
+    }
+  ],
+  "studentSources": {
+    "PASSWORD_CHANGE_REQUIRED": {
+      "sources": [
+        "apps/api/src/student/student-context.guard.ts"
+      ],
+      "displayKey": "errors.PASSWORD_CHANGE_REQUIRED"
+    },
+    "STUDENT_PROFILE_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+        "apps/api/src/student/security/change-password.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "ACCESS_SUSPENDED": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts",
+        "apps/api/src/student/lessons/lessons.service.ts",
+        "apps/api/src/student/materials/materials.service.ts",
+        "apps/api/src/student/notifications/notifications.service.ts",
+        "apps/api/src/student/profile/profile.service.ts",
+        "apps/api/src/student/reports/reports.service.ts",
+        "apps/api/src/student/security/security-commands.ts"
+      ],
+      "displayKey": "boundaryLimited"
+    },
+    "DASHBOARD_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+        "apps/api/src/student/dashboard/dashboard.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "DASHBOARD_REFRESH_REQUIRED": {
+      "sources": [
+        "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "LESSON_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/history/dispute.service.ts",
+        "apps/api/src/student/lessons/lessons.service.ts",
+        "apps/api/src/student/lessons/student-lesson-scope.guard.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "ATTENDANCE_DISPUTE_ALREADY_OPEN": {
+      "sources": [
+        "apps/api/src/student/history/dispute.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "PUBLISHED_LESSON_DEDUCTION_REQUIRED": {
+      "sources": [
+        "apps/api/src/student/history/dispute.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "DISPUTE_WINDOW_CLOSED": {
+      "sources": [
+        "apps/api/src/student/history/dispute.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "STUDENT_HISTORY_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/history/history.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "HOMEWORK_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/homework/homework-scope.guard.ts",
+        "apps/api/src/student/homework/homework.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "HOMEWORK_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/homework/homework.controller.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "INVALID_INPUT": {
+      "sources": [
+        "apps/api/src/student/homework/homework.dto.ts",
+        "apps/api/src/student/homework/homework.service.ts",
+        "apps/api/src/student/profile/profile.service.ts",
+        "apps/api/src/student/reports/reports.dto.ts",
+        "apps/api/src/student/security/change-password.service.ts",
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.INVALID_INPUT"
+    },
+    "UPLOAD_NOT_PENDING": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "FILE_NOT_CONFIRMED": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "MUST_CHANGE_PASSWORD": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts",
+        "apps/api/src/student/lessons/lessons.service.ts",
+        "apps/api/src/student/materials/materials.service.ts",
+        "apps/api/src/student/notifications/notifications.service.ts",
+        "apps/api/src/student/profile/profile.service.ts",
+        "apps/api/src/student/reports/reports.service.ts",
+        "apps/api/src/student/security/security-commands.ts"
+      ],
+      "displayKey": "errors.PASSWORD_CHANGE_REQUIRED"
+    },
+    "HOMEWORK_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "FILE_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/homework/homework.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "INVALID_PREFERRED_DATE": {
+      "sources": [
+        "apps/api/src/student/lessons/lesson-period.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "STUDENT_TIMEZONE_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/lessons/lesson-period.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "INVALID_LESSON_QUERY": {
+      "sources": [
+        "apps/api/src/student/lessons/lesson-period.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "LESSON_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/lessons/lessons.controller.ts"
+      ],
+      "displayKey": "errors.LESSON_NOT_FOUND"
+    },
+    "RESCHEDULE_WINDOW_CLOSED": {
+      "sources": [
+        "apps/api/src/student/lessons/lessons.service.ts"
+      ],
+      "displayKey": "errors.RESCHEDULE_WINDOW_CLOSED"
+    },
+    "CALENDAR_MONTH_LIMIT_EXCEEDED": {
+      "sources": [
+        "apps/api/src/student/lessons/lessons.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "STUDENT_LESSONS_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/lessons/lessons.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "FILE_ACCESS_DENIED": {
+      "sources": [
+        "apps/api/src/student/materials/materials.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "MATERIALS_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/materials/materials.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "STUDENT_CONTEXT_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/me/me.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "NOTIFICATION_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/notifications/notifications.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "NOTIFICATIONS_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/notifications/notifications.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "NOTIFICATION_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/notifications/notifications.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "AVATAR_FILE_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/profile/profile.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "AVATAR_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/profile/profile.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "REPORT_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/reports/reports.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "PDF_EXPORT_LIMIT_REACHED": {
+      "sources": [
+        "apps/api/src/student/reports/reports.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "REPORTS_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/reports/reports.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "PDF_JOB_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/reports/reports.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "PDF_JOB_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/reports/reports.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "PASSWORD_UNCHANGED": {
+      "sources": [
+        "apps/api/src/student/security/change-password.service.ts"
+      ],
+      "displayKey": "errors.PASSWORD_UNCHANGED"
+    },
+    "CURRENT_PASSWORD_INVALID": {
+      "sources": [
+        "apps/api/src/student/security/change-password.service.ts",
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.CURRENT_PASSWORD_INVALID"
+    },
+    "PASSWORD_MUST_DIFFER": {
+      "sources": [
+        "apps/api/src/student/security/change-password.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "EMAIL_DELIVERY_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/security/email-otp.ts",
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "EMAIL_NOT_CONFIGURED": {
+      "sources": [
+        "apps/api/src/student/security/email-otp.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "EMAIL_OTP_INVALID": {
+      "sources": [
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "OTP_GENERATION_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "EMAIL_REQUEST_SUPERSEDED": {
+      "sources": [
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "EMAIL_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/security/email.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "IDEMPOTENCY_KEY_INVALID": {
+      "sources": [
+        "apps/api/src/student/security/security-commands.ts"
+      ],
+      "displayKey": "errors.IDEMPOTENCY_KEY_INVALID"
+    },
+    "AUTH_SERVICE_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/security/security-commands.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "SESSION_NOT_FOUND": {
+      "sources": [
+        "apps/api/src/student/security/sessions.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "CURRENT_SESSION_CANNOT_BE_REVOKED": {
+      "sources": [
+        "apps/api/src/student/security/sessions.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "SKILLS_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/skills/skills.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "SKILLS_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/skills/skills.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "SUBSCRIPTION_UNAVAILABLE": {
+      "sources": [
+        "apps/api/src/student/subscription/subscription.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    },
+    "SUBSCRIPTION_FORBIDDEN": {
+      "sources": [
+        "apps/api/src/student/subscription/subscription.service.ts"
+      ],
+      "displayKey": "errors.failed"
+    }
+  },
+  "explicitMessages": 138,
+  "fieldSource": "DtoValidationPipe details.fields, CURRENT_PASSWORD_INVALID -> currentPassword, EMAIL_ALREADY_USED -> newEmail. Server fields are rendered only for matching local controls."
+}

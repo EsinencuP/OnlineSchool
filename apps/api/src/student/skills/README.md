@@ -15,10 +15,14 @@ The shared pupil/family login and existing cookie sessions are preserved.
   `SkillAuditResponseDto`. History across the pupil's enrollments, newest first,
   ordered by `changed_at DESC, id DESC`. Unknown and foreign personal skills have
   the same 403. An owned unassessed skill has empty history.
-- `GET /api/v1/student/skills/snapshots?page=1&pageSize=20`:
+- `GET /api/v1/student/skills/snapshots?page=1&pageSize=20&subjectId=…`:
   `SkillSnapshotResponseDto` with `items`, `total`, `page`, `pageSize`. Immutable
   confirmed snapshots, newest first by `created_at DESC, id DESC`, including
   prior enrollments. A page past the end keeps the full `total`.
+  Optional `subjectId` filters owned subject history before count/pagination.
+  Unknown and foreign subjects have the same 403 `SKILLS_FORBIDDEN`; an owned
+  subject without snapshots has an empty page with total 0. Omission preserves
+  the original all-subject response. No checkpoint or report is created by a read.
 
 Paging defaults are 1/20, with pageSize at most 100. Unknown parameters, repeated
 parameters, invalid UUIDs and malformed pagination are rejected. OpenAPI and the
@@ -108,3 +112,24 @@ prove SQL binding, row isolation or trigger execution on PostgreSQL.
 Actual migrations, trigger rollback/immutability/concurrency tests, teacher
 confirmation and student working acceptance remain pending. See
 `infra/STU08_EVIDENCE.json`. STU-08 does not close FND-GATE or grant production GO.
+
+## TASK-031 local frontend/read-contract acceptance — 2026-11-08
+
+The additive snapshot filter uses SkillSnapshotQueryDto/Pipe and the existing
+service/query; OpenAPI/SDK were regenerated through the standard scripts with a
+database-blocking preload during export. All 147 operations and prior responses
+remain compatible. No migration or teacher mutation was added. The subject
+confirmed-CONDUCTED counter and stored frozen names/comments are preserved.
+
+The student UI now uses a shared three-stage legend and neutral NOT_STUDIED,
+read-only public audit, authoritative goals and per-subject historical URLs.
+Absence of an assessment does not invent a teacher or an assessment date.
+Snapshot4 and report8 have distinct labels/links. Reads refresh on return and
+explicit refresh without polling; 403 overrides cache and session revocation
+discards late reads. Full RU/RO and local browser evidence are recorded in
+[TASK-031](../../../../../output/k8k-tasks/TASK-031/report.md).
+
+Fresh evidence: 57 unit/Nest HTTP mocks and 10 Chromium scenarios, including the
+unchanged original four-state case. Counter SQL checks are structural source
+checks, not PostgreSQL execution. Historical 21 CTE cases above were not run;
+real database binding/trigger/concurrency and teacher publication remain NOT_RUN.

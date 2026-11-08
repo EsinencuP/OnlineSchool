@@ -1,0 +1,21 @@
+# TASK-034 — design before implementation
+
+Preserve existing session guards, private file grants, source chronology, active-access policy, password-only student exception and staff MFA. No new dependency, locale store/framework, avatar upload, phone verification, source/migration or external provider call.
+
+Planned read-only additive MaterialItemDto metadata: optional subjectId:string|null, canDownload:boolean, fileNameIsFallback:boolean. These project existing permission/object facts; they let UI distinguish contextless/fallback system labels from human names and inline READ from attachment permission without guessing from a filename or subjectName. Existing fields/filters/count/signed URL contract remain. No permission or signer change.
+
+Planned locale extension: RU/RO student dictionary in packages/ui/src/student-messages.ts, with keys included in the existing shared MessageKey/MessageCall types and parity/placeholders enforced. A student-only useStudentLocale wrapper reads the sole existing useLocale store; no second preference or persistence. Keep the student dictionary tree-shakeable so unrelated staff bundles do not acquire student-only copy (the existing manager payment route has77 bytes of budget headroom). Existing domain copy modules continue reading the same store; fill actual route/state gaps rather than rewrite approved workflows.
+
+Planned Profile input: controlled alias value without key={me.displayName}; synchronize from authoritative /me only while pristine. Existing PATCH displayName whitelist and response success; no identity/avatar expansion. Shared Field/Button and explicit saving/unknown/error.
+
+Planned useSecretCommand: direct async closure plus pending/unknown guard, no React Query mutation body or reusable serialized secret intent; UUID only per explicit attempt in write transport. Clear password/OTP in finally after an attempted command. Unknown does not retry blindly and does not claim sent. Request successful acceptance binds the requested email; confirm rotates the local session boundary and reboots authoritative /me before returning. Password/login bootstrap retains session rotation and clears private cache. Logout remains available on suspended and password screens using the established account-ui/session contract.
+
+Planned material action: direct read on explicit click, local pending/error/expiry validation, no signed URL in query/mutation cache, state, storage or evidence. Use exact HTTPS capability, reject expiry, no client extension; immediately hand it to browser navigation. Inline/attachment text comes from canDownload. Foreign/revoked403 overrides cached list. Existing backend remains sole authority.
+
+Coverage audit: all K8K student routes, shared Panel/Empty/Status/date/title/error/aria, AccountMenu, bootstrap, ProfileHelp, material context/filter, profile/security/password/suspended; existing subject/lesson/homework/skill/report/subscription/bell flows retain authored names/content. Include date-only New_York, exact decimal precision and Intl plural forms. Legacy flag-off compatibility is preserved; acceptance targets the current K8K release.
+
+Verification: fresh STU-06/STU-11 baseline mocks, scoped typechecks/generation/quality, browser locales/routes/states/command/session/file fixtures, RU/RO×360/768/1024/1280, long text/200%/keyboard/reduced motion/storage failure/cross-tab, axe and the unchanged50-route budget method. No live DB, S3, OTP, working mail or production gate.
+
+Review refinement before implementation: QueryState gains optional timeZone?:string|undefined, defaulting to the existing cabinet zone, so standalone suspended freshness can use its own authoritative /me zone. Materials gains a manual list refresh (same existing read, no new polling policy) to re-read explicit grants without reloading the cabinet.
+
+Security review before final edit: local useSecretCommand(rotatesSession=false) will call the existing verifySessionOutcome boundary on unknown login/password/email-confirm/logout results. This retires the session lease/cache/DOM immediately instead of leaving possibly rotated auth context reusable. Email request does not rotate auth and retains its explicit unknown/no-sent state. No server policy or new replay registry.

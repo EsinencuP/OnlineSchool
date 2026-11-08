@@ -6,6 +6,20 @@ Student.id always comes from session context. Unknown/scope-selecting query keys
 are rejected. STU-01 access and initial-password guards still apply, including 402
 when access is completely suspended; no hidden exception is introduced.
 
+Optional lessonId gives the owned fact for a detail view without scanning pages.
+Optional subjectId narrows owned enrollment history. Both UUID filters are applied
+before count and pagination. A foreign lesson has an empty result. History also
+retains the existing CANCELLED case backed by a published APPROVED_CANCELLATION
+consumption, distinct from COMPLETED and explicit NO_SHOW.
+
+The student UI keeps one chronological history section with server total and
+historyPage in the schedule URL. A detail view uses lessonId directly. Null legacy
+balances remain unknown. A timed-out command retains its original key for the
+addressed lesson request-result GET, including after reload. Only that key is kept
+in actor-scoped sessionStorage, form descriptions stay in memory. Session teardown
+clears pending keys. An absent receipt remains unknown and does not start a new
+command.
+
 COMPLETED requires a confirmed actual outcome, whose actual teacher and duration
 are used. NO_SHOW requires the staff-confirmed explicit absence report introduced
 in STU-03. A scheduled lesson, generic cancellation, unconfirmed/future outcome or

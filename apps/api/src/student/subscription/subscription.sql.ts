@@ -1,6 +1,16 @@
 import { Prisma } from '@online-school/db';
 import type { SubscriptionPage, SubscriptionSelection } from './subscription.dto.js';
 
+// Requires the enclosing query's selected_periods relation.
+export function confirmedSubscriptionGrantsSql(now: Date | Prisma.Sql): Prisma.Sql {
+  return Prisma.sql`SELECT g.* FROM entitlement_grants g JOIN selected_periods s ON s.id=g.subscription_id
+    JOIN payment_distributions d ON d.id=g.payment_distribution_id AND d.subscription_id=s.id
+    JOIN payment_receipts r ON r.id=d.payment_id
+    WHERE g.granted_at<=${now} AND g.basis='CONFIRMED_PAYMENT' AND d.approved_at<=g.granted_at AND r.confirmed_by_director_at<=g.granted_at
+      AND (SELECT coalesce(sum(p.amount),0) FROM payment_distributions p JOIN payment_receipts receipt ON receipt.id=p.payment_id
+        WHERE p.subscription_id=s.id AND p.approved_at<=g.granted_at AND receipt.confirmed_by_director_at<=g.granted_at)>=s.full_price`;
+}
+
 export function subscriptionSelectionSql(
   studentId: string | Prisma.Sql,
   query: SubscriptionSelection,
@@ -78,12 +88,7 @@ export function subscriptionFacts(
       AND EXISTS(SELECT 1 FROM current_posted p WHERE p.payment_id=r.id)
       AND EXISTS(SELECT 1 FROM current_posted p WHERE p.distribution_id=d.id)
   ), grants AS (
-    SELECT g.* FROM entitlement_grants g JOIN selected_periods s ON s.id=g.subscription_id
-    JOIN payment_distributions d ON d.id=g.payment_distribution_id AND d.subscription_id=s.id
-    JOIN payment_receipts r ON r.id=d.payment_id
-    WHERE g.granted_at<=${now} AND g.basis='CONFIRMED_PAYMENT' AND d.approved_at<=g.granted_at AND r.confirmed_by_director_at<=g.granted_at
-      AND (SELECT coalesce(sum(p.amount),0) FROM payment_distributions p JOIN payment_receipts receipt ON receipt.id=p.payment_id
-        WHERE p.subscription_id=s.id AND p.approved_at<=g.granted_at AND receipt.confirmed_by_director_at<=g.granted_at)>=s.full_price
+    ${confirmedSubscriptionGrantsSql(now)}
   ), charges AS (
     SELECT c.*,posted.entry_id,posted.entitlement_balance_before,posted.entitlement_balance_after
     FROM entitlement_consumptions c JOIN grants g ON g.id=c.grant_id AND g.subscription_id=c.subscription_id
@@ -155,10 +160,13 @@ export function subscriptionLedgerSql(
   query: SubscriptionPage,
   now: Date,
 ): Prisma.Sql {
+  // A published deduction with a missing stored snapshot must retain that unknown value.
   return Prisma.sql`${subscriptionFacts(studentId, query, now)}, page AS(
     SELECT id AS "entryId",at AS "entryDate",type,
-      (CASE WHEN (SELECT count(*) FROM selected_periods)>1 THEN after-delta ELSE coalesce(stored_before,after-delta) END)::text AS "balanceBefore",
-      (CASE WHEN (SELECT count(*) FROM selected_periods)>1 THEN after ELSE coalesce(stored_after,after) END)::text AS "balanceAfter",description,lesson_id AS "lessonId",priority
+      (CASE WHEN priority=1 AND stored_before IS NULL THEN NULL
+        WHEN (SELECT count(*) FROM selected_periods)>1 THEN after-delta ELSE coalesce(stored_before,after-delta) END)::text AS "balanceBefore",
+      (CASE WHEN priority=1 AND stored_after IS NULL THEN NULL
+        WHEN (SELECT count(*) FROM selected_periods)>1 THEN after ELSE coalesce(stored_after,after) END)::text AS "balanceAfter",description,lesson_id AS "lessonId",priority
     FROM balances ORDER BY at DESC,priority DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
     SELECT ${forbidden(query)} AS forbidden,jsonb_build_object('items',coalesce((SELECT jsonb_agg(to_jsonb(page)-'priority' ORDER BY "entryDate" DESC,priority DESC,"entryId" DESC) FROM page),'[]'::jsonb),'total',(SELECT count(*)::int FROM balances)) AS data`;
 }

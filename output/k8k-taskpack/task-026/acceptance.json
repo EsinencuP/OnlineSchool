@@ -1,0 +1,139 @@
+{
+  "task": "TASK-026",
+  "status": "DONE",
+  "scope": "K8K student subscription read surfaces and nullable historical snapshot",
+  "checks": [
+    {
+      "id": "dashboard_hub_real_source",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Subject snapshots drive the dashboard and hub"
+    },
+    {
+      "id": "independent_subjects_active_expired",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Active Mathematics and expired Physics keep their own actions"
+    },
+    {
+      "id": "frozen_end_and_independent_work",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/after/ro-360-details.png",
+      "detail": "Freeze end, materials and homework from capabilities, no Meet"
+    },
+    {
+      "id": "partial_receipt_and_director_admission",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/states/partial-with-admission.png",
+      "detail": "Confirmed paid zero and remaining temporary two shown separately"
+    },
+    {
+      "id": "full_payment_no_double_count",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Updated source displays five and removes temporary block"
+    },
+    {
+      "id": "three_selected_queries_page_reset_and_late_read",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "All three anchor requests, both page states reset, late Math response isolated"
+    },
+    {
+      "id": "financial_anchor_and_wrapper_mapping",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/presentation.log",
+      "detail": "Explicit URL always uses financial anchor, wrapper used only to resolve default details"
+    },
+    {
+      "id": "exact_mdl_eur_usd_and_zero",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "600.1234 MDL, 1.005 EUR, 0.00 MDL, distinct USD"
+    },
+    {
+      "id": "date_only_and_user_zone",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Date-only retained, timestamp converted to America/New_York"
+    },
+    {
+      "id": "future_none_scoped_payments",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/states/future-none.png",
+      "detail": "Future period keeps selected confirmed history"
+    },
+    {
+      "id": "no_plan_zero_null_and_error",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/states-smoke.log",
+      "detail": "Loading, empty, error, NONE and unknown distinct"
+    },
+    {
+      "id": "freeze_unfreeze_correction_and_cancellation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Separate quantity history and cancellation credit"
+    },
+    {
+      "id": "nullable_published_snapshot",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/stu07.log",
+      "detail": "Unit and HTTP preserve missing snapshot without synthetic zero"
+    },
+    {
+      "id": "stale_readonly_403_cache_revocation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Independent 5xx, stale capabilities hidden, 403 removes selected group"
+    },
+    {
+      "id": "scope_no_store_session_guard",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/stu07.log",
+      "detail": "Mocked HTTP and browser guards, no-store headers"
+    },
+    {
+      "id": "ru_ro_four_widths_and_keyboard",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/playwright.log",
+      "detail": "Visual matrix, 6 axe checks, focus and touch evidence"
+    },
+    {
+      "id": "no_new_payment_actions_or_rights_calculation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/contracts.json",
+      "detail": "No operation added and read-only display verified"
+    },
+    {
+      "id": "sdk_and_route_compatibility",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/contracts.json",
+      "detail": "146 operations unchanged, 2 nullable response fields"
+    },
+    {
+      "id": "no_working_db_migration_or_production_changes",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/preservation.json",
+      "detail": "Scoped local commands, starting statuses and lockfile preserved"
+    },
+    {
+      "id": "report_separates_prior_and_fresh_evidence",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/report.md",
+      "detail": "Input artifacts, fresh commands and limitations recorded"
+    },
+    {
+      "id": "route_budget",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-026/budgets.json",
+      "detail": "50/50, fonts included"
+    },
+    {
+      "id": "postgres_live_payments_and_role_gate",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-026/report.md",
+      "detail": "No working environment accessed, TASK-035 role gate separate"
+    }
+  ]
+}

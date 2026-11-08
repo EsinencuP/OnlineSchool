@@ -40,6 +40,17 @@ beforeAll(async () => {
         return [{ code: values[0] === users[2] ? 'TEACHER' : 'STUDENT' }];
       if (sql.includes('AS has_active_access'))
         return [{ subject_ids: [], has_active_access: state.active }];
+      if (sql.includes('SELECT task.id AS "crmTaskId"')) {
+        const [studentId, lessonId, rescheduleKey, disputeKey, type] = values;
+        const task = state.tasks.find(
+          (item) =>
+            item.student_id === studentId &&
+            item.lesson_id === lessonId &&
+            [rescheduleKey, disputeKey].includes(item.idempotency_key) &&
+            (!type || type === item.type),
+        );
+        return task ? [{ crmTaskId: task.id, type: task.type }] : [];
+      }
       if (sql.includes('FOR UPDATE OF l')) {
         const lesson = state.lessons.get(values[0]);
         return lesson ? [lesson] : [];
@@ -196,6 +207,56 @@ const post = (index = 0, id = lessons[0], key = randomUUID(), data = body) =>
     .set('X-CSRF-Token', issued[index].csrfToken)
     .set('Idempotency-Key', key)
     .send(data);
+test('TASK-029 receipt reconciles the original key with owner, lesson and no-store scope', async () => {
+  const key = randomUUID();
+  const created = await post(0, lessons[0], key);
+  expect(created.status).toBe(201);
+  const receipt = (actor, lessonId, requestKey) =>
+    request(app.getHttpServer())
+      .get(`/api/v1/student/lessons/${lessonId}/requests/${requestKey}`)
+      .set('Cookie', cookie(actor));
+  const result = await receipt(0, lessons[0], key);
+  expect(result.status).toBe(200);
+  expect(result.headers['cache-control']).toBe('no-store');
+  expect(result.body).toEqual({
+    status: 'CREATED',
+    crmTaskId: created.body.crmTaskId,
+    type: 'RESCHEDULE_REQUEST',
+  });
+  state.tasks.push({
+    id: randomUUID(),
+    student_id: students[0],
+    lesson_id: lessons[0],
+    type: 'ATTENDANCE_DISPUTE',
+    idempotency_key: `student-dispute:${users[0]}:${key}`,
+  });
+  const typed = await request(app.getHttpServer())
+    .get(`/api/v1/student/lessons/${lessons[0]}/requests/${key}?type=ATTENDANCE_DISPUTE`)
+    .set('Cookie', cookie(0));
+  expect(typed.body).toEqual({
+    status: 'CREATED',
+    crmTaskId: state.tasks[1].id,
+    type: 'ATTENDANCE_DISPUTE',
+  });
+  state.tasks.pop();
+  const invalidType = await request(app.getHttpServer())
+    .get(`/api/v1/student/lessons/${lessons[0]}/requests/${key}?type=OTHER`)
+    .set('Cookie', cookie(0));
+  expect(invalidType.status).toBe(400);
+  expect((await receipt(1, lessons[0], key)).status).toBe(403);
+  expect((await receipt(1, lessons[1], key)).body).toEqual({
+    status: 'UNKNOWN',
+    crmTaskId: null,
+    type: null,
+  });
+  expect((await receipt(0, lessons[0], randomUUID())).body.status).toBe('UNKNOWN');
+  expect((await receipt(0, randomUUID(), key)).status).toBe(403);
+  expect((await receipt(0, lessons[0], 'invalid')).status).toBe(400);
+  state.active = false;
+  expect((await receipt(0, lessons[0], key)).status).toBe(402);
+  expect(state.tasks).toHaveLength(1);
+  expect(state.outbox).toHaveLength(1);
+});
 
 test('STU-12 direct lesson lookup is owned, period-independent and non-enumerating', async () => {
   const own = await request(app.getHttpServer())

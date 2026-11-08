@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getManagerDashboard } from '@online-school/api-contracts';
+import {
+  ErrorState,
+  FreshnessLabel,
+  k8kEnabled,
+  PriorityEvents,
+  useLocale,
+} from '@online-school/ui';
 import { read } from '../api/client.js';
 import { State, Select } from '../components/ui.js';
 import { Icon, Initials } from '../components/icon.js';
@@ -148,6 +155,7 @@ function CalendarPanel({
 }
 export default function Dashboard() {
   const me = useManager();
+  const { locale, t } = useLocale();
   const [horizon, setHorizon] = useState<24 | 48 | 168>(48);
   const [days, setDays] = useState<3 | 7 | 14>(7);
   const query = useQuery({
@@ -158,13 +166,12 @@ export default function Dashboard() {
         signal,
       ),
   });
+  const priority = k8kEnabled && !query.isError ? query.data?.priority : undefined;
   return (
     <>
       <div className="page-heading dashboard-heading">
         <div>
-          <p className="eyebrow">{ru.workOverview}</p>
           <h1>{ru.dashboard}</h1>
-          <p className="heading-caption">{ru.overviewCaption}</p>
         </div>
         <div className="dashboard-horizons">
           <Select
@@ -185,7 +192,7 @@ export default function Dashboard() {
           />
         </div>
       </div>
-      <State operational query={query}>
+      <State operational query={query} asOf={query.data?.generatedAt}>
         {(d) => {
           const metrics: Array<{
             title: string;
@@ -246,6 +253,40 @@ export default function Dashboard() {
           ];
           return (
             <>
+              {priority === null ? (
+                <section aria-label={t('priorityAttention')}>
+                  <ErrorState
+                    retryRead={() => void query.refetch()}
+                    refreshing={query.isFetching}
+                  />
+                </section>
+              ) : (
+                priority && (
+                  <>
+                    <PriorityEvents
+                      enabled
+                      source={{
+                        primary: priority.primary && {
+                          id: priority.primary.taskId,
+                          title: priority.primary.title,
+                          action: (
+                            <Link className="button" to={routes.task(priority.primary.taskId)}>
+                              {locale === 'ro' ? 'Deschide sarcina' : 'Открыть задачу'}
+                            </Link>
+                          ),
+                        },
+                        criticalCount: priority.criticalCount,
+                        queueAction: priority.queueAction === 'TASK_QUEUE' && (
+                          <Link className="button" to={routes.tasks}>
+                            {t('chrome.openQueue')}
+                          </Link>
+                        ),
+                      }}
+                    />
+                    <FreshnessLabel asOf={priority.sourceAsOf} receivedAt={query.dataUpdatedAt} />
+                  </>
+                )
+              )}
               <div className="metrics dashboard-metrics">
                 {metrics.map((m) => (
                   <Link className="metric-card" key={m.title} to={m.to}>

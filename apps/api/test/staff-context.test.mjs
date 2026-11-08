@@ -148,6 +148,13 @@ before(async () => {
     },
     studentSubjectEnrollment: { findUniqueOrThrow: async () => ({ status: 'ACTIVE' }) },
     lessonOccurrence: {
+      findFirst: async ({ where }) =>
+        [lesson, foreignLesson].find(
+          (row) =>
+            row.id === where.id &&
+            (!where.scheduled_teacher_id ||
+              row.scheduled_teacher_id === where.scheduled_teacher_id),
+        ) ?? null,
       findUnique: async ({ where }) =>
         [lesson, foreignLesson].find((l) => l.id === where.id) ?? null,
       findMany: async (q) => {
@@ -183,16 +190,40 @@ before(async () => {
             updated_at: updated,
             enrollment_ref: foreignLesson.enrollment_ref,
           },
-        ].filter((r) => !q.where.teacher_id || r.teacher_id === q.where.teacher_id);
+        ].filter(
+          (r) =>
+            (!q.where.teacher_id || r.teacher_id === q.where.teacher_id) &&
+            (!q.where.enrollment_ref ||
+              r.enrollment_ref.student_id === q.where.enrollment_ref.student_id),
+        );
       },
     },
     homeworkAssignment: {
+      findFirst: async ({ where }) =>
+        where.id === ownStudent && where.issued_by === profiles.TEACHER.id
+          ? {
+              id: ownStudent,
+              title: 'Own synthetic assignment',
+              subject_ref: { name: 'Synthetic subject' },
+              due_at: null,
+            }
+          : null,
       findMany: async (q) => {
         reads.push(q);
         return [];
       },
     },
     crmTask: {
+      findFirst: async ({ where }) =>
+        where.id === ownStudent && where.status.in.includes('OPEN')
+          ? {
+              id: ownStudent,
+              title: 'Synthetic task',
+              status: 'OPEN',
+              assigned_to: null,
+              due_at: now,
+            }
+          : null,
       findMany: async (q) => {
         reads.push(q);
         return [];
@@ -283,6 +314,42 @@ const context = (role) => ({
   tx: db,
   requestId: randomUUID(),
   operationId: randomUUID(),
+});
+
+test('staff detail scopes IDs before projection and retains guards on direct links', async () => {
+  const path = (section, id) => `platform/workspace/${section}/${id}`;
+  const own = await get('TEACHER', path('lessons', lesson.id));
+  assert.equal(own.status, 200);
+  assert.equal(own.body.item.id, lesson.id);
+  assert.equal(own.body.actorContext.accountId, actors.TEACHER.accountId);
+  assert.equal(own.body.item.meetUrl, undefined);
+  assert.match(own.headers['cache-control'], /no-store/);
+  for (const [section, id] of [
+    ['lessons', foreignLesson.id],
+    ['students', foreignStudent],
+    ['homework', foreignStudent],
+    ['tasks', ownStudent],
+  ]) {
+    const denied = await get('TEACHER', path(section, id));
+    assert.equal(denied.status, 404);
+    assert.match(denied.headers['cache-control'], /no-store/);
+    assert(!JSON.stringify(denied.body).includes('Foreign private child'));
+  }
+  assert.deepEqual((await get('TEACHER', path('students', ownStudent))).body.item.subjects, [
+    'Synthetic subject',
+  ]);
+  assert.equal((await get('TEACHER', path('homework', ownStudent))).status, 200);
+  assert.equal((await get('DIRECTOR', path('lessons', foreignLesson.id))).status, 200);
+  assert.equal((await get('DIRECTOR', path('tasks', ownStudent))).status, 200);
+  assert.equal((await get('DIRECTOR', path('homework', ownStudent))).status, 404);
+  assert.equal((await get('TECH_OPERATOR', path('lessons', lesson.id))).status, 403);
+  assert.equal((await get('TEACHER', path('other', ownStudent))).status, 400);
+  assert.equal((await get('TEACHER', path('lessons', 'bad-id'))).status, 400);
+  actors.DIRECTOR.mfaCompleted = false;
+  assert.equal((await get('DIRECTOR', path('tasks', ownStudent))).body.code, 'MFA_REQUIRED');
+  revoked = true;
+  assert.equal((await get('TEACHER', path('lessons', lesson.id))).status, 401);
+  assert.deepEqual(writes, []);
 });
 
 test('teacher context uses own profile, ignores identity override, director never impersonates teacher', async () => {

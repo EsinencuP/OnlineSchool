@@ -1,0 +1,128 @@
+{
+  "previousManifestScopeWasIncomplete": true,
+  "initialSnapshotNotRewritten": true,
+  "previousSourceHashesRemainValidOnlyForListedInputs": true,
+  "coverageAdded": [
+    {
+      "path": "packages/ui/src/feature.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "1fec3fee298d7f2878757b32e935b07b1d0a1afe8b6754601e369943948c5ba2"
+    },
+    {
+      "path": "packages/ui/src/fonts/golos-text-romanian-wght-normal.woff2",
+      "proof": "new authorized font source/asset",
+      "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+    },
+    {
+      "path": "packages/ui/src/fonts/provenance.json",
+      "proof": "new authorized font source/asset",
+      "sha256": "4be87f726ad999ffe6b4d2937ae1f329ee728175b2de86a0da709dd8b25e0855"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "proof": "unchanged from actual TASK-001 snapshot",
+      "sha256": "d18503be249b0cdf80791b893c8b04a73457dce377afef15992e26ecaabe72cd"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "proof": "unchanged from actual TASK-001 snapshot",
+      "sha256": "44759836bc2b1d7c28e513e356092eb54186cfa0d8a784b6809f380b79ce6365"
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "16214f38aac9e27bcd8cea8f3cfa9cd5bb2fea69201e03646f731a07b6a66c3b"
+    },
+    {
+      "path": "packages/ui/src/refresh.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "48ba2dab6c76b692caf098132a0eb198c717e742a616ad7968163a4d014d242d"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "proof": "unchanged from actual TASK-001 snapshot",
+      "sha256": "6331b7d95a8a0925d0ac8fb3549c702a9a98a4e28ba104b1863505faf53bd52e"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "proof": "pre-task canonical source recovered from original saved HEAD+binary patch; matches reconstruction/current tokens after Git CRLF normalization; original raw source SHA was not captured",
+      "sha256": "c7e66114b112c65422cc71e82eee3135129b03a493ee1507567ad9974f8d2242"
+    },
+    {
+      "path": "packages/ui/src/tokens.css",
+      "proof": "pre-task canonical source recovered from original saved HEAD+binary patch; matches reconstruction/current tokens after Git CRLF normalization; original raw source SHA was not captured",
+      "sha256": "91caf4db4d69f02f01f3d1b33d0728ad120553235dfd68d2a32e65ce6dcbee81"
+    },
+    {
+      "path": "packages/account-ui/src/style.css",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "eda2a746fa351e049ca042555fa50e3d0fb57127eb16bfeab72c41d5e6c3e2be"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "proof": "unchanged from actual TASK-001 snapshot",
+      "sha256": "8fad7fa6534518195de3af89b438a5a34adf4c4e0e23d9afb10b7031a617a529"
+    },
+    {
+      "path": "apps/student-cabinet/src/style.css",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf"
+    },
+    {
+      "path": "apps/manager-web/src/style.css",
+      "proof": "unchanged tracked HEAD source after Git CRLF filters",
+      "sha256": "8e0778d28cfe0916cc79a446d3743025fa6617c55d56228456cc59145c4446fb",
+      "gitBlobOid": "98e430041ba4698361a3ec47984ee0b4250489de"
+    },
+    {
+      "path": "apps/manager-web/src/test/browser.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "b863c4a91754e396de8c65622ed0ae4e974cede882e622d43c8b9b9ba3c0cac0"
+    },
+    {
+      "path": "apps/manager-web/src/test/fixtures.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "e8be77fc94cff1b9815ab1bd8d73671d6019d11f9009fdddfbf1c27e13f7ae9c"
+    },
+    {
+      "path": "apps/manager-web/src/test/handlers.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "5fcaf470e5da2c5f8695a13a4ccecdca09d302d154903567184d04c86ee38d1f"
+    },
+    {
+      "path": "apps/manager-web/src/test/setup.ts",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "c19656644ed3a5a2f82838b66418a8bfa294e0e263e1da665ae756d6347d7b92"
+    },
+    {
+      "path": "apps/platform/src/style.css",
+      "proof": "unchanged tracked HEAD source",
+      "sha256": "391af856392e92473c3f3a5266b35df95d12fcc074cc0fe9e31e45fc6d4d9e2f"
+    }
+  ],
+  "unresolved": [],
+  "reconstruction": {
+    "notContemporaneousSnapshot": true,
+    "verification": "Reverse known TASK-006 CSS edits then rebuild student CSS against prior TASK-005 emitted CSS. Additional Fontsource alias resolves the same original assets from reconstruction directory.",
+    "oldFile": "index-BHKtt5sO.css",
+    "reconstructedFile": "index-BHKtt5sO.css",
+    "oldSha256": "fd8b9f82998b650b25363ffe57194f42cf4bca89771beb29d04987c291c5daa8",
+    "reconstructedSha256": "fd8b9f82998b650b25363ffe57194f42cf4bca89771beb29d04987c291c5daa8",
+    "cssBytesMatch": true
+  },
+  "canonicalPatchRecovery": {
+    "source": "Saved HEAD+pre-task binary tracked patch applied only to isolated repo. Exact Git-canonical content recovered; original worktree line-ending hash was not separately captured for these two files. Initial before.json is unchanged.",
+    "restored": [
+      {
+        "path": "packages/ui/src/style.css",
+        "recoveredWorktreeSha256": "c0bd69032dc6cf886b9c9f107551023f5297d3f9b029d424dd7cd019b5256d10",
+        "textMatchesAfterCRLFNormalization": true
+      },
+      {
+        "path": "packages/ui/src/tokens.css",
+        "recoveredWorktreeSha256": "9a4dd07c5227aa016120492cd5beb8aa06bcb46811c949dd8f058cad6e1613f7",
+        "textMatchesAfterCRLFNormalization": true
+      }
+    ]
+  }
+}

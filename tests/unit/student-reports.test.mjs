@@ -307,3 +307,55 @@ test('real SDK signs only one-hour PDF URLs; material permissions keep their fif
     process.env = previous;
   }
 });
+
+test('TASK-032 detail uses same publication CTE, bound owner/id and strips non-public fields', async () => {
+  const report = {
+    ...educationPdfFixture().reports[0],
+    periodFrom: '2026-09-01T00:00:00Z',
+    periodTo: '2026-09-30T00:00:00Z',
+  };
+  report.content.privateNotes = 'PRIVATE';
+  db.$queryRaw.mockResolvedValue([{ report }]);
+  const result = await service.detail(student, ids.subject);
+  expect(result.reportId).toBe(report.reportId);
+  expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  const sql = db.$queryRaw.mock.calls[0][0];
+  expect(sql.values).toContain(ids.student);
+  expect(sql.values).toContain(ids.subject);
+  expect(sql.text).toContain("cp.type='LESSON_8' AND r.status='PUBLISHED'");
+  expect(sql.text).toContain("newer.status='PUBLISHED'");
+  expect(sql.text).toContain('r.published_at<=');
+  expect(sql.text).not.toContain('LIMIT');
+});
+test('TASK-032 absent visible detail has one forbidden result without leaking existence', async () => {
+  db.$queryRaw.mockResolvedValue([]);
+  await expect(service.detail(student, ids.subject)).rejects.toMatchObject({
+    domain: { code: 'REPORT_FORBIDDEN', status: 403 },
+  });
+});
+test('TASK-032 request lookup binds requesting actor, student and original export operation', async () => {
+  const key = randomUUID();
+  expect(await service.exportRequestResult(student, key)).toEqual({
+    status: 'ACCEPTED',
+    jobId: job.id,
+  });
+  expect(db.pdfExportJob.findFirst).toHaveBeenCalledWith({
+    where: {
+      student_id: ids.student,
+      requested_by: ids.account,
+      job_ref: {
+        type: 'student.education-pdf.generate.v1',
+        source_operation_id: key,
+        deduplication_key: 'education-pdf:' + ids.account + ':' + key,
+      },
+    },
+    select: { id: true },
+  });
+  db.pdfExportJob.findFirst.mockResolvedValue(null);
+  expect(await service.exportRequestResult(student, key)).toEqual({
+    status: 'UNKNOWN',
+    jobId: null,
+  });
+  expect(db.pdfExportJob.create).not.toHaveBeenCalled();
+  expect(storage.signPdf).not.toHaveBeenCalled();
+});

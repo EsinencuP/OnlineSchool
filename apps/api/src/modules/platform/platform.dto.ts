@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty, getSchemaPath, OmitType } from '@nestjs/swagger';
 import { StaffActorContextDto } from '../../core/actor/actor-context.dto.js';
 export class SwitchUserRequest {
   @ApiProperty({
@@ -49,6 +49,30 @@ export class WorkspaceTaskDto {
   @ApiProperty() status!: string;
   @ApiProperty() dueAt!: string;
   @ApiProperty() manager!: string;
+}
+export const workspaceDetailSections = ['lessons', 'students', 'homework', 'tasks'] as const;
+export class WorkspaceLessonDetailDto extends OmitType(WorkspaceLessonDto, ['meetUrl']) {}
+export class WorkspaceStudentDetailDto extends OmitType(WorkspaceStudentDto, ['subject']) {
+  @ApiProperty({ type: [String] }) subjects!: string[];
+}
+@ApiExtraModels(
+  WorkspaceLessonDetailDto,
+  WorkspaceStudentDetailDto,
+  WorkspaceHomeworkDto,
+  WorkspaceTaskDto,
+)
+export class WorkspaceDetailDto {
+  @ApiProperty({ type: StaffActorContextDto }) actorContext!: StaffActorContextDto;
+  @ApiProperty({
+    oneOf: [
+      WorkspaceLessonDetailDto,
+      WorkspaceStudentDetailDto,
+      WorkspaceHomeworkDto,
+      WorkspaceTaskDto,
+    ].map((model) => ({ $ref: getSchemaPath(model) })),
+  })
+  item!:
+    WorkspaceLessonDetailDto | WorkspaceStudentDetailDto | WorkspaceHomeworkDto | WorkspaceTaskDto;
 }
 export class WorkspacePageInfoDto {
   @ApiProperty({ type: 'integer' }) limit!: number;

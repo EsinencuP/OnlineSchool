@@ -25,6 +25,7 @@ const nonComponents = {
   initializeK8KTheme: 'Browser theme initializer',
   initializeLocale: 'Browser locale initializer',
   intlLocaleFor: 'Intl locale mapping',
+  isAuthRead: 'Refresh policy predicate for session reads',
   isEditing: 'Refresh policy predicate',
   isPlainMessageKey: 'Plain dictionary key guard',
   k8kEnabled: 'Presentation flag',

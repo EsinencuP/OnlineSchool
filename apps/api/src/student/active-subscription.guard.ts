@@ -5,6 +5,7 @@ import { AuditService } from '../core/audit/audit.service.js';
 import { isStudentRequest, StudentErrors } from './student-context.interface.js';
 import type { StudentRequest } from './student-context.interface.js';
 import { studentBootstrapRoute } from './access-policy.js';
+import { studentAccessSuspended } from './manager-contacts.js';
 import { studentPasswordChangeRoute } from '../core/session/student-password-policy.js';
 @Injectable()
 export class ActiveSubscriptionGuard implements CanActivate {
@@ -22,11 +23,10 @@ export class ActiveSubscriptionGuard implements CanActivate {
         ? StudentErrors.ACCESS_SUSPENDED
         : undefined;
     if (!code) return true;
-    const error = domainError(code, code === StudentErrors.ACCESS_SUSPENDED ? 402 : 403);
-    if (code === StudentErrors.ACCESS_SUSPENDED)
-      error.details = {
-        managerContacts: student.managerContacts ?? { whatsapp: '', telegram: '' },
-      };
+    const error =
+      code === StudentErrors.ACCESS_SUSPENDED
+        ? studentAccessSuspended(student.managerContacts)
+        : domainError(code, 403);
     unwrap(
       await this.audit.denial({
         requestId: req.requestId!,

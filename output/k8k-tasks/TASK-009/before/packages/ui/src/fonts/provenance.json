@@ -1,0 +1,21 @@
+{
+  "sourcePackage": "@fontsource-variable/golos-text@5.2.8",
+  "sourceAsset": "golos-text-latin-ext-wght-normal.woff2",
+  "sourceSha256": "05befabe4813f41238ce6ea4f5ecd6b758591e9ef2f303a9932bff68ba66dc66",
+  "sourceBytes": 19180,
+  "generatedAsset": "golos-text-romanian-wght-normal.woff2",
+  "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc",
+  "bytes": 3544,
+  "unicodeRange": "U+0102,U+0103,U+015E,U+015F,U+0218,U+0219,U+021A,U+021B",
+  "fontTools": "4.60.1",
+  "brotli": "1.1.0",
+  "license": "OFL-1.1; original copyright and license preserved in LICENSE",
+  "weightAxis": [
+    {
+      "tag": "wght",
+      "min": 400.0,
+      "max": 900.0
+    }
+  ],
+  "policy": "Only missing Romanian/legacy S-cedilla glyphs added; original Cyrillic/Latin assets unchanged. Fontsource lacks legacy T-cedilla/NFD mark cmap; readable system fallback remains."
+}

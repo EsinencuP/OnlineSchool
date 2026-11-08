@@ -1,0 +1,257 @@
+{
+  "storyCount": 42,
+  "components": {
+    "AlertDialog": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--pending-confirmation",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "AppShell": [
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "Avatar": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants",
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "BottomNav": [
+      "ui-shell--shell-parts"
+    ],
+    "Button": [
+      "ui-composite-controls--help",
+      "ui-composite-controls--results",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--pending-confirmation",
+      "ui-controlled-overlays--side-drawer",
+      "ui-lists-and-tables--queue-columns",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "Calendar": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--empty-range"
+    ],
+    "Card": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "ConfirmDialog": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--pending-confirmation",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "DatePicker": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--disabled-date",
+      "ui-calendar-and-dates--empty-range"
+    ],
+    "DenseTable": [
+      "ui-lists-and-tables--empty-table",
+      "ui-lists-and-tables--ordered-pages",
+      "ui-lists-and-tables--unknown-table-result"
+    ],
+    "Dialog": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "Drawer": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "DropdownMenu": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "EmptyState": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "ErrorState": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "Field": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants",
+      "ui-vis-11--pending-editor"
+    ],
+    "FreshnessLabel": [
+      "ui-vis-11--freshness"
+    ],
+    "Header": [
+      "ui-shell--shell-parts"
+    ],
+    "HeroCard": [
+      "ui-composite-controls--information"
+    ],
+    "Icon": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "IconButton": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "KanbanColumn": [
+      "ui-lists-and-tables--queue-columns"
+    ],
+    "LanguageSelector": [
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--shell-parts",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "ListRow": [
+      "ui-lists-and-tables--queue-columns"
+    ],
+    "NotificationBell": [
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--shell-parts",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "Popover": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "PriorityEvents": [
+      "ui-shell--priority-slot"
+    ],
+    "Segmented": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--empty-range"
+    ],
+    "Select": [
+      "ui-composite-controls--information",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "Sidebar": [
+      "ui-shell--shell-parts"
+    ],
+    "Skeleton": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "StagesTrack": [
+      "ui-vis-11--stages"
+    ],
+    "StaleBanner": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "StateBoundary": [
+      "ui-native-controls--variants",
+      "ui-vis-11--empty",
+      "ui-vis-11--error",
+      "ui-vis-11--forbidden",
+      "ui-vis-11--loading",
+      "ui-vis-11--pending-editor",
+      "ui-vis-11--ready",
+      "ui-vis-11--session-expired",
+      "ui-vis-11--stale",
+      "ui-vis-11--subscription-limited",
+      "ui-vis-11--unknown-result"
+    ],
+    "StatTile": [
+      "ui-composite-controls--information"
+    ],
+    "StatusChip": [
+      "ui-controlled-overlays--lifecycle",
+      "ui-native-controls--variants"
+    ],
+    "Tabs": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form"
+    ],
+    "Toast": [
+      "ui-composite-controls--results"
+    ],
+    "Tooltip": [
+      "ui-composite-controls--help"
+    ]
+  },
+  "aliases": {
+    "AlertDialog": "ConfirmDialog"
+  },
+  "nonComponents": {
+    "activeNavigation": "Navigation lookup",
+    "cabinetLabels": "Role label data",
+    "calendarDate": "Date parser",
+    "formatDate": "Instant date formatter",
+    "formatDateOnly": "Civil date formatter",
+    "formatDateTime": "Instant date and time formatter",
+    "formatMoneyAmount": "Exact decimal string formatter",
+    "formatRelativeTime": "Relative time formatter",
+    "formatTime": "Instant time formatter",
+    "FreshnessTimeZone": "React context consumed by FreshnessLabel",
+    "initializeK8KTheme": "Browser theme initializer",
+    "initializeLocale": "Browser locale initializer",
+    "intlLocaleFor": "Intl locale mapping",
+    "isEditing": "Refresh policy predicate",
+    "isPlainMessageKey": "Plain dictionary key guard",
+    "k8kEnabled": "Presentation flag",
+    "operationalQueryInterval": "Refresh policy lookup",
+    "queryBoundaryState": "Query state adapter",
+    "refreshPolicies": "Refresh policy data",
+    "roleNavigation": "Navigation data rendered by AppShell",
+    "setLocale": "Locale store setter",
+    "translate": "Typed message lookup",
+    "useContextRefresh": "Refresh hook",
+    "useDataAge": "Freshness hook",
+    "useLocale": "Locale hook"
+  }
+}

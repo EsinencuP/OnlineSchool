@@ -2,9 +2,12 @@ import '../../apps/api/node_modules/reflect-metadata/Reflect.js';
 import { beforeEach, expect, jest, test } from '@jest/globals';
 import { randomUUID } from 'node:crypto';
 import { StudentSkillsService } from '../../apps/api/dist/student/skills/skills.service.js';
+import { skillMapSql } from '../../apps/api/dist/student/skills/skills.sql.js';
+import { getGetStudentSkillSnapshotsUrl } from '../../packages/api-contracts/dist/generated/client.js';
 import {
   SkillMapQueryPipe,
   SkillAuditQueryPipe,
+  SkillSnapshotQueryPipe,
   skillStatuses,
 } from '../../apps/api/dist/student/skills/skills.dto.js';
 const student = { studentProfileId: randomUUID() },
@@ -76,7 +79,7 @@ test.each(['maps', 'audit', 'snapshots'])(
     ).rejects.toMatchObject({ domain: { code: 'SKILLS_UNAVAILABLE', status: 503 } });
   },
 );
-test.each(['maps', 'audit'])(
+test.each(['maps', 'audit', 'snapshots'])(
   '%s does not disclose nonexistent versus foreign resource',
   async (method) => {
     db.$queryRaw.mockResolvedValue([{ forbidden: true, data: null }]);
@@ -85,6 +88,62 @@ test.each(['maps', 'audit'])(
     ).rejects.toMatchObject({ domain: { code: 'SKILLS_FORBIDDEN', status: 403 } });
   },
 );
+
+test('TASK-031 snapshot selection validates subject without changing paging defaults', () => {
+  expect(new SkillSnapshotQueryPipe().transform({ subjectId: id.toUpperCase() })).toEqual({
+    subjectId: id,
+    page: 1,
+    pageSize: 20,
+  });
+  expect(new SkillSnapshotQueryPipe().transform({})).toEqual({ page: 1, pageSize: 20 });
+});
+test.each([
+  { subjectId: 'bad' },
+  { subjectId: [id] },
+  { subjectId: id, page: '0' },
+  { subjectId: id, pageSize: '101' },
+  { studentId: id },
+])('TASK-031 snapshot input rejects %j', (query) => {
+  expect(() => new SkillSnapshotQueryPipe().transform(query)).toThrow();
+});
+test('TASK-031 snapshot subject is bound before shared count and pagination; frozen content is not rebuilt', async () => {
+  db.$queryRaw.mockResolvedValue([{ forbidden: false, data: { items: [], total: 23 } }]);
+  expect(await service.snapshots(student, { subjectId: id, page: 99, pageSize: 20 })).toEqual({
+    items: [],
+    total: 23,
+    page: 99,
+    pageSize: 20,
+  });
+  const sql = db.$queryRaw.mock.calls[0][0];
+  expect(sql.values).toContain(id);
+  expect(sql.values).toContain(student.studentProfileId);
+  expect(sql.text.indexOf('AND e.subject_id=')).toBeLessThan(sql.text.indexOf('page AS'));
+  expect(sql.text).toContain("'total',(SELECT count(*) FROM history)");
+  expect(sql.text).toContain('NOT EXISTS(SELECT 1 FROM owned_subjects');
+  expect(sql.text).not.toContain('JOIN skill_entries');
+});
+
+test('TASK-031 snapshot SDK retains no-filter URL and serializes scoped history input', () => {
+  expect(getGetStudentSkillSnapshotsUrl()).toBe('/api/v1/student/skills/snapshots');
+  const url = new URL(
+    getGetStudentSkillSnapshotsUrl({ subjectId: id, page: 3, pageSize: 20 }),
+    'https://fixture.invalid',
+  );
+  expect(Object.fromEntries(url.searchParams)).toEqual({
+    subjectId: id,
+    page: '3',
+    pageSize: '20',
+  });
+});
+test('TASK-031 counter read retains confirmed conducted subject scope across enrollments without subscription or current teacher filtering', () => {
+  const sql = skillMapSql(student.studentProfileId, { subjectId: id }, new Date()).text;
+  const counter = sql.slice(sql.indexOf("'nextSnapshotIn'"), sql.indexOf(') AS data'));
+  expect(counter).toContain('lesson_actual_outcomes');
+  expect(counter).toContain('JOIN owned_enrollments e ON e.id=l.enrollment_id');
+  expect(counter).toContain("e.subject_id=s.id AND l.status='CONDUCTED' AND o.confirmed_at<=");
+  expect(counter).not.toMatch(/subscription|teacher|SCHEDULED|NO_SHOW/);
+  expect(sql).not.toMatch(/\bINSERT\b|\bUPDATE\b|\bDELETE\b|\bbasis\b/);
+});
 test.each([
   ['audit', 'changedAt'],
   ['snapshots', 'createdAt'],

@@ -4,8 +4,6 @@ import { RequireRole } from '../../core/rbac/decorators.js';
 import { ProblemDetails } from '../../core/errors/error-mapper.js';
 import { StudentCtx } from '../student-context.decorator.js';
 import type { IStudentContext } from '../student-context.interface.js';
-import { HistoryQueryDto, HistoryQueryPipe } from '../history/history.dto.js';
-import type { HistoryPage } from '../history/history.dto.js';
 import {
   SkillAuditQueryDto,
   SkillAuditQueryPipe,
@@ -13,9 +11,11 @@ import {
   SkillMapQueryDto,
   SkillMapQueryPipe,
   SkillSnapshotResponseDto,
+  SkillSnapshotQueryDto,
+  SkillSnapshotQueryPipe,
   SubjectSkillMapDto,
 } from './skills.dto.js';
-import type { SkillAuditQuery } from './skills.dto.js';
+import type { SkillAuditQuery, SkillSnapshotQuery } from './skills.dto.js';
 import { StudentSkillsService } from './skills.service.js';
 
 @ApiTags('Student')
@@ -59,13 +59,13 @@ export class StudentSkillsController {
     operationId: 'getStudentSkillSnapshots',
     summary: 'Read confirmed immutable skill snapshots',
     description:
-      'Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.',
+      'Paginated items/total/page/pageSize. Optional subjectId filters owned history before pagination; foreign and unknown subjects return the same 403. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.',
   })
   @ApiResponse({ status: 200, type: SkillSnapshotResponseDto })
   snapshots(
     @StudentCtx() student: IStudentContext,
-    @Query(HistoryQueryPipe) query: HistoryQueryDto,
+    @Query(SkillSnapshotQueryPipe) query: SkillSnapshotQueryDto,
   ) {
-    return this.skills.snapshots(student, query as HistoryPage);
+    return this.skills.snapshots(student, query as SkillSnapshotQuery);
   }
 }

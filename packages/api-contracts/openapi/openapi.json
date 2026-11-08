@@ -11116,6 +11116,107 @@
         ]
       }
     },
+    "/api/v1/platform/workspace/{section}/{id}": {
+      "get": {
+        "operationId": "getPlatformWorkspaceDetail",
+        "parameters": [
+          {
+            "name": "section",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "lessons",
+                "students",
+                "homework",
+                "tasks"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WorkspaceDetailDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN or MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Object absent or outside visible scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store or configuration unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read a single object in the existing staff workspace scope",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
     "/api/v1/qa/components": {
       "get": {
         "description": "Requires an ordinary MFA staff/teacher session. Worker heartbeat is process liveness, not queue or release readiness.",
@@ -11976,6 +12077,15 @@
         "operationId": "getStudentHomework",
         "parameters": [
           {
+            "name": "lessonId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
             "name": "page",
             "required": false,
             "in": "query",
@@ -12762,7 +12872,7 @@
     },
     "/api/v1/student/lessons": {
       "get": {
-        "description": "Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.",
+        "description": "Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns a calendar capped at 62; overflow is 422. Explicit view=list permits pagination of that month. Optional subjectId narrows owned enrollments.",
         "operationId": "getStudentLessons",
         "parameters": [
           {
@@ -12808,6 +12918,28 @@
             "schema": {
               "pattern": "^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$",
               "example": "2025-09",
+              "type": "string"
+            }
+          },
+          {
+            "name": "view",
+            "required": false,
+            "in": "query",
+            "description": "Explicit list permits pagination of month",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "calendar",
+                "list"
+              ]
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
               "type": "string"
             }
           }
@@ -13137,6 +13269,125 @@
         ]
       }
     },
+    "/api/v1/student/lessons/{lessonId}/requests/{requestKey}": {
+      "get": {
+        "description": "Read-only lookup of an addressed student CRM task using its original idempotency key. Missing or still uncommitted task remains UNKNOWN.",
+        "operationId": "getStudentLessonRequestResult",
+        "parameters": [
+          {
+            "name": "lessonId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestKey",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "RESCHEDULE_REQUEST",
+                "ATTENDANCE_DISPUTE"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonRequestResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Reconcile one owned lesson request after an uncertain command response",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/lessons/{lessonId}/reschedule-request": {
       "post": {
         "description": "Creates one CRM task/audit/outbox atomically; does not move the lesson. Requires >=24 exact hours and revalidates ownership/access inside the transaction.",
@@ -13286,6 +13537,24 @@
               "maximum": 100,
               "default": 20,
               "type": "integer"
+            }
+          },
+          {
+            "name": "lessonId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
             }
           }
         ],
@@ -13474,6 +13743,15 @@
         "description": "Current FilePermission + VERIFIED object required. No object key, bucket or URL in the list. Optional educational subject filter. Historical contextless grants show «Без предмета».",
         "operationId": "getStudentMaterials",
         "parameters": [
+          {
+            "name": "lessonId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
           {
             "name": "subjectId",
             "required": false,
@@ -13730,6 +14008,19 @@
         "description": "Newest first; default30, max100. Last500 active items,90-day TTL, one shared read status. Group by returned type in the client.",
         "operationId": "getStudentNotifications",
         "parameters": [
+          {
+            "name": "locale",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "ru",
+              "type": "string",
+              "enum": [
+                "ru",
+                "ro"
+              ]
+            }
+          },
           {
             "name": "page",
             "required": false,
@@ -14255,6 +14546,93 @@
         ]
       }
     },
+    "/api/v1/student/reports/{reportId}": {
+      "get": {
+        "description": "Same publishedReports scope and public projection as list, independent of pagination. Foreign, unknown, draft, future and superseded IDs share REPORT_FORBIDDEN403. Draft corrections do not hide the preceding publication.",
+        "operationId": "getStudentReport",
+        "parameters": [
+          {
+            "name": "reportId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EducationalReportDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read one own latest published eight-lesson report",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
     "/api/v1/student/reports/{reportId}/read": {
       "post": {
         "description": "CSRF and UUID Idempotency-Key required. First successful mark is 204; every repeat (including cached command replay) is 200. No response body and no teacher report mutation.",
@@ -14553,6 +14931,93 @@
           }
         ],
         "summary": "Read own PDF job state and a fixed-expiry signed download",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/reports/export-pdf/requests/{requestId}": {
+      "get": {
+        "description": "Read-only lookup by original request UUID, scoped to student and requesting actor. ACCEPTED identifies the committed job, not its current readiness. UNKNOWN is not proof that a command never ran. No signing or new export.",
+        "operationId": "getStudentEducationPdfRequestResult",
+        "parameters": [
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PdfExportRequestResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Reconcile own PDF enqueue intention",
         "tags": [
           "Student"
         ]
@@ -15314,7 +15779,7 @@
     },
     "/api/v1/student/skills/snapshots": {
       "get": {
-        "description": "Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.",
+        "description": "Paginated items/total/page/pageSize. Optional subjectId filters owned history before pagination; foreign and unknown subjects return the same 403. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.",
         "operationId": "getStudentSkillSnapshots",
         "parameters": [
           {
@@ -15336,6 +15801,15 @@
               "maximum": 100,
               "default": 20,
               "type": "integer"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
             }
           }
         ],
@@ -15407,6 +15881,84 @@
           }
         ],
         "summary": "Read confirmed immutable skill snapshots",
+        "tags": [
+          "Student"
+        ]
+      }
+    },
+    "/api/v1/student/subjects": {
+      "get": {
+        "description": "One read snapshot from the student session. Subjects are ordered by ID and the preferred subscription comes first. No query parameters, money or mutations. Meet eligibility remains per lesson.",
+        "operationId": "getStudentSubjects",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentSubjectsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read owned subject access and subscription summaries",
         "tags": [
           "Student"
         ]
@@ -17771,6 +18323,60 @@
         ],
         "additionalProperties": false
       },
+      "DashboardPriorityDto": {
+        "type": "object",
+        "properties": {
+          "primary": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardPriorityTaskDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "criticalCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Full authorized critical queue."
+          },
+          "queueAction": {
+            "type": "string",
+            "enum": [
+              "TASK_QUEUE"
+            ]
+          },
+          "sourceAsOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "primary",
+          "criticalCount",
+          "queueAction",
+          "sourceAsOf"
+        ],
+        "additionalProperties": false
+      },
+      "DashboardPriorityTaskDto": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "taskId",
+          "title"
+        ],
+        "additionalProperties": false
+      },
       "DashboardQueryDto": {
         "type": "object",
         "properties": {
@@ -19661,6 +20267,14 @@
           "subjectName": {
             "type": "string"
           },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "originalScheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
           "status": {
             "type": "string",
             "enum": [
@@ -19680,6 +20294,10 @@
               "string",
               "null"
             ]
+          },
+          "meetAsOf": {
+            "type": "string",
+            "format": "date-time"
           },
           "canRequestReschedule": {
             "type": "boolean"
@@ -19908,6 +20526,41 @@
           "late"
         ],
         "additionalProperties": true
+      },
+      "LessonRequestResultDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "CREATED",
+              "UNKNOWN"
+            ]
+          },
+          "crmTaskId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "RESCHEDULE_REQUEST",
+              "ATTENDANCE_DISPUTE",
+              null
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "crmTaskId",
+          "type"
+        ]
       },
       "LessonRescheduleRequest": {
         "type": "object",
@@ -20166,6 +20819,19 @@
           },
           "telegram": {
             "type": "string"
+          },
+          "displayName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "phoneE164": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^\\+[1-9][0-9]{6,14}$"
           }
         },
         "required": [
@@ -20203,6 +20869,17 @@
           },
           "pendingPayments": {
             "$ref": "#/components/schemas/DashboardPendingPaymentsDto"
+          },
+          "priority": {
+            "description": "Omitted when the priority source is not configured; null if it is unavailable.",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardPriorityDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         },
         "required": [
@@ -21213,6 +21890,22 @@
       "MaterialItemDto": {
         "type": "object",
         "properties": {
+          "subjectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Explicit educational subject; null means a legacy contextless grant"
+          },
+          "canDownload": {
+            "type": "boolean",
+            "description": "Existing grant disposition: true attachment, false inline READ; not DRM"
+          },
+          "fileNameIsFallback": {
+            "type": "boolean",
+            "description": "True only when the original filename was not recorded"
+          },
           "fileId": {
             "type": "string",
             "format": "uuid"
@@ -21315,6 +22008,21 @@
           },
           "canJoin": {
             "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "COMPLETED",
+              "CANCELLED",
+              "NO_SHOW",
+              "STAR_PENDING",
+              "DISPUTED"
+            ]
+          },
+          "meetAsOf": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "required": [
@@ -21928,6 +22636,29 @@
           "confirmed_at"
         ],
         "additionalProperties": false
+      },
+      "PdfExportRequestResultDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "UNKNOWN"
+            ]
+          },
+          "jobId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "status",
+          "jobId"
+        ]
       },
       "PdfJobStatusDto": {
         "type": "object",
@@ -23777,6 +24508,214 @@
           "avatarFileId"
         ]
       },
+      "StudentSubjectCapabilitiesDto": {
+        "type": "object",
+        "properties": {
+          "canViewHomework": {
+            "type": "boolean"
+          },
+          "canViewMaterials": {
+            "type": "boolean"
+          },
+          "canOpenSubscription": {
+            "type": "boolean"
+          },
+          "canOpenLessons": {
+            "type": "boolean",
+            "description": "Existing lessons view only; a specific Meet action is checked separately."
+          }
+        },
+        "required": [
+          "canViewHomework",
+          "canViewMaterials",
+          "canOpenSubscription",
+          "canOpenLessons"
+        ],
+        "additionalProperties": false
+      },
+      "StudentSubjectDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "enrollmentIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "displayStatus": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "FROZEN",
+              "EXPIRED",
+              "LIMITED",
+              "NONE"
+            ]
+          },
+          "reasonCode": {
+            "type": "string",
+            "enum": [
+              "PAID_RIGHTS",
+              "FROZEN",
+              "PERIOD_EXPIRED",
+              "ENROLLMENT_ENDED",
+              "ENROLLMENT_PAUSED",
+              "NO_SUBSCRIPTION",
+              "TEMPORARY_ADMISSION",
+              "PAYMENT_OR_ADMISSION_REQUIRED",
+              "NO_PAID_RIGHTS",
+              "RIGHTS_UNKNOWN"
+            ]
+          },
+          "liveAccess": {
+            "type": "boolean",
+            "description": "A subject-level access basis exists. Never authorizes a specific Meet link."
+          },
+          "capabilities": {
+            "$ref": "#/components/schemas/StudentSubjectCapabilitiesDto"
+          },
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSubjectSubscriptionDto"
+            }
+          }
+        },
+        "required": [
+          "subjectId",
+          "subjectName",
+          "enrollmentIds",
+          "displayStatus",
+          "reasonCode",
+          "liveAccess",
+          "capabilities",
+          "subscriptions"
+        ],
+        "additionalProperties": false
+      },
+      "StudentSubjectsResponseDto": {
+        "type": "object",
+        "properties": {
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudentSubjectDto"
+            }
+          }
+        },
+        "required": [
+          "generatedAt",
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "StudentSubjectSubscriptionDto": {
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Owned financial period accepted by subscription, payments and ledger GETs."
+          },
+          "managerSubscriptionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Grouping identity only; do not pass to financial-period GETs."
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayStatus": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "FROZEN",
+              "EXPIRED",
+              "LIMITED",
+              "NONE"
+            ]
+          },
+          "reasonCode": {
+            "type": "string",
+            "enum": [
+              "PAID_RIGHTS",
+              "FROZEN",
+              "PERIOD_EXPIRED",
+              "ENROLLMENT_ENDED",
+              "ENROLLMENT_PAUSED",
+              "NO_SUBSCRIPTION",
+              "TEMPORARY_ADMISSION",
+              "PAYMENT_OR_ADMISSION_REQUIRED",
+              "NO_PAID_RIGHTS",
+              "RIGHTS_UNKNOWN"
+            ]
+          },
+          "validUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "frozenUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "paidLessonsRemaining": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "description": "Confirmed rights for the started periods of this plan. Null means the balance cannot be established."
+          },
+          "liveAccess": {
+            "type": "boolean"
+          },
+          "temporaryAdmission": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StudentTemporaryAdmissionDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "subscriptionId",
+          "managerSubscriptionId",
+          "enrollmentId",
+          "displayStatus",
+          "reasonCode",
+          "validUntil",
+          "frozenUntil",
+          "paidLessonsRemaining",
+          "liveAccess",
+          "temporaryAdmission"
+        ],
+        "additionalProperties": false
+      },
       "StudentSubscriptionLedgerEntryDto": {
         "type": "object",
         "properties": {
@@ -23799,11 +24738,18 @@
             ]
           },
           "balanceBefore": {
-            "type": "string",
-            "description": "Lesson quantities, not monetary account totals"
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Lesson quantity. Null when a historical deduction snapshot was not recorded."
           },
           "balanceAfter": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Lesson quantity. Null when a historical deduction snapshot was not recorded."
           },
           "description": {
             "type": "string"
@@ -23851,6 +24797,29 @@
           "page",
           "pageSize"
         ]
+      },
+      "StudentTemporaryAdmissionDto": {
+        "type": "object",
+        "properties": {
+          "maxLessons": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "lessonsRemaining": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "maxLessons",
+          "lessonsRemaining",
+          "validUntil"
+        ],
+        "additionalProperties": false
       },
       "SubjectCreateRequest": {
         "type": "object",
@@ -25127,6 +26096,34 @@
           "tasks"
         ]
       },
+      "WorkspaceDetailDto": {
+        "type": "object",
+        "properties": {
+          "actorContext": {
+            "$ref": "#/components/schemas/StaffActorContextDto"
+          },
+          "item": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/WorkspaceLessonDetailDto"
+              },
+              {
+                "$ref": "#/components/schemas/WorkspaceStudentDetailDto"
+              },
+              {
+                "$ref": "#/components/schemas/WorkspaceHomeworkDto"
+              },
+              {
+                "$ref": "#/components/schemas/WorkspaceTaskDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "actorContext",
+          "item"
+        ]
+      },
       "WorkspaceHomeworkDto": {
         "type": "object",
         "properties": {
@@ -25151,6 +26148,41 @@
           "title",
           "subject",
           "dueAt"
+        ]
+      },
+      "WorkspaceLessonDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string"
+          },
+          "endsAt": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "student": {
+            "type": "string"
+          },
+          "teacher": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "startsAt",
+          "endsAt",
+          "status",
+          "subject",
+          "student",
+          "teacher"
         ]
       },
       "WorkspaceLessonDto": {
@@ -25220,6 +26252,28 @@
           "returned",
           "hasMore",
           "total"
+        ]
+      },
+      "WorkspaceStudentDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subjects": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "subjects"
         ]
       },
       "WorkspaceStudentDto": {

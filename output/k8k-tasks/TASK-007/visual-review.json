@@ -1,0 +1,15 @@
+{
+  "run": "output/k8k-tasks/TASK-007/runs/2026-11-03T22-17-03.782Z",
+  "inspected": [
+    "ro-360-student-validation.png",
+    "ro-360-profile-k8k-1.png",
+    "ru-1280-profile-k8k-0-success.png"
+  ],
+  "findings": [
+    "Long RO error and unbroken words wrap below input/select with no overlap",
+    "Hint/error both visible; keyboard focus clear",
+    "Unknown status explicitly neutral; disabled reason visible",
+    "Actual Profile labels RO with existing RU app-level ErrorNotice; separate TASK-016/034",
+    "Legacy Profile retains native panel/input/button; no horizontal expansion"
+  ]
+}

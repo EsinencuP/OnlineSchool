@@ -24,7 +24,9 @@ Each write locks the delivery. Version numbers advance by exactly one and point 
 
 The deadline is soft, including null deadlines. Lateness compares server submission time with the delivery due time; equality is on time. Assignment descriptions support existing JSON text/description content, and new answer JSON stores `{ text }` without losing whitespace.
 
-`HomeworkDraft` has one primary key per delivery. Saving overwrites its content and refreshes a 30-day server expiry. Expired drafts are hidden immediately by the list query. The standalone worker clears expired plaintext in batches of 100 using SKIP LOCKED, at most once a minute. Submission clears plaintext and expires the row in the same critical transaction; no runtime DELETE permission is needed. Client debounce (2 seconds) belongs to the future student frontend.
+`HomeworkDraft` has one primary key per delivery. Saving overwrites its content and refreshes a 30-day server expiry. Expired drafts are hidden immediately by the list query. The standalone worker clears expired plaintext in batches of 100 using SKIP LOCKED, at most once a minute. Submission clears plaintext and expires the row in the same critical transaction; no runtime DELETE permission is needed.
+
+TASK-030 preserves the existing student frontend's 2-second debounce and serialized save queue. Refetch and draft expiry preserve current input and selection; a newly expired server draft removes the saved claim. List order and pagination come from the server, with no status tabs. Unknown submission freezes the original key/body and checks the existing detail/version projection before an explicit retry. A matching newer version confirms delivery without another POST; an unchanged editable version allows only the same-key/body retry. Upload confirmation retries retain the intent and skip a successful PUT; an expired presign requests a new intent. Local mock/browser evidence is recorded in [TASK-030](../../../../../output/k8k-tasks/TASK-030/report.md); it does not repeat or extend the historical provider evidence below.
 
 ## Private direct uploads
 

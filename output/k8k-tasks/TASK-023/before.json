@@ -1,0 +1,50 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "paths": [
+    {
+      "path": "package.json",
+      "sha256": "919d8c7c9929216033076fe91ff90e154a24fc17575d2e620dd7dc9e6f931a75"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "f454000693dbaa579ef1397a9eee44bb51e5248d39a12c8b4de522ddcf23ce38"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "935ec91ed33468d7adb1dac8392d27a08247390a0192d7f2eeed4364fd737858"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "6869b15fa8f8224ab44a02b76b89820a94e740152f595ddbb98fb1f99d1d2eaa"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/manager-error-codes.ts",
+      "sha256": "2f5c823bd777d443a873bd6ffba87a60b270648b21dbec1ee429c180ce089513"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "7084b81f529421bbd42aea9eba54eafc16723e22aeddca53622f9549be128075"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "9d27932dd1f145c4e77281080a06fd05ca182f5f42b95daf94bd9ffaf5e20a62"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "6b6137492dc09dfcd63dc9367f65c0464129763d8dc9012ae71713ac17805b1f"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "sha256": "49d236aa6df6e90b8bd886bbbe76af5d96ef4780eb5cad59a6527b8d4df93bea"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "sha256": "43b4c174112f6e6099a379a8e9173a9e1fb7f893634ecd19d95f40ad45053dc2"
+    }
+  ]
+}

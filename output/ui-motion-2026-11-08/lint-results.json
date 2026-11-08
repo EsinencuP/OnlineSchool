@@ -1,0 +1,14 @@
+[
+  {
+    "command": "node_modules/eslint/bin/eslint.js",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "node_modules/prettier/bin/prettier.cjs",
+    "exit": 0,
+    "stdout": "Checking formatting...\nAll matched files use Prettier code style!\n",
+    "stderr": ""
+  }
+]

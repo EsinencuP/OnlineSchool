@@ -1,0 +1,114 @@
+{
+  "cases": [
+    "Keyboard locale change updates labels and existing validation, preserves draft and literal name",
+    "Reload, full navigation, bidirectional cross-tab, removal and unknown locale fallback",
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 360,
+      "locale": "ru",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 360,
+      "locale": "ro",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 768,
+      "locale": "ru",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 768,
+      "locale": "ro",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 1024,
+      "locale": "ru",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 1024,
+      "locale": "ro",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 1280,
+      "locale": "ru",
+      "fixture": "platform login"
+    },
+    {
+      "route": "/",
+      "role": "unauthenticated",
+      "width": 1280,
+      "locale": "ro",
+      "fixture": "platform login"
+    },
+    "Blocked storage uses memory for the document, reload defaults to RU"
+  ],
+  "loginWrites": 0,
+  "errors": [],
+  "blocked": [
+    "https://example.invalid/locale-sentinel"
+  ],
+  "budget": {
+    "status": "available",
+    "files": [
+      {
+        "file": "assets/index-Ba7eqYYB.js",
+        "sha256": "5af180d1e1b1bf207e17aec423d578e71e2e758f4852d150a0085f02a1432f58",
+        "raw": 198593,
+        "gzip": 64611,
+        "kind": "js"
+      },
+      {
+        "file": "assets/index-CSHYN0zG.css",
+        "sha256": "d500264ba3a901dccc46528a747a356f659e2dbf18060925f0b7162afb6f6993",
+        "raw": 37068,
+        "gzip": 7761,
+        "kind": "css"
+      }
+    ],
+    "manifestKeys": [
+      "index.html"
+    ],
+    "deferredDynamicImports": [],
+    "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+    "gzip": 72372,
+    "font": {
+      "romanian": {
+        "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+        "bytes": 3544,
+        "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+      },
+      "cyrillic": {
+        "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+        "bytes": 22032,
+        "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+      },
+      "latin": {
+        "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+        "bytes": 37916,
+        "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+      },
+      "total": 63492
+    },
+    "total": 135864,
+    "limit": 256000,
+    "pass": true
+  }
+}

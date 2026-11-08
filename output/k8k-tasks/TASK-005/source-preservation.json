@@ -1,0 +1,64 @@
+{
+  "task": "TASK-005",
+  "passed": true,
+  "checks": {
+    "onlyAuthorizedPathsChanged": true,
+    "all426RunSourceHashesMatch": true,
+    "task004SourceMatchedBeforeTask005": true,
+    "archivesAndProtectedOriginalOutputsUnchanged": true,
+    "task001AcceptedManifestsUnchanged": true,
+    "task002InventoryUnchanged": true,
+    "task003AuditUnchanged": true,
+    "headBranchUnchanged": true,
+    "indexStillEmpty": true,
+    "uiStackHistoricalTextPreserved": true,
+    "reportLinksResolve": true,
+    "bookkeepingBuildDigestMatches": true,
+    "scopedGitDiffCheck": true
+  },
+  "changedExistingInputPaths": [
+    ".github/workflows/ci.yml",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/package.json",
+    "packages/ui/src/style.css",
+    "packages/ui/src/tokens.css",
+    "packages/ui/tests/contrast.test.mjs",
+    "pnpm-lock.yaml",
+    "scripts/k8k-design-check.mjs"
+  ],
+  "unexpectedChangedPaths": [],
+  "beforeSourceFiles": 419,
+  "acceptedRunSourceFiles": 426,
+  "acceptedBuildBasis": {
+    "head": "171db2142858e035594737e141d422fa5378e844",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "cea448a53cb0f9d5e2fde7356e019fcdb3bf9e612d8e448ea735e64b50275280",
+    "sourceDigest": "0c5e86b994e03db94fe45a394c116348a7bc54c8fa4cbc03c3cbf32e1a534ffe"
+  },
+  "protectedOriginalHashes": {
+    "output/k8k-implementation/baseline/manifest.json": {
+      "sha256": "a7d84075bc8e5925c0f7500c84498e3e02325b8f80f2bbdfb4679d434207c6d4",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/status.txt": {
+      "sha256": "3d0924c29c85ac087181685229ae6eeae823bd0f8a7eab057a71e31a2626312b",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/tracked.patch": {
+      "sha256": "3379e13e28811809aa57714813a99e1d1a12801d6eec86742dd989bb747af902",
+      "unchanged": true
+    },
+    "apps/apps.rar": {
+      "sha256": "1e819a62692e21c21aac31b1dd17588b7ac5930e4d6bb17eb0537a4d92740737",
+      "unchanged": true
+    },
+    "uiux.rar": {
+      "sha256": "563b6e6d2ff5e0fd6aafb5bc960065ac8dcb9368671dcaaf276ac55a4943d740",
+      "unchanged": true
+    }
+  },
+  "missingReportLinks": [],
+  "finalTrackedPatchSha256": "900d99c17f21c0779b678a9a184f347f4779454037495ddf31ec43df3180ff78",
+  "notes": "Build-time dirty digest precedes bookkeeping; final patch hash is separate. All runtime/build inputs still match the accepted run. No database/provider claims."
+}

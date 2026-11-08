@@ -1,0 +1,1792 @@
+{
+  "schemaVersion": 1,
+  "capturedBy": "TASK-005",
+  "policy": "Exact declaration identity: path/context/property/value/occurrence/reason; line advisory. No UI exceptions. New/changed/duplicate/stale entries fail. Delete a record when migrating its declaration; never regenerate automatically.",
+  "entries": [
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\":root\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"2db39110ddb50c7fd4e1215db47c5378065e95cda8babe9865b8c101113e02fd\"} (k8k/token-values)",
+      "line": 12,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"label\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"9b78981aa3d2167ead0c3f20c47035f145cb704f51689625bfc1ae63ef9f2df0\"} (k8k/token-values)",
+      "line": 107,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h1\"],\"property\":\"font-size\",\"value\":\"30px\",\"occurrence\":1,\"sha256\":\"6b0c8e4d4c0927e0322e3a8c3b4ee634ec98ff02c62a4144e5e06d45693d8d44\"} (k8k/token-values)",
+      "line": 121,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h2\"],\"property\":\"font-size\",\"value\":\"19px\",\"occurrence\":1,\"sha256\":\"ad213801ba6df24866129be6f3e558b7e68f52b409cd24131abe2029efe836f6\"} (k8k/token-values)",
+      "line": 127,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h3\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"98b96c03a79cf5d97119ef6ec598b5ce177842e1f67bca658c1c10627065be65\"} (k8k/token-values)",
+      "line": 133,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"d19c106ae8e0c15a93c0526020ab44255041aae3e7febc57c4a44bf513ccdc8e\"} (k8k/token-values)",
+      "line": 178,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"69832f2e0682a1cd42ad3de216569403eb769aea0e9263c6d450dc5db7abe1c4\"} (k8k/token-values)",
+      "line": 181,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand-mark\"],\"property\":\"font-size\",\"value\":\"22px\",\"occurrence\":1,\"sha256\":\"3b339483cb6b1e62596d1380baaa963d38a1c99d657439fdaf96e14449ad9a3a\"} (k8k/token-values)",
+      "line": 195,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar nav a > span:first-child\"],\"property\":\"font-size\",\"value\":\"19px\",\"occurrence\":1,\"sha256\":\"2b60d33180e61e22a54357133e3f0e55a3451568630cf2ffda30e0ad46d717f7\"} (k8k/token-values)",
+      "line": 213,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-color: {\"context\":[\".topbar\"],\"property\":\"background\",\"value\":\"rgba(255, 255, 255, 0.8)\",\"occurrence\":1,\"sha256\":\"8ead190c53f030b7e431579b04133ea030d8e65e56677d2c34699a697bc462bf\"} (k8k/token-values)",
+      "line": 244,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".topbar\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"0f6ed8d72d6218c089251a16b411bf0eb2148c658e8be1c222d38b787407ebb3\"} (k8k/token-values)",
+      "line": 245,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".profile-chip\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"439981c5cc8858d4e9a01a7ae0c9c7914430bfc1af3e32afe0c8db71981acdd5\"} (k8k/token-values)",
+      "line": 251,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".profile-chip small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"9ce05fbb816ab6c417ba8e8692448fedf4a049c9303de4b355661ba503afc42e\"} (k8k/token-values)",
+      "line": 256,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".page-foot\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"385e75e6b61c6e5450617c11105df98ed5d5093abb61822f11873f7230b34056\"} (k8k/token-values)",
+      "line": 271,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metrics article span\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"2d126d4e5648de1b11e8bfe25746f9a9b8bb771fafa23fc1e65e5a92fdca9383\"} (k8k/token-values)",
+      "line": 388,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metrics article strong\"],\"property\":\"font-size\",\"value\":\"38px\",\"occurrence\":1,\"sha256\":\"d2fcb580189e268647066d1354fbb7002050ec85c1f5e07adb8951702f6fcb77\"} (k8k/token-values)",
+      "line": 393,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metrics article a\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"e866440c1acec28eb5164e2541841eeb27986188d9ebabd602dbb03c1d4c93a5\"} (k8k/token-values)",
+      "line": 399,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".record-title\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"41a0ae309af590ec370444a604dc808ebfc65257d859e7fdcbb23df2d0956b6a\"} (k8k/token-values)",
+      "line": 421,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".money-total\"],\"property\":\"font-size\",\"value\":\"28px\",\"occurrence\":1,\"sha256\":\"2089d48a814640b31e885318135ba0291e89edbc142e742855f6847b2bde055c\"} (k8k/token-values)",
+      "line": 447,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".count\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"290de2312733d5f1f19aec9b46e430c64794b63a51f2bb6a482a74c975b3b9fc\"} (k8k/token-values)",
+      "line": 452,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".badge\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"5973167d8a3006580ee279a804f4d341522a1786e659b3178f0155911bb36683\"} (k8k/token-values)",
+      "line": 505,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".tabs > a\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"fbf96a15ddd4dae024d1e57a8be0558f776720c45562a4627f52630dde057105\"} (k8k/token-values)",
+      "line": 545,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".back-link\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"9c4fcd4f0ec2a6caed4d1b71cdcf02a19510f585dd0cf796a5a0ffb818035d27\"} (k8k/token-values)",
+      "line": 559,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".details dt\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"efaf404a6b1cfa2b27797492dd63cc96a556d890a9294856bb5289b54f84b3c0\"} (k8k/token-values)",
+      "line": 568,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".details dd\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"a5401f224a8ac9ae4670a76d2a7255ea1039710b01165388a0a94143fd966827\"} (k8k/token-values)",
+      "line": 574,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-head\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"eb5eb1d2a9cce3773592864bf453247f76c9fc752d77e490e513af2d86ca0bf8\"} (k8k/token-values)",
+      "line": 597,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-row\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"f3fc72a97451ac4924fb9c94e0f2bdcb942a0f5154f8bcfe1e88020d818daf82\"} (k8k/token-values)",
+      "line": 602,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-row small\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"e444d98da82ecf5a333c8122d3cf75dad5fedae31b42774019daad854b73b5d4\"} (k8k/token-values)",
+      "line": 605,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".calendar-day > h2\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"0f46fb9b21277e91b0fe83f6818604b3ac9d096cf805ca8ba4302fe6d39e2502\"} (k8k/token-values)",
+      "line": 636,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-card time\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"249dfa6a582290d20479a23d4303a684dc3e7bf2d07e0d10e9d78f77c0e12d94\"} (k8k/token-values)",
+      "line": 652,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-card p\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"dc0ee8cd0538c4986cdf01b36040d7412fda6056f8af69f26e098d586e49ba4a\"} (k8k/token-values)",
+      "line": 657,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-card .record-title\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"59cd2140853dac7b6bbcdf52545333718cc4c1c284d7f866fd7766917a9729d2\"} (k8k/token-values)",
+      "line": 661,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".auth-shell h1\"],\"property\":\"font-size\",\"value\":\"26px\",\"occurrence\":1,\"sha256\":\"f88bcd44b2fc4317e5f9006f4d180c2eba6679feba1cea439632a5e895499bcb\"} (k8k/token-values)",
+      "line": 695,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".secret\"],\"property\":\"font-size\",\"value\":\"27px\",\"occurrence\":1,\"sha256\":\"b5d1a04846365847f2fa0a1e121592abba9c2c7902c4d017749577f25aadaa5d\"} (k8k/token-values)",
+      "line": 708,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dialog-head h2\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"62ce29e45de984c84314686f6c227ea945b6c579d298c52394f5e503625bf3df\"} (k8k/token-values)",
+      "line": 737,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dialog-head button\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"fdbad136e96b735191b56794256bac7f31d8965aec863cc91bfc7dd87e08c9e7\"} (k8k/token-values)",
+      "line": 742,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\":root\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"7edf37a3bcba0b88d56fc86063b98869494efd576e201d6663c9e9c7438b0fc6\"} (k8k/token-values)",
+      "line": 808,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".sidebar nav a\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"247a24f083b12b4efd1ae60140caa13897af15beaa48f3c4705c4587f77ee1c0\"} (k8k/token-values)",
+      "line": 840,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".sidebar nav a > span:first-child\"],\"property\":\"font-size\",\"value\":\"19px\",\"occurrence\":1,\"sha256\":\"ff96fa04942291fff0c9d4e7dba4891272895e112edc162567a850a2ebb0bcc4\"} (k8k/token-values)",
+      "line": 845,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".profile-chip\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"4b7ad68c30a48b240111c1ac81a32d8956f3dd891247201b76b22a78bce42606\"} (k8k/token-values)",
+      "line": 858,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".mobile-logout\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"5ecadd31f06c1e7cb840ecf480c6dbd1016b0a241f7190081e9197c24c70eb94\"} (k8k/token-values)",
+      "line": 862,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\"h1\"],\"property\":\"font-size\",\"value\":\"26px\",\"occurrence\":1,\"sha256\":\"dec8a562c5ef95370b54b3faab0455f8fe00b3d792c07d47e52756dde3b8bce0\"} (k8k/token-values)",
+      "line": 869,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metrics article span\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"57388e6bf7d33b0baf4f0c480506792db437bb5c698be9db210ccac4bf23357b\"} (k8k/token-values)",
+      "line": 905,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metrics article strong\"],\"property\":\"font-size\",\"value\":\"32px\",\"occurrence\":1,\"sha256\":\"c50741372b11403adf45ef82e474e6310a1f18fc1e704f43186ac70f302299a2\"} (k8k/token-values)",
+      "line": 908,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".table-row\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"3e8c60b60e83a9491ac95369d63951c8dafe36b983ed310b361c96ff52cf639c\"} (k8k/token-values)",
+      "line": 960,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".table-row > div[data-label]::before\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"9d3c1c03d5f9640b9ef549dc67592e7f90ddf4e678431b9749ff65478be51cee\"} (k8k/token-values)",
+      "line": 966,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".table-row small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"f0fb194dbe01c341c41e77f1a582b3a2babd485ce2fce99d06e5e5b354cf376a\"} (k8k/token-values)",
+      "line": 970,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".record-title\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"d220a5125b589ada7ac4a0111bf990cce1b27cdc41229b2c2c49e735f7e90bbd\"} (k8k/token-values)",
+      "line": 973,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".calendar-day > h2\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"ec9b35f1eb54c93a6f2eeaab61002becc1d54713d00493c6c46382c331a67374\"} (k8k/token-values)",
+      "line": 983,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".lesson-card .record-title\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"009143604429824fe0155ea09916ba6f0d584e6aa1315af1e7f8983cec61f589\"} (k8k/token-values)",
+      "line": 990,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".lesson-card button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"485af5268a3326a5fb8455f1004b9e371b2558c7bc39ab47caecf442d19bbbd8\"} (k8k/token-values)",
+      "line": 997,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".pagination button\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"e147a1dbb9f99fea614e0bfdcd41ce2c23a178065dbf84ae6ca7f790afb421fc\"} (k8k/token-values)",
+      "line": 1007,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".page-foot\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"1cdc4da8814ba1faf8c2903359eca3a15687c227e5135faee5bdacb484bcf584\"} (k8k/token-values)",
+      "line": 1012,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".secret\"],\"property\":\"font-size\",\"value\":\"22px\",\"occurrence\":1,\"sha256\":\"91d1dc1b4f6e19cef0588ccc7eae40b6a782c54c50236968beb4a996343c93cd\"} (k8k/token-values)",
+      "line": 1019,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".dialog-head h2\"],\"property\":\"font-size\",\"value\":\"22px\",\"occurrence\":1,\"sha256\":\"dc5a8645fbcc845b5460795e6b5bdf510430523af3e52143e54850add78bfd2d\"} (k8k/token-values)",
+      "line": 1025,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\":root\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"94258e9b4b1dccf8102146c9bee33ca4e4cc2d6127212e1547436fdda5804b17\"} (k8k/token-values)",
+      "line": 1051,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h1\"],\"property\":\"font-size\",\"value\":\"27px\",\"occurrence\":1,\"sha256\":\"ec8e2bcc938c867240940daad67a51d9e91ee0af281c76830ff0745894419bc2\"} (k8k/token-values)",
+      "line": 1066,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h2\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"1d4b7e9606fed7f8b352ac50c83574b52e8bc9b2babe9e7aa63ebfd626808797\"} (k8k/token-values)",
+      "line": 1070,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"e2be4a9915099d9feba96ef0cac09cc8561a02a6eb7865cf00621030f87b4ceb\"} (k8k/token-values)",
+      "line": 1094,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":2,\"sha256\":\"e5003f011f1c36527af46500fe429f2c3723a4309432f4ec82eb9d9769a5a4f0\"} (k8k/token-values)",
+      "line": 1105,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-section-label\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"47a7320bb04175de8f981d41dc7d0c05f96dec2a112fca2013f52e81140b9cc1\"} (k8k/token-values)",
+      "line": 1119,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar nav a\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"961cc05093de2b6732e03827508417552957f4cbddf4d40eeb42936213231662\"} (k8k/token-values)",
+      "line": 1133,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-subsection > a\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"2934baae8aa80149b9101cc7564e019eb7c92c101a85cabd0a9b9c1211721cb2\"} (k8k/token-values)",
+      "line": 1161,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-help summary\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"529c6c0dcff561ca7814e31c105c5b66b8e4dbe509ddef2ec68916312afd3146\"} (k8k/token-values)",
+      "line": 1189,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-help p\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"dc10e7fe7d6efdc1eb0d05ed6c49ae52d813a155ec77a2687bc414275df45e28\"} (k8k/token-values)",
+      "line": 1201,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-foot p\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"70c32639cb61bb35d1c0328fa1aa1ffa7f5132246fe9927bfd511bcaef72f422\"} (k8k/token-values)",
+      "line": 1219,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-foot small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"3dbe4e360b367d6c9e6f9ecf01790c41e6eb50045444a8f808920141134259f9\"} (k8k/token-values)",
+      "line": 1226,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-foot .avatar\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"102c5cc8940c5ed2e47cce9afdc7ee2d13fc4f90a4fc0f7c71807e3b045380c3\"} (k8k/token-values)",
+      "line": 1241,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".global-search input\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"5782d774d66daf49f4c4aadce9a87eb9864f53783fa7d372324213c25a8f70bb\"} (k8k/token-values)",
+      "line": 1272,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".global-search kbd\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"39c4367d17e41e04851f12e03c1b95b3a3781e4fa76e54d5070d96bb5421bc58\"} (k8k/token-values)",
+      "line": 1283,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".topbar-date\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"928a9be80e9ae113cd72eefe413356b4d8fd6607df4cb4df0766f8141f180c7c\"} (k8k/token-values)",
+      "line": 1311,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".topbar-date small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"ba082830f90b74706407c4ac5c56af104e30735a591238ef9736db589f3e82bb\"} (k8k/token-values)",
+      "line": 1317,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".page-foot\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"404dd795c0b1be4cc4bdc848c1ebaa1bc6e34392298223f32b49a49c3c53c61d\"} (k8k/token-values)",
+      "line": 1339,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".heading-caption\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"614779fa9fc94b0ac80020bb37dc976a06d9e48ceb1fcc787f44e8ec66c4a7a6\"} (k8k/token-values)",
+      "line": 1355,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".count\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"6df2926c5815b593fb9b5acdb8ce42f0c27a3ea61df9dba348f24512f2c74db1\"} (k8k/token-values)",
+      "line": 1393,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".subtle-link\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"e34066f4fb413c3dc1b822b57bbe0cfc55ac0ef8dbf29997d5d409458c361eb4\"} (k8k/token-values)",
+      "line": 1408,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".avatar\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"3fb26299d3cdfad64e12f3a641170fa6883d05cc3216252b9effa9bc061721da\"} (k8k/token-values)",
+      "line": 1420,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".student-name-cell .record-title\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"ee14e7e6625c2d1e26ee01c5335b1ec4910929e79c609c89abe9f6047b81222b\"} (k8k/token-values)",
+      "line": 1476,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-head\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"1e0c69519d26f66ce8af2c9aa9e0e2ab2fe5868c680a62384a1ff00f06f7492b\"} (k8k/token-values)",
+      "line": 1484,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-row\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":2,\"sha256\":\"0c8371249c29ff77071dac7c71316ecaf7eaa1e3c06d30f8d58c315051f9b3b1\"} (k8k/token-values)",
+      "line": 1489,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".badge\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"6255336ecc6a5581a6b7dc0aa065ede731915df2b909224d11db750b3c2448d9\"} (k8k/token-values)",
+      "line": 1500,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".tabs > a\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"55183bd30a7109c86befb463f27c332a02a817a06f886a00cabaea1f3401d76d\"} (k8k/token-values)",
+      "line": 1516,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-horizons label\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"fa38eb268d2adb71f3d6c8da0b25fd7be2cb97e2fb84028207311b9573c08d53\"} (k8k/token-values)",
+      "line": 1530,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-horizons select\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"6b117145cd05a53bf70e06878e5bf62762e2e19ed11fa483de77a90473dccffc\"} (k8k/token-values)",
+      "line": 1537,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metric-label\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"65127434eec4f8d4fcf5808df8c78575e6af03b15eb9062d6d34701b4aa56564\"} (k8k/token-values)",
+      "line": 1578,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metric-card strong\"],\"property\":\"font-size\",\"value\":\"25px\",\"occurrence\":1,\"sha256\":\"eacc614be079bef0d62324cb9cc166154c9c5979248cf389f120e6e0391b4a0d\"} (k8k/token-values)",
+      "line": 1586,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metric-card small\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"05ae37c658b6e85bc5b074e5983ad023457d7840cabdadf344d71326e4104d9c\"} (k8k/token-values)",
+      "line": 1592,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".panel-tabs\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"6bdbb870b4ecb4facbef2927a8ae01c7bbf5e9988c3f0038998ff3ad4aa08a6d\"} (k8k/token-values)",
+      "line": 1614,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".row-main > a\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"bf46bf124537293593e53b6d12b83153c196e10e47e21862d7abc491f572d211\"} (k8k/token-values)",
+      "line": 1654,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".row-main > span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"c061242c60340a4b9b167f719b28caf77108a6876c6d12ab590dded392dd44b0\"} (k8k/token-values)",
+      "line": 1664,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".due-time\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"3d9aa1b4421de29312d34220a7542422c11c43a61a0f033e8db2cb8a326c7d43\"} (k8k/token-values)",
+      "line": 1667,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".task-summary-list .avatar\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"eddf1f7a4d01258178f72566e2f62fc87b52539d03f16ac333ee26b8c78ea353\"} (k8k/token-values)",
+      "line": 1677,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-time\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"bd4e5ae7be649df082abe3cb7023851829f8167a0713ca60574966bf5bbfde06\"} (k8k/token-values)",
+      "line": 1698,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-time small\"],\"property\":\"font-size\",\"value\":\"8px\",\"occurrence\":1,\"sha256\":\"3b9ef513b1590b1657481ab0d4990a64c4e706433266a0dbe4e722141f71f5e2\"} (k8k/token-values)",
+      "line": 1704,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".meet-indicator\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"43314a23fac9349f1b570ab7bbcbb913c823b1977715b0d8adab06e5bc6e73ee\"} (k8k/token-values)",
+      "line": 1717,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-empty strong\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"35c01c0d7f015d1b7338da2c6a8c3cb59753d8779d8f845849946b4f9556d491\"} (k8k/token-values)",
+      "line": 1746,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-empty p\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"c6e52b14ca886e5ea557c465767cd8899f850fda30eb16efb1fcd5cbdd075ba4\"} (k8k/token-values)",
+      "line": 1752,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".month-nav > strong\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"1932e26980459c2192b87c9f0e185d408f8c30339e48823602c3ce1910d1ceb8\"} (k8k/token-values)",
+      "line": 1768,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".weekday\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"1c56bd8b0f50ad87045eab564c979e8bb808779aa9f4a93fb722bdf85e895394\"} (k8k/token-values)",
+      "line": 1788,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".month-day\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"b916084ac51b9b59ccd3577154f67cab6e69fd8a7c8fa7a1cd0e8073e0d6a720\"} (k8k/token-values)",
+      "line": 1800,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".selected-day strong\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"f151ac0e078c9d6b51221bfe1e86397e68b7755cca7da4c3cb2003f389296f4d\"} (k8k/token-values)",
+      "line": 1839,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".selected-day > span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"8cc697d98b36394ecf7dae1d29a77c11e7a3afd17f8109f6e15b73d549679974\"} (k8k/token-values)",
+      "line": 1843,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".mini-lessons li\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"eb23260681e1084f53bc0b8370f038c043887951d0265ef2956d95725b83e56d\"} (k8k/token-values)",
+      "line": 1850,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".mini-lessons a\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"3003ab9ee6c7ea917c96b9b9676b56478da962955e25e244c3a4a7457fa82890\"} (k8k/token-values)",
+      "line": 1855,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".calendar-note\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"0356e7a4e22e957238c7b6b2653c9b3e631a728a94ac8d4844592e5578115dcc\"} (k8k/token-values)",
+      "line": 1864,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".payment-totals strong\"],\"property\":\"font-size\",\"value\":\"20px\",\"occurrence\":1,\"sha256\":\"f682ce8dc7a265e7e6e3905391270f4ee4bbed1841645feed221cceedc73e71a\"} (k8k/token-values)",
+      "line": 1890,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".currency-tag\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"69867a594d3d3752ef77e3feede972b5493ee20ecb7f398f8b3f029b9068f16d\"} (k8k/token-values)",
+      "line": 1901,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".finance-caption\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"7e62857e8425e17d46167af0e3d85a9240f2c5ef7bbabc0e8f37809703d432e9\"} (k8k/token-values)",
+      "line": 1908,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-bottom .subtle-link\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"0995d2462a35d2a3e6165e6fc35e9d30733c4a4f42392a3801fc025b4f14a47c\"} (k8k/token-values)",
+      "line": 1913,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".subscription-summary-list time\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"4db0891d81a48b8389ba0ef7b801b9614d76c1078a54ad6012ce35b861b76361\"} (k8k/token-values)",
+      "line": 1916,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".quick-action\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"ec139e0a1f70923e09e30b9da78ae76ceea2857785d6b1dee7ef454107cf8e25\"} (k8k/token-values)",
+      "line": 1933,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".portfolio-summary strong\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"8b6eb23c4528f93d7f71762fb301aa7bdd5d6dbf5a7f40000896c70b48c2f30f\"} (k8k/token-values)",
+      "line": 1957,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".portfolio-summary span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"71deb668f388579e247f520f40bd666ccef9209c62e33278ab83fcf63f8a6c76\"} (k8k/token-values)",
+      "line": 1961,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".dashboard-updated\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"0839ef259c8aa95b013ccb1b7db986cadbf0679ccec056027b3e764e07531e4d\"} (k8k/token-values)",
+      "line": 1968,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-form-wrap h1\"],\"property\":\"font-size\",\"value\":\"29px\",\"occurrence\":1,\"sha256\":\"4b9322b7eba40009ca3e4c7866d085f69c0ef83e3710789112be9524ba59215c\"} (k8k/token-values)",
+      "line": 2090,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-description\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"6ff5611f0cb18db4d1f6f289ef8a263b14425a2c29cf47c0d1456a1a015fbada\"} (k8k/token-values)",
+      "line": 2094,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-form-wrap label\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"89b8a2c4237a92c1e01fada6972e1b629798f08d076044cca60a10e391ee49e8\"} (k8k/token-values)",
+      "line": 2103,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-form-wrap input\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"26b492778aa9e421638a7c5df0e6f88a9ec82860638f89357d0888eacbbd8525\"} (k8k/token-values)",
+      "line": 2110,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 1499px) and (min-width: 1024px)\",\".metric-label\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"81ec7c69da357d57aa6bfe7026021d91991351d3966122a3e208ff1f016bb08f\"} (k8k/token-values)",
+      "line": 2173,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 1499px) and (min-width: 1024px)\",\".metric-card strong\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"191075f6c7a2d222d0eeed323ed04671c3dce75559177a3672223b7126d1e324\"} (k8k/token-values)",
+      "line": 2176,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 1499px) and (min-width: 1024px)\",\".metric-card small\"],\"property\":\"font-size\",\"value\":\"8px\",\"occurrence\":1,\"sha256\":\"f6ff5b9a600bba1a48612e71372e1f2301cf7fa1505b6b207a289fe54f648f62\"} (k8k/token-values)",
+      "line": 2179,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (min-width: 640px) and (max-width: 1023px)\",\".menu-toggle\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"e9609f4469b68f93a3ccc94735e406f65c26a845dd7ebab95678de0a50d0408f\"} (k8k/token-values)",
+      "line": 2224,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (min-width: 640px) and (max-width: 1023px)\",\".metric-label\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"98056cbcf93f46b7b6b31f986aa10590db495d3f9d1df2d56b3faa4ce6ca7d03\"} (k8k/token-values)",
+      "line": 2280,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (min-width: 640px) and (max-width: 1023px)\",\".metric-card strong\"],\"property\":\"font-size\",\"value\":\"25px\",\"occurrence\":1,\"sha256\":\"a4e0c49e6535f0c976b4b9a5579099d642c78095086a2abf262d61ff781a5c04\"} (k8k/token-values)",
+      "line": 2284,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\":root\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"9a2300bdd9b9f4efb5c58059bcf7800a59cf00f1404be3bf5c09678c54b239c4\"} (k8k/token-values)",
+      "line": 2330,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".sidebar nav a\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":2,\"sha256\":\"e0f2f2931aadd78727af4eda1f397e8d1e4f7a513af12cd9aeb6182c955c23e1\"} (k8k/token-values)",
+      "line": 2366,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".global-search input\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"bf4de7cd2505c41fd9e34bc388c06607b2fc05b1539b4ea471c40f3a893dc952\"} (k8k/token-values)",
+      "line": 2395,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\"h1\"],\"property\":\"font-size\",\"value\":\"24px\",\"occurrence\":1,\"sha256\":\"efa5bd85ecdf5058e9c6e524a4515f232a6e70e603acdcf380c097ea610b2dbb\"} (k8k/token-values)",
+      "line": 2419,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".heading-caption\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"4391db85bf34ef0df6c5088fd3380dfa31a0f5224faafa51826a682960837ebf\"} (k8k/token-values)",
+      "line": 2429,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".dashboard-horizons label\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"ed44f88a377b70a1bfffb6dfbbd3d72c71f3cb7bc7d80009ba869dc6ad7879c9\"} (k8k/token-values)",
+      "line": 2446,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metric-label\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"8aa30b089329bc78e344da3b0e90a90c874c8927054bd7044c885e5ecbe88186\"} (k8k/token-values)",
+      "line": 2468,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metric-card strong\"],\"property\":\"font-size\",\"value\":\"25px\",\"occurrence\":1,\"sha256\":\"de8abde80cddd0ae1d3a2f11053ab1856c6d048f408aec53f1a4dc2c4fb49e5a\"} (k8k/token-values)",
+      "line": 2473,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metric-card small\"],\"property\":\"font-size\",\"value\":\"8px\",\"occurrence\":1,\"sha256\":\"0e6d0cb4dfa68f076cab8e1bb58624b91cbb4d6f1919c954c19cadf52f3b591c\"} (k8k/token-values)",
+      "line": 2477,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".panel h2\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"e45f2f001b2dc4c9c2669ffe55958410c8213a0164be93d57d40e52340755509\"} (k8k/token-values)",
+      "line": 2512,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".task-summary-list .due-time\"],\"property\":\"font-size\",\"value\":\"8px\",\"occurrence\":1,\"sha256\":\"4f88a15319337c1f8b094e84ae5bc73ecc01a19bd3bfc02616007c8ca54f3ab1\"} (k8k/token-values)",
+      "line": 2520,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".workspace-list\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"41108ca50d32f5c5f79c6de7767b2e4e06eef5a7bae409bad71388b9e7ff91ec\"} (k8k/token-values)",
+      "line": 2523,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".lesson-summary-list .avatar\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"0eb095c3f38a66b736dd86ffb31067fc39a15b0b94818fbd1ecbe36399a8227c\"} (k8k/token-values)",
+      "line": 2538,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".row-main > a\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"473f41bf1d7b66f78fa62da33f45f4ec0ec222ac811e39a69dc81bae2f367e6a\"} (k8k/token-values)",
+      "line": 2544,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".row-main > span\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"209b2f27213cdd8fbd5ca3c131378d874f8808a17219bb6fe6335f7318dcab05\"} (k8k/token-values)",
+      "line": 2547,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".quick-action\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"03b85c4c38cb9ae6ad5804d0f6d196e83a94cf99a9a84b2973e293297f4efea8\"} (k8k/token-values)",
+      "line": 2556,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".student-name-cell .record-title\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"97ef7cfbdfb48ebcca13ed12384d231783452bd3a95a268fbf1642a1aeb3f820\"} (k8k/token-values)",
+      "line": 2563,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".table-row\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"bcbd1db39abd8ff72b4cd1f0a15f00ae0e00e6024cabc0b19c3018dda7ef10bc\"} (k8k/token-values)",
+      "line": 2568,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".table-row small\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"970681e351daaaf5c48a3fb497b865275b320ae45a63b2f458d876e33ba8c594\"} (k8k/token-values)",
+      "line": 2571,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".page-foot\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"d02cbe140febee568583694e031bd315aa9f2d2aeefa175e973ba6ffa2540ede\"} (k8k/token-values)",
+      "line": 2575,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".login-form-wrap h1\"],\"property\":\"font-size\",\"value\":\"26px\",\"occurrence\":1,\"sha256\":\"12d6cc1a9f393860be03c5e24030f88ba48ce99b0c016b1d3a9c1a7ef2fb4c0a\"} (k8k/token-values)",
+      "line": 2627,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".dashboard-updated\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"fdca2fe92a81a46930fef83be62609bda9b5a3253db9a89f8211e356bbe092f5\"} (k8k/token-values)",
+      "line": 2639,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".subtle-link\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"0e4297a2560034a9d0c21cc26e62f0ad309d85642ef57f19524687f092a56f7d\"} (k8k/token-values)",
+      "line": 2642,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metric-label\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"5d4c582c2516288171289b790266a0fc669a5f3c4b060a289dd3bd1f80744372\"} (k8k/token-values)",
+      "line": 2679,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".metric-card small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"bf9a9e99fd4968dfd6804b1340d83f3f0e04a3bc007328f2551d47be9cc088a4\"} (k8k/token-values)",
+      "line": 2682,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".row-main > a\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"cd99b100088757a6e67437abce06579cbef88bc518a5f24a0613f80509d87bbc\"} (k8k/token-values)",
+      "line": 2685,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".row-main > span\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"9cd1ed50f02f230ddcaa36cfb1a98430d14ecd69142135295111ecf543a76c4e\"} (k8k/token-values)",
+      "line": 2688,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-time small\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"833bd51a83a1905ec1e45cb6ec4fc53309c8d68da5dc7de00c788377f94bc929\"} (k8k/token-values)",
+      "line": 2691,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metric-label\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"41250b6642462f6cec51ff366b685843849ec8b44db3d730afd9f1d2ed9fb84e\"} (k8k/token-values)",
+      "line": 2713,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".metric-card small\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"fc52e138d453ed11859b12ca4dc4c6dd9a0630c8fa12d21fc2820af2d67e1faf\"} (k8k/token-values)",
+      "line": 2716,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".row-main > a\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"f25fe35d0d64be65402171faf71670a39852f98eb0a72f3c009ebcc10789b3c2\"} (k8k/token-values)",
+      "line": 2719,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 639px)\",\".row-main > span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"a9893056ca33cc074f6e4e2021e1e55aefbee4d3671a228f7fa8ecc310917eba\"} (k8k/token-values)",
+      "line": 2722,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lead-summary strong\"],\"property\":\"font-size\",\"value\":\"1.7rem\",\"occurrence\":1,\"sha256\":\"4bab8fcc1c651e94d34407002c9183d0bfa6624e21b8b99a15998a69d1e9a36d\"} (k8k/token-values)",
+      "line": 2750,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lead-column h2\"],\"property\":\"font-size\",\"value\":\"1rem\",\"occurrence\":1,\"sha256\":\"43efc09933e664c53b37d502767ba21bc526ab29a86ee4ede404d04963fb40b6\"} (k8k/token-values)",
+      "line": 2765,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/manager-web/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".table-wrap table\"],\"property\":\"font-size\",\"value\":\"0.9rem\",\"occurrence\":1,\"sha256\":\"1b9a852d1292b239ff6400c9c53a72b8bebb2fb7b2119002746621ad6481af6d\"} (k8k/token-values)",
+      "line": 2837,
+      "removeInTask": "TASK-058"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h1\"],\"property\":\"font-size\",\"value\":\"32px\",\"occurrence\":1,\"sha256\":\"f4d208644d00a613d41f3a9f18c5ef46886192931ddfeb644f171394af9c029c\"} (k8k/token-values)",
+      "line": 45,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h2\"],\"property\":\"font-size\",\"value\":\"20px\",\"occurrence\":1,\"sha256\":\"3efa3df8e312f131f51a04143b6f907726a58013900ad7d50688903a2cd56dcc\"} (k8k/token-values)",
+      "line": 50,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h3\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"1423caee354ef8889282fbb6caadc1129d5f3e025bc9e10347cc06e24499aaff\"} (k8k/token-values)",
+      "line": 54,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand\"],\"property\":\"font-size\",\"value\":\"34px\",\"occurrence\":1,\"sha256\":\"9d44afee772c9de2bc02d542c7d9b8fdef692f999e2c34bdae9f0bc58d37d87c\"} (k8k/token-values)",
+      "line": 70,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand > span\"],\"property\":\"font-size\",\"value\":\"24px\",\"occurrence\":1,\"sha256\":\"1fb76cbf63296af679332d2d89ba84fa8372775cbfcb672b295dab287f37ef39\"} (k8k/token-values)",
+      "line": 75,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"92c34571352fd7182795cb42165b35f1e349a49ecf59b9065349f4c2c8cb9d60\"} (k8k/token-values)",
+      "line": 80,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-form h2\"],\"property\":\"font-size\",\"value\":\"32px\",\"occurrence\":1,\"sha256\":\"7f31c8b9cfb05dfef406ae3a64a1c836a65e36966a70a761eaee5425b251116f\"} (k8k/token-values)",
+      "line": 142,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login label\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"1fb871b1a461ab3535e8b8ad49466ecf26bd6345dd686b9f02d6bf8693023a5a\"} (k8k/token-values)",
+      "line": 158,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".login-help\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"6b2f826f93db9e0e43915c26236b2061e735db7772ee08d2693b324abb81e0ed\"} (k8k/token-values)",
+      "line": 182,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-label\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"39ba82af02169170069717b55f6b72bcb22294ee85b5d1e2935559e1f4af26d0\"} (k8k/token-values)",
+      "line": 212,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar nav button\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"4380d87f0c418856591ca6f24ac88063d9aaf22345dc8ada10d3c4e426c09bc8\"} (k8k/token-values)",
+      "line": 230,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-note\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"85404711bf6749edc316cefdf1505832744f35023b7e3c9699a901d582fc04b1\"} (k8k/token-values)",
+      "line": 243,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".sidebar-note span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"37e28ec03704ed76ede98bc70daab95600259ef6e73673fa0b5d66d9441419a3\"} (k8k/token-values)",
+      "line": 250,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".logout\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"68609b9234dde3c0bd94ceead00082cc1a48c9ce76c0219ffc08ecb9abe0f54c\"} (k8k/token-values)",
+      "line": 261,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".topbar > span\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"ea8d6ea3a6d1e098ea60c8aac31eab4bb136e032680556207b11b9b9a07dff5e\"} (k8k/token-values)",
+      "line": 277,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".page-heading .muted\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"0eebbcabf57b66cd5a9160b00e13ee5d00cebb9e02c107b68ed2645b2f3525fe\"} (k8k/token-values)",
+      "line": 297,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".stats span,\\n.stats small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"90ab9c25a66e614fdbcd7da908913687e46af2a2ac66d9ce2f62b2c3380f15aa\"} (k8k/token-values)",
+      "line": 328,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".stats strong\"],\"property\":\"font-size\",\"value\":\"43px\",\"occurrence\":1,\"sha256\":\"ea90936f36a416b903dd23712a497943601cc668889bcf6ea0bdc784ea540f2f\"} (k8k/token-values)",
+      "line": 332,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".stats small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"86fedf8a83899a2935f5fc6635937894c26248b2bd797a43e0c68dda73a5aba8\"} (k8k/token-values)",
+      "line": 338,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".section-heading > span\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"d8b1106821266444f56bfccc687e5288b7e578e6e5651e4fd7876c019fd7e607\"} (k8k/token-values)",
+      "line": 355,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-date strong\"],\"property\":\"font-size\",\"value\":\"23px\",\"occurrence\":1,\"sha256\":\"f3ea2d3d29255c328b5edb388ec1c253ba1c4227e1d2c180acd2e9b78e465573\"} (k8k/token-values)",
+      "line": 375,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-date span\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"2f20d0bcd01c6cb9b237a5008a0cb540d9eee145aaaa46e6fe8cfaa605e59006\"} (k8k/token-values)",
+      "line": 379,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson p,\\n.simple-row p\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"3a514050890c35a87c472660169b16dff9ea27cf6ca910e168842aeb1ea431b3\"} (k8k/token-values)",
+      "line": 384,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson time\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"a38ea813b323bc0dcf8fbcc261e6359ac296f8d8a954e08653bd5b9709d5d945\"} (k8k/token-values)",
+      "line": 389,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".badge\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"6255336ecc6a5581a6b7dc0aa065ede731915df2b909224d11db750b3c2448d9\"} (k8k/token-values)",
+      "line": 398,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".pupil-avatar\"],\"property\":\"font-size\",\"value\":\"18px\",\"occurrence\":1,\"sha256\":\"b416fc3af9dc9d835837c776469f31557eab6cd5983375a667748fdbba53f7f6\"} (k8k/token-values)",
+      "line": 419,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".text-button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"a366fdce8c53b5f9c445b256db15d7e5285c178cc6f2fc64be6b9ebf8cc76f92\"} (k8k/token-values)",
+      "line": 436,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".empty\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"45a79aa35fef69f3cbf693ebab73b14a511b9aaf56535c39ec0c2aa5eb5653e5\"} (k8k/token-values)",
+      "line": 440,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".staff-main footer\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"86a6a8a8037998160fff7188a550f647b360de828751e80729ae1818bad5b011\"} (k8k/token-values)",
+      "line": 446,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 1000px)\",\".page-heading h1\"],\"property\":\"font-size\",\"value\":\"27px\",\"occurrence\":1,\"sha256\":\"8186d293ec372bdf97365081b01a440f257c94401f7c69dfab76ba1cc19a0534\"} (k8k/token-values)",
+      "line": 477,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".sidebar .brand\"],\"property\":\"font-size\",\"value\":\"27px\",\"occurrence\":1,\"sha256\":\"efdc717f97dd4c04424a7c73fba56ec01b2051f8d7c9baa83f8471e68433a788\"} (k8k/token-values)",
+      "line": 520,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".sidebar .brand > span\"],\"property\":\"font-size\",\"value\":\"20px\",\"occurrence\":1,\"sha256\":\"412a3d2c80555e63f92acef5d8654900eae5faba73444c6eccfd59b44553ab01\"} (k8k/token-values)",
+      "line": 523,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".sidebar nav button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"0b253da74b2b9d1378bab6cc0b7ec2a2b9e2a41776a73696d25d6e38b510e27b\"} (k8k/token-values)",
+      "line": 538,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".page-heading h1\"],\"property\":\"font-size\",\"value\":\"24px\",\"occurrence\":1,\"sha256\":\"aaf8032d2bdfeba9a56d2ea1997a5247e1419a8f191b45a232fc037d4c71fd71\"} (k8k/token-values)",
+      "line": 560,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".stats span\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"b0d6704e981aacb6a0178e1609bcae10fe687adf04142edec9f8f6f9101b72d1\"} (k8k/token-values)",
+      "line": 573,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".stats strong\"],\"property\":\"font-size\",\"value\":\"32px\",\"occurrence\":1,\"sha256\":\"83602bfddd904f6171fe55f788711e2133fe69cc4074937bba32e6596b9d2e72\"} (k8k/token-values)",
+      "line": 576,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".stats small\"],\"property\":\"font-size\",\"value\":\"9px\",\"occurrence\":1,\"sha256\":\"b4a96e617fdd14fd338651c7756db3776b4b633f99c7209651eeda4c4e4966a7\"} (k8k/token-values)",
+      "line": 579,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/platform/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 720px)\",\".page-heading .refresh\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"1c49ff25fb620a2a2860d77c6fda950949c044e2460de19df7abff2eae1bfe3a\"} (k8k/token-values)",
+      "line": 600,
+      "removeInTask": "TASK-071"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\":root\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"94258e9b4b1dccf8102146c9bee33ca4e4cc2d6127212e1547436fdda5804b17\"} (k8k/token-values)",
+      "line": 11,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"button.quiet\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"4083761f00d47963fcd2809d7b741e9832938fa6d3f7184183035d129c3d8cf6\"} (k8k/token-values)",
+      "line": 77,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h1\"],\"property\":\"font-size\",\"value\":\"28px\",\"occurrence\":1,\"sha256\":\"2257dc46baf4d34119a8a3426e4ca1fc8a741c6e7192588c005d3cb28fcc6480\"} (k8k/token-values)",
+      "line": 92,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h2\"],\"property\":\"font-size\",\"value\":\"17px\",\"occurrence\":1,\"sha256\":\"10327a9d30a7a2fdc377d6f5e1ef95de21e2192766fa5c8d85d973e3f838bd4a\"} (k8k/token-values)",
+      "line": 98,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"h3\"],\"property\":\"font-size\",\"value\":\"15px\",\"occurrence\":1,\"sha256\":\"1423caee354ef8889282fbb6caadc1129d5f3e025bc9e10347cc06e24499aaff\"} (k8k/token-values)",
+      "line": 103,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"a10a17a3e12b034cab8fd8a36e81f38894f4bca613624f125414a30d0dfab734\"} (k8k/token-values)",
+      "line": 106,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".empty\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"45a79aa35fef69f3cbf693ebab73b14a511b9aaf56535c39ec0c2aa5eb5653e5\"} (k8k/token-values)",
+      "line": 168,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand\"],\"property\":\"font-size\",\"value\":\"22px\",\"occurrence\":1,\"sha256\":\"c1bbbffb07a37609ee90e1cf72eb51410c18f263b999aaf9a7e1e435efeedf78\"} (k8k/token-values)",
+      "line": 221,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand small\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"92c34571352fd7182795cb42165b35f1e349a49ecf59b9065349f4c2c8cb9d60\"} (k8k/token-values)",
+      "line": 228,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".brand-icon\"],\"property\":\"font-size\",\"value\":\"42px\",\"occurrence\":1,\"sha256\":\"763be15c8d8197fda6cef5e4ba307548eeae78759221fdefd29850d5d465bfce\"} (k8k/token-values)",
+      "line": 233,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".left-sidebar nav a,\\n.navigation-drawer nav a\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"991e918ab576c14774e717551726a523b8a8f3e91c17207f064c0f56651320cb\"} (k8k/token-values)",
+      "line": 250,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".badge\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"5973167d8a3006580ee279a804f4d341522a1786e659b3178f0155911bb36683\"} (k8k/token-values)",
+      "line": 274,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".manager-shortcut\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"8504ee2b4409ee90f0f48e073b416197ff632380c76582b2538db7e6e0b18cf5\"} (k8k/token-values)",
+      "line": 288,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".topbar > strong\"],\"property\":\"font-size\",\"value\":\"20px\",\"occurrence\":1,\"sha256\":\"8540202f955a9e11ea2c80b8b4a634d90f50cc2313afa7a5778bfb22756e2faf\"} (k8k/token-values)",
+      "line": 307,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".header-date\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"cbcfcee5224d347a3331b8f2cc29c57ca67f68257fccaff99bc5d81d7a9099d7\"} (k8k/token-values)",
+      "line": 311,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".profile-link\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"b563acc44af05d295660bcb5dee38aa867fcf089d0f089823cfe1dcaf20c49c8\"} (k8k/token-values)",
+      "line": 324,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".avatar\"],\"property\":\"font-size\",\"value\":\"18px\",\"occurrence\":1,\"sha256\":\"0bc7104381d8c2ff212c53064a6475018812fb35eb5ee7bc76a71f56a77f15d3\"} (k8k/token-values)",
+      "line": 338,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".section-heading > a\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"89c8e823c27876bd08b420313846e43a23993c86260c013a2d6093595be01980\"} (k8k/token-values)",
+      "line": 399,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".welcome p:last-child\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"83164ba6d843c636e5f434900459daaff2d46e104a68840154c54bffc920e3bd\"} (k8k/token-values)",
+      "line": 427,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".summary h2\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"9bd83ef83e19815c8476f2e365befc71ec01e85233e4283f084ae1ad1baf72cd\"} (k8k/token-values)",
+      "line": 497,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".summary-value\"],\"property\":\"font-size\",\"value\":\"18px\",\"occurrence\":1,\"sha256\":\"3512f0388d13837d80adab8b13f166444ab6b0d22a26f4235ba3589fc9fa9074\"} (k8k/token-values)",
+      "line": 503,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".summary small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"cf2245941acc759ed917c90f72e245b1a0d0ef8613aa99e013c7309bf140c208\"} (k8k/token-values)",
+      "line": 511,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".summary button,\\n.summary .button\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"e39f802e0225647ffdbc33e7ed0f1e2fb49992de9055cf74791cfd5dfce67834\"} (k8k/token-values)",
+      "line": 515,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".homework-preview a\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"01234388e6c42299c9748d4fe5631e54171cbcabf4230bec95fda64075095540\"} (k8k/token-values)",
+      "line": 565,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".balance strong\"],\"property\":\"font-size\",\"value\":\"32px\",\"occurrence\":1,\"sha256\":\"751fc0a6a2c1d3feea31c26a703e4a2e99e6708f5e096834438b36c895bd3ec0\"} (k8k/token-values)",
+      "line": 578,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".balance span\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"83576626b77aa70ce3373e2e3a7c91dba244f28f621b49c90bd1f8b0534b61ce\"} (k8k/token-values)",
+      "line": 582,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".status\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"7afa0b525c205e40f5e0cf500638ce099d497eba4107706971c36439725b49be\"} (k8k/token-values)",
+      "line": 592,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-table-head\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"56300cedec7099d152246cab288c4a78a54a175ca518d60eb2ad5c1c65e5b386\"} (k8k/token-values)",
+      "line": 634,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-row strong\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"d9536f3b70af63d0b70cd455a52af03d5285ff12df6dcdf3bf690000a3cb832f\"} (k8k/token-values)",
+      "line": 654,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-row small\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"a022ed26f33d7c9c852d28e1353212ad44c4fe179d66283134b9599d75d895ad\"} (k8k/token-values)",
+      "line": 658,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".lesson-actions .button,\\n.lesson-actions button\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"f4602cd901db6d61d7dd6ded1b9072817192e9752b249c86f52b2175ca9e05d8\"} (k8k/token-values)",
+      "line": 672,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".tabs button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"57437f2d7b6fb9f1decaca3051290abe1b76d7075209a7656355d2b0afd4dbb6\"} (k8k/token-values)",
+      "line": 702,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".filter,\\n.month-picker\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"b2063754ed72010c843fab663d986fb26e28bc43887a658ae3b35f6ec1d6b17a\"} (k8k/token-values)",
+      "line": 711,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".pager\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"31d67d4bc2f715d3bb121d509c573f0b3d40fc706bc8cd3c47d42ffba80dfe48\"} (k8k/token-values)",
+      "line": 719,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".homework-list p\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"7cbe98d330a5ac60d6d3979e68c415dd36a654852afdff09ed01496e15dab18b\"} (k8k/token-values)",
+      "line": 770,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".notification-list p\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"f991d937f28d3bb9a80aac8963f80246bb6f42355b0ecbd6fc0fbf30653b3407\"} (k8k/token-values)",
+      "line": 777,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".goals > li > span\"],\"property\":\"font-size\",\"value\":\"20px\",\"occurrence\":1,\"sha256\":\"9a5b1e4d9509115c9b341f7c7473d150ad67ae9d929e7d89a8bf060e0529e06b\"} (k8k/token-values)",
+      "line": 817,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".calendar-heading\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"f6d9b4d1c689b9d43ba7085b57b9dbd1b7ca7e5947e13322d1a1d87e43b9fd62\"} (k8k/token-values)",
+      "line": 851,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".mini-calendar\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"1adcfaa4438f7827717c8463aa5b1a68350f459a6c4b1297d6d26816b56f57d0\"} (k8k/token-values)",
+      "line": 863,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".mini-calendar button\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"2a366528e1095a4e50ba46fb875bf624e98ecff811d52595faa7e2a389a01efb\"} (k8k/token-values)",
+      "line": 875,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".calendar-lesson\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"4a77555e08dfbde02bb2a2c2219ad65afeac9d48c1dbd7e47739fd9bc5533a5c\"} (k8k/token-values)",
+      "line": 899,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".calendar-lesson span\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"206ce03ad7f05c67674e19def055b56b438fe05a5730b1b57ec9dc15f1527528\"} (k8k/token-values)",
+      "line": 903,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".material-preview\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"fb4edab961f8042ea92c9d54b80ea1b4df920520be97d6a8dcb4c4dc3a935825\"} (k8k/token-values)",
+      "line": 909,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".material-preview small\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"6a5612bd51cddfb32d8e5f41597c3329d9f289fd5b95f37c7d131a1e82d3121a\"} (k8k/token-values)",
+      "line": 918,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\".manager-contacts .button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"8674edf2451fc14ffcef9a8fd7acb031f19a8f82982980ed0af23574b7eb59fb\"} (k8k/token-values)",
+      "line": 927,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (min-width: 1024px) and (max-width: 1399px)\",\".summary-value\"],\"property\":\"font-size\",\"value\":\"17px\",\"occurrence\":1,\"sha256\":\"9fed324720ab6df8480558c1901b5a4169a796a0fa0b6535116da1cb1e5ce771\"} (k8k/token-values)",
+      "line": 996,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\":root\"],\"property\":\"font-size\",\"value\":\"14px\",\"occurrence\":1,\"sha256\":\"12f8b26b7609dbd20b49af497c727ad93242adac6f702e2fe38e48dbe705d700\"} (k8k/token-values)",
+      "line": 1050,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".topbar > strong\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"f7a4cc868cc060d0aa781cbeab25d7f5d5d89dd24134ee63e002c13449d66a74\"} (k8k/token-values)",
+      "line": 1069,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".avatar\"],\"property\":\"font-size\",\"value\":\"16px\",\"occurrence\":1,\"sha256\":\"47e6a431d35b8d2dbe498a4076e74f37bcb86c5ad8407f0aaa42164874b53c3a\"} (k8k/token-values)",
+      "line": 1081,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\"h1\"],\"property\":\"font-size\",\"value\":\"25px\",\"occurrence\":1,\"sha256\":\"4c7a67b303477afd17ce9a3ae667177aff215631d06ef3f9420d875a52abbaa8\"} (k8k/token-values)",
+      "line": 1084,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".welcome h1\"],\"property\":\"font-size\",\"value\":\"25px\",\"occurrence\":1,\"sha256\":\"b34d7281b680a23828d3365dbf300b4bc3952a1e8f7413dc7db830f42896fbfc\"} (k8k/token-values)",
+      "line": 1098,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".summary-value\"],\"property\":\"font-size\",\"value\":\"17px\",\"occurrence\":1,\"sha256\":\"fc1312744681260a0b0ad23eb4ea61169fae17bad8e2664f8c62fb165cc8ef87\"} (k8k/token-values)",
+      "line": 1123,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".summary small\"],\"property\":\"font-size\",\"value\":\"11px\",\"occurrence\":1,\"sha256\":\"11f9a9faf2f7a5a557577c6c1f35f0da996a1e379ed41e9ef9ce122f6e4cbd5d\"} (k8k/token-values)",
+      "line": 1126,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".summary h2\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"a8bab1c69ee8fcce23e24efe366b1d5f6437da4eb20b16bf1fabf49d57cb48a4\"} (k8k/token-values)",
+      "line": 1129,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".lesson-row strong\"],\"property\":\"font-size\",\"value\":\"13px\",\"occurrence\":1,\"sha256\":\"f7eb084422da46592ecb57df8894e7d90c9285b868f0b29cc48c9319f88834ea\"} (k8k/token-values)",
+      "line": 1148,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".bottom-nav > a,\\n  .bottom-nav > button\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"9fa657b678fc9b820209c8dbf9882ff15bef8f8da1d052c062ec9cbc198a6a2e\"} (k8k/token-values)",
+      "line": 1202,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".pager\"],\"property\":\"font-size\",\"value\":\"10px\",\"occurrence\":1,\"sha256\":\"ad82c6e225518795b4ece127d42fb2487e52dada50f26f2041b1041ddc3d1a48\"} (k8k/token-values)",
+      "line": 1229,
+      "removeInTask": "TASK-035"
+    },
+    {
+      "file": "apps/student-cabinet/src/style.css",
+      "rule": "k8k/token-values",
+      "text": "raw-font-size: {\"context\":[\"@media (max-width: 767px)\",\".pager button\"],\"property\":\"font-size\",\"value\":\"12px\",\"occurrence\":1,\"sha256\":\"bd5f16c1faf94f54e9c114cae94246d293bfd61b9076ec28d2802d6b9e40d53b\"} (k8k/token-values)",
+      "line": 1232,
+      "removeInTask": "TASK-035"
+    }
+  ]
+}

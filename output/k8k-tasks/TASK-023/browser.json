@@ -1,0 +1,943 @@
+{
+  "browser": "156.0.8078.4",
+  "cases": [
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ru",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ru",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ru",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ru",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ro",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ro",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ro",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "STUDENT",
+      "path": "/student",
+      "locale": "ro",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/student/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming",
+        "/api/v1/student/homework",
+        "/api/v1/student/skills",
+        "/api/v1/student/skills/snapshots",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/notifications/count",
+        "/api/v1/student/dashboard",
+        "/api/v1/student/lessons/upcoming"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ru",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ru",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ru",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ru",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ro",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ro",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ro",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TEACHER",
+      "path": "/teacher",
+      "locale": "ro",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ru",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/tasks"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ru",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ru",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ru",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ro",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/tasks"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ro",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ro",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "MANAGER",
+      "path": "/manager",
+      "locale": "ro",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/manager/me",
+        "/api/v1/platform/accounts",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard",
+        "/api/v1/manager/dashboard"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ru",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ru",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ru",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ru",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ro",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ro",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ro",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "DIRECTOR",
+      "path": "/director",
+      "locale": "ro",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/platform/workspace",
+        "/api/v1/platform/workspace"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ru",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ru",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ru",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ru",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ro",
+      "width": 360,
+      "reflowWidth": 320,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ro",
+      "width": 768,
+      "reflowWidth": 384,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ro",
+      "width": 1024,
+      "reflowWidth": 512,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "path": "/operator",
+      "locale": "ro",
+      "width": 1280,
+      "reflowWidth": 640,
+      "safeAreaBottom": 24,
+      "reads": [
+        "/api/v1/auth/session",
+        "/api/v1/platform/accounts",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components",
+        "/api/v1/auth/session",
+        "/api/v1/qa/components"
+      ]
+    },
+    {
+      "role": "SHARED",
+      "path": "/",
+      "locale": "ru",
+      "width": 360,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ru",
+      "width": 768,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ru",
+      "width": 1024,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ru",
+      "width": 1280,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/",
+      "locale": "ro",
+      "width": 360,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ro",
+      "width": 768,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ro",
+      "width": 1024,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    },
+    {
+      "role": "SHARED",
+      "path": "/account",
+      "locale": "ro",
+      "width": 1280,
+      "keyboardGeometry": 320,
+      "remainingHeight": 480
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "student-ru-360.png",
+      "sha256": "a1109f88b4690abb19e77436a9a9bcb14464013734f7ce0dac1ac9e4926291fc"
+    },
+    {
+      "name": "student-ru-320-reflow.png",
+      "sha256": "2f2c5cf097661e0a25d29d98f0e81c239e27558eb2d0b5f92b2f1f6827a9992e"
+    },
+    {
+      "name": "student-ru-768.png",
+      "sha256": "09b507b6e2eac5b13a30634733e0dd30f9e93ed623f1f07a7465746e3d98e7f2"
+    },
+    {
+      "name": "student-ru-1024.png",
+      "sha256": "029d31695506f5ca8d56e030085d7c5b86f9246570a4dedc65d09bfbccc05be1"
+    },
+    {
+      "name": "student-ru-1280.png",
+      "sha256": "903d0a46ba72fde90ab0c3f79c0ff62e4e77777c1f1711583d9126f42cc9696c"
+    },
+    {
+      "name": "student-ro-360.png",
+      "sha256": "72719585d8c0a6870bb00944a0a8a12ade8981792d4cc066faafaa6f4df5495d"
+    },
+    {
+      "name": "student-ro-320-reflow.png",
+      "sha256": "942222817522c7218980ab01129a166be5bc5476c16cfd31f49682c86d08b013"
+    },
+    {
+      "name": "student-ro-768.png",
+      "sha256": "52737d2708bea1ca2258fb68507ee39e106d4368b36399760e68962348fa910e"
+    },
+    {
+      "name": "student-ro-1024.png",
+      "sha256": "07b7ed8bb3f57fcd86fba33835883bf3e89e718ab1a75ba652e9884d7c948a84"
+    },
+    {
+      "name": "student-ro-1280.png",
+      "sha256": "c59635b915f3d594a506563f9a8c11e27191897a5b4eed2739d15f438cf5eef5"
+    },
+    {
+      "name": "teacher-ru-360.png",
+      "sha256": "f39991fef984b69d239d74c6a7a4da2bcc97710740abdfedecd65d9b3117f6e5"
+    },
+    {
+      "name": "teacher-ru-768.png",
+      "sha256": "cbe6f47f5ad2df0014ea0207d3dbb56cb6c5c68216dc3b539ccb3516dedfb539"
+    },
+    {
+      "name": "teacher-ru-1024.png",
+      "sha256": "cecbb2d38cd38b0d926794645fadd4d11328d8fbae29b9ab4c93ec7b82f52b6f"
+    },
+    {
+      "name": "teacher-ru-1280.png",
+      "sha256": "c437878cf761c77c49b8e797abf356872c1ceb329996ea6c9a5eb834cdf3110d"
+    },
+    {
+      "name": "teacher-ro-360.png",
+      "sha256": "9ac61972de44be14b2a561103a5678f60f29f25bcb9069a4009e1c0d68a28aca"
+    },
+    {
+      "name": "teacher-ro-768.png",
+      "sha256": "89cc90cf0b7bc860daf49d8db3564c8eb04a1fee187e39938e46df7fd7a53b10"
+    },
+    {
+      "name": "teacher-ro-1024.png",
+      "sha256": "92c8248fda371927f83fe6d532808412c61b16a3e3c0fd6b064e65d50b7212df"
+    },
+    {
+      "name": "teacher-ro-1280.png",
+      "sha256": "47e9d2f780c1404b4280383fe32474c12a67ad595c2cbad244cd84ee062ec05e"
+    },
+    {
+      "name": "manager-ru-360.png",
+      "sha256": "499d84c03d75bc32d0dbe84ec6cd5a65a2765fee1f8749c97950cd5c52808513"
+    },
+    {
+      "name": "manager-ru-768.png",
+      "sha256": "d6e1c235752df2fa374bf7b0dc8b75c5359f344908e2a6d45d3859ef209f78c7"
+    },
+    {
+      "name": "manager-ru-1024.png",
+      "sha256": "226377f2c35dbdc28b18027c148aba32c692d726265b8fde70f6c1f4233205c3"
+    },
+    {
+      "name": "manager-ru-1280.png",
+      "sha256": "18a7acc23adc0acdbba3bec6cc59208250d9bc69efc740e170f1041c69cf251f"
+    },
+    {
+      "name": "manager-ro-360.png",
+      "sha256": "add4c4b86af33574b115af8637c2d815ef55de75a18eaa75f1f8c04b1a986595"
+    },
+    {
+      "name": "manager-ro-768.png",
+      "sha256": "4594ced7f464fc42f37a1736f93a75d6dd848bf97a2525b48f5714f1568d2e8a"
+    },
+    {
+      "name": "manager-ro-1024.png",
+      "sha256": "8e84cb122e341b1f4e4ca9522dffe891ff2d68cb29226153d6e87f4062278185"
+    },
+    {
+      "name": "manager-ro-1280.png",
+      "sha256": "2abf3e3dc8b146656541ad3a4a379fddd739bed055c50a8813ece4d66ab36e49"
+    },
+    {
+      "name": "director-ru-360.png",
+      "sha256": "5ff026f809e618d1bb082f12b29b3c6911ab8e3a034fdf1042b603550d7e7be7"
+    },
+    {
+      "name": "director-ru-768.png",
+      "sha256": "2ddb6fd0d51403fca217857b2d20a6f65a81c3f3faad73044b080af77828e217"
+    },
+    {
+      "name": "director-ru-1024.png",
+      "sha256": "3b6917a08b9121f864d4d513e3fa9257c4e8e2f05b3e5d39f4f2135874a584af"
+    },
+    {
+      "name": "director-ru-1280.png",
+      "sha256": "bf1e692073e9a51498c72d78fd014e46dfef1d1ac3c80580e971f40429db5ef3"
+    },
+    {
+      "name": "director-ro-360.png",
+      "sha256": "8d5a00eddfbf879c79d357689aa7d8f47cbf958f8ede243560ec89543584cf17"
+    },
+    {
+      "name": "director-ro-768.png",
+      "sha256": "3957e8a6666451b714b567ed155318b4d91935677bcbfffed0795c3826b1d08a"
+    },
+    {
+      "name": "director-ro-1024.png",
+      "sha256": "b731dad7b5adbae0ca5f2b9840cbfe7060f2e2bd942907031f91159aa6a6cf8b"
+    },
+    {
+      "name": "director-ro-1280.png",
+      "sha256": "96562311258801da5f8aa857eacf0e32ef4786ded8f2ac06d5d71c110f9d0991"
+    },
+    {
+      "name": "tech_operator-ru-360.png",
+      "sha256": "302060a07789d4dfd7e88b1a59ffd5e733238aa90d7f91e273506b4d9f8478b0"
+    },
+    {
+      "name": "tech_operator-ru-768.png",
+      "sha256": "8c93db2574dad0ebd7a871cd1344dcce6ba62b7760ff9a93781e84fbe892d70f"
+    },
+    {
+      "name": "tech_operator-ru-1024.png",
+      "sha256": "055d2bfad776a4587085e2ff051624afd489bee3d1388bcec25b4c028426ed4f"
+    },
+    {
+      "name": "tech_operator-ru-1280.png",
+      "sha256": "5cae03da4e186b5754a35aa1065e340c6ac62aa47ff170118ca9e9cb709360b2"
+    },
+    {
+      "name": "tech_operator-ro-360.png",
+      "sha256": "17ee2a13421a6eb996325aa4f18f4069a57323df29fa8091fe1c20d9c9db5a31"
+    },
+    {
+      "name": "tech_operator-ro-768.png",
+      "sha256": "a75c5de22521ab93b0762a4dea09ebcdd66a79610bbad93c4478e549764821dc"
+    },
+    {
+      "name": "tech_operator-ro-1024.png",
+      "sha256": "b2be39de1cdf0d38880dfec4bfc60020b4bf2f0f018766a8e32d01117a246f4a"
+    },
+    {
+      "name": "tech_operator-ro-1280.png",
+      "sha256": "50ea04dd4a57d382a69b198a3b86c5e5e3522790378355f9a09e4fe1dc99ffe6"
+    },
+    {
+      "name": "login-ru-360.png",
+      "sha256": "592170c4e78f744fcef89bf6931936b8420ec70d67962b1184bae320ed9b5901"
+    },
+    {
+      "name": "login-ru-768.png",
+      "sha256": "ccfbca56df25c3e5a95f334bb51df5fcf6398cffd299a057d14cc3dc21cf3591"
+    },
+    {
+      "name": "login-ru-1024.png",
+      "sha256": "bace081b706b4cac4c8541b58c40fca7bd35a0a664a57a21339f3173c8b7fc6f"
+    },
+    {
+      "name": "login-ru-1280.png",
+      "sha256": "65f045ecc10d5fd4a091a7e30a7aaa4c4aa8a980c430e203d0ca9b6bcfcda357"
+    },
+    {
+      "name": "login-ro-360.png",
+      "sha256": "56fd2d4074d5b7d4283040f5c1c36fd5f8f6f83f191c3d21cb3a12a0ce76cb0a"
+    },
+    {
+      "name": "login-ro-768.png",
+      "sha256": "f141fc0d246e26b8ba94049b09531629f0b0a5fd1cd28466f1ee5109731d8b8e"
+    },
+    {
+      "name": "login-ro-1024.png",
+      "sha256": "69edec14c4f339c83a20d8628203cf979fc2e58601542adcec6c142ecd5f782f"
+    },
+    {
+      "name": "login-ro-1280.png",
+      "sha256": "36f3c2bfd5d47347d07392b1b24fc0faceca7a76050fc8ebce1c8fac2d87ecf5"
+    }
+  ],
+  "failures": [],
+  "unexpected": []
+}

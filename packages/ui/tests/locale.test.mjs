@@ -23,7 +23,7 @@ test('typed catalog lookup keeps names literal and handles unknown input safely'
   );
   assert.equal(translate('ro', 'missing.key'), 'missing.key');
   assert.equal(translate('ro', 'constructor'), 'constructor');
-  assert.equal(translate('en', 'auth.welcome'), 'С возвращением');
+  assert.equal(translate('en', 'auth.welcome'), 'Вход в кабинет');
   assert.equal(isPlainMessageKey('workspace'), true);
   assert.equal(isPlainMessageKey('validation.required'), false);
   assert.equal(isPlainMessageKey('constructor'), false);

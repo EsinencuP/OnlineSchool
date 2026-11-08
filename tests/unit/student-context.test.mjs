@@ -67,7 +67,6 @@ test('student context uses only verified session identity, maps existing Student
       userId,
       displayName: 'Student',
       timeZone: 'Europe/Chisinau',
-      managerContacts: { whatsapp: '', telegram: '' },
       email: 'student@example.invalid',
       avatarUrl: null,
       mustChangePassword: true,
@@ -84,7 +83,8 @@ test('repeated and concurrent guard calls share one profile load inside the same
   ]);
   await guard.canActivate(context(req));
   expect(client.studentAccount.findFirst).toHaveBeenCalledTimes(1);
-  expect(client.$queryRaw).toHaveBeenCalledTimes(2);
+  // The first-password bootstrap does not read assigned manager contacts.
+  expect(client.$queryRaw).toHaveBeenCalledTimes(1);
 });
 test('context cache does not survive into a different HTTP request', async () => {
   await guard.canActivate(context(req));

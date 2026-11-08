@@ -110,7 +110,7 @@ test('history preserves actual MDL and only serializes known DTO money as string
     confirmedAt: '2026-10-27T12:00:00.000Z',
   });
 });
-test('ledger quantities remain Decimal strings; dates are date-only', async () => {
+test.each(['10', null])('ledger preserves %s before balance and date-only', async (before) => {
   db.$queryRaw.mockResolvedValue([
     {
       forbidden: false,
@@ -120,7 +120,7 @@ test('ledger quantities remain Decimal strings; dates are date-only', async () =
             entryId: id,
             entryDate: '2026-10-27T12:00:00Z',
             type: 'DEDUCTION',
-            balanceBefore: '10',
+            balanceBefore: before,
             balanceAfter: '9',
             description: 'Lesson',
             lessonId: id,
@@ -132,7 +132,7 @@ test('ledger quantities remain Decimal strings; dates are date-only', async () =
   ]);
   const result = await service.ledger(student, { page: 1, pageSize: 20 });
   expect(result.items[0]).toMatchObject({
-    balanceBefore: '10',
+    balanceBefore: before,
     balanceAfter: '9',
     entryDate: '2026-10-27',
   });
@@ -162,6 +162,8 @@ test('ledger replays all facts before pagination, keeps stored deduction snapsho
   const q = subscriptionLedgerSql(student.studentProfileId, { page: 2, pageSize: 20 }, new Date());
   expect(q.sql).toContain('ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW');
   expect(q.sql).toContain('coalesce(stored_before,after-delta)');
+  expect(q.sql).toContain('priority=1 AND stored_before IS NULL THEN NULL');
+  expect(q.sql).toContain('priority=1 AND stored_after IS NULL THEN NULL');
   expect(q.sql).toContain('subscription_freeze_history');
   expect(q.sql).toContain('CONSUMPTION_CANCELLATION');
   expect(q.values.filter((v) => typeof v === 'number')).toEqual([20, 20]);

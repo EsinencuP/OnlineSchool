@@ -25,7 +25,7 @@ import { LessonsQueryPipe } from './lessons/lesson-period.js';
 import { StudentHistoryController } from './history/history.controller.js';
 import { StudentHistoryService } from './history/history.service.js';
 import { StudentDisputeService } from './history/dispute.service.js';
-import { HistoryQueryPipe } from './history/history.dto.js';
+import { HistoryQueryPipe, LessonHistoryQueryPipe } from './history/history.dto.js';
 import { StorageModule } from '../modules/storage/storage.module.js';
 import { StudentHomeworkController } from './homework/homework.controller.js';
 import { StudentHomeworkService } from './homework/homework.service.js';
@@ -36,12 +36,18 @@ import { StudentMaterialsService } from './materials/materials.service.js';
 import { MaterialsQueryPipe } from './materials/materials.dto.js';
 import { StudentSubscriptionController } from './subscription/subscription.controller.js';
 import { StudentSubscriptionService } from './subscription/subscription.service.js';
+import { StudentSubjectsController } from './subjects/subjects.controller.js';
+import { StudentSubjectsService } from './subjects/subjects.service.js';
 import { StudentSkillsController } from './skills/skills.controller.js';
 import { StudentSkillsService } from './skills/skills.service.js';
 import { StudentReportsController, ReportReadResponseGuard } from './reports/reports.controller.js';
 import { StudentReportsService } from './reports/reports.service.js';
 import { ReportsQueryPipe } from './reports/reports.dto.js';
-import { SkillMapQueryPipe, SkillAuditQueryPipe } from './skills/skills.dto.js';
+import {
+  SkillMapQueryPipe,
+  SkillAuditQueryPipe,
+  SkillSnapshotQueryPipe,
+} from './skills/skills.dto.js';
 import {
   StudentNotificationsController,
   NotificationReadResponseGuard,
@@ -87,6 +93,7 @@ export class StudentCsrfGuard implements CanActivate {
     StudentReportsController,
     StudentSkillsController,
     StudentSubscriptionController,
+    StudentSubjectsController,
     StudentMaterialsController,
     StudentHomeworkController,
     MeController,
@@ -111,7 +118,9 @@ export class StudentCsrfGuard implements CanActivate {
     StudentSkillsService,
     SkillMapQueryPipe,
     SkillAuditQueryPipe,
+    SkillSnapshotQueryPipe,
     StudentSubscriptionService,
+    StudentSubjectsService,
     SubscriptionQueryPipe,
     SubscriptionHistoryQueryPipe,
     StudentMaterialsService,
@@ -122,6 +131,7 @@ export class StudentCsrfGuard implements CanActivate {
     StudentHistoryService,
     StudentDisputeService,
     HistoryQueryPipe,
+    LessonHistoryQueryPipe,
     StudentLessonsService,
     StudentCrmTaskService,
     StudentLessonScopeGuard,

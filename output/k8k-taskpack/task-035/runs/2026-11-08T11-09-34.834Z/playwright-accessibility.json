@@ -1,0 +1,893 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.student-gate-axe.config.mjs"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.student-gate-axe.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "studentGate": true,
+      "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/",
+      "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/evidence/TASK-025/",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/test-results-accessibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "student-state-accessibility",
+        "name": "student-state-accessibility",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "student-gate-extra.acceptance.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-09-34.834Z\\test-results-accessibility",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "student-state-accessibility",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "student-gate-extra.acceptance.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "student-state-accessibility"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-09-34.834Z\\playwright-accessibility.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet\\",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": false,
+      "env": {
+        "STUDENT_FIXTURE_DIST": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\build\\student"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "student-gate-extra.acceptance.mjs",
+      "file": "student-gate-extra.acceptance.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-035 composed-state accessibility ru loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:39.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-41063afe504c1f0830c6",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 714,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:40.550Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-85cc73fc75bc6f9e0196",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:41.273Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-27a7c0e25560c5e0fcea",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 695,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:42.044Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-25c2112d78effcfb1ae0",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:42.750Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-fefd17081d1ddbccc553",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:43.527Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-121b5b7a7f05eab391d5",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru subscription-limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 829,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:44.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-4474bafb1dc2c52046a1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 685,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:45.042Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-2d0f6ee8f311bdc32b01",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 909,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:45.735Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-0f79b3e3f8fea32bfd76",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ru unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:46.657Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-c4ab5b98b7e5a29e5f56",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:47.522Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-80cb057e3df4e830651e",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:48.170Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-0e6388b461e795cb48ba",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro ready",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:48.824Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-3cf7bcc3ce0dbe189089",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 696,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:49.597Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-3a50e7ffbe3948128dd1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 781,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:50.301Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-39d6a4c12e14a022e8b6",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 659,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:51.090Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-f92b2e0cb7b7dba43e10",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro subscription-limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 747,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:51.758Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-46a51a1a2ed7f04e41f8",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 698,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:52.512Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-99498b1a1aec96124c05",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 859,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:53.219Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-ce96181f53600f59bcf1",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 composed-state accessibility ro unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:54.087Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-4461ae5849f88da4ad4b",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 23,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 actual third-page report link ru",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 371,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:54.922Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-f612dbdbb2061ae4cc5f",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 54,
+          "column": 34
+        },
+        {
+          "title": "TASK-035 actual third-page report link ro",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-state-accessibility",
+              "projectName": "student-state-accessibility",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 383,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T11:09:55.303Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4b73b2aff9ce8ffa131a-eb92827be2fbb27ea4d9",
+          "file": "student-gate-extra.acceptance.mjs",
+          "line": 54,
+          "column": 34
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T11:09:39.013Z",
+    "duration": 16872.8,
+    "expected": 22,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

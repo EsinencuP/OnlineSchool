@@ -47,7 +47,6 @@ export default function Lead() {
           <>
             <div className="page-heading">
               <div>
-                <p className="eyebrow">{ru.leadCard}</p>
                 <h1>{lead.contactName}</h1>
               </div>
               <Badge value={lead.stage} />

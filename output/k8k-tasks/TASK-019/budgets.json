@@ -1,0 +1,4251 @@
+{
+  "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+  "provenance": {
+    "configFile": false,
+    "envDir": false,
+    "publicDir": false,
+    "write": false,
+    "node": "v24.21.0",
+    "sourceAlias": [
+      {
+        "find": "@online-school/ui/style.css",
+        "replacement": "D:\\OnlineSchool\\packages\\ui\\src\\style.css"
+      },
+      {
+        "find": "@online-school/account-ui/style.css",
+        "replacement": "D:\\OnlineSchool\\packages\\account-ui\\src\\style.css"
+      },
+      {
+        "find": "@online-school/ui",
+        "replacement": "D:\\OnlineSchool\\packages\\ui\\src\\index.ts"
+      },
+      {
+        "find": "@online-school/account-ui",
+        "replacement": "D:\\OnlineSchool\\packages\\account-ui\\src\\index.tsx"
+      },
+      {
+        "find": "@online-school/api-contracts",
+        "replacement": "D:\\OnlineSchool\\packages\\api-contracts\\src\\index.ts"
+      },
+      {
+        "find": "@online-school/shared",
+        "replacement": "D:\\OnlineSchool\\packages\\shared\\src\\index.ts"
+      }
+    ],
+    "previous": "TASK-012/bundle.json",
+    "explicitOverviewSeed": true
+  },
+  "rows": [
+    {
+      "role": "STUDENT",
+      "route": "/student/login",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/suspended",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/security/change-password",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/lessons",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/lessons/:id",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/homework",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/homework/:id",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/skills",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/reports",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/materials",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/subscription",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/notifications",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/profile",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "/student/security",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "SHARED",
+      "route": "(private cabinet account menu)",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "STUDENT",
+      "route": "(student route errorElement)",
+      "app": "student-cabinet",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-B1Wx-FeT.js",
+          "sha256": "3ff7986590358ebd482861f0f1b897e71afa36971b539c935b8d7b705964185d",
+          "raw": 475254,
+          "gzip": 148079,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DgLwqOx-.css",
+          "sha256": "47a93c877df5e2ceb5334f112665ef74a1aee187221205a42f85e8496164c26b",
+          "raw": 57515,
+          "gzip": 11045,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 159124,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 222616,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 14272
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/login",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Login.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Login-CDMhIiLo.js",
+          "sha256": "29b0e0b86c20f316ab235362296c3145c155ad03a5c9b556da29023d8b13dc98",
+          "raw": 3563,
+          "gzip": 1321,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Login.tsx"
+      ],
+      "deferredDynamicImports": [
+        "../../node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/index.js",
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 129566,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 193058,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [
+        {
+          "seed": "../../node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/index.js",
+          "status": "available",
+          "files": [
+            {
+              "file": "assets/Login-CDMhIiLo.js",
+              "sha256": "29b0e0b86c20f316ab235362296c3145c155ad03a5c9b556da29023d8b13dc98",
+              "raw": 3563,
+              "gzip": 1321,
+              "kind": "js"
+            },
+            {
+              "file": "assets/icon-CqY0clL2.js",
+              "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+              "raw": 1496,
+              "gzip": 896,
+              "kind": "js"
+            },
+            {
+              "file": "assets/index-Bc5Cizia.js",
+              "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+              "raw": 148029,
+              "gzip": 47816,
+              "kind": "js"
+            },
+            {
+              "file": "assets/index-BvzrNCpI.js",
+              "sha256": "d71f9af33b70cf34a5a22fe0411808ea288551c64d4da59de409924e461108f0",
+              "raw": 13243,
+              "gzip": 3759,
+              "kind": "js"
+            },
+            {
+              "file": "assets/index-DTXCqeBc.css",
+              "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+              "raw": 68763,
+              "gzip": 14193,
+              "kind": "css"
+            },
+            {
+              "file": "assets/preload-helper-BjPlTtXg.js",
+              "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+              "raw": 1118,
+              "gzip": 654,
+              "kind": "js"
+            },
+            {
+              "file": "assets/session-DCyKFRqP.js",
+              "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+              "raw": 1226,
+              "gzip": 645,
+              "kind": "js"
+            },
+            {
+              "file": "assets/ui-BrhZ36vc.js",
+              "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+              "raw": 199952,
+              "gzip": 60458,
+              "kind": "js"
+            },
+            {
+              "file": "assets/use-command-Bjmr76lg.js",
+              "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+              "raw": 1005,
+              "gzip": 539,
+              "kind": "js"
+            },
+            {
+              "file": "assets/useQuery-CLw4BQpb.js",
+              "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+              "raw": 8276,
+              "gzip": 3044,
+              "kind": "js"
+            }
+          ],
+          "manifestKeys": [
+            "../../node_modules/.pnpm/@simplewebauthn+browser@14.0.0/node_modules/@simplewebauthn/browser/esm/index.js",
+            "_icon-CqY0clL2.js",
+            "_preload-helper-BjPlTtXg.js",
+            "_session-DCyKFRqP.js",
+            "_ui-BrhZ36vc.js",
+            "_use-command-Bjmr76lg.js",
+            "_useQuery-CLw4BQpb.js",
+            "index.html",
+            "src/pages/Login.tsx"
+          ],
+          "deferredDynamicImports": [
+            "src/pages/Account.tsx",
+            "src/pages/Dashboard.tsx",
+            "src/pages/Lead.tsx",
+            "src/pages/Leads.tsx",
+            "src/pages/Schedule.tsx",
+            "src/pages/Student.tsx",
+            "src/pages/Students.tsx",
+            "src/pages/Task.tsx",
+            "src/pages/Tasks.tsx"
+          ],
+          "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+          "gzip": 133325,
+          "font": {
+            "romanian": {
+              "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+              "bytes": 3544,
+              "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+            },
+            "cyrillic": {
+              "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+              "bytes": 22032,
+              "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+            },
+            "latin": {
+              "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+              "bytes": 37916,
+              "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+            },
+            "total": 63492
+          },
+          "total": 196817,
+          "limit": 256000,
+          "pass": true
+        }
+      ],
+      "deltaTask012": 9678
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Dashboard.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Dashboard-DCySGigU.js",
+          "sha256": "340835ba10c5d81cc22dc672ccbc69df69057d25e3db08aab65af369b4639004",
+          "raw": 11149,
+          "gzip": 3176,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Dashboard.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 188545,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 252037,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9485
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/leads",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Leads.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Leads-_7fm7crL.js",
+          "sha256": "e668d44f1ffa9acac4ee90a8a4da1a101753266bd64ec1eb516121c0e596bf96",
+          "raw": 58234,
+          "gzip": 16229,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/lead-form-CAZgd839.js",
+          "sha256": "665605667ac089799d2b98e1a171b9e8f9c1f76efb5ce7814e367578cd1000de",
+          "raw": 2782,
+          "gzip": 1184,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_lead-form-CAZgd839.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Leads.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 190586,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 254078,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9675
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/leads/:id",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Lead.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Lead-DyUudtKe.js",
+          "sha256": "acf823a2f5e5872a4b813eb0b18562ff53db769a23ca3d0a45d189cf8113af66",
+          "raw": 7167,
+          "gzip": 2354,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/lead-form-CAZgd839.js",
+          "sha256": "665605667ac089799d2b98e1a171b9e8f9c1f76efb5ce7814e367578cd1000de",
+          "raw": 2782,
+          "gzip": 1184,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_lead-form-CAZgd839.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Lead.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 176711,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 240203,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9671
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Students.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Students-9Mfw87fx.js",
+          "sha256": "0bd531143a9b3f446973c25699f39fd25f5d98ecee49b382fe9017824840bd16",
+          "raw": 4627,
+          "gzip": 1774,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Students.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 187682,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 251174,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9517
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Payments.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 130439,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 193931,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": -3465
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id/account",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Account.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Account-BoiS9E4o.js",
+          "sha256": "95fde3b37ad2fbcee4506aa17f82c87bac3bbe71a16776aebe115abae29f2a40",
+          "raw": 2652,
+          "gzip": 1132,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Account.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 174113,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 237605,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9670
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/schedule",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Schedule.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Schedule-DSCc9Y_B.js",
+          "sha256": "277df9907457702ec17187e016de11e434599d5e547b7f44de6f2d9d4ede0af4",
+          "raw": 12805,
+          "gzip": 4999,
+          "kind": "js"
+        },
+        {
+          "file": "assets/business-forms-CODy_uTD.js",
+          "sha256": "74ae99168343698a44bda5a9aa44968bbd18c8dc66d856e1a9988f1cd665d178",
+          "raw": 4330,
+          "gzip": 1637,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_business-forms-CODy_uTD.js",
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Schedule.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 179809,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 243301,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": -3322
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/tasks",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Tasks.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Tasks-l1w3LS6H.js",
+          "sha256": "d2ed73c7d35ff19fb684cefc72a057ed09d10df6e39d4894800bbad9cfafffb0",
+          "raw": 2226,
+          "gzip": 1050,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Tasks.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 173492,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 236984,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9642
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/tasks/:id",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Task.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Task-J3zKDpDR.js",
+          "sha256": "e0cef77e800e72efeb2be73253402ce0e1c95fd174e01f82752db1184459c65d",
+          "raw": 4749,
+          "gzip": 1818,
+          "kind": "js"
+        },
+        {
+          "file": "assets/business-forms-CODy_uTD.js",
+          "sha256": "74ae99168343698a44bda5a9aa44968bbd18c8dc66d856e1a9988f1cd665d178",
+          "raw": 4330,
+          "gzip": 1637,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_business-forms-CODy_uTD.js",
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Task.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 189555,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 253047,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9646
+    },
+    {
+      "role": "MANAGER",
+      "route": "*",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_ui-BrhZ36vc.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 127706,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 191198,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9639
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=overview",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/BalanceSummary.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/BalanceSummary-C_48w0p4.js",
+          "sha256": "d4d23319374c1c32d70f1283137aa82d5e2a09f6b89874fbdd511978d5cdbf79",
+          "raw": 468,
+          "gzip": 294,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/BalanceSummary.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Payments.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 143660,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 207152,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9756
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=subscriptions",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Subscriptions-D3Mv0UWT.js",
+          "sha256": "3eb2a7af26a3025e51a9fce50042259e9b587c2e1033b194932753870d19d83b",
+          "raw": 4458,
+          "gzip": 1634,
+          "kind": "js"
+        },
+        {
+          "file": "assets/business-forms-CODy_uTD.js",
+          "sha256": "74ae99168343698a44bda5a9aa44968bbd18c8dc66d856e1a9988f1cd665d178",
+          "raw": 4330,
+          "gzip": 1637,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_business-forms-CODy_uTD.js",
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Payments.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 191373,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 254865,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9602
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=payments",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Payments.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Payments-dxPxgWBg.js",
+          "sha256": "cba17844f0dbfeb0cbee208e21bf85579c860f2de3dc4ebec185e9e5eb35cb1f",
+          "raw": 6265,
+          "gzip": 2113,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/business-forms-CODy_uTD.js",
+          "sha256": "74ae99168343698a44bda5a9aa44968bbd18c8dc66d856e1a9988f1cd665d178",
+          "raw": 4330,
+          "gzip": 1637,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/money-BjtXZ2bz.js",
+          "sha256": "c62ee651f9e0563596bd5bf8325daa61bd708cd41880fb7d6efa26553366c678",
+          "raw": 32169,
+          "gzip": 12927,
+          "kind": "js"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_business-forms-CODy_uTD.js",
+        "_icon-CqY0clL2.js",
+        "_money-BjtXZ2bz.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Payments.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 191852,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255344,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 9606
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=schedule",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/Schedule.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Schedule-DSCc9Y_B.js",
+          "sha256": "277df9907457702ec17187e016de11e434599d5e547b7f44de6f2d9d4ede0af4",
+          "raw": 12805,
+          "gzip": 4999,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/business-forms-CODy_uTD.js",
+          "sha256": "74ae99168343698a44bda5a9aa44968bbd18c8dc66d856e1a9988f1cd665d178",
+          "raw": 4330,
+          "gzip": 1637,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_business-forms-CODy_uTD.js",
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Schedule.tsx",
+        "src/pages/Student.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Payments.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 181811,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 245303,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": -3366
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=tasks",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Tasks-l1w3LS6H.js",
+          "sha256": "d2ed73c7d35ff19fb684cefc72a057ed09d10df6e39d4894800bbad9cfafffb0",
+          "raw": 2226,
+          "gzip": 1050,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/Tasks.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Notifications.tsx",
+        "src/pages/student/Payments.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 176225,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 239717,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": -3462
+    },
+    {
+      "role": "MANAGER",
+      "route": "/manager/students/:id?tab=notifications",
+      "app": "manager-web",
+      "manifestSeeds": [
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Notifications.tsx"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/Notifications-D5Mif1fi.js",
+          "sha256": "55dd8e6ed58eee8160ab87a3bd334e66539c471e5e138ebfd6d3873fa40fa0d6",
+          "raw": 2876,
+          "gzip": 1233,
+          "kind": "js"
+        },
+        {
+          "file": "assets/Student-Cl_mo6bm.js",
+          "sha256": "8e6c18f947f298bbbde5e48ef25dd5fac1c0da5f343e0f373a12a65a133692fb",
+          "raw": 5553,
+          "gzip": 2002,
+          "kind": "js"
+        },
+        {
+          "file": "assets/icon-CqY0clL2.js",
+          "sha256": "151fc43159f83c41dda7531b2cc09ce710e89185c99b7e17471b2c671e08650c",
+          "raw": 1496,
+          "gzip": 896,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-Bc5Cizia.js",
+          "sha256": "cac798dc13bb599cd2e49d93b5fa9763ed8a899b9dadd657bbca54c216a310cb",
+          "raw": 148029,
+          "gzip": 47816,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-DTXCqeBc.css",
+          "sha256": "2166d8a9bf6c16d1d90a205d2b04ffc61d8f0dc04fd1a7fe47743baf43cfbce6",
+          "raw": 68763,
+          "gzip": 14193,
+          "kind": "css"
+        },
+        {
+          "file": "assets/preload-helper-BjPlTtXg.js",
+          "sha256": "3145ac5ec0079854acfcf0556e6625c22e8d56a02100ceb9ffce18c8dd0fa1d8",
+          "raw": 1118,
+          "gzip": 654,
+          "kind": "js"
+        },
+        {
+          "file": "assets/session-DCyKFRqP.js",
+          "sha256": "bb892809bfe7cc63c70b725108cd7f6e8e6dbd9d55331322060d678ef20ba847",
+          "raw": 1226,
+          "gzip": 645,
+          "kind": "js"
+        },
+        {
+          "file": "assets/time-BKnTqktT.js",
+          "sha256": "60a43d7ac89b24a452901519fe5076dc28c4d17c2d6e074b43a05be88c6ed5fa",
+          "raw": 154934,
+          "gzip": 44736,
+          "kind": "js"
+        },
+        {
+          "file": "assets/ui-BrhZ36vc.js",
+          "sha256": "ff9996e2c9ac56626b2eb73375298ca94699f932062a505ebc7bc11161869041",
+          "raw": 199952,
+          "gzip": 60458,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-command-Bjmr76lg.js",
+          "sha256": "d4fd5a09c4c871241a95121d1c5768e711e27da03d5b1f530c9198b1ca65f014",
+          "raw": 1005,
+          "gzip": 539,
+          "kind": "js"
+        },
+        {
+          "file": "assets/use-options-bWOBHEyv.js",
+          "sha256": "f94a54004780e6fd82adb653795526a36da6f7bb1556924fae5a329177c1b9b3",
+          "raw": 217,
+          "gzip": 192,
+          "kind": "js"
+        },
+        {
+          "file": "assets/useQuery-CLw4BQpb.js",
+          "sha256": "f998c1cf1d42d571597e56bdb3535510cb28dcc4e1a5cc68fcc3266122434900",
+          "raw": 8276,
+          "gzip": 3044,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "_icon-CqY0clL2.js",
+        "_preload-helper-BjPlTtXg.js",
+        "_session-DCyKFRqP.js",
+        "_time-BKnTqktT.js",
+        "_ui-BrhZ36vc.js",
+        "_use-command-Bjmr76lg.js",
+        "_use-options-bWOBHEyv.js",
+        "_useQuery-CLw4BQpb.js",
+        "index.html",
+        "src/pages/Student.tsx",
+        "src/pages/student/Notifications.tsx"
+      ],
+      "deferredDynamicImports": [
+        "src/pages/Account.tsx",
+        "src/pages/Dashboard.tsx",
+        "src/pages/Lead.tsx",
+        "src/pages/Leads.tsx",
+        "src/pages/Login.tsx",
+        "src/pages/Schedule.tsx",
+        "src/pages/Students.tsx",
+        "src/pages/Task.tsx",
+        "src/pages/Tasks.tsx",
+        "src/pages/student/BalanceSummary.tsx",
+        "src/pages/student/Payments.tsx",
+        "src/pages/student/Subscriptions.tsx"
+      ],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 176408,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 239900,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": -3456
+    },
+    {
+      "role": "TEACHER",
+      "route": "/teacher",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TEACHER",
+      "route": "/teacher?section=overview",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TEACHER",
+      "route": "/teacher?section=lessons",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TEACHER",
+      "route": "/teacher?section=students",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TEACHER",
+      "route": "/teacher?section=homework",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "DIRECTOR",
+      "route": "/director",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "DIRECTOR",
+      "route": "/director?section=overview",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "DIRECTOR",
+      "route": "/director?section=lessons",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "DIRECTOR",
+      "route": "/director?section=students",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "DIRECTOR",
+      "route": "/director?section=tasks",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "route": "/operator",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "TECH_OPERATOR",
+      "route": "/operator?section=overview",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "SHARED",
+      "route": "/account",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    },
+    {
+      "role": "SHARED",
+      "route": "/",
+      "app": "platform",
+      "manifestSeeds": [
+        "index.html"
+      ],
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-Bv7lKARq.js",
+          "sha256": "b2547427a931bf0509ca7f796f9ed0dde539c8260cb9448802249810a210e617",
+          "raw": 238841,
+          "gzip": 75352,
+          "kind": "js"
+        },
+        {
+          "file": "assets/index-CXUysaU4.css",
+          "sha256": "49345e7d7c3be7dbec6ee8f154d126ad7e5a46585d44d6d809e688d9a27b0301",
+          "raw": 38703,
+          "gzip": 7979,
+          "kind": "css"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 83331,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 146823,
+      "limit": 256000,
+      "pass": true,
+      "optionalActions": [],
+      "deltaTask012": 12994
+    }
+  ],
+  "chunks": [
+    {
+      "app": "student-cabinet",
+      "chunks": 1,
+      "storybookModules": 0
+    },
+    {
+      "app": "manager-web",
+      "chunks": 27,
+      "storybookModules": 0
+    },
+    {
+      "app": "platform",
+      "chunks": 1,
+      "storybookModules": 0
+    }
+  ]
+}

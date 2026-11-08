@@ -1,0 +1,138 @@
+{
+  "task": "TASK-031",
+  "status": "DONE",
+  "scope": "Local implementation and targeted mock/browser acceptance; PostgreSQL execution and full gates deferred",
+  "base": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "8a81d8dca255447507daf97667a44b7b8010a2c72162fb10806d061c42b85d02"
+  },
+  "checks": [
+    {
+      "id": "four_enums_three_stages",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Все 4 enum; NOT_STUDIED отдельно от трёхступенчатой read-only легенды. Исходный four skill states тест не изменён."
+    },
+    {
+      "id": "no_fabricated_assessment",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Пустой teacherName обозначает отсутствие опубликованной проверки; catalog date не называется assessment date и не берётся из now."
+    },
+    {
+      "id": "audit_public_downgrade_reset",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "From/to, автор, время и public_comment; downgrade/reset видны; private basis/notes отсутствуют. Pagination/total серверные."
+    },
+    {
+      "id": "snapshots4_reports8_separate",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Разные заголовки и /student/reports; snapshot ID не передаётся как reportId; открытие/чтение не создаёт report/checkpoint."
+    },
+    {
+      "id": "frozen_names_and_comments",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Frozen names/comments остаются старыми после переименования текущего навыка; источник ss.skills/ss.subject_name, не mutable catalog."
+    },
+    {
+      "id": "goals_null_dates_and_server_stage",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Teacher-authored text, targetDate/null, isAchieved из DTO. Нет оценок, процентов, рейтингов, badge, auto stage или вычисления достижения."
+    },
+    {
+      "id": "counter_source_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/api-tests.log",
+      "detail": "Структурная проверка сохранённого SQL: confirmed outcomes + CONDUCTED + subject across owned enrollments, без subscription/current teacher reset. Не PostgreSQL execution."
+    },
+    {
+      "id": "subject_url_and_historical_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Явный subjectId и исторический предмет вне active hub; не подменяется первым. Unknown/duplicated selection не показывает другую карту."
+    },
+    {
+      "id": "snapshot_filter_before_count",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/api-tests.log",
+      "detail": "Optional subjectId validated/bound до history count/page; unknown/foreign forbidden, beyond-end total сохраняется; service/HTTP mocks и SQL structure."
+    },
+    {
+      "id": "read_only_interactions",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Все skills вызовы GET; audit/expand/refresh не создают skill/checkpoint/report. Student mutation routes отсутствуют, HTTP tests проверяют 404."
+    },
+    {
+      "id": "initial_loading_empty_error_stale",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Loading, initial 503, owned empty list и cached stale различаются. Сохранённый stale снабжён явным предупреждением."
+    },
+    {
+      "id": "refresh_return_without_polling",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "Возврат на карту обновляет опубликованную стадию даже в cache freshness interval; явный refresh; без нового polling."
+    },
+    {
+      "id": "session_forbidden_late_read",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/browser.log",
+      "detail": "403 выше cached map/goal; 401 очищает DOM, поздний intercepted reply после session revocation не возвращает приватный контент."
+    },
+    {
+      "id": "ru_ro_four_widths_keyboard_dates",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/playwright.json",
+      "detail": "RU/RO × 360/768/1024/1280 × map/audit/snapshot/home; 32 matrix + 2 state screenshots. Long names, Enter/focus/collapse, controls≥44px; даты с годом, /me timezone; date-only без shift."
+    },
+    {
+      "id": "backward_compatible_sdk",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/contracts.json",
+      "detail": "147 операций и все прежние responses/request/security/schema неизменны. Единственное добавление — optional getStudentSkillSnapshots.subjectId; standard export/generate с DB-blocking preload."
+    },
+    {
+      "id": "budgets_fonts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/budgets.json",
+      "detail": "50/50 ≤256000 bytes по v2 с raw Golos subsets, skills route 245408 bytes. Storybook modules не попадают в bundle."
+    },
+    {
+      "id": "preservation_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/preservation.json",
+      "detail": "28 snapshots valid,31 migration hashes неизменны, все 431 исходных status paths существуют; HEAD/branch сохранены; working DB/production не использовались."
+    },
+    {
+      "id": "sources_reports_handoff",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-031/report.md",
+      "detail": "Текущие owner decisions, STU-04/TCHD-05/CON-07/B/№9.1–9.28; исходная основа, новые изменения и свежие checks разделены."
+    },
+    {
+      "id": "postgresql_execution_counter_and_isolation",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-031/report.md",
+      "detail": "Реальные counter values при no-show/cancelled/unconfirmed/смене enrollments и row isolation требуют разрешённого PostgreSQL execution. 21 старый source-exact CTE case не запускался."
+    },
+    {
+      "id": "teacher_publication_storage_hooks",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-031/report.md",
+      "detail": "Teacher confirmation/assessment/checkpoint/reminders — TASK-042/043/044; реальные trigger/immutability/transaction races и migrations не применялись."
+    },
+    {
+      "id": "full_role_accessibility_and_production_gate",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-031/report.md",
+      "detail": "Физический screen reader/mobile, полный WCAG, TASK-035/FND-GATE, legal/production GO не входят в локальную Chromium/mock приёмку."
+    }
+  ]
+}

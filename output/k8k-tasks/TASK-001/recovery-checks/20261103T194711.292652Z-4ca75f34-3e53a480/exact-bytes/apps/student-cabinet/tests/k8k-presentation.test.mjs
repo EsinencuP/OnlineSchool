@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {
+  meetPresentation,
+  serverSampleTime,
+  lessonCountdown,
+  formatStudentDate,
+  notificationTarget,
+  studentModuleAvailability,
+} from '../src/student-presentation.ts';
+const starts = Date.parse('2026-11-03T10:00:00Z');
+const url = 'https://meet.google.com/abc-defg-hij';
+const lesson = { scheduledAt: new Date(starts).toISOString(), canJoin: true, meetLink: url };
+test('Meet is denied before T-10 even with inconsistent positive capability', () => {
+  const state = meetPresentation(lesson, url, true, starts - 600_001);
+  assert.equal(state.kind, 'disabled');
+  assert.match(state.reason, /10 минут/);
+});
+test('T-10 opens only with a valid URL and positive server capability', () => {
+  assert.equal(meetPresentation(lesson, url, true, starts - 600_000).kind, 'ready');
+  assert.equal(meetPresentation({ ...lesson, canJoin: false }, url, true, starts).kind, 'disabled');
+  assert.equal(meetPresentation(lesson, undefined, true, starts).kind, 'unavailable');
+});
+test('clock progression alone cannot turn a negative server capability into admission', () => {
+  for (const serverNow of [starts - 600_001, starts - 600_000, starts, starts + 1000])
+    assert.notEqual(
+      meetPresentation({ ...lesson, canJoin: false }, url, true, serverNow).kind,
+      'ready',
+    );
+});
+test('stale or cancelled data never exposes the capability URL', () => {
+  for (const state of [
+    meetPresentation(lesson, url, false, starts),
+    meetPresentation({ ...lesson, status: 'CANCELLED' }, url, true, starts),
+  ]) {
+    assert.notEqual(state.kind, 'ready');
+    assert.ok(!('url' in state));
+  }
+});
+test('without clock metadata use server canJoin, never a fabricated clock', () => {
+  assert.equal(meetPresentation(lesson, url, true, null).kind, 'ready');
+  assert.equal(meetPresentation({ ...lesson, canJoin: false }, url, true, null).kind, 'disabled');
+  assert.equal(lessonCountdown(lesson.scheduledAt, null), null);
+});
+test('server reference survives a skewed browser wall clock', () => {
+  const sample = serverSampleTime('2026-11-03T09:30:00Z', 9e12, 9e12 + 30_000);
+  assert.equal(sample, Date.parse('2026-11-03T09:30:30Z'));
+  assert.equal(lessonCountdown(lesson.scheduledAt, sample), 'Через 30 мин.');
+  assert.equal(serverSampleTime(undefined, 9e12, 9e12), null);
+  assert.equal(serverSampleTime('invalid', 9e12, 9e12), null);
+});
+test('date-only validity is not shifted or given a fictional time', () => {
+  assert.equal(formatStudentDate('2026-11-30', 'America/New_York'), '30 ноября');
+  assert.equal(formatStudentDate('2026-11-30', 'America/New_York', true), '30 ноября');
+  assert.match(formatStudentDate('2026-11-30T02:00:00Z', 'America/New_York', true), /29 ноября/);
+});
+test('event targets use only owned API object IDs and existing routes', () => {
+  const id = '10000000-0000-4000-8000-000000000001';
+  assert.equal(notificationTarget({ lessonId: id }).href, `/student/lessons/${id}`);
+  assert.equal(notificationTarget({ homeworkId: id }).href, `/student/homework/${id}`);
+  assert.equal(
+    notificationTarget({ subscriptionId: id }).href,
+    `/student/subscription?subscriptionId=${id}`,
+  );
+  assert.equal(notificationTarget({ lessonId: 'javascript:alert(1)' }), null);
+  assert.equal(notificationTarget({ url: 'https://example.invalid' }), null);
+  assert.equal(
+    notificationTarget({ reportId: id }).href,
+    `/student/reports?reportId=${id}`,
+    'educational reports have their own route, separate from snapshots',
+  );
+});
+test('subject subscription module stays off without an authoritative list', () =>
+  assert.equal(studentModuleAvailability.subjectSubscriptions, false));

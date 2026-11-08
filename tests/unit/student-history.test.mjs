@@ -7,7 +7,10 @@ import {
   DISPUTE_WINDOW_MS,
 } from '../../apps/api/dist/student/history/history.service.js';
 import { StudentDisputeService } from '../../apps/api/dist/student/history/dispute.service.js';
-import { HistoryQueryPipe } from '../../apps/api/dist/student/history/history.dto.js';
+import {
+  HistoryQueryPipe,
+  LessonHistoryQueryPipe,
+} from '../../apps/api/dist/student/history/history.dto.js';
 import { EntitlementsService } from '../../apps/api/dist/modules/finance/entitlements.service.js';
 import { FinanceLedger } from '../../apps/api/dist/modules/finance/finance-ledger.service.js';
 const student = {
@@ -103,6 +106,32 @@ test.each([
 });
 test('history pagination defaults match the declared contract', () => {
   expect(new HistoryQueryPipe().transform({})).toEqual({ page: 1, pageSize: 20 });
+});
+test('TASK-029 addresses one historical lesson before count/page without scanning pages', async () => {
+  const subjectId = randomUUID();
+  const query = new LessonHistoryQueryPipe().transform({
+    lessonId: row.id,
+    subjectId,
+    pageSize: '1',
+  });
+  const result = await history.list(student, query);
+  expect(result.value).toMatchObject({ page: 1, pageSize: 1, items: [{ lessonId: row.id }] });
+  expect(result.value).not.toHaveProperty('lessonId');
+  const sql = client.$queryRaw.mock.calls[0][0];
+  expect(sql.sql).toContain('AND l.id=');
+  expect(sql.sql).toContain('AND e.subject_id=');
+  expect(sql.values).toEqual(expect.arrayContaining([student.studentProfileId, row.id, subjectId]));
+  expect(sql.sql.indexOf('AND l.id=')).toBeLessThan(sql.sql.indexOf('SELECT count(*)'));
+});
+test.each([{ lessonId: 'not-an-id' }, { lessonId: ['a', 'b'] }, { subjectId: 'foreign' }])(
+  'TASK-029 validates addressed history inputs %j',
+  (query) => {
+    expect(() => new LessonHistoryQueryPipe().transform(query)).toThrow();
+  },
+);
+test('TASK-029 general pagination consumers do not accept lesson filters', () => {
+  expect(() => new HistoryQueryPipe().transform({ lessonId: row.id })).toThrow();
+  expect(() => new HistoryQueryPipe().transform({ subjectId: row.id })).toThrow();
 });
 test('dispute creates only a typed, lesson-addressed CRM task', async () => {
   expect(

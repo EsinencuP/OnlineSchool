@@ -1,0 +1,26 @@
+{
+  "snapshot": "output/k8k-tasks/TASK-001/snapshots/20261103T194818.071851Z-60c1b4fb",
+  "manifestSha256": "dcfd5e8ce0e27a2013e422a5f08e06430a490551bc6195be189fd52d2bcbb462",
+  "sourceCommit": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "e9e7783d519c4a34b28c90a84c35fd5d0d448a34c87c02f0702dabf6ad583be5",
+  "patches": {
+    "worktree": {
+      "emptyPatch": false,
+      "statReadExitCode": 0,
+      "applyCheckExitCode": 0,
+      "applyExitCode": 0,
+      "gitContentMatches": true
+    },
+    "index": {
+      "emptyPatch": true,
+      "statReadExitCode": null,
+      "applyCheckExitCode": null,
+      "applyExitCode": null,
+      "gitContentMatches": true
+    }
+  },
+  "exactByteRestoredFiles": 170,
+  "recoveryDirectory": "output/k8k-tasks/TASK-001/recovery-checks/20261103T194818.071851Z-60c1b4fb-c94d036c",
+  "secretPatternScan": "PASS (bounded patterns; not a general secret audit)",
+  "passed": true
+}

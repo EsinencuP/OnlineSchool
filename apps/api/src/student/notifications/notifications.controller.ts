@@ -20,7 +20,7 @@ import { ProblemDetails } from '../../core/errors/error-mapper.js';
 import { uuid } from '../../modules/identity/input.js';
 import { StudentCtx } from '../student-context.decorator.js';
 import type { IStudentContext } from '../student-context.interface.js';
-import type { HistoryPage } from '../history/history.dto.js';
+import type { NotificationsQuery } from './notifications.dto.js';
 import {
   NotificationsQueryDto,
   NotificationsQueryPipe,
@@ -63,7 +63,7 @@ export class StudentNotificationsController {
     @StudentCtx() student: IStudentContext,
     @Query(NotificationsQueryPipe) query: NotificationsQueryDto,
   ) {
-    return this.notifications.list(student, query as HistoryPage);
+    return this.notifications.list(student, query as NotificationsQuery);
   }
   @Get('count')
   @ApiOperation({

@@ -1,0 +1,65 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "dirtyDigest": "df3bdc81b880102b798d569c8a52ba481f4c163cb7ed3b6ee57030726347b0d6",
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/ui add --save-exact --ignore-scripts @tanstack/react-table@8.21.3",
+      "toolChunk": "e2a29d",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/ui build",
+      "toolChunk": "df33d3",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/ui test",
+      "log": "ui-test.log",
+      "passedTests": 122,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "log": "ui-lint.log",
+      "cssFiles": 15,
+      "legacyDeclarations": 715,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/manager-web typecheck:ui-tables",
+      "log": "typecheck.log",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec eslint apps/manager-web/src/components/lead-table.tsx apps/manager-web/src/pages/Leads.tsx apps/manager-web/test/ui-tables/fixture.tsx scripts/k8k-tables-evidence.mjs --max-warnings 0",
+      "log": "targeted-lint.log",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm k8k:tables:evidence",
+      "log": "evidence.log",
+      "run": "output/k8k-tasks/TASK-010/runs/2026-11-04T04-50-46.028Z",
+      "summary": {
+        "passed": true,
+        "browserCases": 36,
+        "screenshots": 26,
+        "routes": 48,
+        "maxTotal": 245032,
+        "sourceFiles": 493,
+        "mockReads": 75,
+        "unexpected": []
+      },
+      "exitCode": 0
+    }
+  ],
+  "routeMaxima": {
+    "manager-web": 245032,
+    "student-cabinet": 206718,
+    "platform": 132269
+  },
+  "leadsDelta": {
+    "gzip": 15103,
+    "font": 0,
+    "total": 15103
+  }
+}

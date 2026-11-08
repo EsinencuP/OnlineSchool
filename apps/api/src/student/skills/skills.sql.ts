@@ -1,6 +1,5 @@
 import { Prisma } from '@online-school/db';
-import type { HistoryPage } from '../history/history.dto.js';
-import type { SkillAuditQuery, SkillSelection } from './skills.dto.js';
+import type { SkillAuditQuery, SkillSelection, SkillSnapshotQuery } from './skills.dto.js';
 
 // Re-enrollment, teacher replacement and new subscriptions do not reset subject history.
 const scope = (studentId: string, time: Date) => Prisma.sql`
@@ -70,14 +69,15 @@ export function skillAuditSql(studentId: string, query: SkillAuditQuery, time: D
     jsonb_build_object('total',(SELECT count(*) FROM history),
       'items',coalesce((SELECT jsonb_agg(data ORDER BY changed_at DESC,id DESC) FROM page),'[]'::jsonb)) AS data`;
 }
-export function skillSnapshotsSql(studentId: string, query: HistoryPage, time: Date) {
+export function skillSnapshotsSql(studentId: string, query: SkillSnapshotQuery, time: Date) {
   return Prisma.sql`${scope(studentId, time)}, history AS (
     SELECT ss.id,ss.created_at,jsonb_build_object('snapshotId',ss.id,'subjectName',ss.subject_name,
       'createdAt',ss.created_at,'lessonNumber',ss.lesson_number,'skills',ss.skills,
       'teacherSummary',ss.teacher_summary) AS data
     FROM skill_snapshots ss JOIN owned_enrollments e ON e.id=ss.enrollment_id
     WHERE ss.created_at<=${time}
+      ${query.subjectId ? Prisma.sql`AND e.subject_id=${query.subjectId}::uuid` : Prisma.empty}
   ), page AS (SELECT * FROM history ORDER BY created_at DESC,id DESC LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
-  SELECT false AS forbidden,jsonb_build_object('total',(SELECT count(*) FROM history),
+  SELECT ${query.subjectId ? Prisma.sql`NOT EXISTS(SELECT 1 FROM owned_subjects WHERE id=${query.subjectId}::uuid)` : Prisma.sql`false`} AS forbidden,jsonb_build_object('total',(SELECT count(*) FROM history),
     'items',coalesce((SELECT jsonb_agg(data ORDER BY created_at DESC,id DESC) FROM page),'[]'::jsonb)) AS data`;
 }

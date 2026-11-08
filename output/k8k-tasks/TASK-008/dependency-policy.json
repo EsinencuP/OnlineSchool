@@ -1,0 +1,491 @@
+{
+  "date": "2026-11-04",
+  "packages": [
+    {
+      "package": "@floating-ui/core@1.8.0",
+      "license": "MIT",
+      "released": "2026-07-11T08:41:32.92Z",
+      "ageDays": 115,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "@floating-ui/dom@1.8.0",
+      "license": "MIT",
+      "released": "2026-07-11T08:41:32.794Z",
+      "ageDays": 115,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "@floating-ui/react-dom@2.1.9",
+      "license": "MIT",
+      "released": "2026-07-11T08:41:32.791Z",
+      "ageDays": 115,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": ">=16.8.0",
+        "react-dom": ">=16.8.0"
+      }
+    },
+    {
+      "package": "@floating-ui/utils@0.2.12",
+      "license": "MIT",
+      "released": "2026-07-11T08:41:33.036Z",
+      "ageDays": 115,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "@radix-ui/primitive@1.1.1",
+      "license": "MIT",
+      "released": "2024-12-13T01:46:35.677Z",
+      "ageDays": 690,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "@radix-ui/react-alert-dialog@1.1.6",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:21.881Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-arrow@1.1.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:22.057Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-collection@1.1.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:24.154Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-compose-refs@1.1.1",
+      "license": "MIT",
+      "released": "2024-12-13T01:46:38.647Z",
+      "ageDays": 690,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-context@1.1.1",
+      "license": "MIT",
+      "released": "2024-10-01T20:59:41.893Z",
+      "ageDays": 763,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-dialog@1.1.6",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:24.783Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-direction@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:57:54.676Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-dismissable-layer@1.1.5",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:26.384Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-dropdown-menu@2.1.6",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:26.878Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-focus-guards@1.1.1",
+      "license": "MIT",
+      "released": "2024-10-01T20:59:43.576Z",
+      "ageDays": 763,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-focus-scope@1.1.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:26.709Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-id@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:00.984Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-menu@2.1.6",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:28.48Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-popover@1.1.6",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:29.097Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-popper@1.2.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:29.468Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-portal@1.1.4",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:29.503Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-presence@1.1.2",
+      "license": "MIT",
+      "released": "2024-12-13T01:46:44.704Z",
+      "ageDays": 690,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-primitive@2.0.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:30.992Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-roving-focus@1.1.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:31.508Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*",
+        "@types/react-dom": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-slot@1.1.2",
+      "license": "MIT",
+      "released": "2025-02-05T23:50:32.854Z",
+      "ageDays": 636,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-callback-ref@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:40.971Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-controllable-state@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:40.951Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-escape-keydown@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:48.279Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-layout-effect@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:48.276Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-rect@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:48.286Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/react-use-size@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:58:48.268Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+        "@types/react": "*"
+      }
+    },
+    {
+      "package": "@radix-ui/rect@1.1.0",
+      "license": "MIT",
+      "released": "2024-06-19T19:57:30.409Z",
+      "ageDays": 867,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "aria-hidden@1.2.6",
+      "license": "MIT",
+      "released": "2025-05-19T00:03:50.887Z",
+      "ageDays": 533,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "detect-node-es@1.1.0",
+      "license": "MIT",
+      "released": "2021-03-18T00:59:32.365Z",
+      "ageDays": 2056,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "get-nonce@1.0.1",
+      "license": "MIT",
+      "released": "2020-04-17T05:10:02.775Z",
+      "ageDays": 2391,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {}
+    },
+    {
+      "package": "react-remove-scroll-bar@2.3.8",
+      "license": "MIT",
+      "released": "2024-12-15T02:08:28.658Z",
+      "ageDays": 688,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "@types/react": "*",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+      }
+    },
+    {
+      "package": "react-remove-scroll@2.7.2",
+      "license": "MIT",
+      "released": "2025-11-29T07:19:17.296Z",
+      "ageDays": 339,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "@types/react": "*",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc"
+      }
+    },
+    {
+      "package": "react-style-singleton@2.2.3",
+      "license": "MIT",
+      "released": "2024-12-15T02:27:37.493Z",
+      "ageDays": 688,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "@types/react": "*",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc"
+      }
+    },
+    {
+      "package": "use-callback-ref@1.3.3",
+      "license": "MIT",
+      "released": "2024-12-17T11:07:58.012Z",
+      "ageDays": 686,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "@types/react": "*",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc"
+      }
+    },
+    {
+      "package": "use-sidecar@1.1.3",
+      "license": "MIT",
+      "released": "2024-12-15T01:49:19.375Z",
+      "ageDays": 688,
+      "agePass": true,
+      "licensePass": true,
+      "peers": {
+        "@types/react": "*",
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc"
+      }
+    }
+  ],
+  "allPass": true,
+  "minAge": 115
+}

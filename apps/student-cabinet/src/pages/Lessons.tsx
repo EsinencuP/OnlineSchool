@@ -1,260 +1,482 @@
-import { useState } from 'react';
-import type { FormEvent } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {
+  getStudentHomework,
   getStudentLesson,
+  getStudentLessonHistory,
   getStudentLessons,
-  requestStudentLessonReschedule,
+  getStudentMaterials,
 } from '@online-school/api-contracts';
-import type { LessonCardDto } from '@online-school/api-contracts';
-import { k8kEnabled, Segmented, useLocale } from '@online-school/ui';
-import { useCommand, useStudentQuery, write } from '../api.js';
+import type { LessonCardDto, LessonHistoryItemDto } from '@online-school/api-contracts';
+import { Button, Field, ListRow, Segmented, StateBoundary } from '@online-school/ui';
+import { useStudentQuery } from '../api.js';
+import { dayKey, Empty, JoinButton, Pager, Panel, QueryState, Status } from '../components.js';
+import { useMe } from '../Layout.js';
+import { useLessonCopy } from '../lesson-copy.js';
+import { lessonHref, positivePage, scheduleReturn } from '../lesson-navigation.js';
+import { LessonCommands } from '../lesson-requests.js';
 import {
-  date,
-  dayKey,
-  Empty,
-  ErrorNotice,
-  JoinButton,
-  Modal,
-  Pager,
-  Panel,
-  QueryState,
-  Status,
-} from '../components.js';
-function Reschedule({ lesson, close }: { lesson: LessonCardDto; close(): void }) {
-  const mutation = useCommand((body: { reason: string; preferredDate: string }, key) =>
-    write((o) => requestStudentLessonReschedule(lesson.lessonId, body, o), key),
-  );
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (mutation.isPending) return;
-    const values = new FormData(event.currentTarget);
-    mutation.mutate({
-      reason: String(values.get('reason')).trim(),
-      preferredDate: String(values.get('preferredDate')),
-    });
-  }
-  return (
-    <Modal title="Запросить перенос" close={close} busy={mutation.isPending}>
-      {mutation.isSuccess ? (
-        <>
-          <p role="status">
-            Запрос передан менеджеру. Урок остаётся в расписании до подтверждения.
-          </p>
-          <button onClick={close}>Готово</button>
-        </>
-      ) : (
-        <form onSubmit={submit}>
-          <p>
-            {lesson.subjectName} · {date(lesson.scheduledAt, true)}
-          </p>
-          <fieldset disabled={mutation.isPending}>
-            <label>
-              Причина
-              <textarea name="reason" required maxLength={500} />
-            </label>
-            <label>
-              Желаемая дата
-              <input
-                name="preferredDate"
-                type="date"
-                required
-                min={dayKey(new Date().toISOString())}
-              />
-            </label>
-            <ErrorNotice error={mutation.error} />
-            <button className="primary" type="submit">
-              {mutation.isPending ? 'Отправляем…' : 'Отправить запрос'}
-            </button>
-          </fieldset>
-        </form>
-      )}
-    </Modal>
-  );
-}
-export function LessonList({ items }: { items: LessonCardDto[] }) {
-  const [reschedule, setReschedule] = useState<LessonCardDto | null>(null);
-  return (
-    <>
-      {items.length ? (
-        <div className="lesson-table">
-          <div className="lesson-table-head">
-            <span>Дата и время</span>
-            <span>Преподаватель / Предмет</span>
-            <span>Статус</span>
-            <span>Действия</span>
+  formatStudentDate,
+  StudentMeetClock,
+  StudentReadFreshness,
+} from '../student-presentation.js';
+import { SubjectBack, useSubjectReturn } from './Subjects.js';
+
+export function LessonList({
+  items,
+  fromSubject,
+  backTo = '/student/lessons',
+}: {
+  items: LessonCardDto[];
+  fromSubject?: string | undefined;
+  backTo?: string;
+}) {
+  const { locale, text } = useLessonCopy();
+  const { timeZone } = useMe();
+  const fresh = useContext(StudentReadFreshness);
+  const { verifying } = useContext(StudentMeetClock);
+  return items.length ? (
+    <div className="lesson-table">
+      <div className="lesson-table-head">
+        <span>{text('dates')}</span>
+        <span>{text('teacherSubject')}</span>
+        <span>{text('status')}</span>
+        <span>{text('actions')}</span>
+      </div>
+      {items.map((lesson) => (
+        <article className="lesson-row" key={lesson.lessonId}>
+          <div>
+            <Link to={lessonHref(lesson.lessonId, backTo, fromSubject)}>
+              <strong>{formatStudentDate(lesson.scheduledAt, timeZone, true, locale)}</strong>
+            </Link>
+            <small>
+              {lesson.durationMinutes} {text('minutes')}
+            </small>
           </div>
-          {items.map((l) => (
-            <article className="lesson-row" key={l.lessonId}>
-              <div>
-                <Link to={`/student/lessons/${l.lessonId}`}>
-                  <strong>{date(l.scheduledAt, true)}</strong>
-                </Link>
-                <small>{l.durationMinutes} минут</small>
-              </div>
-              <div>
-                <strong>{l.subjectName}</strong>
-                <small>{l.teacherName}</small>
-              </div>
-              <Status value={l.status} />
-              <div className="lesson-actions">
-                <JoinButton lesson={l} />
-                {l.canRequestReschedule && (
-                  <button className="quiet" onClick={() => setReschedule(l)}>
-                    Запросить перенос
-                  </button>
-                )}
-              </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <Empty>В этом периоде уроков нет.</Empty>
-      )}
-      {reschedule && <Reschedule lesson={reschedule} close={() => setReschedule(null)} />}
-    </>
+          <div>
+            <strong>{lesson.subjectName}</strong>
+            <small>{lesson.teacherName}</small>
+          </div>
+          <Status value={lesson.status} />
+          <div className="lesson-actions">
+            <JoinButton lesson={lesson} />
+            <StudentReadFreshness.Provider value={fresh && !verifying}>
+              <LessonCommands
+                lesson={lesson}
+                kind="reschedule"
+                allowed={lesson.canRequestReschedule}
+              />
+            </StudentReadFreshness.Provider>
+          </div>
+        </article>
+      ))}
+    </div>
+  ) : (
+    <Empty>{text('emptySchedule')}</Empty>
   );
 }
+
+function HistoryItem({
+  item,
+  backTo,
+  fromSubject,
+  link = true,
+  verifying = false,
+}: {
+  item: LessonHistoryItemDto;
+  backTo: string;
+  fromSubject?: string | undefined;
+  link?: boolean;
+  verifying?: boolean;
+}) {
+  const { locale, text } = useLessonCopy();
+  const { timeZone } = useMe();
+  const fresh = useContext(StudentReadFreshness);
+  const balance = (value: string | null) => value ?? text('unknownBalance');
+  return (
+    <ListRow
+      title={
+        <>
+          {link ? (
+            <Link to={lessonHref(item.lessonId, backTo, fromSubject)}>
+              {item.subjectName} · {formatStudentDate(item.scheduledAt, timeZone, true, locale)}
+            </Link>
+          ) : (
+            <strong>{item.subjectName}</strong>
+          )}
+          <Status value={item.attendanceStatus} />
+        </>
+      }
+      details={[
+        {
+          id: 'teacher',
+          label: text(item.attendanceStatus === 'COMPLETED' ? 'actualTeacher' : 'teacher'),
+          value: item.teacherName,
+        },
+        {
+          id: 'duration',
+          label: text(item.attendanceStatus === 'COMPLETED' ? 'actualDuration' : 'duration'),
+          value: item.durationMinutes + ' ' + text('minutes'),
+        },
+        {
+          id: 'deducted',
+          label: text('status'),
+          value: text(item.lessonDeducted ? 'deducted' : 'notDeducted'),
+        },
+        { id: 'before', label: text('before'), value: balance(item.balanceBefore) },
+        { id: 'after', label: text('after'), value: balance(item.balanceAfter) },
+      ]}
+      actions={
+        <StudentReadFreshness.Provider value={fresh && !verifying}>
+          <LessonCommands lesson={item} kind="dispute" allowed={item.canDispute} />
+        </StudentReadFreshness.Provider>
+      }
+    />
+  );
+}
+
+function History({
+  page,
+  subjectId,
+  fromSubject,
+  backTo,
+  change,
+}: {
+  page: number;
+  subjectId?: string | undefined;
+  fromSubject?: string | undefined;
+  backTo: string;
+  change(page: number): void;
+}) {
+  const { text } = useLessonCopy();
+  const query = useStudentQuery(['lesson-history', subjectId ?? null, page], (o) =>
+    getStudentLessonHistory({ page, pageSize: 20, ...(subjectId ? { subjectId } : {}) }, o),
+  );
+  return (
+    <Panel title={text('history')} className="k8k-lesson-history">
+      <p>{text('historyHint')}</p>
+      <QueryState
+        query={query}
+        operational
+        empty={query.data?.items.length === 0}
+        emptyMessage={text('emptyHistory')}
+      >
+        <ul className="k8k-lesson-history-list">
+          {query.data?.items.map((item) => (
+            <HistoryItem
+              key={item.lessonId}
+              item={item}
+              verifying={query.isFetching}
+              backTo={backTo}
+              fromSubject={fromSubject}
+            />
+          ))}
+        </ul>
+      </QueryState>
+      {query.data && (
+        <>
+          <p>
+            {text('total')} {query.data.total}
+          </p>
+          <Pager {...query.data} change={change} />
+        </>
+      )}
+    </Panel>
+  );
+}
+
 export function Lessons() {
-  const { locale } = useLocale();
-  const ro = locale === 'ro';
+  const { locale, text } = useLessonCopy();
+  const { timeZone } = useMe();
+  const fromSubject = useSubjectReturn();
   const [params, setParams] = useSearchParams();
-  const [defaultMonth] = useState(() => dayKey(new Date().toISOString()).slice(0, 7));
   const monthParam = params.get('month') ?? '';
-  const month = /^[1-9]\d{3}-(0[1-9]|1[0-2])$/.test(monthParam) ? monthParam : defaultMonth;
+  const month = /^(?!0000)\d{4}-(0[1-9]|1[0-2])$/.test(monthParam)
+    ? monthParam
+    : dayKey(new Date().toISOString()).slice(0, 7);
   const periodParam = params.get('period');
   const period =
     periodParam === 'today' || periodParam === 'week' || periodParam === 'archive'
       ? periodParam
       : 'month';
-  const view = params.get('view') === 'calendar' ? 'calendar' : 'list';
-  const pageParam = params.get('page') ?? '';
-  const page =
-    /^[1-9]\d*$/.test(pageParam) && Number.isSafeInteger(Number(pageParam)) ? Number(pageParam) : 1;
-  function change(changes: Record<string, string>) {
+  const calendar = params.get('view') === 'calendar';
+  const view = calendar ? 'calendar' : 'list';
+  const subjectId = params.get('subjectId') ?? params.get('fromSubjectId') ?? undefined;
+  const page = positivePage(params.get('page'));
+  const historyPage = positivePage(params.get('historyPage'));
+  const location = useLocation();
+  const backTo = scheduleReturn(location.pathname + location.search);
+  function change(values: Record<string, string>) {
     const next = new URLSearchParams(params);
-    for (const [key, value] of Object.entries(changes)) next.set(key, value);
-    setParams(next);
+    for (const [key, value] of Object.entries(values)) next.set(key, value);
+    setParams(next, { preventScrollReset: true });
   }
-  const calendar = view === 'calendar';
   const query = useStudentQuery(
-    ['lessons', period, view, page, month],
-    (o) => getStudentLessons(calendar ? { month } : { period, page, pageSize: 20 }, o),
+    ['lessons', period, view, page, month, subjectId ?? null],
+    (o) =>
+      getStudentLessons(
+        {
+          ...(calendar
+            ? { month }
+            : period === 'month'
+              ? { month, view: 'list' as const, page, pageSize: 20 }
+              : { period, page, pageSize: 20 }),
+          ...(subjectId ? { subjectId } : {}),
+        },
+        o,
+      ),
     true,
     30_000,
   );
+  const limit =
+    !!query.error && 'code' in query.error && query.error.code === 'CALENDAR_MONTH_LIMIT_EXCEEDED';
   return (
     <>
-      <h1>Уроки</h1>
-      <p className="lead">Твоё расписание и история занятий</p>
+      <h1>{text('lessons')}</h1>
+      <SubjectBack id={fromSubject} />
+      <p className="lead">{text('lead')}</p>
       <div className="toolbar">
-        <div className="tabs" aria-label="Период">
-          {(
-            [
-              ['today', 'Сегодня'],
-              ['week', 'Неделя'],
-              ['month', 'Месяц'],
-              ['archive', 'Архив'],
-            ] as const
-          ).map(([key, label]) => (
-            <button
-              key={key}
-              aria-pressed={period === key && !calendar}
-              onClick={() => {
-                change({ period: key, page: '1', view: 'list' });
-              }}
+        <div className="tabs" aria-label={text('period')}>
+          {(['today', 'week', 'month'] as const).map((value) => (
+            <Button
+              key={value}
+              variant="secondary"
+              aria-pressed={!calendar && period === value}
+              onClick={() => change({ period: value, view: 'list', page: '1' })}
             >
-              {label}
-            </button>
+              {text(value)}
+            </Button>
           ))}
         </div>
-        {k8kEnabled ? (
-          <Segmented
-            label={ro ? 'Mod de afișare a orarului' : 'Вид расписания'}
-            value={view}
-            options={[
-              { value: 'list', label: ro ? 'Listă' : 'Список' },
-              { value: 'calendar', label: ro ? 'Calendar' : 'Календарь' },
-            ]}
-            onValueChange={(mode) => {
-              change({ view: mode, page: '1' });
-            }}
-          />
-        ) : (
-          <div className="tabs" aria-label="Вид расписания">
-            {[
-              ['list', 'Список'],
-              ['calendar', 'Календарь'],
-            ].map(([key, label]) => (
-              <button
-                key={key}
-                aria-pressed={view === key}
-                onClick={() => {
-                  if (key) change({ view: key, page: '1' });
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
+        <Segmented
+          label={text('view')}
+          value={view}
+          options={[
+            { value: 'list', label: text('list') },
+            { value: 'calendar', label: text('calendar') },
+          ]}
+          onValueChange={(value) => change({ view: value, page: '1' })}
+        />
       </div>
-      {calendar && (
-        <label className="month-picker">
-          Месяц
-          <input
-            type="month"
-            value={month}
-            required
-            onChange={(e) => {
-              if (e.target.value) change({ month: e.target.value });
-            }}
-          />
-        </label>
+      {(calendar || period === 'month') && (
+        <Field
+          containerClassName="month-picker"
+          label={text('month')}
+          type="month"
+          value={month}
+          required
+          onChange={(event) => {
+            if (event.target.value) change({ month: event.target.value, page: '1' });
+          }}
+        />
       )}
-      <Panel title={calendar ? 'Календарь занятий' : 'Расписание'}>
-        <QueryState query={query}>
-          {calendar ? (
-            <div className="lesson-calendar">
-              {Array.from(new Set(query.data?.items.map((l) => dayKey(l.scheduledAt))))
-                .sort()
-                .map((day) => (
-                  <section key={day}>
-                    <h3>{date(day)}</h3>
-                    <LessonList
-                      items={query.data?.items.filter((l) => dayKey(l.scheduledAt) === day) ?? []}
-                    />
-                  </section>
-                ))}
-              {!query.data?.items.length && <Empty>В этом месяце уроков нет.</Empty>}
-            </div>
-          ) : (
-            <LessonList items={query.data?.items ?? []} />
+      <Panel title={text(calendar ? 'calendarTitle' : 'schedule')}>
+        {limit ? (
+          <div role="status">
+            <p>{text('calendarLimit')}</p>
+            <Button
+              variant="secondary"
+              onClick={() => change({ period: 'month', view: 'list', page: '1', month })}
+            >
+              {text('openMonthList')}
+            </Button>
+          </div>
+        ) : (
+          <QueryState
+            query={query}
+            operational={calendar || period !== 'archive'}
+            empty={query.data?.items.length === 0}
+            emptyMessage={text('emptySchedule')}
+            meet={{ lessons: query.data?.items ?? [] }}
+          >
+            {calendar ? (
+              <div className="lesson-calendar">
+                {Array.from(new Set(query.data?.items.map((item) => dayKey(item.scheduledAt))))
+                  .sort()
+                  .map((day) => (
+                    <section key={day}>
+                      <h3>{formatStudentDate(day, timeZone, false, locale)}</h3>
+                      <LessonList
+                        items={
+                          query.data?.items.filter((item) => dayKey(item.scheduledAt) === day) ?? []
+                        }
+                        fromSubject={fromSubject}
+                        backTo={backTo}
+                      />
+                    </section>
+                  ))}
+              </div>
+            ) : (
+              <LessonList
+                items={query.data?.items ?? []}
+                fromSubject={fromSubject}
+                backTo={backTo}
+              />
+            )}
+          </QueryState>
+        )}
+        {query.data && !calendar && (
+          <>
+            <p>
+              {text('total')} {query.data.total}
+            </p>
+            <Pager {...query.data} change={(next) => change({ page: String(next) })} />
+          </>
+        )}
+      </Panel>
+      <History
+        page={historyPage}
+        subjectId={subjectId}
+        fromSubject={fromSubject}
+        backTo={backTo}
+        change={(next) => change({ historyPage: String(next) })}
+      />
+    </>
+  );
+}
+
+function LessonFacts({ lesson, backTo }: { lesson: LessonCardDto; backTo: string }) {
+  const { text } = useLessonCopy();
+  const [params, setParams] = useSearchParams();
+  const history = useStudentQuery(['lesson-history', 'lesson', lesson.lessonId], (o) =>
+    getStudentLessonHistory({ lessonId: lesson.lessonId, pageSize: 1 }, o),
+  );
+  const homeworkPage = positivePage(params.get('homeworkPage'));
+  const materialPage = positivePage(params.get('materialPage'));
+  const homework = useStudentQuery(['lesson-homework', lesson.lessonId, homeworkPage], (o) =>
+    getStudentHomework({ lessonId: lesson.lessonId, page: homeworkPage, pageSize: 10 }, o),
+  );
+  const materials = useStudentQuery(['lesson-materials', lesson.lessonId, materialPage], (o) =>
+    getStudentMaterials({ lessonId: lesson.lessonId, page: materialPage, pageSize: 10 }, o),
+  );
+  function change(key: string, page: number) {
+    const next = new URLSearchParams(params);
+    next.set(key, String(page));
+    setParams(next, { preventScrollReset: true });
+  }
+  return (
+    <>
+      <Panel title={text('history')}>
+        <QueryState
+          query={history}
+          operational
+          empty={history.data?.items.length === 0}
+          emptyMessage={text('emptyHistory')}
+        >
+          <ul className="k8k-lesson-history-list">
+            {history.data?.items.map((item) => (
+              <HistoryItem
+                key={item.lessonId}
+                item={item}
+                backTo={backTo}
+                link={false}
+                verifying={history.isFetching}
+              />
+            ))}
+          </ul>
+        </QueryState>
+      </Panel>
+      <Panel title={text('homework')}>
+        <QueryState
+          query={homework}
+          empty={homework.data?.items.length === 0}
+          emptyMessage={text('emptyHomework')}
+        >
+          <ul className="k8k-lesson-history-list">
+            {homework.data?.items.map((item) => (
+              <ListRow
+                key={item.homeworkId}
+                title={
+                  <Link className="k8k-student-link" to={'/student/homework/' + item.homeworkId}>
+                    {item.title}
+                  </Link>
+                }
+                details={[
+                  { id: 'status', label: text('status'), value: <Status value={item.status} /> },
+                ]}
+              />
+            ))}
+          </ul>
+        </QueryState>
+        {homework.data && (
+          <Pager {...homework.data} change={(page) => change('homeworkPage', page)} />
+        )}
+      </Panel>
+      <Panel title={text('materials')}>
+        <QueryState
+          query={materials}
+          empty={materials.data?.items.length === 0}
+          emptyMessage={text('emptyMaterials')}
+        >
+          <ul className="k8k-lesson-history-list">
+            {materials.data?.items.map((item) => (
+              <ListRow
+                key={item.fileId}
+                title={item.fileName}
+                details={[
+                  { id: 'teacher', label: text('sharedBy'), value: item.sharedByTeacherName },
+                ]}
+              />
+            ))}
+          </ul>
+          {!!materials.data?.items.length && (
+            <Link
+              className="k8k-student-link"
+              to={
+                '/student/materials?' + new URLSearchParams({ lessonId: lesson.lessonId, backTo })
+              }
+            >
+              {text('openMaterials')}
+            </Link>
           )}
         </QueryState>
-        {query.data && !calendar && (
-          <Pager {...query.data} change={(next) => change({ page: String(next) })} />
+        {materials.data && (
+          <Pager {...materials.data} change={(page) => change('materialPage', page)} />
         )}
       </Panel>
     </>
   );
 }
+
 export function LessonDetail() {
+  const { locale, text } = useLessonCopy();
+  const { timeZone } = useMe();
+  const fromSubject = useSubjectReturn();
+  const [params] = useSearchParams();
+  const backTo = scheduleReturn(
+    params.get('backTo') ??
+      (fromSubject
+        ? '/student/lessons?' + new URLSearchParams({ fromSubjectId: fromSubject })
+        : null),
+  );
   const { id = '' } = useParams();
   const query = useStudentQuery(['lesson', id], (o) => getStudentLesson(id, o), true, 30_000);
   return (
     <>
-      <Link to="/student/lessons">← Все уроки</Link>
-      <h1>Урок</h1>
-      <Panel title="Информация об уроке">
-        <QueryState query={query}>
-          {query.data ? (
-            <LessonList items={[query.data]} />
-          ) : (
-            <Empty>Урок не найден в доступном расписании.</Empty>
-          )}
-        </QueryState>
-      </Panel>
+      <Link className="k8k-student-link" to={backTo}>
+        ← {text('back')}
+      </Link>
+      <SubjectBack id={fromSubject} />
+      <h1>{text('lesson')}</h1>
+      <QueryState query={query} operational meet={{ lessons: query.data ? [query.data] : [] }}>
+        {query.data ? (
+          <>
+            <Panel title={text('details')}>
+              <LessonList items={[query.data]} fromSubject={fromSubject} backTo={backTo} />
+              {query.data.originalScheduledAt &&
+                query.data.originalScheduledAt !== query.data.scheduledAt && (
+                  <p className="k8k-lesson-moved">
+                    {text('movedFrom')}{' '}
+                    {formatStudentDate(query.data.originalScheduledAt, timeZone, true, locale)}
+                  </p>
+                )}
+            </Panel>
+            <LessonFacts lesson={query.data} backTo={backTo} />
+          </>
+        ) : (
+          <StateBoundary state={{ status: 'empty', message: text('notFound') }} />
+        )}
+      </QueryState>
     </>
   );
 }

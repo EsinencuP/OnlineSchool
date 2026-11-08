@@ -139,8 +139,17 @@ test.each([
   '/audit',
   '/audit?skillId=' + skill + '&page=0',
   '/snapshots?pageSize=101',
-  '/snapshots?subjectId=' + skill,
+  '/snapshots?subjectId=bad',
+  '/snapshots?subjectId=' + skill + '&subjectId=' + skill,
 ])('rejects untrusted query %s', async (suffix) => expect((await get(suffix)).status).toBe(400));
+
+test('TASK-031 snapshot optional subject is passed with authoritative student and no-store', async () => {
+  const result = await get('/snapshots?subjectId=' + skill + '&page=3&pageSize=1');
+  expect(result.status).toBe(200);
+  expect(result.headers['cache-control']).toBe('no-store');
+  expect(service.snapshots.mock.calls[0][0].studentProfileId).toBe(students[0]);
+  expect(service.snapshots.mock.calls[0][1]).toEqual({ subjectId: skill, page: 3, pageSize: 1 });
+});
 test.each(['post', 'put', 'patch', 'delete'])(
   'student has no %s skill mutation route',
   async (method) => {

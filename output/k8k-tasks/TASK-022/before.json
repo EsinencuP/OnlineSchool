@@ -1,0 +1,107 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "task021FilesMatched": 156,
+  "paths": [
+    {
+      "path": "package.json",
+      "sha256": "158bff3b58fcf9698e925e0110e1a18a5b126265a44ccf9df1ca3ffd8646c729"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "apps/api/src/modules/manager/dto/manager-dashboard.dto.ts",
+      "sha256": "0356f14a0e560f030156c2e36cd412695dbcda4320f709a1b1f1aedfb0a8da75"
+    },
+    {
+      "path": "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts",
+      "sha256": "c1ea3278a692df6eab215da11a504995c807c50b053f3c9bcc8c95fae227491e"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/task-read.spec.ts",
+      "sha256": "0face6a4e8719fcce70849adb49c4d36ad594a81a0b9d40b65f73fcf04df0015"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/contracts.ts",
+      "sha256": "a275adbb1232a4822fa9b2f8d7b41dc0ae41aa382e1ce27a44f63892f00acf73"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/deadline.module.ts",
+      "sha256": "1221e3072b4e976481d80344da8ff3cd59bc91f06284397b3c1cbfcef70c00be"
+    },
+    {
+      "path": "apps/worker/src/worker.module.ts",
+      "sha256": "a9fc53d857d2b4de881922ebd5abf03fe85823fd73f11771fd7bf1431e42c714"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Dashboard.tsx",
+      "sha256": "ae1fd240035f9b59c9a867648eb9b1b414e73e949ee193ff90413504239f93ae"
+    },
+    {
+      "path": "apps/manager-web/src/components/layout.tsx",
+      "sha256": "0e4ea79f4e827f8f2e65d65385a5db3bee46f27badcdb66c1e338011458c2088"
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "sha256": "de1828d9b848548ee56b8896818f9c0be180b665d2b64053355c44c472d687a2"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "c2bb9d69619e6973907f5f593e9f462c76bc06153d6a0ba5637656d5dd2f10b6"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "9d76092351e1a61b66688f748b5625ac414e082a167401408c7013c20f6299a3"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "90ee0fe4f812d05da12d2980ae58f344aebc3e065b5ff8aa5b34ea2919f27bf8"
+    },
+    {
+      "path": "packages/db/prisma/schema.prisma",
+      "sha256": "13cfb729606e66588eba304a83d4aac53a06c0824787c1e9f943f3be68531e4f"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "6f2dd42ed098fedd5108cf6a81009a11c16881902927e87a5eae28742e1e4654"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "0860bc333d8ad364fa9575061cae2a2471d4d16c5d735cc6cdc887a82300b8be"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "b7df4b4c107521b84d54e6aab6e48bad3e68c921a8f237fdd510c25fb7a70a8a"
+    },
+    {
+      "path": "packages/ui/README.md",
+      "sha256": "e614cbeb18f351eb56e9c8bb6a46f593ceddaf0dd120d6796850049626265ebe"
+    },
+    {
+      "path": "apps/api/src/openapi/dtos.ts",
+      "sha256": "3fdf5f22ab73fcafdf7bcdaacb8ebd788ae200dc918ef17e249810b0bf8794b7"
+    },
+    {
+      "path": "tests/unit/manager-dashboard-sdk.test.mjs",
+      "sha256": "2b3f0e1cfed85c25f6acfff24c1989f649c1a4245414085abb425104f5734c07"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "sha256": "a2f654ea4e3b7c371bced0b8b659888d10a04f8560a7771b84fefba179e55611"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "sha256": "020c7e34405fc2325ec60abfef1141cb4e825e65d557a06688798803d14a3b5a"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "sha256": "5d24b3d29a424d4ea7d9bbf097c436c481771eae3262e54e88a79eca2807b4b5"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "sha256": "2cbb7a9daee9384b8cf96b6b564a1a22d80194b80ae131d636a28612a209efd4"
+    }
+  ]
+}

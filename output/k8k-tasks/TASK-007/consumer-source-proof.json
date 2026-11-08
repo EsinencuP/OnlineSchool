@@ -1,0 +1,27 @@
+{
+  "apiHooksUnchanged": true,
+  "profileHookAndSubmitUnchanged": true,
+  "unchangedExports": [
+    {
+      "name": "formValues",
+      "unchanged": true
+    },
+    {
+      "name": "Login",
+      "unchanged": true
+    },
+    {
+      "name": "ChangePassword",
+      "unchanged": true
+    },
+    {
+      "name": "AccessSuspended",
+      "unchanged": true
+    },
+    {
+      "name": "Security",
+      "unchanged": true
+    }
+  ],
+  "method": "TypeScript AST printer comparison (comments removed); Profile useCommand/save and unrelated account commands preserved; UI JSX only migrated"
+}

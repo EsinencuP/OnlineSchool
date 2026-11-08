@@ -1,3 +1,4 @@
+import type { StudentMessageDefinitions } from './student-messages.js';
 import { cabinetLabels } from './navigation.js';
 import { errorMessages } from './error-messages.js';
 
@@ -16,6 +17,7 @@ const ru = {
   'errors.confirmPassword': 'Повторите новый пароль',
   'errors.otp': 'Код подтверждения',
   'errors.newEmail': 'Новый email',
+  workspace: 'Рабочее пространство',
   unknownStatus: 'Статус неизвестен',
   unknownPerson: 'Имя не указано',
   language: 'Язык интерфейса',
@@ -88,7 +90,6 @@ const ru = {
   forbidden: 'Нет доступа к этому разделу.',
   session: 'Сессия завершилась. Войдите снова.',
   retry: 'Повторить загрузку',
-  workspace: 'Рабочее пространство',
   primaryNavigation: 'Основная навигация',
   mobileNavigation: 'Мобильная навигация',
   cabinetStudent: cabinetLabels.STUDENT,
@@ -112,19 +113,12 @@ const ru = {
   stageFamiliarizing: 'Знакомлюсь',
   stagePracticing: 'Практикую',
   stageApplying: 'Применяю',
-  'auth.eyebrow': 'Школа, в которой всё рядом',
-  'auth.learn': 'Учиться.',
-  'auth.teach': 'Преподавать.',
-  'auth.connect': 'Быть на связи.',
-  'auth.intro': 'Уроки, ученики и ежедневные дела — в вашем личном кабинете.',
-  'auth.storyNote': 'Одна платформа · Своя роль · Свой рабочий день',
   'auth.cabinet': 'Личный кабинет',
   'auth.opening': 'Открываем ваш кабинет…',
   'auth.connectionFailed': 'Не удалось подключиться',
   'auth.connectionHelp': 'Проверьте соединение и повторите попытку.',
   'auth.retry': 'Повторить',
-  'auth.welcome': 'С возвращением',
-  'auth.prompt': 'Войдите в свой аккаунт, чтобы продолжить.',
+  'auth.welcome': 'Вход в кабинет',
   'auth.demoUser': 'Тестовый пользователь',
   'auth.otherAccount': 'Другой аккаунт',
   'auth.login': 'Логин',
@@ -159,6 +153,9 @@ const ru = {
     'Результат пока неизвестен. Проверьте текущую сессию перед следующим действием.',
   'account.verifySession': 'Проверить текущую сессию',
   'nav.homework': 'Домашние задания',
+  'nav.studentSubjects': 'Мои предметы',
+  'nav.studentSubjectsShort': 'Предметы',
+  'nav.studentHelp': 'Помощь',
   'nav.teacherStudents': 'Мои ученики',
   'nav.schoolStudents': 'Ученики школы',
   'nav.managerTasks': 'Задачи менеджеров',
@@ -193,7 +190,9 @@ const ru = {
   'auth.studentPrompt': 'Войди, чтобы продолжить обучение.',
 } as const;
 
-export type MessageKey = keyof typeof ru;
+type BaseMessageKey = keyof typeof ru;
+type MessageDefinitions = typeof ru & StudentMessageDefinitions;
+export type MessageKey = keyof MessageDefinitions;
 const ro = {
   ...errorMessages.ro,
   'errors.passwordMismatch': 'Parolele noi nu coincid.',
@@ -203,6 +202,7 @@ const ro = {
   'errors.confirmPassword': 'Repetă parola nouă',
   'errors.otp': 'Cod de confirmare',
   'errors.newEmail': 'Adresa nouă de e-mail',
+  workspace: 'Spațiu de lucru',
   unknownStatus: 'Stare necunoscută',
   unknownPerson: 'Nume nespecificat',
   language: 'Limba interfeței',
@@ -275,7 +275,6 @@ const ro = {
   forbidden: 'Nu ai acces la această secțiune.',
   session: 'Sesiunea a expirat. Autentifică-te din nou.',
   retry: 'Reîncearcă încărcarea',
-  workspace: 'Spațiu de lucru',
   primaryNavigation: 'Navigare principală',
   mobileNavigation: 'Navigare mobilă',
   cabinetStudent: 'Cabinetul elevului',
@@ -299,19 +298,12 @@ const ro = {
   stageFamiliarizing: 'Mă familiarizez',
   stagePracticing: 'Exersez',
   stageApplying: 'Aplic',
-  'auth.eyebrow': 'Școala în care totul este aproape',
-  'auth.learn': 'Învață.',
-  'auth.teach': 'Predă.',
-  'auth.connect': 'Rămâi în legătură.',
-  'auth.intro': 'Lecțiile, elevii și activitățile zilnice sunt în cabinetul tău.',
-  'auth.storyNote': 'O platformă · Rolul tău · Programul tău de lucru',
   'auth.cabinet': 'Cabinet personal',
   'auth.opening': 'Se deschide cabinetul tău…',
   'auth.connectionFailed': 'Conexiunea nu a reușit',
   'auth.connectionHelp': 'Verifică conexiunea și încearcă din nou.',
   'auth.retry': 'Încearcă din nou',
-  'auth.welcome': 'Bine ai revenit',
-  'auth.prompt': 'Autentifică-te în contul tău pentru a continua.',
+  'auth.welcome': 'Autentificare',
   'auth.demoUser': 'Utilizator de test',
   'auth.otherAccount': 'Alt cont',
   'auth.login': 'Adresă de e-mail',
@@ -346,6 +338,9 @@ const ro = {
     'Rezultatul este încă necunoscut. Verifică sesiunea curentă înainte de următoarea acțiune.',
   'account.verifySession': 'Verifică sesiunea curentă',
   'nav.homework': 'Teme pentru acasă',
+  'nav.studentSubjects': 'Materiile mele',
+  'nav.studentSubjectsShort': 'Materii',
+  'nav.studentHelp': 'Ajutor',
   'nav.teacherStudents': 'Elevii mei',
   'nav.schoolStudents': 'Elevii școlii',
   'nav.managerTasks': 'Sarcinile managerilor',
@@ -379,12 +374,12 @@ const ro = {
   'auth.enter': 'Autentifică-te',
   'auth.email': 'Adresă de e-mail',
   'auth.studentPrompt': 'Autentifică-te pentru a continua studiile.',
-} as const satisfies Record<MessageKey, string>;
+} as const satisfies Record<BaseMessageKey, string>;
 
 type Placeholder<Text extends string> = Text extends `${string}{${infer Name}}${infer Tail}`
   ? Name | Placeholder<Tail>
   : never;
-type MessageParams<Key extends MessageKey> = Placeholder<(typeof ru)[Key]>;
+type MessageParams<Key extends MessageKey> = Placeholder<MessageDefinitions[Key]>;
 export type MessageArgs<Key extends MessageKey> = [MessageParams<Key>] extends [never]
   ? []
   : [params: Record<MessageParams<Key>, string | number>];
@@ -396,26 +391,28 @@ export type MessageCall =
   | [key: PlainMessageKey]
   | { [Key in ParameterizedKey]: [key: Key, ...MessageArgs<Key>] }[ParameterizedKey];
 type MatchingPlaceholders = {
-  [Key in MessageKey]: [Placeholder<(typeof ro)[Key]>] extends [MessageParams<Key>]
+  [Key in BaseMessageKey]: [Placeholder<(typeof ro)[Key]>] extends [MessageParams<Key>]
     ? [MessageParams<Key>] extends [Placeholder<(typeof ro)[Key]>]
       ? string
       : never
     : never;
 };
-const messages: Record<Locale, Record<MessageKey, string>> = {
+const messages: Record<Locale, Record<BaseMessageKey, string>> = {
   ru,
   ro: ro satisfies MatchingPlaceholders,
 };
 
 export function isPlainMessageKey(key: string): key is PlainMessageKey {
-  return Object.hasOwn(ru, key) && !/\{\w+\}/u.test(ru[key as MessageKey]);
+  return Object.hasOwn(ru, key) && !/\{\w+\}/u.test(ru[key as BaseMessageKey]);
 }
 
 export function translate(locale: Locale, ...[key, params]: MessageCall): string {
   const dictionary = messages[locale === 'ro' ? 'ro' : 'ru'];
   if (!Object.hasOwn(dictionary, key)) return key;
   const values: Record<string, string | number> | undefined = params;
-  return dictionary[key].replace(/\{(\w+)\}/gu, (placeholder: string, name: string) =>
-    values && Object.hasOwn(values, name) ? String(values[name]) : placeholder,
+  return dictionary[key as BaseMessageKey].replace(
+    /\{(\w+)\}/gu,
+    (placeholder: string, name: string) =>
+      values && Object.hasOwn(values, name) ? String(values[name]) : placeholder,
   );
 }

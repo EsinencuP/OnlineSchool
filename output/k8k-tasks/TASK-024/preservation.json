@@ -1,0 +1,37 @@
+{
+  "inputCopiesVerified": 21,
+  "historicalProtectedFilesVerified": 9,
+  "initialStatusEntriesStillPresent": 332,
+  "initialStatusEntries": 332,
+  "statusEntriesAdded": [
+    " M apps/api/src/student/homework/homework.service.ts",
+    " M apps/api/src/student/materials/materials.service.ts",
+    " M apps/api/src/student/student.module.ts",
+    " M apps/api/src/student/subscription/subscription.sql.ts",
+    " M tests/unit/student-subscription-http.test.mjs",
+    "?? apps/api/src/student/subjects/",
+    "?? tests/unit/student-subjects.test.mjs"
+  ],
+  "changedFromBefore": [
+    "apps/api/src/openapi/dtos.ts",
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/api/src/student/materials/materials.service.ts",
+    "apps/api/src/student/student.module.ts",
+    "apps/api/src/student/subscription/subscription.sql.ts",
+    "package.json",
+    "packages/api-contracts/openapi/openapi.json",
+    "packages/api-contracts/src/generated/client.ts",
+    "packages/api-contracts/src/generated/openapi.ts",
+    "tests/unit/student-subscription-http.test.mjs"
+  ],
+  "newFiles": [
+    "apps/api/src/student/subjects/subjects.controller.ts",
+    "apps/api/src/student/subjects/subjects.dto.ts",
+    "apps/api/src/student/subjects/subjects.service.ts",
+    "apps/api/src/student/subjects/subjects.sql.ts",
+    "tests/unit/student-subjects.test.mjs"
+  ],
+  "migrationChanges": 0,
+  "prismaSchemaUnchanged": true,
+  "lockfileUnchanged": true
+}

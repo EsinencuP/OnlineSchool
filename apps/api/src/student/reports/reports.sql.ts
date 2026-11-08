@@ -36,3 +36,7 @@ export function studentReportsSql(studentId: string, query: HistoryPage, time: D
   ) SELECT coalesce((SELECT jsonb_agg(${reportJson} ORDER BY r.created_at DESC,r.id DESC) FROM page r),'[]'::jsonb) AS items,
     (SELECT count(*)::int FROM published_reports) AS total`;
 }
+export function studentReportSql(studentId: string, reportId: string, time: Date) {
+  return Prisma.sql`${publishedReportsCte(studentId, time)}
+    SELECT ${reportJson} AS report FROM published_reports r WHERE r.id=${reportId}::uuid`;
+}

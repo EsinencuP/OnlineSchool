@@ -1,0 +1,28 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "beforeCopiesVerified": 505,
+  "protectedArtifactsVerified": 9,
+  "changedExistingInputs": [
+    "apps/manager-web/package.json",
+    "apps/manager-web/src/components/ui.tsx",
+    "apps/platform/src/App.tsx",
+    "apps/student-cabinet/src/components.tsx",
+    "docs/K8K_IMPLEMENTATION_STATUS.md",
+    "docs/K8K_REQUIREMENTS_MATRIX.md",
+    "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/src/freshness.tsx",
+    "packages/ui/src/index.ts",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/state.tsx",
+    "packages/ui/src/style.css",
+    "packages/ui/tests/state.test.mjs"
+  ],
+  "acceptedSourceFilesVerified": 508,
+  "acceptedSourceDigest": "0b5f9cb5c4e4420f4f5e3e8b71af520aa2df8f44bf37734fd85a195bead44c9e",
+  "acceptedBuildTimeDirtyDigest": "8bb7a93eb06760bade794be6cb2763bf4eb62ec6bc512b20053ed464e15d1b49",
+  "finalTrackedPatchSha256": "c93058eefd5cf32a7d5b495d377b6f8f27629952eba86c992cc4c6794b53e776",
+  "lockfileUnchanged": true
+}

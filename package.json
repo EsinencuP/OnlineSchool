@@ -9,7 +9,10 @@
     "pnpm": ">=9 <13"
   },
   "scripts": {
+    "test:vercel-review": "node scripts/vercel-review-smoke.mjs",
     "test:k8k-staff-context": "node --test apps/api/test/staff-context.test.mjs apps/api/test/staff-context-sdk.test.mjs",
+    "test:k8k-student-subjects": "node --experimental-vm-modules node_modules/jest/bin/jest.js --roots tests --runInBand --runTestsByPath tests/unit/student-subjects.test.mjs tests/unit/student-subscription-http.test.mjs",
+    "test:k8k-student-contacts": "node --experimental-vm-modules node_modules/jest/bin/jest.js --roots tests --runInBand --runTestsByPath tests/unit/student-security.test.mjs tests/unit/student-security-http.test.mjs tests/unit/student-transport.test.mjs --testNamePattern=TASK-027",
     "k8k:baseline": "python scripts/k8k-baseline.py",
     "k8k:inventory": "node scripts/k8k-inventory.mjs",
     "k8k:baseline-ui": "node scripts/k8k-screen-baseline.mjs",
@@ -46,6 +49,7 @@
     "test:stu02": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-dashboard.test.mjs tests/unit/student-dashboard-http.test.mjs --runInBand",
     "test:stu03": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-lessons.test.mjs tests/unit/student-lessons-http.test.mjs --runInBand",
     "test:stu04": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-history.test.mjs tests/unit/student-history-http.test.mjs --runInBand",
+    "test:student-lesson-context": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-lesson-context.test.mjs --runInBand --roots tests",
     "test:stu05": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-homework.test.mjs tests/unit/student-homework-http.test.mjs --runInBand",
     "test:stu06": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-materials.test.mjs tests/unit/student-materials-http.test.mjs --runInBand",
     "test:stu07": "node --experimental-vm-modules node_modules/jest/bin/jest.js tests/unit/student-subscription.test.mjs tests/unit/student-subscription-http.test.mjs --runInBand",
@@ -69,7 +73,12 @@
     "k8k:composites:evidence": "node scripts/k8k-composites-evidence.mjs",
     "k8k:tables:evidence": "node scripts/k8k-tables-evidence.mjs",
     "k8k:calendar:evidence": "node scripts/k8k-calendar-evidence.mjs",
-    "k8k:states:evidence": "node scripts/k8k-states-evidence.mjs"
+    "k8k:states:evidence": "node scripts/k8k-states-evidence.mjs",
+    "k8k:refresh:evidence": "node scripts/k8k-refresh-evidence.mjs",
+    "k8k:refresh:budget": "node scripts/k8k-refresh-budget.mjs",
+    "k8k:priority:evidence": "node scripts/k8k-priority-evidence.mjs",
+    "k8k:priority:budget": "node scripts/k8k-refresh-budget.mjs --task-022",
+    "k8k:shell:gate": "node scripts/k8k-shell-gate.mjs"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

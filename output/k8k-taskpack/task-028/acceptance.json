@@ -1,0 +1,144 @@
+{
+  "task": "TASK-028",
+  "status": "DONE",
+  "scope": "Local implementation and scoped mock/browser verification",
+  "base": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "0b76ee06d0e6d9e60b61599e12caadd94ae8f6eeba47de9c19a9c6a384a84d1f"
+  },
+  "checks": [
+    {
+      "id": "hero_own_authoritative_status",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "Upstream upcoming CANCELLED cannot replace dashboard SCHEDULED"
+    },
+    {
+      "id": "hero_retains_current_T0",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+      "detail": "Current lesson regression and warm summary at T0"
+    },
+    {
+      "id": "exact_inclusive_ms_boundaries",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+      "detail": "Same dashboard/list/detail projection at T−600001, T−600000, T0, T+3600000 and +1ms"
+    },
+    {
+      "id": "own_enrollment_assignment_and_subject",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+      "detail": "Shared parameterized SQL scopes owner, slot/read assignment and enabled subject/teacher"
+    },
+    {
+      "id": "paid_rights_freeze_and_director_limit",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/lessons.log",
+      "detail": "SQL predicates for confirmed paid balance, consumption, freeze, current unrevoked unused admission limit"
+    },
+    {
+      "id": "warm_cache_fresh_authorization",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+      "detail": "Summary excludes lesson, revocation and cancellation reread without revision bump"
+    },
+    {
+      "id": "inflight_coalesces_summary_only",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+      "detail": "Waiters independently obtain lesson and revision"
+    },
+    {
+      "id": "canonical_url_only",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/presentation.log",
+      "detail": "Canonical allowlist and positive server canJoin required"
+    },
+    {
+      "id": "clock_skew_hidden_and_deadline_read",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "Visible/hidden T−10 triggers server read, Date.now skew cannot grant or shift eligibility"
+    },
+    {
+      "id": "stale_forbidden_terminal_no_link",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "503 stale, 403, cancelled, absent and invalid URL hide capability with distinct presentation"
+    },
+    {
+      "id": "two_subjects_independent",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "Denied first lesson stays denied while second subject can join"
+    },
+    {
+      "id": "reschedule_refresh",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "Updated slot is future and waits for new opening"
+    },
+    {
+      "id": "no_command_on_read_or_click",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/browser-final.log",
+      "detail": "Intercepted provider GET, student API traffic remains GET only"
+    },
+    {
+      "id": "session_scope_and_no_store",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/dashboard.log",
+      "detail": "Two actual Nest cookie sessions with mock database, spoofed owner, suspended/password/revoked session"
+    },
+    {
+      "id": "sdk_additive_compatibility",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/contracts.json",
+      "detail": "Three optional additive properties, 146 operations, standard generator"
+    },
+    {
+      "id": "RU_RO_four_widths_three_surfaces",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/playwright.json",
+      "detail": "24 matrix screenshots, 100 character names, keyboard focus, 48px primary, no horizontal overflow"
+    },
+    {
+      "id": "route_budgets_and_fonts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/budgets.json",
+      "detail": "50/50 routes under 256000 bytes using method v2"
+    },
+    {
+      "id": "preservation_and_migrations",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/preservation.json",
+      "detail": "32 snapshots, 31 unchanged migration checksums and original paths present"
+    },
+    {
+      "id": "targeted_build_and_lint",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-028/student-check.log",
+      "detail": "API/student/SDK targeted compilation, Vite and ESLint pass"
+    },
+    {
+      "id": "live_postgresql_execution",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-028/report.md",
+      "detail": "No authorized live DB target in this TASK, SQL shape and mocked results verified locally"
+    },
+    {
+      "id": "google_meet_provider_OAuth_POC_security_G4",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-028/report.md",
+      "detail": "Local synthetic fixture only, real provider credentials and separate approval needed"
+    },
+    {
+      "id": "full_phase_regression_FND_GATE",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-028/report.md",
+      "detail": "Deferred by owner Phase 0 validation policy"
+    }
+  ]
+}

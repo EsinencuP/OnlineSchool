@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import type { PipeTransform } from '@nestjs/common';
 import { Temporal } from '@js-temporal/polyfill';
 import { domainError, fail } from '../../core/errors/domain-error.js';
-import { object } from '../../modules/identity/input.js';
+import { object, uuid } from '../../modules/identity/input.js';
 import type { LessonsQueryDto } from './lessons.dto.js';
 
 export type ParsedLessonsQuery = {
@@ -10,11 +10,19 @@ export type ParsedLessonsQuery = {
   page: number;
   pageSize: number;
   month?: string;
+  view?: 'calendar' | 'list';
+  subjectId?: string;
 };
 @Injectable()
 export class LessonsQueryPipe implements PipeTransform {
   transform(value: unknown): ParsedLessonsQuery {
-    const input = object(value, ['period', 'page', 'pageSize', 'month']);
+    const input = object(value, ['period', 'page', 'pageSize', 'month', 'view', 'subjectId']);
+    const scope = input.subjectId === undefined ? {} : { subjectId: uuid(input.subjectId) };
+    if (
+      input.view !== undefined &&
+      (!['calendar', 'list'].includes(input.view as string) || input.month === undefined)
+    )
+      return fail(domainError('INVALID_LESSON_QUERY', 400));
     const period = input.period ?? (input.month === undefined ? 'week' : 'month');
     if (!['today', 'week', 'month', 'archive'].includes(period as string))
       return fail(domainError('INVALID_LESSON_QUERY', 400));
@@ -38,13 +46,19 @@ export class LessonsQueryPipe implements PipeTransform {
         typeof input.month !== 'string' ||
         !/^(?!0000)\d{4}-(0[1-9]|1[0-2])$/.test(input.month) ||
         period !== 'month' ||
-        input.page !== undefined ||
-        input.pageSize !== undefined
+        (input.view !== 'list' && (input.page !== undefined || input.pageSize !== undefined))
       )
         return fail(domainError('INVALID_LESSON_QUERY', 400));
-      return { period: 'month', page: 1, pageSize: 62, month: input.month };
+      return {
+        period: 'month',
+        page: input.view === 'list' ? page : 1,
+        pageSize: input.view === 'list' ? pageSize : 62,
+        month: input.month,
+        ...(input.view ? { view: input.view as 'calendar' | 'list' } : {}),
+        ...scope,
+      };
     }
-    return { period: period as ParsedLessonsQuery['period'], page, pageSize };
+    return { period: period as ParsedLessonsQuery['period'], page, pageSize, ...scope };
   }
 }
 export function lessonPeriod(query: ParsedLessonsQuery, time: Date, zone = 'Europe/Chisinau') {

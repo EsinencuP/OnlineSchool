@@ -1,0 +1,216 @@
+{
+  "checks": [
+    {
+      "role": "TEACHER",
+      "locale": "ru",
+      "width": 360,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ru",
+      "width": 768,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ru",
+      "width": 1024,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ru",
+      "width": 1280,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ru",
+      "cached403": "private rows and sample counts hidden"
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "width": 360,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "width": 768,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "width": 1024,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "width": 1280,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "TEACHER",
+      "locale": "ro",
+      "cached403": "private rows and sample counts hidden"
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ru",
+      "width": 360,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ru",
+      "width": 768,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ru",
+      "width": 1024,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ru",
+      "width": 1280,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ru",
+      "cached403": "private rows and sample counts hidden"
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "width": 360,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "width": 768,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "width": 1024,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "width": 1280,
+      "serverCount": 100,
+      "clientClock": "2027-01-01",
+      "timezone": "Asia/Tokyo",
+      "total": null
+    },
+    {
+      "role": "DIRECTOR",
+      "locale": "ro",
+      "cached403": "private rows and sample counts hidden"
+    }
+  ],
+  "unexpected": [],
+  "errors": [],
+  "budget": {
+    "status": "available",
+    "files": [
+      {
+        "file": "assets/index-BctIqezC.js",
+        "sha256": "4e885f00bd819def9d5542161990dc4af6c1a8c8c5c3d5b55e478437b4783d4a",
+        "raw": 236210,
+        "gzip": 74494,
+        "kind": "js"
+      },
+      {
+        "file": "assets/index-ChbVftDt.css",
+        "sha256": "5c426881d0d0cfa2fbce1922b756358ff5e81cb5ee491a9e970c0a0dad43e80c",
+        "raw": 38412,
+        "gzip": 7942,
+        "kind": "css"
+      }
+    ],
+    "manifestKeys": [
+      "index.html"
+    ],
+    "deferredDynamicImports": [],
+    "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+    "gzip": 82436,
+    "font": {
+      "romanian": {
+        "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+        "bytes": 3544,
+        "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+      },
+      "cyrillic": {
+        "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+        "bytes": 22032,
+        "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+      },
+      "latin": {
+        "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+        "bytes": 37916,
+        "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+      },
+      "total": 63492
+    },
+    "total": 145928,
+    "limit": 256000,
+    "pass": true
+  }
+}

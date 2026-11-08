@@ -300,3 +300,11 @@ Source timezone/asOf не подменяются клиентскими часа
 Свежая actual production closure platform по K8K v2 составляет145928 bytes с63492 bytes
 локальных WOFF2. Full48-route/dependency gate TASK-017 остаётся историческим.
 [Отчёт](../output/k8k-tasks/TASK-018/report.md) · [Browser/budget](../output/k8k-tasks/TASK-018/browser/browser.json)
+
+## TASK-021 — политика чтения, 07.11.2026
+
+Переиспользованы TanStack Query 5.105.0, React 18.3.1 и локальный Playwright.
+Зависимости и lockfile сохранились. Оперативные чтения координирует `useContextRefresh`.
+Проверка v2 включает 63 492 байта трёх локальных WOFF2 в каждом маршруте.
+Все 48 маршрутов проходят порог 256 000 байт. Максимум 255 831 байт у платежей CRM.
+[Бюджеты](../output/k8k-tasks/TASK-021/budgets.json) · [Отчёт](../output/k8k-tasks/TASK-021/report.md)

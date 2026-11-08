@@ -1,0 +1,91 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "task023Matches": 179,
+  "paths": [
+    {
+      "path": "package.json",
+      "sha256": "a7d6ceae20dceef27760d7f19dbc383871ccf09d24c15cff2d6f2decf90cb108"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "apps/api/src/student/student.module.ts",
+      "sha256": "5cb269e77cf8fd68d888a3d9a0842c1f0c2a3020d6211e36d2f15205da5063db"
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.service.ts",
+      "sha256": "473ed4dc5044c55b315845f6c07a89d92ee57e2b847f7c2329526755795fb3a4"
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.service.ts",
+      "sha256": "d750fba093b2f27831265b40cf0f7a761215db73d3cf5e95ca58a5ce4c7aff8d"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.sql.ts",
+      "sha256": "f5228c8002f62d0aa37f66fc89505a5c986ce3ca6ca59e6e513ba01b88d32082"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.service.ts",
+      "sha256": "b66242ef740f95d31836390e9e266c4cbab3eb19b4a6a9e32cef61b998ba8645"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.controller.ts",
+      "sha256": "45896ae673f374916c4b5bc60eb971b5ad1e43cc7c14486b853dbfb59911fe8a"
+    },
+    {
+      "path": "apps/api/src/openapi/dtos.ts",
+      "sha256": "4bd76bfd80bcb70248c34f93ef3f942b597182719a640f1856bf7f7672a66fe2"
+    },
+    {
+      "path": "apps/api/src/student/me/me.service.ts",
+      "sha256": "b925b2b4054e9d8e51d595fe0b4809cad2d263e22447d15e1f8e6e16f8cefb1e"
+    },
+    {
+      "path": "apps/api/src/student/active-subscription.guard.ts",
+      "sha256": "43bdff167b5cf955f40dd842dc34ab825d3e5ad155711536151cd8918368bbce"
+    },
+    {
+      "path": "apps/api/src/student/lessons/lessons.service.ts",
+      "sha256": "1e8e388bf8222a7b023b1e6ad920317ef13ae41d62260e3636e2a2108729e98b"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "f454000693dbaa579ef1397a9eee44bb51e5248d39a12c8b4de522ddcf23ce38"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "935ec91ed33468d7adb1dac8392d27a08247390a0192d7f2eeed4364fd737858"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "6869b15fa8f8224ab44a02b76b89820a94e740152f595ddbb98fb1f99d1d2eaa"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/manager-error-codes.ts",
+      "sha256": "2f5c823bd777d443a873bd6ffba87a60b270648b21dbec1ee429c180ce089513"
+    },
+    {
+      "path": "packages/db/prisma/schema.prisma",
+      "sha256": "13cfb729606e66588eba304a83d4aac53a06c0824787c1e9f943f3be68531e4f"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "5c760befd02aabdc1cd1d4864cdd3fffac6dd3ac6ec0d99a8611fc96678a3791"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "cf6686379bcded0fa80cdaf4072cc43154b46a5523149dbb0a42c4457b6740fd"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "0525e50a0941e55114a0fbe6dafd10084d819aa1f04587d0369ba22d83e2248e"
+    },
+    {
+      "path": "tests/unit/student-subscription-http.test.mjs",
+      "sha256": "d2319764449840711c5d7a763d09924a5e07fc8f7672469a0a36670fdc3ef932"
+    }
+  ]
+}

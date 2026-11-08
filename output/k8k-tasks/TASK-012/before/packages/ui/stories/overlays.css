@@ -1,0 +1,15 @@
+.overlays-lab {
+  box-sizing: border-box;
+  min-height: 160dvh;
+  padding: var(--k8k-space-5);
+}
+.overlays-lab > button {
+  margin: var(--k8k-space-2);
+}
+.overlays-lab output {
+  display: block;
+  margin: var(--k8k-space-3);
+}
+.k8k-overlay-surface > .k8k-button {
+  margin-block: var(--k8k-space-2);
+}

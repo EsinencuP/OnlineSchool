@@ -27,7 +27,9 @@ export class StudentLessonScopeGuard implements CanActivate {
           actor: req.account,
           action: req.originalUrl.split('?')[0]?.endsWith('/dispute')
             ? 'student.lesson.dispute.denied'
-            : 'student.lesson.reschedule.denied',
+            : req.originalUrl.split('?')[0]?.includes('/requests/')
+              ? 'student.lesson.request-result.denied'
+              : 'student.lesson.reschedule.denied',
           code: 'LESSON_FORBIDDEN',
         }),
       );

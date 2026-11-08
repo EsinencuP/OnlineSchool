@@ -6,13 +6,15 @@ import type { Cache } from 'cache-manager';
 import { lastValueFrom, of } from 'rxjs';
 import type { Observable } from 'rxjs';
 import { domainError, fail } from '../../core/errors/domain-error.js';
-import type { StudentRequest } from '../student-context.interface.js';
+import { MEET_LATE_MS } from '../lessons/meet-access.js';
+import type { IStudentContext, StudentRequest } from '../student-context.interface.js';
 import type { DashboardResponseDto } from './dashboard.dto.js';
 import { DashboardService } from './dashboard.service.js';
 
+type Summary = Omit<DashboardResponseDto, 'nextLesson'>;
 interface Entry {
   revision: string;
-  value: DashboardResponseDto;
+  value: Summary;
   expiresAt: number;
 }
 
@@ -33,23 +35,35 @@ export class DashboardCacheInterceptor extends CacheInterceptor {
   ): Promise<Observable<DashboardResponseDto>> {
     const student = context.switchToHttp().getRequest<StudentRequest>().studentCtx;
     if (!student) return fail(domainError('STUDENT_PROFILE_NOT_FOUND', 403));
-    const key = `dashboard:${student.studentProfileId}`;
+    const key = `dashboard:summary:${student.studentProfileId}`;
     const revision = await this.version(student.studentProfileId);
     const entry = await this.store.get<Entry>(key).catch(() => undefined);
     if (entry && entry.revision === revision && entry.expiresAt > Date.now())
-      return of(structuredClone(entry.value));
+      return of(await this.withFreshLesson(entry.value, student, revision));
     if (entry) await this.store.del(key).catch(() => undefined);
+
     const pendingKey = `${key}:${revision}`;
-    let pending = this.pending.get(pendingKey);
-    if (!pending) {
-      pending = this.load(next, key, student.studentProfileId, revision);
-      this.pending.set(pendingKey, pending);
+    const running = this.pending.get(pendingKey);
+    if (running) {
+      // A concurrent request shares the summary only, never the other request's capability.
+      return of(await this.withFreshLesson(this.summary(await running), student, revision));
     }
+    const pending = this.load(next, key, student.studentProfileId, revision);
+    this.pending.set(pendingKey, pending);
     try {
-      return of(structuredClone(await pending));
+      return of(this.beforeResponse(await pending));
     } finally {
       if (this.pending.get(pendingKey) === pending) this.pending.delete(pendingKey);
     }
+  }
+
+  private summary({
+    homework,
+    subscription,
+    skillProgress,
+    generatedAt,
+  }: DashboardResponseDto): Summary {
+    return { homework, subscription, skillProgress, generatedAt };
   }
 
   private async version(studentId: string): Promise<string> {
@@ -60,25 +74,32 @@ export class DashboardCacheInterceptor extends CacheInterceptor {
     }
   }
 
-  private async load(next: CallHandler, key: string, studentId: string, revision: string) {
-    const value = await lastValueFrom<DashboardResponseDto>(next.handle());
-    // A commit during aggregation must not publish a mixed/stale snapshot into the cache.
+  private async verifyRevision(studentId: string, revision: string) {
     if ((await this.version(studentId)) !== revision)
       return fail(domainError('DASHBOARD_REFRESH_REQUIRED', 503));
-    const now = Date.now();
-    let ttl = 30000;
-    if (value.nextLesson) {
-      const start = Date.parse(value.nextLesson.scheduledAt);
-      if (start <= now) return { ...value, nextLesson: null };
-      const windowOpens = start - 10 * 60000;
-      const generated = Date.parse(value.generatedAt);
-      ttl = Math.min(ttl, (windowOpens > generated ? windowOpens : start) - now);
-    }
-    // Never pass TTL=0: cache-manager treats it as an entry that does not expire.
-    if (ttl > 0)
-      await this.store
-        .set(key, { revision, value, expiresAt: now + ttl }, ttl)
-        .catch(() => undefined);
+  }
+
+  private beforeResponse(value: DashboardResponseDto): DashboardResponseDto {
+    const lesson = value.nextLesson;
+    const expired = lesson && Date.now() > Date.parse(lesson.scheduledAt) + MEET_LATE_MS;
+    return structuredClone(expired ? { ...value, nextLesson: null } : value);
+  }
+
+  private async withFreshLesson(summary: Summary, student: IStudentContext, revision: string) {
+    const nextLesson = await this.dashboard
+      .currentLesson(student)
+      .catch(() => fail(domainError('DASHBOARD_UNAVAILABLE', 503)));
+    await this.verifyRevision(student.studentProfileId, revision);
+    return this.beforeResponse({ ...summary, nextLesson });
+  }
+
+  private async load(next: CallHandler, key: string, studentId: string, revision: string) {
+    const value = await lastValueFrom<DashboardResponseDto>(next.handle());
+    await this.verifyRevision(studentId, revision);
+    const ttl = 30_000;
+    await this.store
+      .set(key, { revision, value: this.summary(value), expiresAt: Date.now() + ttl }, ttl)
+      .catch(() => undefined);
     return value;
   }
 }

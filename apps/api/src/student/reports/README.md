@@ -6,7 +6,7 @@
 
 ## API
 
-Все четыре маршрута используют существующие session/STUDENT/context/password/
+Все маршруты используют существующие session/STUDENT/context/password/
 active-access guards STU-01. `studentProfileId` берётся из серверной сессии.
 Ответы приватные (`Cache-Control: no-store`). Ученических команд создания или
 редактирования образовательного отчёта нет.
@@ -14,15 +14,35 @@ active-access guards STU-01. `studentProfileId` берётся из сервер
 | Маршрут                                          | Поведение                                                                                                         |
 | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | `GET /api/v1/student/reports?page=1&pageSize=10` | Опубликованные отчёты, `createdAt DESC, reportId DESC`; pageSize 1–100; items/total/page/pageSize                 |
+| `GET /api/v1/student/reports/:reportId` | Один отчёт из того же published set, независимо от страницы; unknown/foreign/draft/future/superseded — одинаковый403 |
 | `POST /api/v1/student/reports/:reportId/read`    | Пустое тело; первый вызов 204, повторный 200 с пустым телом, включая replay того же ключа; isNew становится false |
 | `POST /api/v1/student/reports/export-pdf`        | 202, `{jobId,status:'QUEUED',estimatedReadyAt}`; пустое тело означает всю историю                                 |
 | `GET /api/v1/student/reports/export-pdf/:jobId`  | QUEUED/PROCESSING/READY/FAILED; чужое или неизвестное задание — 403                                               |
+| `GET /api/v1/student/reports/export-pdf/requests/:requestId` | Read-only сверка исходного enqueue UUID: ACCEPTED + jobId либо UNKNOWN/null. Не подписывает URL и не создаёт задание |
 
 POST требуют CSRF и UUID `Idempotency-Key`. Read receipt и задание создаются
 атомарно с idempotency/audit/outbox. Повторная команда не ставит дубликат задания;
 после отзыва доступа replay также закрыт существующими guards.
 SDK использует отдельный mutator для пустых ответов read; остальные JSON-операции
 продолжают отвергать неожиданный пустой успешный ответ.
+
+TASK-032 добавляет только адресное чтение и восстановление потерянного202.
+Detail использует тот же publishedReportsCte/reportJson/normalizeReport, что list.
+Receipt ищет существующий PdfExportJob по student_id, requested_by и job_ref
+type/source_operation_id/deduplication_key. ACCEPTED — факт постановки, не готовность
+PDF; UNKNOWN не доказывает, что команда не выполнялась. Перед явным повтором UI
+проверяет receipt и сохраняет прежний UUID/body. После reload без исходного body
+допустима только GET-сверка, без эвристического нового POST.
+
+В UI session-owned query cache хранит intent/selection/UUID, без signed URL.
+URL страницы содержит только report/page/job/request IDs. Signed URL живёт в памяти
+mounted PDF UI до expiry/unmount; каждый download сначала читает job заново.
+Polling — последовательный GET раз в2s, максимум30 попыток/60s; остановка клиента
+не отменяет job. Возврат/resume читает прежний job, новый export только явный.
+401/403/session replacement скрывает данные и отменяет reads/timers.
+Состояния, RU/RO и local evidence: [TASK-032](../../../../../output/k8k-tasks/TASK-032/report.md).
+Новые GET/SDK проверены локально; реальные PostgreSQL/S3/worker delivery и FND-GATE
+по-прежнему не принимаются этим browser/mock evidence.
 
 Необязательное тело экспорта: `{subjectId?,periodFrom?,periodTo?}`. Даты строго
 YYYY-MM-DD, границы включительны по часовому поясу ученика, включая DST. Чужой

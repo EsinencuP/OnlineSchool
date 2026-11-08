@@ -1,0 +1,113 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "5da1852af7b2bcab938f52c9b1254c31b72a708669047de0d106ec129e46c3c0",
+  "algorithm": "SHA256 of sorted UTF-8 path + NUL + SHA256(file bytes) + LF",
+  "sourceManifest": [
+    {
+      "path": "apps/api/src/core/session/session.store.ts",
+      "sha256": "a275d57112e15ac2fb32ac0661f793d32fe7ce38bbc9d658431b9b7905a6825b"
+    },
+    {
+      "path": "apps/api/src/modules/finance/payments.service.ts",
+      "sha256": "3ef941dcb10783250fe3c9ae0222476e7dc8a2231babd467c041549ee82a0f6c"
+    },
+    {
+      "path": "apps/api/src/openapi/dtos.ts",
+      "sha256": "2b62b417d8387b5720d916686c9485277d27368569306084f009fdd7b4ff2453"
+    },
+    {
+      "path": "apps/api/src/student/active-subscription.guard.ts",
+      "sha256": "43bdff167b5cf955f40dd842dc34ab825d3e5ad155711536151cd8918368bbce"
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.service.ts",
+      "sha256": "18380cfd97b2e109f44c6addc3c402ca4cbc8cfc54db79ac94d319dfa8e29010"
+    },
+    {
+      "path": "apps/api/src/student/lessons/lessons.service.ts",
+      "sha256": "1e8e388bf8222a7b023b1e6ad920317ef13ae41d62260e3636e2a2108729e98b"
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.service.ts",
+      "sha256": "9706a023e9cb92e82282d2571862f884223195656e37bd55cadbd35f87a800ca"
+    },
+    {
+      "path": "apps/api/src/student/me/me.service.ts",
+      "sha256": "b925b2b4054e9d8e51d595fe0b4809cad2d263e22447d15e1f8e6e16f8cefb1e"
+    },
+    {
+      "path": "apps/api/src/student/student-context.guard.ts",
+      "sha256": "a9585dfb30907893eed7161712d15b73bb562c329b618928e42f2bc8580ce103"
+    },
+    {
+      "path": "apps/api/src/student/student.module.ts",
+      "sha256": "01443605c4c7df33cc261440d5363079f61d32c26cd8b4bcd81ca4d14ff4dc54"
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.controller.ts",
+      "sha256": "53080aec0bce79aa2f515533027999af5ed421b0b72addc32bb53ee538b8156c"
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.dto.ts",
+      "sha256": "07ab4e323ada94e13a6ae7a9e51e5554b6b250739a5bc6c178a5b33f8a6fd97b"
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.service.ts",
+      "sha256": "e0428479ff12d3486c2c1db634f7c8fde28b2e383ac68e512c90dfbd3284e013"
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.sql.ts",
+      "sha256": "30f23e2da1b151c5320312a70488e5626587410bc9a86d0a74a1f475eb6e36a0"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.controller.ts",
+      "sha256": "45896ae673f374916c4b5bc60eb971b5ad1e43cc7c14486b853dbfb59911fe8a"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.service.ts",
+      "sha256": "b66242ef740f95d31836390e9e266c4cbab3eb19b4a6a9e32cef61b998ba8645"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.sql.ts",
+      "sha256": "a7b6002a099610d1670553a1bfc76d88333450a2cc16891572399bfee6c09a66"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1e839dafeda0fecdb2a948d01e3b3c09b72dab4b010514cf02a2b10d2c38172d"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "bf65571ba8daccd49c4d91a88ac41a60f501508d3d65ab92762889212a36f42c"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "ee5ef0bd9e4544f824c069298e1ea773feeb72e8cab238f3684e12df9eb86384"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/manager-error-codes.ts",
+      "sha256": "2f5c823bd777d443a873bd6ffba87a60b270648b21dbec1ee429c180ce089513"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "ff30cc836ce33ddc47d4548e87d5cf9c924a7dd19461793dcd9eba1fe84b05df"
+    },
+    {
+      "path": "packages/db/prisma/schema.prisma",
+      "sha256": "13cfb729606e66588eba304a83d4aac53a06c0824787c1e9f943f3be68531e4f"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "tests/unit/student-subjects.test.mjs",
+      "sha256": "dc335a2e28718642735ddf6eb0fef9aa3ee3c3c0715eb86fa2ef3e7f10ab66d1"
+    },
+    {
+      "path": "tests/unit/student-subscription-http.test.mjs",
+      "sha256": "8ac03aebdf17752069d28c95ebc507cbfc9caeecc55dcfcd7bc289913fb0d4b2"
+    }
+  ],
+  "task023SourceHashesMatchedBeforeEdits": 179
+}

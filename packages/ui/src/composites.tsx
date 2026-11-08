@@ -37,6 +37,17 @@ export const Tabs = /* @__PURE__ */ forwardRef<HTMLDivElement, TabsProps>(functi
   ref,
 ) {
   const id = useId();
+  const [panels, setPanels] = useState({ value, exiting: null as string | null });
+  if (panels.value !== value)
+    setPanels({ value, exiting: mountPolicy === 'keep-mounted' ? panels.value : null });
+  useEffect(() => {
+    if (!panels.exiting) return;
+    const timer = globalThis.setTimeout(
+      () => setPanels((current) => ({ ...current, exiting: null })),
+      globalThis.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 160,
+    );
+    return () => globalThis.clearTimeout(timer);
+  }, [panels.exiting, panels.value]);
   return (
     <TabsPrimitive.Root
       ref={ref}
@@ -77,17 +88,24 @@ export const Tabs = /* @__PURE__ */ forwardRef<HTMLDivElement, TabsProps>(functi
           </div>
         ))}
       </TabsPrimitive.List>
-      {items.map((item) => (
-        <TabsPrimitive.Content
-          key={item.value}
-          value={item.value}
-          {...(mountPolicy === 'keep-mounted' ? { forceMount: true as const } : {})}
-          hidden={value !== item.value}
-          className="k8k-tab-panel"
-        >
-          {item.content}
-        </TabsPrimitive.Content>
-      ))}
+      <div className="k8k-tab-panels">
+        {items.map((item) => (
+          <TabsPrimitive.Content
+            key={item.value}
+            value={item.value}
+            {...(mountPolicy === 'keep-mounted' ? { forceMount: true as const } : {})}
+            hidden={value !== item.value && panels.exiting !== item.value}
+            aria-hidden={value !== item.value || undefined}
+            data-motion-exiting={panels.exiting === item.value || undefined}
+            ref={(node) => {
+              if (node) node.inert = value !== item.value;
+            }}
+            className="k8k-tab-panel"
+          >
+            {item.content}
+          </TabsPrimitive.Content>
+        ))}
+      </div>
     </TabsPrimitive.Root>
   );
 });

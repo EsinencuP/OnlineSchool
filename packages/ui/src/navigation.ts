@@ -30,18 +30,25 @@ export const roleNavigation: Record<CabinetRole, readonly LocalizedNavigationIte
     {
       id: 'lessons',
       href: '/student/lessons',
-      label: 'Уроки',
-      labelKey: 'lessonsShort',
+      label: 'Расписание',
+      labelKey: 'schedule',
+      compactLabelKey: 'lessonsShort',
       icon: 'calendar',
     },
     {
       id: 'homework',
       href: '/student/homework',
-      label: 'Домашние задания',
-      labelKey: 'nav.homework',
-      shortLabel: 'Задания',
-      compactLabelKey: 'homework',
+      label: 'Задания',
+      labelKey: 'homework',
       icon: 'tasks',
+    },
+    {
+      id: 'subjects',
+      href: '/student/subjects',
+      label: 'Мои предметы',
+      labelKey: 'nav.studentSubjects',
+      compactLabelKey: 'nav.studentSubjectsShort',
+      icon: 'materials',
     },
     {
       id: 'skills',
@@ -53,25 +60,11 @@ export const roleNavigation: Record<CabinetRole, readonly LocalizedNavigationIte
       icon: 'skills',
     },
     {
-      id: 'materials',
-      href: '/student/materials',
-      label: 'Материалы',
-      labelKey: 'materials',
-      icon: 'materials',
-    },
-    {
-      id: 'subscription',
-      href: '/student/subscription',
-      label: 'Абонемент',
-      labelKey: 'subscription',
-      icon: 'wallet',
-    },
-    {
-      id: 'profile',
-      href: '/student/profile',
-      label: 'Профиль и настройки',
-      labelKey: 'profile',
-      icon: 'profile',
+      id: 'help',
+      href: '/student/help',
+      label: 'Помощь',
+      labelKey: 'nav.studentHelp',
+      icon: 'health',
     },
   ],
   MANAGER: [
@@ -143,6 +136,12 @@ export const cabinetLabels: Record<CabinetRole, string> = {
   DIRECTOR: 'Кабинет руководителя',
   TECH_OPERATOR: 'Технический кабинет',
 };
+export function studentActiveNavigation(pathname: string): string {
+  if (/^\/student\/(materials|subscription)(?:\/|$)/.test(pathname)) return 'subjects';
+  if (pathname === '/student/reports') return 'skills';
+  if (/^\/student\/(profile|security)(?:\/|$)/.test(pathname)) return '';
+  return activeNavigation(roleNavigation.STUDENT, pathname);
+}
 export function activeNavigation(items: readonly NavigationItem[], pathname: string): string {
   return (
     [...items]

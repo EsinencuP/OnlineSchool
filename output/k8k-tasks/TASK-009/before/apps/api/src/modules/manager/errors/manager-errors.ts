@@ -1,0 +1,9 @@
+export const MANAGER_ERROR_CODES = [
+  'MANAGER_PROFILE_NOT_FOUND',
+  'MANAGER_INACTIVE',
+  'FORBIDDEN_ROLE',
+  'STUDENT_NOT_FOUND',
+  'IDEMPOTENCY_KEY_REQUIRED',
+  'IDEMPOTENCY_KEY_REUSED',
+] as const;
+export type ManagerErrorCode = (typeof MANAGER_ERROR_CODES)[number];

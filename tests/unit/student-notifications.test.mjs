@@ -18,6 +18,7 @@ import {
   subscriptionNotificationSql,
 } from '../../apps/worker/dist/notifications.js';
 import { WorkerLifecycle } from '../../apps/worker/dist/worker.module.js';
+import { projectNotificationText } from '../../apps/api/dist/student/notifications/notification-locale.js';
 const now = new Date('2026-10-28T10:00:00Z'),
   student = randomUUID(),
   sourceId = randomUUID();
@@ -100,6 +101,96 @@ test('query defaults30 and caps100 with strict ownership-query rejection', () =>
     null,
   ])
     expect(() => p.transform(q)).toThrow();
+});
+
+test('TASK-033 locale is a strict optional read input without changing existing defaults', () => {
+  const pipe = new NotificationsQueryPipe();
+  expect(pipe.transform({ locale: 'ro', page: '2' })).toEqual({
+    page: 2,
+    pageSize: 30,
+    locale: 'ro',
+  });
+  for (const locale of ['en', 'RU', '', null, ['ru', 'ro']])
+    expect(() => pipe.transform({ locale })).toThrow();
+});
+test.each(NOTIFICATION_TYPES.filter((type) => type !== 'MANUAL_MESSAGE'))(
+  'TASK-033 %s projects existing catalog RU/RO without altering payload',
+  (type) => {
+    const params = structuredClone(payloads[type]);
+    const before = structuredClone(params);
+    const catalog = { code: type, params, kind: 'source' };
+    const ru = projectNotificationText(type, catalog, 'ru'),
+      ro = projectNotificationText(type, catalog, 'ro');
+    expect(ru).toMatchObject({ title: expect.any(String), body: expect.any(String) });
+    expect(ro.title).not.toBe(ru.title);
+    expect(ro.body).not.toBe(ru.body);
+    expect(params).toEqual(before);
+  },
+);
+test('TASK-033 historical/free human text and incomplete catalog metadata are not guessed', () => {
+  expect(projectNotificationText('REPORT_READY', null, 'ro')).toBeNull();
+  expect(
+    projectNotificationText(
+      'REPORT_READY',
+      { code: 'REPORT_READY', params: {}, kind: 'source' },
+      'ro',
+    ),
+  ).toBeNull();
+  expect(
+    projectNotificationText(
+      'REPORT_READY',
+      { code: 'LESSON_CANCELLED', params: payloads.REPORT_READY, kind: 'source' },
+      'ro',
+    ),
+  ).toBeNull();
+  expect(
+    projectNotificationText(
+      'MANUAL_MESSAGE',
+      { code: 'MANUAL_MESSAGE', params: { body: 'Текст человека' }, kind: 'dispatch' },
+      'ro',
+    ),
+  ).toBeNull();
+  const out = projectNotificationText(
+    'PAYMENT_CONFIRMED',
+    {
+      code: 'PAYMENT_CONFIRMED',
+      params: { paymentId: randomUUID(), receiptOnly: 'true' },
+      kind: 'dispatch',
+    },
+    'ro',
+  );
+  expect(out.body).toContain('Verifică alocarea');
+  expect(out.body).not.toContain('alocarea ei');
+});
+test('TASK-033 list projection strips internal catalog metadata and preserves historical text/read/payload', async () => {
+  const item = {
+    notificationId: sourceId,
+    type: 'REPORT_READY',
+    title: 'Исторический заголовок',
+    body: '  Исходный текст\n  ',
+    payload: payloads.REPORT_READY,
+    isRead: false,
+    createdAt: now.toISOString(),
+  };
+  const db = { $queryRaw: jest.fn(async () => [{ total: 1, unreadCount: 1, items: [item] }]) };
+  db.$queryRaw.mockResolvedValueOnce([{ now }]);
+  const service = new StudentNotificationsService({ client: db }, {});
+  expect(
+    (await service.list({ studentProfileId: student }, { page: 1, pageSize: 5, locale: 'ro' }))
+      .items[0],
+  ).toEqual(item);
+  const catalog = { code: 'REPORT_READY', params: payloads.REPORT_READY, kind: 'source' };
+  db.$queryRaw
+    .mockResolvedValueOnce([{ now }])
+    .mockResolvedValueOnce([{ total: 1, unreadCount: 1, items: [{ ...item, catalog }] }]);
+  const result = await service.list(
+    { studentProfileId: student },
+    { page: 1, pageSize: 5, locale: 'ro' },
+  );
+  expect(result.items[0].title).toBe('Raportul educațional este gata');
+  expect(result.items[0]).not.toHaveProperty('catalog');
+  expect(result.items[0].payload).toEqual(item.payload);
+  expect(result).not.toHaveProperty('locale');
 });
 test('projection scope and TTL are server parameters; paging is stable', () => {
   const q = notificationsSql(student, { page: 3, pageSize: 30 }, now);

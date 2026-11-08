@@ -1,0 +1,42 @@
+{
+  "checks": [
+    "Server field error preserves exact money, note and focus, no repeat on RU/RO x four widths",
+    "Native required validation has a localized aria description and prevents commands",
+    "Unknown command outcome blocks blind repeat and stays unknown through locale switch",
+    "manager-denied hides cached private body without logging out",
+    "student-denied hides cached private body without logging out",
+    "Actual student password form keeps session, field values and focus on CURRENT_PASSWORD_INVALID",
+    "Actual notification SDK response 202 QUEUED is displayed as queued"
+  ],
+  "browserErrors": [],
+  "external": [
+    "https://example.invalid/error-sentinel"
+  ],
+  "budgets": [
+    {
+      "route": "/manager/students/:id?tab=schedule",
+      "total": 244440,
+      "pass": true
+    },
+    {
+      "route": "/manager/schedule",
+      "total": 242435,
+      "pass": true
+    },
+    {
+      "route": "/manager/students/:id?tab=overview",
+      "total": 206307,
+      "pass": true
+    },
+    {
+      "route": "/manager/students/:id?tab=payments",
+      "total": 254495,
+      "pass": true
+    },
+    {
+      "route": "/manager/students/:id?tab=subscriptions",
+      "total": 254015,
+      "pass": true
+    }
+  ]
+}

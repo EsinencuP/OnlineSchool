@@ -1,0 +1,52 @@
+{
+  "exit": 1,
+  "vulnerabilities": {
+    "info": 0,
+    "low": 1,
+    "moderate": 4,
+    "high": 1,
+    "critical": 0
+  },
+  "findings": [
+    {
+      "package": "multer",
+      "severity": "high",
+      "id": "GHSA-q7qp-rjg7-q26m",
+      "paths": [
+        "apps__api>@nestjs/platform-express>multer"
+      ],
+      "url": "https://github.com/advisories/GHSA-q7qp-rjg7-q26m"
+    },
+    {
+      "package": "deepmerge",
+      "severity": "low",
+      "id": "GHSA-gcqx-w48m-w2h4",
+      "paths": [
+        ".>jest>@jest/core>jest-config>deepmerge"
+      ],
+      "url": "https://github.com/advisories/GHSA-gcqx-w48m-w2h4"
+    },
+    {
+      "package": "glob",
+      "severity": "moderate",
+      "id": "GHSA-3g3m-2fjr-6pw4",
+      "paths": [
+        ".>@jest/globals>@jest/expect>jest-snapshot>@jest/transform>babel-plugin-istanbul>test-exclude>glob",
+        ".>jest>@jest/core>@jest/reporters>glob"
+      ],
+      "url": "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4"
+    },
+    {
+      "package": "minimatch",
+      "severity": "moderate",
+      "id": "GHSA-g3hv-75wg-m249",
+      "paths": [
+        ".>@jest/globals>@jest/expect>jest-snapshot>@jest/transform>babel-plugin-istanbul>test-exclude>glob>minimatch",
+        ".>@jest/globals>@jest/expect>jest-snapshot>@jest/transform>babel-plugin-istanbul>test-exclude>minimatch"
+      ],
+      "url": "https://github.com/advisories/GHSA-g3hv-75wg-m249"
+    }
+  ],
+  "foundationPaths": [],
+  "disposition": "Existing API/Jest chains unchanged. Repository audit is FAIL; foundation direct dependency chains have no findings. TASK-072 dependencies and TASK-073 safe regression; security follow-up before production."
+}

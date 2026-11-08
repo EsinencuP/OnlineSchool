@@ -6,7 +6,7 @@ import { DatabaseService } from '../../core/database/database.module.js';
 import { domainError } from '../../core/errors/domain-error.js';
 import type { DomainError } from '../../core/errors/domain-error.js';
 import type { IStudentContext } from '../student-context.interface.js';
-import type { HistoryPage, LessonHistoryResponseDto } from './history.dto.js';
+import type { LessonHistoryPage, LessonHistoryResponseDto } from './history.dto.js';
 
 export const DISPUTE_WINDOW_MS = 30 * 86400000;
 export interface HistoryRow {
@@ -23,7 +23,15 @@ export interface HistoryRow {
   can_dispute: boolean;
   total?: number;
 }
-export function historyRecords(studentId: string, time: Date): Prisma.Sql {
+export function historyRecords(
+  studentId: string,
+  time: Date,
+  filter?: Pick<LessonHistoryPage, 'lessonId' | 'subjectId'>,
+): Prisma.Sql {
+  const lesson = filter?.lessonId ? Prisma.sql`AND l.id=${filter.lessonId}::uuid` : Prisma.empty;
+  const subject = filter?.subjectId
+    ? Prisma.sql`AND e.subject_id=${filter.subjectId}::uuid`
+    : Prisma.empty;
   return Prisma.sql`
     SELECT l.id,l.scheduled_at,coalesce(o.duration_min,round(extract(epoch FROM(l.scheduled_end_at-l.scheduled_at))/60)::int) AS duration_minutes,
       t.full_name AS teacher_name,s.name AS subject_name,
@@ -44,23 +52,23 @@ export function historyRecords(studentId: string, time: Date): Prisma.Sql {
           JOIN ledger_documents d ON d.consumption_id=c.id JOIN ledger_entries le ON le.document_id=d.id
         WHERE c.lesson_occurrence_id=l.id AND c.consumed_at<=${time} AND (c.cancelled_at IS NULL OR c.cancelled_at>${time}) AND le.published_at<=${time}
         ORDER BY c.consumed_at DESC,c.id DESC LIMIT 1) charge ON true
-    WHERE e.student_id=${studentId}::uuid AND l.scheduled_at<=${time}
+    WHERE e.student_id=${studentId}::uuid AND l.scheduled_at<=${time} ${lesson} ${subject}
       AND ((l.status='CONDUCTED' AND o.id IS NOT NULL) OR
         (l.status='CANCELLED' AND ((r.result='NOT_CONDUCTED' AND r.student_no_show AND r.reported_at<=${time}) OR charge.basis='APPROVED_CANCELLATION')))`;
 }
 @Injectable()
 export class StudentHistoryService {
   constructor(private readonly database: DatabaseService) {}
-  async read(studentId: string, page: HistoryPage, time: Date): Promise<HistoryRow[]> {
+  async read(studentId: string, page: LessonHistoryPage, time: Date): Promise<HistoryRow[]> {
     return this.database.client.$queryRaw<HistoryRow[]>(Prisma.sql`
-      WITH records AS (${historyRecords(studentId, time)})
+      WITH records AS (${historyRecords(studentId, time, page)})
       SELECT data.*,totals.total FROM(SELECT count(*)::int AS total FROM records)totals
       LEFT JOIN LATERAL(SELECT * FROM records ORDER BY scheduled_at DESC,id DESC LIMIT ${page.pageSize} OFFSET ${(page.page - 1) * page.pageSize})data ON true
       ORDER BY data.scheduled_at DESC,data.id DESC`);
   }
   async list(
     student: IStudentContext,
-    page: HistoryPage,
+    page: LessonHistoryPage,
   ): Promise<Result<LessonHistoryResponseDto, DomainError>> {
     try {
       const rows = await this.read(student.studentProfileId, page, new Date());
@@ -84,7 +92,8 @@ export class StudentHistoryService {
             canDispute: row.can_dispute,
           })),
         total: rows[0]?.total ?? 0,
-        ...page,
+        page: page.page,
+        pageSize: page.pageSize,
       });
     } catch {
       return err(domainError('STUDENT_HISTORY_UNAVAILABLE', 503));

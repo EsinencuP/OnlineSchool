@@ -1,0 +1,53 @@
+[
+  {
+    "name": "@radix-ui/react-tabs",
+    "pin": "1.1.3",
+    "kind": "direct",
+    "released": "2025-02-05T23:50:33.644Z",
+    "ageDays": 637,
+    "license": "MIT",
+    "peers": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "reactResolved": "18.3.1",
+    "reactDomResolved": "18.3.1",
+    "registryMetadata": "tabs-metadata.json"
+  },
+  {
+    "name": "@radix-ui/react-tooltip",
+    "pin": "1.1.8",
+    "kind": "direct",
+    "released": "2025-02-05T23:50:35.364Z",
+    "ageDays": 637,
+    "license": "MIT",
+    "peers": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "reactResolved": "18.3.1",
+    "reactDomResolved": "18.3.1",
+    "registryMetadata": "tooltip-metadata.json"
+  },
+  {
+    "name": "@radix-ui/react-visually-hidden",
+    "pin": "1.1.2",
+    "kind": "transitive",
+    "released": "2025-02-05T23:50:37.137Z",
+    "ageDays": 637,
+    "license": "MIT",
+    "peers": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "reactResolved": "18.3.1",
+    "reactDomResolved": "18.3.1",
+    "registryMetadata": "visually-hidden-metadata.json"
+  }
+]

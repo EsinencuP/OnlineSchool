@@ -1,0 +1,556 @@
+{
+  "PASSWORD_CHANGE_REQUIRED": [
+    "apps/api/src/student/student-context.guard.ts",
+    "apps/api/src/student/student-context.interface.ts",
+    "apps/student-cabinet/src/api.ts",
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "STUDENT_PROFILE_NOT_FOUND": [
+    "apps/api/src/student/student-context.interface.ts",
+    "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+    "apps/api/src/student/security/change-password.service.ts"
+  ],
+  "ACCESS_SUSPENDED": [
+    "apps/api/src/student/student-context.interface.ts",
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/api/src/student/lessons/lessons.service.ts",
+    "apps/api/src/student/materials/materials.service.ts",
+    "apps/api/src/student/notifications/notifications.service.ts",
+    "apps/api/src/student/profile/profile.service.ts",
+    "apps/api/src/student/reports/reports.service.ts",
+    "apps/api/src/student/security/security-commands.ts"
+  ],
+  "DASHBOARD_UNAVAILABLE": [
+    "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+    "apps/api/src/student/dashboard/dashboard.service.ts"
+  ],
+  "DASHBOARD_REFRESH_REQUIRED": [
+    "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts"
+  ],
+  "NOT_STUDIED": [
+    "apps/api/src/student/dashboard/dashboard.service.ts",
+    "apps/api/src/student/skills/skills.dto.ts",
+    "apps/api/src/student/skills/skills.sql.ts"
+  ],
+  "NEEDS_REVISION": [
+    "apps/api/src/student/dashboard/dashboard.service.ts",
+    "apps/api/src/student/homework/homework.dto.ts",
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/student-cabinet/src/components.tsx",
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "LESSON_FORBIDDEN": [
+    "apps/api/src/student/history/dispute.service.ts",
+    "apps/api/src/student/lessons/lessons.service.ts",
+    "apps/api/src/student/lessons/student-lesson-scope.guard.ts"
+  ],
+  "ATTENDANCE_DISPUTE_ALREADY_OPEN": [
+    "apps/api/src/student/history/dispute.service.ts"
+  ],
+  "IN_PROGRESS": [
+    "apps/api/src/student/history/dispute.service.ts",
+    "apps/api/src/student/history/history.service.ts"
+  ],
+  "PUBLISHED_LESSON_DEDUCTION_REQUIRED": [
+    "apps/api/src/student/history/dispute.service.ts"
+  ],
+  "DISPUTE_WINDOW_CLOSED": [
+    "apps/api/src/student/history/dispute.service.ts"
+  ],
+  "ATTENDANCE_DISPUTE": [
+    "apps/api/src/student/history/dispute.service.ts",
+    "apps/api/src/student/history/history.service.ts",
+    "apps/api/src/student/lessons/student-crm-task.service.ts"
+  ],
+  "NO_SHOW": [
+    "apps/api/src/student/history/history.dto.ts",
+    "apps/api/src/student/history/history.service.ts",
+    "apps/api/src/student/lessons/lessons.dto.ts",
+    "apps/api/src/student/lessons/lessons.service.ts",
+    "apps/api/src/student/reports/export-data.ts",
+    "apps/student-cabinet/src/components.tsx"
+  ],
+  "NOT_CONDUCTED": [
+    "apps/api/src/student/history/history.service.ts",
+    "apps/api/src/student/lessons/lessons.service.ts",
+    "apps/api/src/student/reports/export-data.ts"
+  ],
+  "APPROVED_CANCELLATION": [
+    "apps/api/src/student/history/history.service.ts",
+    "apps/api/src/student/subscription/subscription.sql.ts"
+  ],
+  "STUDENT_HISTORY_UNAVAILABLE": [
+    "apps/api/src/student/history/history.service.ts"
+  ],
+  "HOMEWORK_FORBIDDEN": [
+    "apps/api/src/student/homework/homework-scope.guard.ts",
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "HOMEWORK_NOT_FOUND": [
+    "apps/api/src/student/homework/homework.controller.ts"
+  ],
+  "INVALID_INPUT": [
+    "apps/api/src/student/homework/homework.dto.ts",
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/api/src/student/profile/profile.service.ts",
+    "apps/api/src/student/reports/reports.dto.ts",
+    "apps/api/src/student/security/change-password.service.ts",
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "NOT_SUBMITTED": [
+    "apps/api/src/student/homework/homework.dto.ts",
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "UPLOAD_NOT_PENDING": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "ALREADY_SUBMITTED": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "FILE_NOT_CONFIRMED": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "MUST_CHANGE_PASSWORD": [
+    "apps/api/src/student/homework/homework.service.ts",
+    "apps/api/src/student/lessons/lessons.service.ts",
+    "apps/api/src/student/materials/materials.service.ts",
+    "apps/api/src/student/notifications/notifications.service.ts",
+    "apps/api/src/student/profile/profile.service.ts",
+    "apps/api/src/student/reports/reports.service.ts",
+    "apps/api/src/student/security/security-commands.ts",
+    "apps/student-cabinet/src/api.ts"
+  ],
+  "HOMEWORK_UNAVAILABLE": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "HOMEWORK_ALREADY_REVIEWED": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "FILE_FORBIDDEN": [
+    "apps/api/src/student/homework/homework.service.ts"
+  ],
+  "INVALID_PREFERRED_DATE": [
+    "apps/api/src/student/lessons/lesson-period.ts"
+  ],
+  "STUDENT_TIMEZONE_UNAVAILABLE": [
+    "apps/api/src/student/lessons/lesson-period.ts"
+  ],
+  "INVALID_LESSON_QUERY": [
+    "apps/api/src/student/lessons/lesson-period.ts"
+  ],
+  "LESSON_NOT_FOUND": [
+    "apps/api/src/student/lessons/lessons.controller.ts",
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "STAR_PENDING": [
+    "apps/api/src/student/lessons/lessons.dto.ts",
+    "apps/student-cabinet/src/components.tsx"
+  ],
+  "RESCHEDULE_WINDOW_CLOSED": [
+    "apps/api/src/student/lessons/lessons.service.ts"
+  ],
+  "CALENDAR_MONTH_LIMIT_EXCEEDED": [
+    "apps/api/src/student/lessons/lessons.service.ts"
+  ],
+  "STUDENT_LESSONS_UNAVAILABLE": [
+    "apps/api/src/student/lessons/lessons.service.ts"
+  ],
+  "RESCHEDULE_REQUEST": [
+    "apps/api/src/student/lessons/student-crm-task.service.ts"
+  ],
+  "FILE_ACCESS_DENIED": [
+    "apps/api/src/student/materials/materials.service.ts"
+  ],
+  "MATERIALS_UNAVAILABLE": [
+    "apps/api/src/student/materials/materials.service.ts"
+  ],
+  "STUDENT_CONTEXT_UNAVAILABLE": [
+    "apps/api/src/student/me/me.service.ts"
+  ],
+  "RESCHEDULE_DECLINED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_UNFROZEN": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_EXPIRING": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "LESSON_RESCHEDULED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "LESSON_CANCELLED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_FROZEN": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "DISPUTE_REJECTED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_EXPIRED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "REPORT_READY": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_RENEWED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "HOMEWORK_NEEDS_REVISION": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "MANUAL_MESSAGE": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "HOMEWORK_REVIEWED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "ACCOUNT_CREATED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "DISPUTE_ACCEPTED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "PAYMENT_CONFIRMED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "SUBSCRIPTION_CREATED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "LESSON_SCHEDULED": [
+    "apps/api/src/student/notifications/notifications.dto.ts"
+  ],
+  "NOTIFICATION_FORBIDDEN": [
+    "apps/api/src/student/notifications/notifications.service.ts"
+  ],
+  "NOTIFICATIONS_UNAVAILABLE": [
+    "apps/api/src/student/notifications/notifications.service.ts"
+  ],
+  "NOTIFICATION_NOT_FOUND": [
+    "apps/api/src/student/notifications/notifications.service.ts"
+  ],
+  "AVATAR_FILE_FORBIDDEN": [
+    "apps/api/src/student/profile/profile.service.ts"
+  ],
+  "AVATAR_NOT_FOUND": [
+    "apps/api/src/student/profile/profile.service.ts"
+  ],
+  "NOT_CONFIRMED": [
+    "apps/api/src/student/reports/export-data.ts"
+  ],
+  "PDF_EXPORT_FAILED": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "RETRY_WAIT": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "SAFE_RETRY": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "REPORT_FORBIDDEN": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "PDF_EXPORT_LIMIT_REACHED": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "REPORTS_UNAVAILABLE": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "PDF_EXPORT_EXPIRED": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "PDF_JOB_UNAVAILABLE": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "PDF_JOB_FORBIDDEN": [
+    "apps/api/src/student/reports/reports.service.ts"
+  ],
+  "LESSON_8": [
+    "apps/api/src/student/reports/reports.sql.ts"
+  ],
+  "STUDENT_PASSWORD_CHANGED": [
+    "apps/api/src/student/security/change-password.service.ts"
+  ],
+  "PASSWORD_UNCHANGED": [
+    "apps/api/src/student/security/change-password.service.ts"
+  ],
+  "CURRENT_PASSWORD_INVALID": [
+    "apps/api/src/student/security/change-password.service.ts",
+    "apps/api/src/student/security/email.service.ts",
+    "apps/student-cabinet/src/api.ts"
+  ],
+  "PASSWORD_MUST_DIFFER": [
+    "apps/api/src/student/security/change-password.service.ts"
+  ],
+  "EMAIL_DELIVERY_UNAVAILABLE": [
+    "apps/api/src/student/security/email-otp.ts",
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "EMAIL_NOT_CONFIGURED": [
+    "apps/api/src/student/security/email-otp.ts"
+  ],
+  "EMAIL_OTP_INVALID": [
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "OTP_GENERATION_UNAVAILABLE": [
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "EMAIL_REQUEST_SUPERSEDED": [
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "STUDENT_EMAIL_CHANGED": [
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "EMAIL_UNAVAILABLE": [
+    "apps/api/src/student/security/email.service.ts"
+  ],
+  "IDEMPOTENCY_KEY_INVALID": [
+    "apps/api/src/student/security/security-commands.ts"
+  ],
+  "AUTH_SERVICE_UNAVAILABLE": [
+    "apps/api/src/student/security/security-commands.ts"
+  ],
+  "SESSION_NOT_FOUND": [
+    "apps/api/src/student/security/sessions.service.ts"
+  ],
+  "CURRENT_SESSION_CANNOT_BE_REVOKED": [
+    "apps/api/src/student/security/sessions.service.ts"
+  ],
+  "STUDENT_SESSION_REVOKED": [
+    "apps/api/src/student/security/sessions.service.ts"
+  ],
+  "SKILLS_UNAVAILABLE": [
+    "apps/api/src/student/skills/skills.service.ts"
+  ],
+  "SKILLS_FORBIDDEN": [
+    "apps/api/src/student/skills/skills.service.ts"
+  ],
+  "SUBSCRIPTION_UNAVAILABLE": [
+    "apps/api/src/student/subscription/subscription.service.ts"
+  ],
+  "SUBSCRIPTION_FORBIDDEN": [
+    "apps/api/src/student/subscription/subscription.service.ts"
+  ],
+  "CONFIRMED_PAYMENT": [
+    "apps/api/src/student/subscription/subscription.sql.ts"
+  ],
+  "CONSUMPTION_CANCELLATION": [
+    "apps/api/src/student/subscription/subscription.sql.ts"
+  ],
+  "CONFIRMED_LESSON": [
+    "apps/api/src/student/subscription/subscription.sql.ts"
+  ],
+  "GRANT_DELTA": [
+    "apps/api/src/student/subscription/subscription.sql.ts"
+  ],
+  "INVALID_CREDENTIALS": [
+    "apps/student-cabinet/src/api.ts"
+  ],
+  "UPLOAD_EXPIRED": [
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "UPLOAD_FAILED": [
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "INVALID_FILE": [
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "INVALID_UPLOAD_URL": [
+    "apps/student-cabinet/src/pages/Homework.tsx"
+  ],
+  "INVALID_URL": [
+    "apps/student-cabinet/src/pages/Learning.tsx"
+  ],
+  "NETWORK_ERROR": [
+    "apps/manager-web/src/api/client.ts"
+  ],
+  "VALIDATION_FAILED": [
+    "apps/manager-web/src/components/business-forms.tsx"
+  ],
+  "FIRST_PAYMENT": [
+    "apps/manager-web/src/components/business-forms.tsx"
+  ],
+  "BANK_TRANSFER": [
+    "apps/manager-web/src/components/business-forms.tsx"
+  ],
+  "LEAD_DUPLICATE_SUSPECTED": [
+    "apps/manager-web/src/components/lead-form.tsx"
+  ],
+  "VERSION_CONFLICT": [
+    "apps/manager-web/src/components/ui.tsx"
+  ],
+  "TASK_VERSION_CONFLICT": [
+    "apps/manager-web/src/components/ui.tsx"
+  ],
+  "STUDENT_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "IDEMPOTENCY_KEY_REQUIRED": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "FORBIDDEN_ROLE": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "MANAGER_PROFILE_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "MANAGER_INACTIVE": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "IDEMPOTENCY_KEY_REUSED": [
+    "apps/api/src/modules/manager/errors/manager-errors.ts"
+  ],
+  "APPROVAL_REQUIRED": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "DISPUTE_REFUND_EXCEEDS_CHARGE": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "CURRENCY_NOT_SUPPORTED": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "PAYMENT_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "PAYMENT_IMMUTABLE": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "PAYMENT_DUPLICATE": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "LEDGER_PUBLICATION_FAILED": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts",
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "PAYMENT_NOT_PENDING": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "INVALID_MONEY": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "INVALID_RECEIVED_AT": [
+    "apps/api/src/modules/manager/errors/manager-payment.errors.ts"
+  ],
+  "CHANGE_REQUEST_STALE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "SUBSCRIPTION_REQUIRED": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "LEAD_TIME_VIOLATION": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "CHANGE_REQUEST_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "SUBSCRIPTION_NOT_ACTIVE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "LATE_RULE_OVERRIDE_REQUIRED": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "INVALID_RANGE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "SLOT_CONFLICT": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "CHANGE_REQUEST_ALREADY_APPROVED": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "LESSON_IMMUTABLE_STATE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "TEACHER_NOT_AVAILABLE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "NO_SCHEDULE_CHANGE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "CHARGEABLE_CANCELLATION_NOT_ALLOWED": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "RANGE_TOO_LARGE": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "TEACHER_NOT_ASSIGNED": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "INVALID_MEET_LINK": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "NO_LESSONS_REMAINING": [
+    "apps/api/src/modules/manager/errors/manager-schedule.errors.ts"
+  ],
+  "FREEZE_HAS_LESSONS": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "PLAN_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "PAYMENT_NOT_CONFIRMED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "INVALID_STATE_TRANSITION": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "INVALID_FREEZE_DATES": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "ACTIVE_SUBSCRIPTION_EXISTS": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "DISTRIBUTION_ALREADY_USED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "PLAN_DURATION_REQUIRED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "FINANCIAL_PACKAGE_ALREADY_ATTACHED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "LESSON_CANCELLATION_NOT_AVAILABLE": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "DISTRIBUTION_PLAN_MISMATCH": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "FREEZE_LIMIT_EXCEEDED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "SUBSCRIPTION_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "LESSON_CANCELLATION_NOT_COMPLETED": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "DISTRIBUTION_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "PREPARED_TERM_MISMATCH": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "INVALID_STARTS_AT": [
+    "apps/api/src/modules/manager/errors/manager-subscription.errors.ts"
+  ],
+  "FIRST_PAYMENT_NOT_CONFIRMED": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "ACCOUNT_NOT_FOUND": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "EMAIL_ALREADY_USED": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "ACCOUNT_ALREADY_EXISTS": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "TEMPORARY_PASSWORD_EXPIRED": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ],
+  "RESET_LIMIT_EXCEEDED": [
+    "apps/api/src/modules/manager/errors/student-account.errors.ts"
+  ]
+}

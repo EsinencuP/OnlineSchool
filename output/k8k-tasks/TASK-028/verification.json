@@ -1,0 +1,113 @@
+{
+  "target": "Local compile and mocked HTTP/browser, no production DB/provider",
+  "commands": [
+    {
+      "id": "api_typecheck",
+      "command": "pnpm --filter @online-school/api typecheck",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-build.log"
+    },
+    {
+      "id": "openapi_export",
+      "command": "pnpm --filter @online-school/api export:openapi",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "environment": {
+        "NODE_OPTIONS": "--import=file:///D:/OnlineSchool/output/k8k-tasks/TASK-018/no-db-export.mjs"
+      }
+    },
+    {
+      "id": "sdk_generate",
+      "command": "pnpm --filter @online-school/api-contracts generate:client",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log"
+    },
+    {
+      "id": "sdk_typecheck",
+      "command": "pnpm --filter @online-school/api-contracts typecheck",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log"
+    },
+    {
+      "id": "dashboard",
+      "command": "pnpm test:stu02 --roots tests",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "dashboard.log"
+    },
+    {
+      "id": "lessons",
+      "command": "pnpm test:stu03 --roots tests",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "lessons.log"
+    },
+    {
+      "id": "student_typecheck",
+      "command": "pnpm --filter @online-school/student-cabinet typecheck",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log"
+    },
+    {
+      "id": "student_fixture_build",
+      "command": "pnpm --filter @online-school/student-cabinet exec node --input-type=module",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "stdin": "import { build } from 'vite'; await build({ envDir: false, publicDir: false, logLevel: 'error', build: { emptyOutDir: false } });"
+    },
+    {
+      "id": "presentation",
+      "command": "pnpm --filter @online-school/student-cabinet test:presentation",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "presentation.log"
+    },
+    {
+      "id": "student_lint",
+      "command": "pnpm --filter @online-school/student-cabinet lint",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-lint.log"
+    },
+    {
+      "id": "api_scoped_lint",
+      "command": "pnpm exec eslint apps/api/src/student/dashboard/dashboard-cache.interceptor.ts apps/api/src/student/dashboard/dashboard.dto.ts apps/api/src/student/dashboard/dashboard.service.ts apps/api/src/student/lessons/meet-access.ts apps/api/src/student/lessons/lessons.dto.ts apps/api/src/student/lessons/lessons.service.ts tests/unit/student-dashboard.test.mjs tests/unit/student-dashboard-http.test.mjs tests/unit/student-lessons.test.mjs --max-warnings 0",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-lint.log"
+    },
+    {
+      "id": "browser",
+      "command": "pnpm --filter @online-school/student-cabinet test:meet-eligibility",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "browser-final.log"
+    },
+    {
+      "id": "budgets",
+      "command": "node scripts/k8k-refresh-budget.mjs --task-028",
+      "cwd": "D:/OnlineSchool",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "budget.log"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "task": "TASK-033",
+  "status": "DONE",
+  "scope": "authorized local code, mock/browser and contract checks; external gates remain NOT_RUN",
+  "date": "2026-11-08",
+  "baseline": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "db66e7bed8949d9f9504c34973ebe224b6270183086934a6bea30b649686d6f2",
+    "statusEntries": 458
+  },
+  "checks": [
+    {
+      "id": "sole-surface",
+      "description": "Один bell/Drawer; legacy redirect, reload/back/close сохраняют URL params",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "page-global-count",
+      "description": "Page2 unread0/global7, page1, empty beyond-end total5/unread5, loading/empty различимы",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "read-replay",
+      "description": "Read/read-all204, CSRF/UUID/empty body, unknown reconciliation, arrival после committed read-all, same-key replay/new-key explicit command",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "immutable-read",
+      "description": "Первый read_at неизменен; existing service and critical-operation mock semantics preserved",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/api-tests.log"
+    },
+    {
+      "id": "target-scope",
+      "description": "Lesson/homework/financial subscription/старый report25; invalid UUID/URL omitted; report403/404 scoped",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "read-not-action",
+      "description": "Notification read/navigation не запускают report-read/lesson/homework/payment/CRM mutation",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "all18-types",
+      "description": "Все18 типов DTO/response schema сохранены; source audit основан на существующем коде",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/contracts.json"
+    },
+    {
+      "id": "catalog-locale",
+      "description": "Strict optional ru/ro, default ru, existing catalog/public params; manual/history/incomplete fallback, no metadata exposure or persisted rewrite",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/api-tests.log"
+    },
+    {
+      "id": "session-and-late",
+      "description": "Open-only query, cancellation, unavailable counter, stale503, count403 late preview, logout and cross-tab actor switch",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/playwright.json"
+    },
+    {
+      "id": "accessibility",
+      "description": "RU/RO axe360 zero violations; focus/ESC/outside/Tab/scroll/bottom-nav/touch-size assertions",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/axe-ru.json"
+    },
+    {
+      "id": "visual-matrix",
+      "description": "29 synthetic screenshots,24 matrix RU/RO×360/768/1024/1280, role STUDENT; reviewed actual render",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/screenshots.json"
+    },
+    {
+      "id": "route-budgets",
+      "description": "50/50 routes≤256000 bytes including all fonts; student251072, max255923",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/budgets.json"
+    },
+    {
+      "id": "contracts-generated",
+      "description": "149 operations/old schemas unchanged, single additive locale query; SDK generated through standard scripts",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/contracts.json"
+    },
+    {
+      "id": "preservation",
+      "description": "32 snapshots valid,458 initial paths present,31 migration paths/checksums intact, HEAD/branch unchanged",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/preservation.json"
+    },
+    {
+      "id": "targeted-quality",
+      "description": "API/consumer typechecks, scoped ESLint,12 presentation tests; incremental diff whitespace clean",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-033/verification.json"
+    },
+    {
+      "id": "pg-integration",
+      "description": "Actual PostgreSQL metadata SQL, source guards, triggers, lock concurrency, projector retention500/TTL",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-033/source-audit.md",
+      "reason": "No authorized isolated PostgreSQL integration environment used;10 prepared readonly checks were not executed."
+    },
+    {
+      "id": "live-producers",
+      "description": "Actual teacher/manager/finance facts and worker/provider delivery",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-033/source-audit.md",
+      "reason": "Synthetic fixture and static producer audit do not prove live delivery; no live provider/DB/worker calls authorized by local smoke."
+    },
+    {
+      "id": "complete-gate",
+      "description": "TASK-035/end-of-phase regression/FND-GATE/production GO",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-033/handoff.md",
+      "reason": "Outside TASK-033; phase policy requires separate final gate. TASK-034 not started."
+    },
+    {
+      "id": "screen-reader",
+      "description": "Human screen-reader and real-device acceptance",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-033/report.md",
+      "reason": "Automated axe/keyboard/render evidence only; no certification claimed."
+    }
+  ],
+  "artifacts": "../../k8k-tasks/TASK-033/artifacts-check.json",
+  "nextTask": "TASK-034",
+  "nextTaskStarted": false
+}

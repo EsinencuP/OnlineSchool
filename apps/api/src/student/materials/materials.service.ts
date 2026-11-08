@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import { Prisma } from '@online-school/db';
@@ -22,7 +23,7 @@ function materialFrom(): Prisma.Sql {
     JOIN teacher_accounts t ON t.account_id=p.granted_by
     LEFT JOIN subjects s ON s.id=p.educational_subject_id`;
 }
-function materialWhere(student: IStudentContext, now: Date): Prisma.Sql {
+function materialWhere(student: IStudentContext, now: Date | Prisma.Sql): Prisma.Sql {
   return Prisma.sql`WHERE p.subject_id=${student.userId}::uuid AND p.subject_type='STUDENT'
     AND p.revoked_at IS NULL AND p.granted_at<=${now} AND (p.expires_at IS NULL OR p.expires_at>${now})
     AND o.status='VERIFIED' AND o.uploaded_at<=${now}
@@ -33,6 +34,10 @@ function materialWhere(student: IStudentContext, now: Date): Prisma.Sql {
       JOIN student_subject_enrollments e ON e.id=l.enrollment_id WHERE l.id=p.lesson_occurrence_id
         AND e.student_id=${student.studentProfileId}::uuid AND e.subject_id=p.educational_subject_id))`;
 }
+export function visibleMaterialSubjectsSql(student: IStudentContext, now: Prisma.Sql): Prisma.Sql {
+  return Prisma.sql`SELECT DISTINCT p.educational_subject_id AS subject_id
+    ${materialFrom()} ${materialWhere(student, now)} AND p.educational_subject_id IS NOT NULL`;
+}
 export function materialsProjectionSql(
   student: IStudentContext,
   query: MaterialsQuery,
@@ -41,11 +46,14 @@ export function materialsProjectionSql(
   const filter = query.subjectId
     ? Prisma.sql`AND p.educational_subject_id=${query.subjectId}::uuid`
     : Prisma.empty;
+  const lesson = query.lessonId
+    ? Prisma.sql`AND p.lesson_occurrence_id=${query.lessonId}::uuid`
+    : Prisma.empty;
   return Prisma.sql`WITH visible AS (
-    SELECT o.id AS "fileId",COALESCE(o.file_name,'Материал') AS "fileName",o.size AS "fileSizeBytes",o.content_type AS "mimeType",
+    SELECT p.educational_subject_id AS "subjectId",p.can_download AS "canDownload",(o.file_name IS NULL) AS "fileNameIsFallback",o.id AS "fileId",COALESCE(o.file_name,'Материал') AS "fileName",o.size AS "fileSizeBytes",o.content_type AS "mimeType",
       COALESCE(s.name,'Без предмета') AS "subjectName",o.uploaded_at AS "uploadedAt",p.granted_at AS "sharedAt",
       t.full_name AS "sharedByTeacherName",CASE WHEN p.lesson_occurrence_id IS NOT NULL THEN p.lesson_title ELSE NULL END AS "lessonTitle"
-    ${materialFrom()} ${materialWhere(student, now)} ${filter}
+    ${materialFrom()} ${materialWhere(student, now)} ${filter} ${lesson}
     ), paged AS (SELECT * FROM visible ORDER BY "sharedAt" DESC,"fileId" DESC
       LIMIT ${query.pageSize} OFFSET ${(query.page - 1) * query.pageSize})
     SELECT COALESCE((SELECT jsonb_agg(to_jsonb(paged) ORDER BY "sharedAt" DESC,"fileId" DESC) FROM paged),'[]'::jsonb) AS items,
@@ -107,16 +115,7 @@ export class StudentMaterialsService {
       if (loaded.studentProfileId !== student.studentProfileId)
         return fail(domainError('FILE_ACCESS_DENIED', 403));
       if (loaded.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-      if (!loaded.hasActiveAccess)
-        return fail({
-          ...domainError('ACCESS_SUSPENDED', 402),
-          details: {
-            managerContacts: {
-              whatsapp: process.env.STUDENT_MANAGER_WHATSAPP ?? '',
-              telegram: process.env.STUDENT_MANAGER_TELEGRAM ?? '',
-            },
-          },
-        });
+      if (!loaded.hasActiveAccess) return fail(studentAccessSuspended(loaded.managerContacts));
       const now = await at(tx);
       const [permission] = await tx.$queryRaw<MaterialAccessRow[]>(
         materialAccessSql(loaded, id, now),

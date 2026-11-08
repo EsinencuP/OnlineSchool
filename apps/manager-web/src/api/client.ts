@@ -1,5 +1,11 @@
 import { QueryClient } from '@tanstack/react-query';
-import { k8kEnabled, operationalQueryInterval } from '@online-school/ui';
+import {
+  clearPrivateSession,
+  leaveSession,
+  sessionSignal,
+  subscribeSession,
+} from '@online-school/account-ui';
+import { isAuthRead, k8kEnabled } from '@online-school/ui';
 import { getCsrfToken } from '@online-school/api-contracts';
 import type { SchoolRequestOptions, ClientError } from '@online-school/api-contracts';
 import { err } from '@online-school/shared';
@@ -14,31 +20,36 @@ export const queryClient = new QueryClient({
       retry: false,
       staleTime: 0,
       gcTime: 0,
-      refetchOnWindowFocus: (query) =>
-        !k8kEnabled || operationalQueryInterval(query.queryKey) === false,
+      refetchOnWindowFocus: (query) => !k8kEnabled || isAuthRead(query.queryKey),
+      refetchOnReconnect: (query) => !k8kEnabled || isAuthRead(query.queryKey),
     },
     mutations: { retry: false, gcTime: 0 },
   },
 });
-let sessionController = new AbortController();
-let onUnauthorized: () => void = () => {
-  window.location.replace(MANAGER_ROUTES.login);
-};
+let onUnauthorized: (() => void) | undefined;
 export function setUnauthorizedHandler(handler: () => void) {
   onUnauthorized = handler;
 }
-export function clearSession() {
-  sessionController.abort();
-  void queryClient.cancelQueries();
+subscribeSession(() => {
+  void queryClient.cancelQueries({}, { silent: true });
   queryClient.clear();
-  sessionController = new AbortController();
-}
+});
+queryClient.getQueryCache().subscribe((event) => {
+  if (event.type !== 'updated' || event.action.type !== 'error') return;
+  const { data, error } = event.query.state;
+  if (data !== undefined && error && 'status' in error && error.status === 403) {
+    // A later transient error must never reveal data from before a denial.
+    event.query.setState({ data: undefined, dataUpdatedAt: 0 });
+  }
+});
+export const clearSession = clearPrivateSession;
 type Command<T> = (options: SchoolRequestOptions) => Promise<Result<T, ClientError>>;
 export function requestOptions(signal?: AbortSignal): SchoolRequestOptions {
   return {
     credentials: 'include',
+    cache: 'no-store',
     signal: AbortSignal.any([
-      sessionController.signal,
+      sessionSignal(),
       ...(signal ? [signal] : []),
       AbortSignal.timeout(30_000),
     ]),
@@ -56,17 +67,23 @@ function inspect<T>(
       ['CURRENT_PASSWORD_INVALID', 'INVALID_CREDENTIALS'].includes(result.error.code)
     )
   ) {
-    clearSession();
-    onUnauthorized();
+    if (onUnauthorized) {
+      clearSession();
+      onUnauthorized();
+    } else leaveSession(MANAGER_ROUTES.login);
   }
   return err(errorView(result.error, operation));
 }
 export async function read<T>(command: Command<T>, signal?: AbortSignal): Promise<T> {
   const options = requestOptions(signal);
-  const result = inspect(await command(options));
-  if (options.signal?.aborted && result.ok)
-    return Promise.reject(errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }));
+  if (options.signal?.aborted) return Promise.reject(discarded());
+  const response = await command(options);
+  if (options.signal?.aborted) return Promise.reject(discarded());
+  const result = inspect(response);
   return result.ok ? result.value : Promise.reject(result.error);
+}
+function discarded(operation: 'read' | 'write' = 'read') {
+  return errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }, operation);
 }
 export async function write<T>(
   command: Command<T>,
@@ -74,18 +91,14 @@ export async function write<T>(
   signal?: AbortSignal,
 ): Promise<Result<T, ApiErrorView>> {
   const options = requestOptions(signal);
-  const csrf = inspect(await getCsrfToken(options));
+  if (options.signal?.aborted) return err(discarded('write'));
+  const token = await getCsrfToken(options);
+  if (options.signal?.aborted) return err(discarded('write'));
+  const csrf = inspect(token);
   if (!csrf.ok) return csrf;
-  if (options.signal?.aborted)
-    return err(errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }));
-  const result = inspect(
-    await command({
-      ...options,
-      headers: { 'X-CSRF-Token': csrf.value.csrfToken, 'Idempotency-Key': key },
-    }),
-    'write',
-  );
-  return options.signal?.aborted && result.ok
-    ? err(errorView({ code: 'NETWORK_ERROR', status: 0, message: '' }, 'write'))
-    : result;
+  const response = await command({
+    ...options,
+    headers: { 'X-CSRF-Token': csrf.value.csrfToken, 'Idempotency-Key': key },
+  });
+  return options.signal?.aborted ? err(discarded('write')) : inspect(response, 'write');
 }

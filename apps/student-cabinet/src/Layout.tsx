@@ -1,14 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
-import { AccountMenu } from '@online-school/account-ui';
+import { AccountMenu, leaveSession } from '@online-school/account-ui';
 import type { AccountLogoutOutcome } from '@online-school/account-ui';
 import {
   AppShell,
-  activeNavigation,
+  studentActiveNavigation,
   k8kEnabled,
   formatDate,
-  roleNavigation,
   useContextRefresh,
+  operationalQueryInterval,
+  refreshPolicies,
   useLocale,
+  useDataAge,
 } from '@online-school/ui';
 import '@online-school/account-ui/style.css';
 import { Link, NavLink, Navigate, Outlet, useLocation, useOutletContext } from 'react-router-dom';
@@ -21,21 +23,12 @@ import {
   getStudentUnreadNotificationCount,
 } from '@online-school/api-contracts';
 import type { StudentMeResponseDto } from '@online-school/api-contracts';
-import { queryClient, resetAccess, useStudentQuery, write } from './api.js';
-import {
-  date,
-  dayKey,
-  Empty,
-  Icon,
-  Modal,
-  Panel,
-  QueryState,
-  safeUrl,
-  setDateZone,
-} from './components.js';
+import { queryClient, StudentDeadlineRead, useStudentQuery, write } from './api.js';
+import { date, dayKey, Empty, Icon, Modal, Panel, QueryState, setDateZone } from './components.js';
 import { useUI } from './ui-store.js';
-import { StudentAside } from './student-widgets.js';
+import { useStudentCopy } from './student-copy.js';
 import { StudentNotificationMenu } from './StudentNotificationMenu.js';
+import { ManagerContacts, StudentManagerCard } from './student-widgets.js';
 export const navigation = [
   ['home', '', 'Главная'],
   ['lessons', '/lessons', 'Уроки'],
@@ -46,32 +39,9 @@ export const navigation = [
   ['notifications', '/notifications', 'Уведомления'],
   ['profile', '/profile', 'Профиль и настройки'],
 ] as const;
+type StudentViewProfile = StudentMeResponseDto & { managerContactsUnavailable?: boolean };
 export function useMe() {
-  return useOutletContext<StudentMeResponseDto>();
-}
-export function ManagerContacts({
-  contacts,
-}: {
-  contacts?: StudentMeResponseDto['managerContacts'];
-}) {
-  const { t } = useLocale();
-  const whatsapp = safeUrl(contacts?.whatsapp, 'whatsapp'),
-    telegram = safeUrl(contacts?.telegram, 'telegram');
-  return (
-    <div className="manager-contacts">
-      {whatsapp && (
-        <a className="button" href={whatsapp} target="_blank" rel="noreferrer">
-          WhatsApp ↗
-        </a>
-      )}
-      {telegram && (
-        <a className="button" href={telegram} target="_blank" rel="noreferrer">
-          Telegram ↗
-        </a>
-      )}
-      {!whatsapp && !telegram && <p className="muted">{t('chrome.noManagerContacts')}</p>}
-    </div>
-  );
+  return useOutletContext<StudentViewProfile>();
 }
 function MiniCalendar() {
   const [month, setMonth] = useState(() => dayKey(new Date().toISOString()).slice(0, 7));
@@ -151,7 +121,7 @@ function MiniCalendar() {
     </Panel>
   );
 }
-function RightSidebar({ me, inline = false }: { me: StudentMeResponseDto; inline?: boolean }) {
+function RightSidebar({ me, inline = false }: { me: StudentViewProfile; inline?: boolean }) {
   const dashboard = useStudentQuery(['dashboard'], getStudentDashboard, true, 60_000);
   const materials = useStudentQuery(['quick-materials'], (o) =>
     getStudentMaterials({ pageSize: 3 }, o),
@@ -198,77 +168,116 @@ function RightSidebar({ me, inline = false }: { me: StudentMeResponseDto; inline
           )}
         </QueryState>
       </Panel>
-      <section className="panel" id={inline ? 'mobile-manager' : 'manager-contacts'}>
-        <Icon name="manager" />
-        <h2>Ваш менеджер</h2>
-        <p className="muted">Поможет с расписанием и вопросами по обучению.</p>
-        <ManagerContacts contacts={me.managerContacts} />
-      </section>
+      <StudentManagerCard
+        id={inline ? 'mobile-manager' : 'manager-contacts'}
+        contacts={me.managerContacts}
+        unavailable={me.managerContactsUnavailable}
+      />
     </aside>
   );
 }
 export function StudentLayout() {
   const { locale, t } = useLocale();
+  const { copy } = useStudentCopy();
   const me = useStudentQuery(['me'], getStudentMe, true, 60_000);
+  const contactsTooOld = useDataAge(me.dataUpdatedAt, 120_000);
+  const account = useRef<string>();
+  const accountId = me.data?.userId;
+  const replaced = !!account.current && !!accountId && account.current !== accountId;
+  const denied = !!me.error && 'status' in me.error && me.error.status === 403;
+  useEffect(() => {
+    if (replaced) leaveSession('/');
+    else if (accountId) account.current = accountId;
+  }, [accountId, replaced]);
+  useEffect(() => {
+    if (!denied) return;
+    const privateQueries = {
+      predicate: (q: { queryKey: readonly unknown[] }) => q.queryKey[1] !== 'me',
+    };
+    void queryClient.cancelQueries(privateQueries, { silent: true });
+    queryClient.removeQueries(privateQueries);
+    queryClient.getMutationCache().clear();
+  }, [denied]);
   const location = useLocation(),
     heading = useRef<HTMLElement>(null);
   const { sidebar, toggle, close } = useUI();
   const unread = useStudentQuery(
     ['unread'],
     getStudentUnreadNotificationCount,
-    !!me.data && !me.data.mustChangePassword && me.data.hasActiveAccess,
+    !denied && !replaced && !!me.data && !me.data.mustChangePassword && me.data.hasActiveAccess,
     60_000,
   );
-  useContextRefresh({
-    enabled: k8kEnabled && !!me.data,
-    context: /^\/student\/lessons\/[^/]+/.test(location.pathname) ? 'live-lesson' : 'operational',
+  const autoReads =
+    k8kEnabled && !denied && !replaced && !!me.data?.hasActiveAccess && !me.data.mustChangePassword;
+  const { request: requestOperationalRead } = useContextRefresh({
+    enabled: autoReads,
+    context: 'operational',
     refresh: () =>
-      queryClient.refetchQueries({
-        type: 'active',
-        predicate: (query) =>
-          query.queryKey[0] === 'student' && query.meta?.k8kOperational === true,
-      }),
+      queryClient.refetchQueries(
+        {
+          type: 'active',
+          predicate: (query) =>
+            query.queryKey[0] === 'student' &&
+            operationalQueryInterval(query.queryKey) === refreshPolicies.operational,
+        },
+        { cancelRefetch: false },
+      ),
+  });
+  const liveLesson = /^\/student\/lessons\/[^/]+/.test(location.pathname);
+  const { request: requestLiveRead } = useContextRefresh({
+    enabled: autoReads && liveLesson,
+    context: 'live-lesson',
+    refresh: () =>
+      queryClient.refetchQueries(
+        {
+          type: 'active',
+          predicate: (query) =>
+            query.queryKey[0] === 'student' &&
+            operationalQueryInterval(query.queryKey) === refreshPolicies['live-lesson'],
+        },
+        { cancelRefetch: false },
+      ),
   });
   useEffect(() => {
     close();
-    heading.current?.focus();
-    window.scrollTo(0, 0);
+    heading.current?.focus({ preventScroll: k8kEnabled });
+    if (!k8kEnabled) window.scrollTo(0, 0);
   }, [location.pathname, close]);
   async function logout(): Promise<AccountLogoutOutcome> {
     try {
       await write((o) => deleteSession({}, o));
-      queryClient.clear();
-      resetAccess();
-      window.location.replace('/student/login');
       return 'ended';
     } catch (error) {
       const status = error && typeof error === 'object' && 'status' in error ? error.status : null;
       if (status === 401) return 'ended';
-      return typeof status !== 'number' || status === 0 || status >= 500 ? 'unknown' : 'rejected';
+      const invalid =
+        error && typeof error === 'object' && 'code' in error && error.code === 'INVALID_RESPONSE';
+      return invalid || typeof status !== 'number' || status === 0 || status >= 500
+        ? 'unknown'
+        : 'rejected';
     }
   }
-  if (me.data?.mustChangePassword)
+  if (replaced) return null;
+  if (!denied && me.data?.mustChangePassword)
     return <Navigate to="/student/security/change-password" replace />;
-  if (me.data && !me.data.hasActiveAccess) return <Navigate to="/student/suspended" replace />;
-  if (!me.data)
+  if (!denied && me.data && !me.data.hasActiveAccess)
+    return <Navigate to="/student/suspended" replace />;
+  if (denied || !me.data)
     return (
       <main className="standalone">
         <h1>{t('cabinetStudent')}</h1>
         <QueryState query={me}>{null}</QueryState>
       </main>
     );
-  const profile = me.data;
+  const profile: StudentViewProfile =
+    me.error || contactsTooOld ? { ...me.data, managerContactsUnavailable: true } : me.data;
   setDateZone(profile.timeZone);
   if (k8kEnabled)
     return (
       <AppShell
         role="STUDENT"
         timeZone={profile.timeZone}
-        activeId={
-          location.pathname.startsWith('/student/security')
-            ? 'profile'
-            : activeNavigation(roleNavigation.STUDENT, location.pathname)
-        }
+        activeId={studentActiveNavigation(location.pathname)}
         renderNavigation={(item, content, props) => (
           <Link to={item.href!} {...props}>
             {content}
@@ -276,40 +285,39 @@ export function StudentLayout() {
         )}
         mainId="main-content"
         mainRef={heading}
-        account={<AccountMenu name={profile.displayName} role="STUDENT" onLogout={logout} />}
+        account={
+          <AccountMenu
+            name={profile.displayName}
+            role="STUDENT"
+            onLogout={logout}
+            logoutPath="/student/login"
+            links={[
+              { href: '/student/profile', label: copy.profile },
+              { href: '/student/security', label: copy.security },
+            ].map(({ href, label }) => (
+              <Link
+                key={href}
+                className="account-login-link k8k-student-account-link"
+                to={href}
+                onClick={(event) => event.currentTarget.closest('details')?.removeAttribute('open')}
+              >
+                {label}
+              </Link>
+            ))}
+          />
+        }
         notifications={
-          <StudentNotificationMenu count={unread.error ? undefined : unread.data?.unreadCount} />
+          <StudentNotificationMenu
+            count={unread.error ? undefined : unread.data?.unreadCount}
+            countError={unread.error}
+            retryCount={() => unread.refetch()}
+            timeZone={profile.timeZone}
+          />
         }
-        sidebarFooter={
-          <>
-            <a
-              href="#manager-contacts"
-              onClick={(event) => {
-                if (!window.matchMedia('(max-width: 1279px)').matches) return;
-                event.preventDefault();
-                const details = document.querySelector<HTMLDetailsElement>(
-                  '.k8k-main .inline-widgets',
-                );
-                if (details) details.open = true;
-                const contacts = document.getElementById('mobile-manager');
-                if (contacts) {
-                  contacts.tabIndex = -1;
-                  contacts.focus();
-                  contacts.scrollIntoView({ block: 'start' });
-                }
-              }}
-            >
-              {t('chrome.managerContacts')}
-            </a>
-          </>
-        }
-        aside={<StudentAside contacts={profile.managerContacts} />}
       >
-        <Outlet context={profile} />
-        <details className="inline-widgets">
-          <summary>{t('chrome.managerContacts')}</summary>
-          <StudentAside contacts={profile.managerContacts} inline />
-        </details>
+        <StudentDeadlineRead.Provider value={liveLesson ? requestLiveRead : requestOperationalRead}>
+          <Outlet context={profile} />
+        </StudentDeadlineRead.Provider>
       </AppShell>
     );
   const nav = navigation.map(([icon, path]) => (
@@ -368,7 +376,12 @@ export function StudentLayout() {
                 <span className="badge">{unread.data.unreadCount}</span>
               )}
             </Link>
-            <AccountMenu name={profile.displayName} role="STUDENT" onLogout={logout} />
+            <AccountMenu
+              name={profile.displayName}
+              role="STUDENT"
+              onLogout={logout}
+              logoutPath="/student/login"
+            />
           </div>
         </header>
         <div className="content-grid">
@@ -399,7 +412,10 @@ export function StudentLayout() {
       {sidebar && (
         <Modal title={t('sections')} close={close} className="navigation-drawer">
           <nav>{nav}</nav>
-          <ManagerContacts contacts={profile.managerContacts} />
+          <ManagerContacts
+            contacts={profile.managerContacts}
+            unavailable={profile.managerContactsUnavailable}
+          />
         </Modal>
       )}
     </div>

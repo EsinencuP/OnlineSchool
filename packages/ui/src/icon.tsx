@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Bell,
   BookOpen,
@@ -63,5 +64,32 @@ export function Icon({ name, size = 22, className }: IconProps) {
       aria-hidden="true"
       focusable="false"
     />
+  );
+}
+
+/** Opt in where the same control changes meaning; static icons keep their SVG-only markup. */
+export function IconSwap({ name, size = 22, className }: IconProps) {
+  const [icons, setIcons] = useState({ name, previous: null as IconName | null });
+  if (icons.name !== name) setIcons({ name, previous: icons.name });
+  return (
+    <span
+      className={`k8k-icon-swap ${className ?? ''}`}
+      aria-hidden="true"
+      data-changing={!!icons.previous}
+      onAnimationEnd={(event) => {
+        if (event.animationName === 'k8k-icon-in')
+          setIcons((current) => ({ ...current, previous: null }));
+      }}
+    >
+      {icons.previous && (
+        <Icon
+          key={`old-${icons.previous}`}
+          name={icons.previous}
+          size={size}
+          className="k8k-icon-previous"
+        />
+      )}
+      <Icon key={name} name={name} size={size} className="k8k-icon-current" />
+    </span>
   );
 }

@@ -1,0 +1,100 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "42c976241f3a411477e8442fe572807822cd8f4ceebd27950bf8a775da7bf2f4",
+  "algorithm": "SHA256 of sorted UTF-8 path + NUL + SHA256(file bytes) + LF; scope listed in sourceManifest",
+  "sourceManifest": [
+    {
+      "path": "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts",
+      "sha256": "c1ea3278a692df6eab215da11a504995c807c50b053f3c9bcc8c95fae227491e"
+    },
+    {
+      "path": "apps/api/src/modules/manager/dto/manager-dashboard.dto.ts",
+      "sha256": "00b8d18cc448a70437cc6fbd3c4065394eca3fdaf0a9d0f821eed3d90badbc2b"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/contracts.ts",
+      "sha256": "a275adbb1232a4822fa9b2f8d7b41dc0ae41aa382e1ce27a44f63892f00acf73"
+    },
+    {
+      "path": "apps/api/src/modules/manager/tasks/task-read.spec.ts",
+      "sha256": "0face6a4e8719fcce70849adb49c4d36ad594a81a0b9d40b65f73fcf04df0015"
+    },
+    {
+      "path": "apps/api/src/modules/schedule/deadline.module.ts",
+      "sha256": "1221e3072b4e976481d80344da8ff3cd59bc91f06284397b3c1cbfcef70c00be"
+    },
+    {
+      "path": "apps/api/src/openapi/dtos.ts",
+      "sha256": "4bd76bfd80bcb70248c34f93ef3f942b597182719a640f1856bf7f7672a66fe2"
+    },
+    {
+      "path": "apps/manager-web/src/components/layout.tsx",
+      "sha256": "0e4ea79f4e827f8f2e65d65385a5db3bee46f27badcdb66c1e338011458c2088"
+    },
+    {
+      "path": "apps/manager-web/src/pages/Dashboard.tsx",
+      "sha256": "c684dd9bbbc65d1cabaeb604d5de7f936e0e07921b7f9c6f69e98532f530657c"
+    },
+    {
+      "path": "apps/worker/src/worker.module.ts",
+      "sha256": "a9fc53d857d2b4de881922ebd5abf03fe85823fd73f11771fd7bf1431e42c714"
+    },
+    {
+      "path": "package.json",
+      "sha256": "919d8c7c9929216033076fe91ff90e154a24fc17575d2e620dd7dc9e6f931a75"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "f454000693dbaa579ef1397a9eee44bb51e5248d39a12c8b4de522ddcf23ce38"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "935ec91ed33468d7adb1dac8392d27a08247390a0192d7f2eeed4364fd737858"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "6869b15fa8f8224ab44a02b76b89820a94e740152f595ddbb98fb1f99d1d2eaa"
+    },
+    {
+      "path": "packages/db/prisma/schema.prisma",
+      "sha256": "13cfb729606e66588eba304a83d4aac53a06c0824787c1e9f943f3be68531e4f"
+    },
+    {
+      "path": "packages/ui/README.md",
+      "sha256": "ea4f120eaf525c1274ce2948f3321a861c847b30ab033a07d55b99808348661a"
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "sha256": "cc0bae952c3b427291bd456343114ce415f72ccd1b7adc6b31b2b538766dbdb1"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "sha256": "5d24b3d29a424d4ea7d9bbf097c436c481771eae3262e54e88a79eca2807b4b5"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "sha256": "04a3a5446fb226ae7d5775ee330b0df7e5b057464660924859591d364b2e2794"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "sha256": "49d236aa6df6e90b8bd886bbbe76af5d96ef4780eb5cad59a6527b8d4df93bea"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "scripts/k8k-priority-evidence.mjs",
+      "sha256": "467c3e9301d2f8cffe6692b146b28b50485f13bfea17cabe9f85d14ed32116da"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "sha256": "43b4c174112f6e6099a379a8e9173a9e1fb7f893634ecd19d95f40ad45053dc2"
+    },
+    {
+      "path": "tests/unit/manager-dashboard-sdk.test.mjs",
+      "sha256": "b6bcab182652492424e7d978c0d0c2f62960b2f8c54bf8eac2e8a2040496654c"
+    }
+  ]
+}

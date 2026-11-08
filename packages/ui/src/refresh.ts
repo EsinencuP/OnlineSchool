@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export type RefreshContext = 'operational' | 'live-lesson' | 'financial' | 'published' | 'history';
-// Provisional engineering recommendation behind ui.k8k; these are not domain timers or SLAs.
+export type RefreshReason = 'background' | 'deadline';
+// Provisional K8K defaults, independent of business deadlines.
 export const refreshPolicies: Record<RefreshContext, number | false> = {
   operational: 60_000,
   'live-lesson': 15_000,
@@ -9,67 +10,126 @@ export const refreshPolicies: Record<RefreshContext, number | false> = {
   published: false,
   history: false,
 };
+
 export function isEditing() {
   if (typeof document === 'undefined') return false;
   return !!(
-    globalThis.document.activeElement?.matches(
-      'input, textarea, select, [contenteditable="true"]',
-    ) || globalThis.document.querySelector('dialog[open], .account-menu[open]')
+    document.activeElement?.closest(
+      'input:not([type="button"]):not([type="submit"]), textarea, select, [contenteditable]:not([contenteditable="false"])',
+    ) ||
+    document.querySelector(
+      'dialog[open], [role="dialog"][data-state="open"], [role="alertdialog"][data-state="open"], .account-menu[open], .k8k-notification-menu[open]',
+    )
   );
 }
+
+const managerReads = ['dashboard', 'tasks', 'leads', 'lead-summary', 'schedule'];
+const studentReads = [
+  'subjects',
+  'dashboard',
+  'upcoming',
+  'lessons',
+  'unread',
+  'calendar',
+  'notifications-preview',
+  'notifications',
+];
 export function operationalQueryInterval(key: readonly unknown[]): number | false {
-  const scope = key[0],
-    kind = key[1];
-  if (scope === 'student' && kind === 'lessons' && key[2] === 'archive' && key[3] !== 'calendar')
-    return false;
-  const operational =
-    scope === 'manager'
-      ? ['dashboard', 'tasks', 'leads', 'lead-summary', 'schedule']
-      : scope === 'student'
-        ? ['dashboard', 'upcoming', 'lessons', 'unread', 'calendar']
-        : [];
-  return typeof kind === 'string' && operational.includes(kind)
-    ? refreshPolicies.operational
-    : false;
+  const [scope, kind] = key;
+  if (typeof kind !== 'string') return false;
+  if (scope === 'manager') return managerReads.includes(kind) ? refreshPolicies.operational : false;
+  if (scope !== 'student') return false;
+  if (kind === 'lesson') return refreshPolicies['live-lesson'];
+  if (kind === 'lessons' && key[2] === 'archive' && key[3] !== 'calendar') return false;
+  return studentReads.includes(kind) ? refreshPolicies.operational : false;
 }
 
-// Used by the staff workspace, which has no QueryClient. Only read callbacks belong here.
+export function isAuthRead(key: readonly unknown[]): boolean {
+  return (
+    (key[0] === 'manager' || key[0] === 'student') && (key[1] === 'me' || key[1] === 'suspended-me')
+  );
+}
+
+/** Single owner of automatic reads for a group of disjoint keys. */
 export function useContextRefresh({
   enabled,
   context,
+  paused = false,
   refresh,
 }: {
   enabled: boolean;
   context: RefreshContext;
-  refresh: () => Promise<unknown>;
+  paused?: boolean;
+  refresh: (reason: RefreshReason) => Promise<unknown>;
 }) {
-  const callback = useRef(refresh);
-  callback.current = refresh;
+  const latest = useRef({ refresh, paused });
+  latest.current = { refresh, paused };
+  const requestRef = useRef<(reason: RefreshReason, dueAt?: number) => void>();
+  const resumeRef = useRef<() => void>();
+  const request = useCallback(
+    (reason: RefreshReason = 'background', dueAt?: number) => requestRef.current?.(reason, dueAt),
+    [],
+  );
   const [failed, setFailed] = useState(false);
+
   useEffect(() => {
     if (!enabled) return;
-    let disposed = false,
-      running = false,
-      deferred = false,
-      lastStarted = 0;
-    const run = () => {
-      if (
-        disposed ||
-        globalThis.document.visibilityState === 'hidden' ||
-        !globalThis.navigator.onLine ||
-        running
-      )
-        return;
-      if (isEditing()) {
-        deferred = true;
+    let disposed = false;
+    let running = false;
+    let deferred: RefreshReason | undefined;
+    let deadline: number | undefined;
+    let lastStarted = -Infinity;
+    let wake: ReturnType<typeof setTimeout> | undefined;
+
+    const run = (reason: RefreshReason, dueAt = performance.now()) => {
+      if (disposed) return;
+      if (reason === 'deadline' && lastStarted >= dueAt) return;
+      if (running || latest.current.paused) {
+        if (reason === 'deadline') {
+          deferred = reason;
+          deadline = dueAt;
+        }
         return;
       }
-      if (Date.now() - lastStarted < 1000) return;
-      lastStarted = Date.now();
+      const editing = isEditing();
+      if (editing && !watching) {
+        observer.observe(document.body, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+          attributeFilter: ['open', 'data-state'],
+        });
+        watching = true;
+      }
+      if (document.visibilityState === 'hidden' || navigator.onLine === false || editing) {
+        deferred ??= reason;
+        if (reason === 'deadline') {
+          deferred = reason;
+          deadline = dueAt;
+        }
+        return;
+      }
+      const intent = deferred === 'deadline' ? deferred : reason;
+      const cooldown = 1000 - (performance.now() - lastStarted);
+      if (intent !== 'deadline' && cooldown > 0) {
+        if (deferred && wake === undefined) {
+          wake = globalThis.setTimeout(() => {
+            wake = undefined;
+            if (deferred) run(deferred);
+          }, cooldown);
+        }
+        return;
+      }
+      deferred = undefined;
+      deadline = undefined;
+      observer.disconnect();
+      watching = false;
+      lastStarted = performance.now();
       running = true;
-      deferred = false;
       void Promise.resolve()
-        .then(() => callback.current())
+        .then(() => {
+          if (!disposed) return latest.current.refresh(intent);
+        })
         .then(
           () => {
             if (!disposed) setFailed(false);
@@ -80,25 +140,41 @@ export function useContextRefresh({
         )
         .finally(() => {
           running = false;
+          resume();
         });
     };
-    const resumeInput = () => {
-      if (deferred) globalThis.queueMicrotask(run);
+    const background = () => run('background');
+    const resume = () => {
+      if (deferred && !disposed)
+        globalThis.queueMicrotask(() => {
+          if (deferred) run(deferred, deadline);
+        });
     };
+    requestRef.current = run;
+    resumeRef.current = resume;
     const interval = refreshPolicies[context];
-    const timer = interval === false ? undefined : globalThis.setInterval(run, interval);
-    globalThis.document.addEventListener('visibilitychange', run);
-    globalThis.addEventListener('focus', run);
-    globalThis.addEventListener('online', run);
-    globalThis.document.addEventListener('focusout', resumeInput);
+    const timer = interval === false ? undefined : globalThis.setInterval(background, interval);
+    const observer = new MutationObserver(resume);
+    let watching = false;
+    document.addEventListener('visibilitychange', background);
+    globalThis.addEventListener('focus', background);
+    globalThis.addEventListener('online', background);
+    document.addEventListener('focusout', resume);
     return () => {
       disposed = true;
+      requestRef.current = undefined;
+      resumeRef.current = undefined;
+      observer.disconnect();
       globalThis.clearInterval(timer);
-      globalThis.document.removeEventListener('visibilitychange', run);
-      globalThis.removeEventListener('focus', run);
-      globalThis.removeEventListener('online', run);
-      globalThis.document.removeEventListener('focusout', resumeInput);
+      globalThis.clearTimeout(wake);
+      document.removeEventListener('visibilitychange', background);
+      globalThis.removeEventListener('focus', background);
+      globalThis.removeEventListener('online', background);
+      document.removeEventListener('focusout', resume);
     };
   }, [enabled, context]);
-  return { failed };
+  useEffect(() => {
+    if (!paused) resumeRef.current?.();
+  }, [paused]);
+  return { failed, request };
 }

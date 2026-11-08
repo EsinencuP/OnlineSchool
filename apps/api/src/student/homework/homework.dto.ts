@@ -14,7 +14,7 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
-import { object } from '../../modules/identity/input.js';
+import { object, uuid } from '../../modules/identity/input.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import { HistoryQueryPipe } from '../history/history.dto.js';
 
@@ -25,8 +25,14 @@ export const HOMEWORK_STATUSES = [
   'NEEDS_REVISION',
 ] as const;
 export type HomeworkStatus = (typeof HOMEWORK_STATUSES)[number];
-export type HomeworkQuery = { page: number; pageSize: number; status?: HomeworkStatus };
+export type HomeworkQuery = {
+  page: number;
+  pageSize: number;
+  status?: HomeworkStatus;
+  lessonId?: string;
+};
 export class HomeworkQueryDto {
+  @ApiPropertyOptional({ format: 'uuid' }) lessonId?: string;
   @ApiPropertyOptional({ minimum: 1, default: 1 }) page?: number;
   @ApiPropertyOptional({ minimum: 1, maximum: 100, default: 20 }) pageSize?: number;
   @ApiPropertyOptional({ enum: HOMEWORK_STATUSES }) status?: HomeworkStatus;
@@ -34,15 +40,16 @@ export class HomeworkQueryDto {
 @Injectable()
 export class HomeworkQueryPipe implements PipeTransform {
   transform(value: unknown): HomeworkQuery {
-    const input = object(value, ['page', 'pageSize', 'status']);
+    const input = object(value, ['page', 'pageSize', 'status', 'lessonId']);
     const page = new HistoryQueryPipe().transform({
       ...(input.page !== undefined ? { page: input.page } : {}),
       ...(input.pageSize !== undefined ? { pageSize: input.pageSize } : {}),
     });
-    if (input.status === undefined) return page;
+    const scope = input.lessonId === undefined ? {} : { lessonId: uuid(input.lessonId) };
+    if (input.status === undefined) return { ...page, ...scope };
     if (!HOMEWORK_STATUSES.includes(input.status as HomeworkStatus))
       return fail(domainError('INVALID_INPUT', 400));
-    return { ...page, status: input.status as HomeworkStatus };
+    return { ...page, ...scope, status: input.status as HomeworkStatus };
   }
 }
 export class HomeworkAttachmentDto {

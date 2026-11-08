@@ -1,0 +1,152 @@
+{
+  "task": "TASK-034",
+  "status": "DONE",
+  "scope": "current K8K local code, typed contracts and synthetic/mock/browser verification; external gates remain NOT_RUN",
+  "date": "2026-11-08",
+  "baseline": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "0523d72884192015f1c72655c282c0f72ecb191bfa3eddf215ecb47c98bffc4a",
+    "statusEntries": 15210
+  },
+  "checks": [
+    {
+      "id": "locale-one-store",
+      "description": "RU/RO current K8K routes, titles/aria/validation, one store and input retention",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+      "detail": "15 route variants, no reload/visible keys; cross-tab/reload/storage failure; typed parity/placeholders. Legacy flag-off is compatibility, not new redesign acceptance."
+    },
+    {
+      "id": "file-scope",
+      "description": "Existing own/foreign/revoked/expired grants and no-store preserved",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/materials-tests.log",
+      "detail": "48 material unit/HTTP mocks; new3 metadata fields only. Signature/permission source sections unchanged; real PostgreSQL/S3 not executed."
+    },
+    {
+      "id": "file-context",
+      "description": "Contextless/fallback versus authored labels, server filter/page/total",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+      "detail": "35 synthetic grants, default30/page2, filter resets page, same-named authored text remains raw."
+    },
+    {
+      "id": "capability-ephemeral",
+      "description": "Private capability explicit read, expiry/HTTPS and no app persistence",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+      "detail": "Synthetic intercepted handoff; expired/403 and late logout/switch blocked. No live storage URL in evidence."
+    },
+    {
+      "id": "profile",
+      "description": "Alias whitelist and stable dirty input, saved only after response",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+      "detail": "Background /me and locale do not remount alias; alias100; full_name/email remain unchanged, profile PATCH displayName only."
+    },
+    {
+      "id": "secret-state",
+      "description": "Password/OTP handling, no blind retry or false sent, safe localized errors",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/playwright.json",
+      "detail": "Provider unknown/current password/OTP/expired temporary password; direct closures not generic mutation state, fields clear; private diagnostic hidden."
+    },
+    {
+      "id": "session-rotation",
+      "description": "Existing session rotation and revoke contracts retained",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/security-tests.log",
+      "detail": "73 service/HTTP/SDK mocks; browser confirm/password /me bootstrap, current409/foreign404/own-other204 and unknown logout boundary. Actual cookies not live-tested."
+    },
+    {
+      "id": "gate-separation",
+      "description": "Full suspended/initial password and authoritative subject access remain separate",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/coverage.md",
+      "detail": "Browser full suspended/initial gate; existing /me hasActiveAccess and subject capabilities retained, TASK-024/027 prerequisites; no client-derived global suspension."
+    },
+    {
+      "id": "date-money",
+      "description": "Timezone separate from locale, New_York date-only, exact600.1234, plural category",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/browser.log",
+      "detail": "2 locale cases; suspended freshness uses its /me zone, countdown remains server-time based."
+    },
+    {
+      "id": "visual-accessibility",
+      "description": "RU/RO×4 widths, long text, keyboard/reduced motion and200% reflow",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/screenshots.json",
+      "detail": "65 images/48 matrix;10 axe360 scans with0 violations. 200% equivalent CSS640/DPR2, not physical-device certification."
+    },
+    {
+      "id": "contracts",
+      "description": "149 operations unchanged,3 optional MaterialItemDto fields and standard generation",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/contracts.json",
+      "detail": "Old schemas except additive MaterialItemDto, existing required/properties and request/security/operation definitions unchanged."
+    },
+    {
+      "id": "quality-budget",
+      "description": "Targeted typecheck/lint/tests and50/50 route budgets",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/verification.json",
+      "detail": "48+73 mocks,12 presentation,2 locale,19 Chromium; student255001/max255923 against256000 incl fonts."
+    },
+    {
+      "id": "preservation",
+      "description": "79 snapshots,31 migration checksums and15210 initial paths preserved",
+      "status": "PASS",
+      "passed": true,
+      "evidence": "../../k8k-tasks/TASK-034/preservation.json",
+      "detail": "HEAD/branch unchanged; no migrations/dependencies/env-file/live DB/provider/seed/deploy access. UI barrel append-only export noted."
+    },
+    {
+      "id": "postgresql",
+      "description": "Actual SQL metadata binding/permission locks/expiry races",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-034/report.md",
+      "detail": "No authorized working PostgreSQL integration action in TASK-034; existing CTE evidence is historical."
+    },
+    {
+      "id": "providers",
+      "description": "Live S3, OTP/email/provider acceptance and cookie/session rotation",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-034/report.md",
+      "detail": "Only mocks/local synthetic browser; actual provider/working object/credential workflows require separate acceptance."
+    },
+    {
+      "id": "physical-a11y",
+      "description": "Physical zoom/device/screen-reader validation",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-034/coverage.md",
+      "detail": "Local viewport/DPR equivalent, keyboard/axe and screenshots are not physical-device certification."
+    },
+    {
+      "id": "gate",
+      "description": "TASK-035, recursive regression, FND-GATE/production GO",
+      "status": "NOT_RUN",
+      "passed": null,
+      "evidence": "../../k8k-tasks/TASK-034/handoff.md",
+      "detail": "Separate owner-issued task; TASK-035 not started."
+    }
+  ],
+  "nextTask": "TASK-035",
+  "nextTaskStarted": false
+}

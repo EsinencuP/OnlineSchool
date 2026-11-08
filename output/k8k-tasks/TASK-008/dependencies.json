@@ -1,0 +1,115 @@
+[
+  {
+    "version": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "dependencies": {
+      "aria-hidden": "^1.2.4",
+      "@radix-ui/react-id": "1.1.0",
+      "@radix-ui/primitive": "1.1.1",
+      "react-remove-scroll": "^2.6.3",
+      "@radix-ui/react-slot": "1.1.2",
+      "@radix-ui/react-portal": "1.1.4",
+      "@radix-ui/react-context": "1.1.1",
+      "@radix-ui/react-presence": "1.1.2",
+      "@radix-ui/react-primitive": "2.0.2",
+      "@radix-ui/react-focus-scope": "1.1.2",
+      "@radix-ui/react-compose-refs": "1.1.1",
+      "@radix-ui/react-focus-guards": "1.1.1",
+      "@radix-ui/react-dismissable-layer": "1.1.5",
+      "@radix-ui/react-use-controllable-state": "1.1.0"
+    },
+    "name": "@radix-ui/react-dialog",
+    "releasedAt": "2025-02-05T23:50:24.783Z",
+    "ageDays": 636
+  },
+  {
+    "version": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "dependencies": {
+      "@radix-ui/primitive": "1.1.1",
+      "@radix-ui/react-slot": "1.1.2",
+      "@radix-ui/react-dialog": "1.1.6",
+      "@radix-ui/react-context": "1.1.1",
+      "@radix-ui/react-primitive": "2.0.2",
+      "@radix-ui/react-compose-refs": "1.1.1"
+    },
+    "name": "@radix-ui/react-alert-dialog",
+    "releasedAt": "2025-02-05T23:50:21.881Z",
+    "ageDays": 636
+  },
+  {
+    "version": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "dependencies": {
+      "aria-hidden": "^1.2.4",
+      "@radix-ui/react-id": "1.1.0",
+      "@radix-ui/primitive": "1.1.1",
+      "react-remove-scroll": "^2.6.3",
+      "@radix-ui/react-slot": "1.1.2",
+      "@radix-ui/react-popper": "1.2.2",
+      "@radix-ui/react-portal": "1.1.4",
+      "@radix-ui/react-context": "1.1.1",
+      "@radix-ui/react-presence": "1.1.2",
+      "@radix-ui/react-primitive": "2.0.2",
+      "@radix-ui/react-focus-scope": "1.1.2",
+      "@radix-ui/react-compose-refs": "1.1.1",
+      "@radix-ui/react-focus-guards": "1.1.1",
+      "@radix-ui/react-dismissable-layer": "1.1.5",
+      "@radix-ui/react-use-controllable-state": "1.1.0"
+    },
+    "name": "@radix-ui/react-popover",
+    "releasedAt": "2025-02-05T23:50:29.097Z",
+    "ageDays": 636
+  },
+  {
+    "version": "2.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "dependencies": {
+      "@radix-ui/react-id": "1.1.0",
+      "@radix-ui/primitive": "1.1.1",
+      "@radix-ui/react-menu": "2.1.6",
+      "@radix-ui/react-context": "1.1.1",
+      "@radix-ui/react-primitive": "2.0.2",
+      "@radix-ui/react-compose-refs": "1.1.1",
+      "@radix-ui/react-use-controllable-state": "1.1.0"
+    },
+    "name": "@radix-ui/react-dropdown-menu",
+    "releasedAt": "2025-02-05T23:50:26.878Z",
+    "ageDays": 636
+  },
+  {
+    "version": "18.3.7",
+    "license": "MIT",
+    "peerDependencies": {
+      "@types/react": "^18.0.0"
+    },
+    "dependencies": {},
+    "name": "@types/react-dom",
+    "releasedAt": "2025-04-30T10:37:39.536Z",
+    "ageDays": 552
+  }
+]

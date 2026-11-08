@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "generation": "standard export:openapi and generate:client",
+  "operationsBefore": 146,
+  "operationsAfter": 146,
+  "differences": [
+    {
+      "path": "/components/schemas/LessonCardDto/properties/meetAsOf",
+      "before": null,
+      "after": {
+        "type": "string",
+        "format": "date-time"
+      }
+    },
+    {
+      "path": "/components/schemas/NextLessonDto/properties/status",
+      "before": null,
+      "after": {
+        "type": "string",
+        "enum": [
+          "SCHEDULED",
+          "COMPLETED",
+          "CANCELLED",
+          "NO_SHOW",
+          "STAR_PENDING",
+          "DISPUTED"
+        ]
+      }
+    },
+    {
+      "path": "/components/schemas/NextLessonDto/properties/meetAsOf",
+      "before": null,
+      "after": {
+        "type": "string",
+        "format": "date-time"
+      }
+    }
+  ],
+  "migrationsAdded": 0,
+  "migrationExecuted": false
+}

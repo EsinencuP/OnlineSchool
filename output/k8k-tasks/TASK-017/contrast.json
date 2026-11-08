@@ -1,0 +1,227 @@
+[
+  {
+    "foreground": "--k8k-accent",
+    "background": "--surface",
+    "foregroundValue": "#0392bc",
+    "backgroundValue": "#ffffff",
+    "ratio": 3.5949094571524225,
+    "historicalExpected": 3.59,
+    "usage": "decorative accent; forbidden for ordinary text or critical graphics on sand"
+  },
+  {
+    "foreground": "--k8k-accent",
+    "background": "--bg-page",
+    "foregroundValue": "#0392bc",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 3.3639395315148755,
+    "historicalExpected": 3.36,
+    "usage": "decorative accent; forbidden for ordinary text or critical graphics on sand"
+  },
+  {
+    "foreground": "--k8k-accent",
+    "background": "--k8k-sand",
+    "foregroundValue": "#0392bc",
+    "backgroundValue": "#e4e3d7",
+    "ratio": 2.784803357201204,
+    "historicalExpected": 2.78,
+    "usage": "decorative accent; forbidden for ordinary text or critical graphics on sand"
+  },
+  {
+    "foreground": "--k8k-ink",
+    "background": "--k8k-sand",
+    "foregroundValue": "#222222",
+    "backgroundValue": "#e4e3d7",
+    "ratio": 12.3246992967986,
+    "historicalExpected": 12.32,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--k8k-ink",
+    "background": "--bg-page",
+    "foregroundValue": "#222222",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 14.887781240037812,
+    "historicalExpected": 14.89,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--k8k-ink",
+    "background": "--surface",
+    "foregroundValue": "#222222",
+    "backgroundValue": "#ffffff",
+    "ratio": 15.909984431773273,
+    "historicalExpected": 15.91,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--surface",
+    "background": "--brand-900",
+    "foregroundValue": "#ffffff",
+    "backgroundValue": "#023849",
+    "ratio": 12.616716658013784,
+    "historicalExpected": 12.62,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--surface",
+    "background": "--brand-700",
+    "foregroundValue": "#ffffff",
+    "backgroundValue": "#057485",
+    "ratio": 5.464053637076438,
+    "historicalExpected": 5.46,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--surface",
+    "background": "--brand-hero",
+    "foregroundValue": "#ffffff",
+    "backgroundValue": "#01738a",
+    "ratio": 5.49654803903812,
+    "historicalExpected": 5.5,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--brand-text",
+    "background": "--surface",
+    "foregroundValue": "#046b7f",
+    "backgroundValue": "#ffffff",
+    "ratio": 6.149878476399459,
+    "historicalExpected": 6.15,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--brand-text",
+    "background": "--bg-page",
+    "foregroundValue": "#046b7f",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 5.754753928395104,
+    "historicalExpected": 5.75,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--brand-text",
+    "background": "--k8k-sand",
+    "foregroundValue": "#046b7f",
+    "backgroundValue": "#e4e3d7",
+    "ratio": 4.764014902623595,
+    "historicalExpected": 4.76,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--k8k-ink",
+    "background": "--surface-warm",
+    "foregroundValue": "#222222",
+    "backgroundValue": "#efebe1",
+    "ratio": 13.364936461140246,
+    "historicalExpected": 13.36,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--text-2",
+    "background": "--bg-page",
+    "foregroundValue": "#4a4a4a",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 8.292990848604889,
+    "historicalExpected": 8.29,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--text-muted",
+    "background": "--bg-page",
+    "foregroundValue": "#5e5e5e",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 6.067582579992285,
+    "historicalExpected": 6.07,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--border",
+    "background": "--bg-page",
+    "foregroundValue": "#8a8a82",
+    "backgroundValue": "#f9f7f5",
+    "ratio": 3.254307177930193,
+    "historicalExpected": 3.25,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--sidebar-text",
+    "background": "--brand-900",
+    "foregroundValue": "#d6e7ec",
+    "backgroundValue": "#023849",
+    "ratio": 9.913626954008159,
+    "historicalExpected": 9.91,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--sidebar-muted",
+    "background": "--brand-900",
+    "foregroundValue": "#9fbfc9",
+    "backgroundValue": "#023849",
+    "ratio": 6.470522527554818,
+    "historicalExpected": 6.47,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--success",
+    "background": "--success-bg",
+    "foregroundValue": "#1e6b35",
+    "backgroundValue": "#e4f4dd",
+    "ratio": 5.696238619979306,
+    "historicalExpected": 5.7,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--warning",
+    "background": "--warning-bg",
+    "foregroundValue": "#8a4b00",
+    "backgroundValue": "#fff1d6",
+    "ratio": 6.091547059134478,
+    "historicalExpected": 6.09,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--danger",
+    "background": "--danger-bg",
+    "foregroundValue": "#b3261e",
+    "backgroundValue": "#fdecea",
+    "ratio": 5.715634529672996,
+    "historicalExpected": 5.72,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--surface",
+    "background": "--danger",
+    "foregroundValue": "#ffffff",
+    "backgroundValue": "#b3261e",
+    "ratio": 6.536488984854359,
+    "historicalExpected": 6.54,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--info",
+    "background": "--info-bg",
+    "foregroundValue": "#0b5c8a",
+    "backgroundValue": "#e1f2f4",
+    "ratio": 6.252805920246294,
+    "historicalExpected": 6.25,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--focus",
+    "background": "--k8k-sand",
+    "foregroundValue": "#023849",
+    "backgroundValue": "#e4e3d7",
+    "ratio": 9.773563235699438,
+    "historicalExpected": 9.77,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  },
+  {
+    "foreground": "--focus",
+    "background": "--surface",
+    "foregroundValue": "#023849",
+    "backgroundValue": "#ffffff",
+    "ratio": 12.616716658013784,
+    "historicalExpected": 12.62,
+    "usage": "semantic contract tested in contrast.test.mjs"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "task": "TASK-004",
+  "scope": "Isolated installed QueryClient only; no app account, password, OTP, request, DB or provider",
+  "installedQueryVersion": "5.105.0",
+  "syntheticNonSecretVariableRetainedInMutationState": true,
+  "actualVariableValueLogged": false,
+  "clientCleared": true,
+  "sourceChain": [
+    "apps/student-cabinet/src/api.ts:122",
+    "apps/student-cabinet/src/pages/Account.tsx:28",
+    "apps/student-cabinet/src/pages/Account.tsx:274"
+  ],
+  "interpretation": "Confirms MutationCache variable semantics for the existing useMutation path; not a production credential inspection"
+}

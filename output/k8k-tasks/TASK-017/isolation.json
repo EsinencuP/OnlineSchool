@@ -1,0 +1,346 @@
+{
+  "status": "PASS for inspected imports/no network entrypoints; catalog module guard also passed build",
+  "imports": [
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "@js-temporal/polyfill"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "./controls.js"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "specifier": "./format.js"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "@radix-ui/react-tabs"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "@radix-ui/react-tooltip"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "./controls.js"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "specifier": "./state.js"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "specifier": "./error-feedback.js"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "./errors.js"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "./money-format.js"
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/error-keys.ts",
+      "specifier": "./error-messages.js"
+    },
+    {
+      "path": "packages/ui/src/error-keys.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "specifier": "./error-keys.js"
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/format.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/format.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "specifier": "./format.js"
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/icon.tsx",
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "specifier": "./navigation.js"
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "specifier": "./error-messages.js"
+    },
+    {
+      "path": "packages/ui/src/money-format.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/money-format.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/navigation.ts",
+      "specifier": "./messages.js"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "@radix-ui/react-dialog"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "@radix-ui/react-alert-dialog"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "@radix-ui/react-popover"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "@radix-ui/react-dropdown-menu"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "./controls.js"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/refresh.ts",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./freshness.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./navigation.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./navigation.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./priority.js"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "specifier": "./priority.js"
+    },
+    {
+      "path": "packages/ui/src/stages.tsx",
+      "specifier": "./controls.js"
+    },
+    {
+      "path": "packages/ui/src/stages.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "./freshness.js"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "./freshness.js"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "@tanstack/react-table"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "@tanstack/react-table"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "./controls.js"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "./icon.js"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "./locale.js"
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "specifier": "./state.js"
+    }
+  ],
+  "boundary": "account-ui owns SDK/session; generic UI receives data/actions; storage only locale/theme"
+}

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "loading",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--loading&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--loading\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- status [ref=f4e7]: Se încarcă datele…\n```"
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--empty&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--empty\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- generic [ref=f5e5]:\n  - status [ref=f5e7]: Nu există încă date pentru această secțiune.\n  - paragraph [ref=f5e11]: Ora ultimei încărcări reușite nu este cunoscută\n```\n### Events\n- New console entries: .playwright-mcp\\console-2026-11-04T21-10-21-168Z.log#L2"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ready",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--ready&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--ready\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- generic [ref=f6e5]:\n  - paragraph [ref=f6e7]:\n    - generic [ref=f6e8]:\n      - text: Datele serverului la\n      - time [ref=f6e9]: 4 noiembrie la 09:40\n    - text: ·\n    - generic [ref=f6e10]:\n      - text: Recepționat la\n      - time [ref=f6e11]: 4 noiembrie la 10:00\n    - text: · Europe/Chisinau\n  - paragraph [ref=f6e13]: Date pentru exemplul local\n```"
+        }
+      ]
+    }
+  },
+  {
+    "id": "stale",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--stale&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--stale\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- generic [ref=f7e5]:\n  - generic [ref=f7e6]:\n    - status [ref=f7e7]: Ultima încărcare nu a returnat înregistrări. Starea actuală este necunoscută.\n    - button \"Reîncearcă încărcarea\" [ref=f7e10]\n  - paragraph [ref=f7e12]:\n    - generic [ref=f7e13]:\n      - text: Recepționat la\n      - time [ref=f7e14]: 4 noiembrie la 10:00\n    - text: · Europe/Chisinau\n```\n### Events\n- New console entries: .playwright-mcp\\console-2026-11-04T21-10-21-445Z.log#L2"
+        }
+      ]
+    }
+  },
+  {
+    "id": "error",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--error&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--error\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- generic [ref=f8e6]:\n  - alert [ref=f8e7]: Datele nu au putut fi încărcate.\n  - button \"Reîncearcă încărcarea\" [ref=f8e10]\n```\n### Events\n- New console entries: .playwright-mcp\\console-2026-11-04T21-10-21-586Z.log#L2"
+        }
+      ]
+    }
+  },
+  {
+    "id": "forbidden",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--forbidden&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--forbidden\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- alert [ref=f9e7]: Nu ai acces la această secțiune.\n```"
+        }
+      ]
+    }
+  },
+  {
+    "id": "session-expired",
+    "snapshot": {
+      "content": [
+        {
+          "type": "text",
+          "text": "### Page\n- Page URL: http://127.0.0.1:6007/iframe.html?id=ui-vis-11--session-expired&viewMode=story&globals=locale%3Aro\n- Page Title: ui-vis-11--session-expired\n- Console: 2 errors, 0 warnings\n### Snapshot\n```yaml\n- alert [ref=f10e7]: Sesiunea a expirat. Autentifică-te din nou.\n```"
+        }
+      ]
+    }
+  }
+]

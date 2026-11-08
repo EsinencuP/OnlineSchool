@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.ui-controls.json",
+  "include": ["tests/ui-composites/**/*.tsx", "../../packages/ui/stories/**/*.tsx"]
+}

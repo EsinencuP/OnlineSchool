@@ -1,0 +1,884 @@
+{
+  "taskId": "TASK-035",
+  "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+  "provenance": {
+    "configFile": false,
+    "envDir": false,
+    "publicDir": false,
+    "write": false,
+    "sourceAlias": [
+      {
+        "find": "@online-school/ui/style.css",
+        "replacement": "D:\\OnlineSchool\\packages\\ui\\src\\style.css"
+      },
+      {
+        "find": "@online-school/account-ui/style.css",
+        "replacement": "D:\\OnlineSchool\\packages\\account-ui\\src\\style.css"
+      },
+      {
+        "find": "@online-school/ui",
+        "replacement": "D:\\OnlineSchool\\packages\\ui\\src\\index.ts"
+      },
+      {
+        "find": "@online-school/account-ui",
+        "replacement": "D:\\OnlineSchool\\packages\\account-ui\\src\\index.tsx"
+      },
+      {
+        "find": "@online-school/api-contracts",
+        "replacement": "D:\\OnlineSchool\\packages\\api-contracts\\src\\index.ts"
+      },
+      {
+        "find": "@online-school/shared",
+        "replacement": "D:\\OnlineSchool\\packages\\shared\\src\\index.ts"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "route": "/student/login",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/suspended",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/security/change-password",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/lessons",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/lessons/:id",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/homework",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/homework/:id",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/subjects",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/help",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/skills",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/reports",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/materials",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/subscription",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/notifications",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/profile",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    },
+    {
+      "route": "/student/security",
+      "status": "available",
+      "files": [
+        {
+          "file": "assets/index-BaMDI_jk.css",
+          "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e",
+          "raw": 75756,
+          "gzip": 13555,
+          "kind": "css"
+        },
+        {
+          "file": "assets/index-DfwGNQ5p.js",
+          "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a",
+          "raw": 574167,
+          "gzip": 178935,
+          "kind": "js"
+        }
+      ],
+      "manifestKeys": [
+        "index.html"
+      ],
+      "deferredDynamicImports": [],
+      "method": "k8k-route-v2: v1 static/lazy closure and per-file gzip(level=9); all raw cyrillic+latin+romanian WOFF2 once each; limit=256000",
+      "gzip": 192490,
+      "font": {
+        "romanian": {
+          "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+          "bytes": 3544,
+          "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+        },
+        "cyrillic": {
+          "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+          "bytes": 22032,
+          "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+        },
+        "latin": {
+          "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+          "bytes": 37916,
+          "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+        },
+        "total": 63492
+      },
+      "total": 255982,
+      "limit": 256000,
+      "pass": true,
+      "delta": 0
+    }
+  ],
+  "assets": [
+    {
+      "file": "assets/index-DfwGNQ5p.js",
+      "sha256": "196146957412801636978940d899ea39b19c2400484a377b18cbc04f8e15cb7a"
+    },
+    {
+      "file": "assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+      "sha256": "37e11b8c631e5a330e493655af4bb8b914ef75deeb9ce6728a7fa1b1ec3d86fc"
+    },
+    {
+      "file": "assets/golos-text-latin-wght-normal-BS5oQT7X.woff2",
+      "sha256": "9a69d0aa4734c4022224c002a3d944a702e0204972a49d892789f5668b922c2a"
+    },
+    {
+      "file": "assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+      "sha256": "17d048ca05cb1218af3c0d6dcdf882989e6d1cc5dcb598ea50eaf54850ff7229"
+    },
+    {
+      "file": "assets/index-BaMDI_jk.css",
+      "sha256": "583cdcbf2ddaee3a0fe7242beeecaf2b9dce20da1460729e49055aa91781263e"
+    },
+    {
+      "file": "index.html",
+      "sha256": "5c0e211ac6ff12e062b8dd4911dd9d440ccea8e91623a276e48acb890d1ecb35"
+    },
+    {
+      "file": ".vite/manifest.json",
+      "sha256": "d2147fe74500ad71650513524b836284119ca5501d87e1405640ca13da214f24"
+    }
+  ]
+}

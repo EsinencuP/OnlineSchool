@@ -1,0 +1,992 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\.pnpm\\@playwright+test@1.64.1\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.config.mjs"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/stu12/browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\stu12\\browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "*.spec.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1600,
+            "height": 1000
+          },
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../../output/stu12/playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": true
+    }
+  },
+  "suites": [
+    {
+      "title": "mgr03-password.spec.mjs",
+      "file": "mgr03-password.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "MGR-03 browser: temporary login, forced password change and cabinet bootstrap",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1419,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\mgr03-password.spec.mjs:26:31",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\mgr03-password.spec.mjs",
+                      "column": 31,
+                      "line": 26
+                    },
+                    "snippet": "  24 |   const state = await (await request.get('/__fixture/state')).json();\n  25 |   expect(state.mustChangePassword).toBe(false);\n> 26 |   expect(state.missingRoutes).toEqual([]);\n     |                               ^\n  27 |   const calls = state.calls;\n  28 |   const login = calls.findIndex((c) => c.path === '/api/v1/auth/session');\n  29 |   const change = calls.findIndex((c) => c.path.endsWith('/security/change-password'));"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\mgr03-password.spec.mjs",
+                        "column": 31,
+                        "line": 26
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  24 |   const state = await (await request.get('/__fixture/state')).json();\n  25 |   expect(state.mustChangePassword).toBe(false);\n> 26 |   expect(state.missingRoutes).toEqual([]);\n     |                               ^\n  27 |   const calls = state.calls;\n  28 |   const login = calls.findIndex((c) => c.path === '/api/v1/auth/session');\n  29 |   const change = calls.findIndex((c) => c.path.endsWith('/security/change-password'));\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\mgr03-password.spec.mjs:26:31"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:57:47.999Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\mgr03-password-MGR-03-brow-f2642-hange-and-cabinet-bootstrap\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\mgr03-password-MGR-03-brow-f2642-hange-and-cabinet-bootstrap\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\mgr03-password.spec.mjs",
+                    "column": 31,
+                    "line": 26
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "57a497ef4fe9423cb440-a101b4157bce9e48bf94",
+          "file": "mgr03-password.spec.mjs",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "student.spec.mjs",
+      "file": "student.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "login → forced password → dashboard → direct upload → submission → unchanged balance",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2904,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:57:50.595Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-login-→-forced-pas-07760-mission-→-unchanged-balance\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-login-→-forced-pas-07760-mission-→-unchanged-balance\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-e083c77d7b5c59f134ae",
+          "file": "student.spec.mjs",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "debounce, server draft restoration and chronological versions",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5162,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:57:54.740Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-debounce-server-dr-9a9fe--and-chronological-versions\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-debounce-server-dr-9a9fe--and-chronological-versions\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-2d5ba3bcb149b04cab14",
+          "file": "student.spec.mjs",
+          "line": 58,
+          "column": 1
+        },
+        {
+          "title": "lesson periods, calendar and manager reschedule request",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1812,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:01.222Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-lesson-periods-cal-4725e--manager-reschedule-request\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-lesson-periods-cal-4725e--manager-reschedule-request\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-7b2b40ad5dc6ae135be3",
+          "file": "student.spec.mjs",
+          "line": 73,
+          "column": 1
+        },
+        {
+          "title": "server canJoin authority and protected direct links",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 937,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 4\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:04.016Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-server-canJoin-authority-and-protected-direct-links\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-server-canJoin-authority-and-protected-direct-links\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-537a6f05212b04f57234",
+          "file": "student.spec.mjs",
+          "line": 102,
+          "column": 1
+        },
+        {
+          "title": "402 suspends without navigation and 403 forces password on any request",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 973,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:06.059Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-402-suspends-witho-e40a8-ces-password-on-any-request\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-402-suspends-witho-e40a8-ces-password-on-any-request\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-324759d2e58e1ac63a6c",
+          "file": "student.spec.mjs",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "read-all resets both notification counters",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 854,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:08.119Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-read-all-resets-both-notification-counters\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-read-all-resets-both-notification-counters\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-df167a13b8d6d7f398a6",
+          "file": "student.spec.mjs",
+          "line": 134,
+          "column": 1
+        },
+        {
+          "title": "mobile five-item navigation, trapped drawer, tablet and desktop sizes",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1290,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:10.141Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-mobile-five-item-n-d63d8-er-tablet-and-desktop-sizes\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-mobile-five-item-n-d63d8-er-tablet-and-desktop-sizes\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-5638160053ffb6f247d6",
+          "file": "student.spec.mjs",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "failed save stays editable, blocks accidental navigation and retries",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3595,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:12.638Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-failed-save-stays--7e611-ntal-navigation-and-retries\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-failed-save-stays--7e611-ntal-navigation-and-retries\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-d2fd22b92bf55dacdec2",
+          "file": "student.spec.mjs",
+          "line": 165,
+          "column": 1
+        },
+        {
+          "title": "confirmation and submission retry the same intent after provider/server failures",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1306,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:17.355Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-confirmation-and-s-d469f-er-provider-server-failures\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-confirmation-and-s-d469f-er-provider-server-failures\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-c172b20c1854cde7bbc9",
+          "file": "student.spec.mjs",
+          "line": 181,
+          "column": 1
+        },
+        {
+          "title": "serialized slow draft writes preserve the latest edit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6655,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:19.697Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-serialized-slow-dr-e3f20-es-preserve-the-latest-edit\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-serialized-slow-dr-e3f20-es-preserve-the-latest-edit\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-47fad1db2f30364617d3",
+          "file": "student.spec.mjs",
+          "line": 214,
+          "column": 1
+        },
+        {
+          "title": "suspension is public and offers no navigation or unrelated actions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:27.306Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-09be1d5eee8604f9d400",
+          "file": "student.spec.mjs",
+          "line": 228,
+          "column": 1
+        },
+        {
+          "title": "all cabinet pages fit a narrow viewport and expose the four skill states",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2436,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                      "column": 48,
+                      "line": 11
+                    },
+                    "snippet": "   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                        "column": 48,
+                        "line": 11
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 14\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+   \"/api/v1/platform/accounts\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   9 | const patch = (request, data) => request.patch('/__fixture/state', { data });\n  10 | test.afterEach(async ({ request }) => {\n> 11 |   expect((await state(request)).missingRoutes).toEqual([]);\n     |                                                ^\n  12 | });\n  13 | test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({\n  14 |   page,\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs:11:48"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-02T22:58:27.960Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-all-cabinet-pages--63b45-xpose-the-four-skill-states\\test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\stu12\\browser\\student-all-cabinet-pages--63b45-xpose-the-four-skill-states\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student.spec.mjs",
+                    "column": 48,
+                    "line": 11
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "731518b4acc94b2e5cc1-e964d41e0f51c94bf67f",
+          "file": "student.spec.mjs",
+          "line": 240,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-02T22:57:46.637Z",
+    "duration": 44302.885,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 12,
+    "flaky": 0
+  }
+}

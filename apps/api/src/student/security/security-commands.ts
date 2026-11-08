@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import type { AuthAccount, Prisma } from '@online-school/db';
@@ -70,11 +71,7 @@ export class StudentSecurityCommands {
       if (current.studentProfileId !== student.studentProfileId)
         return fail(domainError('FORBIDDEN', 403));
       if (current.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-      if (!current.hasActiveAccess)
-        return fail({
-          ...domainError('ACCESS_SUSPENDED', 402),
-          details: { managerContacts: current.managerContacts ?? { whatsapp: '', telegram: '' } },
-        });
+      if (!current.hasActiveAccess) return fail(studentAccessSuspended(current.managerContacts));
       const time = await now(tx),
         outcome = await fn(tx, account, actor, time),
         id = randomUUID();

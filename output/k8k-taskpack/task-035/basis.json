@@ -1,0 +1,1079 @@
+{
+  "taskId": "TASK-035",
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "0c04fb3984e35c4275da935e85719b6bd33088622d3c0120d29b47872064bd28",
+  "method": "SHA256(JSON.stringify({head,statusSha256:SHA256(git status --porcelain=v1),files:ordered scoped source SHA256 manifest}))",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "b9ea985925d57bcd1703d9af7b9a2c689cbc4c4b508e2ba059940e9a2585c625",
+      "bytes": 7513
+    },
+    {
+      "path": "apps/api/src/student/access-policy.ts",
+      "sha256": "2ca8130d2db6abf7601896efac4d0854499533e846cfe6ff3f296b091af6d4a1",
+      "bytes": 458
+    },
+    {
+      "path": "apps/api/src/student/active-subscription.guard.ts",
+      "sha256": "b53b4fec0ed797858d51d6a0ebc774fb5d2163359736a39973cd8b5726662b61",
+      "bytes": 1788
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+      "sha256": "099ecdbbb4b02c4605857f8425099d5aa0525c4c37d1f0f226b8bf472c191088",
+      "bytes": 4191
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.controller.ts",
+      "sha256": "568bf4622108f1e232770cfa3ad67a970163daedf4201d678566999730a6711c",
+      "bytes": 1733
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.dto.ts",
+      "sha256": "00018e16885b682de8bc1ef29392b08375838e917fcc5e24b8ba780f9d405eb8",
+      "bytes": 2085
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.service.ts",
+      "sha256": "5b3f555303691a9426b35e53847446495290ede8c62a68ca4d3be1389dd9296a",
+      "bytes": 9831
+    },
+    {
+      "path": "apps/api/src/student/history/dispute.service.ts",
+      "sha256": "7b11cd33bdf94ccd85adfde2a8348451e6cf4a8cea93a9cb0c386abf6930eb62",
+      "bytes": 2600
+    },
+    {
+      "path": "apps/api/src/student/history/history.controller.ts",
+      "sha256": "b6cefef6580be4fc762c93caaf32fc2d7b6856606fb28a817b1a401fd019b94f",
+      "bytes": 3919
+    },
+    {
+      "path": "apps/api/src/student/history/history.dto.ts",
+      "sha256": "14547d774558555214fd00920b8a01695767e9144561f19bf6233a854bcc9c7f",
+      "bytes": 3778
+    },
+    {
+      "path": "apps/api/src/student/history/history.service.ts",
+      "sha256": "eed25a388738400a67885290c5a9d52089c0745402c8e508bfc76dc567716143",
+      "bytes": 5880
+    },
+    {
+      "path": "apps/api/src/student/homework/draft-expiry.module.ts",
+      "sha256": "d178a428f7f65e32449cb67c125930d1392c63022b3b85320b819f21ae3b12bf",
+      "bytes": 1368
+    },
+    {
+      "path": "apps/api/src/student/homework/homework-scope.guard.ts",
+      "sha256": "cd848e218de79c5860e7ffc15e36b63d19053737fd9fc71186efc52cd1639af2",
+      "bytes": 2047
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.controller.ts",
+      "sha256": "4a782875c3611965d6fca8a6603f89057d8fd229357cd3f09432814067f62747",
+      "bytes": 6776
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.dto.ts",
+      "sha256": "b79d8767809cbdc57ebb253b040d6ed815c3f7350ea24aef00a33d232bd07e11",
+      "bytes": 5310
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.service.ts",
+      "sha256": "31a2bd9c7419a1c851b17c0258c3ac1631f21eb515c2b5c003c3e1bb8e5a8326",
+      "bytes": 15707
+    },
+    {
+      "path": "apps/api/src/student/lessons/lesson-period.ts",
+      "sha256": "9f961e72420fcc23d2aea9751cb32303ced6e79301dbb208b01e06bea7b6080d",
+      "bytes": 4167
+    },
+    {
+      "path": "apps/api/src/student/lessons/lessons.controller.ts",
+      "sha256": "f1185cfa9a5d350943cc9cb6cb8b5490210e32f4ec38718ee23aaabf27388503",
+      "bytes": 6059
+    },
+    {
+      "path": "apps/api/src/student/lessons/lessons.dto.ts",
+      "sha256": "f169f22a5a741713508ad23715ec53f838598246520d1394dc3b80f1b23f5e4e",
+      "bytes": 3323
+    },
+    {
+      "path": "apps/api/src/student/lessons/lessons.service.ts",
+      "sha256": "8bea6559b8512286e0126050f2a823324ea456e2d9de0f9126e8be6d4c367f4b",
+      "bytes": 9921
+    },
+    {
+      "path": "apps/api/src/student/lessons/meet-access.ts",
+      "sha256": "aa5609234117ee18355562d340864335c3d3ba23fecf4767a856929f28f6b41b",
+      "bytes": 3359
+    },
+    {
+      "path": "apps/api/src/student/lessons/student-crm-task.service.ts",
+      "sha256": "837efa513af7005ea38cb9287d54eb6344ee3d80d223bdd7dce0268df5be6fae",
+      "bytes": 2028
+    },
+    {
+      "path": "apps/api/src/student/lessons/student-lesson-scope.guard.ts",
+      "sha256": "ea1481cb530b942ea911581496a0da464e390549afba72792f462c3b2ebbe295",
+      "bytes": 2096
+    },
+    {
+      "path": "apps/api/src/student/manager-contacts.ts",
+      "sha256": "f9fac91a714bb4ae64a209d2cb4112c6613985135f699964893b403e079527b6",
+      "bytes": 1850
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.controller.ts",
+      "sha256": "ded7fe4aabfad1962b2850a5f3a5c2e89ade654c3520f470b657c9b182038dfc",
+      "bytes": 2950
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.dto.ts",
+      "sha256": "bef1d4beb5cabe45ff6a1b6fe7cf0d7b6295d43ef7dc157a7865e1c0e09cabbf",
+      "bytes": 3135
+    },
+    {
+      "path": "apps/api/src/student/materials/materials.service.ts",
+      "sha256": "74c3f8d7a42b8893778231b2e09514fb89ac0ddfe459392a01171c1388ab51cd",
+      "bytes": 8282
+    },
+    {
+      "path": "apps/api/src/student/me/me.controller.ts",
+      "sha256": "d62c78d96cb982a9f979792078edd57462296042ed1c4d0e162f231445c6090e",
+      "bytes": 1469
+    },
+    {
+      "path": "apps/api/src/student/me/me.dto.ts",
+      "sha256": "a77b145604e9235d2479a48581fa85476bcfb9c32e4938fcf92a784678c6a55c",
+      "bytes": 765
+    },
+    {
+      "path": "apps/api/src/student/me/me.service.ts",
+      "sha256": "20198950d0fc2a26856adb30ff0b3c4b2ab851b59bad65fbaaef184fac410c42",
+      "bytes": 5451
+    },
+    {
+      "path": "apps/api/src/student/notifications/notification-locale.ts",
+      "sha256": "e05c06a190137de7dc837d294b5662852d0de7739aa1dea857ebb5788e2ce78b",
+      "bytes": 4549
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.controller.ts",
+      "sha256": "a3fb9e2e78bf40a0bcc604dc58b25b6e2a7fe8ef9aa3ee436915fc01535d6fad",
+      "bytes": 5210
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.dto.ts",
+      "sha256": "b56aae7cc02c58f5b279885f59999b624d6248b49691d4ca6251242e89adeb03",
+      "bytes": 3181
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.service.ts",
+      "sha256": "8dc6c4555a8677b33cac5c7cfaa5e2cdb03e9cd5d70ac225df362a58c153f5d9",
+      "bytes": 5231
+    },
+    {
+      "path": "apps/api/src/student/profile/profile.controller.ts",
+      "sha256": "1360d7a325be16692300d80ca018f31583f1f3a2c25c818d216c8c77ac6aadd4",
+      "bytes": 2833
+    },
+    {
+      "path": "apps/api/src/student/profile/profile.dto.ts",
+      "sha256": "1e8e94907921c9f31d0b186b8f84619cfc5c0c5eba5b6a55cae10f1bf96b8735",
+      "bytes": 724
+    },
+    {
+      "path": "apps/api/src/student/profile/profile.service.ts",
+      "sha256": "35171300a39af2a656dfe919132bfaead2877129d695c97c4e6847de4d6988ca",
+      "bytes": 3982
+    },
+    {
+      "path": "apps/api/src/student/reports/export-data.ts",
+      "sha256": "4a901bf7e4e8b062f1ecc53689743f18b93dd40fe71025097ca7898284fd5195",
+      "bytes": 5352
+    },
+    {
+      "path": "apps/api/src/student/reports/reports.controller.ts",
+      "sha256": "1bc2fdf76a1bb47534184e48f81157ce799e4e6acb4ba9f7f2a46578c32aef5e",
+      "bytes": 7225
+    },
+    {
+      "path": "apps/api/src/student/reports/reports.dto.ts",
+      "sha256": "461f17271013ff277c052140f1515f55eeff41cbcb90a3fb33c6d4e0a4701bcf",
+      "bytes": 3981
+    },
+    {
+      "path": "apps/api/src/student/reports/reports.service.ts",
+      "sha256": "ef8501598935cf1c9025715f15181ba3202142911fee581f225bbc7592d86f13",
+      "bytes": 7916
+    },
+    {
+      "path": "apps/api/src/student/reports/reports.sql.ts",
+      "sha256": "8f42ff973580d585b18480c27f2199ca14db205b584aaf666e60e7bcb7bb6988",
+      "bytes": 3255
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.controller.ts",
+      "sha256": "31be3ed2fc76eb11b3e23816081c2598bfa90eaad5ceec60c58f256014607385",
+      "bytes": 2872
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.dto.ts",
+      "sha256": "c603da6357d47d9d6355adb9525edf88a1e8ed85f76f33c8e435f03267198629",
+      "bytes": 676
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.service.ts",
+      "sha256": "02a88664fc70dba9cc268347ad15c06bdb8e3c2d60a6a15388df57a3100e5fe7",
+      "bytes": 4193
+    },
+    {
+      "path": "apps/api/src/student/security/email-otp.ts",
+      "sha256": "b7a5b77eec26ef87410d275455aa9eeed6c3b76662c9fd0b2025438b6a517861",
+      "bytes": 3047
+    },
+    {
+      "path": "apps/api/src/student/security/email.service.ts",
+      "sha256": "0ef10ec4836753ef13abce5356cb05ae266e0ecfe1cae20fb2ce886a02550fa1",
+      "bytes": 6693
+    },
+    {
+      "path": "apps/api/src/student/security/security-commands.ts",
+      "sha256": "689639a6c5f1dc6800ef6afbd22ab43361a15b7eecb899ccad4307e0f00ae89b",
+      "bytes": 4880
+    },
+    {
+      "path": "apps/api/src/student/security/security.controller.ts",
+      "sha256": "2c7c3dc818710132e7b8ae36d2df5a76d47c64ba2264f25ac10f2f0b13e0f4d9",
+      "bytes": 4337
+    },
+    {
+      "path": "apps/api/src/student/security/security.dto.ts",
+      "sha256": "f887e97d49a74502c439dca4963ff752bce64caa60ddb1fd4fd7e7b1c9295887",
+      "bytes": 1324
+    },
+    {
+      "path": "apps/api/src/student/security/sessions.service.ts",
+      "sha256": "765fffca96d656a4bb633b3997eb285a81298ed6a62167f58d35c9d05c4712b6",
+      "bytes": 2753
+    },
+    {
+      "path": "apps/api/src/student/skills/skills.controller.ts",
+      "sha256": "1159520dced6b34c72d25f97a7fa0afb7ec6468835bd2968623df464981fc773",
+      "bytes": 3047
+    },
+    {
+      "path": "apps/api/src/student/skills/skills.dto.ts",
+      "sha256": "a70949d7578fba14a773916b060e9ad5afa83c967eb2755291f23b5ef2e3ef41",
+      "bytes": 5195
+    },
+    {
+      "path": "apps/api/src/student/skills/skills.service.ts",
+      "sha256": "d3d08e098aef3c75d7a9b2a8e66f6a09f3719dab2aa8828659cd2ae0e389efb8",
+      "bytes": 2369
+    },
+    {
+      "path": "apps/api/src/student/skills/skills.sql.ts",
+      "sha256": "e68f0977c4d70b4e1d2ba4aae08998c131c54969bef217c3011edb3a4b38a37e",
+      "bytes": 5969
+    },
+    {
+      "path": "apps/api/src/student/student-context.decorator.ts",
+      "sha256": "d46a720c18ef42a95c97dd6b325f46d556ad18d7d0be3ac8906248ed7c5a754b",
+      "bytes": 609
+    },
+    {
+      "path": "apps/api/src/student/student-context.guard.ts",
+      "sha256": "a9585dfb30907893eed7161712d15b73bb562c329b618928e42f2bc8580ce103",
+      "bytes": 2994
+    },
+    {
+      "path": "apps/api/src/student/student-context.interface.ts",
+      "sha256": "2d4d52430c621a8620d8fc047cded79f6ac606eff2d4c9d62246b8aaf7c58a60",
+      "bytes": 972
+    },
+    {
+      "path": "apps/api/src/student/student.module.ts",
+      "sha256": "fea92ca042b693d65429563f2edacc62f7448ec60326c1c66a34b05540977cd1",
+      "bytes": 7164
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.controller.ts",
+      "sha256": "53080aec0bce79aa2f515533027999af5ed421b0b72addc32bb53ee538b8156c",
+      "bytes": 1701
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.dto.ts",
+      "sha256": "07ab4e323ada94e13a6ae7a9e51e5554b6b250739a5bc6c178a5b33f8a6fd97b",
+      "bytes": 3112
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.service.ts",
+      "sha256": "e0428479ff12d3486c2c1db634f7c8fde28b2e383ac68e512c90dfbd3284e013",
+      "bytes": 6565
+    },
+    {
+      "path": "apps/api/src/student/subjects/subjects.sql.ts",
+      "sha256": "30f23e2da1b151c5320312a70488e5626587410bc9a86d0a74a1f475eb6e36a0",
+      "bytes": 6417
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.controller.ts",
+      "sha256": "45896ae673f374916c4b5bc60eb971b5ad1e43cc7c14486b853dbfb59911fe8a",
+      "bytes": 3533
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.dto.ts",
+      "sha256": "f2886b85ee2e82462c496fc304cc134bbdfb10f23ce48bf1e894afdb29979f39",
+      "bytes": 4954
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.service.ts",
+      "sha256": "a25162144abe6a3c97f11d070fe70d61c391ca608a3267d7c668b97065dfd192",
+      "bytes": 3517
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.sql.ts",
+      "sha256": "0b6efd5311aa64e639b5200b3e73570b4a7ea872354c1063604ec0d7a7b8efd5",
+      "bytes": 12043
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "sha256": "979f5d3e3305f476e7254332a49612482ab2f99c23010b4fb5acafdae4e60925",
+      "bytes": 2630
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "sha256": "68cea10e3e963e2699478a989892da7ca8b9645684d39dbdce857f4233c13f29",
+      "bytes": 15905
+    },
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "sha256": "d3af98bf345c453ea60bf615cbb17d4748d1135b21f365eda29ca0fe2c977f2d",
+      "bytes": 11372
+    },
+    {
+      "path": "apps/student-cabinet/src/api.ts",
+      "sha256": "c3e05905a0132f4ffa7c244eb1771f5a736a46a5971130c626923f9d3a8bfd0b",
+      "bytes": 8660
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "sha256": "dd67a11a71d849fdf4f983a11197c9f4b2f1f7020ad1156c8a72fda09f351fb3",
+      "bytes": 14823
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-copy.tsx",
+      "sha256": "604de95165f58397879525f108e92bf87f3bc645a542495492a11f6bac9cfc11",
+      "bytes": 7158
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-navigation.ts",
+      "sha256": "298061672c67cbfe99aeffaeda801bd690d4070950a9568c57b974082e431e70",
+      "bytes": 591
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-copy.ts",
+      "sha256": "1ad7f30d636306ae460904ccaf822cfa71805738a980475c0ea7738b89bd3a9c",
+      "bytes": 6720
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-navigation.ts",
+      "sha256": "8069fd02e581b0f27d15e6a279628bcbeae30940db424b5f767646a7bfc0c6db",
+      "bytes": 1215
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-requests.tsx",
+      "sha256": "eed4ae449fd0deda58df23d74ea45113f6fca9948316265b2f38f157bd20eb8b",
+      "bytes": 11494
+    },
+    {
+      "path": "apps/student-cabinet/src/main.tsx",
+      "sha256": "aabb59ccb2d8c7a406d05c4293d89979619a14a608637e84e19cc852a3ceff80",
+      "bytes": 804
+    },
+    {
+      "path": "apps/student-cabinet/src/meet-scope.tsx",
+      "sha256": "5736650cd0366729905f3017fa1e7642acd434d977d1a7ad913aa13366061c2b",
+      "bytes": 4275
+    },
+    {
+      "path": "apps/student-cabinet/src/notification-copy.ts",
+      "sha256": "579954224803220981fcd921e0e8e36c1560e993c2c7fbe2f9b86aeff15b85e7",
+      "bytes": 3425
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Account.tsx",
+      "sha256": "660a1dd392fa78bc7ac5d6a22e779b3da46aa066c11076a13f4543f3d88cce4b",
+      "bytes": 18517
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "sha256": "943d32ab7dbb490de8e2d33247d95231f178c9845fe62681df23ebce43b82872",
+      "bytes": 6694
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Homework.tsx",
+      "sha256": "07c275ce1a678ddcce5454166f95902cdf58145ec72c159f23b2742fbdac6ffe",
+      "bytes": 27860
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "sha256": "ccc8ad83550028ad0c1bf1db1af7843ab3b2c3bfec7753797fe324f737cc5410",
+      "bytes": 11032
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Lessons.tsx",
+      "sha256": "5c309f1d793620bba7cfc2b7734b44d4641f497680c306f37ff764b7cc838ec0",
+      "bytes": 16144
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Reports.tsx",
+      "sha256": "2c0df468e31d5edfef74cc5bb314f9b5ea597c174e8de56967865306032a7e22",
+      "bytes": 7819
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/SkillMap.tsx",
+      "sha256": "50e67abb54550a6707d0c94373f9f9cfc41758d2a77abd28e170ad6a7c38fd37",
+      "bytes": 11620
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "sha256": "96793d7e8fa0d1a81b3c6e50e7bb84b3b6fea97dbffd54c3e0a750c219991a0f",
+      "bytes": 12415
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subjects.tsx",
+      "sha256": "68709f61321a8a04642501e41f5d5bc394b453a574b40e7a2a20ee939ba9b4a5",
+      "bytes": 7678
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subscription.tsx",
+      "sha256": "ff1ff99f8f30d50ba5edacd351dc3beb4287b564204f7c6af515af07a81ade9f",
+      "bytes": 14757
+    },
+    {
+      "path": "apps/student-cabinet/src/profile-help.tsx",
+      "sha256": "3aaf6ac968fd0861abde23225a7e92a92563e96c0ba3ce37ee6bf7a053fa7427",
+      "bytes": 722
+    },
+    {
+      "path": "apps/student-cabinet/src/report-copy.ts",
+      "sha256": "f4c23f9d316be4e420cece63eb3f2e3e8f97eff78aa5c581607eaa85f31fd5b1",
+      "bytes": 4487
+    },
+    {
+      "path": "apps/student-cabinet/src/report-export.tsx",
+      "sha256": "6fa8ba55efbcfd401f8916b0f8a64bfdb54b5b7bcf67ce952ed8e8fd60cd6f20",
+      "bytes": 16379
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "sha256": "de2800f1d393f0fde517749f44bfac56a128f719a48d60c355e8f37829767479",
+      "bytes": 5364
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-copy.ts",
+      "sha256": "bf8f637d08cccc5b50179b9df77c98fcc11291e8dadcfcabc9032f56628e43e1",
+      "bytes": 5334
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-widgets.tsx",
+      "sha256": "a667ab09dcd3619018014faf488a067a0fad1d3de53e511e8d864648b68b4b6e",
+      "bytes": 961
+    },
+    {
+      "path": "apps/student-cabinet/src/student-copy.ts",
+      "sha256": "f95ce2f932c6f94482e105e7ee832a5d89a7e7eed3ba86944376706b63ade3f3",
+      "bytes": 8366
+    },
+    {
+      "path": "apps/student-cabinet/src/student-locale.ts",
+      "sha256": "8453c3ad64da605c8e1675ec636ca7afdfa04744f35edf545b6e2b95ce772002",
+      "bytes": 280
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "sha256": "765f6944b0a7826087451d92a1916309b59384926cf0320269d3051a341a0070",
+      "bytes": 6846
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "sha256": "55408f4442bb190a32401c82bbe4c9e93222f3f8c212e2c679b62e3494e88576",
+      "bytes": 6179
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "sha256": "cefd4ca9800be8600e65b0cec175107a0fbfca65ec27f3f8288266ada74046e8",
+      "bytes": 21270
+    },
+    {
+      "path": "apps/student-cabinet/src/style.css",
+      "sha256": "017b1d3ba9b03df93fef4eec42f6a81427cdb07d41d0f75b51ee083ecb1280d2",
+      "bytes": 20272
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-copy.ts",
+      "sha256": "b862d1df9ae72f71641b7b1957a77e5ed039cf3bbf5b2ea979aabf2957336671",
+      "bytes": 4179
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-presentation.ts",
+      "sha256": "25865a69f2d9b78985a9395b3ee866c3f136d39b4aaa367c5c6af542347cabb8",
+      "bytes": 1150
+    },
+    {
+      "path": "apps/student-cabinet/src/ui-store.ts",
+      "sha256": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86",
+      "bytes": 253
+    },
+    {
+      "path": "apps/student-cabinet/tests/accessibility.mjs",
+      "sha256": "e5a87bcaf87791bd7af1470167f05ff693dd4cf73e5232b500d26ce81c8bcccb",
+      "bytes": 2264
+    },
+    {
+      "path": "apps/student-cabinet/tests/bell-fixtures.mjs",
+      "sha256": "0ca0785eb744991723bc53e9287eb1bffe863408863598b803dcc8b38c454b89",
+      "bytes": 3148
+    },
+    {
+      "path": "apps/student-cabinet/tests/bell.spec.mjs",
+      "sha256": "f6b879ba678b440374ffa90520ef902d3109c324eb72340a330065655085ddca",
+      "bytes": 21020
+    },
+    {
+      "path": "apps/student-cabinet/tests/build-homework-baseline.mjs",
+      "sha256": "2e17bb2ac570b09224951d3238f02f0c831d60fd824481c8314a102fcf7687a4",
+      "bytes": 1315
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "sha256": "c4238ef674150ac6b6364cab86868fd4cdb3a4063b055dc433e3b5784ace3238",
+      "bytes": 44508
+    },
+    {
+      "path": "apps/student-cabinet/tests/homework-redesign.spec.mjs",
+      "sha256": "e9a1cd89b50870c02a7e9fa9a2f217838924859570ba5b48f7fe538200f38228",
+      "bytes": 16586
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "sha256": "522486268dd1225c437860c7c3fc88b3b6901aa3b811679040c0c89a0ef0a6c7",
+      "bytes": 6534
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/data.mjs",
+      "sha256": "45f9effbd0bfa7b83c5a0cc2a2ee024f01edb9d448e79153f5f45221adb7274d",
+      "bytes": 5495
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx",
+      "sha256": "c958b02ec13c931effd4e464dea825fcdd132f127d2af2ac23be5a51fdc82689",
+      "bytes": 907
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/index.html",
+      "sha256": "5bfabe0ffcde73a23134910212e064b3a2c64aae2638a68b7a473c771cab6229",
+      "bytes": 367
+    },
+    {
+      "path": "apps/student-cabinet/tests/lesson-journey-fixtures.mjs",
+      "sha256": "0b7c98a52f60cf8fb700ed53958b6169274021bf44bd0f389bfa3eaa57faf287",
+      "bytes": 2667
+    },
+    {
+      "path": "apps/student-cabinet/tests/lesson-journey.spec.mjs",
+      "sha256": "81666723144a70bd0f7a67d02f333d44fca276e4e710a027e5a21d99c644e3cd",
+      "bytes": 20077
+    },
+    {
+      "path": "apps/student-cabinet/tests/locale-fixtures.mjs",
+      "sha256": "c7482d0779f51b1a14e9cc1ef800d3f4497ab253b99eaf82602b9b1989a2d198",
+      "bytes": 2016
+    },
+    {
+      "path": "apps/student-cabinet/tests/locales.spec.mjs",
+      "sha256": "21af526e8f5c13b68be09c14876a671a058a17212cfebda7b5ca188230155b8b",
+      "bytes": 27189
+    },
+    {
+      "path": "apps/student-cabinet/tests/locales.test.mjs",
+      "sha256": "1bd9eb4c276ee1eca1bd3419971e083b7d56c6cb1e6d108d5ce12c3aecb37e81",
+      "bytes": 2292
+    },
+    {
+      "path": "apps/student-cabinet/tests/manager-contacts.spec.mjs",
+      "sha256": "3463fbb3317d35dc206b859bb3c4d431529b2aa9308446220b7d0f96f15785ce",
+      "bytes": 11284
+    },
+    {
+      "path": "apps/student-cabinet/tests/meet-eligibility.spec.mjs",
+      "sha256": "62fac95f711881fbeec648fa7468278561ee9bf22f079ab532a17c34b5643d93",
+      "bytes": 9418
+    },
+    {
+      "path": "apps/student-cabinet/tests/mgr03-password.spec.mjs",
+      "sha256": "04856c2d32e4c564dba5aa303b6f02d57f4a6e9e4e7915c4a3826575465689b9",
+      "bytes": 1910
+    },
+    {
+      "path": "apps/student-cabinet/tests/navigation.spec.mjs",
+      "sha256": "52c57edf4f214d9f8316bc7d0d36c0f92d30c75fa1e0a0ef9e6d519e69a51719",
+      "bytes": 739
+    },
+    {
+      "path": "apps/student-cabinet/tests/report-export.spec.mjs",
+      "sha256": "02a3fb5716c4829977a407b95b913cca216e9991bfe344e47531a9279177d8e3",
+      "bytes": 22607
+    },
+    {
+      "path": "apps/student-cabinet/tests/report-journey-fixtures.mjs",
+      "sha256": "95fb176aa1e1c38d54d11069a9c8007e468856fd00cd6f15ab74eeef20e61402",
+      "bytes": 1181
+    },
+    {
+      "path": "apps/student-cabinet/tests/skill-journey-fixtures.mjs",
+      "sha256": "4cbc5e3981bc372753fc9de99c5d63e31b0334b171b1c288ec0d5de05ced81da",
+      "bytes": 3977
+    },
+    {
+      "path": "apps/student-cabinet/tests/skill-map.spec.mjs",
+      "sha256": "0bcbb0244f507fa553789b456fae3cc62e38ba36daf3f69bac6b0a8a05b7cdf6",
+      "bytes": 15810
+    },
+    {
+      "path": "apps/student-cabinet/tests/student.spec.mjs",
+      "sha256": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "bytes": 16861
+    },
+    {
+      "path": "apps/student-cabinet/tests/subject-hub.spec.mjs",
+      "sha256": "6ff008ab38e96c250c14d768b237140ec412aca6e46eb0d8ae66a8b8df4a9633",
+      "bytes": 20907
+    },
+    {
+      "path": "apps/student-cabinet/tests/subject-subscriptions.spec.mjs",
+      "sha256": "00dcb5a039f55eb823d1e6f874caf6e5dfa86f013db7561b05954d7bba325d18",
+      "bytes": 17345
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-composites/fixture.tsx",
+      "sha256": "f36b5592eeebc93532d4f08bd4023871ce0dcb0f2ee6922fca1207f21fdc87c2",
+      "bytes": 1742
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-composites/index.html",
+      "sha256": "d45b2f91c55d84bc3e6ddf9327fcc6ba4234654070ecc03db89fb2d5a1d9b983",
+      "bytes": 332
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-controls/fixture.tsx",
+      "sha256": "5220de18899029a0b089999a7eb76b9089e25d3035918eb825289c33de6cf8da",
+      "bytes": 1632
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-controls/index.html",
+      "sha256": "739102f2d505aa048fcc613075be325a3e146b1e51a1cdf3940392e5f44e4114",
+      "bytes": 303
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-motion/fixture.tsx",
+      "sha256": "140ce88374e0c491e9ca1ca75ebeee8d53dfeeec5b217230c85b453059c7bc30",
+      "bytes": 4025
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-motion/index.html",
+      "sha256": "d2fee9f725c758b1dce6e6d638a48bad67e1c15b9914c86ee9f711ed75f05514",
+      "bytes": 333
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-overlays/fixture.tsx",
+      "sha256": "faacc8087dea57d3238b9b6743b2a220d14db8fa9c7e586d7b9e2689009aea28",
+      "bytes": 1346
+    },
+    {
+      "path": "apps/student-cabinet/tests/ui-overlays/index.html",
+      "sha256": "35fe79093f52d4e2f2efab2d8918c01cafd2a6978dab71fdd86af5185f020d36",
+      "bytes": 332
+    },
+    {
+      "path": "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "sha256": "ea150ee2180fd9b6cf492308237619ec044befc58791a0a1f720e856d812aa71",
+      "bytes": 55871
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "7e0c2015b0bb68ac9f43340dfff0d5275a47c3e09f813ec2bcb6f69286938905",
+      "bytes": 40060
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "072e43eab833825f46ac467cc4af64bdadcc1d807840d67e08481718a4a71b55",
+      "bytes": 37506
+    },
+    {
+      "path": "docs/UI_MOTION_2026_11_08.md",
+      "sha256": "534fda2a4bd022c797944b6720fc4644663d49ab9363cee6a278d1ea4a673ec3",
+      "bytes": 9688
+    },
+    {
+      "path": "docs/UI_VISUAL_SIMPLIFICATION_2026_11_08.md",
+      "sha256": "aa31d8f122791202b0f31f66a14408c430aaaea6d76796b545727984a9ad9b8e",
+      "bytes": 6417
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "d0ca8ea15e77349c6c0c40872b078c2828b301c7dbc1fe9f0a66cde5fe8a8794",
+      "bytes": 25608
+    },
+    {
+      "path": "packages/account-ui/src/index.tsx",
+      "sha256": "9411553c5c09369d74f7ac316312558e8dc6bc351beb61ee1ab5eef05fcdf057",
+      "bytes": 8946
+    },
+    {
+      "path": "packages/account-ui/src/session.tsx",
+      "sha256": "b1478210e82da33790b4b048f5659fe91f7211dfd0ca14ef877816e4a4cb8ac5",
+      "bytes": 3535
+    },
+    {
+      "path": "packages/account-ui/src/style.css",
+      "sha256": "55acc0e3a8a60b4251fc69f814d6015c38ab96961014ee3c2e1b88e8887fc742",
+      "bytes": 3563
+    },
+    {
+      "path": "packages/api-contracts/src/index.ts",
+      "sha256": "97337bd5d11e5b0dd817d666deb62fd8ba70812e94a6743c1fb310592f63283f",
+      "bytes": 5652
+    },
+    {
+      "path": "packages/ui/src/calendar.css",
+      "sha256": "aab501f7aed9c3fb4fdf7094ceb06f78d49119d29f287b3732e1822397e12dc3",
+      "bytes": 2209
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "sha256": "746eea3a519ee3a0fb2968765956e72649b79981513248e4ce19f27ec32d0d5c",
+      "bytes": 7836
+    },
+    {
+      "path": "packages/ui/src/composites.css",
+      "sha256": "d98dfa645fe0ababe119bac24d7d12daf4c9fb150b05ec7d6a7a41f77d4d9f47",
+      "bytes": 3914
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "sha256": "26081cb2a55302f28cd642b7097a56d3d2f01f5c7cb44b9621619d2d1911d078",
+      "bytes": 13612
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "sha256": "15d751445d11cb67d8568164a717df6e7c19aea9f92fc09200b8a527d9b3d3f3",
+      "bytes": 8226
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "sha256": "67ba3fbab22e7adc69cbda3888de33d74d193cc548c15e25a8a73e4db8e200c7",
+      "bytes": 4539
+    },
+    {
+      "path": "packages/ui/src/error-keys.ts",
+      "sha256": "45205e9c1c43c80b26f18a962364c422f1aa4e51561d315641b5a4769e438db1",
+      "bytes": 685
+    },
+    {
+      "path": "packages/ui/src/error-messages.ts",
+      "sha256": "659430cd317d6a8849244c465769a898f4f8f1c341ce4acc41f714d8ecbb2bb6",
+      "bytes": 32244
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "sha256": "d7463fa4dc44ac4a912a2bf62ff5764fa90fa824e49512508cffe4b185f6bec0",
+      "bytes": 2559
+    },
+    {
+      "path": "packages/ui/src/feature.ts",
+      "sha256": "1fec3fee298d7f2878757b32e935b07b1d0a1afe8b6754601e369943948c5ba2",
+      "bytes": 876
+    },
+    {
+      "path": "packages/ui/src/fonts/provenance.json",
+      "sha256": "4be87f726ad999ffe6b4d2937ae1f329ee728175b2de86a0da709dd8b25e0855",
+      "bytes": 878
+    },
+    {
+      "path": "packages/ui/src/format.ts",
+      "sha256": "aaa5b184930b2cadf62529dc2546dd6d67755edb2f6740b34d755db4576a7fb3",
+      "bytes": 2547
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "sha256": "f9d28f3034934dc311b6a7cb71468e45d4790d244422d1fbf197674abc356cd6",
+      "bytes": 2005
+    },
+    {
+      "path": "packages/ui/src/icon.tsx",
+      "sha256": "1c212986fec3f0e7ad1f1be6b1319755f922ac8bc5dcb7c37d49e67b2a421c56",
+      "bytes": 2251
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "sha256": "2fd62f1a870569844c53e47e093909149ff98dc257a47881307c958f6fbcdaca",
+      "bytes": 848
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "sha256": "2ed88addf3d85178b06601a41c83e9be2348c4dbbb0ce8f111d34408eb3b4e18",
+      "bytes": 2519
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "sha256": "f08a5a98c38bad2fa95c7cf65d41d32e5f384cf98d2fac792266635bba74e5ea",
+      "bytes": 21193
+    },
+    {
+      "path": "packages/ui/src/money-format.ts",
+      "sha256": "0bd627e72878261833912050e765b492d825f80fb0527a0ab02925e32b848f7a",
+      "bytes": 1168
+    },
+    {
+      "path": "packages/ui/src/motion.css",
+      "sha256": "d1bbe95bb41df9b3dd17bfe13fa0287612cc1bafb265f3fc124d3987cae44acd",
+      "bytes": 6217
+    },
+    {
+      "path": "packages/ui/src/motion.ts",
+      "sha256": "e010f31ac4215a7508d5890f718ff26f99d8c9905810ae1e5a105bf7ce8d5df6",
+      "bytes": 1000
+    },
+    {
+      "path": "packages/ui/src/navigation.ts",
+      "sha256": "8e9f007155c94e15596bea44b0379fe3f05f4dc178fa55cc983d58c28762bfc5",
+      "bytes": 4656
+    },
+    {
+      "path": "packages/ui/src/overlays.css",
+      "sha256": "48fc2caca94a1aabee7857d919ae992e3e27986827993accf1327c5e40b9bb2c",
+      "bytes": 2753
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "sha256": "2ea8d040ec42fa6de85e1bf77cef4c5cb30fa66cef3c545c3b59ff9f7fcb1de8",
+      "bytes": 14454
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "sha256": "cc0bae952c3b427291bd456343114ce415f72ccd1b7adc6b31b2b538766dbdb1",
+      "bytes": 97
+    },
+    {
+      "path": "packages/ui/src/quiet.css",
+      "sha256": "e56f4ff4c6d4cfafe2c67bb8c7625ba8a74515afab2c417fb34df8a293a4d15b",
+      "bytes": 7207
+    },
+    {
+      "path": "packages/ui/src/refresh.ts",
+      "sha256": "a5969ec5f99e6ad24ff4714b664ef8144db03790584ed9a6ca387b1bd5e2c391",
+      "bytes": 6011
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "sha256": "c1a4cb9d97b3eb3c28686a42967624c0afb183e845d276da920fda9cf46a8257",
+      "bytes": 7225
+    },
+    {
+      "path": "packages/ui/src/stages.tsx",
+      "sha256": "07f2c3dc1e981bb37f28ad29b4d44ea1d19e28b0006b6c15ea38426fd9789282",
+      "bytes": 1034
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "sha256": "04a3a5446fb226ae7d5775ee330b0df7e5b057464660924859591d364b2e2794",
+      "bytes": 8562
+    },
+    {
+      "path": "packages/ui/src/student-messages.ts",
+      "sha256": "21cc0b3ca55035514196dfcfa281d7880fb19e1bf3e9c0b7d88538200d1f241f",
+      "bytes": 10562
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "sha256": "09223c8bd7b8085c6ab66bf535d73d6f18cd2d98355f8c57f7591c55c83220e8",
+      "bytes": 18803
+    },
+    {
+      "path": "packages/ui/src/tables.css",
+      "sha256": "2da72c987b509a46be2037f395db06b73013a37f3acbc7793f3c12e0ccbf9c09",
+      "bytes": 2950
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "sha256": "087191bfbbe5f951ae8533dec2599fbf1e4823944042ff06635d8823a93b0d5a",
+      "bytes": 9620
+    },
+    {
+      "path": "packages/ui/src/tokens.css",
+      "sha256": "f8d214e59a003e1080b457ca353ba6eb48207ed5e5e569ff9809da0da074c938",
+      "bytes": 2568
+    },
+    {
+      "path": "packages/ui/tests/locale.test.mjs",
+      "sha256": "f82f2211daeac6ecc65410f13cfe63a965ae25ce860f8caf411443141c417a1f",
+      "bytes": 3454
+    },
+    {
+      "path": "packages/ui/tests/stylelint-legacy.json",
+      "sha256": "aafd0bac0f9fc66bfe995220cbdaabf97355a9c4f75a2bcf4dfac33ef2effd00",
+      "bytes": 90043
+    },
+    {
+      "path": "tests/unit/student-context.test.mjs",
+      "sha256": "89ba62778b690463767978a91a4eda3c0505d62f1f71c5a3887cc39e2fabee18",
+      "bytes": 9654
+    },
+    {
+      "path": "tests/unit/student-dashboard-http.test.mjs",
+      "sha256": "7dfb4ff0dc7f7afdb9545b66e10d0cc5d73c2f4ec3a5dab53598a080bd9bb539",
+      "bytes": 9453
+    },
+    {
+      "path": "tests/unit/student-dashboard.test.mjs",
+      "sha256": "90e7a1251f859f983eedd9b50f2c0edfbcfc8eb90d3439a453d1afe0b67cbd68",
+      "bytes": 12265
+    },
+    {
+      "path": "tests/unit/student-history-http.test.mjs",
+      "sha256": "0c9b979df0d87224b21a1cfcaf8afbf6de42b61f220331f863e34674c1ca88e9",
+      "bytes": 16076
+    },
+    {
+      "path": "tests/unit/student-history.test.mjs",
+      "sha256": "bf30b05b9f723b7300cce65198ceb2afc06fd68796bb4608cb8f47574b145c80",
+      "bytes": 11433
+    },
+    {
+      "path": "tests/unit/student-homework-http.test.mjs",
+      "sha256": "0b3463497d5dddcbdd3f4e468a7d50ad95c4f11cb0ab64daebe8e9e645f5ab9f",
+      "bytes": 17963
+    },
+    {
+      "path": "tests/unit/student-homework.test.mjs",
+      "sha256": "cff2c6b8551002a5f6fc6dbad5f45e88b89eebb79b15427e02837269937ebd26",
+      "bytes": 14872
+    },
+    {
+      "path": "tests/unit/student-http.test.mjs",
+      "sha256": "bb0339220da7bbcc2535b1aa60dbd372f6e4061d8a00a59fefe2f09e9f04b3d9",
+      "bytes": 16009
+    },
+    {
+      "path": "tests/unit/student-lesson-context.test.mjs",
+      "sha256": "04de72426caa51ba848fc2c315b96a97f565e301de2dec86c8585b7a184de73f",
+      "bytes": 2461
+    },
+    {
+      "path": "tests/unit/student-lessons-http.test.mjs",
+      "sha256": "fc9884159a8528c74c34dda6d0a68dbe12f6a0dad28258a49b681cc21def67f5",
+      "bytes": 16177
+    },
+    {
+      "path": "tests/unit/student-lessons.test.mjs",
+      "sha256": "fe31dcc086e5c5104b3fddade3bc850b07de25fd55edb010f167692de2320837",
+      "bytes": 16831
+    },
+    {
+      "path": "tests/unit/student-materials-http.test.mjs",
+      "sha256": "42b71962505ce5ab0ae8e4ac3154c501906c6eb9eb59791ba2f100e9e6ea3763",
+      "bytes": 11185
+    },
+    {
+      "path": "tests/unit/student-materials.test.mjs",
+      "sha256": "ff942809727b295b7a7553954bb5df9420d34fc75d2bc0e05b4f9e5271014a10",
+      "bytes": 10495
+    },
+    {
+      "path": "tests/unit/student-notifications-http.test.mjs",
+      "sha256": "58315ac3f6c5f15dcacd44f9d7c6c1f850917a86527766210280bf31c593b3a3",
+      "bytes": 13546
+    },
+    {
+      "path": "tests/unit/student-notifications-sdk.test.mjs",
+      "sha256": "d61ed8ec369d61c2ec7b94d5ad4873bcb508a3ed4852050cefcc2ed28aab32d1",
+      "bytes": 2304
+    },
+    {
+      "path": "tests/unit/student-notifications.test.mjs",
+      "sha256": "f0eb53528a7856ac13db3291c33c90d040976a3a82d7b19ef89697c1ba06ad0e",
+      "bytes": 14549
+    },
+    {
+      "path": "tests/unit/student-reports-http.test.mjs",
+      "sha256": "f7089c1d4fa67eddcb801f7b1a31918c5321cda8a5615713681ab8fb2d2bc17d",
+      "bytes": 15211
+    },
+    {
+      "path": "tests/unit/student-reports-sdk.test.mjs",
+      "sha256": "158f757cf49f4f63d237b22042d38a46bfb3d8460c03fa6c18f25710bffada31",
+      "bytes": 2507
+    },
+    {
+      "path": "tests/unit/student-reports-worker.test.mjs",
+      "sha256": "c60799deb0847e0994fd3a5dad2d7de200b4d1cac1529a4f620c464252a52555",
+      "bytes": 12694
+    },
+    {
+      "path": "tests/unit/student-reports.test.mjs",
+      "sha256": "a3e37a74a3601b734274c20e07b4f7604d4e5a17455431a447375dc031ef291e",
+      "bytes": 14390
+    },
+    {
+      "path": "tests/unit/student-security-http.test.mjs",
+      "sha256": "eae43bb123d7176ce0ef02e8f5f2f346df53f4c0a7124d97fbc906dd1d33dca2",
+      "bytes": 28963
+    },
+    {
+      "path": "tests/unit/student-security-sdk.test.mjs",
+      "sha256": "fe8a003fd700fb4f79169d225db68c279e79ad4e17b3445e29a982bc1849ea81",
+      "bytes": 2545
+    },
+    {
+      "path": "tests/unit/student-security.test.mjs",
+      "sha256": "f552c86c247afbc00d57e76877972d8813ca4022ae94d465df125eaba96ade63",
+      "bytes": 9222
+    },
+    {
+      "path": "tests/unit/student-skills-http.test.mjs",
+      "sha256": "15dd1888b44875368c42c1f40829cd8a62a00b3629f798e32bb018efbedb785e",
+      "bytes": 6741
+    },
+    {
+      "path": "tests/unit/student-skills.test.mjs",
+      "sha256": "f96a3f704be806bc53bc7a8d2f95747a040636feccb75833a6ce910ede0d7048",
+      "bytes": 6934
+    },
+    {
+      "path": "tests/unit/student-subjects.test.mjs",
+      "sha256": "dc335a2e28718642735ddf6eb0fef9aa3ee3c3c0715eb86fa2ef3e7f10ab66d1",
+      "bytes": 9381
+    },
+    {
+      "path": "tests/unit/student-subscription-http.test.mjs",
+      "sha256": "2e43777c6878aea2cb0520c0547e152d1c9bd828ea239f0dc637b9555b0c970a",
+      "bytes": 17751
+    },
+    {
+      "path": "tests/unit/student-subscription.test.mjs",
+      "sha256": "0bd45068917ff6412598f4e4af6fd38d3c1e86e78f999144107ef79331107506",
+      "bytes": 7661
+    },
+    {
+      "path": "tests/unit/student-transport.test.mjs",
+      "sha256": "4b84d22fe170b3acf38a0ad0c7d093ac03664de5f648aa742543240a0ff9b1ad",
+      "bytes": 2379
+    }
+  ]
+}

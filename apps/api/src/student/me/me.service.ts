@@ -65,7 +65,9 @@ export class MeService {
               )
           ) AS has_active_access`;
       if (!access) return err(domainError('STUDENT_CONTEXT_UNAVAILABLE', 503));
-      const managerContacts = await studentManagerContacts(client, profile.student_id);
+      const managerContacts = profile.must_change_password
+        ? undefined
+        : await studentManagerContacts(client, profile.student_id);
       const context: IStudentContext = {
         timeZone: profile.timezone ?? 'Europe/Chisinau',
         userId,

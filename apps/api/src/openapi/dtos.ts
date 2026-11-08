@@ -2594,6 +2594,13 @@ export const SCHEMA_OVERRIDES = {
   },
 };
 export const SCHEMA_ADDITIONAL_PROPERTIES = {
+  StudentSubjectsResponseDto: false,
+  StudentSubjectDto: false,
+  StudentSubjectCapabilitiesDto: false,
+  StudentSubjectSubscriptionDto: false,
+  StudentTemporaryAdmissionDto: false,
+  DashboardPriorityDto: false,
+  DashboardPriorityTaskDto: false,
   DashboardQueryDto:false,ManagerDashboardDto:false,DashboardStudentCountsDto:false,DashboardLessonDto:false,DashboardTaskDto:false,DashboardOverdueTasksDto:false,DashboardSubscriptionDto:false,DashboardCurrencyTotalDto:false,DashboardPendingPaymentsDto:false,
   SendManagerNotificationDto:false,ListManagerNotificationsDto:false,ManagerNotificationDto:false,ManagerNotificationPageDto:false,
   ClaimManagerTaskDto:false,ResolveManagerRescheduleDto:false,ResolveManagerDisputeDto:false,ManagerTaskDto:false,ManagerTaskPageDto:false,ManagerTaskDetailDto:false,TaskPreferredWindowDto:false,TaskReschedulePayloadDto:false,TaskDisputePayloadDto:false,TaskExpiringPayloadDto:false,TaskGeneralPayloadDto:false,ApproveCrmDisputeDto:false,CrmDisputeResolutionDto:false,CrmDisputeReviewDto:false,

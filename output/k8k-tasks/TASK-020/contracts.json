@@ -1,0 +1,112 @@
+{
+  "before": 144,
+  "after": 145,
+  "addedPaths": [
+    "/api/v1/platform/workspace/{section}/{id}"
+  ],
+  "operation": {
+    "operationId": "getPlatformWorkspaceDetail",
+    "parameters": [
+      {
+        "name": "section",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "enum": [
+            "lessons",
+            "students",
+            "homework",
+            "tasks"
+          ],
+          "type": "string"
+        }
+      },
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WorkspaceDetailDto"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "INVALID_INPUT",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "UNAUTHENTICATED",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "FORBIDDEN or MFA_REQUIRED",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Object absent or outside visible scope",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "Data store or configuration unavailable",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ApiError"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "sessionCookie": []
+      }
+    ],
+    "summary": "Read a single object in the existing staff workspace scope",
+    "tags": [
+      "Platform"
+    ]
+  },
+  "addedSchemas": [
+    "WorkspaceDetailDto",
+    "WorkspaceLessonDetailDto",
+    "WorkspaceStudentDetailDto"
+  ],
+  "oldOperationsAndSchemas": "identical"
+}

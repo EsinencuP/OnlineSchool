@@ -80,8 +80,10 @@ export class StudentSubscriptionService {
     );
     for (const item of row.items) {
       item.entryDate = subscriptionDate(item.entryDate, student.timeZone);
-      item.balanceBefore = new Prisma.Decimal(item.balanceBefore).toFixed(0);
-      item.balanceAfter = new Prisma.Decimal(item.balanceAfter).toFixed(0);
+      if (item.balanceBefore !== null)
+        item.balanceBefore = new Prisma.Decimal(item.balanceBefore).toFixed(0);
+      if (item.balanceAfter !== null)
+        item.balanceAfter = new Prisma.Decimal(item.balanceAfter).toFixed(0);
     }
     return { ...row, page: query.page, pageSize: query.pageSize };
   }

@@ -28,6 +28,7 @@ beforeEach(() => {
     scheduled_end_at: new Date(+fixed + 69 * 60000),
     teacher_name: 'Teacher A',
     subject_name: 'Math',
+    student_status: 'SCHEDULED',
     google_meet_link: 'https://meet.google.com/abc-defg-hij',
   };
   summary = {
@@ -121,9 +122,12 @@ test('empty sources return nulls/zero counts, with no fabricated subscription or
     skillProgress: { notStudied: 0 },
   });
 });
-test('a lesson that started during aggregation is never presented as the next future lesson', async () => {
+test('a lesson that started during aggregation remains available as current lesson', async () => {
   jest.useFakeTimers({ now: new Date(+lesson.scheduled_at + 1) });
-  expect((await service.get(student)).value.nextLesson).toBeNull();
+  expect((await service.get(student)).value.nextLesson).toMatchObject({
+    lessonId: lesson.id,
+    canJoin: true,
+  });
 });
 test('frozen and unbounded subscriptions preserve their real metadata', async () => {
   jest.useFakeTimers({ now: fixed });
@@ -180,7 +184,10 @@ function cacheFixture() {
       entries.delete(key);
     }),
   };
-  const source = { revision: jest.fn(async () => version) };
+  const source = {
+    revision: jest.fn(async () => version),
+    currentLesson: jest.fn(async () => null),
+  };
   const interceptor = new DashboardCacheInterceptor(manager, new Reflector(), source);
   const ctx = (who) => ({ switchToHttp: () => ({ getRequest: () => ({ studentCtx: who }) }) });
   const value = {
@@ -211,7 +218,7 @@ test('CacheInterceptor uses student-specific key/30s TTL and does not mutate sto
   first.homework.total = 99;
   expect((await f.read()).homework.total).toBe(1);
   expect(f.handler.handle).toHaveBeenCalledTimes(1);
-  expect(f.manager.set.mock.calls[0][0]).toBe(`dashboard:${student.studentProfileId}`);
+  expect(f.manager.set.mock.calls[0][0]).toBe(`dashboard:summary:${student.studentProfileId}`);
   expect(f.manager.set.mock.calls[0][2]).toBe(30000);
   await f.read({ ...student, studentProfileId: randomUUID() });
   expect(f.handler.handle).toHaveBeenCalledTimes(2);
@@ -222,7 +229,7 @@ test('committed homework status change invalidates the cached response using moc
   f.revision('2');
   f.value.homework.total = 2;
   expect((await f.read()).homework.total).toBe(2);
-  expect(f.manager.del).toHaveBeenCalledWith(`dashboard:${student.studentProfileId}`);
+  expect(f.manager.del).toHaveBeenCalledWith(`dashboard:summary:${student.studentProfileId}`);
   expect(f.handler.handle).toHaveBeenCalledTimes(2);
 });
 test('cache expires after 30 seconds, including with a backend that ignores its TTL', async () => {
@@ -233,23 +240,35 @@ test('cache expires after 30 seconds, including with a backend that ignores its 
   await f.read();
   expect(f.handler.handle).toHaveBeenCalledTimes(2);
 });
-test('TTL stops at the join-window boundary and lesson start instead of serving stale canJoin', async () => {
+test('cached summary never stores or shares Meet and current lesson is retained across T0', async () => {
   jest.useFakeTimers({ now: fixed });
   const f = cacheFixture();
-  f.value.nextLesson = { scheduledAt: new Date(+fixed + 600001).toISOString() };
-  await f.read();
-  expect(f.manager.set.mock.calls[0][2]).toBe(1);
+  f.value.nextLesson = {
+    lessonId: lesson.id,
+    scheduledAt: fixed.toISOString(),
+    status: 'SCHEDULED',
+    canJoin: true,
+    meetLink: lesson.google_meet_link,
+    meetAsOf: fixed.toISOString(),
+  };
+  expect((await f.read()).nextLesson).toEqual(f.value.nextLesson);
+  expect(f.manager.set.mock.calls[0][1].value).not.toHaveProperty('nextLesson');
   jest.setSystemTime(new Date(+fixed + 1));
-  await f.read();
-  expect(f.handler.handle).toHaveBeenCalledTimes(2);
-  jest.setSystemTime(new Date(+fixed + 600000));
-  await f.read();
-  expect(f.manager.set.mock.calls.at(-1)[2]).toBe(1);
+  f.source.currentLesson.mockResolvedValueOnce({
+    ...f.value.nextLesson,
+    meetAsOf: new Date().toISOString(),
+  });
+  expect((await f.read()).nextLesson).toMatchObject({ lessonId: lesson.id, canJoin: true });
+  f.source.currentLesson.mockResolvedValueOnce(null);
+  expect((await f.read()).nextLesson).toBeNull();
+  expect(f.handler.handle).toHaveBeenCalledTimes(1);
+  expect(f.source.currentLesson).toHaveBeenCalledTimes(2);
 });
 test('in-flight requests for the same student/revision share one aggregate', async () => {
   const f = cacheFixture();
   await Promise.all([f.read(), f.read(), f.read()]);
   expect(f.handler.handle).toHaveBeenCalledTimes(1);
+  expect(f.source.currentLesson).toHaveBeenCalledTimes(2);
 });
 test('a source commit during load cannot be cached as a coherent snapshot', async () => {
   const f = cacheFixture();
@@ -279,4 +298,16 @@ test('CRM stores a valid reusable Meet link and allows omission', () => {
     'https://meet.google.com/abc-defg-hij',
   );
   expect(meetLink(undefined)).toBeNull();
+});
+
+test.each([0, -0.01, -30, -60])('current lesson remains in hero at %s minutes', async (minutes) => {
+  jest.useFakeTimers({ now: fixed });
+  lesson.scheduled_at = new Date(+fixed + minutes * 60000);
+  const result = await service.get(student);
+  expect(result.value.nextLesson).toMatchObject({ lessonId: lesson.id, canJoin: true });
+});
+test('hero does not retain an expired join window', async () => {
+  jest.useFakeTimers({ now: fixed });
+  lesson.scheduled_at = new Date(+fixed - 3_600_001);
+  expect((await service.get(student)).value.nextLesson).toBeNull();
 });

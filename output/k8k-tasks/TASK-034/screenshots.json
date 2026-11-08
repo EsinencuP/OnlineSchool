@@ -1,0 +1,1175 @@
+{
+  "task": "TASK-034",
+  "screenshots": [
+    {
+      "path": "after/ro-1024-login.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "9f2dfa93f12bdd26e603df8314cd58b254e8a464898e15225daa57e2f0b24372"
+    },
+    {
+      "path": "after/ro-1024-materials.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "d0aa0b97a00bafa65e2bbd4b2c58cb665f94629d7dae9dceb281854aaf7c6ce5"
+    },
+    {
+      "path": "after/ro-1024-profile.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "92e7eb6e026125cd43b7af38f2f9d31aa158793295a82e8dde11d7c8007a9737"
+    },
+    {
+      "path": "after/ro-1024-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "623bbd7c33b6cb2080cbd387dcd2a4bf0218a0387c4ce4a3aed0ed2d018a9312"
+    },
+    {
+      "path": "after/ro-1024-security.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "713114b5e9449f120955033e9cf9762c37bb92366f37d29bad11cb6836661049"
+    },
+    {
+      "path": "after/ro-1024-suspended.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "a2633ce18d650df74298fe36b4c7cb8e61be580c0969b309f8155ebe3e03114d"
+    },
+    {
+      "path": "after/ro-1280-login.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "a74efeae14595c22b038c7985b3d11214a75ea17685eee1d21f74b0e1f833168"
+    },
+    {
+      "path": "after/ro-1280-materials.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "85c02718ae4d962f83132ce4143e67b69287e74ebe576a85116929f35bcbb4f3"
+    },
+    {
+      "path": "after/ro-1280-profile.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "349558b424d3389ed82965d3d1cd9a889563502d91a64ab1a1932903673e760c"
+    },
+    {
+      "path": "after/ro-1280-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "3a5a5ef6fb5739b85a2724f9e47ed0d818cea78118bdb16e871839e1d04dfe79"
+    },
+    {
+      "path": "after/ro-1280-security.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "cf94a8e2dd8fc600163d491522c317465bd56bacbfe83ec187a34064f95edaad"
+    },
+    {
+      "path": "after/ro-1280-suspended.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "7e8f980b5294a432ee5b42ecf96e4cf7d75259c5a38c7d318dfbcf48f72712e0"
+    },
+    {
+      "path": "after/ro-360-login.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "71a646fbb57fa8d3eff56c6e45ef075e55da65355b37c5f7b340c4ecbd3043b2"
+    },
+    {
+      "path": "after/ro-360-materials.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "b1d4560454b0aed6d84a1c2051fc98c3f4a3870093a20fec25ac89634fe16ce7"
+    },
+    {
+      "path": "after/ro-360-profile.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "efe0ab51172fbe1a99bdb651d562ba310a49e88e876ca05292de847d0adeb0f1"
+    },
+    {
+      "path": "after/ro-360-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "fc1ccd5fcd2a1c66db6188542d4cf219b4b18be9edf9241b3d196c666f66b63c"
+    },
+    {
+      "path": "after/ro-360-security.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "b2547d6ce258479646ee689b917d15e069366a6090d3bb7465dc941defdd5210"
+    },
+    {
+      "path": "after/ro-360-suspended.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "1873eff5f37cf622aa8e8dfd52ed62cc3f5cae6cfd5ade3bfdcc9b5bf43fa593"
+    },
+    {
+      "path": "after/ro-768-login.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "2da39c5c9707d78c9315a2c1bfb42cdc938932c7311aa5d60ecb251e585d8c59"
+    },
+    {
+      "path": "after/ro-768-materials.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "c4aabc54b7cbe30aa6bb732b702a1522d7c391fac89886cd35fd339e98b916c2"
+    },
+    {
+      "path": "after/ro-768-profile.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "46bbb9727cea43f68f03e54567f5e14c3bd71cf639487536a289ed51499edfa4"
+    },
+    {
+      "path": "after/ro-768-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "c818031713a9ce0a5d67d541d1b240b398af30901482ea01a7187c25c3e13b23"
+    },
+    {
+      "path": "after/ro-768-security.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "467f687d02b26eeba4664e837cb49045b983faf863f0ad0bf812ad721c6f37e6"
+    },
+    {
+      "path": "after/ro-768-suspended.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "e12de0ccf5f6b6f671a1a9ad90ad4282c035db0933f702cf475155ec40054320"
+    },
+    {
+      "path": "after/ro-alias100-dirty.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "alias100-dirty",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "4e22321d9548257fce294ea330ed0ce3961a8c88532f11a0949674591a0ffdd6"
+    },
+    {
+      "path": "after/ro-logout-unknown-verification.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "logout-unknown-verification",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "c0f61db52ee75a4a92f199cf3e886731dd0d143e8e032ef43af0360ad8bb8e11"
+    },
+    {
+      "path": "after/ro-material-empty.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "material-empty",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "29f740cef9fa5fea1adff15b7e36d867e0b16a57ad13fd48ed683a39ee835afb"
+    },
+    {
+      "path": "after/ro-material-expired.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "material-expired",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "4731a3a9067f62eee64a93b53aa72f350ec70d489d2fbd3276629172955f4808"
+    },
+    {
+      "path": "after/ro-material-forbidden.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "material-forbidden",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "404ade7f26a54294ebf583adffe456ad6201d35443f9431f8cd1eb6a05d964de"
+    },
+    {
+      "path": "after/ro-material-revoked.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "material-revoked",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "3625ae5710ec304db77f644eab9697ebd2295bdcc5ca5bd117105fca2c36e903"
+    },
+    {
+      "path": "after/ro-material-stale.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "material-stale",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "d5dc8e45aa1852547243384532f7d49a5e895dd61681783b70e0b87ced03d82b"
+    },
+    {
+      "path": "after/ro-profile-pending.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile-pending",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "0557765a9d706e31677d375cf2e10902e096a86b33808719bbfa16e867207179"
+    },
+    {
+      "path": "after/ro-request-unknown.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/security?ui.k8k=1",
+      "view": "request-unknown",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "47a97ecc8f46def25bcb250232628fb3f6a865444753d76fb93788a20fe44df3"
+    },
+    {
+      "path": "after/ro-storage-unavailable.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/login?ui.k8k=1",
+      "view": "storage-unavailable",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "82426422f0444f2ec47a51eee9301ea3eccae7b6e9e0c5da629a1e0db9d89ce5"
+    },
+    {
+      "path": "after/ro-temporary-password-expired.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/login?ui.k8k=1",
+      "view": "temporary-password-expired",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "baeb840afbf9819f21f07c14c0b4dd0983a9b7739aaac1bbebc530786dc4aa9e"
+    },
+    {
+      "path": "after/ro-validation-and-dirty-email.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/security?ui.k8k=1",
+      "view": "validation-and-dirty-email",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "7d1e8ec7b1e961819f6c6817b4385dc9b29a3462267c6857eebb9cb39fb12cc8"
+    },
+    {
+      "path": "after/ro-wrong-otp.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/security?ui.k8k=1",
+      "view": "wrong-otp",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "0b53e7ab68297a52902a7a106b714020fd2fc0e95156950732db68844b8eb45c"
+    },
+    {
+      "path": "after/ro-wrong-password.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "cssViewport": {
+        "width": 1600,
+        "height": 1000
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": false,
+      "route": "/student/security?ui.k8k=1",
+      "view": "wrong-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "3ac54817afce022963be5d8d5ffec8aa0c993d7f2ad57bd3b080f3ae3e685610"
+    },
+    {
+      "path": "after/ro-zoom200-materials.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 1000,
+      "cssViewport": {
+        "width": 640,
+        "height": 500
+      },
+      "deviceScaleFactor": 2,
+      "zoomEquivalent": "200% at1280x1000 device output; responsive CSS640x500, DPR2",
+      "matrix": false,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "zoom200-materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "69eaa838f140f6d9fc732dca019b219811c1624e7d7fb5ac79e683b2bb3a43a2"
+    },
+    {
+      "path": "after/ro-zoom200-profile.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 1000,
+      "cssViewport": {
+        "width": 640,
+        "height": 500
+      },
+      "deviceScaleFactor": 2,
+      "zoomEquivalent": "200% at1280x1000 device output; responsive CSS640x500, DPR2",
+      "matrix": false,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "zoom200-profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "f30aaa12ff1ed578f0cfe1e8c670da2c7b49607b5bc8b3b30c572d8e283a31f7"
+    },
+    {
+      "path": "after/ro-zoom200-security.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 1000,
+      "cssViewport": {
+        "width": 640,
+        "height": 500
+      },
+      "deviceScaleFactor": 2,
+      "zoomEquivalent": "200% at1280x1000 device output; responsive CSS640x500, DPR2",
+      "matrix": false,
+      "route": "/student/security?ui.k8k=1",
+      "view": "zoom200-security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "b682298f97e829a092f9896c07a7e1ea1a3b8522da3e0cb4338e91f63ef456e3"
+    },
+    {
+      "path": "after/ru-1024-login.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "4698af09acf81b5c67ecaa9848979ad7899e4a0d3aeab1c3565acb07a37e0190"
+    },
+    {
+      "path": "after/ru-1024-materials.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "77791366353f7268ae935427aeddb9f854fd1980b7e5761d2bacdee68146729c"
+    },
+    {
+      "path": "after/ru-1024-profile.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "6da74b90e74823805e11991726757be6cef0a1251ba1da0c96018049fee89839"
+    },
+    {
+      "path": "after/ru-1024-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "e7595e477049e079d4ad531e06153400ef9d61b49da709e64c94ed08b9ec829f"
+    },
+    {
+      "path": "after/ru-1024-security.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "2f46092a13329ee6636658ea849ec70f24479b1b5719d545d6ecbae7edf2c0db"
+    },
+    {
+      "path": "after/ru-1024-suspended.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "cssViewport": {
+        "width": 1024,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "45a466e4330897d578e7996f8bb1d899f31c350d03c0d85a924ea636b07f81f2"
+    },
+    {
+      "path": "after/ru-1280-login.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "a2a0219f2d74db20d4cee03bb0a79f13cd1432c4b6715d01c6e40a6e501245cc"
+    },
+    {
+      "path": "after/ru-1280-materials.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "9d7cd07bc5ca1d21035b7e6dbea81a52b7e14176b55ba8b4d4a081e06749d671"
+    },
+    {
+      "path": "after/ru-1280-profile.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "37b598b2907527c18fd71fbee2dce6b8f4d8d416be8de318c515117af3a15043"
+    },
+    {
+      "path": "after/ru-1280-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "8ce4e4f8fd657bf04e8068d1a4b1144b545acbd1206e496a5af3620a17cfc76d"
+    },
+    {
+      "path": "after/ru-1280-security.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "e187d7a7d70c91d141af6f24e058b3f927671ce5d80874fd1bd977042d20c590"
+    },
+    {
+      "path": "after/ru-1280-suspended.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "cssViewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "6638f27fb21c6688c53980fa366b10a5ca7f5cdc31ebcfd5cd1d6a637ace1ef4"
+    },
+    {
+      "path": "after/ru-360-login.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "77ca16b4cc85f79217000771a2efdd1fee579ded415a8be135e869bf62e89c8e"
+    },
+    {
+      "path": "after/ru-360-materials.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "28dbc3e0becb4d0e0af8de28494ba4451fa119978e04f9bc455f4d7fe0253bd7"
+    },
+    {
+      "path": "after/ru-360-profile.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "1a50ea90f610b5846ebd9db6f147fbf050b7249a9bd353f71c3f480e8e214a29"
+    },
+    {
+      "path": "after/ru-360-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "8900c47565405c9864805b23455a5d95c09ec55a4d02a9d5e97bd16054b945e9"
+    },
+    {
+      "path": "after/ru-360-security.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "bd0769ca71f0359d68f4239b2b70a88e43f2473a3bfc10404a04352f9ba7612d"
+    },
+    {
+      "path": "after/ru-360-suspended.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 900,
+      "cssViewport": {
+        "width": 360,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "21fcd1c624a9d29f6576f6e54d3beaa407ca11e550c721cfdd7ab4cec881a095"
+    },
+    {
+      "path": "after/ru-768-login.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/login?ui.k8k=1",
+      "view": "login",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "a25cd3ea0da55378a13d10e6028dd07527e0baca8b2f4bb30e73ce56f0bf515e"
+    },
+    {
+      "path": "after/ru-768-materials.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/materials?ui.k8k=1",
+      "view": "materials",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "755f5ca0f0901a66fd0bd1e23767a69f5c84caa725719bca73cbd3b92cea9837"
+    },
+    {
+      "path": "after/ru-768-profile.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/profile?ui.k8k=1",
+      "view": "profile",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "bcadc1124ab96ed7e12a4e5b9fc10a7b202ed1d54f77ca660fb74516b36ae7af"
+    },
+    {
+      "path": "after/ru-768-security-change-password.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security/change-password?ui.k8k=1",
+      "view": "security-change-password",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "083bdb787176892c33f40044abe64f9b4742ce3301d67e8d2026df73d28116d2"
+    },
+    {
+      "path": "after/ru-768-security.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/security?ui.k8k=1",
+      "view": "security",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "a78f8de65725a0a0b794671a71ff23eec4d5029f5bb03b65cd9cb91aadc08207"
+    },
+    {
+      "path": "after/ru-768-suspended.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "cssViewport": {
+        "width": 768,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "zoomEquivalent": null,
+      "matrix": true,
+      "route": "/student/suspended?ui.k8k=1",
+      "view": "suspended",
+      "fixture": "synthetic35 explicit material grants/2 sessions; authored names and contextless labels; no live DB/S3/OTP/email; secret inputs cleared or masked",
+      "sha256": "f00ba281cc1bf829f04bde89bc770f188dccd449233aac443648ab7b0711e58b"
+    }
+  ]
+}

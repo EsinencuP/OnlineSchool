@@ -1460,6 +1460,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/platform/workspace/{section}/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read a single object in the existing staff workspace scope */
+        get: operations["getPlatformWorkspaceDetail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/qa/components": {
         parameters: {
             query?: never;
@@ -1737,7 +1754,7 @@ export interface paths {
         };
         /**
          * Student lesson list or monthly calendar
-         * @description Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+         * @description Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns a calendar capped at 62; overflow is 422. Explicit view=list permits pagination of that month. Optional subjectId narrows owned enrollments.
          */
         get: operations["getStudentLessons"];
         put?: never;
@@ -1779,6 +1796,26 @@ export interface paths {
          * @description Addressed CRM task only. Requires current deduction, no OPEN/IN_PROGRESS case and <=30 elapsed days. A new command with an open case is 409; same Idempotency-Key replays the original 201 without writing again. Does not change attendance, ledger or rights.
          */
         post: operations["disputeStudentLessonDeduction"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/lessons/{lessonId}/requests/{requestKey}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Reconcile one owned lesson request after an uncertain command response
+         * @description Read-only lookup of an addressed student CRM task using its original idempotency key. Missing or still uncommitted task remains UNKNOWN.
+         */
+        get: operations["getStudentLessonRequestResult"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2039,6 +2076,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/student/reports/{reportId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read one own latest published eight-lesson report
+         * @description Same publishedReports scope and public projection as list, independent of pagination. Foreign, unknown, draft, future and superseded IDs share REPORT_FORBIDDEN403. Draft corrections do not hide the preceding publication.
+         */
+        get: operations["getStudentReport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/student/reports/{reportId}/read": {
         parameters: {
             query?: never;
@@ -2091,6 +2148,26 @@ export interface paths {
          * @description Every poll rechecks student access. READY signatures expire exactly one hour after ready_at; polling never extends the expiry. After expiry returns FAILED/PDF_EXPORT_EXPIRED without a URL. Foreign/nonexistent jobs return the same 403.
          */
         get: operations["getStudentEducationPdfStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/reports/export-pdf/requests/{requestId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Reconcile own PDF enqueue intention
+         * @description Read-only lookup by original request UUID, scoped to student and requesting actor. ACCEPTED identifies the committed job, not its current readiness. UNKNOWN is not proof that a command never ran. No signing or new export.
+         */
+        get: operations["getStudentEducationPdfRequestResult"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2249,9 +2326,29 @@ export interface paths {
         };
         /**
          * Read confirmed immutable skill snapshots
-         * @description Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
+         * @description Paginated items/total/page/pageSize. Optional subjectId filters owned history before pagination; foreign and unknown subjects return the same 403. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
          */
         get: operations["getStudentSkillSnapshots"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/student/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read owned subject access and subscription summaries
+         * @description One read snapshot from the student session. Subjects are ordered by ID and the preferred subscription comes first. No query parameters, money or mutations. Meet eligibility remains per lesson.
+         */
+        get: operations["getStudentSubjects"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2752,6 +2849,20 @@ export interface components {
         DashboardPendingPaymentsDto: {
             count: number;
             totalsByCurrency: components["schemas"]["DashboardCurrencyTotalDto"][];
+        };
+        DashboardPriorityDto: {
+            primary: components["schemas"]["DashboardPriorityTaskDto"] | null;
+            /** @description Full authorized critical queue. */
+            criticalCount: number;
+            /** @enum {string} */
+            queueAction: "TASK_QUEUE";
+            /** Format: date-time */
+            sourceAsOf: string;
+        };
+        DashboardPriorityTaskDto: {
+            /** Format: uuid */
+            taskId: string;
+            title: string;
         };
         DashboardQueryDto: {
             /**
@@ -3294,10 +3405,16 @@ export interface components {
             durationMinutes: number;
             teacherName: string;
             subjectName: string;
+            /** Format: uuid */
+            subjectId?: string;
+            /** Format: date-time */
+            originalScheduledAt?: string;
             /** @enum {string} */
             status: "SCHEDULED" | "COMPLETED" | "CANCELLED" | "NO_SHOW" | "STAR_PENDING" | "DISPUTED";
             canJoin: boolean;
             meetLink: string | null;
+            /** Format: date-time */
+            meetAsOf?: string;
             canRequestReschedule: boolean;
         };
         LessonCreateRequest: {
@@ -3362,6 +3479,14 @@ export interface components {
             late: boolean;
         } & {
             [key: string]: unknown;
+        };
+        LessonRequestResultDto: {
+            /** @enum {string} */
+            status: "CREATED" | "UNKNOWN";
+            /** Format: uuid */
+            crmTaskId: string | null;
+            /** @enum {string|null} */
+            type: "RESCHEDULE_REQUEST" | "ATTENDANCE_DISPUTE" | null;
         };
         LessonRescheduleRequest: {
             /** Format: date-time */
@@ -3437,6 +3562,8 @@ export interface components {
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
+            displayName?: string | null;
+            phoneE164?: string | null;
         };
         ManagerDashboardDto: {
             leads: components["schemas"]["LeadSummaryDto"];
@@ -3447,6 +3574,8 @@ export interface components {
             overdueTasks: components["schemas"]["DashboardOverdueTasksDto"];
             expiringSubscriptions: components["schemas"]["DashboardSubscriptionDto"][];
             pendingPayments: components["schemas"]["DashboardPendingPaymentsDto"];
+            /** @description Omitted when the priority source is not configured; null if it is unavailable. */
+            priority?: components["schemas"]["DashboardPriorityDto"] | null;
         };
         ManagerDistributionDto: {
             /** Format: uuid */
@@ -3692,6 +3821,15 @@ export interface components {
             nextCursor: string | null;
         };
         MaterialItemDto: {
+            /**
+             * Format: uuid
+             * @description Explicit educational subject; null means a legacy contextless grant
+             */
+            subjectId?: string | null;
+            /** @description Existing grant disposition: true attachment, false inline READ; not DRM */
+            canDownload?: boolean;
+            /** @description True only when the original filename was not recorded */
+            fileNameIsFallback?: boolean;
             /** Format: uuid */
             fileId: string;
             fileName: string;
@@ -3722,6 +3860,10 @@ export interface components {
             subjectName: string;
             meetLink: string | null;
             canJoin: boolean;
+            /** @enum {string} */
+            status?: "SCHEDULED" | "COMPLETED" | "CANCELLED" | "NO_SHOW" | "STAR_PENDING" | "DISPUTED";
+            /** Format: date-time */
+            meetAsOf?: string;
         };
         NotificationItemDto: {
             /** Format: uuid */
@@ -3903,6 +4045,12 @@ export interface components {
             currency: string;
             /** Format: date-time */
             confirmed_at: string;
+        };
+        PdfExportRequestResultDto: {
+            /** @enum {string} */
+            status: "ACCEPTED" | "UNKNOWN";
+            /** Format: uuid */
+            jobId: string | null;
         };
         PdfJobStatusDto: {
             /** Format: uuid */
@@ -4416,6 +4564,58 @@ export interface components {
             /** Format: uuid */
             avatarFileId: string | null;
         };
+        StudentSubjectCapabilitiesDto: {
+            canViewHomework: boolean;
+            canViewMaterials: boolean;
+            canOpenSubscription: boolean;
+            /** @description Existing lessons view only; a specific Meet action is checked separately. */
+            canOpenLessons: boolean;
+        };
+        StudentSubjectDto: {
+            /** Format: uuid */
+            subjectId: string;
+            subjectName: string;
+            enrollmentIds: string[];
+            /** @enum {string} */
+            displayStatus: "ACTIVE" | "FROZEN" | "EXPIRED" | "LIMITED" | "NONE";
+            /** @enum {string} */
+            reasonCode: "PAID_RIGHTS" | "FROZEN" | "PERIOD_EXPIRED" | "ENROLLMENT_ENDED" | "ENROLLMENT_PAUSED" | "NO_SUBSCRIPTION" | "TEMPORARY_ADMISSION" | "PAYMENT_OR_ADMISSION_REQUIRED" | "NO_PAID_RIGHTS" | "RIGHTS_UNKNOWN";
+            /** @description A subject-level access basis exists. Never authorizes a specific Meet link. */
+            liveAccess: boolean;
+            capabilities: components["schemas"]["StudentSubjectCapabilitiesDto"];
+            subscriptions: components["schemas"]["StudentSubjectSubscriptionDto"][];
+        };
+        StudentSubjectsResponseDto: {
+            /** Format: date-time */
+            generatedAt: string;
+            items: components["schemas"]["StudentSubjectDto"][];
+        };
+        StudentSubjectSubscriptionDto: {
+            /**
+             * Format: uuid
+             * @description Owned financial period accepted by subscription, payments and ledger GETs.
+             */
+            subscriptionId: string;
+            /**
+             * Format: uuid
+             * @description Grouping identity only; do not pass to financial-period GETs.
+             */
+            managerSubscriptionId: string | null;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** @enum {string} */
+            displayStatus: "ACTIVE" | "FROZEN" | "EXPIRED" | "LIMITED" | "NONE";
+            /** @enum {string} */
+            reasonCode: "PAID_RIGHTS" | "FROZEN" | "PERIOD_EXPIRED" | "ENROLLMENT_ENDED" | "ENROLLMENT_PAUSED" | "NO_SUBSCRIPTION" | "TEMPORARY_ADMISSION" | "PAYMENT_OR_ADMISSION_REQUIRED" | "NO_PAID_RIGHTS" | "RIGHTS_UNKNOWN";
+            /** Format: date-time */
+            validUntil: string | null;
+            /** Format: date-time */
+            frozenUntil: string | null;
+            /** @description Confirmed rights for the started periods of this plan. Null means the balance cannot be established. */
+            paidLessonsRemaining: number | null;
+            liveAccess: boolean;
+            temporaryAdmission: components["schemas"]["StudentTemporaryAdmissionDto"] | null;
+        };
         StudentSubscriptionLedgerEntryDto: {
             /**
              * Format: uuid
@@ -4426,9 +4626,10 @@ export interface components {
             entryDate: string;
             /** @enum {string} */
             type: "DEDUCTION" | "CREDIT" | "FREEZE" | "UNFREEZE";
-            /** @description Lesson quantities, not monetary account totals */
-            balanceBefore: string;
-            balanceAfter: string;
+            /** @description Lesson quantity. Null when a historical deduction snapshot was not recorded. */
+            balanceBefore: string | null;
+            /** @description Lesson quantity. Null when a historical deduction snapshot was not recorded. */
+            balanceAfter: string | null;
             description: string;
             /** Format: uuid */
             lessonId: string | null;
@@ -4438,6 +4639,12 @@ export interface components {
             total: number;
             page: number;
             pageSize: number;
+        };
+        StudentTemporaryAdmissionDto: {
+            maxLessons: number;
+            lessonsRemaining: number;
+            /** Format: date-time */
+            validUntil: string;
         };
         SubjectCreateRequest: {
             code: string;
@@ -4825,11 +5032,24 @@ export interface components {
             homework: components["schemas"]["WorkspaceCoverageDto"];
             tasks: components["schemas"]["WorkspaceCoverageDto"];
         };
+        WorkspaceDetailDto: {
+            actorContext: components["schemas"]["StaffActorContextDto"];
+            item: components["schemas"]["WorkspaceLessonDetailDto"] | components["schemas"]["WorkspaceStudentDetailDto"] | components["schemas"]["WorkspaceHomeworkDto"] | components["schemas"]["WorkspaceTaskDto"];
+        };
         WorkspaceHomeworkDto: {
             id: string;
             title: string;
             subject: string;
             dueAt: string | null;
+        };
+        WorkspaceLessonDetailDto: {
+            id: string;
+            startsAt: string;
+            endsAt: string;
+            status: string;
+            subject: string;
+            student: string;
+            teacher: string;
         };
         WorkspaceLessonDto: {
             id: string;
@@ -4847,6 +5067,11 @@ export interface components {
             hasMore: boolean;
             /** @description Unknown total; never a global KPI */
             total: number | null;
+        };
+        WorkspaceStudentDetailDto: {
+            id: string;
+            name: string;
+            subjects: string[];
         };
         WorkspaceStudentDto: {
             id: string;
@@ -12136,6 +12361,73 @@ export interface operations {
             };
         };
     };
+    getPlatformWorkspaceDetail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                section: "lessons" | "students" | "homework" | "tasks";
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WorkspaceDetailDto"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN or MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Object absent or outside visible scope */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store or configuration unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     getComponentStatus: {
         parameters: {
             query?: never;
@@ -12678,6 +12970,7 @@ export interface operations {
     getStudentHomework: {
         parameters: {
             query?: {
+                lessonId?: string;
                 page?: number;
                 pageSize?: number;
                 status?: "NOT_SUBMITTED" | "SUBMITTED" | "REVIEWED" | "NEEDS_REVISION";
@@ -13179,6 +13472,9 @@ export interface operations {
                 page?: number;
                 pageSize?: number;
                 month?: string;
+                /** @description Explicit list permits pagination of month */
+                view?: "calendar" | "list";
+                subjectId?: string;
             };
             header?: never;
             path?: never;
@@ -13405,6 +13701,78 @@ export interface operations {
             };
         };
     };
+    getStudentLessonRequestResult: {
+        parameters: {
+            query?: {
+                type?: "RESCHEDULE_REQUEST" | "ATTENDANCE_DISPUTE";
+            };
+            header?: never;
+            path: {
+                lessonId: string;
+                requestKey: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonRequestResultDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
     requestStudentLessonReschedule: {
         parameters: {
             query?: never;
@@ -13486,6 +13854,8 @@ export interface operations {
             query?: {
                 page?: number;
                 pageSize?: number;
+                lessonId?: string;
+                subjectId?: string;
             };
             header?: never;
             path?: never;
@@ -13629,6 +13999,7 @@ export interface operations {
     getStudentMaterials: {
         parameters: {
             query?: {
+                lessonId?: string;
                 /** @description Educational subject ID, not the permission recipient account */
                 subjectId?: string;
                 page?: number;
@@ -13797,6 +14168,7 @@ export interface operations {
     getStudentNotifications: {
         parameters: {
             query?: {
+                locale?: "ru" | "ro";
                 page?: number;
                 pageSize?: number;
             };
@@ -14124,6 +14496,67 @@ export interface operations {
             };
         };
     };
+    getStudentReport: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                reportId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EducationalReportDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
     markStudentReportRead: {
         parameters: {
             query?: never;
@@ -14285,6 +14718,67 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PdfJobStatusDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentEducationPdfRequestResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PdfExportRequestResultDto"];
                 };
             };
             400: {
@@ -14839,6 +15333,7 @@ export interface operations {
             query?: {
                 page?: number;
                 pageSize?: number;
+                subjectId?: string;
             };
             header?: never;
             path?: never;
@@ -14852,6 +15347,65 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SkillSnapshotResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            402: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetails"];
+                };
+            };
+        };
+    };
+    getStudentSubjects: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentSubjectsResponseDto"];
                 };
             };
             400: {

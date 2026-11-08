@@ -3,8 +3,20 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { journeyHistory, journeyLessons } from './lesson-journey-fixtures.mjs';
+import { bellProjection } from './bell-fixtures.mjs';
+import {
+  anchors,
+  subscriptionDetails,
+  subscriptionLedger,
+  subscriptionPayments,
+  subscriptionSubjects,
+} from './k8k-subscriptions/data.mjs';
 export const lessonId = '10000000-0000-4000-8000-000000000001';
 export const homeworkId = '20000000-0000-4000-8000-000000000001';
+export const englishId = '60000000-0000-4000-8000-000000000001';
+export const mathId = '60000000-0000-4000-8000-000000000002';
+export const periodId = '61000000-0000-4000-8000-000000000001';
 const skillId = '30000000-0000-4000-8000-000000000001';
 const fileId = '40000000-0000-4000-8000-000000000001';
 const now = () => new Date().toISOString();
@@ -27,7 +39,7 @@ const initial = () => ({
 });
 const states = new Map();
 const fallback = initial();
-const root = resolve(import.meta.dirname, '../dist');
+const root = resolve(import.meta.dirname, process.env.STUDENT_FIXTURE_DIST || '../dist');
 const types = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript',
@@ -38,6 +50,54 @@ const contacts = {
   whatsapp: 'https://wa.me/37360000001',
   telegram: 'https://t.me/academy_manager',
 };
+function subjects(state) {
+  const enrollmentId = '62000000-0000-4000-8000-000000000001';
+  return [
+    {
+      subjectId: englishId,
+      subjectName: 'Английский язык',
+      enrollmentIds: [enrollmentId],
+      displayStatus: 'ACTIVE',
+      reasonCode: 'PAID_RIGHTS',
+      liveAccess: true,
+      capabilities: {
+        canViewHomework: true,
+        canViewMaterials: true,
+        canOpenSubscription: true,
+        canOpenLessons: true,
+      },
+      subscriptions: [
+        {
+          subscriptionId: periodId,
+          managerSubscriptionId: '63000000-0000-4000-8000-000000000001',
+          enrollmentId,
+          displayStatus: 'ACTIVE',
+          reasonCode: 'PAID_RIGHTS',
+          validUntil: '2026-11-30',
+          frozenUntil: null,
+          paidLessonsRemaining: 6,
+          liveAccess: true,
+          temporaryAdmission: null,
+        },
+      ],
+    },
+    {
+      subjectId: mathId,
+      subjectName: 'Математика',
+      enrollmentIds: ['62000000-0000-4000-8000-000000000002'],
+      displayStatus: state.expiredSubject ? 'EXPIRED' : 'FROZEN',
+      reasonCode: state.expiredSubject ? 'PERIOD_EXPIRED' : 'FROZEN',
+      liveAccess: false,
+      capabilities: {
+        canViewHomework: false,
+        canViewMaterials: true,
+        canOpenSubscription: false,
+        canOpenLessons: false,
+      },
+      subscriptions: [],
+    },
+  ];
+}
 function list(items, url, defaultSize = 20) {
   const page = Number(url.searchParams.get('page') || 1),
     pageSize = Number(url.searchParams.get('pageSize') || defaultSize);
@@ -48,44 +108,59 @@ function list(items, url, defaultSize = 20) {
     pageSize,
   };
 }
-function lessons() {
+function lessons(state, meetAsOf = state.meetSnapshot?.asOf ?? now()) {
+  if (state.lessonJourney) return journeyLessons(state);
+  const sample = state.meetSnapshot;
+  const asOf = Date.parse(meetAsOf);
+  const scheduledAt = (offset) => new Date(asOf + offset).toISOString();
   return [
     {
       lessonId,
-      scheduledAt: new Date(Date.now() + 300_000).toISOString(),
+      scheduledAt: sample?.scheduledAt ?? scheduledAt(300_000),
       durationMinutes: 50,
-      subjectName: 'Английский язык',
-      teacherName: 'Елизавета К.',
-      status: 'SCHEDULED',
-      canJoin: true,
-      meetLink: 'https://meet.google.com/abc-defg-hij',
+      subjectName: sample?.subjectName ?? 'Английский язык',
+      teacherName: sample?.teacherName ?? 'Елизавета К.',
+      status: sample?.status ?? 'SCHEDULED',
+      allowed: sample?.allowed ?? state.canJoin ?? true,
+      url: sample?.noLink ? null : 'https://meet.google.com/abc-defg-hij',
       canRequestReschedule: false,
     },
     {
       lessonId: '10000000-0000-4000-8000-000000000002',
-      scheduledAt: new Date(Date.now() + 3 * 86400_000).toISOString(),
+      scheduledAt: sample?.secondAt ?? scheduledAt(3 * 86400_000),
       durationMinutes: 50,
       subjectName: 'Математика',
       teacherName: 'Александр Константинопольский — преподаватель математики',
       status: 'SCHEDULED',
-      canJoin: false,
-      meetLink: null,
+      allowed: sample?.secondAllowed ?? false,
+      url: 'https://meet.google.com/abc-defg-hij',
       canRequestReschedule: true,
     },
-  ];
+  ].map(({ allowed, url, ...item }) => {
+    const elapsed = asOf - Date.parse(item.scheduledAt);
+    const canJoin =
+      item.status === 'SCHEDULED' &&
+      allowed &&
+      !!url &&
+      elapsed >= -600_000 &&
+      elapsed <= 3_600_000;
+    return { ...item, meetAsOf, canJoin, meetLink: canJoin ? url : null };
+  });
 }
 function homework(state) {
-  return {
+  const item = {
     homeworkId,
     assignedAt: new Date(Date.now() - 86400_000).toISOString(),
-    dueAt: new Date(Date.now() - 60_000).toISOString(),
+    dueAt: Object.hasOwn(state, 'homeworkDueAt')
+      ? state.homeworkDueAt
+      : new Date(Date.now() - 60_000).toISOString(),
     subjectName: 'Английский язык',
-    teacherName: 'Елизавета К.',
-    title: 'Present Perfect. Рассказ о путешествии',
+    teacherName: state.homeworkTeacher ?? 'Елизавета К.',
+    title: state.homeworkTitle ?? 'Present Perfect. Рассказ о путешествии',
     description: 'Напиши короткий рассказ о своём путешествии. Используй Present Perfect.',
-    status: state.submitted ? 'SUBMITTED' : 'NEEDS_REVISION',
-    isLate: state.submitted,
-    draftContent: state.draft || null,
+    status: state.homeworkStatus ?? (state.submitted ? 'SUBMITTED' : 'NEEDS_REVISION'),
+    isLate: state.homeworkIsLate ?? state.submitted,
+    draftContent: state.expiredDraft ? null : state.draft || null,
     latestVersion: null,
     attachments: [],
     versions: [
@@ -107,6 +182,9 @@ function homework(state) {
       },
     ],
   };
+  if (state.homeworkVersions) item.versions = state.homeworkVersions;
+  item.latestVersion = item.versions[0] ?? null;
+  return item;
 }
 export function startFixture(port = 4175) {
   const server = createServer(async (req, res) => {
@@ -145,16 +223,42 @@ export function startFixture(port = 4175) {
         return json({ ok: true });
       }
       if (path.startsWith('/api/')) {
-        if (path === '/api/v1/platform/accounts' && req.method === 'GET')
-          return json({ enabled: false, currentKey: null, items: [] });
+        if (path === '/api/v1/platform/accounts' && req.method === 'GET') {
+          const items = state.demoContacts
+            ? [
+                {
+                  key: 'sofia',
+                  name: 'Демо София',
+                  role: 'STUDENT',
+                  login: 'sofia@example.invalid',
+                  home: '/student',
+                },
+                {
+                  key: 'daniil',
+                  name: 'Демо Даниил',
+                  role: 'STUDENT',
+                  login: 'daniil@example.invalid',
+                  home: '/student',
+                },
+              ]
+            : [];
+          return json({
+            enabled: !!state.demoContacts,
+            currentKey: state.demoKey ?? (items.length ? 'sofia' : null),
+            items,
+          });
+        }
         state.calls.push({
           path,
           query: url.search,
           method: req.method,
           body:
-            path === '/api/v1/auth/session' || path.endsWith('/security/change-password')
+            path === '/api/v1/auth/session' ||
+            path.endsWith('/security/change-password') ||
+            path.includes('/change-email/')
               ? {}
               : body,
+          fields: Object.keys(body),
           csrf: req.headers['x-csrf-token'],
           key: req.headers['idempotency-key'],
         });
@@ -190,30 +294,77 @@ export function startFixture(port = 4175) {
           }
         }
         if (!state.auth) return json({ code: 'UNAUTHENTICATED' }, 401);
+        if (
+          path === '/api/v1/auth/switch-user' &&
+          req.method === 'POST' &&
+          state.demoContacts &&
+          body.key === 'daniil' &&
+          state.demoAlternate
+        ) {
+          const id = randomUUID();
+          states.set(id, {
+            ...initial(),
+            ...state.demoAlternate,
+            demoContacts: true,
+            demoKey: 'daniil',
+          });
+          res.setHeader('Set-Cookie', `stu_fixture=${id}; HttpOnly; Path=/; SameSite=Lax`);
+          return json({ home: '/student' });
+        }
+        if (path === '/api/v1/student/me' && state.meForbidden)
+          return json({ code: 'FORBIDDEN' }, 403);
+        if (path === '/api/v1/student/me' && state.meSuspended)
+          return json({ code: 'ACCESS_SUSPENDED', managerContacts: contacts }, 402);
+        if (path === '/api/v1/student/me' && state.meError)
+          return json({ code: 'STUDENT_CONTEXT_UNAVAILABLE' }, 503);
         if (path === '/api/v1/student/me')
           return json({
             id: '50000000-0000-4000-8000-000000000001',
-            userId: '50000000-0000-4000-8000-000000000002',
+            userId: state.userId ?? '50000000-0000-4000-8000-000000000002',
             displayName: state.displayName || 'София',
-            timeZone: 'Europe/Chisinau',
-            email: 'student@example.invalid',
+            timeZone: state.timeZone ?? 'Europe/Chisinau',
+            email: state.email ?? 'student@example.invalid',
             avatarUrl: null,
             hasActiveAccess: state.active,
             mustChangePassword: state.mustChangePassword,
             createdAt: now(),
-            managerContacts: contacts,
+            managerContacts: state.managerContacts ?? contacts,
           });
         if (path.endsWith('/security/change-password')) {
+          if (state.passwordError)
+            return json({ code: state.passwordError.code }, state.passwordError.status);
           state.mustChangePassword = false;
           return json({ changed: true });
         }
         if (state.mustChangePassword) return json({ code: 'PASSWORD_CHANGE_REQUIRED' }, 403);
         if (!state.active)
-          return json({ code: 'ACCESS_SUSPENDED', managerContacts: contacts }, 402);
+          return json(
+            { code: 'ACCESS_SUSPENDED', managerContacts: state.managerContacts ?? contacts },
+            402,
+          );
+        if (path === '/api/v1/student/subjects') {
+          if (state.subjectDelay) await new Promise((r) => setTimeout(r, state.subjectDelay));
+          if (state.subjectError) return json({ code: 'FORBIDDEN' }, state.subjectError);
+          const items = state.subscriptionScenario
+            ? subscriptionSubjects(state.subscriptionScenario)
+            : subjects(state);
+          return json({ generatedAt: now(), items: state.subjectEmpty ? [] : items });
+        }
+        if (state.meetError && /^\/api\/v1\/student\/(dashboard$|lessons(?:\/|$))/.test(path))
+          return json({ code: 'UNAVAILABLE' }, state.meetError);
         if (path.endsWith('/student/dashboard')) {
-          const l = lessons()[0];
+          const generatedAt = state.meetSnapshot?.asOf ?? now();
+          const items = lessons(state, generatedAt).filter((item) => item.status === 'SCHEDULED');
+          items.sort(
+            (a, b) =>
+              a.scheduledAt.localeCompare(b.scheduledAt) || a.lessonId.localeCompare(b.lessonId),
+          );
+          const nextLesson =
+            items.find((item) => item.canJoin && item.scheduledAt <= generatedAt) ??
+            items.find((item) => item.scheduledAt > generatedAt) ??
+            null;
           return json({
-            nextLesson: l,
+            nextLesson,
             homework: {
               notSubmitted: 0,
               submitted: state.submitted ? 1 : 0,
@@ -227,24 +378,108 @@ export function startFixture(port = 4175) {
               frozenUntil: null,
             },
             skillProgress: { familiarizing: 1, practicing: 1, applying: 1, notStudied: 1 },
-            generatedAt: now(),
+            generatedAt,
           });
         }
-        if (path === '/api/v1/student/lessons' || path === '/api/v1/student/lessons/upcoming')
-          return json(list(url.searchParams.get('period') === 'archive' ? [] : lessons(), url));
-        if (path.match(/\/lessons\/[^/]+\/reschedule-request$/))
-          return json({ crmTaskId: randomUUID(), status: 'CREATED' }, 201);
+        if (path === '/api/v1/student/lessons' || path === '/api/v1/student/lessons/upcoming') {
+          let items = url.searchParams.get('period') === 'archive' ? [] : lessons(state);
+          const subject = url.searchParams.get('subjectId');
+          if (subject) items = items.filter((item) => item.subjectId === subject);
+          if (
+            state.calendarOverflow &&
+            url.searchParams.has('month') &&
+            url.searchParams.get('view') !== 'list'
+          )
+            return json({ code: 'CALENDAR_MONTH_LIMIT_EXCEEDED' }, 422);
+          if (path.endsWith('/upcoming') && state.upcomingStatus && items[0])
+            items[0] = { ...items[0], status: state.upcomingStatus };
+          return json(list(items, url));
+        }
+        if (path === '/api/v1/student/lessons/history') {
+          if (state.historyDelay) await new Promise((done) => setTimeout(done, state.historyDelay));
+          if (state.historyError)
+            return json({ code: 'STUDENT_HISTORY_UNAVAILABLE' }, state.historyError);
+          let items = journeyHistory(state).sort(
+            (a, b) =>
+              b.scheduledAt.localeCompare(a.scheduledAt) || b.lessonId.localeCompare(a.lessonId),
+          );
+          const id = url.searchParams.get('lessonId'),
+            subject = url.searchParams.get('subjectId');
+          if (id) items = items.filter((item) => item.lessonId === id);
+          if (subject) items = items.filter((item) => item.subjectId === subject);
+          return json(list(items, url));
+        }
+        if (path.match(/\/lessons\/[^/]+\/requests\/[^/]+$/)) {
+          const [, id, key] = path.match(/\/lessons\/([^/]+)\/requests\/([^/]+)$/);
+          if (!lessons(state).some((item) => item.lessonId === id))
+            return json({ code: 'LESSON_FORBIDDEN' }, 403);
+          const task = (state.lessonRequests ?? []).find(
+            (item) =>
+              item.lessonId === id &&
+              item.key === key &&
+              (!url.searchParams.has('type') || item.type === url.searchParams.get('type')),
+          );
+          return json(
+            task
+              ? { status: 'CREATED', crmTaskId: task.crmTaskId, type: task.type }
+              : { status: 'UNKNOWN', crmTaskId: null, type: null },
+          );
+        }
+        if (path.match(/\/lessons\/[^/]+\/(reschedule-request|dispute)$/)) {
+          const [, id, action] = path.match(/\/lessons\/([^/]+)\/(reschedule-request|dispute)$/);
+          if (!lessons(state).some((item) => item.lessonId === id))
+            return json({ code: 'LESSON_FORBIDDEN' }, 403);
+          const key = req.headers['idempotency-key'];
+          state.lessonRequests ??= [];
+          const previous = state.lessonRequests.find((item) => item.key === key);
+          if (previous)
+            return JSON.stringify(previous.body) === JSON.stringify(body)
+              ? json({ crmTaskId: previous.crmTaskId, status: 'CREATED' }, 201)
+              : json({ code: 'IDEMPOTENCY_PAYLOAD_MISMATCH' }, 422);
+          if (state.commandError)
+            return json(
+              {
+                code:
+                  state.commandError === 409
+                    ? 'ATTENDANCE_DISPUTE_ALREADY_OPEN'
+                    : 'COMMAND_UNAVAILABLE',
+              },
+              state.commandError,
+            );
+          if (
+            action === 'dispute' &&
+            state.lessonRequests.some(
+              (item) => item.lessonId === id && item.type === 'ATTENDANCE_DISPUTE',
+            )
+          )
+            return json({ code: 'ATTENDANCE_DISPUTE_ALREADY_OPEN' }, 409);
+          if (state.commandDelay) await new Promise((done) => setTimeout(done, state.commandDelay));
+          const task = {
+            lessonId: id,
+            key,
+            body,
+            crmTaskId: randomUUID(),
+            type: action === 'dispute' ? 'ATTENDANCE_DISPUTE' : 'RESCHEDULE_REQUEST',
+          };
+          state.lessonRequests.push(task);
+          return state.lostResponse
+            ? json({ code: 'COMMAND_RESPONSE_LOST' }, 503)
+            : json({ crmTaskId: task.crmTaskId, status: 'CREATED' }, 201);
+        }
         if (path.match(/\/lessons\/[^/]+$/)) {
-          const item = lessons().find((l) => path.endsWith(l.lessonId));
+          const item = lessons(state).find((l) => path.endsWith(l.lessonId));
           return json(item || { code: 'LESSON_NOT_FOUND' }, item ? 200 : 404);
         }
         if (path === '/api/v1/student/homework') {
-          const item = homework(state);
+          if (url.searchParams.has('lessonId') && url.searchParams.get('lessonId') !== lessonId)
+            return json(list([], url));
+          const items = state.homeworkItems ?? [homework(state)];
           return json(
             list(
-              !url.searchParams.get('status') || url.searchParams.get('status') === item.status
-                ? [item]
-                : [],
+              items.filter(
+                (item) =>
+                  !url.searchParams.get('status') || url.searchParams.get('status') === item.status,
+              ),
               url,
             ),
           );
@@ -253,30 +488,100 @@ export function startFixture(port = 4175) {
           if (state.draftDelay) await new Promise((r) => setTimeout(r, state.draftDelay));
           if (state.failDraft) return json({ code: 'DRAFT_FAILED' }, 503);
           state.draft = body.content;
-          return json({ homeworkId, status: 'SAVED', expiresAt: '2099-01-01T00:00:00Z' });
+          state.expiredDraft = false;
+          return json({
+            homeworkId,
+            status: 'SAVED',
+            expiresAt: new Date(Date.now() + 30 * 86400_000).toISOString(),
+          });
         }
-        if (path.endsWith('/upload-url'))
-          return json({ fileId, uploadUrl: 'https://upload.student.test/presigned' }, 201);
+        if (path.endsWith('/upload-url')) {
+          state.homeworkUploads ??= {};
+          const key = req.headers['idempotency-key'];
+          const item = (state.homeworkUploads[key] ??= {
+            fileId: Object.keys(state.homeworkUploads).length ? randomUUID() : fileId,
+            fileName: body.fileName,
+            confirmed: false,
+          });
+          return json(
+            { fileId: item.fileId, uploadUrl: 'https://upload.student.test/presigned' },
+            201,
+          );
+        }
         if (path.endsWith('/confirm') && path.includes('/files/')) {
           if (state.failConfirm) return json({ code: 'CONFIRM_FAILED' }, 503);
           state.confirmed = true;
-          return json({ fileId, status: 'VERIFIED' });
+          const id = path.split('/').at(-2);
+          const upload = Object.values(state.homeworkUploads ?? {}).find(
+            (item) => item.fileId === id,
+          );
+          if (!upload) return json({ code: 'FILE_FORBIDDEN' }, 403);
+          upload.confirmed = true;
+          return json({ fileId: id, status: 'VERIFIED' });
         }
         if (path.endsWith('/submit')) {
+          state.homeworkSubmissions ??= {};
+          const key = req.headers['idempotency-key'];
+          const previous = state.homeworkSubmissions[key];
+          if (previous)
+            return JSON.stringify(previous.body) === JSON.stringify(body)
+              ? json(previous.result, 201)
+              : json({ code: 'IDEMPOTENCY_PAYLOAD_MISMATCH' }, 422);
           if (state.submitDelay) await new Promise((r) => setTimeout(r, state.submitDelay));
           if (state.failSubmit) return json({ code: 'SUBMIT_FAILED' }, 503);
           state.submitted = true;
           state.draft = '';
-          return json(
-            { submissionId: randomUUID(), status: 'SUBMITTED', isLate: true, versionNumber: 3 },
-            201,
-          );
+          state.homeworkStatus = 'SUBMITTED';
+          const due = homework(state).dueAt;
+          state.homeworkIsLate = !!due && (state.homeworkClock ?? Date.now()) > Date.parse(due);
+          const versionNumber = (homework(state).latestVersion?.versionNumber ?? 0) + 1;
+          const version = {
+            versionNumber,
+            content: body.content,
+            submittedAt: now(),
+            teacherComment: null,
+            teacherStatus: null,
+            attachments: (body.fileIds ?? []).map((id) => ({
+              fileId: id,
+              fileName:
+                Object.values(state.homeworkUploads ?? {}).find((item) => item.fileId === id)
+                  ?.fileName ?? 'attachment',
+              fileSizeBytes: 1,
+              mimeType: 'text/plain',
+            })),
+          };
+          state.homeworkVersions = [version, ...homework(state).versions];
+          const result = {
+            submissionId: randomUUID(),
+            status: 'SUBMITTED',
+            isLate: state.homeworkIsLate,
+            versionNumber,
+          };
+          state.homeworkSubmissions[key] = { body, result };
+          if (state.loseSubmitResponse) return json({ code: 'RESPONSE_LOST' }, 503);
+          return json(result, 201);
         }
-        if (path === `/api/v1/student/homework/${homeworkId}`) return json(homework(state));
-        if (path === '/api/v1/student/skills')
-          return json([
+        if (/^\/api\/v1\/student\/homework\/[^/]+$/.test(path)) {
+          if (state.homeworkError) return json({ code: 'HOMEWORK_FORBIDDEN' }, state.homeworkError);
+          if (state.homeworkDelay)
+            await new Promise((done) => setTimeout(done, state.homeworkDelay));
+          const id = path.split('/').at(-1);
+          const item =
+            id === homeworkId
+              ? homework(state)
+              : state.homeworkItems?.find((item) => item.homeworkId === id);
+          return json(item ?? { code: 'HOMEWORK_NOT_FOUND' }, item ? 200 : 404);
+        }
+        if (path === '/api/v1/student/skills') {
+          if (state.skillsError)
+            return json(
+              { code: state.skillsError === 403 ? 'SKILLS_FORBIDDEN' : 'SKILLS_UNAVAILABLE' },
+              state.skillsError,
+            );
+          if (state.skillsDelay) await new Promise((done) => setTimeout(done, state.skillsDelay));
+          const maps = state.skillMaps ?? [
             {
-              subjectId: '60000000-0000-4000-8000-000000000001',
+              subjectId: englishId,
               subjectName: 'Английский язык',
               totalSkills: 4,
               skills: ['NOT_STUDIED', 'FAMILIARIZING', 'PRACTICING', 'APPLYING'].map(
@@ -286,7 +591,7 @@ export function startFixture(port = 4175) {
                   category: 'Общий английский',
                   status,
                   lastUpdatedAt: now(),
-                  lastUpdatedByTeacherName: 'Елизавета К.',
+                  lastUpdatedByTeacherName: i ? 'Елизавета К.' : '',
                 }),
               ),
               learningGoals: [
@@ -300,31 +605,165 @@ export function startFixture(port = 4175) {
               lastSnapshotAt: null,
               nextSnapshotIn: 2,
             },
-          ]);
-        if (path === '/api/v1/student/skills/snapshots' || path === '/api/v1/student/skills/audit')
-          return json(list([], url));
-        if (path === '/api/v1/student/materials')
-          return json(
-            list(
-              [
-                {
-                  fileId,
-                  fileName: 'Словарь — Present Perfect.pdf',
-                  fileSizeBytes: 245000,
-                  mimeType: 'application/pdf',
-                  subjectName: 'Английский язык',
-                  uploadedAt: now(),
-                  sharedAt: now(),
-                  sharedByTeacherName: 'Елизавета К.',
-                  lessonTitle: 'Разговорная практика',
-                },
-              ],
-              url,
-            ),
+          ];
+          if (state.subjectHub && !state.skillMaps)
+            maps.push({
+              subjectId: mathId,
+              subjectName: 'Математика',
+              totalSkills: 0,
+              skills: [],
+              learningGoals: [],
+              lastSnapshotAt: null,
+              nextSnapshotIn: null,
+            });
+          const filter = url.searchParams.get('subjectId');
+          if (filter && !maps.some((item) => item.subjectId === filter))
+            return json({ code: 'SKILLS_FORBIDDEN' }, 403);
+          return json(filter ? maps.filter((item) => item.subjectId === filter) : maps);
+        }
+        if (path === '/api/v1/student/skills/snapshots') {
+          if (state.snapshotsError)
+            return json(
+              { code: state.snapshotsError === 403 ? 'SKILLS_FORBIDDEN' : 'SKILLS_UNAVAILABLE' },
+              state.snapshotsError,
+            );
+          const subjectId = url.searchParams.get('subjectId');
+          const owned = state.skillMaps?.map((map) => map.subjectId) ?? [
+            englishId,
+            ...(state.subjectHub ? [mathId] : []),
+          ];
+          if (subjectId && !owned.includes(subjectId))
+            return json({ code: 'SKILLS_FORBIDDEN' }, 403);
+          const rows = (state.skillSnapshots ?? [])
+            .filter((item) => !subjectId || item.subjectId === subjectId)
+            .map(({ subjectId: ignored, ...dto }) => {
+              void ignored;
+              return dto;
+            });
+          return json(list(rows, url));
+        }
+        if (path === '/api/v1/student/skills/audit') {
+          const selected = url.searchParams.get('skillId');
+          if (state.auditError)
+            return json(
+              { code: state.auditError === 403 ? 'SKILLS_FORBIDDEN' : 'SKILLS_UNAVAILABLE' },
+              state.auditError,
+            );
+          const owned = state.skillMaps?.flatMap((map) =>
+            map.skills.map((skill) => skill.skillId),
+          ) ?? [skillId];
+          if (!owned.includes(selected)) return json({ code: 'SKILLS_FORBIDDEN' }, 403);
+          const rows = (state.skillAudit ?? [])
+            .filter((entry) => entry.skillId === selected)
+            .map(({ basis, privateNotes, ...dto }) => {
+              void basis;
+              void privateNotes;
+              return dto;
+            });
+          return json(list(rows, url));
+        }
+        if (state.materialRows && path.match(/\/student\/materials\/[^/]+\/url$/)) {
+          const selected = state.materialRows.find((row) =>
+            path.endsWith('/' + row.fileId + '/url'),
           );
+          if (
+            !selected ||
+            selected.revoked ||
+            selected.foreign ||
+            (selected.expiresAt && Date.parse(selected.expiresAt) <= Date.now())
+          )
+            return json({ code: 'FILE_ACCESS_DENIED' }, 403);
+          if (state.materialUrlError)
+            return json({ code: 'FILE_ACCESS_DENIED' }, state.materialUrlError);
+          return json({
+            url: 'https://material.student.test/read?capability=synthetic-only',
+            expiresAt: new Date(
+              Date.now() + (state.materialUrlExpired ? -1000 : 60000),
+            ).toISOString(),
+            fileName: selected.fileName,
+          });
+        }
+        if (path === '/api/v1/student/materials') {
+          if (state.materialsError)
+            return json({ code: 'MATERIALS_UNAVAILABLE' }, state.materialsError);
+          if (state.materialRows) {
+            const filter = url.searchParams.get('subjectId');
+            const lesson = url.searchParams.get('lessonId');
+            const rows = state.materialRows
+              .filter(
+                (row) =>
+                  !row.revoked &&
+                  !row.foreign &&
+                  (!row.expiresAt || Date.parse(row.expiresAt) > Date.now()) &&
+                  (!filter || row.subjectId === filter) &&
+                  (!lesson || row.lessonId === lesson),
+              )
+              .map(({ revoked, foreign, expiresAt, lessonId, ...dto }) => {
+                void revoked;
+                void foreign;
+                void expiresAt;
+                void lessonId;
+                return dto;
+              });
+            return json(list(rows, url, 30));
+          }
+          if (url.searchParams.has('lessonId') && url.searchParams.get('lessonId') !== lessonId)
+            return json(list([], url));
+          const materials = [
+            {
+              fileId,
+              subjectId: englishId,
+              fileName: 'Словарь — Present Perfect.pdf',
+              fileSizeBytes: 245000,
+              mimeType: 'application/pdf',
+              subjectName: 'Английский язык',
+              uploadedAt: now(),
+              sharedAt: now(),
+              sharedByTeacherName: 'Елизавета К.',
+              lessonTitle: 'Разговорная практика',
+            },
+          ];
+          if (state.subjectHub)
+            materials.push({
+              ...materials[0],
+              fileId: '40000000-0000-4000-8000-000000000002',
+              subjectId: mathId,
+              subjectName: 'Математика',
+              fileName: 'Алгебра.pdf',
+            });
+          const filter = url.searchParams.get('subjectId');
+          if (filter && !subjects(state).some((item) => item.subjectId === filter))
+            return json({ code: 'FORBIDDEN' }, 403);
+          return json(
+            list(filter ? materials.filter((item) => item.subjectId === filter) : materials, url),
+          );
+        }
+        if (
+          state.subscriptionScenario &&
+          /^\/api\/v1\/student\/subscription(?:\/(payments|ledger))?$/.test(path)
+        ) {
+          const anchor = url.searchParams.get('subscriptionId') ?? anchors.math;
+          const key = ['math', 'physics', 'english', 'future'].find(
+            (value) => anchors[value] === anchor,
+          );
+          if (!key || (key === 'physics' && state.subscriptionScenario === 'no-plan'))
+            return json({ code: 'SUBSCRIPTION_FORBIDDEN' }, 403);
+          const kind = path.split('/').at(-1);
+          const failure = state.subscriptionFailures?.[key]?.[kind];
+          if (failure)
+            return json(
+              { code: failure === 403 ? 'SUBSCRIPTION_FORBIDDEN' : 'SUBSCRIPTION_UNAVAILABLE' },
+              failure,
+            );
+          if (kind === 'payments')
+            return json(list(subscriptionPayments(key, state.subscriptionScenario), url));
+          if (kind === 'ledger')
+            return json(list(subscriptionLedger(key, state.subscriptionScenario), url));
+          return json(subscriptionDetails(key, state.subscriptionScenario));
+        }
         if (path === '/api/v1/student/subscription')
           return json({
-            subscriptionId: randomUUID(),
+            subscriptionId: url.searchParams.get('subscriptionId') ?? randomUUID(),
             planName: 'Английский язык · 8 занятий',
             lessonsTotal: 8,
             lessonsRemaining: 6,
@@ -368,33 +807,186 @@ export function startFixture(port = 4175) {
               url,
             ),
           );
-        if (path.endsWith('/student/reports'))
-          return json(
-            list(
-              [
+        if (path.startsWith('/api/v1/student/reports')) {
+          const rows = state.reportRows ?? [
+            {
+              reportId: '80000000-0000-4000-8000-000000000001',
+              subjectName: 'Математика',
+              createdAt: now(),
+              periodFrom: '2026-10-01',
+              periodTo: '2026-11-01',
+              lessonCount: 8,
+              teacherName: 'Преподаватель ДЕМО',
+              isNew: true,
+              content: {
+                achievements: 'Решает задачи',
+                growthAreas: 'Проверка ответа',
+                recommendations: 'Практиковаться',
+                teacherSignature: 'Подтверждено преподавателем',
+              },
+            },
+          ];
+          if (path.endsWith('/export-pdf') && req.method === 'POST') {
+            const key = req.headers['idempotency-key'];
+            state.pdfCommands ??= {};
+            state.pdfJobs ??= {};
+            if (state.pdfCommands[key]) {
+              if (state.pdfCommands[key].body !== JSON.stringify(body))
+                return json({ code: 'IDEMPOTENCY_CONFLICT' }, 422);
+              return json(state.pdfCommands[key].result, 202);
+            }
+            if (state.enqueueError)
+              return json(
                 {
-                  reportId: '80000000-0000-4000-8000-000000000001',
-                  subjectName: 'Математика',
-                  createdAt: now(),
-                  periodFrom: '2026-10-01',
-                  periodTo: '2026-11-01',
-                  lessonCount: 8,
-                  teacherName: 'Преподаватель ДЕМО',
-                  isNew: true,
-                  content: {
-                    achievements: 'Решает задачи',
-                    growthAreas: 'Проверка ответа',
-                    recommendations: 'Практиковаться',
-                    teacherSignature: 'Подтверждено преподавателем',
-                  },
+                  code:
+                    state.enqueueError === 429 ? 'PDF_EXPORT_LIMIT_REACHED' : 'REPORTS_UNAVAILABLE',
                 },
-              ],
-              url,
-            ),
-          );
-        if (path.match(/\/reports\/[^/]+\/read$/)) {
-          res.writeHead(204);
-          return res.end();
+                state.enqueueError,
+              );
+            if (body.periodFrom && body.periodTo && body.periodFrom > body.periodTo)
+              return json({ code: 'INVALID_INPUT' }, 400);
+            const id = randomUUID();
+            const result = {
+              jobId: id,
+              status: 'QUEUED',
+              estimatedReadyAt: new Date(Date.now() + 30000).toISOString(),
+            };
+            state.pdfJobs[id] = {
+              jobId: id,
+              status: 'QUEUED',
+              downloadUrl: null,
+              expiresAt: null,
+              failureReason: null,
+            };
+            state.pdfCommands[key] = { body: JSON.stringify(body), result };
+            if (state.loseEnqueueResponse) {
+              state.loseEnqueueResponse = false;
+              return json({ code: 'SERVICE_UNAVAILABLE' }, 503);
+            }
+            return json(result, 202);
+          }
+          if (path.includes('/export-pdf/requests/')) {
+            const key = path.split('/').at(-1);
+            const command = state.pdfCommands?.[key];
+            return json(
+              command
+                ? { status: 'ACCEPTED', jobId: command.result.jobId }
+                : { status: 'UNKNOWN', jobId: null },
+            );
+          }
+          if (path.includes('/export-pdf/')) {
+            if (state.pdfError)
+              return json(
+                { code: state.pdfError === 403 ? 'PDF_JOB_FORBIDDEN' : 'PDF_JOB_UNAVAILABLE' },
+                state.pdfError,
+              );
+            const id = path.split('/').at(-1),
+              job = state.pdfJobs?.[id];
+            if (!job) return json({ code: 'PDF_JOB_FORBIDDEN' }, 403);
+            if (job.expiresAt && Date.parse(job.expiresAt) <= (state.pdfNow ?? Date.now()))
+              return json({
+                ...job,
+                status: 'FAILED',
+                downloadUrl: null,
+                failureReason: 'PDF_EXPORT_EXPIRED',
+              });
+            return json(job);
+          }
+          const visible = rows
+            .filter((row) => row.visible !== false)
+            .map(({ visible, content, ...row }) => {
+              void visible;
+              return {
+                ...row,
+                isNew: !(state.reportReadIds ?? []).includes(row.reportId),
+                content: {
+                  achievements: content.achievements,
+                  growthAreas: content.growthAreas,
+                  recommendations: content.recommendations,
+                  teacherSignature: content.teacherSignature,
+                },
+              };
+            });
+          if (path === '/api/v1/student/reports') return json(list(visible, url, 10));
+          const id =
+            path.split('/').at(-1) === 'read' ? path.split('/').at(-2) : path.split('/').at(-1);
+          const report = visible.find((row) => row.reportId === id);
+          if (!report || state.reportError)
+            return json({ code: 'REPORT_FORBIDDEN' }, state.reportError ?? 403);
+          if (path.endsWith('/read')) {
+            state.reportReadIds ??= [];
+            const seen = state.reportReadIds.includes(id);
+            state.reportReadIds.push(id);
+            if (state.loseReportReadResponse) {
+              state.loseReportReadResponse = false;
+              return json({ code: 'SERVICE_UNAVAILABLE' }, 503);
+            }
+            res.writeHead(seen ? 200 : 204, { 'Cache-Control': 'no-store' });
+            return res.end();
+          }
+          return json(report);
+        }
+        if (state.notificationRows && path.startsWith('/api/v1/student/notifications')) {
+          if (path.endsWith('/count')) {
+            if (state.countError)
+              return json(
+                {
+                  code:
+                    state.countError === 403
+                      ? 'NOTIFICATION_FORBIDDEN'
+                      : 'NOTIFICATIONS_UNAVAILABLE',
+                },
+                state.countError,
+              );
+            return json({
+              unreadCount: state.notificationRows.filter((row) => !row.isRead).length,
+            });
+          }
+          if (req.method !== 'GET') {
+            state.notificationIntents ??= {};
+            const key = req.headers['idempotency-key'];
+            if (!state.notificationIntents[key]) {
+              const id = path.endsWith('/read-all') ? null : path.split('/').at(-2);
+              for (const row of state.notificationRows)
+                if (!row.isRead && (!id || row.notificationId === id)) {
+                  row.isRead = true;
+                  row.readAt = now();
+                }
+              state.notificationIntents[key] = { path };
+              if (!id && state.afterReadAllEvent) {
+                state.notificationRows.unshift(state.afterReadAllEvent);
+                state.afterReadAllEvent = null;
+              }
+            }
+            state.unread = state.notificationRows.filter((row) => !row.isRead).length;
+            if (state.loseNotificationReadResponse) {
+              state.loseNotificationReadResponse = false;
+              return json({ code: 'SERVICE_UNAVAILABLE' }, 503);
+            }
+            res.writeHead(204, { 'Cache-Control': 'no-store' });
+            return res.end();
+          }
+          if (state.previewError)
+            return json(
+              {
+                code:
+                  state.previewError === 403
+                    ? 'NOTIFICATION_FORBIDDEN'
+                    : 'NOTIFICATIONS_UNAVAILABLE',
+              },
+              state.previewError,
+            );
+          if (state.notificationsDelay)
+            await new Promise((done) => setTimeout(done, state.notificationsDelay));
+          const rows = state.notificationRows.map((row) => {
+            const { readAt, ...dto } = bellProjection(row, url.searchParams.get('locale') ?? 'ru');
+            void readAt;
+            return dto;
+          });
+          return json({
+            ...list(rows, url, 30),
+            unreadCount: state.notificationRows.filter((row) => !row.isRead).length,
+          });
         }
         if (path.endsWith('/notifications/count')) return json({ unreadCount: state.unread });
         if (
@@ -424,22 +1016,49 @@ export function startFixture(port = 4175) {
             unreadCount: state.unread,
           });
         if (path.endsWith('/student/profile')) {
+          if (state.profileError) return json({ code: 'INVALID_INPUT' }, state.profileError);
+          if (state.profileDelay) await new Promise((done) => setTimeout(done, state.profileDelay));
           state.displayName = body.displayName;
           return json({ ...body, avatarFileId: null });
         }
-        if (path.endsWith('/security/sessions'))
-          return json([
-            {
-              sessionId: randomUUID(),
-              createdAt: now(),
-              lastActiveAt: now(),
-              userAgent: 'Chromium',
-              ipAddress: '127.0.0.1',
-              isCurrent: true,
-            },
-          ]);
-        if (path.endsWith('/change-email/request')) return json({ message: 'OTP sent' });
-        if (path.endsWith('/change-email/confirm')) return json({ email: body.newEmail });
+        if (state.sessionRows && path.match(/\/security\/sessions\/[^/]+$/)) {
+          const selected = state.sessionRows.find((row) => path.endsWith('/' + row.sessionId));
+          if (selected?.isCurrent) return json({ code: 'CURRENT_SESSION_CANNOT_BE_REVOKED' }, 409);
+          if (!selected || selected.foreign) return json({ code: 'SESSION_NOT_FOUND' }, 404);
+          selected.revoked = true;
+          res.writeHead(204, { 'Cache-Control': 'no-store' });
+          return res.end();
+        }
+        if (path.endsWith('/security/sessions')) {
+          if (state.sessionsError)
+            return json({ code: 'SESSIONS_UNAVAILABLE' }, state.sessionsError);
+          return json(
+            state.sessionRows
+              ? state.sessionRows.filter((row) => !row.revoked && !row.foreign)
+              : [
+                  {
+                    sessionId: randomUUID(),
+                    createdAt: now(),
+                    lastActiveAt: now(),
+                    userAgent: 'Chromium',
+                    ipAddress: '127.0.0.1',
+                    isCurrent: true,
+                  },
+                ],
+          );
+        }
+        if (path.endsWith('/change-email/request')) {
+          if (state.emailRequestError)
+            return json({ code: state.emailRequestError.code }, state.emailRequestError.status);
+          state.emailAccepted = true;
+          return json({ message: 'OTP sent' });
+        }
+        if (path.endsWith('/change-email/confirm')) {
+          if (state.emailConfirmError)
+            return json({ code: state.emailConfirmError.code }, state.emailConfirmError.status);
+          state.email = body.newEmail;
+          return json({ email: body.newEmail });
+        }
         state.missingRoutes.push(path);
         return json({ code: 'FIXTURE_ROUTE_MISSING', path }, 501);
       }

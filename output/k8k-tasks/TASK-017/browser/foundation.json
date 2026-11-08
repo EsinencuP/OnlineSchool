@@ -1,0 +1,4084 @@
+{
+  "scope": "component fixtures; no role/production/AT gate",
+  "renders": [
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "width": 360,
+      "scrollWidth": 360
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "width": 768,
+      "scrollWidth": 768
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "width": 1024,
+      "scrollWidth": 1024
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "width": 1280,
+      "scrollWidth": 1280
+    }
+  ],
+  "axe": [
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        },
+        {
+          "id": "th-has-data-cells",
+          "targets": [
+            [
+              ".k8k-dense-table"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button-primary"
+            ],
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "#radix-\\:r0\\:"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--empty-range",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-calendar-and-dates--disabled-date",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--retained-form",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--guarded-form",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--help",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-composite-controls--information",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-composite-controls--results",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-native-controls--variants",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-lists-and-tables--ordered-pages",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--empty-table",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        },
+        {
+          "id": "th-has-data-cells",
+          "targets": [
+            [
+              ".k8k-dense-table"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--unknown-table-result",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-error-feedback--rejected",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-error-feedback--unknown-command",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-error-feedback--validation",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--lifecycle",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--nonmodal-dialog",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--pending-confirmation",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--teacher",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--manager",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--director",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--operator",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--shell-parts",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-shell--priority-slot",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": []
+    },
+    {
+      "id": "ui-vis-11--loading",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--empty",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--ready",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--stale",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--error",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--unknown-result",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--forbidden",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--subscription-limited",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--session-expired",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--pending-editor",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--notice-primitives",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--freshness",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "mode": "initial",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-hidden-focus",
+          "targets": [
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+            ],
+            [
+              "#storybook-root"
+            ],
+            [
+              "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(12)"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              ".k8k-button-primary"
+            ],
+            [
+              "button[data-nested=\"true\"]"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "mode": "open",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "aria-valid-attr-value",
+          "targets": [
+            [
+              "#radix-\\:r0\\:"
+            ]
+          ]
+        },
+        {
+          "id": "bypass",
+          "targets": [
+            [
+              "html"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "keyboard": [
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ru",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ru",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ru",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ru",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ru",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--modal-dialog",
+      "locale": "ro",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--side-drawer",
+      "locale": "ro",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--confirmation",
+      "locale": "ro",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--inline-popover",
+      "locale": "ro",
+      "escape": "closed",
+      "returnFocus": true
+    },
+    {
+      "id": "ui-controlled-overlays--action-menu",
+      "locale": "ro",
+      "escape": "closed",
+      "returnFocus": true
+    }
+  ],
+  "zoom": [
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ru",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 200,
+      "width": 640,
+      "scrollWidth": 640
+    },
+    {
+      "id": "ui-shell--student",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-native-controls--field-and-select",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-lists-and-tables--queue-columns",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-vis-11--stages",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-calendar-and-dates--calendar-views",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    },
+    {
+      "id": "ui-calendar-and-dates--month-range",
+      "locale": "ro",
+      "originalWidth": 1280,
+      "zoomPercent": 400,
+      "width": 320,
+      "scrollWidth": 320
+    }
+  ],
+  "motion": [
+    {
+      "locale": "ru",
+      "reduced": true,
+      "activeAnimations": 0
+    },
+    {
+      "locale": "ro",
+      "reduced": true,
+      "activeAnimations": 0
+    }
+  ],
+  "blocked": [],
+  "pageErrors": [],
+  "failures": []
+}

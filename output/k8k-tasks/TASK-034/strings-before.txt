@@ -1,0 +1,177 @@
+apps/student-cabinet/src\components.tsx:42:      : 'Не указан';
+apps/student-cabinet/src\components.tsx:170:        {to && <Link to={to}>Все →</Link>}
+apps/student-cabinet/src\components.tsx:177:  children = 'Пока ничего нет. Новые данные появятся здесь.',
+apps/student-cabinet/src\components.tsx:286:  SCHEDULED: 'По расписанию',
+apps/student-cabinet/src\components.tsx:287:  COMPLETED: 'Проведён',
+apps/student-cabinet/src\components.tsx:288:  CANCELLED: 'Отменён',
+apps/student-cabinet/src\components.tsx:289:  NO_SHOW: 'Неявка',
+apps/student-cabinet/src\components.tsx:290:  STAR_PENDING: 'Ожидает подтверждения',
+apps/student-cabinet/src\components.tsx:291:  DISPUTED: 'На рассмотрении',
+apps/student-cabinet/src\components.tsx:292:  NOT_SUBMITTED: 'Назначено',
+apps/student-cabinet/src\components.tsx:293:  SUBMITTED: 'Сдано',
+apps/student-cabinet/src\components.tsx:294:  REVIEWED: 'Проверено',
+apps/student-cabinet/src\components.tsx:295:  NEEDS_REVISION: 'На доработку',
+apps/student-cabinet/src\components.tsx:296:  NOT_STUDIED: 'Ещё не изучали',
+apps/student-cabinet/src\components.tsx:297:  FAMILIARIZING: 'Знакомлюсь',
+apps/student-cabinet/src\components.tsx:298:  PRACTICING: 'Практикую',
+apps/student-cabinet/src\components.tsx:299:  APPLYING: 'Применяю',
+apps/student-cabinet/src\components.tsx:300:  ACTIVE: 'Активен',
+apps/student-cabinet/src\components.tsx:301:  EXPIRED: 'Истёк',
+apps/student-cabinet/src\components.tsx:302:  FROZEN: 'Заморожен',
+apps/student-cabinet/src\components.tsx:303:  NONE: 'Нет абонемента',
+apps/student-cabinet/src\components.tsx:304:  LIMITED: 'Доступ ограничен',
+apps/student-cabinet/src\components.tsx:424:      Подключиться
+apps/student-cabinet/src\components.tsx:429:      Подключиться
+apps/student-cabinet/src\homework-copy.tsx:7:  homework: ['Домашние задания', 'Teme'],
+apps/student-cabinet/src\homework-copy.tsx:8:  task: ['Домашнее задание', 'Temă'],
+apps/student-cabinet/src\homework-copy.tsx:9:  lead: ['Практика, которая помогает двигаться вперёд', 'Exersează și progresează în ritmul tău'],
+apps/student-cabinet/src\homework-copy.tsx:10:  yourTasks: ['Твои задания', 'Temele tale'],
+apps/student-cabinet/src\homework-copy.tsx:11:  yourTask: ['Твоё задание', 'Tema ta'],
+apps/student-cabinet/src\homework-copy.tsx:12:  status: ['Статус', 'Stare'],
+apps/student-cabinet/src\homework-copy.tsx:13:  all: ['Все задания', 'Toate temele'],
+apps/student-cabinet/src\homework-copy.tsx:14:  empty: ['Заданий с этим статусом пока нет.', 'Nu există încă teme cu această stare.'],
+apps/student-cabinet/src\homework-copy.tsx:16:    'Задание не найдено или больше недоступно.',
+apps/student-cabinet/src\homework-copy.tsx:19:  assigned: ['Назначено', 'Atribuită'],
+apps/student-cabinet/src\homework-copy.tsx:20:  due: ['Сдать до', 'Termen'],
+apps/student-cabinet/src\homework-copy.tsx:21:  noDeadline: ['Без срока сдачи', 'Fără termen de predare'],
+apps/student-cabinet/src\homework-copy.tsx:22:  late: ['Сдано с опозданием', 'Predată cu întârziere'],
+apps/student-cabinet/src\homework-copy.tsx:23:  instruction: ['Задание преподавателя', 'Sarcina profesorului'],
+apps/student-cabinet/src\homework-copy.tsx:24:  teacher: ['Преподаватель', 'Profesor'],
+apps/student-cabinet/src\homework-copy.tsx:25:  answer: ['Твой ответ', 'Răspunsul tău'],
+apps/student-cabinet/src\homework-copy.tsx:27:    'До 10 000 символов. Черновик сохраняется автоматически.',
+apps/student-cabinet/src\homework-copy.tsx:30:  saving: ['Сохраняем черновик…', 'Se salvează ciorna…'],
+apps/student-cabinet/src\homework-copy.tsx:31:  dirty: ['Изменения не сохранены', 'Modificările nu sunt salvate'],
+apps/student-cabinet/src\homework-copy.tsx:32:  saved: ['Черновик сохранён', 'Ciorna este salvată'],
+apps/student-cabinet/src\homework-copy.tsx:33:  noDraft: ['Ответ ещё не сохранён в черновике.', 'Răspunsul nu este încă salvat ca ciornă.'],
+apps/student-cabinet/src\homework-copy.tsx:34:  retrySave: ['Повторить сохранение', 'Reîncearcă salvarea'],
+apps/student-cabinet/src\homework-copy.tsx:35:  teacherFiles: ['Вложения преподавателя', 'Fișierele profesorului'],
+apps/student-cabinet/src\homework-copy.tsx:37:    'Доступные для скачивания файлы находятся в разделе «Материалы».',
+apps/student-cabinet/src\homework-copy.tsx:40:  attach: ['Прикрепить файл', 'Atașează un fișier'],
+apps/student-cabinet/src\homework-copy.tsx:42:    'До 50 МБ на файл, до 20 файлов. Отправка доступна после завершения загрузки.',
+apps/student-cabinet/src\homework-copy.tsx:45:  requesting: ['Готовим загрузку файла…', 'Se pregătește încărcarea fișierului…'],
+apps/student-cabinet/src\homework-copy.tsx:46:  uploading: ['Загружаем файл…', 'Se încarcă fișierul…'],
+apps/student-cabinet/src\homework-copy.tsx:47:  confirming: ['Загружаем и проверяем файл…', 'Se verifică fișierul încărcat…'],
+apps/student-cabinet/src\homework-copy.tsx:48:  retryUpload: ['Повторить загрузку', 'Reîncearcă încărcarea'],
+apps/student-cabinet/src\homework-copy.tsx:49:  cancelUpload: ['Отменить загрузку', 'Renunță la încărcare'],
+apps/student-cabinet/src\homework-copy.tsx:51:    'Выбери непустой файл размером до 50 МБ. Можно приложить до 20 файлов.',
+apps/student-cabinet/src\homework-copy.tsx:55:    'Срок загрузки истёк. Повтори загрузку, чтобы получить новое разрешение.',
+apps/student-cabinet/src\homework-copy.tsx:58:  remove: ['Убрать', 'Elimină'],
+apps/student-cabinet/src\homework-copy.tsx:59:  send: ['Сдать работу', 'Predă tema'],
+apps/student-cabinet/src\homework-copy.tsx:60:  sending: ['Отправляем…', 'Se trimite…'],
+apps/student-cabinet/src\homework-copy.tsx:62:    'Работа сдана. Ждём комментарий преподавателя.',
+apps/student-cabinet/src\homework-copy.tsx:66:    'Работа отправлена. Новую версию можно сдать после запроса доработки.',
+apps/student-cabinet/src\homework-copy.tsx:69:  reviewed: ['Работа проверена.', 'Tema este verificată.'],
+apps/student-cabinet/src\homework-copy.tsx:71:    'Результат отправки пока неизвестен. Проверим, получила ли школа работу. Если отправка не подтвердится, можно повторить её.',
+apps/student-cabinet/src\homework-copy.tsx:74:  check: ['Проверить результат', 'Verifică rezultatul'],
+apps/student-cabinet/src\homework-copy.tsx:76:    'Отправка пока не подтверждена. Можно повторить отправку.',
+apps/student-cabinet/src\homework-copy.tsx:80:    'На сервере появилась другая версия. Проверь историю перед дальнейшими действиями.',
+apps/student-cabinet/src\homework-copy.tsx:83:  history: ['История версий', 'Istoricul versiunilor'],
+apps/student-cabinet/src\homework-copy.tsx:84:  version: ['Версия', 'Versiunea'],
+apps/student-cabinet/src\homework-copy.tsx:86:    'Комментарий преподавателя пока не добавлен',
+apps/student-cabinet/src\homework-copy.tsx:89:  noVersions: ['Отправленных версий пока нет.', 'Nu există încă versiuni predate.'],
+apps/student-cabinet/src\homework-copy.tsx:90:  leaveTitle: ['Черновик ещё не сохранён', 'Ciorna nu este încă salvată'],
+apps/student-cabinet/src\homework-copy.tsx:92:    'Дождитесь сохранения или вернитесь к заданию. Выбранные файлы и неопределённая отправка также требуют внимания.',
+apps/student-cabinet/src\homework-copy.tsx:95:  stay: ['Остаться', 'Rămâi'],
+apps/student-cabinet/src\homework-copy.tsx:96:  leave: ['Уйти без сохранения', 'Pleacă fără salvare'],
+apps/student-cabinet/src\homework-copy.tsx:98:    'Проверь актуальные данные перед отправкой.',
+apps/student-cabinet/src\homework-copy.tsx:101:  refresh: ['Обновить задание', 'Actualizează tema'],
+apps/student-cabinet/src\Layout.tsx:33:  ['home', '', 'Главная'],
+apps/student-cabinet/src\Layout.tsx:34:  ['lessons', '/lessons', 'Уроки'],
+apps/student-cabinet/src\Layout.tsx:35:  ['homework', '/homework', 'Домашние задания'],
+apps/student-cabinet/src\Layout.tsx:36:  ['skills', '/skills', 'Мой путь знаний'],
+apps/student-cabinet/src\Layout.tsx:37:  ['materials', '/materials', 'Материалы'],
+apps/student-cabinet/src\Layout.tsx:38:  ['subscription', '/subscription', 'Абонемент'],
+apps/student-cabinet/src\Layout.tsx:39:  ['notifications', '/notifications', 'Уведомления'],
+apps/student-cabinet/src\Layout.tsx:40:  ['profile', '/profile', 'Профиль и настройки'],
+apps/student-cabinet/src\Layout.tsx:65:    <Panel title="Мой календарь">
+apps/student-cabinet/src\Layout.tsx:71:          <button aria-label="Предыдущий месяц" onClick={() => move(-1)}>
+apps/student-cabinet/src\Layout.tsx:74:          <button aria-label="Следующий месяц" onClick={() => move(1)}>
+apps/student-cabinet/src\Layout.tsx:80:        {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d) => (
+apps/student-cabinet/src\Layout.tsx:95:              aria-label={`${date(key)}${has ? ', есть урок' : ''}`}
+apps/student-cabinet/src\Layout.tsx:118:          <p className="muted">На этот день уроков нет</p>
+apps/student-cabinet/src\Layout.tsx:132:      aria-label={inline ? 'Полезное в содержимом страницы' : 'Календарь и полезное'}
+apps/student-cabinet/src\Layout.tsx:135:      <Panel title="Абонемент" to="/student/subscription">
+apps/student-cabinet/src\Layout.tsx:142:                <span>занятий осталось</span>
+apps/student-cabinet/src\Layout.tsx:144:              <p className="muted">Действует до {date(dashboard.data.subscription.validUntil)}</p>
+apps/student-cabinet/src\Layout.tsx:146:                <p>Заморожен до {date(dashboard.data.subscription.frozenUntil)}</p>
+apps/student-cabinet/src\Layout.tsx:150:            <Empty>Нет активного абонемента</Empty>
+apps/student-cabinet/src\Layout.tsx:154:      <Panel title="Материалы" to="/student/materials">
+apps/student-cabinet/src\Layout.tsx:167:            <Empty>Материалы появятся после назначения преподавателем.</Empty>
+apps/student-cabinet/src\router.tsx:73:          ? 'Страница не найдена'
+apps/student-cabinet/src\router.tsx:74:          : 'Не удалось открыть страницу'}
+apps/student-cabinet/src\router.tsx:76:      <Link to="/student">Вернуться в кабинет</Link>
+apps/student-cabinet/src\profile-help.tsx:13:      title={ro ? 'Numele afișat în cabinet' : 'Имя в кабинете'}
+apps/student-cabinet/src\profile-help.tsx:17:          : 'Это имя отображается в кабинете. Данные в документах школы не меняются.'
+apps/student-cabinet/src\profile-help.tsx:20:        <Button variant="ghost">{ro ? 'Despre numele afișat' : 'Об имени в кабинете'}</Button>
+apps/student-cabinet/src\profile-help.tsx:24:        {ro ? 'Am înțeles' : 'Понятно'}
+apps/student-cabinet/src\pages\Account.tsx:191:        <p className="eyebrow">Безопасность аккаунта</p>
+apps/student-cabinet/src\pages\Account.tsx:192:        <h1>Задайте новый пароль</h1>
+apps/student-cabinet/src\pages\Account.tsx:193:        <p>Для первого входа замени временный пароль на собственный.</p>
+apps/student-cabinet/src\pages\Account.tsx:239:              {busy ? 'Сохраняем…' : 'Изменить пароль'}
+apps/student-cabinet/src\pages\Account.tsx:290:          title: 'Профиль и настройки',
+apps/student-cabinet/src\pages\Account.tsx:291:          panel: 'Личные данные',
+apps/student-cabinet/src\pages\Account.tsx:292:          name: 'Как к тебе обращаться',
+apps/student-cabinet/src\pages\Account.tsx:293:          hint: 'Это имя отображается в кабинете. Данные в документах школы не меняются.',
+apps/student-cabinet/src\pages\Account.tsx:294:          save: 'Сохранить профиль',
+apps/student-cabinet/src\pages\Account.tsx:295:          pending: 'Сохраняем профиль…',
+apps/student-cabinet/src\pages\Account.tsx:296:          saved: 'Профиль сохранён',
+apps/student-cabinet/src\pages\Account.tsx:297:          security: 'Безопасность аккаунта →',
+apps/student-cabinet/src\pages\Account.tsx:400:      <h1>Безопасность</h1>
+apps/student-cabinet/src\pages\Account.tsx:401:      <Panel title="Пароль">
+apps/student-cabinet/src\pages\Account.tsx:402:        <p>Меняй пароль, если считаешь, что его мог узнать кто-то ещё.</p>
+apps/student-cabinet/src\pages\Account.tsx:404:          Изменить пароль
+apps/student-cabinet/src\pages\Account.tsx:407:      <Panel title="Email для входа">
+apps/student-cabinet/src\pages\Account.tsx:409:          <p role="status">Email изменён: {confirmedEmail}</p>
+apps/student-cabinet/src\pages\Account.tsx:417:              <p>Введи код, отправленный на {newEmail}.</p>
+apps/student-cabinet/src\pages\Account.tsx:430:                Подтвердить email
+apps/student-cabinet/src\pages\Account.tsx:433:                Запросить новый код
+apps/student-cabinet/src\pages\Account.tsx:460:                Получить код
+apps/student-cabinet/src\pages\Account.tsx:466:      <Panel title="Активные устройства">
+apps/student-cabinet/src\pages\Account.tsx:472:                <strong>{s.isCurrent ? 'Это устройство' : 'Другое устройство'}</strong>
+apps/student-cabinet/src\pages\Account.tsx:473:                <span>{s.userAgent || 'Браузер не указан'}</span>
+apps/student-cabinet/src\pages\Account.tsx:475:                  {s.ipAddress} · Активность: {date(s.lastActiveAt, true)}
+apps/student-cabinet/src\pages\Account.tsx:479:                    Завершить сессию
+apps/student-cabinet/src\pages\Dashboard.tsx:44:          <p className="eyebrow">Твой следующий шаг</p>
+apps/student-cabinet/src\pages\Dashboard.tsx:46:            Привет, {me.displayName}! <span aria-hidden="true">👋</span>
+apps/student-cabinet/src\pages\Dashboard.tsx:48:          <p>Продолжаем идти к большим целям. Всё начинается с одного урока.</p>
+apps/student-cabinet/src\pages\Dashboard.tsx:69:                <h2>Следующий урок</h2>
+apps/student-cabinet/src\pages\Dashboard.tsx:83:                  <p>Пока не запланирован</p>
+apps/student-cabinet/src\pages\Dashboard.tsx:92:                <h2>Домашние задания</h2>
+apps/student-cabinet/src\pages\Dashboard.tsx:94:                  {plural(data.homework.total, ['задание', 'задания', 'заданий'])}
+apps/student-cabinet/src\pages\Dashboard.tsx:97:                  Не сдано: {data.homework.notSubmitted} · Сдано: {data.homework.submitted}
+apps/student-cabinet/src\pages\Dashboard.tsx:99:                <small>На доработку: {data.homework.needsRevision}</small>
+apps/student-cabinet/src\pages\Dashboard.tsx:107:                <h2>Мой путь знаний</h2>
+apps/student-cabinet/src\pages\Dashboard.tsx:108:                <strong className="summary-value">{progress?.applying ?? 0} применяю</strong>
+apps/student-cabinet/src\pages\Dashboard.tsx:111:                    aria-label="Навыки на уровне «Применяю»"
+apps/student-cabinet/src\pages\Dashboard.tsx:116:                <small>{total} навыков в карте</small>
+apps/student-cabinet/src\pages\Dashboard.tsx:124:                <h2>Осталось занятий</h2>
+apps/student-cabinet/src\pages\Dashboard.tsx:130:                    ? `До ${date(data.subscription.validUntil)}`
+apps/student-cabinet/src\pages\Dashboard.tsx:131:                    : 'Нет активного абонемента'}
+apps/student-cabinet/src\pages\Dashboard.tsx:138:      <Panel title="Ближайшие уроки" to="/student/lessons">
+apps/student-cabinet/src\pages\Dashboard.tsx:144:        <Panel title="Домашние задания" to="/student/homework">
+apps/student-cabinet/src\pages\Dashboard.tsx:153:                      <small>Сдать до {date(h.dueAt)}</small>
+apps/student-cabinet/src\pages\Dashboard.tsx:160:              <Empty>Новых заданий пока нет.</Empty>
+apps/student-cabinet/src\pages\Dashboard.tsx:164:        <Panel title="Мой путь знаний" to="/student/skills">
+apps/student-cabinet/src\pages\Dashboard.tsx:181:              <Empty>Карта появится после назначения предмета.</Empty>
+apps/student-cabinet/src\pages\Learning.tsx:134:      <p className="lead">Всё необходимое для уроков и самостоятельной работы</p>
+apps/student-cabinet/src\pages\Learning.tsx:139:          Предмет
+apps/student-cabinet/src\pages\Learning.tsx:147:            <option value="">Все предметы</option>
+apps/student-cabinet/src\pages\Learning.tsx:157:        <Panel title="Библиотека">
+apps/student-cabinet/src\pages\Learning.tsx:170:                        {m.mimeType} · {(m.fileSizeBytes / 1024 / 1024).toFixed(1)} МБ ·{' '}
+apps/student-cabinet/src\pages\Learning.tsx:176:                      Скачать
+apps/student-cabinet/src\pages\Learning.tsx:182:              <Empty>Преподаватель ещё не поделился материалами.</Empty>
+apps/student-cabinet/src\pages\Learning.tsx:203:      <h1>Уведомления</h1>
+apps/student-cabinet/src\pages\Learning.tsx:205:        <p className="lead">Непрочитанных: {query.data?.unreadCount ?? '—'}</p>
+apps/student-cabinet/src\pages\Learning.tsx:210:          Прочитать все
+apps/student-cabinet/src\pages\Learning.tsx:214:      <Panel title="События обучения">
+apps/student-cabinet/src\pages\Learning.tsx:227:                      Прочитано
+apps/student-cabinet/src\pages\Learning.tsx:234:            <Empty>Новых событий пока нет.</Empty>
+apps/student-cabinet/src\pages\Reports.tsx:89:        {locale === 'ro' ? 'lecții' : 'уроков'}
+apps/student-cabinet/src\pages\Subscription.tsx:158:    case 'Списание занятия':
+apps/student-cabinet/src\pages\Subscription.tsx:160:    case 'Начисление оплаченных занятий':
+apps/student-cabinet/src\pages\Subscription.tsx:162:    case 'Отмена списания занятия':
+apps/student-cabinet/src\pages\Subscription.tsx:164:    case 'Корректировка остатка занятий':
+apps/student-cabinet/src\pages\Subscription.tsx:166:    case 'Заморозка абонемента':
+apps/student-cabinet/src\pages\Subscription.tsx:168:    case 'Разморозка абонемента':
+apps/student-cabinet/src\pages\Subscription.tsx:212:  const paymentPrefix = 'Подтверждённая оплата: ';
+apps/student-cabinet/src\pages\Subscription.tsx:223:            title={k8kEnabled ? copy.plan : 'Твой абонемент'}

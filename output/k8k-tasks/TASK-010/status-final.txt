@@ -1,0 +1,125 @@
+ M .github/workflows/ci.yml
+ M AGENTS.md
+ M apps/api/src/student/dashboard/dashboard.service.ts
+ M apps/manager-web/package.json
+ M apps/manager-web/src/pages/Leads.tsx
+ M apps/platform/src/App.tsx
+ M apps/student-cabinet/package.json
+ M apps/student-cabinet/src/Layout.tsx
+ M apps/student-cabinet/src/components.tsx
+ M apps/student-cabinet/src/main.tsx
+ M apps/student-cabinet/src/pages/Account.tsx
+ M apps/student-cabinet/src/pages/Dashboard.tsx
+ M apps/student-cabinet/src/pages/Learning.tsx
+ M apps/student-cabinet/src/pages/Lessons.tsx
+ M apps/student-cabinet/src/router.tsx
+ M apps/student-cabinet/tests/fixture-server.mjs
+ M docs/ui-stack.md
+ M output/stu12/browser/.last-run.json
+ M output/stu12/desktop.png
+ M output/stu12/mobile.png
+ M output/stu12/playwright.json
+ M package.json
+ M packages/ui/package.json
+ M packages/ui/src/freshness.tsx
+ M packages/ui/src/icon.tsx
+ M packages/ui/src/index.ts
+ M packages/ui/src/shell.tsx
+ M packages/ui/src/style.css
+ M packages/ui/src/tokens.css
+ M packages/ui/tests/contrast.test.mjs
+ M pnpm-lock.yaml
+ M tests/unit/student-dashboard.test.mjs
+?? REDESIGN_REPORT.md
+?? apps/apps.rar
+?? apps/manager-web/src/components/lead-table.tsx
+?? apps/manager-web/test/ui-tables/
+?? apps/manager-web/tsconfig.ui-tables.json
+?? apps/student-cabinet/src/StudentNotificationMenu.tsx
+?? apps/student-cabinet/src/pages/Reports.tsx
+?? apps/student-cabinet/src/pages/StudentHome.tsx
+?? apps/student-cabinet/src/profile-help.tsx
+?? apps/student-cabinet/src/student-presentation.ts
+?? apps/student-cabinet/src/student-widgets.tsx
+?? apps/student-cabinet/src/student.css
+?? apps/student-cabinet/tests/k8k-presentation.test.mjs
+?? apps/student-cabinet/tests/k8k-subscriptions/
+?? apps/student-cabinet/tests/ui-composites/
+?? apps/student-cabinet/tests/ui-controls/
+?? apps/student-cabinet/tests/ui-overlays/
+?? apps/student-cabinet/tsconfig.ui-composites.json
+?? apps/student-cabinet/tsconfig.ui-controls.json
+?? apps/student-cabinet/tsconfig.ui-overlays.json
+?? docs/K8K_AI_CODER_TASKS.md
+?? docs/K8K_Academy_UX_decision_register_v0.9.md
+?? docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md
+?? docs/K8K_DESIGN_INSTRUCTIONS.md
+?? docs/K8K_IMPLEMENTATION_STATUS.md
+?? docs/K8K_REDESIGN_PLAN.md
+?? docs/K8K_REQUIREMENTS_MATRIX.md
+?? docs/k8k-redesign-tasks/
+?? output/k8k-implementation/
+?? output/k8k-phase3/
+?? output/k8k-redesign/
+?? output/k8k-taskpack/
+?? output/k8k-tasks/
+?? output/stu12/browser/mgr03-password-MGR-03-brow-f2642-hange-and-cabinet-bootstrap/
+?? output/stu12/browser/student-402-suspends-witho-e40a8-ces-password-on-any-request/
+?? output/stu12/browser/student-all-cabinet-pages--63b45-xpose-the-four-skill-states/
+?? output/stu12/browser/student-confirmation-and-s-d469f-er-provider-server-failures/
+?? output/stu12/browser/student-debounce-server-dr-9a9fe--and-chronological-versions/
+?? output/stu12/browser/student-failed-save-stays--7e611-ntal-navigation-and-retries/
+?? output/stu12/browser/student-lesson-periods-cal-4725e--manager-reschedule-request/
+?? "output/stu12/browser/student-login-\342\206\222-forced-pas-07760-mission-\342\206\222-unchanged-balance/"
+?? output/stu12/browser/student-mobile-five-item-n-d63d8-er-tablet-and-desktop-sizes/
+?? output/stu12/browser/student-read-all-resets-both-notification-counters/
+?? output/stu12/browser/student-serialized-slow-dr-e3f20-es-preserve-the-latest-edit/
+?? output/stu12/browser/student-server-canJoin-authority-and-protected-direct-links/
+?? packages/ui/src/composites.css
+?? packages/ui/src/composites.tsx
+?? packages/ui/src/controls.tsx
+?? packages/ui/src/fonts/
+?? packages/ui/src/locale.tsx
+?? packages/ui/src/overlays.css
+?? packages/ui/src/overlays.tsx
+?? packages/ui/src/tables.css
+?? packages/ui/src/tables.tsx
+?? packages/ui/stories/
+?? packages/ui/tests/baseline/
+?? packages/ui/tests/composites.test.mjs
+?? packages/ui/tests/contrast-contract.mjs
+?? packages/ui/tests/controls.test.mjs
+?? packages/ui/tests/design/
+?? packages/ui/tests/overlays.test.mjs
+?? packages/ui/tests/stylelint-legacy.json
+?? packages/ui/tests/stylelint.test.mjs
+?? packages/ui/tests/tables.test.mjs
+?? packages/ui/tests/typography.test.mjs
+?? packages/ui/tests/typography/
+?? scripts/__pycache__/
+?? scripts/k8k-baseline-audit.mjs
+?? scripts/k8k-baseline-fixtures.mjs
+?? scripts/k8k-baseline.py
+?? scripts/k8k-browser-smoke.mjs
+?? scripts/k8k-composites-evidence.mjs
+?? scripts/k8k-controls-evidence.mjs
+?? scripts/k8k-design-check.mjs
+?? scripts/k8k-design-evidence.mjs
+?? scripts/k8k-font-assets.py
+?? scripts/k8k-font-requirements.txt
+?? scripts/k8k-implementation-smoke.mjs
+?? scripts/k8k-inventory.mjs
+?? scripts/k8k-overlays-evidence.mjs
+?? scripts/k8k-phase3-browser.mjs
+?? scripts/k8k-route-budget-core.mjs
+?? scripts/k8k-route-budget.mjs
+?? scripts/k8k-screen-baseline.mjs
+?? scripts/k8k-size-check.mjs
+?? scripts/k8k-stylelint.mjs
+?? scripts/k8k-tables-evidence.mjs
+?? scripts/k8k-typography-evidence.mjs
+?? scripts/stylelint-k8k.mjs
+?? scripts/validate-k8k-taskpack.py
+?? stylelint.config.mjs
+?? template/newtemp.png
+?? uiux.rar

@@ -5,7 +5,7 @@ import { useId, useLayoutEffect, useRef, useState } from 'react';
 import type { ReactNode, RefObject } from 'react';
 import { roleNavigation } from './navigation.js';
 import type { CabinetRole, NavigationItem } from './navigation.js';
-import { Icon } from './icon.js';
+import { Icon, IconSwap } from './icon.js';
 import { PriorityEvents } from './priority.js';
 import type { PrioritySource } from './priority.js';
 
@@ -40,7 +40,6 @@ export function Sidebar({
           K8K Academy<small>{t(cabinetTitle[role])}</small>
         </span>
       </div>
-      <p className="k8k-sidebar-label">{t('workspace')}</p>
       <nav aria-label={t('primaryNavigation')}>{navigation}</nav>
       <div className="k8k-sidebar-footer">{footer}</div>
     </aside>
@@ -110,6 +109,7 @@ export function AppShell({
   aside,
   mainId = 'content',
   mainRef,
+  mobileMore = false,
   priority,
   priorityEnabled = false,
   timeZone = 'Europe/Chisinau',
@@ -126,6 +126,7 @@ export function AppShell({
   aside?: ReactNode;
   mainId?: string;
   mainRef?: RefObject<HTMLElement>;
+  mobileMore?: boolean;
   priority?: PrioritySource;
   priorityEnabled?: boolean;
   timeZone?: string;
@@ -181,7 +182,7 @@ export function AppShell({
                 aria-controls={mobileId}
                 onClick={(event) => toggle(event.currentTarget)}
               >
-                <Icon name="menu" />
+                <IconSwap name={expanded ? 'close' : 'menu'} />
               </button>
             }
           >
@@ -226,8 +227,8 @@ export function AppShell({
           {footer && <footer className="k8k-shell-footer">{footer}</footer>}
         </div>
         <BottomNav>
-          {nav(items.length > 5 ? items.slice(0, 4) : items, true)}
-          {items.length > 5 && (
+          {nav(items.length > 5 || mobileMore ? items.slice(0, 4) : items, true)}
+          {(items.length > 5 || mobileMore) && (
             <button
               className="k8k-nav-link"
               type="button"

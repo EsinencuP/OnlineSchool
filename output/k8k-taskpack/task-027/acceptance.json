@@ -1,0 +1,103 @@
+{
+  "task": "TASK-027",
+  "status": "DONE",
+  "scope": "Assigned student manager projection and contact card",
+  "checks": [
+    {
+      "id": "assigned_identity_and_two_sessions",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+      "detail": "Two cookie sessions, other pupil query cannot change owner"
+    },
+    {
+      "id": "temporal_assignment_role_login",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+      "detail": "SQL predicates and mock ended, disabled, deactivated, role; director case"
+    },
+    {
+      "id": "private_phone_and_staff_ids_excluded",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/contacts-http.log",
+      "detail": "Exact allowlisted DTO and error JSON"
+    },
+    {
+      "id": "explicit_public_e164_only",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+      "detail": "Valid tel, absent and malformed public numbers omitted"
+    },
+    {
+      "id": "canonical_channels_and_safe_external_links",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+      "detail": "Exact host, HTTPS, malicious values hidden, noreferrer and noopener"
+    },
+    {
+      "id": "missing_contact_no_fallback",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/states/ru-no-manager.png",
+      "detail": "No invented name, image, link or channel"
+    },
+    {
+      "id": "same_projection_three_surfaces",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+      "detail": "Dashboard, help, suspended, one direct /me read"
+    },
+    {
+      "id": "reassignment_and_stale",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/states/ro-refresh-error.png",
+      "detail": "New manager on revalidation and no previous actions on failure"
+    },
+    {
+      "id": "second_tab_and_late_actor",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/playwright.log",
+      "detail": "Demo switch retires both tabs and old response"
+    },
+    {
+      "id": "suspended_first_password_and_401",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/stu11.log",
+      "detail": "402 safe contacts, locked/anonymous denied, allowlist retained"
+    },
+    {
+      "id": "ru_ro_widths_long_name_keyboard",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/after/ro-360-suspended.png",
+      "detail": "RU/RO × 4 widths, 6 axe, Tab, 44 px"
+    },
+    {
+      "id": "sdk_additive_optional_contract",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/contracts.json",
+      "detail": "146 unchanged operations and two optional nullable fields"
+    },
+    {
+      "id": "additive_migration_only",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/preservation.json",
+      "detail": "30 prior checksums intact, no write/default/backfill"
+    },
+    {
+      "id": "report_separates_prior_and_fresh",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/report.md",
+      "detail": "Input artifacts, fresh results and explicit limitations"
+    },
+    {
+      "id": "route_budgets",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-027/budgets.json",
+      "detail": "50/50 under 256000 bytes incl fonts"
+    },
+    {
+      "id": "production_database_and_channel_provisioning",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-027/report.md",
+      "detail": "No production changes or external channels, authorized rollout prerequisite"
+    }
+  ]
+}

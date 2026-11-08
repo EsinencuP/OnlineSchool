@@ -1,0 +1,1 @@
+import{u as o}from"./useQuery-C3TR2cfn.js";import{G as n,am as s}from"./ui-CVUZfOEM.js";function m(r){return o({queryKey:["manager","options",r],queryFn:({signal:a})=>n(e=>s(r?{studentId:r}:{},e),a)})}export{m as u};

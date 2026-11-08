@@ -1,0 +1,18 @@
+{
+  "profileSaveAndSDKHooksUnchanged": true,
+  "ownerOfState": "caller",
+  "noUnconditionalEffectOrCommandInUI": true,
+  "controlledRoots": [
+    "Dialog",
+    "Drawer",
+    "ConfirmDialog/AlertDialog",
+    "Popover",
+    "DropdownMenu"
+  ],
+  "unmountedPrivateDom": "No forceMount or exit animation; caller removes root on revoke",
+  "focus": "Radix modal trap/background isolation; explicit refs only prevent default after connected focus succeeds; native event callbacks compose first",
+  "noReactUpgrade": true,
+  "staticImportsTreeShaken": "Unused overlays annotated pure; actual 48 routes measured including live Profile Dialog",
+  "locale": "UI generic close RU/RO; domain labels passed by caller, human text not translated",
+  "remaining": "Legacy caller migrations and full role/session/AT/WCAG gates remain separate TASKs"
+}

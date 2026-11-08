@@ -7,6 +7,8 @@ import {
   preferredDate,
 } from '../../apps/api/dist/student/lessons/lesson-period.js';
 import { StudentLessonsService } from '../../apps/api/dist/student/lessons/lessons.service.js';
+import { DashboardService } from '../../apps/api/dist/student/dashboard/dashboard.service.js';
+import { studentMeetLinkSql } from '../../apps/api/dist/student/lessons/meet-access.js';
 import { StudentCrmTaskService } from '../../apps/api/dist/student/lessons/student-crm-task.service.js';
 import { OutcomesService } from '../../apps/api/dist/modules/schedule/outcomes.service.js';
 import { createHandlers } from '../../apps/worker/dist/handlers.js';
@@ -48,6 +50,54 @@ test('STU-12 detail SQL binds owner and selected ID without a calendar limit', a
   expect(sql.values).toContain(student.studentProfileId);
   expect(sql.values).toContain(row.id);
   expect(sql.sql).not.toContain('AND l.scheduled_at>=');
+});
+test.each([600001, 600000, 0, -3600000, -3600001])(
+  'TASK-028 dashboard, list and detail share exact projection at %sms',
+  async (delta) => {
+    jest.useFakeTimers({ now: fixed });
+    row.scheduled_at = new Date(+fixed + delta);
+    row.scheduled_end_at = new Date(+row.scheduled_at + 3600000);
+    const dashboard = new DashboardService({ client });
+    const query = pipe.transform({ period: 'today' });
+    const [hero, list, detail] = await Promise.all([
+      dashboard.currentLesson(student, fixed),
+      service.list(student, query),
+      service.list(student, query, row.id),
+    ]);
+    const [listed] = list.value.items;
+    const [selected] = detail.value.items;
+    expect(selected).toEqual(listed);
+    if (delta === -3600001) expect(hero).toBeNull();
+    else expect(listed).toMatchObject(hero);
+  },
+);
+test('TASK-028 eligibility SQL binds enrollment, active assignment, freeze and unused director admission', async () => {
+  const expression = studentMeetLinkSql(fixed);
+  for (const rule of [
+    "l.status='SCHEDULED'",
+    "e.status='ACTIVE'",
+    'e.valid_from<=l.scheduled_at',
+    'a.enrollment_id=e.id',
+    'a.teacher_id=t.id',
+    'a.valid_from<=l.scheduled_at',
+    'a.valid_to>',
+    't.deactivated_at IS NULL',
+    's.archived_at IS NULL',
+    'sub.enrollment_id=e.id',
+    'sub.frozen_until>',
+    '>=sub.full_price',
+    'entitlement_consumptions',
+    'temporary_access_permissions',
+    'p.revoked_at>',
+    'p.valid_to>',
+    '<p.max_lessons',
+    'l.meet_link_overridden',
+  ])
+    expect(expression.sql).toContain(rule);
+  expect(expression.values.every((value) => value === fixed)).toBe(true);
+  expect(expression.sql).not.toMatch(/\b(UPDATE|INSERT|DELETE)\b/);
+  await service.list(student, pipe.transform({ period: 'today' }));
+  expect(client.$queryRaw.mock.calls[0][0].sql).toContain(expression.sql);
 });
 
 test('STU-12 next five lessons cross month boundaries but exclude ended and unscheduled rows', async () => {
@@ -114,6 +164,89 @@ test('calendar month handles DST and end-exclusive boundaries', () => {
     'Europe/Chisinau',
   );
   expect((+spring.until - +spring.from) / 3600000).toBe(23);
+});
+test('TASK-029 autumn DST keeps the exclusive next local midnight and ISO week', () => {
+  const time = new Date('2026-10-25T12:00:00Z');
+  const day = lessonPeriod(pipe.transform({ period: 'today' }), time, 'Europe/Chisinau');
+  expect(day.from.toISOString()).toBe('2026-10-24T21:00:00.000Z');
+  expect(day.until.toISOString()).toBe('2026-10-25T22:00:00.000Z');
+  expect(+day.until - +day.from).toBe(25 * 3600000);
+  const week = lessonPeriod(pipe.transform({ period: 'week' }), time, 'Europe/Chisinau');
+  expect(+week.until - +week.from).toBe(169 * 3600000);
+  const spring = lessonPeriod(
+    pipe.transform({ period: 'week' }),
+    new Date('2026-03-29T12:00Z'),
+    'Europe/Chisinau',
+  );
+  expect(+spring.until - +spring.from).toBe(167 * 3600000);
+});
+test('TASK-029 overflow fallback paginates the same month within owned subject scope', async () => {
+  const subjectId = randomUUID();
+  const query = pipe.transform({
+    month: '2026-03',
+    view: 'list',
+    page: '4',
+    pageSize: '20',
+    subjectId,
+  });
+  row.total = 65;
+  row.subject_id = subjectId;
+  row.original_scheduled_at = new Date('2026-03-01T12:00Z');
+  const result = await service.list(student, query);
+  expect(result.ok).toBe(true);
+  expect(result.value).toMatchObject({
+    total: 65,
+    page: 4,
+    pageSize: 20,
+    items: [{ subjectId, originalScheduledAt: '2026-03-01T12:00:00.000Z' }],
+  });
+  const sql = client.$queryRaw.mock.calls[0][0];
+  expect(sql.sql).toContain('AND e.subject_id=');
+  expect(sql.values).toEqual(expect.arrayContaining([student.studentProfileId, subjectId, 20, 60]));
+  const times = sql.values
+    .filter((value) => value instanceof Date)
+    .map((value) => value.toISOString());
+  expect(times).toContain('2026-02-28T22:00:00.000Z');
+  expect(times).toContain('2026-03-31T21:00:00.000Z');
+});
+test.each([
+  { view: 'list' },
+  { month: '2026-03', view: 'other' },
+  { month: '2026-03', view: 'calendar', page: '1' },
+  { period: 'today', subjectId: 'not-an-id' },
+])('TASK-029 rejects ambiguous view or subject input %j', (input) => {
+  expect(() => pipe.transform(input)).toThrow();
+});
+test('TASK-029 request receipt returns only the owned committed task or UNKNOWN', async () => {
+  const requestKey = randomUUID();
+  const crmTaskId = randomUUID();
+  client.$queryRaw.mockResolvedValueOnce([
+    { crmTaskId, type: 'RESCHEDULE_REQUEST', payload: 'private' },
+  ]);
+  expect(await service.requestResult(student, row.id, requestKey)).toEqual({
+    status: 'CREATED',
+    crmTaskId,
+    type: 'RESCHEDULE_REQUEST',
+  });
+  const [, ...parameters] = client.$queryRaw.mock.calls[0];
+  expect(parameters).toEqual(
+    expect.arrayContaining([
+      student.studentProfileId,
+      row.id,
+      `student-reschedule:${student.userId}:${requestKey}`,
+      `student-dispute:${student.userId}:${requestKey}`,
+    ]),
+  );
+  client.$queryRaw.mockResolvedValueOnce([]);
+  expect(await service.requestResult(student, row.id, requestKey)).toEqual({
+    status: 'UNKNOWN',
+    crmTaskId: null,
+    type: null,
+  });
+  client.$queryRaw.mockRejectedValueOnce(new Error('secret DB address'));
+  await expect(service.requestResult(student, row.id, requestKey)).rejects.toMatchObject({
+    domain: { code: 'STUDENT_LESSON_REQUEST_UNAVAILABLE', status: 503 },
+  });
 });
 test.each(['2026-02-30', '2026-13-01', '2026-10-27T12:00:00Z', '0000-01-01', '2026-10-26'])(
   'invalid/past preferred date is rejected: %s',

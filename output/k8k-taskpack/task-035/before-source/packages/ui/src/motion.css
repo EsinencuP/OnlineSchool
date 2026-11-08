@@ -1,0 +1,244 @@
+/* Owner motion direction, 2026-11-08. Never delay data or command eligibility. */
+:root {
+  --k8k-motion-enter: 200ms;
+  --k8k-motion-exit: 160ms;
+  --k8k-motion-press: 80ms;
+  --k8k-motion-stagger: 30ms;
+  --k8k-motion-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --k8k-motion-in: cubic-bezier(0.4, 0, 1, 1);
+  --k8k-motion-move: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root :is(button, .button, .primary, .k8k-main-action) {
+    transition: scale var(--k8k-motion-press) var(--k8k-motion-move);
+  }
+  :root
+    :is(button, .button, .primary, .k8k-main-action):active:not(:disabled):not(
+      [aria-disabled='true']
+    ) {
+    scale: 0.97;
+  }
+  .k8k-popover {
+    transform-origin: var(--radix-popover-content-transform-origin);
+  }
+  .k8k-menu {
+    transform-origin: var(--radix-dropdown-menu-content-transform-origin);
+  }
+  .k8k-tooltip {
+    transform-origin: var(--radix-tooltip-content-transform-origin);
+  }
+  :is(.k8k-dialog, .k8k-drawer) {
+    transform-origin: 50% 0%;
+  }
+  :is(.k8k-overlay-surface, .k8k-tooltip)[data-state='open'],
+  .k8k-tooltip[data-state='delayed-open'],
+  .k8k-tooltip[data-state='instant-open'] {
+    animation: k8k-surface-in var(--k8k-motion-enter) var(--k8k-motion-out) both;
+  }
+  :is(.k8k-overlay-surface, .k8k-tooltip)[data-state='closed'] {
+    animation: k8k-surface-out var(--k8k-motion-exit) var(--k8k-motion-in) both;
+    pointer-events: none;
+  }
+  .k8k-overlay-backdrop[data-state='open'] {
+    animation: k8k-backdrop-in var(--k8k-motion-enter) var(--k8k-motion-out) both;
+  }
+  .k8k-overlay-backdrop[data-state='closed'] {
+    animation: k8k-backdrop-out var(--k8k-motion-exit) var(--k8k-motion-in) both;
+    pointer-events: none;
+  }
+  :is(
+      .k8k-student-list,
+      .homework-list,
+      .history-list,
+      .workspace-list,
+      .record-list,
+      .lesson-list,
+      .k8k-toast-list,
+      .k8k-notification-scroll ul
+    )
+    > *,
+  .k8k-dense-table tbody > tr {
+    animation: k8k-row-in var(--k8k-motion-enter) var(--k8k-motion-out) backwards;
+    animation-delay: calc(var(--k8k-row-index, 0) * var(--k8k-motion-stagger));
+  }
+  :is(.k8k-overlay-surface[data-state='open'], .account-menu[open] .account-popover)
+    > :not(header) {
+    animation: k8k-reveal var(--k8k-motion-enter) var(--k8k-motion-out) backwards;
+    animation-delay: var(--k8k-motion-stagger);
+  }
+  :is(.k8k-overlay-surface[data-state='open'], .account-menu[open] .account-popover)
+    > :nth-child(n + 3) {
+    animation-delay: calc(2 * var(--k8k-motion-stagger));
+  }
+  .k8k-toast[data-outcome='confirmed'][data-tone='success'] > svg {
+    animation: k8k-success-pulse 320ms var(--k8k-motion-move) 1;
+  }
+  .k8k-tab-panels {
+    display: grid;
+    align-items: start;
+  }
+  .k8k-tab-panels > .k8k-tab-panel {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+  .k8k-tab-panel[data-state='active'] {
+    animation: k8k-reveal var(--k8k-motion-enter) var(--k8k-motion-out) both;
+  }
+  .k8k-tab-panel[data-motion-exiting='true'] {
+    animation: k8k-conceal var(--k8k-motion-exit) var(--k8k-motion-in) both;
+    pointer-events: none;
+  }
+  .k8k-icon-swap[data-changing='true'] > .k8k-icon-current {
+    animation: k8k-icon-in var(--k8k-motion-enter) var(--k8k-motion-out) both;
+  }
+  .k8k-icon-previous {
+    animation: k8k-icon-out var(--k8k-motion-exit) var(--k8k-motion-in) both;
+  }
+  :is(.k8k-state-data, .k8k-overlay-surface, .k8k-student-list) :focus-within {
+    animation: none;
+  }
+  /* Native details remains semantic; discrete visibility retains its closing frame. */
+  @supports (transition-behavior: allow-discrete) {
+    .account-menu::details-content {
+      transition: content-visibility var(--k8k-motion-exit) allow-discrete;
+    }
+    .account-menu .account-popover {
+      transform-origin: 100% 0%;
+      scale: 0.95;
+      clip-path: inset(0 0 100% 0);
+      transition:
+        scale var(--k8k-motion-exit) var(--k8k-motion-in),
+        clip-path var(--k8k-motion-exit) var(--k8k-motion-in);
+    }
+    .account-menu[open] .account-popover {
+      scale: 1;
+      clip-path: inset(0);
+      transition-duration: var(--k8k-motion-enter);
+      transition-timing-function: var(--k8k-motion-out);
+    }
+    @starting-style {
+      .account-menu[open] .account-popover {
+        scale: 0.95;
+        clip-path: inset(0 0 100% 0);
+      }
+    }
+  }
+}
+.k8k-icon-swap {
+  display: inline-grid;
+  flex: none;
+  vertical-align: middle;
+}
+.k8k-icon-swap > svg {
+  grid-area: 1 / 1;
+}
+@keyframes k8k-surface-in {
+  from {
+    scale: 0.95;
+  }
+}
+@keyframes k8k-surface-out {
+  to {
+    scale: 0.95;
+  }
+}
+@keyframes k8k-reveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes k8k-conceal {
+  from {
+    clip-path: inset(0);
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@keyframes k8k-row-in {
+  from {
+    translate: 0 4px;
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    translate: 0 0;
+    clip-path: inset(0);
+  }
+}
+@keyframes k8k-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes k8k-backdrop-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes k8k-success-pulse {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.12;
+  }
+}
+@keyframes k8k-icon-in {
+  from {
+    opacity: 0;
+    scale: 0.8;
+    filter: blur(2px);
+  }
+}
+@keyframes k8k-icon-out {
+  to {
+    opacity: 0;
+    scale: 0.8;
+    filter: blur(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .k8k-icon-previous {
+    display: none;
+  }
+  .k8k-tab-panel[data-motion-exiting='true'] {
+    display: none;
+  }
+}
+
+/* Bound the cascade to the first visible group, so long pages never wait seconds. */
+:is(li, tr, .lesson):nth-child(2) {
+  --k8k-row-index: 1;
+}
+:is(li, tr, .lesson):nth-child(3) {
+  --k8k-row-index: 2;
+}
+:is(li, tr, .lesson):nth-child(4) {
+  --k8k-row-index: 3;
+}
+:is(li, tr, .lesson):nth-child(5) {
+  --k8k-row-index: 4;
+}
+:is(li, tr, .lesson):nth-child(6) {
+  --k8k-row-index: 5;
+}
+:is(li, tr, .lesson):nth-child(7) {
+  --k8k-row-index: 6;
+}
+:is(li, tr, .lesson):nth-child(8) {
+  --k8k-row-index: 7;
+}
+:is(li, tr, .lesson):nth-child(9) {
+  --k8k-row-index: 8;
+}
+:is(li, tr, .lesson):nth-child(10) {
+  --k8k-row-index: 9;
+}
+:is(li, tr, .lesson):nth-child(n + 11) {
+  --k8k-row-index: 9;
+}

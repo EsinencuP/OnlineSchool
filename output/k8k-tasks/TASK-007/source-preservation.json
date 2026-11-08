@@ -1,0 +1,74 @@
+{
+  "task": "TASK-007",
+  "passed": true,
+  "checks": {
+    "onlyAuthorizedSnapshotInputsChanged": true,
+    "all465RunSourcesUnchanged": true,
+    "all456Task006InputsMatchedBefore": true,
+    "appEntryHtmlUnchanged": true,
+    "protectedArchivesAndOriginalArtifactsUnchanged": true,
+    "task001ManifestsUnchanged": true,
+    "task002InventoryUnchanged": true,
+    "task003AuditUnchanged": true,
+    "JSLockfileUnchanged": true,
+    "fontsUnchanged": true,
+    "legacyStylelintAllowlistUnchanged": true,
+    "apiHookSourceUnchanged": true,
+    "ProfileHookAndSubmitASTUnchanged": true,
+    "headBranchUnchanged": true,
+    "indexStillEmpty": true,
+    "uiStackHistoricalPrefixPreserved": true,
+    "reportLinksResolve": true,
+    "bookkeepingDigestMatches": true,
+    "scopedDiffWhitespaceCheck": true
+  },
+  "changedInitiallySnapshottedInputs": [
+    "apps/student-cabinet/package.json",
+    "apps/student-cabinet/src/pages/Account.tsx",
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/src/controls.tsx",
+    "packages/ui/src/locale.tsx",
+    "packages/ui/src/style.css",
+    "packages/ui/tests/controls.test.mjs"
+  ],
+  "unexpectedFinalRunSourceChanges": [],
+  "beforeInputs": 457,
+  "acceptedRunInputs": 465,
+  "acceptedBuildBasis": {
+    "head": "171db2142858e035594737e141d422fa5378e844",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "04eb5901ce4a206fad7bddcf88cb7365a91793905ca2aea069465d1d5bc9963f",
+    "sourceDigest": "3c04b4f4ca9e2fd8fe7ca88c04b44a2d598fa6fb1d76c1fba2bb4a35d50f3fef"
+  },
+  "protectedOriginalHashes": {
+    "output/k8k-implementation/baseline/manifest.json": {
+      "sha256": "a7d84075bc8e5925c0f7500c84498e3e02325b8f80f2bbdfb4679d434207c6d4",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/status.txt": {
+      "sha256": "3d0924c29c85ac087181685229ae6eeae823bd0f8a7eab057a71e31a2626312b",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/tracked.patch": {
+      "sha256": "3379e13e28811809aa57714813a99e1d1a12801d6eec86742dd989bb747af902",
+      "unchanged": true
+    },
+    "apps/apps.rar": {
+      "sha256": "1e819a62692e21c21aac31b1dd17588b7ac5930e4d6bb17eb0537a4d92740737",
+      "unchanged": true
+    },
+    "uiux.rar": {
+      "sha256": "563b6e6d2ff5e0fd6aafb5bc960065ac8dcb9368671dcaaf276ac55a4943d740",
+      "unchanged": true
+    }
+  },
+  "appEntryHtml": {
+    "apps/student-cabinet/index.html": true,
+    "apps/manager-web/index.html": true,
+    "apps/platform/index.html": true
+  },
+  "missingLinks": [],
+  "finalTrackedPatchSha256": "1e554b92a491d92176eb8dadab81fbeb1044ed4dce84333ffedf0e48d3c070ac",
+  "limits": "Build-time dirty digest precedes bookkeeping; current source inputs match run. Scoped local evidence, no whole-repo/DB/provider/production gate."
+}

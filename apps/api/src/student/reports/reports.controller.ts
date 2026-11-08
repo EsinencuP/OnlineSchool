@@ -33,6 +33,8 @@ import {
   ExportPdfRequestDto,
   ExportPdfResponseDto,
   PdfJobStatusDto,
+  PdfExportRequestResultDto,
+  EducationalReportDto,
   ReportsQueryDto,
   ReportsQueryPipe,
   ReportsResponseDto,
@@ -120,6 +122,17 @@ export class StudentReportsController {
   ) {
     return this.reports.enqueue(ctx, student, body);
   }
+  @Get('export-pdf/requests/:requestId')
+  @ApiOperation({
+    operationId: 'getStudentEducationPdfRequestResult',
+    summary: 'Reconcile own PDF enqueue intention',
+    description:
+      'Read-only lookup by original request UUID, scoped to student and requesting actor. ACCEPTED identifies the committed job, not its current readiness. UNKNOWN is not proof that a command never ran. No signing or new export.',
+  })
+  @ApiResponse({ status: 200, type: PdfExportRequestResultDto })
+  requestResult(@StudentCtx() student: IStudentContext, @Param('requestId') id: string) {
+    return this.reports.exportRequestResult(student, uuid(id));
+  }
   @Get('export-pdf/:jobId')
   @ApiOperation({
     operationId: 'getStudentEducationPdfStatus',
@@ -130,6 +143,17 @@ export class StudentReportsController {
   @ApiResponse({ status: 200, type: PdfJobStatusDto })
   status(@StudentCtx() student: IStudentContext, @Param('jobId') id: string) {
     return this.reports.status(student, uuid(id));
+  }
+  @Get(':reportId')
+  @ApiOperation({
+    operationId: 'getStudentReport',
+    summary: 'Read one own latest published eight-lesson report',
+    description:
+      'Same publishedReports scope and public projection as list, independent of pagination. Foreign, unknown, draft, future and superseded IDs share REPORT_FORBIDDEN403. Draft corrections do not hide the preceding publication.',
+  })
+  @ApiResponse({ status: 200, type: EducationalReportDto })
+  detail(@StudentCtx() student: IStudentContext, @Param('reportId') id: string) {
+    return this.reports.detail(student, uuid(id));
   }
   @Post(':reportId/read')
   @UseGuards(ReportReadResponseGuard)

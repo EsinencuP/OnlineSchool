@@ -1,0 +1,136 @@
+{
+  "task": "TASK-024",
+  "status": "DONE",
+  "scope": "API and SDK, local mock verification",
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "dirtyDigest": "5da1852af7b2bcab938f52c9b1254c31b72a708669047de0d106ec129e46c3c0",
+  "criteria": [
+    {
+      "id": "subjects_openapi_sdk",
+      "status": "PASS",
+      "verification": "generated schema and SDK mock",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/contracts.json",
+        "../../k8k-tasks/TASK-024/subjects.log"
+      ]
+    },
+    {
+      "id": "own_subjects_and_legacy_detail_anchors",
+      "status": "PASS",
+      "verification": "Nest HTTP with in-memory database substitute",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/contracts.json"
+      ]
+    },
+    {
+      "id": "separate_live_math_and_expired_physics",
+      "status": "PASS",
+      "verification": "service and Nest HTTP fixtures",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/stu03.log"
+      ]
+    },
+    {
+      "id": "freeze_and_previously_issued_homework_materials",
+      "status": "PASS",
+      "verification": "service fixtures and shared SQL contract",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/resource-reads.log",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "partial_payment_and_director_admission",
+      "status": "PASS",
+      "verification": "service fixture and generated SQL predicates",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "limited_expiry_revocation_exhaustion_and_latest_allocation",
+      "status": "PASS",
+      "verification": "generated SQL structural checks; database execution tracked separately",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "last_payment_switches_to_normal_paid_rights",
+      "status": "PASS",
+      "verification": "read projection fixture; no grant writing",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log"
+      ]
+    },
+    {
+      "id": "zero_null_future_and_wrapper",
+      "status": "PASS",
+      "verification": "service fixtures and started-period SQL scope",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "401_402_403_other_session_password_and_invalid_query",
+      "status": "PASS",
+      "verification": "Nest HTTP fixtures and session guard tests",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/stu01.log"
+      ]
+    },
+    {
+      "id": "parallel_read_empty_and_source_outage",
+      "status": "PASS",
+      "verification": "Nest HTTP fixtures and SELECT-only query verification",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/subjects.log",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "old_dto_and_decimal_contracts_preserved",
+      "status": "PASS",
+      "verification": "OpenAPI diff and subscription/lesson regression tests",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/contracts.json",
+        "../../k8k-tasks/TASK-024/stu07.log",
+        "../../k8k-tasks/TASK-024/stu03.log"
+      ]
+    },
+    {
+      "id": "dirty_work_migrations_lockfile_and_prisma_preserved",
+      "status": "PASS",
+      "verification": "file hashes and working-tree status",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/preservation.json",
+        "../../k8k-tasks/TASK-024/basis.json"
+      ]
+    },
+    {
+      "id": "actual_postgresql_cte_and_query_plan",
+      "status": "NOT_RUN",
+      "verification": "no authorized PostgreSQL read-only target for this task",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/query.json",
+        "../../k8k-tasks/TASK-024/projection.sql"
+      ]
+    },
+    {
+      "id": "browser_and_production",
+      "status": "NOT_RUN",
+      "verification": "API/SDK increment; browser consumers are TASK-025/026",
+      "evidence": [
+        "../../k8k-tasks/TASK-024/report.md",
+        "../../k8k-tasks/TASK-024/handoff.md"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 :root {
   font-family: 'Segoe UI', Arial, sans-serif;
-  color: #15234d;
-  background: #f5f9fe;
+  color: var(--brand-text);
+  background: var(--bg-page);
   font-synthesis: none;
   font-weight: 400;
 }
@@ -32,7 +32,7 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid #499e85;
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 h1,
@@ -43,7 +43,7 @@ p {
 }
 h1 {
   font-size: 32px;
-  letter-spacing: -1px;
+  letter-spacing: normal;
   font-weight: 600;
 }
 h2 {
@@ -59,7 +59,7 @@ p {
   line-height: 1.6;
 }
 button:disabled {
-  opacity: 0.65;
+  opacity: 1;
   cursor: default;
 }
 .brand {
@@ -69,11 +69,11 @@ button:disabled {
   text-decoration: none;
   font-size: 34px;
   font-weight: 700;
-  letter-spacing: -2px;
+  letter-spacing: normal;
 }
 .brand > span {
   font-size: 24px;
-  letter-spacing: -0.5px;
+  letter-spacing: normal;
 }
 .brand small {
   display: block;
@@ -81,56 +81,15 @@ button:disabled {
   font-weight: 400;
   letter-spacing: 0;
   margin-top: 6px;
-  color: #91a6c4;
-}
-.eyebrow {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #57729c;
-  margin-bottom: 16px;
+  color: var(--brand-text);
 }
 .muted {
-  color: #536582;
+  color: var(--brand-text);
 }
 .login {
   min-height: 100dvh;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-}
-.login-story {
-  background: #e7effa;
-  padding: 50px 10%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-}
-.login-story .brand {
-  margin-bottom: 80px;
-}
-.login-story h1 {
-  font-size: clamp(44px, 5vw, 76px);
-  line-height: 1.09;
-  letter-spacing: -3px;
-  margin-bottom: 28px;
-}
-.login-story h1 em {
-  font-style: normal;
-  color: #1d63d4;
-}
-.login-story > p:not(.eyebrow) {
-  max-width: 390px;
-  color: #526a8d;
-  font-size: 17px;
-}
-.story-note {
-  margin-top: 65px;
-  border-top: 1px solid #bdcaba;
-  padding-top: 22px;
-  font-size: 12px;
-  color: #627da2;
 }
 .login-form {
   align-self: center;
@@ -140,7 +99,7 @@ button:disabled {
 }
 .login-form h2 {
   font-size: 32px;
-  letter-spacing: -1px;
+  letter-spacing: normal;
   margin-bottom: 12px;
 }
 .login form {
@@ -161,18 +120,18 @@ button:disabled {
 .login input,
 .login select {
   width: 100%;
-  border: 1px solid #cdd7cb;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--surface);
   padding: 13px 14px;
-  color: #15234d;
+  color: var(--brand-text);
   min-height: 47px;
 }
 .primary {
   border: 0;
   border-radius: 8px;
-  background: #125ccc;
-  color: white;
+  background: var(--brand-text);
+  color: var(--surface);
   padding: 15px 20px;
   margin-top: 8px;
   font-weight: 600;
@@ -180,14 +139,14 @@ button:disabled {
 .login-help {
   margin-top: 28px;
   font-size: 12px;
-  color: #637da2;
+  color: var(--brand-text);
 }
 .error {
   padding: 14px 18px;
-  background: #fce9e3;
-  border: 1px solid #dca796;
+  background: var(--surface);
+  border: 1px solid var(--danger);
   border-radius: 8px;
-  color: #853c2a;
+  color: var(--danger);
 }
 .staff-app {
   display: flex;
@@ -196,8 +155,7 @@ button:disabled {
 .sidebar {
   width: 250px;
   flex-shrink: 0;
-  background: #fff;
-  border-right: 1px solid #dce5f1;
+  border-right: 1px solid var(--border);
   position: sticky;
   top: 0;
   height: 100dvh;
@@ -207,12 +165,6 @@ button:disabled {
 }
 .sidebar .brand {
   margin-bottom: 55px;
-}
-.sidebar-label {
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  color: #859382;
 }
 .sidebar nav {
   display: grid;
@@ -225,25 +177,19 @@ button:disabled {
   border: 0;
   border-radius: 8px;
   text-align: left;
-  color: #627da2;
   background: transparent;
   font-size: 14px;
 }
 .sidebar nav button[aria-current='page'] {
-  background: #eaf2ff;
-  color: #1d63d4;
   font-weight: 600;
-}
-.sidebar nav button:hover {
-  background: #f1f6ff;
 }
 .sidebar-note {
   margin-top: auto;
   padding: 45px 14px 30px;
   font-size: 23px;
   line-height: 1.4;
-  color: #a8b9d0;
-  letter-spacing: -0.5px;
+  color: var(--brand-text);
+  letter-spacing: normal;
 }
 .sidebar-note span {
   display: block;
@@ -253,11 +199,11 @@ button:disabled {
 }
 .logout {
   border: 0;
-  border-top: 1px solid #e7eade;
+  border-top: 1px solid var(--border);
   padding: 22px 0 0;
   background: transparent;
   text-align: left;
-  color: #6b7965;
+  color: var(--text-muted);
   font-size: 12px;
 }
 .staff-main {
@@ -266,8 +212,8 @@ button:disabled {
 }
 .topbar {
   height: 86px;
-  background: #fff;
-  border-bottom: 1px solid #dce5f1;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -275,7 +221,7 @@ button:disabled {
 }
 .topbar > span {
   font-size: 13px;
-  color: #81907e;
+  color: var(--text-muted);
 }
 .staff-main main {
   max-width: 1340px;
@@ -298,12 +244,12 @@ button:disabled {
   margin-bottom: 0;
 }
 .refresh {
-  background: #fff;
-  border: 1px solid #dfe5d9;
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 10px 16px;
   border-radius: 7px;
   white-space: nowrap;
-  color: #526e94;
+  color: var(--brand-text);
 }
 .stats {
   display: grid;
@@ -313,36 +259,33 @@ button:disabled {
 }
 .stats section {
   padding: 24px;
-  border: 1px solid #dce5f1;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
 }
 .stats section:first-child {
-  background: #e7efff;
-  border-color: #d7e2fa;
+  background: var(--surface);
+  border-color: var(--border);
 }
 .stats span,
 .stats small {
   display: block;
-  color: #536582;
+  color: var(--brand-text);
   font-size: 12px;
 }
 .stats strong {
   display: block;
   font-size: 43px;
   font-weight: 500;
-  letter-spacing: -2px;
+  letter-spacing: normal;
   margin: 10px 0;
 }
 .stats small {
   font-size: 10px;
-  color: #7589a7;
+  color: var(--brand-text);
 }
 .panel {
-  background: #fff;
   padding: 26px 28px;
-  border: 1px solid #dce5f1;
-  border-radius: 12px;
   margin-bottom: 24px;
 }
 .section-heading {
@@ -353,19 +296,19 @@ button:disabled {
 }
 .section-heading > span {
   font-size: 11px;
-  color: #7b8d76;
+  color: var(--text-muted);
 }
 .lesson {
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 22px 0;
-  border-top: 1px solid #edf2f8;
+  border-top: 1px solid var(--border);
 }
 .lesson-date {
   width: 53px;
   min-width: 53px;
-  background: #edf5ff;
+  background: var(--surface);
   border-radius: 9px;
   padding: 10px;
   text-align: center;
@@ -377,24 +320,21 @@ button:disabled {
 }
 .lesson-date span {
   font-size: 11px;
-  color: #7589a7;
+  color: var(--brand-text);
 }
 .lesson p,
 .simple-row p {
   font-size: 12px;
-  color: #7b8a76;
+  color: var(--text-muted);
   margin: 0 0 5px;
 }
 .lesson time {
   font-size: 11px;
-  color: #647760;
+  color: var(--text-muted);
 }
 .badge {
   margin-left: auto;
-  border: 1px solid #d7e5f6;
-  color: #3168a6;
-  background: #edf5ff;
-  border-radius: 6px;
+  color: var(--brand-text);
   font-size: 10px;
   padding: 6px 10px;
   white-space: nowrap;
@@ -404,7 +344,7 @@ button:disabled {
   align-items: center;
   gap: 16px;
   padding: 20px 0;
-  border-top: 1px solid #edf2f8;
+  border-top: 1px solid var(--border);
 }
 .simple-row p {
   margin-bottom: 0;
@@ -413,7 +353,7 @@ button:disabled {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #ebefdf;
+  background: var(--surface);
   display: grid;
   place-items: center;
   font-size: 18px;
@@ -422,36 +362,36 @@ button:disabled {
 .task-dot {
   width: 9px;
   height: 9px;
-  background: #99b58a;
+  background: var(--brand-text);
   border-radius: 50%;
   flex-shrink: 0;
 }
 .task-dot.overdue {
-  background: #c7906d;
+  background: var(--brand-text);
 }
 .text-button {
   border: 0;
   background: transparent;
-  color: #516f46;
+  color: var(--brand-text);
   font-size: 12px;
   padding: 12px 0;
 }
 .empty {
   font-size: 13px;
-  color: #637da7;
+  color: var(--brand-text);
   padding: 24px 0;
 }
 .staff-main footer {
   padding: 10px 40px 25px;
   font-size: 10px;
-  color: #8a9982;
+  color: var(--text-muted);
 }
 .skip {
   position: fixed;
   top: -100px;
   left: 10px;
   z-index: 200;
-  background: #fff;
+  background: var(--surface);
   padding: 12px;
 }
 .skip:focus {
@@ -487,20 +427,6 @@ button:disabled {
   .login {
     grid-template-columns: 1fr;
   }
-  .login-story {
-    padding: 25px 28px;
-  }
-  .login-story .brand {
-    margin-bottom: 30px;
-  }
-  .login-story h1 {
-    font-size: 40px;
-    letter-spacing: -2px;
-  }
-  .login-story > p:not(.eyebrow),
-  .story-note {
-    display: none;
-  }
   .login-form {
     padding-top: 32px;
   }
@@ -513,7 +439,7 @@ button:disabled {
     height: auto;
     padding: 18px 20px;
     border-right: 0;
-    border-bottom: 1px solid #dce5f1;
+    border-bottom: 1px solid var(--border);
   }
   .sidebar .brand {
     margin-bottom: 18px;
@@ -522,7 +448,6 @@ button:disabled {
   .sidebar .brand > span {
     font-size: 20px;
   }
-  .sidebar-label,
   .sidebar-note,
   .logout {
     display: none;
@@ -558,9 +483,6 @@ button:disabled {
   }
   .page-heading h1 {
     font-size: 24px;
-  }
-  .eyebrow {
-    font-size: 10px;
   }
   .stats {
     grid-template-columns: repeat(3, 1fr);
@@ -611,27 +533,24 @@ button:disabled {
 
 /* Staff navigation follows the teacher reference and manager cabinet. */
 .sidebar {
-  background: #10213f;
-  border-color: #10213f;
-  color: #fff;
+  background: var(--brand-text);
+  border-color: var(--border);
+  color: var(--surface);
 }
 .sidebar nav button {
-  color: #b4c5dd;
+  color: var(--brand-text);
 }
 .sidebar nav button[aria-current='page'] {
-  background: #1763ce;
-  color: #fff;
+  background: var(--brand-text);
+  color: var(--surface);
 }
 .sidebar nav button:hover {
-  background: #203a5f;
-}
-.sidebar-label {
-  color: #8fa6c7;
+  background: var(--brand-text);
 }
 .sidebar .brand small {
-  color: #91a6c4;
+  color: var(--brand-text);
 }
 .sidebar .logout {
-  color: #b4c5dd;
-  border-color: #294060;
+  color: var(--brand-text);
+  border-color: var(--border);
 }

@@ -1,0 +1,13 @@
+# Local acceptance evidence and source archives are retained in Git, not deployed.
+output/
+ref/
+template/
+templates/
+apps/apps.rar
+uiux.rar
+scripts/__pycache__/
+.codex/
+.playwright-mcp/
+**/.env
+**/.env.*
+**/*.log

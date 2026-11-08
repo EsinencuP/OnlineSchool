@@ -1,0 +1,115 @@
+{
+  "task": "TASK-025",
+  "status": "DONE",
+  "scope": "K8K student cabinet, local synthetic fixture",
+  "checks": [
+    {
+      "id": "menu_desktop_mobile_active",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Six destinations at 360 and 1280, AccountMenu profile/security"
+    },
+    {
+      "id": "deep_links_and_bell",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/handoff.md",
+      "detail": "Original route inventory and legacy notifications browser test"
+    },
+    {
+      "id": "independent_subject_access",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Active English, expired Mathematics, independent materials and lessons"
+    },
+    {
+      "id": "foreign_invalid_repeated_selector",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Warm cache, invalid and repeated selectors, no foreign scoped GET"
+    },
+    {
+      "id": "loading_empty_error_stale_forbidden",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Five states and forbidden response after stale cache"
+    },
+    {
+      "id": "home_hero_and_shortcuts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Meet or lesson detail as primary, maximum two shortcuts"
+    },
+    {
+      "id": "ru_ro_four_widths_long_name",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/after/ro-360-home.png",
+      "detail": "24 screenshots, two locales, 360/768/1024/1280, name of 100 characters"
+    },
+    {
+      "id": "touch_bottom_navigation_dialog",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "48/44 px, mobile bottom bar, draft modal"
+    },
+    {
+      "id": "keyboard_and_focus",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Skip link, Escape and focus return"
+    },
+    {
+      "id": "refresh_stability",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Focus, scroll and order survive subject refetch"
+    },
+    {
+      "id": "draft_scroll_and_context",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "History and explicit return after saving, no false homework filter"
+    },
+    {
+      "id": "auth_guard_401_402_403_password",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Direct hub and help under private guard"
+    },
+    {
+      "id": "official_help_without_private_bootstrap",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "WhatsApp/Telegram only, no extra dashboard or subjects request"
+    },
+    {
+      "id": "server_filter_and_pagination",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/playwright.log",
+      "detail": "Materials and skill map use server subjectId, snapshots/lessons/homework keep global scope"
+    },
+    {
+      "id": "typed_sdk_and_no_migrations",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/preservation.json",
+      "detail": "SDK, OpenAPI and lockfile unchanged"
+    },
+    {
+      "id": "style_and_types",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/typecheck.log",
+      "detail": "TypeScript, ESLint and targeted Stylelint"
+    },
+    {
+      "id": "route_budget",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-025/budgets.json",
+      "detail": "50 routes within 256000 bytes, fonts included"
+    },
+    {
+      "id": "database_meet_production_and_full_gate",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-025/report.md",
+      "detail": "Local synthetic environment, provider checks outside task"
+    }
+  ]
+}

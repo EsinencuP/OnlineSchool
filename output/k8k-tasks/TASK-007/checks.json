@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ui-build",
+    "command": "pnpm --filter @online-school/ui build",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-test",
+    "command": "pnpm --filter @online-school/ui test",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-lint",
+    "command": "pnpm --filter @online-school/ui lint",
+    "exitCode": 0
+  },
+  {
+    "name": "consumer-typecheck",
+    "command": "pnpm --filter @online-school/student-cabinet typecheck:ui-controls",
+    "exitCode": 0
+  },
+  {
+    "name": "eslint",
+    "command": "pnpm exec eslint packages/ui/src/controls.tsx packages/ui/src/locale.tsx packages/ui/stories/controls.stories.tsx apps/student-cabinet/src/pages/Account.tsx apps/student-cabinet/tests/ui-controls/fixture.tsx scripts/k8k-controls-evidence.mjs --max-warnings 0",
+    "exitCode": 0
+  },
+  {
+    "name": "format",
+    "command": "pnpm exec prettier --check package.json apps/student-cabinet/package.json apps/student-cabinet/tsconfig.ui-controls.json apps/student-cabinet/src/pages/Account.tsx apps/student-cabinet/tests/ui-controls packages/ui/src/controls.tsx packages/ui/src/locale.tsx packages/ui/src/style.css packages/ui/stories packages/ui/tests/controls.test.mjs scripts/k8k-controls-evidence.mjs",
+    "exitCode": 0
+  }
+]

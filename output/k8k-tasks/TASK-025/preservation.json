@@ -1,0 +1,17 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtySnapshot": "status-before.txt",
+  "dirtyDigest": "fd20f764aca3906624134fc718763d5e3b7952b113c35ff2ae100e38b7dd454a",
+  "initialStatusEntriesExcludingTaskOutput": 339,
+  "missingInitialStatus": [],
+  "verifiedCopies": 20,
+  "invalidCopies": [],
+  "preservedAnchorHashes": [
+    "package.json",
+    "pnpm-lock.yaml",
+    "packages/api-contracts/openapi/openapi.json",
+    "packages/api-contracts/src/generated/client.ts",
+    "packages/api-contracts/src/generated/openapi.ts"
+  ]
+}

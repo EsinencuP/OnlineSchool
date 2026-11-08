@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "operationsBefore": 147,
+  "operationsAfter": 147,
+  "newOperations": [],
+  "addedParameters": [
+    {
+      "operation": "getStudentSkillSnapshots",
+      "parameter": "subjectId",
+      "schema": {
+        "format": "uuid",
+        "type": "string"
+      }
+    }
+  ],
+  "components": "byte-equivalent schema objects",
+  "existingRequestsResponsesSecurityAndParameters": "preserved",
+  "studentMutationRoutesAdded": 0,
+  "standardGeneration": true,
+  "noDatabaseExportPreload": "output/k8k-tasks/TASK-018/no-db-export.mjs",
+  "adjacentMaterialsNotificationsBody": "byte-identical to before snapshot",
+  "dependenciesAdded": 0,
+  "migrationsAdded": 0,
+  "migrationsExecuted": false
+}

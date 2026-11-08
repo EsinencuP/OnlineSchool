@@ -1,0 +1,142 @@
+{
+  "checks": {
+    "sharedChunkExactlyOnce": true,
+    "bothFontSubsetsCharged": true,
+    "explicitLazyIncluded": true,
+    "missingManifestUnavailable": true,
+    "missingAssetUnavailable": true,
+    "missingImportUnavailable": true,
+    "overLimitFails": true
+  },
+  "valid": {
+    "status": "available",
+    "files": [
+      {
+        "file": "assets/a.js",
+        "raw": 1,
+        "gzip": 21,
+        "kind": "js"
+      },
+      {
+        "file": "assets/b.js",
+        "raw": 1,
+        "gzip": 21,
+        "kind": "js"
+      },
+      {
+        "file": "assets/entry.js",
+        "raw": 5,
+        "gzip": 25,
+        "kind": "js"
+      },
+      {
+        "file": "assets/shared.js",
+        "raw": 6,
+        "gzip": 26,
+        "kind": "js"
+      },
+      {
+        "file": "assets/style.css",
+        "raw": 129,
+        "gzip": 96,
+        "kind": "css"
+      }
+    ],
+    "manifestKeys": [
+      "a",
+      "b",
+      "index.html",
+      "shared"
+    ],
+    "deferredDynamicImports": [
+      "lazy"
+    ],
+    "method": "k8k-route-v1: unique cold-entry+explicit-route-lazy-seeds recursive static JS/CSS; gzip(level=9) per file; raw cyrillic+latin WOFF2 once each; limit=256000",
+    "gzip": 189,
+    "font": {
+      "cyrillic": {
+        "file": "assets/golos-text-cyrillic-wght-normal.woff2",
+        "bytes": 22032
+      },
+      "latin": {
+        "file": "assets/golos-text-latin-wght-normal.woff2",
+        "bytes": 37916
+      },
+      "total": 59948
+    },
+    "total": 60137,
+    "limit": 256000,
+    "pass": true
+  },
+  "missing": {
+    "status": "unavailable",
+    "reason": "Manifest unavailable",
+    "files": null,
+    "method": "k8k-route-v1: unique cold-entry+explicit-route-lazy-seeds recursive static JS/CSS; gzip(level=9) per file; raw cyrillic+latin WOFF2 once each; limit=256000",
+    "gzip": null,
+    "font": null,
+    "total": null,
+    "limit": 256000,
+    "pass": false
+  },
+  "over": {
+    "status": "available",
+    "files": [
+      {
+        "file": "assets/a.js",
+        "raw": 1,
+        "gzip": 21,
+        "kind": "js"
+      },
+      {
+        "file": "assets/b.js",
+        "raw": 1,
+        "gzip": 21,
+        "kind": "js"
+      },
+      {
+        "file": "assets/entry.js",
+        "raw": 5,
+        "gzip": 25,
+        "kind": "js"
+      },
+      {
+        "file": "assets/shared.js",
+        "raw": 6,
+        "gzip": 26,
+        "kind": "js"
+      },
+      {
+        "file": "assets/style.css",
+        "raw": 129,
+        "gzip": 96,
+        "kind": "css"
+      }
+    ],
+    "manifestKeys": [
+      "a",
+      "b",
+      "index.html",
+      "shared"
+    ],
+    "deferredDynamicImports": [
+      "lazy"
+    ],
+    "method": "k8k-route-v1: unique cold-entry+explicit-route-lazy-seeds recursive static JS/CSS; gzip(level=9) per file; raw cyrillic+latin WOFF2 once each; limit=256000",
+    "gzip": 189,
+    "font": {
+      "cyrillic": {
+        "file": "assets/golos-text-cyrillic-wght-normal.woff2",
+        "bytes": 22032
+      },
+      "latin": {
+        "file": "assets/golos-text-latin-wght-normal.woff2",
+        "bytes": 37916
+      },
+      "total": 59948
+    },
+    "total": 60137,
+    "limit": 1,
+    "pass": false
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "e51ce7e1b5d4fc3dd60f366b85af8b85c2dedd95396fd5e29cd206cd489e2dc5",
+  "statusEntries": 354,
+  "paths": [
+    {
+      "path": "apps/api/src/student/subscription/subscription.dto.ts",
+      "sha256": "b5efcbb5e272d035ad85d77f4a8dcb797a11700578c8355bd20b5759a4caaa89"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.service.ts",
+      "sha256": "b66242ef740f95d31836390e9e266c4cbab3eb19b4a6a9e32cef61b998ba8645"
+    },
+    {
+      "path": "apps/api/src/student/subscription/subscription.sql.ts",
+      "sha256": "a7b6002a099610d1670553a1bfc76d88333450a2cc16891572399bfee6c09a66"
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "sha256": "c3450df3a253b4ea3a85f1cbde0354be57334fa0e7796e4070ea7342126da93d"
+    },
+    {
+      "path": "apps/student-cabinet/src/api.ts",
+      "sha256": "5762ef0ed32e657b19489921fa3d87328e85b84b51829b6b79b1a5c902ec7527"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "sha256": "e3c07a0bc8a5a026ba2e393794e54b175867b681cedc26f683ed38926c0f13fd"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "sha256": "7d484eb93ff0d5c2586dfdc73860936cdcc28a3cb3d36bd853a479c18f3c7aa6"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "sha256": "99b7c831de3cc031a724e5f63956f9707571d85c7eb3b410faed8abad5acd5ba"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "sha256": "8f0283a7fd663f45b797e223d79112739bef522bd30015bd3aa0f0dc3f871043"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subjects.tsx",
+      "sha256": "375669d3c6ffbc49fb818d7d16177e9d4f00d79f9daf92f89346a1978ae5b9a7"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "sha256": "634fcda06127ce1a1f920b4e906c74aa0fd5762398ff33dc5dc0eb4635d95344"
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "sha256": "cc73e3850e9aaf00b4fa86dec622094fc1df0d89e837ffb48376196628f9ec6d"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "sha256": "528ef2e233e7c575afb02ba057fee64a753782261743a5afa8b4a901e8366924"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx",
+      "sha256": "7cbf16c112a23d3939344bc38c15375fb8bb7e1c29a1f7ae6b19be6ca102d930"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "sha256": "9d60e02917fd28c481a6f0ac5adb4ca7e953ac9091a68108f79ab732e39e91c7"
+    },
+    {
+      "path": "tests/unit/student-subscription.test.mjs",
+      "sha256": "c9dad2d144bca26107ac1732fbd44ad9f1627497a0c9ece3fbf7b43a76584ab5"
+    },
+    {
+      "path": "tests/unit/student-subscription-http.test.mjs",
+      "sha256": "8ac03aebdf17752069d28c95ebc507cbfc9caeecc55dcfcd7bc289913fb0d4b2"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "sha256": "bf65571ba8daccd49c4d91a88ac41a60f501508d3d65ab92762889212a36f42c"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "sha256": "ee5ef0bd9e4544f824c069298e1ea773feeb72e8cab238f3684e12df9eb86384"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "sha256": "ff30cc836ce33ddc47d4548e87d5cf9c924a7dd19461793dcd9eba1fe84b05df"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "sha256": "733a9566c63749532484b24326e694be812bd63ab5ea7b28ec045b364aec5d6f"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "c821bd502018e6149a6c0d8e78e2d9336f93cc07a02a1e39cbd7b7a5b04266e3"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "bf3425a3e0512d1046de9fc2f1262f07792fc93eeb5e43c7d7ac9384166d979a"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "9bbdc0d5efdb8a9ddff1ee225516854d706dfa5cb37c47d8cb913657d32d5902"
+    },
+    {
+      "path": "package.json",
+      "sha256": "1e839dafeda0fecdb2a948d01e3b3c09b72dab4b010514cf02a2b10d2c38172d"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "scripts/k8k-phase3-browser.mjs",
+      "sha256": "6811b81d2a4beebe8ed0b718dd2534842ea702095e663c044f9be3abd5398f23"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-copy.ts",
+      "sha256": "232b92b1cbbffa659e52fed2d4ef072b629b4e36b2ec84e096ac265fe5b9689a"
+    },
+    {
+      "path": "apps/api/src/student/subscription/README.md",
+      "sha256": "26a0631423d9d5db5c3e25fe028299f0a0fda3ac860312b892b2fc57c6b85519"
+    },
+    {
+      "path": "apps/student-cabinet/tests/subject-hub.spec.mjs",
+      "sha256": "6dc81812f9bc8b894f9be94e5d7633b2c9f03557909730474ed64949602e306a"
+    }
+  ]
+}

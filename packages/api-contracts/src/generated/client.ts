@@ -545,6 +545,29 @@ export interface DashboardPendingPaymentsDto {
   totalsByCurrency: DashboardCurrencyTotalDto[];
 }
 
+export type DashboardPriorityDtoQueueAction = typeof DashboardPriorityDtoQueueAction[keyof typeof DashboardPriorityDtoQueueAction];
+
+
+export const DashboardPriorityDtoQueueAction = {
+  TASK_QUEUE: 'TASK_QUEUE',
+} as const;
+
+export interface DashboardPriorityTaskDto {
+  taskId: string;
+  title: string;
+}
+
+export interface DashboardPriorityDto {
+  primary: DashboardPriorityTaskDto | null;
+  /**
+     * Full authorized critical queue.
+     * @minimum 0
+     */
+  criticalCount: number;
+  queueAction: DashboardPriorityDtoQueueAction;
+  sourceAsOf: string;
+}
+
 export type DashboardQueryDtoLessonsHorizonHours = typeof DashboardQueryDtoLessonsHorizonHours[keyof typeof DashboardQueryDtoLessonsHorizonHours];
 
 
@@ -568,6 +591,18 @@ export interface DashboardQueryDto {
   expiringDays?: DashboardQueryDtoExpiringDays;
 }
 
+export type NextLessonDtoStatus = typeof NextLessonDtoStatus[keyof typeof NextLessonDtoStatus];
+
+
+export const NextLessonDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  NO_SHOW: 'NO_SHOW',
+  STAR_PENDING: 'STAR_PENDING',
+  DISPUTED: 'DISPUTED',
+} as const;
+
 export interface NextLessonDto {
   lessonId: string;
   scheduledAt: string;
@@ -578,6 +613,8 @@ export interface NextLessonDto {
   /** @nullable */
   meetLink: string | null;
   canJoin: boolean;
+  status?: NextLessonDtoStatus;
+  meetAsOf?: string;
 }
 
 export interface HomeworkCountsDto {
@@ -1388,10 +1425,13 @@ export interface LessonCardDto {
   durationMinutes: number;
   teacherName: string;
   subjectName: string;
+  subjectId?: string;
+  originalScheduledAt?: string;
   status: LessonCardDtoStatus;
   canJoin: boolean;
   /** @nullable */
   meetLink: string | null;
+  meetAsOf?: string;
   canRequestReschedule: boolean;
 }
 
@@ -1497,6 +1537,33 @@ export interface LessonOutcomeReportResponse {
   [key: string]: unknown;
  }
 
+export type LessonRequestResultDtoStatus = typeof LessonRequestResultDtoStatus[keyof typeof LessonRequestResultDtoStatus];
+
+
+export const LessonRequestResultDtoStatus = {
+  CREATED: 'CREATED',
+  UNKNOWN: 'UNKNOWN',
+} as const;
+
+/**
+ * @nullable
+ */
+export type LessonRequestResultDtoType = typeof LessonRequestResultDtoType[keyof typeof LessonRequestResultDtoType] | null;
+
+
+export const LessonRequestResultDtoType = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+  ATTENDANCE_DISPUTE: 'ATTENDANCE_DISPUTE',
+} as const;
+
+export interface LessonRequestResultDto {
+  status: LessonRequestResultDtoStatus;
+  /** @nullable */
+  crmTaskId: string | null;
+  /** @nullable */
+  type: LessonRequestResultDtoType;
+}
+
 export interface LessonRescheduleRequest {
   startsAt: string;
   endsAt: string;
@@ -1590,6 +1657,13 @@ export interface LoseLeadDto {
 export interface ManagerContactsDto {
   whatsapp: string;
   telegram: string;
+  /** @nullable */
+  displayName?: string | null;
+  /**
+     * @nullable
+     * @pattern ^\+[1-9][0-9]{6,14}$
+     */
+  phoneE164?: string | null;
 }
 
 export interface ManagerDashboardDto {
@@ -1600,6 +1674,8 @@ export interface ManagerDashboardDto {
   overdueTasks: DashboardOverdueTasksDto;
   expiringSubscriptions: DashboardSubscriptionDto[];
   pendingPayments: DashboardPendingPaymentsDto;
+  /** Omitted when the priority source is not configured; null if it is unavailable. */
+  priority?: DashboardPriorityDto | null;
 }
 
 export type ManagerDistributionDtoStatus = typeof ManagerDistributionDtoStatus[keyof typeof ManagerDistributionDtoStatus];
@@ -2164,6 +2240,15 @@ export interface ManagerTaskPageDto {
 }
 
 export interface MaterialItemDto {
+  /**
+     * Explicit educational subject; null means a legacy contextless grant
+     * @nullable
+     */
+  subjectId?: string | null;
+  /** Existing grant disposition: true attachment, false inline READ; not DRM */
+  canDownload?: boolean;
+  /** True only when the original filename was not recorded */
+  fileNameIsFallback?: boolean;
   fileId: string;
   fileName: string;
   fileSizeBytes: number;
@@ -2449,6 +2534,20 @@ export interface PayrollItem {
   recognized_at: string;
   obligation: PayrollItemObligation | null;
   payouts: PayrollItemPayoutsItem[];
+}
+
+export type PdfExportRequestResultDtoStatus = typeof PdfExportRequestResultDtoStatus[keyof typeof PdfExportRequestResultDtoStatus];
+
+
+export const PdfExportRequestResultDtoStatus = {
+  ACCEPTED: 'ACCEPTED',
+  UNKNOWN: 'UNKNOWN',
+} as const;
+
+export interface PdfExportRequestResultDto {
+  status: PdfExportRequestResultDtoStatus;
+  /** @nullable */
+  jobId: string | null;
 }
 
 export type PdfJobStatusDtoStatus = typeof PdfJobStatusDtoStatus[keyof typeof PdfJobStatusDtoStatus];
@@ -3206,6 +3305,118 @@ export interface StudentProfileDto {
   avatarFileId: string | null;
 }
 
+export interface StudentSubjectCapabilitiesDto {
+  canViewHomework: boolean;
+  canViewMaterials: boolean;
+  canOpenSubscription: boolean;
+  /** Existing lessons view only; a specific Meet action is checked separately. */
+  canOpenLessons: boolean;
+}
+
+export type StudentSubjectDtoDisplayStatus = typeof StudentSubjectDtoDisplayStatus[keyof typeof StudentSubjectDtoDisplayStatus];
+
+
+export const StudentSubjectDtoDisplayStatus = {
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  LIMITED: 'LIMITED',
+  NONE: 'NONE',
+} as const;
+
+export type StudentSubjectDtoReasonCode = typeof StudentSubjectDtoReasonCode[keyof typeof StudentSubjectDtoReasonCode];
+
+
+export const StudentSubjectDtoReasonCode = {
+  PAID_RIGHTS: 'PAID_RIGHTS',
+  FROZEN: 'FROZEN',
+  PERIOD_EXPIRED: 'PERIOD_EXPIRED',
+  ENROLLMENT_ENDED: 'ENROLLMENT_ENDED',
+  ENROLLMENT_PAUSED: 'ENROLLMENT_PAUSED',
+  NO_SUBSCRIPTION: 'NO_SUBSCRIPTION',
+  TEMPORARY_ADMISSION: 'TEMPORARY_ADMISSION',
+  PAYMENT_OR_ADMISSION_REQUIRED: 'PAYMENT_OR_ADMISSION_REQUIRED',
+  NO_PAID_RIGHTS: 'NO_PAID_RIGHTS',
+  RIGHTS_UNKNOWN: 'RIGHTS_UNKNOWN',
+} as const;
+
+export type StudentSubjectSubscriptionDtoDisplayStatus = typeof StudentSubjectSubscriptionDtoDisplayStatus[keyof typeof StudentSubjectSubscriptionDtoDisplayStatus];
+
+
+export const StudentSubjectSubscriptionDtoDisplayStatus = {
+  ACTIVE: 'ACTIVE',
+  FROZEN: 'FROZEN',
+  EXPIRED: 'EXPIRED',
+  LIMITED: 'LIMITED',
+  NONE: 'NONE',
+} as const;
+
+export type StudentSubjectSubscriptionDtoReasonCode = typeof StudentSubjectSubscriptionDtoReasonCode[keyof typeof StudentSubjectSubscriptionDtoReasonCode];
+
+
+export const StudentSubjectSubscriptionDtoReasonCode = {
+  PAID_RIGHTS: 'PAID_RIGHTS',
+  FROZEN: 'FROZEN',
+  PERIOD_EXPIRED: 'PERIOD_EXPIRED',
+  ENROLLMENT_ENDED: 'ENROLLMENT_ENDED',
+  ENROLLMENT_PAUSED: 'ENROLLMENT_PAUSED',
+  NO_SUBSCRIPTION: 'NO_SUBSCRIPTION',
+  TEMPORARY_ADMISSION: 'TEMPORARY_ADMISSION',
+  PAYMENT_OR_ADMISSION_REQUIRED: 'PAYMENT_OR_ADMISSION_REQUIRED',
+  NO_PAID_RIGHTS: 'NO_PAID_RIGHTS',
+  RIGHTS_UNKNOWN: 'RIGHTS_UNKNOWN',
+} as const;
+
+export interface StudentTemporaryAdmissionDto {
+  /** @minimum 1 */
+  maxLessons: number;
+  /** @minimum 1 */
+  lessonsRemaining: number;
+  validUntil: string;
+}
+
+export interface StudentSubjectSubscriptionDto {
+  /** Owned financial period accepted by subscription, payments and ledger GETs. */
+  subscriptionId: string;
+  /**
+     * Grouping identity only; do not pass to financial-period GETs.
+     * @nullable
+     */
+  managerSubscriptionId: string | null;
+  enrollmentId: string;
+  displayStatus: StudentSubjectSubscriptionDtoDisplayStatus;
+  reasonCode: StudentSubjectSubscriptionDtoReasonCode;
+  /** @nullable */
+  validUntil: string | null;
+  /** @nullable */
+  frozenUntil: string | null;
+  /**
+     * Confirmed rights for the started periods of this plan. Null means the balance cannot be established.
+     * @minimum 0
+     * @nullable
+     */
+  paidLessonsRemaining: number | null;
+  liveAccess: boolean;
+  temporaryAdmission: StudentTemporaryAdmissionDto | null;
+}
+
+export interface StudentSubjectDto {
+  subjectId: string;
+  subjectName: string;
+  enrollmentIds: string[];
+  displayStatus: StudentSubjectDtoDisplayStatus;
+  reasonCode: StudentSubjectDtoReasonCode;
+  /** A subject-level access basis exists. Never authorizes a specific Meet link. */
+  liveAccess: boolean;
+  capabilities: StudentSubjectCapabilitiesDto;
+  subscriptions: StudentSubjectSubscriptionDto[];
+}
+
+export interface StudentSubjectsResponseDto {
+  generatedAt: string;
+  items: StudentSubjectDto[];
+}
+
 export type StudentSubscriptionLedgerEntryDtoType = typeof StudentSubscriptionLedgerEntryDtoType[keyof typeof StudentSubscriptionLedgerEntryDtoType];
 
 
@@ -3221,9 +3432,16 @@ export interface StudentSubscriptionLedgerEntryDto {
   entryId: string;
   entryDate: string;
   type: StudentSubscriptionLedgerEntryDtoType;
-  /** Lesson quantities, not monetary account totals */
-  balanceBefore: string;
-  balanceAfter: string;
+  /**
+     * Lesson quantity. Null when a historical deduction snapshot was not recorded.
+     * @nullable
+     */
+  balanceBefore: string | null;
+  /**
+     * Lesson quantity. Null when a historical deduction snapshot was not recorded.
+     * @nullable
+     */
+  balanceAfter: string | null;
   description: string;
   /** @nullable */
   lessonId: string | null;
@@ -3627,6 +3845,27 @@ export interface WebAuthnStartRequest {
   email?: string;
 }
 
+export interface WorkspaceLessonDetailDto {
+  id: string;
+  startsAt: string;
+  endsAt: string;
+  status: string;
+  subject: string;
+  student: string;
+  teacher: string;
+}
+
+export interface WorkspaceStudentDetailDto {
+  id: string;
+  name: string;
+  subjects: string[];
+}
+
+export interface WorkspaceDetailDto {
+  actorContext: StaffActorContextDto;
+  item: WorkspaceLessonDetailDto | WorkspaceStudentDetailDto | WorkspaceHomeworkDto | WorkspaceTaskDto;
+}
+
 export type GetManagerDashboardParams = {
 lessonsHorizonHours?: GetManagerDashboardLessonsHorizonHours;
 expiringDays?: GetManagerDashboardExpiringDays;
@@ -3860,6 +4099,7 @@ limit?: number;
 };
 
 export type GetStudentHomeworkParams = {
+lessonId?: string;
 /**
  * @minimum 1
  */
@@ -3897,6 +4137,11 @@ pageSize?: number;
  * @pattern ^(?!0000)[0-9]{4}-(0[1-9]|1[0-2])$
  */
 month?: string;
+/**
+ * Explicit list permits pagination of month
+ */
+view?: GetStudentLessonsView;
+subjectId?: string;
 };
 
 export type GetStudentLessonsPeriod = typeof GetStudentLessonsPeriod[keyof typeof GetStudentLessonsPeriod];
@@ -3909,6 +4154,26 @@ export const GetStudentLessonsPeriod = {
   archive: 'archive',
 } as const;
 
+export type GetStudentLessonsView = typeof GetStudentLessonsView[keyof typeof GetStudentLessonsView];
+
+
+export const GetStudentLessonsView = {
+  calendar: 'calendar',
+  list: 'list',
+} as const;
+
+export type GetStudentLessonRequestResultParams = {
+type?: GetStudentLessonRequestResultType;
+};
+
+export type GetStudentLessonRequestResultType = typeof GetStudentLessonRequestResultType[keyof typeof GetStudentLessonRequestResultType];
+
+
+export const GetStudentLessonRequestResultType = {
+  RESCHEDULE_REQUEST: 'RESCHEDULE_REQUEST',
+  ATTENDANCE_DISPUTE: 'ATTENDANCE_DISPUTE',
+} as const;
+
 export type GetStudentLessonHistoryParams = {
 /**
  * @minimum 1
@@ -3919,9 +4184,12 @@ page?: number;
  * @maximum 100
  */
 pageSize?: number;
+lessonId?: string;
+subjectId?: string;
 };
 
 export type GetStudentMaterialsParams = {
+lessonId?: string;
 /**
  * Educational subject ID, not the permission recipient account
  */
@@ -3938,6 +4206,7 @@ pageSize?: number;
 };
 
 export type GetStudentNotificationsParams = {
+locale?: GetStudentNotificationsLocale;
 /**
  * @minimum 1
  */
@@ -3948,6 +4217,14 @@ page?: number;
  */
 pageSize?: number;
 };
+
+export type GetStudentNotificationsLocale = typeof GetStudentNotificationsLocale[keyof typeof GetStudentNotificationsLocale];
+
+
+export const GetStudentNotificationsLocale = {
+  ru: 'ru',
+  ro: 'ro',
+} as const;
 
 export type GetStudentReportsParams = {
 /**
@@ -3988,6 +4265,7 @@ page?: number;
  * @maximum 100
  */
 pageSize?: number;
+subjectId?: string;
 };
 
 export type GetStudentSubscriptionParams = {
@@ -7081,6 +7359,32 @@ export const getPlatformWorkspace = ( options?: Parameters<typeof schoolFetch>[1
 
 
 
+export const getGetPlatformWorkspaceDetailUrl = (section: 'lessons' | 'students' | 'homework' | 'tasks',
+    id: string,) => {
+
+
+
+
+  return `/api/v1/platform/workspace/${section}/${id}`
+}
+
+/**
+ * @summary Read a single object in the existing staff workspace scope
+ */
+export const getPlatformWorkspaceDetail = (section: 'lessons' | 'students' | 'homework' | 'tasks',
+    id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<WorkspaceDetailDto>(getGetPlatformWorkspaceDetailUrl(section,id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getGetComponentStatusUrl = () => {
 
 
@@ -7570,7 +7874,7 @@ export const getGetStudentLessonsUrl = (params?: GetStudentLessonsParams,) => {
 }
 
 /**
- * Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns an unpaginated calendar capped at 62; overflow is an explicit 422. Unresolved CRM statuses remain explicit.
+ * Student timezone, ISO Monday-start week, stable pagination. month=YYYY-MM returns a calendar capped at 62; overflow is 422. Explicit view=list permits pagination of that month. Optional subjectId narrows owned enrollments.
  * @summary Student lesson list or monthly calendar
  */
 export const getStudentLessons = (params?: GetStudentLessonsParams, options?: Parameters<typeof schoolFetch>[1]) => {
@@ -7645,6 +7949,42 @@ return schoolFetch<DisputeResponseDto>(getDisputeStudentLessonDeductionUrl(lesso
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(disputeRequestDto)
+  }
+);}
+
+
+
+export const getGetStudentLessonRequestResultUrl = (lessonId: string,
+    requestKey: string,
+    params?: GetStudentLessonRequestResultParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/student/lessons/${lessonId}/requests/${requestKey}?${stringifiedParams}` : `/api/v1/student/lessons/${lessonId}/requests/${requestKey}`
+}
+
+/**
+ * Read-only lookup of an addressed student CRM task using its original idempotency key. Missing or still uncommitted task remains UNKNOWN.
+ * @summary Reconcile one owned lesson request after an uncertain command response
+ */
+export const getStudentLessonRequestResult = (lessonId: string,
+    requestKey: string,
+    params?: GetStudentLessonRequestResultParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonRequestResultDto>(getGetStudentLessonRequestResultUrl(lessonId,requestKey,params),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 
@@ -8030,6 +8370,31 @@ export const getStudentReports = (params?: GetStudentReportsParams, options?: Pa
 
 
 
+export const getGetStudentReportUrl = (reportId: string,) => {
+
+
+
+
+  return `/api/v1/student/reports/${reportId}`
+}
+
+/**
+ * Same publishedReports scope and public projection as list, independent of pagination. Foreign, unknown, draft, future and superseded IDs share REPORT_FORBIDDEN403. Draft corrections do not hide the preceding publication.
+ * @summary Read one own latest published eight-lesson report
+ */
+export const getStudentReport = (reportId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<EducationalReportDto>(getGetStudentReportUrl(reportId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getMarkStudentReportReadUrl = (reportId: string,) => {
 
 
@@ -8109,6 +8474,31 @@ export const getGetStudentEducationPdfStatusUrl = (jobId: string,) => {
 export const getStudentEducationPdfStatus = (jobId: string, options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<PdfJobStatusDto>(getGetStudentEducationPdfStatusUrl(jobId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentEducationPdfRequestResultUrl = (requestId: string,) => {
+
+
+
+
+  return `/api/v1/student/reports/export-pdf/requests/${requestId}`
+}
+
+/**
+ * Read-only lookup by original request UUID, scoped to student and requesting actor. ACCEPTED identifies the committed job, not its current readiness. UNKNOWN is not proof that a command never ran. No signing or new export.
+ * @summary Reconcile own PDF enqueue intention
+ */
+export const getStudentEducationPdfRequestResult = (requestId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PdfExportRequestResultDto>(getGetStudentEducationPdfRequestResultUrl(requestId),
   {
     ...options,
     method: 'GET'
@@ -8404,12 +8794,37 @@ export const getGetStudentSkillSnapshotsUrl = (params?: GetStudentSkillSnapshots
 }
 
 /**
- * Paginated items/total/page/pageSize. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
+ * Paginated items/total/page/pageSize. Optional subjectId filters owned history before pagination; foreign and unknown subjects return the same 403. Newest first; only teacher-confirmed four-lesson reviews, never drafts or a reconstruction of today’s map.
  * @summary Read confirmed immutable skill snapshots
  */
 export const getStudentSkillSnapshots = (params?: GetStudentSkillSnapshotsParams, options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<SkillSnapshotResponseDto>(getGetStudentSkillSnapshotsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetStudentSubjectsUrl = () => {
+
+
+
+
+  return `/api/v1/student/subjects`
+}
+
+/**
+ * One read snapshot from the student session. Subjects are ordered by ID and the preferred subscription comes first. No query parameters, money or mutations. Meet eligibility remains per lesson.
+ * @summary Read owned subject access and subscription summaries
+ */
+export const getStudentSubjects = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StudentSubjectsResponseDto>(getGetStudentSubjectsUrl(),
   {
     ...options,
     method: 'GET'

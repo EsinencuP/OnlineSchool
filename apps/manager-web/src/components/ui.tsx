@@ -26,6 +26,7 @@ export function ErrorBox({ error, retry }: { error: ApiErrorView | null; retry?:
 
 export function State<T>({
   query,
+  asOf,
   empty = false,
   operational = false,
   children,
@@ -39,6 +40,7 @@ export function State<T>({
     isFetching?: boolean;
   };
   empty?: boolean;
+  asOf?: string | undefined;
   operational?: boolean;
   children: (data: T) => ReactNode;
 }) {
@@ -65,6 +67,7 @@ export function State<T>({
             ? { status: 'error', message: errorText(error, locale) }
             : state
         }
+        asOf={asOf}
         receivedAt={query.dataUpdatedAt}
         refreshing={query.isFetching ?? false}
         retryRead={() => void query.refetch()}

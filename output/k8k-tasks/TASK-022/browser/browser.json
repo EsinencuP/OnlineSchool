@@ -1,0 +1,742 @@
+{
+  "browser": "156.0.8078.4",
+  "checks": [
+    {
+      "locale": "ru",
+      "width": 360,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "scenario": "links open existing task and queue with GET only"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "scenario": "authorization denial clears cached priority"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "scenario": "links open existing task and queue with GET only"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "scenario": "old payload and overdue task keep slot hidden"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "scenario": "single primary, full server count, two times, tab and stable menu/focus"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "scenario": "explicit outage shows no count; GET retry restores verified empty"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "scenario": "dashboard failure hides cached zero"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "scenario": "authorization denial clears cached priority"
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "ru-360-ready-five.png",
+      "locale": "ru",
+      "width": 360,
+      "sha256": "45a619e1abd7848054a8b432a1c580eec8d282a08da17850400b678af13e56bf"
+    },
+    {
+      "file": "ru-360-unavailable.png",
+      "locale": "ru",
+      "width": 360,
+      "sha256": "1cde777143747e1a5ebe7c52acc83d940e23118a2f7f5705b3bd88157cd26fde"
+    },
+    {
+      "file": "ru-768-ready-five.png",
+      "locale": "ru",
+      "width": 768,
+      "sha256": "5295cfbc324da73932cbeb9a15611aa06ee2721b2ab1f4768c87cc7edf14ef24"
+    },
+    {
+      "file": "ru-768-unavailable.png",
+      "locale": "ru",
+      "width": 768,
+      "sha256": "bfeed38d7975606e737b458cd1ba3d02005a2dcee3418c1d239797c5f445feb0"
+    },
+    {
+      "file": "ru-1024-ready-five.png",
+      "locale": "ru",
+      "width": 1024,
+      "sha256": "45ee892f0bb0f9f342e8cd6ed3af8e488226227106dc2d14a9d335d4a5f884a2"
+    },
+    {
+      "file": "ru-1024-unavailable.png",
+      "locale": "ru",
+      "width": 1024,
+      "sha256": "95f77ad6aa6c11d18b02e1d1e18730de4675a17e261236c81972d02818f649ae"
+    },
+    {
+      "file": "ru-1280-ready-five.png",
+      "locale": "ru",
+      "width": 1280,
+      "sha256": "7825e9f50e4d1356f1737b97c83725b7d5a99708a0c9d2539894b23ba5f1d593"
+    },
+    {
+      "file": "ru-1280-unavailable.png",
+      "locale": "ru",
+      "width": 1280,
+      "sha256": "b311292efb26b29d886d600645bd51e1537db6436f6969c4367bac929b6cb971"
+    },
+    {
+      "file": "ro-360-ready-five.png",
+      "locale": "ro",
+      "width": 360,
+      "sha256": "a5270525c68c32fb8bae39d6e77d4ce95874e04b55ffed9f454a29065e90f107"
+    },
+    {
+      "file": "ro-360-unavailable.png",
+      "locale": "ro",
+      "width": 360,
+      "sha256": "ac0f7c597f1e8b74596617f30435ff90537ec9cf20a2a2425878f7a465a4007a"
+    },
+    {
+      "file": "ro-768-ready-five.png",
+      "locale": "ro",
+      "width": 768,
+      "sha256": "3b4841b827b24c8af33a0527cd3770713018b203ca8a5154cf9a578107214211"
+    },
+    {
+      "file": "ro-768-unavailable.png",
+      "locale": "ro",
+      "width": 768,
+      "sha256": "27bdfd85f3c33f4ef9fd8b89195fc51f80e8b060d769813cac6d0a423826ac21"
+    },
+    {
+      "file": "ro-1024-ready-five.png",
+      "locale": "ro",
+      "width": 1024,
+      "sha256": "eee64ebf340ef1a2cd8deb4cf29d417f03518121787e6a77ef91af7d24777787"
+    },
+    {
+      "file": "ro-1024-unavailable.png",
+      "locale": "ro",
+      "width": 1024,
+      "sha256": "6b098a9997377c053d45099da4c7c04f0f85aae687c2d18756317dd4bc955726"
+    },
+    {
+      "file": "ro-1280-ready-five.png",
+      "locale": "ro",
+      "width": 1280,
+      "sha256": "0df29c252ceaecd2eb20909ad4aa556d71cd1b643ad652ba12665381b8ae054a"
+    },
+    {
+      "file": "ro-1280-unavailable.png",
+      "locale": "ro",
+      "width": 1280,
+      "sha256": "570be56fd9097b0f8ddee9c0544d32be16a1eb4d3aa7659762ab7f43b5d82c70"
+    }
+  ],
+  "requests": [
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/tasks/50000000-0000-4000-8000-000000000002"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/options"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/tasks"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/tasks/50000000-0000-4000-8000-000000000002"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/options"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "method": "GET",
+      "path": "/api/v1/manager/tasks"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/me"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/platform/accounts"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "method": "GET",
+      "path": "/api/v1/manager/dashboard"
+    }
+  ],
+  "unexpected": []
+}

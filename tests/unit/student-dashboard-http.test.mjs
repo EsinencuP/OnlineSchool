@@ -12,7 +12,19 @@ const { CACHE_MANAGER } =
   await import('../../apps/api/node_modules/@nestjs/cache-manager/dist/index.js');
 const users = [randomUUID(), randomUUID(), randomUUID()],
   students = [randomUUID(), randomUUID()];
-let app, db, sessions, issued, revisions, active, mustChange, empty, broken, homework;
+let app,
+  db,
+  sessions,
+  issued,
+  revisions,
+  active,
+  mustChange,
+  empty,
+  broken,
+  homework,
+  start,
+  revoked,
+  lessonStatus;
 const rows = new Map();
 const actor = (id) => ({
   id,
@@ -32,8 +44,9 @@ const profile = (id) => ({
 });
 beforeAll(async () => {
   db = {
-    $queryRaw: jest.fn(async (parts, ...values) => {
-      const sql = parts.join('?');
+    $queryRaw: jest.fn(async (parts, ...bindings) => {
+      const sql = Array.isArray(parts) ? parts.join('?') : parts.sql;
+      const values = Array.isArray(parts) ? bindings : parts.values;
       if (sql.includes('SELECT r.code'))
         return [{ code: values[0] === users[2] ? 'TEACHER' : 'STUDENT' }];
       if (sql.includes('AS has_active_access'))
@@ -45,18 +58,25 @@ beforeAll(async () => {
       const sid = values.find((value) => students.includes(value));
       const owner = students.indexOf(sid);
       if (sql.includes('SELECT l.id'))
-        return empty
+        return empty ||
+          (sql.includes('WITH candidates') &&
+            (lessonStatus !== 'SCHEDULED' || (revoked && +start <= Date.now())))
           ? []
           : [
               {
                 id: sid,
-                scheduled_at: new Date(Date.now() + 5 * 60000),
-                scheduled_end_at: new Date(Date.now() + 65 * 60000),
+                scheduled_at: start,
+                scheduled_end_at: new Date(+start + 3600000),
                 teacher_name: `Teacher ${owner}`,
                 subject_name: `Subject ${owner}`,
-                google_meet_link: owner
-                  ? 'https://meet.google.com/xyz-abcd-efg'
-                  : 'https://meet.google.com/abc-defg-hij',
+                student_status: lessonStatus,
+                total: 1,
+                google_meet_link:
+                  revoked || lessonStatus !== 'SCHEDULED'
+                    ? null
+                    : owner
+                      ? 'https://meet.google.com/xyz-abcd-efg'
+                      : 'https://meet.google.com/abc-defg-hij',
               },
             ];
       if (sql.includes('AS "notSubmitted"'))
@@ -118,6 +138,9 @@ beforeEach(async () => {
   empty = false;
   broken = false;
   homework = 1;
+  start = new Date(Date.now() + 5 * 60000);
+  revoked = false;
+  lessonStatus = 'SCHEDULED';
   rows.clear();
   await app.get(CACHE_MANAGER).clear();
   db.$queryRaw.mockClear();
@@ -140,7 +163,12 @@ test('real Nest endpoint aggregates for two separate authenticated sessions and 
     canJoin: true,
   });
   expect(b.body.nextLesson.lessonId).toBe(students[1]);
-  expect(spoof.body).toEqual(a.body);
+  expect(spoof.body.generatedAt).toBe(a.body.generatedAt);
+  expect(spoof.body.nextLesson).toMatchObject({
+    lessonId: students[0],
+    status: 'SCHEDULED',
+    canJoin: true,
+  });
   expect(JSON.stringify(a.body)).not.toContain(students[1]);
   expect(JSON.stringify(a.body)).not.toContain('Teacher 1');
   expect(a.headers['cache-control']).toBe('no-store');
@@ -152,6 +180,38 @@ test('real Nest endpoint aggregates for two separate authenticated sessions and 
     'skillProgress',
     'subscription',
   ]);
+});
+test('TASK-028 warm dashboard and lesson reads use fresh authorization without a revision bump', async () => {
+  start = new Date(Date.now() - 5 * 60_000);
+  const routes = [
+    '/api/v1/student/dashboard',
+    '/api/v1/student/lessons',
+    '/api/v1/student/lessons/' + students[0],
+  ];
+  const responses = () => Promise.all(routes.map((route) => get(0, route)));
+  const projections = ([home, list, detail]) => [
+    home.body.nextLesson,
+    list.body.items[0],
+    detail.body,
+  ];
+  const allowed = await responses();
+  for (const response of allowed) expect(response.headers['cache-control']).toBe('no-store');
+  for (const view of projections(allowed))
+    expect(view).toMatchObject({
+      lessonId: students[0],
+      status: 'SCHEDULED',
+      canJoin: true,
+      meetAsOf: expect.any(String),
+    });
+  revoked = true;
+  const [revokedHome, ...revokedLessons] = projections(await responses());
+  expect(revokedHome).toBeNull();
+  for (const view of revokedLessons) expect(view).toMatchObject({ canJoin: false, meetLink: null });
+  lessonStatus = 'CANCELLED';
+  const [home, list, detail] = projections(await responses());
+  expect(home).toBeNull();
+  for (const view of [list, detail])
+    expect(view).toMatchObject({ status: 'CANCELLED', canJoin: false, meetLink: null });
 });
 test('anonymous and teacher sessions cannot access student dashboards', async () => {
   expect((await request(app.getHttpServer()).get('/api/v1/student/dashboard')).status).toBe(401);

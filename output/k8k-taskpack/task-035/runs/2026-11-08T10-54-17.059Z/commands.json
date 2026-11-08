@@ -1,0 +1,28 @@
+{
+  "taskId": "TASK-035",
+  "run": "output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z",
+  "phase": "browser",
+  "results": [
+    {
+      "id": "source-build-budget",
+      "command": "programmatic Vite source build / evaluateRoute",
+      "exit": 0,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/budgets.json"
+    },
+    {
+      "id": "browser",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+        "test",
+        "--config",
+        "playwright.student-gate.config.mjs",
+        "--grep=subject-hub independent|subject-hub homework context|legacy.*notifications|route layouts and accessibility|TASK-035 complete|TASK-035 keyboard"
+      ],
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet",
+      "exit": 1,
+      "durationMs": 53278,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/browser.log"
+    }
+  ]
+}

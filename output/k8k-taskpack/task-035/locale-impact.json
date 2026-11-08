@@ -1,0 +1,19 @@
+{
+  "taskId": "TASK-035",
+  "scope": "same current source bundle, runtime RU→RO switch",
+  "ruAssets": [
+    "/student/assets/index-DfwGNQ5p.js",
+    "/student/assets/index-BaMDI_jk.css",
+    "/student/assets/golos-text-cyrillic-wght-normal-mKek_fSS.woff2",
+    "/student/assets/golos-text-latin-wght-normal-BS5oQT7X.woff2"
+  ],
+  "additionalRoAssets": [
+    {
+      "file": "/student/assets/golos-text-romanian-wght-normal-BzDAN1Sk.woff2",
+      "rawBytes": 3544
+    }
+  ],
+  "additionalJavaScriptCss": 0,
+  "allRequiredFontsAlreadyIncludedInBudget": 63492,
+  "method": "runtime requests after document.fonts.ready; asset paths only, no API bodies/credentials"
+}

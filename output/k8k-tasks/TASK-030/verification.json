@@ -1,0 +1,89 @@
+{
+  "task": "TASK-030",
+  "scope": "Local targeted checks only; no env files/live database/provider",
+  "commands": [
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:homework-baseline",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "baseline.log",
+      "detail": "5/5 before editor source"
+    },
+    {
+      "command": "pnpm --filter @online-school/api typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-build.log",
+      "detail": "targeted tsc -b; API dist required by test:stu05"
+    },
+    {
+      "command": "pnpm test:stu05 --roots tests",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "homework-api.log",
+      "detail": "55/55 unit + actual Nest HTTP, mocked Prisma/storage"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "tsc -b"
+    },
+    {
+      "command": "safe programmatic Vite build (exact invocation in report.md)",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "envDir:false/publicDir:false; frontend dist before browser tests; silent success, typecheck log contains tsc only"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-lint.log",
+      "detail": "eslint . --max-warnings 0"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:homework-redesign",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "browser.log",
+      "detail": "16/16 Chromium; includes 5 preserved original scenarios and 401/402/403"
+    },
+    {
+      "command": "node scripts/k8k-refresh-budget.mjs --task-030",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "budget.log",
+      "detail": "50/50 route v2, includes raw local fonts"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-030/verify-preservation.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "preservation.log",
+      "detail": "21 snapshots,31 migrations,9 unchanged sources/contracts,147 operations"
+    },
+    {
+      "command": "git -c core.safecrlf=false diff --check -- $task030Paths",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "diff-check.log",
+      "detail": "$task030Paths = before.json paths.path; scoped pre-existing dirty tree"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-030/verify-artifacts.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "artifacts-check.log",
+      "detail": "26 screenshots,16 browser stats,50 budgets,all report/acceptance links exist"
+    }
+  ],
+  "initialFailuresResolved": [
+    "TS narrowing of redundant pending check corrected",
+    "Use globalThis.DataTransfer in browser test to satisfy no-undef",
+    "Native file picker chrome replaced with translated UI-kit button after visual review"
+  ],
+  "historyIsNotRerun": true
+}

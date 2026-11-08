@@ -55,7 +55,7 @@ const browser = await chromium.launch();
 const language = { ru: 'Язык интерфейса', ro: 'Limba interfeței' };
 const signOut = { ru: 'Выйти из аккаунта', ro: 'Deconectează-te' };
 
-async function setup({ catalogEnabled = true, storageDenied = false } = {}) {
+async function setup({ catalogEnabled = true, storageDenied = false, teacherRace = false } = {}) {
   const context = await browser.newContext({
     viewport: { width: 360, height: 900 },
     reducedMotion: 'reduce',
@@ -68,7 +68,30 @@ async function setup({ catalogEnabled = true, storageDenied = false } = {}) {
     sessionActive: true,
     writes: [],
     catalogReads: 0,
+    mfa: true,
+    passwordOnly: false,
+    oldReads: [],
+    navigations: [],
+    holdReads: false,
+    holdNavigation: false,
+    workspaceReads: 0,
   };
+  const actorId = () =>
+    state.currentKey === 'active-fixture' && teacherRace
+      ? '10000000-0000-4000-8000-000000000001'
+      : '10000000-0000-4000-8000-000000000002';
+  if (teacherRace)
+    await context.addInitScript(() => {
+      // Simulate a transport completing a read even after its AbortSignal fires.
+      const fetchOriginal = globalThis.fetch;
+      globalThis.fixtureCompletedReads = 0;
+      globalThis.fetch = async (url, options) => {
+        if (!String(url).includes('/api/v1/platform/workspace')) return fetchOriginal(url, options);
+        const response = await fetchOriginal(url, { ...options, signal: undefined });
+        globalThis.fixtureCompletedReads++;
+        return response;
+      };
+    });
   if (storageDenied)
     await context.addInitScript(() => {
       Object.defineProperty(globalThis, 'localStorage', {
@@ -94,9 +117,9 @@ async function setup({ catalogEnabled = true, storageDenied = false } = {}) {
                     {
                       key: 'active-fixture',
                       name: currentName,
-                      role: 'STUDENT',
+                      role: teacherRace ? 'TEACHER' : 'STUDENT',
                       login: 'student@example.invalid',
-                      home: '/student',
+                      home: teacherRace ? '/teacher' : '/student',
                     },
                     {
                       key: 'teacher-fixture',
@@ -115,42 +138,78 @@ async function setup({ catalogEnabled = true, storageDenied = false } = {}) {
             ? route.fulfill({
                 json: {
                   account: {
-                    id: '10000000-0000-4000-8000-000000000001',
-                    kind: 'TEACHER',
-                    roles: ['TEACHER'],
+                    id: actorId(),
+                    kind: state.role === 'DIRECTOR' ? 'STAFF' : 'TEACHER',
+                    roles: [state.role ?? 'TEACHER'],
                   },
-                  mfa_completed: true,
+                  mfa_completed: state.mfa,
+                  password_only: state.passwordOnly,
                   recovery_only: false,
                   expires_at: '2026-11-05T00:00:00Z',
                 },
               })
             : route.fulfill({ status: 401, json: { code: 'UNAUTHENTICATED' } });
         }
-        if (pathname === '/api/v1/platform/workspace')
+        if (pathname === '/api/v1/platform/workspace') {
+          state.workspaceReads++;
+          const first = state.currentKey === 'active-fixture';
+          const subject = first ? 'Synthetic class A' : 'Synthetic class B';
+          const accountId = actorId();
+          if (state.holdReads) await new Promise((resolve) => state.oldReads.push(resolve));
           return route.fulfill({
             json: {
-              name: targetName,
-              role: 'TEACHER',
-              lessons: [],
+              name: teacherRace && first ? currentName : targetName,
+              role: state.role ?? 'TEACHER',
+              ...(teacherRace
+                ? {
+                    actorContext: {
+                      accountId,
+                      role: state.role ?? 'TEACHER',
+                      timezone: 'Europe/Chisinau',
+                      asOf: '2026-11-06T08:00:00Z',
+                    },
+                  }
+                : {}),
+              lessons: teacherRace
+                ? [
+                    {
+                      id: 'synthetic',
+                      subject,
+                      student: 'Synthetic student',
+                      teacher: 'Synthetic teacher',
+                      startsAt: '2026-11-06T10:00:00Z',
+                      endsAt: '2026-11-06T11:00:00Z',
+                      status: 'SCHEDULED',
+                      meetUrl: null,
+                    },
+                  ]
+                : [],
               students: [],
               homework: [],
               tasks: [],
             },
           });
+        }
         if (pathname === '/api/v1/auth/csrf')
           return route.fulfill({ json: { csrfToken: 'local-fixture' } });
         const key = pathname.slice(1);
         const body =
           pathname === '/fixture'
             ? fixture.get('index.html')
-            : ['/', '/account', '/teacher'].includes(pathname)
+            : ['/', '/account', '/teacher', '/director'].includes(pathname)
               ? platform.get('index.html')
               : (platform.get(key) ?? fixture.get(key));
-        if (body)
+        if (body) {
+          if (state.holdNavigation && request.isNavigationRequest()) {
+            state.navigations.push(request.url());
+            // Keep the retiring document alive without freezing it during navigation.
+            return route.fulfill({ status: 204 });
+          }
           return route.fulfill({
             body,
             contentType: mime[extname(pathname) || '.html'] ?? 'application/octet-stream',
           });
+        }
       }
       if (request.method() === 'POST' && pathname === '/api/v1/auth/switch-user') {
         const hasCsrf = request.headers()['x-csrf-token'] === 'local-fixture';
@@ -312,21 +371,41 @@ try {
   state.waitsForSwitch = true;
   await menu(page)
     .getByRole('button', { name: new RegExp(targetName, 'u') })
-    .click();
+    .press('Enter');
   await expect.poll(() => state.writes.length).toBe(1);
   await changeLanguage(page, 'ru', 'ro');
   await expect(menu(page).getByRole('status')).toHaveText('Se deschide cabinetul tău…');
   assert.deepEqual(state.writes, [{ action: 'switch', hasCsrf: true, targetsTeacher: true }]);
   state.settle();
-  await expect(menu(page).getByRole('alert')).toContainText('Rezultatul este încă necunoscut.');
-  await expect(
-    menu(page).getByRole('button', { name: new RegExp(targetName, 'u') }),
-  ).toBeDisabled();
-  await expect(menu(page).getByRole('button', { name: signOut.ro, exact: true })).toBeDisabled();
-  await expect(menu(page).getByRole('link', { name: 'Verifică sesiunea curentă' })).toHaveAttribute(
+  await expect(page.getByRole('alert')).toContainText('Rezultatul este încă necunoscut.');
+  await expect(menu(page)).toHaveCount(0);
+  await expect(page.locator('#draft')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Verifică sesiunea curentă' })).toHaveAttribute(
     'href',
     '/',
   );
+  for (const locale of ['ro', 'ru']) {
+    await page.evaluate((value) => {
+      globalThis.localStorage.setItem('k8k.locale', value);
+      globalThis.dispatchEvent(
+        new globalThis.StorageEvent('storage', {
+          key: 'k8k.locale',
+          newValue: value,
+          storageArea: globalThis.localStorage,
+        }),
+      );
+    }, locale);
+    for (const width of [360, 768, 1024, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.getByRole('link')).toBeFocused();
+      assert.equal(await page.locator('html').evaluate((el) => el.scrollWidth), width);
+      await page.screenshot({
+        path: fileURLToPath(new URL(`session-verify-${locale}-${width}.png`, screenshots)),
+      });
+    }
+  }
+  assert.equal(state.writes.length, 1);
   cases.push(
     'Pending locale switch keeps one CSRF-protected command; unknown outcome blocks repeat',
   );
@@ -372,6 +451,101 @@ try {
   cases.push(
     'Synthetic successful switch and logout navigate the current tab and refresh another tab with one CSRF-protected command per action',
   );
+
+  const race = await setup({ teacherRace: true });
+  const teacherA = await race.context.newPage(),
+    peer = await race.context.newPage();
+  await teacherA.goto(origin + '/teacher?ui.k8k=1');
+  await peer.goto(origin + '/teacher?ui.k8k=1');
+  const classA = (tab) => tab.getByRole('heading', { name: 'Synthetic class A' });
+  const classB = (tab) => tab.getByRole('heading', { name: 'Synthetic class B' });
+  await expect(classA(teacherA)).toBeVisible();
+  await expect(classA(peer)).toBeVisible();
+
+  const tabs = [teacherA, peer];
+  const privateCount = () =>
+    Promise.all(tabs.map((tab) => tab.locator('.lesson, .account-menu').count()));
+  const completedReads = () =>
+    Promise.all(tabs.map((tab) => tab.evaluate(() => globalThis.fixtureCompletedReads)));
+
+  async function retireWithLateReads(change, destination) {
+    race.state.holdReads = true;
+    await teacherA.locator('.refresh').click();
+    await peer.locator('.refresh').click();
+    await expect.poll(() => race.state.oldReads.length).toBe(2);
+    await openMenu(teacherA);
+    const completed = await completedReads();
+    race.state.holdNavigation = true;
+    await change();
+    await expect.poll(() => race.state.navigations.length).toBe(2);
+    assert.deepEqual(race.state.navigations.sort(), [origin + '/', origin + destination]);
+    await expect.poll(privateCount).toEqual([0, 0]);
+    const reads = race.state.workspaceReads;
+    await Promise.all(
+      tabs.map((tab) =>
+        tab.evaluate(() => {
+          globalThis.dispatchEvent(new Event('focus'));
+          globalThis.dispatchEvent(new Event('online'));
+        }),
+      ),
+    );
+    race.state.holdReads = false;
+    for (const resolve of race.state.oldReads.splice(0)) resolve();
+    await expect.poll(completedReads).toEqual(completed.map((n) => n + 1));
+    assert.deepEqual(await privateCount(), [0, 0]);
+    assert.equal(race.state.workspaceReads, reads);
+    race.state.holdNavigation = false;
+    race.state.navigations.length = 0;
+    await Promise.all([teacherA.goto(origin + destination), peer.goto(origin + '/')]);
+  }
+  race.state.switchOutcome = 200;
+  await retireWithLateReads(
+    () =>
+      menu(teacherA)
+        .getByRole('button', { name: new RegExp(targetName, 'u') })
+        .click({ noWaitAfter: true }),
+    '/teacher',
+  );
+  for (const tab of [teacherA, peer]) {
+    await expect(classB(tab)).toBeVisible();
+    await expect(classA(tab)).toHaveCount(0);
+  }
+  cases.push(
+    'Teacher A to B in two real workspace tabs: release old noncooperative reads during suspended navigation; no private DOM or focus/online refetch',
+  );
+  await retireWithLateReads(
+    () =>
+      menu(teacherA)
+        .getByRole('button', { name: signOut.ru, exact: true })
+        .click({ noWaitAfter: true }),
+    '/account',
+  );
+  await expect(teacherA).toHaveURL(origin + '/account');
+  await expect(peer).toHaveURL(origin + '/');
+  assert.deepEqual(race.state.writes, [
+    { action: 'switch', hasCsrf: true, targetsTeacher: true },
+    { action: 'logout', hasCsrf: true },
+  ]);
+  cases.push(
+    'Late workspace response after logout is discarded in both tabs; navigation issues no additional writes',
+  );
+  await race.context.close();
+
+  const mfa = await setup({ teacherRace: true });
+  mfa.state.role = 'DIRECTOR';
+  mfa.state.mfa = false;
+  const protectedPage = await mfa.context.newPage();
+  await protectedPage.goto(origin + '/director?ui.k8k=1');
+  await expect(protectedPage.getByRole('alert')).toBeVisible();
+  await expect(protectedPage.locator('.stats')).toHaveCount(0);
+  assert.equal(mfa.state.workspaceReads, 0);
+  assert.deepEqual(mfa.state.writes, []);
+  cases.push('Director with incomplete MFA and no server exception cannot mount workspace');
+  mfa.state.passwordOnly = true;
+  await protectedPage.reload();
+  await expect(classA(protectedPage)).toBeVisible();
+  cases.push('Explicit server password-only demo flag retains its existing workspace path');
+  await mfa.context.close();
   assert.equal(
     await changed.evaluate(() =>
       fetch('https://example.invalid/account-sentinel').then(

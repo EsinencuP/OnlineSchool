@@ -79,3 +79,7 @@ export class PdfJobStatusDto {
   @ApiProperty({ type: String, nullable: true, format: 'date-time' }) expiresAt!: string | null;
   @ApiProperty({ type: String, nullable: true }) failureReason!: string | null;
 }
+export class PdfExportRequestResultDto {
+  @ApiProperty({ enum: ['ACCEPTED', 'UNKNOWN'] }) status!: 'ACCEPTED' | 'UNKNOWN';
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) jobId!: string | null;
+}

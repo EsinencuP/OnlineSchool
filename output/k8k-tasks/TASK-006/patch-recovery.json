@@ -1,0 +1,15 @@
+{
+  "source": "Saved HEAD+pre-task binary tracked patch applied only to isolated repo. Exact Git-canonical content recovered; original worktree line-ending hash was not separately captured for these two files. Initial before.json is unchanged.",
+  "restored": [
+    {
+      "path": "packages/ui/src/style.css",
+      "recoveredWorktreeSha256": "c0bd69032dc6cf886b9c9f107551023f5297d3f9b029d424dd7cd019b5256d10",
+      "textMatchesAfterCRLFNormalization": true
+    },
+    {
+      "path": "packages/ui/src/tokens.css",
+      "recoveredWorktreeSha256": "9a4dd07c5227aa016120492cd5beb8aa06bcb46811c949dd8f058cad6e1613f7",
+      "textMatchesAfterCRLFNormalization": true
+    }
+  ]
+}

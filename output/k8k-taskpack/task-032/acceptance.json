@@ -1,0 +1,144 @@
+{
+  "task": "TASK-032",
+  "status": "DONE",
+  "scope": "Local implementation and targeted mocks/browser acceptance; real DB/worker/S3/gate deferred",
+  "base": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "d84e168474569deb1941daeb31b5a56248c356747c513a2cb35d186e8efa235c"
+  },
+  "checks": [
+    {
+      "id": "deep_link_independent_page",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Report25 со страницы3 читается одним detail GET без перебора списка; фокус заголовка и возврат page3. Нет подмены первым отчётом."
+    },
+    {
+      "id": "published_scope_public_projection",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+      "detail": "Detail использует publishedReportsCte/reportJson/normalizeReport; UUID, own/foreign/unknown/no-store проверены HTTP mocks. Draft/future/superseded predicates сохранены структурно; фактический PostgreSQL отдельно NOT_RUN."
+    },
+    {
+      "id": "four_fields_plain_text_dates",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Четыре публичных поля, точные пробелы/переводы строк, script отображается текстом; private notes исключены. RU/RO даты с годом, date-only без timezone shift."
+    },
+    {
+      "id": "explicit_read_empty_transport",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+      "detail": "204 first/200 repeat без body, прежний schoolEmptyFetch; чтение не публикует и не выполняет другую задачу."
+    },
+    {
+      "id": "read_confirmation_and_unknown",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "isNew меняется после ответа, новая версия снова unread; unknown read проверяет detail и не повторяет подтверждённый POST."
+    },
+    {
+      "id": "export_selection_and_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+      "detail": "Omitted body/all history и filtered subject/date-only; reverse400, foreign403, inclusive student-zone/DST. UI передаёт ту же selection и CSRF/UUID."
+    },
+    {
+      "id": "stable_intent_double_click",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Два synchronous clicks дают один POST. Same key/body retry после receipt UNKNOWN; server replay/conflict/limit покрыты API mocks."
+    },
+    {
+      "id": "lost_202_reconciliation",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Read-only receipt находит собственный committed job по исходному UUID. Lost response/reload восстанавливаются GET без второго POST. UNKNOWN не объявляется QUEUED."
+    },
+    {
+      "id": "four_job_states_no_false_ready",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "QUEUED/PROCESSING/READY/FAILED; без valid HTTPS URL и будущего expiresAt нет download или ready success. 429 объясняется отдельно."
+    },
+    {
+      "id": "poll_2s_bound_and_resume",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Нет дополнительного GET до раннего интервала, следующий появляется после2s; максимум30 automatic attempts/60s, затем пауза. Resume/route return читает тот же job без нового POST."
+    },
+    {
+      "id": "fixed_expiry_and_download_recheck",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/api-tests.log",
+      "detail": "Server mock clock: expiry=ready_at+1h, repeat polling не продлевает, точная boundary FAILED без URL. Browser expiry hides download; каждый download делает fresh GET."
+    },
+    {
+      "id": "synthetic_download_path",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Fresh READY запускает перехваченный private fixture download; это синтетический HTTP body, не доказательство настоящего PDF/worker/S3."
+    },
+    {
+      "id": "session_revocation_and_switch",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "403/401 убирают download/DOM; logout прекращает polling; поздний READY после logout или смены actor во второй вкладке не возвращает приватные данные."
+    },
+    {
+      "id": "url_and_cache_privacy",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/browser.log",
+      "detail": "Signed URL только в памяти mounted UI, не в query cache/localStorage/sessionStorage/evidence. В URL страницы только UUID/page; invalid PDF IDs не подменяются предыдущим job."
+    },
+    {
+      "id": "ru_ro_keyboard_matrix",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/playwright.json",
+      "detail": "RU/RO × 360/768/1024/1280 × list/detail/form/queued/ready =40 matrix, ещё3 state screenshots. Long names/text, heading focus, keyboard controls, primary≥48px и no horizontal overflow."
+    },
+    {
+      "id": "backward_compatible_sdk",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/contracts.json",
+      "detail": "147 прежних операций/requests/responses/security/params и schemas сохранены; только2 GET и PdfExportRequestResultDto добавлены, standard export/generate."
+    },
+    {
+      "id": "budget_fonts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/budgets.json",
+      "detail": "50/50 ≤256000 bytes v2 с raw local Golos; reports route249272 bytes, max255923."
+    },
+    {
+      "id": "preservation_and_scope",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/preservation.json",
+      "detail": "31 source snapshots,31 migration hashes, исходные445 status paths и HEAD/branch сохранены. Transport, worker/renderer/export-data/lockfile без изменений; no DB/deploy."
+    },
+    {
+      "id": "sources_handoff",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-032/report.md",
+      "detail": "TASK024/031 prerequisites и актуальные №9.25/B/9.26/B, VIS12 STU04/V12-AT04/10/11 применены. Новые student publications/рассылки не вводились."
+    },
+    {
+      "id": "live_postgresql_and_races",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-032/report.md",
+      "detail": "Нет разрешённого PostgreSQL execution/migration/transaction-race rehearsal; mocks и SQL structure не подтверждают реальные row binding/triggers."
+    },
+    {
+      "id": "real_worker_pdf_s3_delivery",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-032/report.md",
+      "detail": "Реальные queue worker, PDF renderer/fonts/layout, S3/CORS/private download/TTL и доставка не запускались; HTTP download mock не является provider evidence."
+    },
+    {
+      "id": "full_accessibility_role_and_gate",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-032/report.md",
+      "detail": "Физический mobile/screen reader, полный WCAG, TASK035/FND-GATE/LEGAL/Meet provider/production GO вне локального TASK032."
+    }
+  ]
+}

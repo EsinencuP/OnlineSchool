@@ -1,0 +1,332 @@
+ M AGENTS.md
+ M apps/api/src/modules/manager/dto/manager-dashboard.dto.ts
+ M apps/api/src/modules/platform/platform.dto.ts
+ M apps/api/src/modules/platform/platform.module.ts
+ M apps/api/src/modules/platform/workspace.service.ts
+ M apps/api/src/openapi/dtos.ts
+ M apps/api/src/student/dashboard/dashboard.service.ts
+ M apps/api/test/staff-context.test.mjs
+ M apps/manager-web/package.json
+ M apps/manager-web/src/api/client.ts
+ M apps/manager-web/src/components/layout.tsx
+ M apps/manager-web/src/components/ui.tsx
+ M apps/manager-web/src/main.tsx
+ M apps/manager-web/src/pages/Dashboard.tsx
+ M apps/manager-web/src/pages/Login.tsx
+ M apps/manager-web/src/pages/student/Notifications.tsx
+ M apps/manager-web/src/session.tsx
+ M apps/manager-web/src/test/session.test.tsx
+ M apps/platform/src/App.tsx
+ M apps/platform/src/main.tsx
+ M apps/platform/test/account-chrome/fixture.tsx
+ M apps/platform/test/account-chrome/smoke.mjs
+ M apps/platform/test/staff-context/smoke.mjs
+ M apps/student-cabinet/src/Layout.tsx
+ M apps/student-cabinet/src/StudentNotificationMenu.tsx
+ M apps/student-cabinet/src/api.ts
+ M apps/student-cabinet/src/main.tsx
+ M apps/student-cabinet/src/pages/Account.tsx
+ M apps/student-cabinet/src/pages/Homework.tsx
+ M apps/student-cabinet/src/pages/Lessons.tsx
+ M apps/student-cabinet/src/pages/StudentHome.tsx
+ M apps/student-cabinet/tests/student.spec.mjs
+ M docs/K8K_IMPLEMENTATION_STATUS.md
+ M docs/K8K_REQUIREMENTS_MATRIX.md
+ M docs/k8k-redesign-tasks/EXECUTION_LOG.md
+ M docs/ui-stack.md
+ M output/stu12/browser/.last-run.json
+ M output/stu12/desktop.png
+ M output/stu12/mobile.png
+ M output/stu12/playwright.json
+ M package.json
+ M packages/account-ui/src/index.tsx
+ M packages/account-ui/src/style.css
+ M packages/api-contracts/openapi/openapi.json
+ M packages/api-contracts/src/generated/client.ts
+ M packages/api-contracts/src/generated/openapi.ts
+ M packages/ui/README.md
+ M packages/ui/src/priority.tsx
+ M packages/ui/src/refresh.ts
+ M packages/ui/src/shell.tsx
+ M packages/ui/src/state.tsx
+ M packages/ui/src/style.css
+ M packages/ui/stories/check-coverage.mjs
+ M tests/unit/manager-dashboard-sdk.test.mjs
+ M tests/unit/manager-payments-http.test.mjs
+ M tests/unit/student-dashboard.test.mjs
+?? REDESIGN_REPORT.md
+?? apps/apps.rar
+?? apps/manager-web/test/ui-refresh/
+?? apps/manager-web/tsconfig.ui-refresh.json
+?? apps/platform/src/staff/
+?? apps/student-cabinet/tests/navigation.spec.mjs
+?? output/k8k-implementation/
+?? output/k8k-phase3/
+?? output/k8k-redesign/
+?? output/k8k-taskpack/
+?? output/k8k-tasks/TASK-001/README.md
+?? output/k8k-tasks/TASK-001/design-note.md
+?? output/k8k-tasks/TASK-001/final-verification.json
+?? output/k8k-tasks/TASK-001/recovery-checks/
+?? output/k8k-tasks/TASK-001/snapshots/
+?? output/k8k-tasks/TASK-002/README.md
+?? output/k8k-tasks/TASK-002/design-note.md
+?? output/k8k-tasks/TASK-002/inventory.json
+?? output/k8k-tasks/TASK-002/inventory.md
+?? output/k8k-tasks/TASK-002/selfcheck.json
+?? output/k8k-tasks/TASK-002/source-preservation.json
+?? output/k8k-tasks/TASK-002/verification.json
+?? output/k8k-tasks/TASK-003/README.md
+?? output/k8k-tasks/TASK-003/baseline-findings.json
+?? output/k8k-tasks/TASK-003/design-note.md
+?? output/k8k-tasks/TASK-003/runs/
+?? output/k8k-tasks/TASK-003/source-preservation-before.json
+?? output/k8k-tasks/TASK-003/source-preservation.json
+?? output/k8k-tasks/TASK-003/unavailable-scenarios.json
+?? output/k8k-tasks/TASK-003/visual-review.json
+?? output/k8k-tasks/TASK-004/README.md
+?? output/k8k-tasks/TASK-004/cache-variable-probe.json
+?? output/k8k-tasks/TASK-004/design-note.md
+?? output/k8k-tasks/TASK-004/runs/
+?? output/k8k-tasks/TASK-004/selfchecks/
+?? output/k8k-tasks/TASK-004/source-preservation.json
+?? output/k8k-tasks/TASK-005/README.md
+?? output/k8k-tasks/TASK-005/before.json
+?? output/k8k-tasks/TASK-005/before/
+?? output/k8k-tasks/TASK-005/checks.json
+?? output/k8k-tasks/TASK-005/dependencies.json
+?? output/k8k-tasks/TASK-005/design-note.md
+?? output/k8k-tasks/TASK-005/final-checks.json
+?? output/k8k-tasks/TASK-005/initial-stylelint.json
+?? output/k8k-tasks/TASK-005/negative-probes.json
+?? output/k8k-tasks/TASK-005/runs/
+?? output/k8k-tasks/TASK-005/source-preservation.json
+?? output/k8k-tasks/TASK-005/visual-review.json
+?? output/k8k-tasks/TASK-006/README.md
+?? output/k8k-tasks/TASK-006/before.json
+?? output/k8k-tasks/TASK-006/before/
+?? output/k8k-tasks/TASK-006/checks.json
+?? output/k8k-tasks/TASK-006/css-task006.patch
+?? output/k8k-tasks/TASK-006/design-note.md
+?? output/k8k-tasks/TASK-006/existing-dependencies.json
+?? output/k8k-tasks/TASK-006/font-glyph-discovery.json
+?? output/k8k-tasks/TASK-006/font-network.json
+?? output/k8k-tasks/TASK-006/font-tool-metadata.json
+?? output/k8k-tasks/TASK-006/patch-recovery.json
+?? output/k8k-tasks/TASK-006/patch-recovery/
+?? output/k8k-tasks/TASK-006/reconstruction/
+?? output/k8k-tasks/TASK-006/runs/
+?? output/k8k-tasks/TASK-006/source-coverage.json
+?? output/k8k-tasks/TASK-006/source-preservation.json
+?? output/k8k-tasks/TASK-006/tooling/
+?? output/k8k-tasks/TASK-006/visual-review.json
+?? output/k8k-tasks/TASK-007/README.md
+?? output/k8k-tasks/TASK-007/before.json
+?? output/k8k-tasks/TASK-007/before/
+?? output/k8k-tasks/TASK-007/checks.json
+?? output/k8k-tasks/TASK-007/consumer-source-proof.json
+?? output/k8k-tasks/TASK-007/design-note.md
+?? output/k8k-tasks/TASK-007/handoff.md
+?? output/k8k-tasks/TASK-007/react-review.json
+?? output/k8k-tasks/TASK-007/runs/
+?? output/k8k-tasks/TASK-007/source-preservation.json
+?? output/k8k-tasks/TASK-007/visual-review.json
+?? output/k8k-tasks/TASK-008/before.json
+?? output/k8k-tasks/TASK-008/before/
+?? output/k8k-tasks/TASK-008/bookkeeping-before.json
+?? output/k8k-tasks/TASK-008/checks.json
+?? output/k8k-tasks/TASK-008/consumer-source-proof.json
+?? output/k8k-tasks/TASK-008/dependencies.json
+?? output/k8k-tasks/TASK-008/dependency-policy.json
+?? output/k8k-tasks/TASK-008/design-note.md
+?? output/k8k-tasks/TASK-008/final-tracked.patch
+?? output/k8k-tasks/TASK-008/handoff.md
+?? output/k8k-tasks/TASK-008/lifecycle-inventory.md
+?? output/k8k-tasks/TASK-008/lock-delta.json
+?? output/k8k-tasks/TASK-008/new-lock-metadata.json
+?? output/k8k-tasks/TASK-008/preservation.json
+?? output/k8k-tasks/TASK-008/protected-inputs.json
+?? output/k8k-tasks/TASK-008/react-review.json
+?? output/k8k-tasks/TASK-008/resolved-ui-deps.json
+?? output/k8k-tasks/TASK-008/runs/
+?? output/k8k-tasks/TASK-008/scoped-review.patch
+?? output/k8k-tasks/TASK-008/status-current.txt
+?? output/k8k-tasks/TASK-008/status-final.txt
+?? output/k8k-tasks/TASK-009/before.json
+?? output/k8k-tasks/TASK-009/before/
+?? output/k8k-tasks/TASK-009/checks.json
+?? output/k8k-tasks/TASK-009/consumer-source-proof.json
+?? output/k8k-tasks/TASK-009/dependency-policy.json
+?? output/k8k-tasks/TASK-009/design-note.md
+?? output/k8k-tasks/TASK-009/handoff.md
+?? output/k8k-tasks/TASK-009/lock-delta.json
+?? output/k8k-tasks/TASK-009/preservation.json
+?? output/k8k-tasks/TASK-009/runs/
+?? output/k8k-tasks/TASK-009/status-before.txt
+?? output/k8k-tasks/TASK-009/status-final.txt
+?? output/k8k-tasks/TASK-009/tabs-metadata.json
+?? output/k8k-tasks/TASK-009/tooltip-metadata.json
+?? output/k8k-tasks/TASK-009/visually-hidden-metadata.json
+?? output/k8k-tasks/TASK-010/before.json
+?? output/k8k-tasks/TASK-010/before/
+?? output/k8k-tasks/TASK-010/checks.json
+?? output/k8k-tasks/TASK-010/dependency-policy.json
+?? output/k8k-tasks/TASK-010/design-note.md
+?? output/k8k-tasks/TASK-010/handoff.md
+?? output/k8k-tasks/TASK-010/lock-delta.json
+?? output/k8k-tasks/TASK-010/preservation.json
+?? output/k8k-tasks/TASK-010/react-table-metadata.json
+?? output/k8k-tasks/TASK-010/runs/
+?? output/k8k-tasks/TASK-010/status-before.txt
+?? output/k8k-tasks/TASK-010/status-final.txt
+?? output/k8k-tasks/TASK-010/table-core-metadata.json
+?? output/k8k-tasks/TASK-011/before.json
+?? output/k8k-tasks/TASK-011/before/
+?? output/k8k-tasks/TASK-011/checks.json
+?? output/k8k-tasks/TASK-011/dependency-policy.json
+?? output/k8k-tasks/TASK-011/design-note.md
+?? output/k8k-tasks/TASK-011/event-calendar-core-5.5.1.tgz
+?? output/k8k-tasks/TASK-011/event-calendar-metadata.json
+?? output/k8k-tasks/TASK-011/event-calendar-review.json
+?? output/k8k-tasks/TASK-011/handoff.md
+?? output/k8k-tasks/TASK-011/lock-delta.json
+?? output/k8k-tasks/TASK-011/preservation.json
+?? output/k8k-tasks/TASK-011/runs/
+?? output/k8k-tasks/TASK-011/status-before.txt
+?? output/k8k-tasks/TASK-011/status-final.txt
+?? output/k8k-tasks/TASK-011/temporal-metadata.json
+?? output/k8k-tasks/TASK-012/before.json
+?? output/k8k-tasks/TASK-012/before/
+?? output/k8k-tasks/TASK-012/checks.json
+?? output/k8k-tasks/TASK-012/design-note.md
+?? output/k8k-tasks/TASK-012/handoff.md
+?? output/k8k-tasks/TASK-012/preservation.json
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/build/
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/bundle.md
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/fixture/
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/gallery.html
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-1024-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-1024-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-1280-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-1280-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-360-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-360-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-768-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ro-768-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-1024-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-1024-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-1280-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-1280-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-360-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-360-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-768-catalog.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/ru-768-retained-unknown.png
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/verification.json
+?? output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/visual.json
+?? output/k8k-tasks/TASK-012/status-before.txt
+?? output/k8k-tasks/TASK-012/status-final.txt
+?? output/k8k-tasks/TASK-013/app-chunks.json
+?? output/k8k-tasks/TASK-013/basis.json
+?? output/k8k-tasks/TASK-013/coverage.json
+?? output/k8k-tasks/TASK-013/dependency-audit.json
+?? output/k8k-tasks/TASK-013/design-note.md
+?? output/k8k-tasks/TASK-013/dev-smoke.json
+?? output/k8k-tasks/TASK-013/screenshots/
+?? output/k8k-tasks/TASK-013/smoke.json
+?? output/k8k-tasks/TASK-013/story-index.json
+?? output/k8k-tasks/TASK-014/basis.json
+?? output/k8k-tasks/TASK-014/browser.json
+?? output/k8k-tasks/TASK-014/design-note.md
+?? output/k8k-tasks/TASK-014/screenshots/
+?? output/k8k-tasks/TASK-014/storybook-smoke.json
+?? output/k8k-tasks/TASK-015/basis.json
+?? output/k8k-tasks/TASK-015/browser.json
+?? output/k8k-tasks/TASK-015/dependencies.json
+?? output/k8k-tasks/TASK-015/design-note.md
+?? output/k8k-tasks/TASK-015/literal-inventory.md
+?? output/k8k-tasks/TASK-015/login-smoke.json
+?? output/k8k-tasks/TASK-015/manager-browser/
+?? output/k8k-tasks/TASK-015/screenshots/
+?? output/k8k-tasks/TASK-015/storybook-coverage.json
+?? output/k8k-tasks/TASK-015/storybook-smoke.json
+?? output/k8k-tasks/TASK-016/basis.json
+?? output/k8k-tasks/TASK-016/browser.json
+?? output/k8k-tasks/TASK-016/budgets.json
+?? output/k8k-tasks/TASK-016/code-inventory.json
+?? output/k8k-tasks/TASK-016/design-note.md
+?? output/k8k-tasks/TASK-016/display-inventory.json
+?? output/k8k-tasks/TASK-016/manager-inventory.json
+?? output/k8k-tasks/TASK-016/previous-manager-messages.ts
+?? output/k8k-tasks/TASK-016/romanian-copy.json
+?? output/k8k-tasks/TASK-016/screenshots/
+?? output/k8k-tasks/TASK-016/storybook-coverage.json
+?? output/k8k-tasks/TASK-016/storybook-smoke.json
+?? output/k8k-tasks/TASK-017/a11y-review.md
+?? output/k8k-tasks/TASK-017/account/
+?? output/k8k-tasks/TASK-017/artifacts.json
+?? output/k8k-tasks/TASK-017/audit-summary.json
+?? output/k8k-tasks/TASK-017/audit.json
+?? output/k8k-tasks/TASK-017/basis.json
+?? output/k8k-tasks/TASK-017/browser/
+?? output/k8k-tasks/TASK-017/budgets.json
+?? output/k8k-tasks/TASK-017/catalog-smoke.json
+?? output/k8k-tasks/TASK-017/collect-evidence.mjs
+?? output/k8k-tasks/TASK-017/commands.json
+?? output/k8k-tasks/TASK-017/contrast.json
+?? output/k8k-tasks/TASK-017/coverage.json
+?? output/k8k-tasks/TASK-017/dependency-check.json
+?? output/k8k-tasks/TASK-017/dependency-policy.json
+?? output/k8k-tasks/TASK-017/design-note.md
+?? output/k8k-tasks/TASK-017/finalize-evidence.mjs
+?? output/k8k-tasks/TASK-017/installed.json
+?? output/k8k-tasks/TASK-017/isolation.json
+?? output/k8k-tasks/TASK-017/locale/
+?? output/k8k-tasks/TASK-017/manifest-manager-web.json
+?? output/k8k-tasks/TASK-017/manifest-platform.json
+?? output/k8k-tasks/TASK-017/manifest-student-cabinet.json
+?? output/k8k-tasks/TASK-017/manual-dialog-csszoom200.png
+?? output/k8k-tasks/TASK-017/manual-review.md
+?? output/k8k-tasks/TASK-017/manual-states.json
+?? output/k8k-tasks/TASK-017/prerequisites.json
+?? output/k8k-tasks/TASK-017/required-controls.json
+?? output/k8k-tasks/TASK-017/serve-catalog.mjs
+?? output/k8k-tasks/TASK-017/status-before.txt
+?? output/k8k-tasks/TASK-017/verification.json
+?? output/k8k-tasks/TASK-018/artifacts.json
+?? output/k8k-tasks/TASK-018/basis.json
+?? output/k8k-tasks/TASK-018/before.json
+?? output/k8k-tasks/TASK-018/before/
+?? output/k8k-tasks/TASK-018/browser/
+?? output/k8k-tasks/TASK-018/capture-before.mjs
+?? output/k8k-tasks/TASK-018/collect-evidence.mjs
+?? output/k8k-tasks/TASK-018/commands.json
+?? output/k8k-tasks/TASK-018/contracts-evidence.mjs
+?? output/k8k-tasks/TASK-018/finalize-evidence.mjs
+?? output/k8k-tasks/TASK-018/no-db-export.mjs
+?? output/k8k-tasks/TASK-018/preservation.json
+?? output/k8k-tasks/TASK-018/status-before.txt
+?? output/k8k-tasks/TASK-019/
+?? output/k8k-tasks/TASK-020/
+?? output/k8k-tasks/TASK-021/
+?? output/k8k-tasks/TASK-022/
+?? output/k8k-tasks/TASK-023/
+?? output/k8k-tasks/TASK-024/
+?? output/stu12/browser/mgr03-password-MGR-03-brow-f2642-hange-and-cabinet-bootstrap/
+?? output/stu12/browser/student-402-suspends-witho-e40a8-ces-password-on-any-request/
+?? output/stu12/browser/student-all-cabinet-pages--63b45-xpose-the-four-skill-states/
+?? output/stu12/browser/student-confirmation-and-s-d469f-er-provider-server-failures/
+?? output/stu12/browser/student-debounce-server-dr-9a9fe--and-chronological-versions/
+?? output/stu12/browser/student-failed-save-stays--7e611-ntal-navigation-and-retries/
+?? output/stu12/browser/student-lesson-periods-cal-4725e--manager-reschedule-request/
+?? "output/stu12/browser/student-login-\342\206\222-forced-pas-07760-mission-\342\206\222-unchanged-balance/"
+?? output/stu12/browser/student-mobile-five-item-n-d63d8-er-tablet-and-desktop-sizes/
+?? output/stu12/browser/student-read-all-resets-both-notification-counters/
+?? output/stu12/browser/student-serialized-slow-dr-e3f20-es-preserve-the-latest-edit/
+?? output/stu12/browser/student-server-canJoin-authority-and-protected-direct-links/
+?? packages/account-ui/src/session.tsx
+?? scripts/__pycache__/
+?? scripts/k8k-priority-evidence.mjs
+?? scripts/k8k-refresh-budget.mjs
+?? scripts/k8k-refresh-evidence.mjs
+?? scripts/k8k-shell-gate.mjs
+?? uiux.rar

@@ -1,0 +1,74 @@
+# TASK-025 — предметный хаб, навигация и помощь ученику
+
+**Статус — DONE в объёме TASK-025.**
+
+## Основа
+
+Ветка `feat/k8k-design`, HEAD `60e2a0c47cbcc744dc658a85f386833146e836b3`. SHA-256 исходного снимка статуса `fd20f764aca3906624134fc718763d5e3b7952b113c35ff2ae100e38b7dd454a`. Сохранены все 339 исходных записи git status и проверены 20 входных копий. Сравнение подтверждает неизменность корневого manifest, lockfile, OpenAPI и сгенерированного SDK. На входе совпали 26 хешей TASK-024. Его 39 unit/HTTP/SDK проверок относятся к предыдущему инкременту. [Основа](../../k8k-tasks/TASK-025/before.json) · [Снимок](../../k8k-tasks/TASK-025/status-before.txt) · [Сохранение](../../k8k-tasks/TASK-025/preservation.json) · [TASK-024](../../k8k-tasks/TASK-024/report.md)
+
+Уже работали AppShell, общее меню аккаунта, guards сессии и доступа, колокольчик, урок и Google Meet, список и редактор ДЗ, материалы, навыки, отчёты и старые GET абонемента. TASK-024 добавил серверную проекцию предметов. На исходной главной отсутствовали предметные карточки, новый хаб и помощь. Длинное имя на 360 px расширяло область контента и сдвигало действие урока. Исходные кадры воспроизведены отдельной сборкой со снимком исходников.
+
+## Изменения
+
+| Путь | Поведение |
+|---|---|
+| `apps/student-cabinet/src/pages/Subjects.tsx` | Хаб читает `getStudentSubjects`, сверяет селектор с разрешённым списком, показывает состояние и действия каждого предмета. Помощь использует `me.managerContacts` и объясняет, где искать доступные действия по уроку. |
+| `pages/StudentHome.tsx`, `student.css`, `student-copy.ts` | Одно главное действие ближайшего урока, два быстрых входа, предметы, занятия и ДЗ, затем знание и вторичные контакты/абонемент. RU/RO, даты в зоне профиля. Полное имя переносится в приветствии и доступно в меню аккаунта. |
+| `Layout.tsx`, `router.tsx`, `packages/ui/src/navigation.ts` | Шесть утверждённых разделов K8K. Профиль и безопасность через `AccountMenu.links`. В истории и при явном возврате к предмету сохраняется позиция. |
+| `pages/Learning.tsx`, `pages/Homework.tsx`, `pages/Lessons.tsx` | Серверный предметный фильтр материалов и карты навыков. Общие списки ДЗ/уроков сохраняют контекст через `fromSubjectId`. После успешного autosave обновляется существующий кэш карточки ДЗ. Очередь и команды сохранены. |
+| `components.tsx`, `student-presentation.ts`, `packages/ui/src/refresh.ts` | Общие состояния, локализованные причины доступа к Meet, общий владелец фоновых чтений. Серверный запрет подключения переключает главное действие на карточку урока. |
+| `tests/subject-hub.spec.mjs`, `fixture-server.mjs`, `scripts/k8k-refresh-budget.mjs` | Адресные browser fixtures, матрица снимков и бюджет двух новых URL по методу TASK-023. |
+
+Новые DTO, API-операции, SDK-генерация, миграции и зависимости не понадобились. Для деталей абонемента используется существующий `subscriptionId` финансового периода. `subjectId` передаётся серверу только в поддерживающие его GET материалов и карты навыков. `fromSubjectId` относится к навигации. Старые маршруты перечислены в передаче. [Проектирование](../../k8k-tasks/TASK-025/design-note.md) · [Маршруты и контракты](../../k8k-tasks/TASK-025/handoff.md)
+
+Применены TASK-025 ``3, 5–10, VIS-12 STU-01…07, VIS-03, VIS-04/B, VIS-08/B, VIS-10/B и действующие DEV-13/B и DEV-14/B. Утверждённый состав меню имеет приоритет над иллюстрацией в раннем разделе дизайн-инструкции. Действующие права приходят из серверного снимка. Присоединение к встрече требует `canJoin` и пригодной ссылки конкретного урока.
+
+## Свежие проверки
+
+| Команда | Код | Доказательство |
+|---|---:|---|
+| `node output/k8k-tasks/TASK-025/rebuild-baseline.mjs` и `pnpm --filter @online-school/student-cabinet test:subject-baseline` | 0 | Два прогона baseline, 16 исходных PNG. [Лог](../../k8k-tasks/TASK-025/baseline.log) · [Пример](../../k8k-tasks/TASK-025/baseline/ro-360-home.png) |
+| `pnpm --filter @online-school/student-cabinet typecheck` | 0 | [Лог](../../k8k-tasks/TASK-025/typecheck.log) |
+| `pnpm --filter @online-school/student-cabinet lint` | 0 | [Лог](../../k8k-tasks/TASK-025/lint.log) |
+| `pnpm exec stylelint apps/student-cabinet/src/student.css --ignore-disables` | 0 | [Лог](../../k8k-tasks/TASK-025/stylelint.log) |
+| `pnpm --filter @online-school/student-cabinet test:presentation` | 0 | 9 тестов. [Лог](../../k8k-tasks/TASK-025/presentation.log) |
+| Vite `build({envDir:false, publicDir:false, logLevel:'error', build:{emptyOutDir:false}})` через `pnpm --filter @online-school/student-cabinet exec node --input-type=module` | 0 | Локальный frontend dist. [Лог](../../k8k-tasks/TASK-025/build.log) |
+| `pnpm --filter @online-school/student-cabinet test:subject-hub` | 0 | 14 Chromium-сценариев на loopback fixture. 24 итоговых PNG и 5 снимков состояний. На 360 px 6 axe-проверок для трёх маршрутов и двух языков. [Лог](../../k8k-tasks/TASK-025/playwright.log) |
+| `pnpm --filter @online-school/student-cabinet exec playwright test --config playwright.subject-hub.config.mjs student.spec.mjs --grep "(logout discards\|serialized slow draft\|failed save)"` | 0 | 3 регрессии. Logout при позднем ответе, сериализация записи и восстановление после отказа. [Лог](../../k8k-tasks/TASK-025/draft-regression.log) |
+| `node scripts/k8k-refresh-budget.mjs --task-025` | 0 | 50/50 маршрутов до 256 000 байт, включая все шрифты по методу v2. Максимум 255 964 байта. [Замеры](../../k8k-tasks/TASK-025/budgets.json) |
+
+## Визуальные доказательства
+
+Роль STUDENT, синтетический HTTP-стенд `127.0.0.1:4175`, `ui.k8k=1`, имя из 100 символов. Исходная главная и меню сняты для RU/RO и ширин 360/768/1024/1280. Итоговые главная, хаб и помощь сняты при тех же ширинах. Высота итогового мобильного кадра 800 px, остальных 900 px. Снимки доступны в каталогах `baseline/`, `after/` и `states/`.
+
+| Маршрут | Примеры |
+|---|---|
+| `/student` | [RU 1280](../../k8k-tasks/TASK-025/after/ru-1280-home.png) · [RO 360](../../k8k-tasks/TASK-025/after/ro-360-home.png) |
+| `/student/subjects` | [RU 768](../../k8k-tasks/TASK-025/after/ru-768-subjects.png) · [RO 360](../../k8k-tasks/TASK-025/after/ro-360-subjects.png) |
+| `/student/help` | [RU 1024](../../k8k-tasks/TASK-025/after/ru-1024-help.png) · [RO 360](../../k8k-tasks/TASK-025/after/ro-360-help.png) |
+| Состояния хаба | [Loading](../../k8k-tasks/TASK-025/states/ro-loading.png) · [Empty](../../k8k-tasks/TASK-025/states/ro-empty.png) · [Error](../../k8k-tasks/TASK-025/states/ro-error.png) · [Stale](../../k8k-tasks/TASK-025/states/ro-stale.png) · [Forbidden](../../k8k-tasks/TASK-025/states/ro-forbidden.png) |
+
+## Приёмка
+
+| Критерий | Статус | Доказательство |
+|---|---|---|
+| Шесть пунктов меню, active, deep links и нижняя навигация | PASS | Переходы с desktop/mobile, ссылки аккаунта, прежний URL уведомлений. |
+| Независимые права двух предметов и защита от чужого, неверного и повторённого селектора | PASS | Истёкший предмет сохраняет разрешённые материалы, активный ведёт в расписание. Чужой селектор отклонён при заполненном кэше. |
+| Loading, empty, error, stale и отзыв доступа | PASS | Раздельные снимки. После 403 прежние карточки исчезают. |
+| Возврат из ДЗ, позиция, диалог и черновик | PASS | История и явный возврат, Escape, подтверждённый черновик при повторном открытии. |
+| RU/RO, четыре ширины, имя 100 символов и одна кнопка урока | PASS | Матрица и две ветки `canJoin`. |
+| Нижнее меню, высота 48/44 px, клавиатура, skip-link, Escape, восстановление фокуса | PASS | Проверки на 360 px, открытие диалога ДЗ, действия клавиатурой. |
+| Фокус, позиция и порядок карточек при refetch | PASS | Обновление предметного статуса сохраняет фокус и позицию. |
+| Guards 401/402/403, первоначальный пароль, помощь без дополнительного bootstrap | PASS | Прямые входы к обоим URL, отсутствие предметных запросов до допуска. |
+| Серверный фильтр и total из одного запроса | PASS | Контекстные GET навыков и материалов. ДЗ, расписание и срезы остаются общими. |
+| Официальные контакты | PASS | Присутствие WhatsApp/Telegram по `me` и нейтральное состояние без каналов. |
+| Совместимость SDK и сохранение рабочей основы | PASS | Сверка хешей и локальный browser fixture. |
+| PostgreSQL, реальная встреча и полный ролевой прогон | NOT_RUN | Использован локальный синтетический стенд. |
+
+[Машиночитаемая приёмка](acceptance.json)
+
+## Передача и обратимость
+
+TASK-026 получает переходы к финансовому периоду, TASK-027 получает экран помощи и существующую проекцию контактов. Серверные фильтры общих списков переданы в TASK-029/030/031 как контрактные продолжения. Полная локализация прежних страниц остаётся в TASK-034. Текущая тема работает через действующий opt-in K8K. [Передача](../../k8k-tasks/TASK-025/handoff.md)
+
+Откат выполняется точечно по `before/` с обратным применением изменений TASK-025 в `Lessons.tsx` и бюджетном скрипте. Файлы новых маршрутов, словаря и локального теста принадлежат этому инкременту. Ветка, история, исходные незакоммиченные записи и рабочая БД сохранены.

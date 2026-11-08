@@ -1,0 +1,246 @@
+{
+  "allOperations": 149,
+  "studentBoundaryOperations": 48,
+  "operations": [
+    {
+      "path": "/api/v1/auth/csrf",
+      "method": "GET",
+      "operationId": "getCsrfToken"
+    },
+    {
+      "path": "/api/v1/auth/session",
+      "method": "POST",
+      "operationId": "createSession"
+    },
+    {
+      "path": "/api/v1/auth/session",
+      "method": "GET",
+      "operationId": "currentSession"
+    },
+    {
+      "path": "/api/v1/auth/session",
+      "method": "DELETE",
+      "operationId": "deleteSession"
+    },
+    {
+      "path": "/api/v1/auth/switch-user",
+      "method": "POST",
+      "operationId": "switchDemoUser"
+    },
+    {
+      "path": "/api/v1/platform/accounts",
+      "method": "GET",
+      "operationId": "getPlatformAccounts"
+    },
+    {
+      "path": "/api/v1/student/dashboard",
+      "method": "GET",
+      "operationId": "getStudentDashboard"
+    },
+    {
+      "path": "/api/v1/student/homework",
+      "method": "GET",
+      "operationId": "getStudentHomework"
+    },
+    {
+      "path": "/api/v1/student/homework/{hwId}",
+      "method": "GET",
+      "operationId": "getStudentHomeworkDetail"
+    },
+    {
+      "path": "/api/v1/student/homework/{hwId}/draft",
+      "method": "PATCH",
+      "operationId": "saveStudentHomeworkDraft"
+    },
+    {
+      "path": "/api/v1/student/homework/{hwId}/files/{fileId}/confirm",
+      "method": "POST",
+      "operationId": "confirmStudentHomeworkUpload"
+    },
+    {
+      "path": "/api/v1/student/homework/{hwId}/submit",
+      "method": "POST",
+      "operationId": "submitStudentHomework"
+    },
+    {
+      "path": "/api/v1/student/homework/{hwId}/upload-url",
+      "method": "POST",
+      "operationId": "requestStudentHomeworkUpload"
+    },
+    {
+      "path": "/api/v1/student/lessons",
+      "method": "GET",
+      "operationId": "getStudentLessons"
+    },
+    {
+      "path": "/api/v1/student/lessons/{lessonId}",
+      "method": "GET",
+      "operationId": "getStudentLesson"
+    },
+    {
+      "path": "/api/v1/student/lessons/{lessonId}/dispute",
+      "method": "POST",
+      "operationId": "disputeStudentLessonDeduction"
+    },
+    {
+      "path": "/api/v1/student/lessons/{lessonId}/requests/{requestKey}",
+      "method": "GET",
+      "operationId": "getStudentLessonRequestResult"
+    },
+    {
+      "path": "/api/v1/student/lessons/{lessonId}/reschedule-request",
+      "method": "POST",
+      "operationId": "requestStudentLessonReschedule"
+    },
+    {
+      "path": "/api/v1/student/lessons/history",
+      "method": "GET",
+      "operationId": "getStudentLessonHistory"
+    },
+    {
+      "path": "/api/v1/student/lessons/upcoming",
+      "method": "GET",
+      "operationId": "getStudentUpcomingLessons"
+    },
+    {
+      "path": "/api/v1/student/materials",
+      "method": "GET",
+      "operationId": "getStudentMaterials"
+    },
+    {
+      "path": "/api/v1/student/materials/{fileId}/url",
+      "method": "GET",
+      "operationId": "getStudentMaterialUrl"
+    },
+    {
+      "path": "/api/v1/student/me",
+      "method": "GET",
+      "operationId": "getStudentMe"
+    },
+    {
+      "path": "/api/v1/student/notifications",
+      "method": "GET",
+      "operationId": "getStudentNotifications"
+    },
+    {
+      "path": "/api/v1/student/notifications/{id}/read",
+      "method": "PATCH",
+      "operationId": "markStudentNotificationRead"
+    },
+    {
+      "path": "/api/v1/student/notifications/count",
+      "method": "GET",
+      "operationId": "getStudentUnreadNotificationCount"
+    },
+    {
+      "path": "/api/v1/student/notifications/read-all",
+      "method": "POST",
+      "operationId": "markAllStudentNotificationsRead"
+    },
+    {
+      "path": "/api/v1/student/profile",
+      "method": "PATCH",
+      "operationId": "updateStudentProfile"
+    },
+    {
+      "path": "/api/v1/student/profile/avatar",
+      "method": "GET",
+      "operationId": "getStudentAvatar"
+    },
+    {
+      "path": "/api/v1/student/reports",
+      "method": "GET",
+      "operationId": "getStudentReports"
+    },
+    {
+      "path": "/api/v1/student/reports/{reportId}",
+      "method": "GET",
+      "operationId": "getStudentReport"
+    },
+    {
+      "path": "/api/v1/student/reports/{reportId}/read",
+      "method": "POST",
+      "operationId": "markStudentReportRead"
+    },
+    {
+      "path": "/api/v1/student/reports/export-pdf",
+      "method": "POST",
+      "operationId": "requestStudentEducationPdf"
+    },
+    {
+      "path": "/api/v1/student/reports/export-pdf/{jobId}",
+      "method": "GET",
+      "operationId": "getStudentEducationPdfStatus"
+    },
+    {
+      "path": "/api/v1/student/reports/export-pdf/requests/{requestId}",
+      "method": "GET",
+      "operationId": "getStudentEducationPdfRequestResult"
+    },
+    {
+      "path": "/api/v1/student/security/change-email/confirm",
+      "method": "POST",
+      "operationId": "confirmStudentEmailChange"
+    },
+    {
+      "path": "/api/v1/student/security/change-email/request",
+      "method": "POST",
+      "operationId": "requestStudentEmailChange"
+    },
+    {
+      "path": "/api/v1/student/security/change-password",
+      "method": "PATCH",
+      "operationId": "changeStudentPassword"
+    },
+    {
+      "path": "/api/v1/student/security/change-password",
+      "method": "POST",
+      "operationId": "changeStudentPasswordLegacy"
+    },
+    {
+      "path": "/api/v1/student/security/sessions",
+      "method": "GET",
+      "operationId": "getStudentSessions"
+    },
+    {
+      "path": "/api/v1/student/security/sessions/{sessionId}",
+      "method": "DELETE",
+      "operationId": "revokeStudentSession"
+    },
+    {
+      "path": "/api/v1/student/skills",
+      "method": "GET",
+      "operationId": "getStudentSkillMaps"
+    },
+    {
+      "path": "/api/v1/student/skills/audit",
+      "method": "GET",
+      "operationId": "getStudentSkillAudit"
+    },
+    {
+      "path": "/api/v1/student/skills/snapshots",
+      "method": "GET",
+      "operationId": "getStudentSkillSnapshots"
+    },
+    {
+      "path": "/api/v1/student/subjects",
+      "method": "GET",
+      "operationId": "getStudentSubjects"
+    },
+    {
+      "path": "/api/v1/student/subscription",
+      "method": "GET",
+      "operationId": "getStudentSubscription"
+    },
+    {
+      "path": "/api/v1/student/subscription/ledger",
+      "method": "GET",
+      "operationId": "getStudentSubscriptionLedger"
+    },
+    {
+      "path": "/api/v1/student/subscription/payments",
+      "method": "GET",
+      "operationId": "getStudentSubscriptionPayments"
+    }
+  ]
+}

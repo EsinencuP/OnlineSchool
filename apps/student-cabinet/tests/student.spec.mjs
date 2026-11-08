@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './gate-fixtures.mjs';
 /* global document, innerWidth */
 import { homeworkId, lessonId } from './fixture-server.mjs';
 test.beforeEach(async ({ request, context }) => {
@@ -9,6 +9,46 @@ const state = async (request) => (await request.get('/__fixture/state')).json();
 const patch = (request, data) => request.patch('/__fixture/state', { data });
 test.afterEach(async ({ request }) => {
   expect((await state(request)).missingRoutes).toEqual([]);
+});
+test('logout discards a late draft response and stops the queued save', async ({
+  page,
+  request,
+}) => {
+  let release;
+  let accepted = false;
+  await page.route('**/api/v1/student/homework/*/draft', async (route) => {
+    const response = await route.fetch();
+    accepted = true;
+    await new Promise((resolve) => {
+      release = resolve;
+    });
+    await route.fulfill({ response });
+  });
+  try {
+    await page.goto(`/student/homework/${homeworkId}?ui.k8k=1`);
+    await page.clock.install();
+    const editor = page.getByLabel('Твой ответ');
+    await editor.fill('First synthetic draft');
+    await page.clock.runFor(2100);
+    await expect.poll(() => accepted).toBe(true);
+    await editor.fill('Queued synthetic draft');
+    await page.clock.runFor(2100);
+    await page.locator('.account-menu > summary').click();
+    await page.getByRole('button', { name: 'Выйти из аккаунта', exact: true }).click();
+    await expect(page).toHaveURL(/\/student\/login$/);
+    release();
+    await expect(editor).toHaveCount(0);
+    const snapshot = await state(request);
+    expect(snapshot.calls.filter((call) => call.path.endsWith('/draft'))).toHaveLength(1);
+    expect(
+      snapshot.calls.filter(
+        (call) => call.method === 'DELETE' && call.path === '/api/v1/auth/session',
+      ),
+    ).toHaveLength(1);
+    expect(snapshot.draft).toBe('First synthetic draft');
+  } finally {
+    release?.();
+  }
 });
 test('login → forced password → dashboard → direct upload → submission → unchanged balance', async ({
   page,
@@ -54,6 +94,20 @@ test('login → forced password → dashboard → direct upload → submission �
   await page.goto('/student/subscription');
   await expect(page.locator('#main-content>section .balance strong')).toHaveText('6');
   await expect(page.getByRole('button', { name: /Оплатить|Карта|Пополнить/ })).toHaveCount(0);
+});
+test('email security commands keep CSRF and one write per step', async ({ page, request }) => {
+  await page.goto('/student/security');
+  await page.getByLabel('Новый email', { exact: true }).fill('new@example.invalid');
+  await page.getByLabel('Текущий пароль', { exact: true }).fill('SyntheticPassword123');
+  await page.getByRole('button', { name: 'Получить код', exact: true }).click();
+  await page.getByLabel('Код подтверждения', { exact: true }).fill('123456');
+  await page.getByRole('button', { name: 'Подтвердить email', exact: true }).click();
+  await expect(page.getByText('Email изменён: new@example.invalid', { exact: true })).toBeVisible();
+  const calls = (await state(request)).calls.filter((call) => call.path.includes('/change-email/'));
+  expect(calls.map((call) => call.path.split('/').at(-1))).toEqual(['request', 'confirm']);
+  expect(
+    calls.every((call) => call.csrf === 'fixture-csrf' && /^[\da-f-]{36}$/.test(call.key)),
+  ).toBe(true);
 });
 test('debounce, server draft restoration and chronological versions', async ({ page, request }) => {
   await page.goto(`/student/homework/${homeworkId}`);
@@ -171,7 +225,7 @@ test('failed save stays editable, blocks accidental navigation and retries', asy
   await page.getByLabel('Твой ответ').fill('Сохранить мою работу');
   await expect(page.getByRole('button', { name: 'Повторить сохранение' })).toBeVisible();
   await page.getByRole('link', { name: '← Все задания' }).click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByRole('alertdialog')).toBeVisible();
   await page.getByRole('button', { name: 'Остаться', exact: true }).click();
   await patch(request, { failDraft: false });
   await page.getByRole('button', { name: 'Повторить сохранение' }).click();

@@ -7,6 +7,7 @@ import * as MenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Button, IconButton } from './controls.js';
 import { Icon } from './icon.js';
 import { useLocale } from './locale.js';
+import { setOverlayOrigin } from './motion.js';
 
 export type OverlayCloseReason =
   'escape' | 'outside' | 'close-button' | 'cancel-button' | 'primitive';
@@ -95,6 +96,7 @@ const DialogSurface = /* @__PURE__ */ forwardRef<HTMLDivElement, SurfaceProps>(
             className={`k8k-overlay-surface ${drawer ? 'k8k-drawer' : 'k8k-dialog'} ${className}`}
             aria-busy={pending || undefined}
             onOpenAutoFocus={(e) => {
+              setOverlayOrigin(e.target, returnFocusRef?.current);
               onOpenAutoFocus?.(e);
               focusRef(e, initialFocusRef);
             }}
@@ -208,6 +210,7 @@ export const ConfirmDialog = /* @__PURE__ */ forwardRef<HTMLDivElement, ConfirmD
             className={`k8k-overlay-surface k8k-dialog ${className}`}
             aria-busy={pending || undefined}
             onOpenAutoFocus={(e) => {
+              setOverlayOrigin(e.target, returnFocusRef?.current);
               onOpenAutoFocus?.(e);
               focusRef(e, initialFocusRef);
             }}

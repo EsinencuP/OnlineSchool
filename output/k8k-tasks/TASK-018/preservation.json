@@ -1,0 +1,25 @@
+{
+  "task017Inputs": 224,
+  "unchanged": 216,
+  "changed": [
+    "apps/manager-web/src/test/fixtures.ts",
+    "apps/platform/package.json",
+    "apps/platform/src/App.tsx",
+    "package.json",
+    "packages/api-contracts/openapi/openapi.json",
+    "packages/api-contracts/src/generated/client.ts",
+    "packages/api-contracts/src/generated/manager-error-codes.ts",
+    "packages/api-contracts/src/generated/openapi.ts"
+  ],
+  "ownerDirtyDashboard": "byte-identical to preserved pre-foundation TASK-005 snapshot",
+  "policyBackup": "HEAD canonical original; file was clean in status-before",
+  "prisma": "tracked schema/migrations unchanged; no migration applied",
+  "lockfile": "byte-identical to TASK-017",
+  "generatedManagerCodes": {
+    "before": 243,
+    "after": 244,
+    "added": [
+      "CONFIGURATION_INVALID"
+    ]
+  }
+}

@@ -1,0 +1,203 @@
+[
+  {
+    "name": "@online-school/ui",
+    "version": "0.0.0",
+    "path": "D:\\OnlineSchool\\packages\\ui",
+    "private": true,
+    "dependencies": {
+      "@fontsource-variable/golos-text": {
+        "from": "@fontsource-variable/golos-text",
+        "version": "5.2.8",
+        "resolved": "https://registry.npmjs.org/@fontsource-variable/golos-text/-/golos-text-5.2.8.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@fontsource-variable+golos-text@5.2.8\\node_modules\\@fontsource-variable\\golos-text"
+      },
+      "@js-temporal/polyfill": {
+        "from": "@js-temporal/polyfill",
+        "version": "0.5.1",
+        "resolved": "https://registry.npmjs.org/@js-temporal/polyfill/-/polyfill-0.5.1.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@js-temporal+polyfill@0.5.1\\node_modules\\@js-temporal\\polyfill"
+      },
+      "@radix-ui/react-alert-dialog": {
+        "from": "@radix-ui/react-alert-dialog",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-alert-dialog/-/react-alert-dialog-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-alert-dialo_a1a23861c543386307a5a4f1ead3679c\\node_modules\\@radix-ui\\react-alert-dialog"
+      },
+      "@radix-ui/react-dialog": {
+        "from": "@radix-ui/react-dialog",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-dialog/-/react-dialog-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dialog@1.1._9111ebc3bb5cbd8b04040ff4b116758b\\node_modules\\@radix-ui\\react-dialog"
+      },
+      "@radix-ui/react-dropdown-menu": {
+        "from": "@radix-ui/react-dropdown-menu",
+        "version": "2.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-dropdown-menu/-/react-dropdown-menu-2.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dropdown-me_77e918aa902a1e9042bc0e96e051d4ba\\node_modules\\@radix-ui\\react-dropdown-menu"
+      },
+      "@radix-ui/react-popover": {
+        "from": "@radix-ui/react-popover",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-popover/-/react-popover-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-popover@1.1_f4f9861f7864e88ad08732e1cf7ad163\\node_modules\\@radix-ui\\react-popover"
+      },
+      "@radix-ui/react-tabs": {
+        "from": "@radix-ui/react-tabs",
+        "version": "1.1.3",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-tabs/-/react-tabs-1.1.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-tabs@1.1.3__4e849ffd091f91f64bfb36fd76001871\\node_modules\\@radix-ui\\react-tabs"
+      },
+      "@radix-ui/react-tooltip": {
+        "from": "@radix-ui/react-tooltip",
+        "version": "1.1.8",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-tooltip/-/react-tooltip-1.1.8.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-tooltip@1.1_f24917841f9961e9948198ad732c892d\\node_modules\\@radix-ui\\react-tooltip"
+      },
+      "@tanstack/react-table": {
+        "from": "@tanstack/react-table",
+        "version": "8.21.3",
+        "resolved": "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.21.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@tanstack+react-table@8.21._d9a3d91e32e1b0b4b45e923246987805\\node_modules\\@tanstack\\react-table"
+      },
+      "lucide-react": {
+        "from": "lucide-react",
+        "version": "0.468.0",
+        "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.468.0.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\lucide-react@0.468.0_react@18.3.1\\node_modules\\lucide-react"
+      },
+      "react": {
+        "from": "react",
+        "version": "18.3.1",
+        "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+      },
+      "react-dom": {
+        "from": "react-dom",
+        "version": "18.3.1",
+        "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom"
+      }
+    },
+    "devDependencies": {
+      "@storybook/addon-a11y": {
+        "from": "@storybook/addon-a11y",
+        "version": "10.6.3",
+        "resolved": "https://registry.npmjs.org/@storybook/addon-a11y/-/addon-a11y-10.6.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@storybook+addon-a11y@10.6._632871ab21b4b3858a81ccb46ebb9176\\node_modules\\@storybook\\addon-a11y"
+      },
+      "@storybook/react-vite": {
+        "from": "@storybook/react-vite",
+        "version": "10.6.3",
+        "resolved": "https://registry.npmjs.org/@storybook/react-vite/-/react-vite-10.6.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@storybook+react-vite@10.6._2691d57461141c1c42e15d14aee0971c\\node_modules\\@storybook\\react-vite"
+      },
+      "@types/react": {
+        "from": "@types/react",
+        "version": "18.3.31",
+        "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+      },
+      "@types/react-dom": {
+        "from": "@types/react-dom",
+        "version": "18.3.7",
+        "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom"
+      },
+      "storybook": {
+        "from": "storybook",
+        "version": "10.6.3",
+        "resolved": "https://registry.npmjs.org/storybook/-/storybook-10.6.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\storybook@10.6.3_@types+rea_4f5190d9aae8de600e4b892c4f407624\\node_modules\\storybook"
+      },
+      "typescript": {
+        "from": "typescript",
+        "version": "6.0.3",
+        "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript"
+      },
+      "vite": {
+        "from": "vite",
+        "version": "7.3.7",
+        "resolved": "https://registry.npmjs.org/vite/-/vite-7.3.7.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\vite@7.3.7_@types+node@24.19.2_jiti@2.7.0_yaml@2.9.1\\node_modules\\vite"
+      }
+    },
+    "unsavedDependencies": {
+      "culori": {
+        "from": "culori",
+        "version": "link:../../node_modules/.pnpm/culori@4.0.2/node_modules/culori",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\culori@4.0.2\\node_modules\\culori"
+      },
+      "eslint": {
+        "from": "eslint",
+        "version": "link:../../node_modules/.pnpm/eslint@9.39.5_jiti@2.7.0/node_modules/eslint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\eslint@9.39.5_jiti@2.7.0\\node_modules\\eslint"
+      },
+      "eslint-config-prettier": {
+        "from": "eslint-config-prettier",
+        "version": "link:../../node_modules/.pnpm/eslint-config-prettier@10.1.8_eslint@9.39.5_jiti@2.7.0_/node_modules/eslint-config-prettier",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\eslint-config-prettier@10.1.8_eslint@9.39.5_jiti@2.7.0_\\node_modules\\eslint-config-prettier"
+      },
+      "globals": {
+        "from": "globals",
+        "version": "link:../../node_modules/.pnpm/globals@17.13.0/node_modules/globals",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\globals@17.13.0\\node_modules\\globals"
+      },
+      "jest": {
+        "from": "jest",
+        "version": "link:../../node_modules/.pnpm/jest@30.5.2_@types+node@24._bc5e55e00bb10f403b7a19f0ebee8f6f/node_modules/jest",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\jest@30.5.2_@types+node@24._bc5e55e00bb10f403b7a19f0ebee8f6f\\node_modules\\jest"
+      },
+      "postcss-value-parser": {
+        "from": "postcss-value-parser",
+        "version": "link:../../node_modules/.pnpm/postcss-value-parser@4.2.0/node_modules/postcss-value-parser",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\postcss-value-parser@4.2.0\\node_modules\\postcss-value-parser"
+      },
+      "prettier": {
+        "from": "prettier",
+        "version": "link:../../node_modules/.pnpm/prettier@3.9.10/node_modules/prettier",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\prettier@3.9.10\\node_modules\\prettier"
+      },
+      "stylelint": {
+        "from": "stylelint",
+        "version": "link:../../node_modules/.pnpm/stylelint@16.26.1_typescript@6.0.3/node_modules/stylelint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\stylelint@16.26.1_typescript@6.0.3\\node_modules\\stylelint"
+      },
+      "@eslint/js": {
+        "from": "@eslint/js",
+        "version": "link:../../node_modules/.pnpm/@eslint+js@9.39.5/node_modules/@eslint/js",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@eslint+js@9.39.5\\node_modules\\@eslint\\js"
+      },
+      "supertest": {
+        "from": "supertest",
+        "version": "link:../../node_modules/.pnpm/supertest@7.3.1/node_modules/supertest",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\supertest@7.3.1\\node_modules\\supertest"
+      },
+      "typescript-eslint": {
+        "from": "typescript-eslint",
+        "version": "link:../../node_modules/.pnpm/typescript-eslint@8.72.0_es_0cf7ec737a232f6a7bbff28cdbde1a06/node_modules/typescript-eslint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\typescript-eslint@8.72.0_es_0cf7ec737a232f6a7bbff28cdbde1a06\\node_modules\\typescript-eslint"
+      },
+      "turbo": {
+        "from": "turbo",
+        "version": "link:../../node_modules/.pnpm/turbo@2.11.10/node_modules/turbo",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\turbo@2.11.10\\node_modules\\turbo"
+      },
+      "@playwright/test": {
+        "from": "@playwright/test",
+        "version": "link:../../node_modules/.pnpm/@playwright+test@1.64.1/node_modules/@playwright/test",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@playwright+test@1.64.1\\node_modules\\@playwright\\test"
+      },
+      "@jest/globals": {
+        "from": "@jest/globals",
+        "version": "link:../../node_modules/.pnpm/@jest+globals@30.5.2/node_modules/@jest/globals",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@jest+globals@30.5.2\\node_modules\\@jest\\globals"
+      },
+      "@types/node": {
+        "from": "@types/node",
+        "version": "link:../../node_modules/.pnpm/@types+node@24.19.2/node_modules/@types/node",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+node@24.19.2\\node_modules\\@types\\node"
+      }
+    }
+  }
+]

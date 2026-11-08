@@ -1,0 +1,83 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "beforeCopiesVerified": 466,
+  "unchangedExistingInputs": 456,
+  "changedExistingInputs": [
+    {
+      "path": "apps/student-cabinet/package.json",
+      "beforeSha256": "0d708f24d910de9b1c083857e0f6d662769a9505b9550a3553fff4d0296c52be",
+      "sha256": "4a5b0a50af6c4721bb2ae816210a5d055cc88b3a5302a20bb178071b9e5a2949"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Account.tsx",
+      "beforeSha256": "de7fae675ee2a146fc84a142e8e784efab91d465513e93495f568cc597db8c8a",
+      "sha256": "3f8604a5987533849d2aede833fd652803412a002629b678a6e3bb880df0379a"
+    },
+    {
+      "path": "docs/ui-stack.md",
+      "beforeSha256": "48ad9d44c3ed60421770a1b47bfe513be0e9d76bdb122fd191bcff952e14a25c",
+      "sha256": "7ec5b5f9fbd57965a0032ed0a472f2a3e17ef52c6d97ab4e2d9401dc4ad9506c"
+    },
+    {
+      "path": "package.json",
+      "beforeSha256": "ce8f272e2c0e15c0aa51da79622ed786027420786b952cb6965695b302ee93d1",
+      "sha256": "f743813d650ccfb8a38417975d1c8b47a8feca6e37c7d53858b85238d12f4107"
+    },
+    {
+      "path": "packages/ui/package.json",
+      "beforeSha256": "15ca5a0a3ab121d70b50c718c218e7bc197279c4578ebf58d1417e3cd7a4050c",
+      "sha256": "39a4a80c98c3655e928d70f7e6fdb98ddbe1c6cf1ae98337c99acbd8e21c8976"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "beforeSha256": "d18503be249b0cdf80791b893c8b04a73457dce377afef15992e26ecaabe72cd",
+      "sha256": "17e00e6cea0524120ff326360e252eebe9de7ccf02382c84f33c701e640e3670"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "beforeSha256": "f1173e436fe366630c0bcec78cde469e8d47dc2020c107a02492ef4cb793437f",
+      "sha256": "934d81d96457f500ed860dc4df397f98e9e68c930dde257c4e3d85de64132b81"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "beforeSha256": "468107b6a4b6348f26b3825ffec595362c05da04cee0a2162c7abfbfed613ada",
+      "sha256": "d98050c97c93a1787e5d8083a59c9d91e860aa2566715c7b43a93467e0711e1d"
+    },
+    {
+      "path": "packages/ui/src/tokens.css",
+      "beforeSha256": "91caf4db4d69f02f01f3d1b33d0728ad120553235dfd68d2a32e65ce6dcbee81",
+      "sha256": "68629b23aad0c455c3c209bc6260a90b932e77a28f6f7bfd08ae5ec0004e5f8e"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "beforeSha256": "0e3b91ff60bcd932394cc8276a0e376bc427d6be51b8df4ed4df5d753a09971f",
+      "sha256": "51ea009da6f7a478568309a73560a80a5c8fb172e7339e2f828fd4101d1e7bf8"
+    }
+  ],
+  "newSourceInputs": [
+    "apps/student-cabinet/src/profile-help.tsx",
+    "apps/student-cabinet/tests/ui-overlays/fixture.tsx",
+    "apps/student-cabinet/tests/ui-overlays/index.html",
+    "apps/student-cabinet/tsconfig.ui-overlays.json",
+    "packages/ui/src/overlays.css",
+    "packages/ui/src/overlays.tsx",
+    "packages/ui/stories/overlays.css",
+    "packages/ui/stories/overlays.stories.tsx",
+    "packages/ui/tests/overlays.test.mjs",
+    "scripts/k8k-overlays-evidence.mjs"
+  ],
+  "acceptedSourceFilesVerified": 475,
+  "acceptedSourceDigest": "b72b6e077624c707227fe8be3b02543f85075ce84bbe943075bb09debd9ff6d0",
+  "acceptedBuildTimeDirtyDigest": "3c1036a16e8e2693ec0238c6f97eda4d7320ad97f65ada37bc2cce234018b5ba",
+  "finalTrackedPatchSha256": "91ba5caa05c5d249c6898bc7d38c8e1b02575e67120e967dcd3c6d02ddacc2c6",
+  "digestTiming": "Build-time dirty digest includes HEAD patch at build. Final bookkeeping changes patch only; all475 accepted source inputs identical after bookkeeping. No accepted output rewritten.",
+  "changedImporters": [
+    "packages/ui"
+  ],
+  "bookkeepingPreservesHistory": true,
+  "uiStackPrefixPreserved": true,
+  "protectedInputs": "protected-inputs.json verified9 files including archives and old manifests",
+  "noGitMutation": true,
+  "changedFilesOutsideAllowlist": []
+}

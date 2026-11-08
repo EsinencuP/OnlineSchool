@@ -1,0 +1,489 @@
+import { useRef, useState } from 'react';
+import { announceSessionChange, sessionSignal } from '@online-school/account-ui';
+import type { FormEvent } from 'react';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import {
+  changeStudentPassword,
+  confirmStudentEmailChange,
+  createSession,
+  getStudentMe,
+  getStudentSessions,
+  requestStudentEmailChange,
+  revokeStudentSession,
+  updateStudentProfile,
+} from '@online-school/api-contracts';
+import { queryClient, read, resetAccess, useCommand, useStudentQuery, write } from '../api.js';
+import { date, ErrorNotice, Panel, QueryState } from '../components.js';
+import { useMe } from '../Layout.js';
+import {
+  k8kEnabled,
+  Icon as UIIcon,
+  Button,
+  Card,
+  Field,
+  LanguageSelector,
+  useLocale,
+  useDataAge,
+  ErrorForm,
+  describeError,
+} from '@online-school/ui';
+import { StudentManagerCard } from '../student-widgets.js';
+import { ProfileHelp } from '../profile-help.js';
+import { useStudentCopy } from '../student-copy.js';
+function formValues(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+  return new FormData(event.currentTarget);
+}
+function useSecretCommand() {
+  const [error, setError] = useState<unknown>(null);
+  const [isPending, setPending] = useState(false);
+  const pending = useRef(false);
+  const unresolved = useRef(false);
+
+  async function run<T>(command: () => Promise<T>) {
+    const lease = sessionSignal();
+    if (pending.current || unresolved.current || lease.aborted) return;
+    pending.current = true;
+    setPending(true);
+    setError(null);
+    try {
+      const result = await command();
+      if (lease.aborted) return;
+      return result;
+    } catch (error) {
+      if (lease.aborted) return;
+      unresolved.current = describeError(error).outcome === 'unknown';
+      setError(error);
+    } finally {
+      pending.current = false;
+      if (!lease.aborted) setPending(false);
+    }
+  }
+
+  return { run, error, isPending };
+}
+export function Login() {
+  const { t } = useLocale();
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false),
+    [bootstrapError, setBootstrapError] = useState<unknown>(null);
+  const login = useSecretCommand();
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget,
+      data = formValues(event);
+    if (busy) return;
+    setBusy(true);
+    setBootstrapError(null);
+    try {
+      const session = await login.run(() =>
+        write((o) =>
+          createSession(
+            {
+              method: 'password',
+              email: String(data.get('email')),
+              password: String(data.get('password')),
+            },
+            o,
+          ),
+        ),
+      );
+      if (!session) return;
+      form.reset();
+      resetAccess();
+      announceSessionChange();
+      const me = await read(getStudentMe);
+      navigate(
+        me.mustChangePassword
+          ? '/student/security/change-password'
+          : me.hasActiveAccess
+            ? '/student'
+            : '/student/suspended',
+        { replace: true },
+      );
+    } catch (error) {
+      setBootstrapError(error);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <main className="standalone">
+      <section className="panel auth-card">
+        <p className="eyebrow">Academy · {t('cabinetStudent')}</p>
+        <h1>{t('auth.welcome')}</h1>
+        <p className="muted">{t('auth.studentPrompt')}</p>
+        <LanguageSelector />
+        <ErrorForm
+          error={bootstrapError ?? login.error}
+          busy={busy}
+          onSubmit={(e) => void submit(e)}
+        >
+          <fieldset disabled={busy}>
+            <Field
+              label={t('auth.email')}
+              name="email"
+              type="email"
+              autoComplete="username"
+              required
+              maxLength={254}
+            />
+            <Field
+              label={t('auth.password')}
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              maxLength={256}
+            />
+            <ErrorNotice error={bootstrapError ?? login.error} />
+            <button className="primary" type="submit">
+              {t(busy ? 'auth.signingIn' : 'auth.enter')}
+            </button>
+          </fieldset>
+        </ErrorForm>
+      </section>
+    </main>
+  );
+}
+export function ChangePassword() {
+  const { t } = useLocale();
+  const navigate = useNavigate();
+  const [busy, setBusy] = useState(false),
+    [bootstrapError, setBootstrapError] = useState<unknown>(null);
+  const change = useSecretCommand();
+  const [mismatch, setMismatch] = useState(false);
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget,
+      data = formValues(event);
+    if (busy) return;
+    const newPassword = String(data.get('newPassword'));
+    setMismatch(newPassword !== data.get('confirmPassword'));
+    if (newPassword !== data.get('confirmPassword')) return;
+    setBusy(true);
+    setBootstrapError(null);
+    try {
+      const changed = await change.run(() =>
+        write((o) =>
+          changeStudentPassword(
+            {
+              currentPassword: String(data.get('currentPassword')),
+              newPassword,
+            },
+            o,
+          ),
+        ),
+      );
+      if (!changed) return;
+      form.reset();
+      resetAccess();
+      announceSessionChange();
+      const me = await read(getStudentMe);
+      navigate(me.hasActiveAccess ? '/student' : '/student/suspended', { replace: true });
+    } catch (error) {
+      setBootstrapError(error);
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <main className="standalone">
+      <section className="panel auth-card">
+        <p className="eyebrow">Безопасность аккаунта</p>
+        <h1>Задайте новый пароль</h1>
+        <p>Для первого входа замени временный пароль на собственный.</p>
+        <LanguageSelector />
+        <ErrorForm
+          error={bootstrapError ?? change.error}
+          busy={busy}
+          onSubmit={(e) => void submit(e)}
+        >
+          <fieldset disabled={busy}>
+            <Field
+              label={t('errors.currentPassword')}
+              name="currentPassword"
+              type="password"
+              autoComplete="current-password"
+              required
+              maxLength={256}
+            />
+            <Field
+              label={t('errors.newPassword')}
+              name="newPassword"
+              type="password"
+              autoComplete="new-password"
+              minLength={8}
+              maxLength={128}
+              pattern="(?=.*[A-Za-z])(?=.*[0-9]).+"
+              required
+              aria-describedby="password-hint"
+            />
+            <p className="muted" id="password-hint">
+              {t('errors.passwordHint')}
+            </p>
+            <Field
+              label={t('errors.confirmPassword')}
+              name="confirmPassword"
+              type="password"
+              autoComplete="new-password"
+              required
+              maxLength={128}
+              error={mismatch ? t('errors.passwordMismatch') : undefined}
+            />
+            {mismatch && (
+              <p className="error" role="alert">
+                {t('errors.passwordMismatch')}
+              </p>
+            )}
+            <ErrorNotice error={bootstrapError ?? change.error} />
+            <button className="primary" type="submit">
+              {busy ? 'Сохраняем…' : 'Изменить пароль'}
+            </button>
+          </fieldset>
+        </ErrorForm>
+      </section>
+    </main>
+  );
+}
+export function AccessSuspended() {
+  const me = useStudentQuery(['suspended-me'], getStudentMe, true, 60_000);
+  const contactsTooOld = useDataAge(me.dataUpdatedAt, 120_000);
+  const { copy } = useStudentCopy();
+  if (!me.error && me.data?.hasActiveAccess) return <Navigate to="/student" replace />;
+  return (
+    <main className={k8kEnabled ? 'k8k-access-screen' : 'standalone'}>
+      <section className={k8kEnabled ? 'k8k-student-card' : 'panel auth-card'}>
+        {k8kEnabled && (
+          <p className="k8k-access-brand">
+            <UIIcon name="brand" /> K8K Academy
+          </p>
+        )}
+        <h1>{copy.suspendedTitle}</h1>
+        <p>{copy.suspendedBody}</p>
+        <QueryState query={me} operational>
+          {me.data && (
+            <StudentManagerCard
+              contacts={me.data.managerContacts}
+              unavailable={!!me.error || contactsTooOld}
+            />
+          )}
+        </QueryState>
+      </section>
+    </main>
+  );
+}
+export function Profile() {
+  const me = useMe();
+  const { locale } = useLocale();
+  const copy =
+    k8kEnabled && locale === 'ro'
+      ? {
+          title: 'Profil și setări',
+          panel: 'Date personale',
+          name: 'Cum să ne adresăm',
+          hint: 'Acest nume apare în cabinet. Datele din documentele școlii nu se modifică.',
+          save: 'Salvează profilul',
+          pending: 'Se salvează profilul…',
+          saved: 'Profilul a fost salvat',
+          security: 'Securitatea contului →',
+        }
+      : {
+          title: 'Профиль и настройки',
+          panel: 'Личные данные',
+          name: 'Как к тебе обращаться',
+          hint: 'Это имя отображается в кабинете. Данные в документах школы не меняются.',
+          save: 'Сохранить профиль',
+          pending: 'Сохраняем профиль…',
+          saved: 'Профиль сохранён',
+          security: 'Безопасность аккаунта →',
+        };
+  const ProfilePanel = k8kEnabled ? Card : Panel;
+  const update = useCommand((displayName: string, key) =>
+    write((o) => updateStudentProfile({ displayName }, o), key),
+  );
+  function save(event: FormEvent<HTMLFormElement>) {
+    const data = formValues(event);
+    if (!update.isPending) update.mutate(String(data.get('displayName')).trim());
+  }
+  return (
+    <>
+      <h1>{copy.title}</h1>
+      <ProfilePanel title={copy.panel}>
+        {k8kEnabled && <ProfileHelp />}
+        <ErrorForm error={update.error} busy={update.isPending} onSubmit={save}>
+          <fieldset disabled={update.isPending}>
+            {k8kEnabled ? (
+              <Field
+                key={me.displayName}
+                id="student-profile-name"
+                label={copy.name}
+                name="displayName"
+                defaultValue={me.displayName}
+                required
+                minLength={1}
+                maxLength={100}
+                autoComplete="nickname"
+                inputMode="text"
+                hint={copy.hint}
+              />
+            ) : (
+              <>
+                <Field
+                  label={copy.name}
+                  key={me.displayName}
+                  name="displayName"
+                  defaultValue={me.displayName}
+                  required
+                  minLength={1}
+                  maxLength={100}
+                />
+                <p className="muted">{copy.hint}</p>
+              </>
+            )}
+            <p>Email: {me.email}</p>
+            <ErrorNotice error={update.error} />
+            {update.isSuccess && <p role="status">{copy.saved}</p>}
+            {k8kEnabled ? (
+              <Button type="submit" pending={update.isPending} disabledReason={copy.pending}>
+                {copy.save}
+              </Button>
+            ) : (
+              <button className="primary" type="submit">
+                {copy.save}
+              </button>
+            )}
+          </fieldset>
+        </ErrorForm>
+        <Link className="button" to="/student/security">
+          {copy.security}
+        </Link>
+      </ProfilePanel>
+    </>
+  );
+}
+export function Security() {
+  const { t } = useLocale();
+  const [newEmail, setNewEmail] = useState(''),
+    [otpRequested, setOtpRequested] = useState(false),
+    [confirmedEmail, setConfirmedEmail] = useState<string>();
+  const sessions = useStudentQuery(['sessions'], getStudentSessions);
+  const revoke = useCommand((id: string) => write((o) => revokeStudentSession(id, o)));
+  const request = useSecretCommand();
+  const confirm = useSecretCommand();
+  async function send(event: FormEvent<HTMLFormElement>) {
+    const form = event.currentTarget,
+      data = formValues(event);
+    const requested = await request.run(() =>
+      write((o) =>
+        requestStudentEmailChange(
+          { newEmail, currentPassword: String(data.get('currentPassword')) },
+          o,
+        ),
+      ),
+    );
+    if (!requested) return;
+    form.reset();
+    setOtpRequested(true);
+    void queryClient.invalidateQueries({ queryKey: ['student'] });
+  }
+  async function verify(event: FormEvent<HTMLFormElement>) {
+    const data = formValues(event);
+    const result = await confirm.run(() =>
+      write((o) => confirmStudentEmailChange({ newEmail, otp: String(data.get('otp')) }, o)),
+    );
+    if (result) {
+      setConfirmedEmail(result.email);
+      void queryClient.invalidateQueries({ queryKey: ['student'] });
+    }
+  }
+  return (
+    <>
+      <h1>Безопасность</h1>
+      <Panel title="Пароль">
+        <p>Меняй пароль, если считаешь, что его мог узнать кто-то ещё.</p>
+        <Link className="button" to="/student/security/change-password">
+          Изменить пароль
+        </Link>
+      </Panel>
+      <Panel title="Email для входа">
+        {confirmedEmail !== undefined ? (
+          <p role="status">Email изменён: {confirmedEmail}</p>
+        ) : otpRequested ? (
+          <ErrorForm
+            error={confirm.error}
+            busy={confirm.isPending}
+            onSubmit={(e) => void verify(e)}
+          >
+            <fieldset disabled={confirm.isPending}>
+              <p>Введи код, отправленный на {newEmail}.</p>
+              <Field
+                label={t('errors.otp')}
+                name="otp"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9]{6}"
+                minLength={6}
+                maxLength={6}
+                required
+              />
+              <ErrorNotice error={confirm.error} />
+              <button className="primary" type="submit">
+                Подтвердить email
+              </button>
+              <button type="button" onClick={() => setOtpRequested(false)}>
+                Запросить новый код
+              </button>
+            </fieldset>
+          </ErrorForm>
+        ) : (
+          <ErrorForm error={request.error} busy={request.isPending} onSubmit={(e) => void send(e)}>
+            <fieldset disabled={request.isPending}>
+              <Field
+                label={t('errors.newEmail')}
+                name="newEmail"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                type="email"
+                autoComplete="email"
+                maxLength={254}
+                required
+              />
+              <Field
+                label={t('errors.currentPassword')}
+                name="currentPassword"
+                type="password"
+                autoComplete="current-password"
+                maxLength={256}
+                required
+              />
+              <ErrorNotice error={request.error} />
+              <button className="primary" type="submit">
+                Получить код
+              </button>
+            </fieldset>
+          </ErrorForm>
+        )}
+      </Panel>
+      <Panel title="Активные устройства">
+        <ErrorNotice error={revoke.error} />
+        <QueryState query={sessions}>
+          <ul className="history-list">
+            {sessions.data?.map((s) => (
+              <li key={s.sessionId}>
+                <strong>{s.isCurrent ? 'Это устройство' : 'Другое устройство'}</strong>
+                <span>{s.userAgent || 'Браузер не указан'}</span>
+                <small>
+                  {s.ipAddress} · Активность: {date(s.lastActiveAt, true)}
+                </small>
+                {!s.isCurrent && (
+                  <button disabled={revoke.isPending} onClick={() => revoke.mutate(s.sessionId)}>
+                    Завершить сессию
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </QueryState>
+      </Panel>
+    </>
+  );
+}

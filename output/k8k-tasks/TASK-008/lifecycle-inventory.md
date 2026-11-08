@@ -1,0 +1,18 @@
+# TASK-008 — inventory of preserved lifecycle
+
+Source inspection before introducing wrappers; this record points to unchanged source, not migration acceptance.
+
+| Existing caller | Actual ownership/behavior | Decision for TASK-008 / migration follow-up |
+|---|---|---|
+| `apps/manager-web/src/components/ui.tsx:189` Dialog | native showModal, previous activeElement restore; Escape/backdrop delegates close. No generic dirty decision. FormShell checks busy/disabled; Conflict reload is caller-owned. | Preserve bytes. Future caller migration must carry close guard/error/reload, not substitute unconditional setOpen. TASK-048—058. |
+| `pages/Students.tsx:184`, `Student.tsx:203`, `Schedule.tsx:294`, `student/Notifications.tsx:132`, `student/Payments.tsx:242`, `student/Subscriptions.tsx:153` | caller close blocks on command.busy; forms keep command hooks, fieldsets, idempotency and conflict reload. No automatic dirty confirmation in native wrapper. | Preserve all; UI cannot infer unknown outcome from busy=false. Add app reconciliation/dirty decisions at each eventual migration, TASK-048—058. |
+| `pages/Schedule.tsx:227` | read-only student chooser: close directly sets choosing=false. | Preserve; does not grant action eligibility. |
+| `pages/Leads.tsx:224`, `Lead.tsx:270/275/303/334` | close sets creating=false/action=null; mutations/availability live in caller. Generic close currently has no dirty/unknown guard. | Record gap; no broad replacement. TASK-053/054 subject to their own task scope. |
+| `apps/student-cabinet/src/components.tsx` Modal; `pages/Homework.tsx:122/371` | native dialog. Homework dirty derives editable/content versus saved; router blocker, beforeunload, serialized autosave/version/queue preserved; auth/session redirect bypasses dirty blocker. | Preserve all. Draft migration belongs to TASK-030 and related student acceptance, not this wrapper task. |
+| `apps/manager-web/src/pages/Account.tsx:28—126` | issued credential in component state/ref only. clear/pagehide/unmount zero temporaryPassword; late response accepted only if active; copy reads ref. useCommand bypasses MutationCache; abort/lifetime gates. | Preserve bytes, do not execute/produce credentials or include in fixtures/screenshots. TASK-067—069 privacy/credentials acceptance remains separate. |
+| `packages/account-ui/src/index.tsx:45—190` AccountMenu | details/ref outside pointer/Escape; abortable getAccounts, busy/error. SDK+CSRF switch/logout; school-account BroadcastChannel and full location.replace clear current actor navigation/caches. | Preserve bytes and package ownership. New DropdownMenu only accepts caller-eligible items and callbacks; future account-ui migration TASK-067. |
+| `apps/manager-web/src/session.tsx` and existing student api/session boundary | 401 redirects,403 above cached data; caller context removal owns private subtree. | UI never subscribes to session or caches actors. Local specimen removes complete overlay subtree + clears local state/callback on synthetic revoke; no claim of fresh production session acceptance. |
+
+New production use only `apps/student-cabinet/src/profile-help.tsx`: read-only explanation already present in Profile; no mutation/dirty/secret data. GuardedOverlay is a local CSF/consumer fixture demonstrating caller-owned requestClose(reason), dirty confirm, pending/unknown no retry and lifecycle cleanup. All markers are synthetic noncredentials.
+
+Modal background uses Radix aria-hidden + pointer isolation/focus trap/scroll lock (equivalent inaccessible background behavior, not a claim of native inert attribute). Nonmodal must keep background accessible/focusable. No forceMount, exit animation or retained private form DOM.

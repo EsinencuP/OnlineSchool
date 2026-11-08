@@ -1,0 +1,29 @@
+{
+  "task": "TASK-003",
+  "task002InputsUnchangedExceptPackage": true,
+  "changedInputPaths": [
+    "package.json"
+  ],
+  "preservedTask002Inputs": 393,
+  "protectedOriginalHashes": {
+    "output/k8k-implementation/baseline/manifest.json": "a7d84075bc8e5925c0f7500c84498e3e02325b8f80f2bbdfb4679d434207c6d4",
+    "output/k8k-implementation/baseline/status.txt": "3d0924c29c85ac087181685229ae6eeae823bd0f8a7eab057a71e31a2626312b",
+    "output/k8k-implementation/baseline/tracked.patch": "3379e13e28811809aa57714813a99e1d1a12801d6eec86742dd989bb747af902",
+    "apps/apps.rar": "1e819a62692e21c21aac31b1dd17588b7ac5930e4d6bb17eb0537a4d92740737",
+    "uiux.rar": "563b6e6d2ff5e0fd6aafb5bc960065ac8dcb9368671dcaaf276ac55a4943d740"
+  },
+  "task002InventorySha256": "d7911bbdad9e86736d3b0682fae361463a8ce3c56ce21864a5c63a90a7f3c40c",
+  "runtimeProviderCalls": "none; local fixture HTTP only",
+  "passed": true,
+  "sourceCommit": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "b6821f156103220df0bb2f8347db889ad00a399fb611191bba4578493c7dd36d",
+  "sourceDigest": "7c981ad78dcbb4c9d5d5d6ad15cbd1489549ad5694488db73994ed036aade915",
+  "currentRunSourceInputsUnchanged": 399,
+  "task001AcceptedManifestsUnchanged": true,
+  "headBranchIndexUnchanged": true,
+  "bookkeepingDigestsMatch": true,
+  "packageChangesOnlyThreeTaskScriptsRelativeToTask001": true,
+  "unexpectedNotRunRows": 0,
+  "auditStatus": "DONE"
+}

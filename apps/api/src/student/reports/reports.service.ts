@@ -1,3 +1,4 @@
+import { studentAccessSuspended } from '../manager-contacts.js';
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@online-school/db';
@@ -15,8 +16,14 @@ import type { HistoryPage } from '../history/history.dto.js';
 import { MeService } from '../me/me.service.js';
 import { normalizeReport, PDF_EXPORT_JOB_TYPE } from './export-data.js';
 import { exportSelection } from './reports.dto.js';
-import type { ExportPdfResponseDto, PdfJobStatusDto, ReportsResponseDto } from './reports.dto.js';
-import { publishedReportsCte, studentReportsSql } from './reports.sql.js';
+import type {
+  EducationalReportDto,
+  ExportPdfResponseDto,
+  PdfJobStatusDto,
+  PdfExportRequestResultDto,
+  ReportsResponseDto,
+} from './reports.dto.js';
+import { publishedReportsCte, studentReportsSql, studentReportSql } from './reports.sql.js';
 
 @Injectable()
 export class StudentReportsService {
@@ -30,7 +37,8 @@ export class StudentReportsService {
     if (loaded.context.studentProfileId !== student.studentProfileId)
       return fail(domainError('REPORT_FORBIDDEN', 403));
     if (loaded.context.mustChangePassword) return fail(domainError('MUST_CHANGE_PASSWORD', 403));
-    if (!loaded.context.hasActiveAccess) return fail(domainError('ACCESS_SUSPENDED', 402));
+    if (!loaded.context.hasActiveAccess)
+      return fail(studentAccessSuspended(loaded.context.managerContacts));
     return loaded;
   }
   async list(student: IStudentContext, query: HistoryPage): Promise<ReportsResponseDto> {
@@ -70,6 +78,31 @@ export class StudentReportsService {
       ],
     });
     return result.count === 1;
+  }
+  async detail(student: IStudentContext, id: string): Promise<EducationalReportDto> {
+    const [row] = await this.database.client.$queryRaw<{ report: EducationalReportDto }[]>(
+      studentReportSql(student.studentProfileId, id, new Date()),
+    );
+    if (!row) return fail(domainError('REPORT_FORBIDDEN', 403));
+    return normalizeReport(row.report, student.timeZone);
+  }
+  async exportRequestResult(
+    student: IStudentContext,
+    key: string,
+  ): Promise<PdfExportRequestResultDto> {
+    const job = await this.database.client.pdfExportJob.findFirst({
+      where: {
+        student_id: student.studentProfileId,
+        requested_by: student.userId,
+        job_ref: {
+          type: PDF_EXPORT_JOB_TYPE,
+          source_operation_id: key,
+          deduplication_key: `education-pdf:${student.userId}:${key}`,
+        },
+      },
+      select: { id: true },
+    });
+    return job ? { status: 'ACCEPTED', jobId: job.id } : { status: 'UNKNOWN', jobId: null };
   }
   async enqueue(
     ctx: CriticalContext,

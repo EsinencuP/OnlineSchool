@@ -4,8 +4,14 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { object, uuid } from '../../modules/identity/input.js';
 import { HistoryQueryPipe } from '../history/history.dto.js';
 
-export type MaterialsQuery = { page: number; pageSize: number; subjectId?: string };
+export type MaterialsQuery = {
+  page: number;
+  pageSize: number;
+  subjectId?: string;
+  lessonId?: string;
+};
 export class MaterialsQueryDto {
+  @ApiPropertyOptional({ format: 'uuid' }) lessonId?: string;
   @ApiPropertyOptional({
     format: 'uuid',
     description: 'Educational subject ID, not the permission recipient account',
@@ -18,7 +24,7 @@ export class MaterialsQueryDto {
 @Injectable()
 export class MaterialsQueryPipe implements PipeTransform {
   transform(value: unknown): MaterialsQuery {
-    const input = object(value, ['subjectId', 'page', 'pageSize']);
+    const input = object(value, ['subjectId', 'page', 'pageSize', 'lessonId']);
     const page = new HistoryQueryPipe().transform({
       ...(input.page !== undefined ? { page: input.page } : {}),
       pageSize: input.pageSize === undefined ? '30' : input.pageSize,
@@ -26,10 +32,24 @@ export class MaterialsQueryPipe implements PipeTransform {
     return {
       ...page,
       ...(input.subjectId !== undefined ? { subjectId: uuid(input.subjectId) } : {}),
+      ...(input.lessonId !== undefined ? { lessonId: uuid(input.lessonId) } : {}),
     };
   }
 }
 export class MaterialItemDto {
+  @ApiPropertyOptional({
+    format: 'uuid',
+    type: String,
+    nullable: true,
+    description: 'Explicit educational subject; null means a legacy contextless grant',
+  })
+  subjectId?: string | null;
+  @ApiPropertyOptional({
+    description: 'Existing grant disposition: true attachment, false inline READ; not DRM',
+  })
+  canDownload?: boolean;
+  @ApiPropertyOptional({ description: 'True only when the original filename was not recorded' })
+  fileNameIsFallback?: boolean;
   @ApiProperty({ format: 'uuid' }) fileId!: string;
   @ApiProperty() fileName!: string;
   @ApiProperty({ type: 'integer' }) fileSizeBytes!: number;

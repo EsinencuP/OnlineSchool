@@ -1,0 +1,376 @@
+[
+  {
+    "name": "AppShell",
+    "status": "PASS",
+    "stories": [
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Sidebar",
+    "status": "PASS",
+    "stories": [
+      "ui-shell--shell-parts"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "BottomNav",
+    "status": "PASS",
+    "stories": [
+      "ui-shell--shell-parts"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Header",
+    "status": "PASS",
+    "stories": [
+      "ui-shell--shell-parts"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "NotificationBell",
+    "status": "PASS",
+    "stories": [
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--shell-parts",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "HeroCard",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--information"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "StatTile",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--information"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "ListRow",
+    "status": "PASS",
+    "stories": [
+      "ui-lists-and-tables--queue-columns"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "StatusChip",
+    "status": "PASS",
+    "stories": [
+      "ui-controlled-overlays--lifecycle",
+      "ui-native-controls--variants"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Button",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--help",
+      "ui-composite-controls--results",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--pending-confirmation",
+      "ui-controlled-overlays--side-drawer",
+      "ui-lists-and-tables--queue-columns",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "IconButton",
+    "status": "PASS",
+    "stories": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Field",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer",
+      "ui-error-feedback--validation",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants",
+      "ui-vis-11--pending-editor"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Select",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--information",
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "DatePicker",
+    "status": "PASS",
+    "stories": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--disabled-date",
+      "ui-calendar-and-dates--empty-range"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Segmented",
+    "status": "PASS",
+    "stories": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--empty-range"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Tabs",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Dialog",
+    "status": "PASS",
+    "stories": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Drawer",
+    "status": "PASS",
+    "stories": [
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "ConfirmDialog",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--guarded-form",
+      "ui-composite-controls--retained-form",
+      "ui-controlled-overlays--action-menu",
+      "ui-controlled-overlays--confirmation",
+      "ui-controlled-overlays--inline-popover",
+      "ui-controlled-overlays--lifecycle",
+      "ui-controlled-overlays--modal-dialog",
+      "ui-controlled-overlays--nonmodal-dialog",
+      "ui-controlled-overlays--pending-confirmation",
+      "ui-controlled-overlays--side-drawer"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "DenseTable",
+    "status": "PASS",
+    "stories": [
+      "ui-lists-and-tables--empty-table",
+      "ui-lists-and-tables--ordered-pages",
+      "ui-lists-and-tables--unknown-table-result"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "KanbanColumn",
+    "status": "PASS",
+    "stories": [
+      "ui-lists-and-tables--queue-columns"
+    ],
+    "adapterTasks": [
+      "TASK-053: server pages/filter/count",
+      "TASK-054: keyboard/dnd eligibility/revision commands"
+    ]
+  },
+  {
+    "name": "Calendar",
+    "status": "PASS",
+    "stories": [
+      "ui-calendar-and-dates--calendar-views",
+      "ui-calendar-and-dates--empty-range",
+      "ui-calendar-and-dates--month-range"
+    ],
+    "adapterTasks": [
+      "TASK-037: teacher schedule/resources",
+      "TASK-057/058: CRM exception workflow/role gate"
+    ]
+  },
+  {
+    "name": "StagesTrack",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--stages"
+    ],
+    "adapterTasks": [
+      "TASK-031: published student stages",
+      "TASK-042/043/044: teacher assessment/checkpoint/publication"
+    ]
+  },
+  {
+    "name": "Avatar",
+    "status": "PASS",
+    "stories": [
+      "ui-native-controls--field-and-select",
+      "ui-native-controls--variants",
+      "ui-shell--director",
+      "ui-shell--manager",
+      "ui-shell--operator",
+      "ui-shell--student",
+      "ui-shell--teacher"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Skeleton",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "EmptyState",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "ErrorState",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "StaleBanner",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--notice-primitives"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "FreshnessLabel",
+    "status": "PASS",
+    "stories": [
+      "ui-vis-11--freshness"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  },
+  {
+    "name": "Toast",
+    "status": "PASS",
+    "stories": [
+      "ui-composite-controls--results"
+    ],
+    "adapterTasks": [
+      "TASK-018–023 / relevant role TASK: authoritative data, permissions and lifecycle"
+    ]
+  }
+]

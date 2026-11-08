@@ -1,0 +1,40 @@
+.design-page {
+  padding: var(--k8k-space-4);
+  max-width: 1100px;
+  margin-inline: auto;
+  font-size: var(--k8k-font-body);
+  overflow-wrap: anywhere;
+}
+.design-surface {
+  padding: var(--k8k-space-4);
+  margin-bottom: var(--k8k-space-4);
+  border: 1px solid var(--border);
+}
+.design-white {
+  background: var(--surface);
+}
+.design-page {
+  background: var(--bg-page);
+}
+.design-sand {
+  background: var(--k8k-sand);
+}
+.design-warm {
+  background: var(--surface-warm);
+}
+.design-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--k8k-space-3);
+}
+.design-controls > * {
+  max-width: 100%;
+}
+.design-links {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.design-state {
+  margin-bottom: var(--k8k-space-4);
+}

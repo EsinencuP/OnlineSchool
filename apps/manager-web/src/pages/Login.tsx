@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { announceSessionChange } from '@online-school/account-ui';
 import { LanguageSelector, useLocale } from '@online-school/ui';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   createSession,
   authenticatePasskeyStart,
@@ -25,8 +26,10 @@ export default function Login() {
   const [keyBusy, setKeyBusy] = useState(false);
   const command = useCommand();
   const navigate = useNavigate();
-  const sessionError = (useLocation().state as { sessionError?: ApiErrorView } | null)
-    ?.sessionError;
+  function enterCabinet() {
+    announceSessionChange();
+    navigate('/manager', { replace: true });
+  }
   async function login(data: FormData) {
     clearSession();
     const payload = {
@@ -37,8 +40,7 @@ export default function Login() {
     const result = await command.run({ email: payload.email }, (o) => createSession(payload, o));
     payload.password = '';
     if (result && 'mfa_completed' in result) {
-      if (result.mfa_completed || result.manager_password_only)
-        navigate('/manager', { replace: true });
+      if (result.mfa_completed || result.manager_password_only) enterCabinet();
       else setMfa(true);
     }
   }
@@ -88,7 +90,7 @@ export default function Login() {
               o,
             ),
           );
-          if (finish) navigate('/manager', { replace: true });
+          if (finish) enterCabinet();
         }
       }
     } catch {
@@ -99,46 +101,14 @@ export default function Login() {
   }
   return (
     <main className="login-page">
-      <section className="login-story" aria-label={ru.academy}>
-        <div className="login-brand">
-          <Icon name="academy" size={38} />
-          <span>
-            {ru.brandShort}
-            <small>{ru.managerPanel}</small>
-          </span>
-        </div>
-        <div className="login-story-copy">
-          <p className="eyebrow">{ru.loginEyebrow}</p>
-          <h2>{ru.loginTagline}</h2>
-          <p>{ru.loginIntro}</p>
-          <div className="login-feature">
-            <Icon name="users" />
-            <span>{ru.myPortfolio}</span>
-          </div>
-          <div className="login-feature">
-            <Icon name="calendar" />
-            <span>{ru.workingCalendar}</span>
-          </div>
-          <div className="login-feature">
-            <Icon name="tasks" />
-            <span>{ru.myTasks}</span>
-          </div>
-        </div>
-        <p className="login-security">
-          <Icon name="shield" size={18} />
-          {ru.loginSecurity}
-        </p>
-      </section>
       <section className="login-form-side">
         <div className="login-form-wrap">
           <div className="brand-mark" aria-hidden="true">
             <Icon name="academy" size={31} />
           </div>
-          <p className="eyebrow">{ru.academy}</p>
           <LanguageSelector />
           <h1>{mfa ? ru.mfa : ru.login}</h1>
-          <p className="login-description">{mfa ? ru.firstKeyHelp : ru.loginFormHelp}</p>
-          {sessionError && <ErrorBox error={sessionError} />}
+          {mfa && <p className="login-description">{ru.firstKeyHelp}</p>}
           {mfa ? (
             <>
               <p>{ru.mfaHelp}</p>

@@ -1,0 +1,27 @@
+{
+  "taskId": "TASK-035",
+  "run": "output/k8k-taskpack/task-035/runs/2026-11-08T10-45-10.781Z",
+  "phase": "browser",
+  "results": [
+    {
+      "id": "source-build-budget",
+      "command": "programmatic Vite source build / evaluateRoute",
+      "exit": 0,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T10-45-10.781Z/budgets.json"
+    },
+    {
+      "id": "browser",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+        "test",
+        "--config",
+        "playwright.student-gate.config.mjs"
+      ],
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet",
+      "exit": 1,
+      "durationMs": 184327,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T10-45-10.781Z/browser.log"
+    }
+  ]
+}

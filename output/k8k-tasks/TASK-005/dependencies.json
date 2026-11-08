@@ -1,0 +1,37 @@
+{
+  "devOnly": true,
+  "install": "pnpm add -Dw --save-exact --ignore-scripts stylelint@16.26.1 culori@4.0.2 postcss-value-parser@4.2.0",
+  "postinstallExecuted": false,
+  "dependencies": [
+    {
+      "version": "16.26.1",
+      "license": "MIT",
+      "engines": {
+        "node": ">=18.12.0"
+      },
+      "dist.unpackedSize": 1755068,
+      "name": "stylelint",
+      "releasedAt": "2025-11-28T09:28:14.439Z",
+      "ageDaysAtTaskDate": 339
+    },
+    {
+      "version": "4.0.2",
+      "license": "MIT",
+      "engines": {
+        "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+      },
+      "dist.unpackedSize": 1108305,
+      "name": "culori",
+      "releasedAt": "2025-06-27T15:55:34.023Z",
+      "ageDaysAtTaskDate": 493
+    },
+    {
+      "version": "4.2.0",
+      "license": "MIT",
+      "dist.unpackedSize": 27193,
+      "name": "postcss-value-parser",
+      "releasedAt": "2021-11-29T11:32:56.985Z",
+      "ageDaysAtTaskDate": 1799
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+.controls-lab {
+  max-width: 1100px;
+  padding: var(--k8k-space-4);
+  margin-inline: auto;
+  overflow-wrap: anywhere;
+}
+.controls-lab .k8k-card {
+  margin-block: var(--k8k-space-4);
+}
+.controls-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k8k-space-3);
+  margin-block: var(--k8k-space-4);
+}
+.controls-person {
+  display: flex;
+  align-items: center;
+  gap: var(--k8k-space-3);
+}
+.controls-lab output {
+  display: block;
+  font-size: var(--k8k-font-sm);
+}

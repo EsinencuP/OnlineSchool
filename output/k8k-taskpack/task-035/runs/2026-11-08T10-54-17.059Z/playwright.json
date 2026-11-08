@@ -1,0 +1,579 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.student-gate.config.mjs",
+      "--grep=subject-hub independent|subject-hub homework context|legacy.*notifications|route layouts and accessibility|TASK-035 complete|TASK-035 keyboard"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.student-gate.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "studentGate": true,
+      "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/",
+      "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/evidence/TASK-025/",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "student-k8k",
+        "name": "student-k8k",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "editor-preservation",
+        "name": "editor-preservation",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "student.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": {},
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-54-17.059Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "student-k8k",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "student-k8k"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-54-17.059Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-54-17.059Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "editor-preservation",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "student.spec.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "editor-preservation"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-54-17.059Z\\playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet\\",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": false,
+      "env": {
+        "STUDENT_FIXTURE_DIST": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\build\\student"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "locales.spec.mjs",
+      "file": "locales.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-034 RU/RO route layouts and accessibility ru",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:22.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "64cfcad1fdd213fbfa38-5c393df1127a68c9914f",
+          "file": "locales.spec.mjs",
+          "line": 54,
+          "column": 3
+        },
+        {
+          "title": "TASK-034 RU/RO route layouts and accessibility ro",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6009,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:28.772Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "64cfcad1fdd213fbfa38-1638fe24d2d3e21db0a6",
+          "file": "locales.spec.mjs",
+          "line": 54,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "navigation.spec.mjs",
+      "file": "navigation.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "legacy student notifications opens the K8K bell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 338,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:34.799Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "eea81427e4fb2b1abe7d-7f7b4274668e7c17e561",
+          "file": "navigation.spec.mjs",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "student-gate.spec.mjs",
+      "file": "student-gate.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4969,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:35.162Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-24df952bc4e71dc01bd4",
+          "file": "student-gate.spec.mjs",
+          "line": 85,
+          "column": 1
+        },
+        {
+          "title": "TASK-035 keyboard, 200% reflow and motion preference preserve the main action",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 644,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:40.140Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-999ce9ca612b2eb2acf2",
+          "file": "student-gate.spec.mjs",
+          "line": 137,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "subject-hub.spec.mjs",
+      "file": "subject-hub.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "subject-hub independent permissions and scoped reads reject foreign or repeated selectors",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1534,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs:241:87",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                      "column": 87,
+                      "line": 241
+                    },
+                    "snippet": "  239 |   await page.goto(subjectUrl('not-a-uuid'));\n  240 |   await expect(page.locator('main [data-state=forbidden]')).toBeVisible();\n> 241 |   expect((await state(request)).calls.some((call) => call.query.includes(foreignId))).toBe(false);\n      |                                                                                       ^\n  242 | });\n  243 |\n  244 | test('subject-hub separates loading, empty, error, stale and revocation', async ({"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                        "column": 87,
+                        "line": 241
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mfalse\u001b[39m\nReceived: \u001b[31mtrue\u001b[39m\n\n  239 |   await page.goto(subjectUrl('not-a-uuid'));\n  240 |   await expect(page.locator('main [data-state=forbidden]')).toBeVisible();\n> 241 |   expect((await state(request)).calls.some((call) => call.query.includes(foreignId))).toBe(false);\n      |                                                                                       ^\n  242 | });\n  243 |\n  244 | test('subject-hub separates loading, empty, error, stale and revocation', async ({\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs:241:87"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:40.803Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-54-17.059Z\\test-results\\subject-hub-subject-hub-in-b3d8b-reign-or-repeated-selectors-student-k8k\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                    "column": 87,
+                    "line": 241
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "05a46c8a4a4d2022fdda-492a58e36708bf8c6848",
+          "file": "subject-hub.spec.mjs",
+          "line": 173,
+          "column": 1
+        },
+        {
+          "title": "subject-hub homework context, scroll, guard and saved draft",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 30028,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 30000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs",
+                        "column": 16,
+                        "line": 304
+                      },
+                      "message": "Error: locator.fill: Test timeout of 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Твой ответ')\u001b[22m\n\n\n  302 |   await page.clock.install();\n  303 |   await page.clock.pauseAt(new Date(Date.now() + 1000));\n> 304 |   await editor.fill('Синтетический черновик');\n      |                ^\n  305 |   await page.getByRole('link', { name: 'К предмету' }).click();\n  306 |   const dialog = page.getByRole('dialog', { name: 'Черновик ещё не сохранён' });\n  307 |   await expect(dialog).toBeVisible();\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\subject-hub.spec.mjs:304:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:54:42.938Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-54-17.059Z\\test-results\\subject-hub-subject-hub-ho-edaea-croll-guard-and-saved-draft-student-k8k\\error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "05a46c8a4a4d2022fdda-667468c63176e902112d",
+          "file": "subject-hub.spec.mjs",
+          "line": 285,
+          "column": 1
+        },
+        {
+          "title": "subject-hub legacy notifications still opens the K8K bell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 342,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:55:13.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "05a46c8a4a4d2022fdda-8ed5595828d8a26a3129",
+          "file": "subject-hub.spec.mjs",
+          "line": 394,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T10:54:21.467Z",
+    "duration": 52705.196,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

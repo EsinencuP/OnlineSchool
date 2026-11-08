@@ -1,0 +1,138 @@
+{
+  "task": "TASK-030",
+  "status": "DONE",
+  "scope": "Local implementation and scoped mock/browser verification",
+  "base": {
+    "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "e5c068927cc2802b231e6dc797f0ecda59f5d7823d8f4c301bdb4b7156acadf2"
+  },
+  "checks": [
+    {
+      "id": "baseline_and_serial_autosave",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/baseline.log",
+      "detail": "Пять исходных сценариев до JSX; те же пять в итоговых 16. Debounce 2s, serial queue и медленный старый save не затирают новый."
+    },
+    {
+      "id": "chronological_server_list",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "23 задания, серверные страницы по issued_at DESC/id DESC; nullable dueAt не переупорядочивает список; нет tabs/checkboxes и выдуманного global count."
+    },
+    {
+      "id": "editor_input_selection_refetch_expiry",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "Неизменный textarea DOM/selection и whitespace при failed save/refetch; expired draft не подменяет ввод и снимает saved claim."
+    },
+    {
+      "id": "route_unload_focus",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "Dirty/selected files/unknown защищены blocker; cancel возвращает focus к ответу; сохранён beforeunload."
+    },
+    {
+      "id": "confirmed_feedback_only",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "Saved после server draft/save response, attached file после VERIFIED с совпавшим ID, submitted после response или найденной версии."
+    },
+    {
+      "id": "unknown_result_safe_retry",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "Нет автоматического повтора; GET existing detail/version перед явным повтором. Потерянный committed ответ подтверждён без второго POST; replay использует исходные key/body."
+    },
+    {
+      "id": "queue_submit_double_click",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "Submit ждёт queue.current, синхронный lock блокирует double click; серверный replay покрыт API mocks."
+    },
+    {
+      "id": "revision_readonly_history",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "NEEDS_REVISION допускает новую версию; SUBMITTED/REVIEWED read-only после refresh; прежние версии и plain text comments сохранены."
+    },
+    {
+      "id": "file_bounds_and_verified_protocol",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "0 и 50MiB+1 не запрашивают upload; максимум 20 VERIFIED. PUT точных bytes, credentials omit, только MIME header; confirm retry без повторного PUT."
+    },
+    {
+      "id": "expired_upload_and_foreign_file",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/homework-api.log",
+      "detail": "Browser expired PUT создаёт новый upload intent с сохранённым File; server mocks отвергают pending/foreign file IDs."
+    },
+    {
+      "id": "soft_deadlines_and_server_status",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/homework-api.log",
+      "detail": "55 API mocks включают null/equal/late deadline; серверные status/isLate и Delivery.id сохранены; денежных и skill writes нет."
+    },
+    {
+      "id": "auth_revocation_private_dom",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/browser.log",
+      "detail": "403 скрывает cached private answer, 402/401 обходят dirty blocker и удаляют редактор; logout отбрасывает поздний save/следующую очередь."
+    },
+    {
+      "id": "ru_ro_keyboard_touch_long_text",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/playwright.json",
+      "detail": "RU/RO × 360/768/1024/1280, 24 matrix + 2 state screenshots. Long teacher name, focus, no horizontal overflow; CTA≥48px, file button≥44px, локализованная видимая кнопка файла."
+    },
+    {
+      "id": "authoritative_existing_contracts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/contracts.json",
+      "detail": "Homework DTO/service, OpenAPI и SDK byte-identical baseline; 147 operations; /me timezone, server pagination/status, UI-kit и штатные auth/CSRF границы."
+    },
+    {
+      "id": "route_budgets_fonts",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/budgets.json",
+      "detail": "50/50 ≤256000 bytes по v2 с локальными Golos subsets; Storybook отсутствует в bundle."
+    },
+    {
+      "id": "preserve_dirty_migrations_production",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/preservation.json",
+      "detail": "21 before snapshot valid, 31 migration hashes неизменны, все исходные 423 status paths существуют; ветка/HEAD сохранены, production/DB не использовались."
+    },
+    {
+      "id": "current_sources_and_scoped_report",
+      "status": "PASS",
+      "evidence": "../../k8k-tasks/TASK-030/report.md",
+      "detail": "Применены актуальные owner decisions и STU-02/V12-AT-04/10/11; исходный lifecycle, новые изменения и свежие mock/browser доказательства разделены."
+    },
+    {
+      "id": "real_s3_cors",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-030/report.md",
+      "detail": "Только local intercepted upload. Реальные signing/PUT/HEAD/COPY/CORS/private provider и retention не проверялись."
+    },
+    {
+      "id": "postgresql_write_and_concurrency",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-030/report.md",
+      "detail": "Тесты mock Prisma/storage/Nest HTTP; реальные SERIALIZABLE/locks/index races и migration rehearsal не запускались."
+    },
+    {
+      "id": "physical_mobile_and_full_accessibility",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-030/report.md",
+      "detail": "Chromium viewport/focus измерения; физическая виртуальная клавиатура, нативный системный file picker и полный WCAG аудит требуют отдельной ручной приёмки."
+    },
+    {
+      "id": "full_role_gate_and_production",
+      "status": "NOT_RUN",
+      "evidence": "../../k8k-tasks/TASK-030/report.md",
+      "detail": "TASK-035 и общий FND-GATE, юридические/Meet provider gates и production GO вне локальной приёмки TASK-030."
+    }
+  ]
+}

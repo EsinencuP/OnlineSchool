@@ -1,0 +1,68 @@
+.k8k-date-picker {
+  min-inline-size: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--k8k-space-2);
+}
+.k8k-date-steps {
+  display: flex;
+  gap: var(--k8k-space-2);
+}
+.k8k-date-back {
+  transform: rotate(180deg);
+}
+.k8k-calendar,
+.k8k-calendar-day {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.k8k-calendar-zone,
+.k8k-calendar-notice,
+.k8k-calendar-times {
+  color: var(--text-2);
+  font-size: var(--k8k-font-sm);
+}
+.k8k-calendar-days {
+  display: grid;
+  gap: var(--k8k-space-2);
+}
+.k8k-calendar-day {
+  border: 1px solid var(--border);
+  border-radius: var(--k8k-control-radius);
+  padding: var(--k8k-space-2);
+  background: var(--surface);
+}
+.k8k-calendar-day h3 {
+  margin: 0;
+  font-size: var(--k8k-font-body);
+}
+.k8k-calendar-day ul {
+  display: grid;
+  gap: var(--k8k-space-2);
+  padding: 0;
+  list-style: none;
+}
+.k8k-calendar-day li {
+  min-inline-size: 0;
+  border-block-start: 1px solid var(--border);
+}
+.k8k-calendar-times {
+  margin-block: var(--k8k-space-2);
+  font-variant-numeric: tabular-nums;
+}
+.k8k-calendar-day button {
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (min-width: 768px) {
+  .k8k-calendar[data-view='week'] .k8k-calendar-days {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .k8k-calendar[data-view='week'] .k8k-calendar-days {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

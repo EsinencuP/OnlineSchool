@@ -207,7 +207,7 @@ try {
         await join.waitFor();
         assert.match(await join.getAttribute('href'), /^https:\/\/meet\.google\.com\//);
         assert.ok(await join.evaluate((el) => el.getBoundingClientRect().height >= 48));
-        assert.equal(await page.locator('[data-module="DASH-STU-05"]').count(), 0);
+        await page.locator('[data-module="DASH-STU-05"] [data-state="ready"]').waitFor();
         const nav = await page.locator('.k8k-sidebar nav').textContent();
         assert.ok(!/Сообщения|Уведомления/.test(nav));
       }
@@ -299,11 +299,11 @@ try {
     await page.setViewportSize({ width, height: 1000 });
     assert.equal(await page.locator('[data-module="DASH-STU-05"]').count(), 1);
     assert.equal(await page.getByRole('heading', { name: 'Физика', exact: true }).count(), 1);
-    assert.equal(await page.getByRole('link', { name: 'Подробнее' }).count(), 3);
+    assert.equal(await page.getByRole('link', { name: 'Условия абонемента' }).count(), 3);
     await capture(page, 'subject-subscriptions-component', width);
   }
   checks.push(
-    'subject-subscription renderer: active, expired and frozen independent rows; disabled duplicate stays absent; synthetic component source only',
+    'subject-subscription renderer: active, expired and frozen independent rows from a synthetic subject projection',
   );
   await context.close();
 } catch (error) {

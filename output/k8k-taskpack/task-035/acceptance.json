@@ -1,0 +1,1503 @@
+{
+  "taskId": "TASK-035",
+  "status": "DONE",
+  "meaning": "Acceptance procedure completed; local student gate PASS, student rollout NO-GO",
+  "commit": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "basis": {
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "0c04fb3984e35c4275da935e85719b6bd33088622d3c0120d29b47872064bd28",
+    "method": "SHA256(JSON.stringify({head,statusSha256:SHA256(git status --porcelain=v1),files:ordered scoped source SHA256 manifest}))"
+  },
+  "commandEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/commands.json",
+  "supplementalEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/commands.json",
+  "readiness": {
+    "localFunctional": "PASS",
+    "localVisualAccessibility": "PASS",
+    "external": "NOT_RUN",
+    "studentRollout": "NO-GO",
+    "productionGo": false,
+    "fndGate": false,
+    "automaticRollout": false
+  },
+  "checks": [
+    {
+      "id": "PREREQUISITES-024-034",
+      "status": "PASS",
+      "evidence": "prerequisites.json",
+      "limitation": "Historical reports are only provenance; current source/mocks and browser paths were freshly rerun."
+    },
+    {
+      "id": "FUNCTIONAL-STUDENT",
+      "status": "PASS",
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "tests": 680
+    },
+    {
+      "id": "BROWSER-STUDENT",
+      "status": "PASS",
+      "evidence": "browser-cases.json",
+      "tests": 200,
+      "skipped": 0,
+      "flaky": 0
+    },
+    {
+      "id": "ROUTES-LOCALES-WIDTHS",
+      "status": "PASS",
+      "evidence": "screenshots.json",
+      "scenes": 38,
+      "widths": [
+        360,
+        768,
+        1024,
+        1280
+      ],
+      "screenshots": 597
+    },
+    {
+      "id": "ACCESSIBILITY-LOCAL",
+      "status": "PASS",
+      "evidence": "accessibility.json",
+      "axeScenes": 58,
+      "violations": 0,
+      "limitation": "Manual keyboard/focus plus emulated 200% and reduced motion; not full physical WCAG signoff."
+    },
+    {
+      "id": "ROUTE-BUDGET",
+      "status": "PASS",
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/budgets.json",
+      "routes": 17,
+      "maxBytes": 255982,
+      "limit": 256000,
+      "fonts": 63492
+    },
+    {
+      "id": "LOCALE-IMPACT",
+      "status": "PASS",
+      "evidence": "locale-impact.json",
+      "additionalJavaScriptCss": 0,
+      "romanianFont": 3544,
+      "limitation": "Romanian subset is already counted in the shared route budget."
+    },
+    {
+      "id": "TOKENS-CONTRAST",
+      "status": "PASS",
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/design.log",
+      "measuredPairs": 25,
+      "limitation": "Legacy exact Stylelint baseline remains; new/UI violations zero."
+    },
+    {
+      "id": "CONTRACTS-MIGRATIONS-PRESERVED",
+      "status": "PASS",
+      "evidence": "source-audit.json",
+      "verified": 46
+    }
+  ],
+  "modules": [
+    {
+      "id": "DASH-STU-01",
+      "title": "Ближайший урок / Meet",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentDashboard, getStudentLessons, getStudentLesson",
+      "right": "own enrollment + server canJoin/meetAsOf; клик не пишет факт/ledger",
+      "implementation": "apps/api/src/student/dashboard; apps/api/src/student/lessons",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "lesson-journey.spec.mjs",
+          "title": "TASK-028 current Meet remains through T0 and closes at the server deadline",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "meet-eligibility.spec.mjs",
+          "title": "current lesson layout, focus and status ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "meet-eligibility.spec.mjs",
+          "title": "current lesson layout, focus and status ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "meet-eligibility.spec.mjs",
+          "title": "keyboard Meet click opens the intercepted fixture and sends no command",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub main action opens the lesson while Meet eligibility is false",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-02",
+      "title": "ДЗ / редактор",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentHomework, getStudentHomeworkDetail, saveStudentHomeworkDraft, requestStudentHomeworkUpload, confirmStudentHomeworkUpload, submitStudentHomework",
+      "right": "own delivery; serialized draft, explicit submit/unknown reconciliation",
+      "implementation": "apps/api/src/student/homework",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 list/editor/history layout ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 list/editor/history layout ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 refetch preserves text/selection and expired draft cannot replace unsaved input",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 an expired saved draft remains in the editor and loses its saved claim",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 committed lost submit response is reconciled without a second command and revision keeps history",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 submit waits for queued save and double click creates one version",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 expired upload renews intent and confirmation retry does not repeat successful PUT",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 file bounds, twenty verified attachments and blocker cancel restore focus",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 forbidden read hides private answer and suspension bypasses dirty blocker",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 submitted and reviewed stay read-only after authoritative refresh",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "homework-redesign.spec.mjs",
+          "title": "TASK-030 pagination follows issued chronology without sorting by due date",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 command state matrix ru pending",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 command state matrix ru unknown-result",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 command state matrix ro pending",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 command state matrix ro unknown-result",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub homework context, scroll, guard and saved draft",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student.spec.mjs",
+          "title": "logout discards a late draft response and stops the queued save",
+          "status": "expected",
+          "project": "editor-preservation",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student.spec.mjs",
+          "title": "debounce, server draft restoration and chronological versions",
+          "status": "expected",
+          "project": "editor-preservation",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student.spec.mjs",
+          "title": "confirmation and submission retry the same intent after provider/server failures",
+          "status": "expected",
+          "project": "editor-preservation",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student.spec.mjs",
+          "title": "serialized slow draft writes preserve the latest edit",
+          "status": "expected",
+          "project": "editor-preservation",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-03",
+      "title": "Расписание / история / формы",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentLessons, getStudentLessonHistory, requestStudentLessonReschedule, disputeStudentLessonDeduction, getStudentLessonRequestResult",
+      "right": "own lesson/fact, authoritative capabilities; календарь не финансовый факт",
+      "implementation": "apps/api/src/student/lessons; apps/api/src/student/history",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru schedule",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru calendar",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru lesson",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro schedule",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro calendar",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro lesson",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-04",
+      "title": "Навыки / срез4 / отчёт8 / PDF",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentSkillMaps, getStudentSkillAudit, getStudentSkillSnapshots, getStudentReports, getStudentReport, requestStudentEducationPdf, getStudentEducationPdfStatus, getStudentEducationPdfRequestResult",
+      "right": "own historical subject + published-only projection; student read≠teacher publication",
+      "implementation": "apps/api/src/student/skills; apps/api/src/student/reports",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 deep link and PDF form/job layout ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 deep link and PDF form/job layout ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 explicit mark-read returns empty response and list back keeps page, new version unread",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 unavailable deep link and cached denial never substitute another report",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 export filters are date-only, reversed range is blocked and CSRF/key sent once",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 lost committed enqueue response is recovered by GET and reload resumes same job",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 unknown before enqueue explicitly retries same key/body after receipt without duplicate job",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 polling stops at sixty seconds, resumes same job and no new command on return",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 expired and malformed READY never offer a download, new export stays explicit and limit is clear",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 download rechecks current status and 403/401 conceal private URL and stop polling",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 READY download performs fresh GET before requesting the private fixture",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 logout during polling discards a late READY and cancels further reads",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 demo switch in another tab removes a late old PDF reply",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "report-export.spec.mjs",
+          "title": "TASK-032 unknown read receipt is verified through detail before any same-key retry",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 four states, goals, audit and snapshots layout ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 four states, goals, audit and snapshots layout ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 audit pages preserve server total and beyond-end is empty, frozen titles survive rename",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 subject URL includes historical study and does not silently choose first or filter global snapshot page",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 unknown subject and forbidden cached read hide records without fallback",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 published refresh on return, stale read and session expiry keep meaning and private boundary",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 dashboard previews each subject goal, and skill reads never create an eight-lesson report",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 loading, initial error and owned empty maps remain distinct",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "skill-map.spec.mjs",
+          "title": "TASK-031 a late skill response cannot restore private content after session revocation",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate-extra.acceptance.mjs",
+          "title": "TASK-035 actual third-page report link ru",
+          "status": "expected",
+          "project": "student-state-accessibility",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/playwright-accessibility.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate-extra.acceptance.mjs",
+          "title": "TASK-035 actual third-page report link ro",
+          "status": "expected",
+          "project": "student-state-accessibility",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z/playwright-accessibility.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-05",
+      "title": "Предметные права / абонементы",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentSubjects, getStudentSubscription, getStudentSubscriptionLedger, getStudentSubscriptionPayments",
+      "right": "own subscription anchor; paid rights and limited admission kept separate",
+      "implementation": "apps/api/src/student/subjects; apps/api/src/student/subscription",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru subscriptions",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro subscriptions",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru loading",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru empty",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru error",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru forbidden",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru limited",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru stale",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ru session-expired",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro loading",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro empty",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro error",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro forbidden",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro limited",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro stale",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 critical state matrix ro session-expired",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub visual matrix and touch targets ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub visual matrix and touch targets ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub six menu destinations and active state at 360",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub six menu destinations and active state at 1280",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub independent permissions and scoped reads reject foreign or repeated selectors",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub separates loading, empty, error, stale and revocation",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub homework context, scroll, guard and saved draft",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub keyboard, focus on refresh, and safe absent contacts",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub protected entrypoints 401",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub protected entrypoints 402",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub protected entrypoints 403",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub protected entrypoints first password",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub legacy notifications still opens the K8K bell",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub main action opens the lesson while Meet eligibility is false",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions visual matrix ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions visual matrix ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions Math active, Physics expired, and English frozen work stay independent",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions director admission and confirmed purchase are separate balances",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions exact currencies, local dates and quantity history preserve meaning",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions future NONE keeps selected payments and no-plan is distinct from outage",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions selecting Physics resets both pages and discards a late Math response",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions stale history is read-only and one 403 revokes all cached panels",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions protected deep link 401",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-subscriptions.spec.mjs",
+          "title": "subscriptions protected deep link 402",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-06",
+      "title": "Колокольчик",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentNotifications, getStudentUnreadNotificationCount, markStudentNotificationRead, markAllStudentNotificationsRead",
+      "right": "own feed/count; read/read-all does not claim/resolve or perform target command",
+      "implementation": "apps/api/src/student/notifications",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 bell pagination, global counters, layout and empty page ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 bell pagination, global counters, layout and empty page ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 closed preview, loading, page cancellation and outside close",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 unknown read-all retries same key without consuming a concurrent arrival",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 lesson, homework and financial subscription targets use existing detail reads",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 individual read and old report target keep report read command separate",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 stale, unavailable counter and empty feed remain distinct",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 strict targets and scoped report forbid prevent unsafe navigation",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 count403 cancels a late preview and hides cached private rows",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 legacy URL, reload, locale replacement and short keyboard drawer",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 late preview discarded after logout",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "bell.spec.mjs",
+          "title": "TASK-033 late preview discarded after switch",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "meet-eligibility.spec.mjs",
+          "title": "keyboard Meet click opens the intercepted fixture and sends no command",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "navigation.spec.mjs",
+          "title": "legacy student notifications opens the K8K bell",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru bell",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro bell",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 keyboard, 200% reflow and motion preference ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 keyboard, 200% reflow and motion preference ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub keyboard, focus on refresh, and safe absent contacts",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "subject-hub.spec.mjs",
+          "title": "subject-hub legacy notifications still opens the K8K bell",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    },
+    {
+      "id": "DASH-STU-07",
+      "title": "Назначенный менеджер / помощь",
+      "status": "PASS",
+      "scope": "local fixtures / unit-HTTP-SDK mocks",
+      "apiSource": "getStudentMe and ACCESS_SUSPENDED managerContacts projection",
+      "right": "enabled assigned staff + official contacts; no general chat",
+      "implementation": "apps/api/src/student/me",
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "stale",
+        "error",
+        "pending/unknown-result",
+        "forbidden",
+        "subscription-limited",
+        "session-expired"
+      ],
+      "locales": [
+        "ru",
+        "ro"
+      ],
+      "evidence": [
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts RU/RO matrix ru",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts RU/RO matrix ro",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts missing official phone and invalid channels stay hidden",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts reassign and suppress stale links on refresh error",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts demo switch in a second tab discards a late old /me",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "manager-contacts.spec.mjs",
+          "title": "manager contacts suspended direct link, password guard and session expiration",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru help",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ru suspended",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro help",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 screen matrix ro suspended",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        },
+        {
+          "taskId": "TASK-035",
+          "file": "student-gate.acceptance.mjs",
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "status": "expected",
+          "project": "student-k8k",
+          "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+        }
+      ],
+      "apiEvidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+      "limitation": "PostgreSQL/provider verification remains separate; no production GO"
+    }
+  ],
+  "prerequisites": [
+    {
+      "taskId": "TASK-024",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-024/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-025",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-025/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-026",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-026/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-027",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-027/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-028",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-028/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-029",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-029/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-030",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-030/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-031",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-031/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-032",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-032/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-033",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-033/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    },
+    {
+      "taskId": "TASK-034",
+      "status": "PASS",
+      "scope": "local",
+      "historicalReport": "output/k8k-tasks/TASK-034/report.md",
+      "freshEvidence": [
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-results.json",
+        "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/playwright.json"
+      ]
+    }
+  ],
+  "external": [
+    {
+      "id": "DB-ROLLOUT",
+      "status": "NOT_RUN",
+      "owner": "release/DB",
+      "condition": "Разрешённая безопасная проверка рабочей схемы и данных; миграция TASK-027 official phone и прежние query/trigger/immutable ledger/replay/locks. Никакая миграция здесь не применялась."
+    },
+    {
+      "id": "STORAGE-PDF",
+      "status": "NOT_RUN",
+      "owner": "TASK-074/075",
+      "condition": "Реальные S3/CORS/expiry/revocation и worker PDF delivery на разрешённой среде, без destructive/main seed."
+    },
+    {
+      "id": "IDENTITY-PROVIDER",
+      "status": "NOT_RUN",
+      "owner": "TASK-066/067/069",
+      "condition": "Доставка email/OTP, реальные secure cookie rotation/session revocation и межвкладочная смена actor вне fixture."
+    },
+    {
+      "id": "MEET-G4",
+      "status": "NOT_RUN",
+      "owner": "REL-01/A, TASK-074",
+      "condition": "Expanded Meet POC/OAuth/security/QA/G4; переход по fixture URL не доказывает provider integration."
+    },
+    {
+      "id": "PUBLISHED-PRODUCER",
+      "status": "NOT_RUN",
+      "owner": "TASK-042/043/044",
+      "condition": "Фактическая педагогическая публикация срез4/отчёт8 и проверка потребления настоящей серверной проекции. UI ученика не создаёт публикацию."
+    },
+    {
+      "id": "PHYSICAL-AA",
+      "status": "NOT_RUN",
+      "owner": "TASK-071",
+      "condition": "Физические устройства, assistive technology/screen reader и поддерживаемые браузеры; текущие проверки — Chromium и эмуляция reflow 200%."
+    },
+    {
+      "id": "VISUAL-SIGNOFF",
+      "status": "NOT_RUN",
+      "owner": "owner / VIS-13…17",
+      "condition": "Владельческая визуальная приёмка provisional токенов/размеров/шрифта по предъявленным снимкам."
+    },
+    {
+      "id": "FND-LEGAL-RELEASE",
+      "status": "NOT_RUN",
+      "owner": "MVP-IMPL-02, LEGAL-01, FIN-LEGAL-01, TASK-074/075",
+      "condition": "Независимые foundation/legal/financial и общий release gate; экономика11.4 и refund review не закрываются этим тестом."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "openapi": "3.1.0",
+  "regeneration": [
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "before": "f454000693dbaa579ef1397a9eee44bb51e5248d39a12c8b4de522ddcf23ce38",
+      "after": "f454000693dbaa579ef1397a9eee44bb51e5248d39a12c8b4de522ddcf23ce38"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "before": "935ec91ed33468d7adb1dac8392d27a08247390a0192d7f2eeed4364fd737858",
+      "after": "935ec91ed33468d7adb1dac8392d27a08247390a0192d7f2eeed4364fd737858"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "before": "6869b15fa8f8224ab44a02b76b89820a94e740152f595ddbb98fb1f99d1d2eaa",
+      "after": "6869b15fa8f8224ab44a02b76b89820a94e740152f595ddbb98fb1f99d1d2eaa"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/manager-error-codes.ts",
+      "before": "2f5c823bd777d443a873bd6ffba87a60b270648b21dbec1ee429c180ce089513",
+      "after": "2f5c823bd777d443a873bd6ffba87a60b270648b21dbec1ee429c180ce089513"
+    }
+  ],
+  "historicalOperationsPreserved": 140,
+  "currentOperations": 145,
+  "addedOperations": [
+    {
+      "method": "GET",
+      "path": "/api/v1/manager/payments/{paymentId}/approval-eligibility",
+      "operationId": "getManagerPaymentApprovalEligibility"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/platform/actor-context",
+      "operationId": "getStaffActorContext"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/platform/lessons/{id}/start-eligibility",
+      "operationId": "getTeacherLessonStartEligibility"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/platform/payments/{id}/confirm-eligibility",
+      "operationId": "getDirectorPaymentConfirmationEligibility"
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/platform/workspace/{section}/{id}",
+      "operationId": "getPlatformWorkspaceDetail"
+    }
+  ],
+  "mode": "standard generator with database access denied in final OpenAPI export"
+}

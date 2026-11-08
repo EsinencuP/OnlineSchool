@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "operationsBefore": 147,
+  "operationsAfter": 149,
+  "added": [
+    {
+      "path": "/api/v1/student/reports/{reportId}",
+      "method": "get",
+      "operation": "getStudentReport"
+    },
+    {
+      "path": "/api/v1/student/reports/export-pdf/requests/{requestId}",
+      "method": "get",
+      "operation": "getStudentEducationPdfRequestResult"
+    }
+  ],
+  "addedSchemas": [
+    "PdfExportRequestResultDto"
+  ],
+  "existingRequestResponseSecurityAndParameters": "preserved",
+  "existingSchemas": "unchanged",
+  "standardGeneration": true,
+  "unchanged": [
+    {
+      "path": "apps/api/src/student/reports/export-data.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/worker/src/pdf-exports.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/worker/src/education-pdf.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "unchanged": true
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "unchanged": true
+    },
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "unchanged": true
+    }
+  ],
+  "studentMutationRoutesAdded": 0,
+  "migrationsAdded": 0,
+  "migrationsExecuted": false,
+  "dependenciesAdded": 0,
+  "receiptJustification": "Existing status lookup requires jobId; read-only original-request lookup reconciles a lost 202 without creating a new export."
+}

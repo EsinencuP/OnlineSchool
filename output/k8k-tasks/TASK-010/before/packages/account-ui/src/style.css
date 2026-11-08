@@ -1,0 +1,136 @@
+.account-menu {
+  position: relative;
+  color: #203a3b;
+  font-size: 14px;
+  min-width: 0;
+}
+.account-menu summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 6px;
+  text-align: left;
+}
+.account-menu summary::-webkit-details-marker {
+  display: none;
+}
+.account-menu summary:focus-visible,
+.account-menu button:focus-visible,
+.account-menu a:focus-visible {
+  outline: 3px solid #36857c;
+  outline-offset: 3px;
+}
+.account-avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e2ece8;
+  color: #25544d;
+  font-weight: 700;
+}
+.account-caption {
+  display: block;
+  max-width: 230px;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.account-menu small {
+  display: block;
+  font-size: 12px;
+  color: #52696a;
+  font-weight: 400;
+  margin-top: 3px;
+}
+.account-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 90;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  padding: 20px;
+  border: 1px solid #d8e2de;
+  border-radius: 16px;
+  box-shadow: 0 18px 48px #233a3926;
+  background: #fff;
+  max-height: calc(100dvh - 100px);
+  overflow: auto;
+}
+.account-menu .account-popover h2 {
+  font-size: 16px;
+  margin: 18px 0 8px;
+}
+.account-menu .account-popover p {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 8px 0;
+  color: #52696a;
+}
+.account-choices {
+  display: grid;
+  gap: 5px;
+  margin-top: 14px;
+}
+.account-menu .account-choices button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #203a3b;
+  background: #f5f7f4;
+  cursor: pointer;
+  font: inherit;
+}
+.account-menu .account-choices button:hover {
+  background: #e7efea;
+}
+.account-menu .account-choices button[aria-current='true'] {
+  background: #e2efe8;
+  border-color: #87aa96;
+  opacity: 1;
+}
+.account-menu .account-choices button:disabled {
+  cursor: default;
+}
+.account-login-link {
+  display: block;
+  margin-top: 16px;
+  color: #205e53;
+  font-size: 13px;
+}
+.account-menu .account-logout {
+  display: block;
+  margin-top: 14px;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  color: #52696a;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .account-caption {
+    max-width: 125px;
+    font-size: 12px;
+  }
+  .account-popover {
+    position: fixed;
+    top: 76px;
+    right: 16px;
+  }
+  .account-avatar {
+    width: 30px;
+    height: 30px;
+  }
+}

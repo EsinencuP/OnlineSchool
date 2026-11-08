@@ -168,8 +168,8 @@ export function DenseTable<T>({
             ))}
           </thead>
           <tbody>
-            {visibleRows.map((row) => (
-              <tr key={row.id}>
+            {visibleRows.map((row, index) => (
+              <tr key={row.id} style={{ animationDelay: `${Math.min(index, 9) * 30}ms` }}>
                 {selection && (
                   <td>
                     <label className="k8k-table-check">

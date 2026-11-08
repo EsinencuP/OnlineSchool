@@ -1,0 +1,15 @@
+[
+  {
+    "scenario": "brand-text replaced by accent",
+    "expectedExit": 1,
+    "actualExit": 1,
+    "passed": true,
+    "source": "in-memory token mutation; repository CSS untouched"
+  },
+  {
+    "scenario": "raw hex outside tokens",
+    "expectedExit": 2,
+    "actualExit": 2,
+    "passed": true
+  }
+]

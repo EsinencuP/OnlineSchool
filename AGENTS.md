@@ -2,6 +2,27 @@
 
 ## Источники проекта
 
+- Owner motion direction, 2026-11-08: follow `docs/UI_MOTION_2026_11_08.md` for cabinet
+  transitions. Entrances ease out at 200 ms, exits at 160 ms, dropdowns stay within
+  150–250 ms; trigger origins, 30 ms row stagger, 0.97 press scale, no spring bounce,
+  reduced-motion support. Future drag/knob/shared-object interactions follow the same
+  document; do not invent them where no such interaction exists.
+
+- Owner visual direction, 2026-11-08: remove present AI slop indicators from the five cabinets
+  and shared login. Current rules and the 20-item audit: `docs/UI_VISUAL_SIMPLIFICATION_2026_11_08.md`.
+  Prefer plain status text, restrained colors, borderless content groups, normal tracking and
+  concise headings. Preserve functional labels, form boundaries, keyboard focus and domain
+  information. This later visual instruction overrides incompatible decorative examples in
+  older K8K templates; it does not approve new business behavior or release gates.
+
+- Owner request 2026-11-03: implement the functional K8K redesign plan for five cabinets
+  and shared login, including separate missing API increments and RU/RO UI. Public site
+  is separate. Current implementation map: `docs/K8K_REDESIGN_PLAN.md` and
+  `docs/K8K_REQUIREMENTS_MATRIX.md`; `docs/K8K_DESIGN_INSTRUCTIONS.md` section 7 overrides
+  its historical frontend-only command in section 8. Existing dirty work must be preserved.
+  Sequential AI-coder backlog: `docs/k8k-redesign-tasks/README.md` (TASK-001—076).
+  Each task repeats context and is issued individually; taskpack is derived scope, not new business approval.
+
 - Latest owner request, 2026-11-01: remove the QA app, use in-cabinet demo user switching,
   complete the synthetic lesson/subscription dataset, and push to main. Current map:
   `docs/platform_account_switching_2026_11_01.md`. Earlier QA UI and pending demo finance

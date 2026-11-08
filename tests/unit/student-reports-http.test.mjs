@@ -47,6 +47,8 @@ beforeAll(async () => {
       if (sql.includes('WITH published_reports')) {
         const owner = values.find((v) => students.includes(v)),
           index = students.indexOf(owner);
+        if (sql.includes('AS report FROM published_reports'))
+          return values.includes(reports[index]) ? [{ report: row(index) }] : [];
         if (sql.includes('SELECT id FROM published_reports WHERE id='))
           return values.includes(reports[index]) ? [{ id: reports[index] }] : [];
         return [{ items: index >= 0 ? [row(index)] : [], total: index >= 0 ? 1 : 0 }];
@@ -117,7 +119,16 @@ beforeAll(async () => {
           ).length,
       ),
       findFirst: jest.fn(async ({ where }) => {
-        const r = state.pdf.get(where.id);
+        const r = where.id
+          ? state.pdf.get(where.id)
+          : [...state.pdf.values()].find((item) => {
+              const job = state.jobs.get(item.id);
+              return (
+                job.type === where.job_ref.type &&
+                job.source_operation_id === where.job_ref.source_operation_id &&
+                job.deduplication_key === where.job_ref.deduplication_key
+              );
+            });
         return r && r.student_id === where.student_id && r.requested_by === where.requested_by
           ? { ...r, job_ref: state.jobs.get(r.id) }
           : null;
@@ -345,4 +356,36 @@ test('no student route creates or changes an educational report', async () => {
         .send({ content: 'fake' })
     ).status,
   ).toBe(404);
+});
+
+test('TASK-032 report detail uses own scope and returns a normalized public report independently of list page', async () => {
+  const own = await get('/' + reports[0]);
+  expect(own.status).toBe(200);
+  expect(own.body.reportId).toBe(reports[0]);
+  expect(own.headers['cache-control']).toBe('no-store');
+  expect(Object.keys(own.body.content).sort()).toEqual(
+    ['achievements', 'growthAreas', 'recommendations', 'teacherSignature'].sort(),
+  );
+  expect((await get('/' + reports[1])).status).toBe(403);
+  expect((await get('/' + randomUUID())).status).toBe(403);
+  expect((await get('/bad')).status).toBe(400);
+});
+test('TASK-032 enqueue receipt lookup is read-only, actor scoped and does not shadow job route', async () => {
+  const key = randomUUID();
+  expect((await get('/export-pdf/requests/' + key)).body).toEqual({
+    status: 'UNKNOWN',
+    jobId: null,
+  });
+  const queued = await post('/export-pdf', {}, 0, key);
+  expect(queued.status).toBe(202);
+  const receipt = await get('/export-pdf/requests/' + key);
+  expect(receipt.body).toEqual({ status: 'ACCEPTED', jobId: queued.body.jobId });
+  expect(receipt.headers['cache-control']).toBe('no-store');
+  expect((await get('/export-pdf/requests/' + key, 1)).body).toEqual({
+    status: 'UNKNOWN',
+    jobId: null,
+  });
+  expect((await get('/export-pdf/' + queued.body.jobId)).body.status).toBe('QUEUED');
+  expect((await get('/export-pdf/requests/bad')).status).toBe(400);
+  expect(state.jobs.size).toBe(1);
 });

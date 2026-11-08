@@ -1,0 +1,121 @@
+{
+  "task": "TASK-031",
+  "scope": "No .env/live database/provider/deploy; local fixture and mocked HTTP",
+  "commands": [
+    {
+      "command": "pnpm --filter @online-school/student-cabinet exec playwright test --config playwright.config.mjs --grep 'four skill states' --reporter=list --output=../../output/k8k-tasks/TASK-031/baseline-results",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "baseline.log",
+      "detail": "1 original browser scenario before UI changes, unchanged expectations"
+    },
+    {
+      "command": "pnpm --filter @online-school/api typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-check.log",
+      "detail": "targeted tsc -b for dist-based tests"
+    },
+    {
+      "command": "pnpm test:stu08 --roots tests",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-tests.log",
+      "detail": "57 unit/actual Nest HTTP cases with mock Prisma/storage; includes SDK serializer and structural SQL assertions"
+    },
+    {
+      "command": "pnpm --filter @online-school/api export:openapi (NODE_OPTIONS=--import=file:///D:/OnlineSchool/output/k8k-tasks/TASK-018/no-db-export.mjs)",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "detail": "Standard export; DB client access throws; NODE_OPTIONS restored afterwards"
+    },
+    {
+      "command": "pnpm --filter @online-school/api-contracts generate:client",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "detail": "Orval + publish-client + generate-openapi + error catalog; no dependency changes"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "tsc -b"
+    },
+    {
+      "command": "safe programmatic Vite build shown in report.md",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "envDir:false/publicDir:false, before browser tests; silent success, tsc-only log"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-lint.log",
+      "detail": "eslint . --max-warnings 0"
+    },
+    {
+      "command": "pnpm exec eslint apps/api/src/student/skills/skills.dto.ts apps/api/src/student/skills/skills.sql.ts apps/api/src/student/skills/skills.service.ts apps/api/src/student/skills/skills.controller.ts apps/api/src/student/student.module.ts tests/unit/student-skills.test.mjs tests/unit/student-skills-http.test.mjs --max-warnings 0",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-lint.log",
+      "detail": "Changed backend/tests lint"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:skill-map",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "browser.log",
+      "detail": "10/10 Chromium, includes unchanged original four-state/narrow-viewport case"
+    },
+    {
+      "command": "node scripts/k8k-refresh-budget.mjs --task-031",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "budget.log",
+      "detail": "50/50 budgets with fonts"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-031/verify-contract.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "contracts.log",
+      "detail": "147 existing operations; one optional filter only"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-031/verify-preservation.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "preservation.log",
+      "detail": "28 before snapshots,31 migrations,original paths/HEAD/branch"
+    },
+    {
+      "command": "git -c core.safecrlf=false diff --check -- $task031Paths",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "diff-check.log",
+      "detail": "before.json paths.path, scoped dirty tree"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-031/verify-artifacts.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "artifacts-check.log",
+      "detail": "Screenshots/budgets/browser counts and report links"
+    }
+  ],
+  "initialFailuresResolved": [
+    "Snapshot controller narrowed via validated SkillSnapshotQuery cast, same DTO pattern as existing controller",
+    "New test selectors scoped to history toggle/open snapshot; localized pager name and fixture query string parsed correctly",
+    "Beyond-end assertion now waits for authoritative empty state before inspecting request log"
+  ],
+  "notRun": [
+    "PostgreSQL source-exact CTE execution and trigger/races",
+    "Teacher publication workflow and working migration",
+    "Full role/WCAG/FND-GATE/production"
+  ]
+}

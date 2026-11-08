@@ -29,6 +29,9 @@ const budget = evaluateRoute({
 });
 assert(budget.pass);
 const origin = 'http://127.0.0.1:4198';
+const ownId = '40000000-0000-4000-8000-000000000024';
+const foreignId = '40000000-0000-4000-8000-000000000025';
+const detailTitle = 'Synthetic long title ' + 'LongWord'.repeat(16);
 const mime = {
   '.html': 'text/html',
   '.js': 'text/javascript',
@@ -78,11 +81,11 @@ try {
           profileUpdatedAt: null,
         },
         lessons: Array.from({ length: 100 }, (_, i) => ({
-          id: `synthetic-${i}`,
+          id: i === 24 ? ownId : `synthetic-${i}`,
           startsAt: '2026-11-04T12:30:00Z',
           endsAt: '2026-11-04T13:30:00Z',
           status: 'SCHEDULED',
-          subject: 'Synthetic subject',
+          subject: i === 24 ? detailTitle : 'Synthetic subject',
           student: 'Ștefan Sintetic',
           teacher: 'Synthetic teacher',
           meetUrl: null,
@@ -101,10 +104,16 @@ try {
       };
       let phase = 'loading',
         release;
+      let detailReads = 0;
+      let signedIn = true;
       await context.route('**/*', async (route) => {
         const request = route.request(),
           url = new URL(request.url());
         if (url.origin === origin && request.method() === 'GET') {
+          if (url.pathname === '/api/v1/auth/csrf')
+            return route.fulfill({ json: { csrfToken: 'fixture-csrf' } });
+          if (url.pathname === '/api/v1/auth/session' && !signedIn)
+            return route.fulfill({ status: 401, json: { code: 'UNAUTHENTICATED' } });
           if (url.pathname === '/api/v1/auth/session')
             return route.fulfill({
               json: {
@@ -129,6 +138,15 @@ try {
               ? route.fulfill({ status: 403, json: { code: 'FORBIDDEN' } })
               : route.fulfill({ json: workspace });
           }
+          if (url.pathname.startsWith('/api/v1/platform/workspace/lessons/')) {
+            detailReads++;
+            if (url.pathname.endsWith(ownId)) {
+              const { meetUrl: _meetUrl, ...item } = workspace.lessons[24];
+              assert.equal(_meetUrl, null);
+              return route.fulfill({ json: { actorContext: workspace.actorContext, item } });
+            }
+            return route.fulfill({ status: 404, json: { code: 'NOT_FOUND' } });
+          }
           if (url.pathname === '/favicon.ico') return route.fulfill({ status: 204 });
           const key = ['/', '/teacher', '/director'].includes(url.pathname)
             ? 'index.html'
@@ -138,6 +156,20 @@ try {
               body: assets.get(key),
               contentType: mime[extname(key)] ?? 'application/octet-stream',
             });
+        }
+        if (
+          url.origin === origin &&
+          request.method() === 'POST' &&
+          url.pathname === '/api/v1/auth/session'
+        ) {
+          assert.equal(request.headers()['x-csrf-token'], 'fixture-csrf');
+          signedIn = true;
+          return route.fulfill({
+            json: {
+              account: { id: workspace.actorContext.accountId, kind: 'TEACHER', roles: [role] },
+              mfa_completed: true,
+            },
+          });
         }
         unexpected.push(`${request.method()} ${url.origin}${url.pathname}`);
         return route.abort('blockedbyclient');
@@ -194,6 +226,95 @@ try {
       await expect(page.locator('[data-state="forbidden"]')).toBeVisible();
       await expect(page.getByText('Synthetic subject', { exact: true })).toHaveCount(0);
       checks.push({ role, locale, cached403: 'private rows and sample counts hidden' });
+
+      phase = 'ready';
+      await page.goto(path + '&section=lessons&filter=SCHEDULED');
+      const filter = page.locator('.staff-filter select');
+      await expect(filter).toHaveValue('SCHEDULED');
+      await page.reload();
+      await expect(filter).toHaveValue('SCHEDULED');
+      await expect(page.locator('.k8k-sidebar [aria-current=page]')).toHaveText(
+        locale === 'ro' ? 'Orar' : 'Расписание',
+      );
+      await filter.selectOption('CANCELLED');
+      await expect(page).toHaveURL(/filter=CANCELLED$/);
+      await expect(page.locator('.lesson')).toHaveCount(0);
+      await page.goBack();
+      await expect(filter).toHaveValue('SCHEDULED');
+      const object = page.getByRole('link', { name: detailTitle });
+      await object.scrollIntoViewIfNeeded();
+      const previousScroll = await page.evaluate(() => globalThis.scrollY);
+      assert(previousScroll > 0);
+      await object.press('Enter');
+      await expect(page.locator('main h1')).toBeFocused();
+      await expect(page.getByRole('heading', { name: detailTitle })).toBeVisible();
+      assert.equal(detailReads, 1);
+      for (const width of [360, 768, 1024, 1280]) {
+        await page.setViewportSize({ width, height: 900 });
+        const mobile = page.locator('.k8k-bottom-nav');
+        const sidebar = page.locator('.k8k-sidebar');
+        if (width < 1024) {
+          await expect(sidebar).toBeHidden();
+          const more = mobile.getByRole('button', { name: locale === 'ro' ? 'Mai multe' : 'Ещё' });
+          await more.press('Enter');
+          await expect(page.locator('.k8k-mobile-menu nav a').first()).toBeFocused();
+          await expect(page.locator('.k8k-mobile-menu .staff-help')).toBeVisible();
+          await page.keyboard.press('Escape');
+          await expect(more).toBeFocused();
+          await expect(page.locator('.k8k-mobile-menu')).toBeHidden();
+        } else {
+          await expect(sidebar).toBeVisible();
+          await expect(mobile).toBeHidden();
+        }
+        assert.equal(await page.locator('html').evaluate((el) => el.scrollWidth), width);
+        await page.screenshot({
+          path: fileURLToPath(
+            new URL(`screenshots/detail-${role.toLowerCase()}-${locale}-${width}.png`, out),
+          ),
+        });
+      }
+      await page.setViewportSize({ width: 1280, height: 1000 });
+      await page.goBack();
+      await expect(filter).toHaveValue('SCHEDULED');
+      await expect.poll(() => page.evaluate(() => globalThis.scrollY)).toBe(previousScroll);
+      await page.goForward();
+      await expect(page.getByRole('heading', { name: detailTitle })).toBeVisible();
+      const back = page.locator('.staff-back');
+      await back.focus();
+      const readsBeforeRefresh = detailReads;
+      await page.evaluate(() => globalThis.dispatchEvent(new Event('online')));
+      await expect.poll(() => detailReads).toBeGreaterThan(readsBeforeRefresh);
+      await expect(back).toBeFocused();
+      await page.goto(path + '&section=lessons&id=' + foreignId);
+      await expect(page.locator('[data-state="error"]')).toContainText(
+        locale === 'ro' ? 'Obiectul nu este disponibil.' : 'Объект недоступен.',
+      );
+      await expect(page.getByText(detailTitle, { exact: true })).toHaveCount(0);
+      checks.push({
+        role,
+        locale,
+        navigation:
+          'refresh, filter, detail, back/forward, scroll, mobile escape, refetch focus, foreign denied',
+      });
+      if (role === 'TEACHER' && locale === 'ru') {
+        signedIn = false;
+        const protectedUrl = path + '&section=lessons&filter=SCHEDULED&id=' + ownId;
+        const previousReads = detailReads;
+        await page.goto(protectedUrl);
+        const login = page.locator('form');
+        await expect(login).toBeVisible();
+        assert.equal(detailReads, previousReads);
+        await login.locator('[name=email]').fill('synthetic@example.invalid');
+        await login.locator('[name=password]').fill('SyntheticFixtureOnly123');
+        await login.locator('button[type=submit]').click();
+        await expect(page).toHaveURL(protectedUrl);
+        await expect(page.getByRole('heading', { name: detailTitle })).toBeVisible();
+        checks.push({
+          role,
+          locale,
+          protectedLink: 'requires sign-in and restores same staff URL',
+        });
+      }
       await context.close();
     }
   assert.deepEqual(unexpected, []);

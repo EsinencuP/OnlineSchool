@@ -1,0 +1,236 @@
+[
+  {
+    "name": "@fontsource-variable/golos-text",
+    "pinned": "5.2.8",
+    "license": "OFL-1.1",
+    "peerDependencies": null,
+    "release": "2025-09-17T09:18:12.789Z",
+    "ageDays": 413.6956737384259,
+    "unpackedBytes": 116533
+  },
+  {
+    "name": "@js-temporal/polyfill",
+    "pinned": "0.5.1",
+    "license": "ISC",
+    "peerDependencies": null,
+    "release": "2025-03-31T20:37:25.458Z",
+    "ageDays": 583.2239993287037,
+    "unpackedBytes": 2981675
+  },
+  {
+    "name": "@radix-ui/react-alert-dialog",
+    "pinned": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:21.881Z",
+    "ageDays": 637.0900129513889,
+    "unpackedBytes": 89655
+  },
+  {
+    "name": "@radix-ui/react-dialog",
+    "pinned": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:24.783Z",
+    "ageDays": 637.089979363426,
+    "unpackedBytes": 100095
+  },
+  {
+    "name": "@radix-ui/react-dropdown-menu",
+    "pinned": "2.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:26.878Z",
+    "ageDays": 637.0899551157407,
+    "unpackedBytes": 105795
+  },
+  {
+    "name": "@radix-ui/react-popover",
+    "pinned": "1.1.6",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:29.097Z",
+    "ageDays": 637.0899294328703,
+    "unpackedBytes": 89911
+  },
+  {
+    "name": "@radix-ui/react-tabs",
+    "pinned": "1.1.3",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:33.644Z",
+    "ageDays": 637.0898768055556,
+    "unpackedBytes": 50748
+  },
+  {
+    "name": "@radix-ui/react-tooltip",
+    "pinned": "1.1.8",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc",
+      "@types/react": "*",
+      "@types/react-dom": "*"
+    },
+    "release": "2025-02-05T23:50:35.364Z",
+    "ageDays": 637.0898568981481,
+    "unpackedBytes": 132871
+  },
+  {
+    "name": "@tanstack/react-table",
+    "pinned": "8.21.3",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": ">=16.8",
+      "react-dom": ">=16.8"
+    },
+    "release": "2025-04-14T20:20:18.966Z",
+    "ageDays": 569.2358800231482,
+    "unpackedBytes": 761890
+  },
+  {
+    "name": "lucide-react",
+    "pinned": "0.468.0",
+    "license": "ISC",
+    "peerDependencies": {
+      "react": "^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc"
+    },
+    "release": "2024-12-05T12:21:46.519Z",
+    "ageDays": 699.568200011574,
+    "unpackedBytes": 28578348
+  },
+  {
+    "name": "react",
+    "pinned": "18.3.1",
+    "license": "MIT",
+    "peerDependencies": null,
+    "release": "2024-04-26T16:42:26.496Z",
+    "ageDays": 922.3871817592593,
+    "unpackedBytes": 318101
+  },
+  {
+    "name": "react-dom",
+    "pinned": "18.3.1",
+    "license": "MIT",
+    "peerDependencies": {
+      "react": "^18.3.1"
+    },
+    "release": "2024-04-26T16:42:49.931Z",
+    "ageDays": 922.3869105208333,
+    "unpackedBytes": 4513549
+  },
+  {
+    "name": "@storybook/addon-a11y",
+    "pinned": "10.6.3",
+    "license": "MIT",
+    "peerDependencies": {
+      "storybook": "^10.6.3"
+    },
+    "release": "2026-10-20T09:47:45.075Z",
+    "ageDays": 15.675161168981482,
+    "unpackedBytes": 188002
+  },
+  {
+    "name": "@storybook/react-vite",
+    "pinned": "10.6.3",
+    "license": "MIT",
+    "peerDependencies": {
+      "vite": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
+      "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+      "storybook": "^10.6.3",
+      "typescript": ">= 4.9.x"
+    },
+    "release": "2026-10-20T09:49:26.313Z",
+    "ageDays": 15.67398943287037,
+    "unpackedBytes": 31994
+  },
+  {
+    "name": "@types/react",
+    "pinned": "18.3.31",
+    "license": "MIT",
+    "peerDependencies": {},
+    "release": "2026-06-05T20:10:34.637Z",
+    "ageDays": 152.24264309027777,
+    "unpackedBytes": 439059
+  },
+  {
+    "name": "@types/react-dom",
+    "pinned": "18.3.7",
+    "license": "MIT",
+    "peerDependencies": {
+      "@types/react": "^18.0.0"
+    },
+    "release": "2025-04-30T10:37:39.536Z",
+    "ageDays": 553.6405030555555,
+    "unpackedBytes": 38213
+  },
+  {
+    "name": "storybook",
+    "pinned": "10.6.3",
+    "license": "MIT",
+    "peerDependencies": {
+      "prettier": "^2 || ^3",
+      "vite-plus": "^0.1.15 || ^0.2.0",
+      "@types/react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    },
+    "release": "2026-10-20T09:52:08.416Z",
+    "ageDays": 15.67211324074074,
+    "unpackedBytes": 22250222
+  },
+  {
+    "name": "typescript",
+    "pinned": "6.0.3",
+    "license": "Apache-2.0",
+    "peerDependencies": null,
+    "release": "2026-04-16T23:38:27.905Z",
+    "ageDays": 202.0982765625,
+    "unpackedBytes": 24346827
+  },
+  {
+    "name": "vite",
+    "pinned": "7.3.7",
+    "license": "MIT",
+    "peerDependencies": {
+      "tsx": "^4.8.1",
+      "jiti": ">=1.21.0",
+      "less": "^4.0.0",
+      "sass": "^1.70.0",
+      "yaml": "^2.4.2",
+      "stylus": ">=0.54.8",
+      "terser": "^5.16.0",
+      "sugarss": "^5.0.0",
+      "@types/node": "^20.19.0 || >=22.12.0",
+      "lightningcss": "^1.21.0",
+      "sass-embedded": "^1.70.0"
+    },
+    "release": "2026-10-06T05:11:19.017Z",
+    "ageDays": 29.86712943287037,
+    "unpackedBytes": 2244268
+  }
+]

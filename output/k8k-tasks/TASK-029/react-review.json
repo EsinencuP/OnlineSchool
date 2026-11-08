@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "scope": [
+    "LessonCommands",
+    "Lessons/LessonDetail",
+    "Materials lesson context",
+    "query/session boundaries"
+  ],
+  "checked": [
+    "Server capabilities, no derived financial eligibility",
+    "One intent/key, no blind command retry",
+    "Session lease and private cache cleanup",
+    "Dialog return focus and labels",
+    "Read-only subject/lesson filters",
+    "Existing kit and local tokens, no new dependencies"
+  ],
+  "evidence": [
+    "student-lint.log",
+    "student-check.log",
+    "browser.log",
+    "contracts.json"
+  ]
+}

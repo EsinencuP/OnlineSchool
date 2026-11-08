@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "operationsBefore": 149,
+  "operationsAfter": 149,
+  "operationDefinitions": "unchanged",
+  "additiveSchema": {
+    "name": "MaterialItemDto",
+    "optionalProperties": [
+      "canDownload",
+      "fileNameIsFallback",
+      "subjectId"
+    ],
+    "existingPropertiesAndRequired": "unchanged"
+  },
+  "unchanged": [
+    {
+      "path": "apps/api/src/student/security/change-password.controller.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.dto.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/change-password.service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/email-otp.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/email.service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/security-commands.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/security.controller.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/security.dto.ts",
+      "unchanged": true
+    },
+    {
+      "path": "apps/api/src/student/security/sessions.service.ts",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "unchanged": true
+    },
+    {
+      "path": "packages/account-ui/src/session.tsx",
+      "unchanged": true
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "unchanged": true
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "unchanged": true
+    },
+    {
+      "path": "packages/ui/package.json",
+      "unchanged": true
+    },
+    {
+      "path": "packages/account-ui/package.json",
+      "unchanged": true
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Homework.tsx",
+      "unchanged": true
+    }
+  ],
+  "materialPermissionPredicatesAndSignedWorkflow": "unchanged",
+  "standardGeneration": true,
+  "dependenciesAdded": 0,
+  "migrationsAdded": 0,
+  "migrationsExecuted": false
+}

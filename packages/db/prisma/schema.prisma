@@ -453,6 +453,7 @@ model StaffAccount {
   managed_subscription_operations ManagerSubscriptionOperation[]
   student_whatsapp_url String?
   student_telegram_url String?
+  student_phone_e164   String?
   exception_accruals   TeacherAccrual[]      @relation("AccrualExceptionDirector")
   recorded_engagements TeacherEngagement[]   @relation("EngagementRecorder")
   recorded_tenure      TeacherTenureCredit[] @relation("TenureRecorder")

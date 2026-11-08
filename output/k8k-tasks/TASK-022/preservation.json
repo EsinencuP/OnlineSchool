@@ -1,0 +1,45 @@
+{
+  "beforeCopiesVerified": 25,
+  "baselineProtectedFilesVerified": 9,
+  "initialStatusEntries": 321,
+  "initialStatusEntriesStillPresent": 321,
+  "statusEntriesAdded": [
+    " M apps/api/src/modules/manager/dto/manager-dashboard.dto.ts",
+    " M apps/api/src/openapi/dtos.ts",
+    " M packages/ui/README.md",
+    " M packages/ui/src/priority.tsx",
+    " M packages/ui/src/state.tsx",
+    " M packages/ui/src/style.css",
+    " M tests/unit/manager-dashboard-sdk.test.mjs",
+    "?? scripts/k8k-priority-evidence.mjs"
+  ],
+  "changedFromBefore": [
+    "apps/api/src/modules/manager/dto/manager-dashboard.dto.ts",
+    "apps/api/src/openapi/dtos.ts",
+    "apps/manager-web/src/pages/Dashboard.tsx",
+    "docs/K8K_IMPLEMENTATION_STATUS.md",
+    "docs/K8K_REQUIREMENTS_MATRIX.md",
+    "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+    "package.json",
+    "packages/api-contracts/openapi/openapi.json",
+    "packages/api-contracts/src/generated/client.ts",
+    "packages/api-contracts/src/generated/openapi.ts",
+    "packages/ui/README.md",
+    "packages/ui/src/priority.tsx",
+    "packages/ui/src/state.tsx",
+    "packages/ui/src/style.css",
+    "scripts/k8k-refresh-budget.mjs",
+    "tests/unit/manager-dashboard-sdk.test.mjs"
+  ],
+  "verifiedTask021SourceHashesBeforeEdits": 156,
+  "newFiles": [
+    "scripts/k8k-priority-evidence.mjs"
+  ],
+  "openapiRoutesUnchanged": 135,
+  "openapiSchemasChanged": [
+    "DashboardPriorityDto",
+    "DashboardPriorityTaskDto",
+    "ManagerDashboardDto"
+  ],
+  "lockfileAndPrismaSchemaMatch": true
+}

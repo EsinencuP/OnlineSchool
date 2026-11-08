@@ -1,0 +1,436 @@
+{
+  "runs": [
+    "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z",
+    "output/k8k-taskpack/task-035/runs/2026-11-08T11-09-34.834Z"
+  ],
+  "scenes": 58,
+  "violations": 0,
+  "results": [
+    {
+      "taskId": "TASK-035",
+      "route": "/student",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/help",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons?view=list",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons?view=calendar&month=2026-11",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons/10000000-0000-4000-8000-000000000001",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/skills",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/reports",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/reports?reportId=80000000-0000-4000-8000-000000000025&page=3",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subscription?subscriptionId=71000000-0000-4000-8000-000000000001",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/materials",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/profile",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/security",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student?events=1",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/login",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/security/change-password",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/suspended",
+      "locale": "ru",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/help",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons?view=list",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons?view=calendar&month=2026-11",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/lessons/10000000-0000-4000-8000-000000000001",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/skills",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/reports",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/reports?reportId=80000000-0000-4000-8000-000000000025&page=3",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subscription?subscriptionId=71000000-0000-4000-8000-000000000001",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/materials",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/profile",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/security",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student?events=1",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/login",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/security/change-password",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/suspended",
+      "locale": "ro",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "loading",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "empty",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "ready",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "error",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "stale",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "forbidden",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ru",
+      "state": "subscription-limited",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/login",
+      "locale": "ru",
+      "state": "session-expired",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ru",
+      "state": "pending",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ru",
+      "state": "unknown-result",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "loading",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "empty",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "ready",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "error",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "stale",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "forbidden",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/subjects",
+      "locale": "ro",
+      "state": "subscription-limited",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/login",
+      "locale": "ro",
+      "state": "session-expired",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ro",
+      "state": "pending",
+      "width": 360,
+      "failures": []
+    },
+    {
+      "taskId": "TASK-035",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001",
+      "locale": "ro",
+      "state": "unknown-result",
+      "width": 360,
+      "failures": []
+    }
+  ]
+}

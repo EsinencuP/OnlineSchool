@@ -1,0 +1,19 @@
+{
+  "operations": 146,
+  "unchangedPaths": true,
+  "optionalFields": {
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "phoneE164": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\+[1-9][0-9]{6,14}$"
+    }
+  }
+}

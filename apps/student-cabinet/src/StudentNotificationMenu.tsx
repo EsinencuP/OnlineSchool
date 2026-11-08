@@ -1,130 +1,318 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { NotificationBell, useLocale } from '@online-school/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { sessionSignal } from '@online-school/account-ui';
+import {
+  Button,
+  NotificationBell,
+  Drawer,
+  StatusChip,
+  StateBoundary,
+  describeError,
+} from '@online-school/ui';
 import {
   getStudentNotifications,
+  getStudentUnreadNotificationCount,
   markAllStudentNotificationsRead,
   markStudentNotificationRead,
 } from '@online-school/api-contracts';
-import { useCommand, useStudentQuery, write } from './api.js';
-import { date, ErrorNotice, Pager, QueryState } from './components.js';
+import { read, useStudentQuery, write } from './api.js';
+import { ErrorNotice, Pager, QueryState } from './components.js';
 import { notificationTarget } from './student-presentation.js';
+import { formatSkillDate } from './skill-copy.js';
+import { useNotificationCopy } from './notification-copy.js';
 
-export function StudentNotificationMenu({ count }: { count?: number | undefined }) {
-  const { t } = useLocale();
+export function StudentNotificationMenu({
+  count,
+  countError,
+  retryCount,
+  timeZone,
+}: {
+  count?: number | undefined;
+  countError?: unknown;
+  retryCount?: () => unknown;
+  timeZone: string;
+}) {
+  const { t, locale, text, typeLabel } = useNotificationCopy();
   const [params, setParams] = useSearchParams();
+  const open = params.getAll('events').length === 1 && params.get('events') === '1';
   const [page, setPage] = useState(1);
-  const details = useRef<HTMLDetailsElement>(null);
-  const [open, setOpen] = useState(false);
+  const client = useQueryClient(),
+    lease = useRef(sessionSignal());
+  const mounted = useRef(true);
+  const trigger = useRef<HTMLButtonElement>(null),
+    title = useRef<HTMLSpanElement>(null),
+    scroll = useRef<HTMLDivElement>(null),
+    navigating = useRef(false);
+  const forbidden =
+    !!countError &&
+    typeof countError === 'object' &&
+    'status' in countError &&
+    countError.status === 403;
   const query = useStudentQuery(
-    ['notifications-preview', page],
-    (options) => getStudentNotifications({ page, pageSize: 5 }, options),
-    open,
-    60_000,
+    ['notifications-preview', page, locale],
+    (o) => getStudentNotifications({ page, pageSize: 5, locale }, o),
+    open && !forbidden,
   );
-  const mark = useCommand((id: string) =>
-    write((options) => markStudentNotificationRead(id, options)),
-  );
-  const markAll = useCommand(() => write(markAllStudentNotificationsRead));
+  const { refetch } = query;
   useEffect(() => {
-    if (params.get('events') === '1' && details.current) {
-      details.current.open = true;
-      setOpen(true);
-    }
-  }, [params]);
-  useEffect(() => {
-    const outside = (event: PointerEvent) => {
-      if (details.current && !details.current.contains(event.target as Node))
-        details.current.open = false;
-    };
-    const escape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && details.current?.open) {
-        details.current.open = false;
-        details.current.querySelector('summary')?.focus();
-      }
-    };
-    window.addEventListener('pointerdown', outside);
-    window.addEventListener('keydown', escape);
+    mounted.current = true;
     return () => {
-      window.removeEventListener('pointerdown', outside);
-      window.removeEventListener('keydown', escape);
+      mounted.current = false;
     };
   }, []);
+  useEffect(() => {
+    if (open && !forbidden) void refetch({ cancelRefetch: false });
+    else
+      void client.cancelQueries(
+        { queryKey: ['student', 'notifications-preview'] },
+        { silent: true, revert: false },
+      );
+  }, [open, page, locale, forbidden, refetch, client]);
+  const [phase, setPhase] = useState<'idle' | 'pending' | 'unknown'>('idle'),
+    [error, setError] = useState<unknown>(null),
+    [checked, setChecked] = useState(false),
+    [checking, setChecking] = useState(false);
+  const intent = useRef<{ key: string; notificationId: string | null }>();
+  const lock = useRef(false);
+  const fresh = !!query.data && !query.error && !query.isFetching && !forbidden;
+  function changeOpen(value: boolean) {
+    setParams(
+      (previous) => {
+        const next = new URLSearchParams(previous);
+        next.delete('events');
+        if (value) next.set('events', '1');
+        return next;
+      },
+      { replace: true, preventScrollReset: true },
+    );
+  }
+  async function check() {
+    if (lock.current || lease.current.aborted) return;
+    lock.current = true;
+    setChecking(true);
+    setError(null);
+    setChecked(false);
+    try {
+      await Promise.all([
+        refetch({ throwOnError: true }),
+        client.fetchQuery({
+          queryKey: ['student', 'unread'],
+          staleTime: 0,
+          queryFn: ({ signal }) =>
+            read(getStudentUnreadNotificationCount, AbortSignal.any([signal, lease.current])),
+        }),
+      ]);
+      if (!lease.current.aborted && mounted.current) setChecked(true);
+    } catch (value) {
+      if (!lease.current.aborted && mounted.current) setError(value);
+    } finally {
+      lock.current = false;
+      if (!lease.current.aborted && mounted.current) setChecking(false);
+    }
+  }
+  async function perform(id: string | null, retry = false) {
+    if (
+      lock.current ||
+      lease.current.aborted ||
+      (!retry && (phase !== 'idle' || !fresh)) ||
+      (retry && (!checked || !intent.current))
+    )
+      return;
+    lock.current = true;
+    setPhase('pending');
+    setError(null);
+    if (!retry) intent.current = { key: crypto.randomUUID(), notificationId: id };
+    const current = intent.current!;
+    try {
+      await write(
+        (o) =>
+          current.notificationId
+            ? markStudentNotificationRead(current.notificationId, o)
+            : markAllStudentNotificationsRead(o),
+        current.key,
+        lease.current,
+      );
+      if (lease.current.aborted || !mounted.current) return;
+      await client.invalidateQueries({ queryKey: ['student'] });
+      if (lease.current.aborted || !mounted.current) return;
+      intent.current = undefined;
+      setPhase('idle');
+      setChecked(false);
+      title.current?.focus({ preventScroll: true });
+    } catch (value) {
+      if (!lease.current.aborted && mounted.current) {
+        setError(value);
+        const unknown = describeError(value, 'write').outcome === 'unknown';
+        setPhase(unknown ? 'unknown' : 'idle');
+        setChecked(false);
+        if (!unknown) intent.current = undefined;
+      }
+    } finally {
+      lock.current = false;
+    }
+  }
   return (
-    <details
-      ref={details}
-      className="k8k-notification-menu"
-      onToggle={(event) => {
-        const value = event.currentTarget.open;
-        setOpen(value);
-        if (!value && params.has('events')) {
-          const next = new URLSearchParams(params);
-          next.delete('events');
-          setParams(next, { replace: true });
-        }
-      }}
-    >
-      <NotificationBell
-        count={count}
-        renderLink={(content, label) => (
-          <summary className="k8k-bell" aria-label={label}>
-            {content}
-          </summary>
-        )}
-      />
-      <section className="k8k-notification-popover" aria-label={t('chrome.recentEvents')}>
-        <h2>{t('chrome.recentEvents')}</h2>
-        <ErrorNotice error={mark.error ?? markAll.error} />
-        <button
-          type="button"
-          disabled={markAll.isPending || !query.data?.unreadCount}
-          onClick={() => markAll.mutate()}
+    <NotificationBell
+      count={count}
+      renderLink={(content, label) => (
+        <Drawer
+          open={open}
+          onOpenChange={changeOpen}
+          title={
+            <span ref={title} tabIndex={-1}>
+              {t('chrome.recentEvents')}
+            </span>
+          }
+          description={text('help')}
+          initialFocusRef={title}
+          returnFocusRef={trigger}
+          trigger={
+            <Button ref={trigger} variant="ghost" className="k8k-bell" aria-label={label}>
+              {content}
+            </Button>
+          }
+          contentProps={{
+            className: 'k8k-notification-drawer',
+            onCloseAutoFocus: (event) => {
+              if (navigating.current) {
+                event.preventDefault();
+                navigating.current = false;
+              }
+            },
+          }}
         >
-          {t('chrome.readAll')}
-        </button>
-        {open && (
-          <QueryState operational query={query}>
-            {query.data?.items.length ? (
-              <ul>
-                {query.data.items.map((item) => {
-                  const target = notificationTarget(item.payload);
-                  return (
-                    <li key={item.notificationId}>
-                      <h3>{item.title}</h3>
-                      <p>{item.body}</p>
-                      <time dateTime={item.createdAt}>{date(item.createdAt, true)}</time>
-                      <p>{t(item.isRead ? 'chrome.read' : 'chrome.unread')}</p>
-                      {target && (
-                        <Link
-                          className="k8k-student-link"
-                          to={target.href}
-                          onClick={() => {
-                            if (details.current) details.current.open = false;
-                          }}
-                        >
-                          {target.label}
-                        </Link>
-                      )}
-                      {!item.isRead && (
-                        <button
-                          type="button"
-                          disabled={mark.isPending}
-                          onClick={() => mark.mutate(item.notificationId)}
-                        >
-                          {t('read')}
-                        </button>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <p>{t('chrome.noEvents')}</p>
+          {count === undefined && (
+            <p role="status">
+              {text('unavailable')}{' '}
+              <Button variant="secondary" onClick={() => void retryCount?.()}>
+                {text('retryCount')}
+              </Button>
+            </p>
+          )}
+          <div className="k8k-notification-actions">
+            <Button
+              variant="secondary"
+              disabled={phase !== 'idle' || !fresh || !query.data?.unreadCount}
+              onClick={() => void perform(null)}
+            >
+              {t('chrome.readAll')}
+            </Button>
+            <Button
+              variant="secondary"
+              disabled={checking || phase === 'pending'}
+              onClick={() => void check()}
+            >
+              {text('refresh')}
+            </Button>
+          </div>
+          <div ref={scroll} className="k8k-notification-scroll">
+            {phase !== 'unknown' && <ErrorNotice error={error} />}
+            {phase === 'pending' && <p role="status">{text('pending')}</p>}
+            {phase === 'unknown' && (
+              <div>
+                <StateBoundary
+                  state={{ status: 'pending', outcome: 'unknown' }}
+                  receivedAt={query.dataUpdatedAt}
+                  timeZone={timeZone}
+                />
+                <p>{text('unknown')}</p>
+                <Button variant="secondary" disabled={checking} onClick={() => void check()}>
+                  {text('check')}
+                </Button>
+                <Button
+                  variant="secondary"
+                  disabled={checking || !checked}
+                  onClick={() => void perform(null, true)}
+                >
+                  {text('retry')}
+                </Button>
+              </div>
             )}
-          </QueryState>
-        )}
-        {query.data && <Pager {...query.data} change={setPage} />}
-      </section>
-    </details>
+            {!forbidden && query.data && (
+              <p className="k8k-notification-counts" role="status">
+                {text('globalUnread')}: {query.data.unreadCount} · {text('total')}:{' '}
+                {query.data.total}
+              </p>
+            )}
+            {forbidden ? (
+              <StateBoundary state={{ status: 'forbidden' }} />
+            ) : (
+              <QueryState
+                operational
+                query={query}
+                empty={query.data?.items.length === 0}
+                emptyMessage={query.data?.total ? text('emptyPage') : text('empty')}
+              >
+                {query.data && (
+                  <>
+                    {!!query.data.items.length && (
+                      <ul>
+                        {query.data.items.map((item) => {
+                          const target = notificationTarget(item.payload, item.type, locale);
+                          return (
+                            <li
+                              key={item.notificationId}
+                              data-notification-id={item.notificationId}
+                            >
+                              <p className="k8k-notification-type">{typeLabel(item.type)}</p>
+                              <h3>{item.title}</h3>
+                              <p className="preserve-lines">{item.body}</p>
+                              <time dateTime={item.createdAt}>
+                                {formatSkillDate(item.createdAt, timeZone, locale, true)}
+                              </time>
+                              <p>
+                                <StatusChip tone={item.isRead ? 'neutral' : 'info'}>
+                                  {t(item.isRead ? 'chrome.read' : 'chrome.unread')}
+                                </StatusChip>
+                              </p>
+                              {target && (
+                                <Link
+                                  className="k8k-student-link"
+                                  to={target.href}
+                                  onClick={() => {
+                                    navigating.current = true;
+                                  }}
+                                >
+                                  {target.label}
+                                </Link>
+                              )}
+                              {!item.isRead && (
+                                <Button
+                                  variant="secondary"
+                                  disabled={phase !== 'idle' || !fresh}
+                                  onClick={() => void perform(item.notificationId)}
+                                >
+                                  {t('read')}
+                                </Button>
+                              )}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </>
+                )}
+              </QueryState>
+            )}
+          </div>
+          {!forbidden &&
+            query.data &&
+            (!query.data.items.length && page > 1 ? (
+              <Button variant="secondary" onClick={() => setPage(1)}>
+                {text('firstPage')}
+              </Button>
+            ) : (
+              <Pager
+                {...query.data}
+                change={(next) => {
+                  setPage(next);
+                  if (scroll.current) scroll.current.scrollTop = 0;
+                }}
+              />
+            ))}
+        </Drawer>
+      )}
+    />
   );
 }

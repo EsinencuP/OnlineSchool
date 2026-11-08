@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": false,
+    "incremental": false
+  },
+  "include": ["tests/ui-controls/**/*.tsx", "../../packages/ui/stories/**/*.tsx"],
+  "references": [
+    { "path": "../../packages/shared" },
+    { "path": "../../packages/api-contracts" },
+    { "path": "../../packages/account-ui" },
+    { "path": "../../packages/ui" }
+  ]
+}

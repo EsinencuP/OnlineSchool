@@ -52,10 +52,13 @@ beforeAll(async () => {
           {
             items: rows.map((p) => ({
               fileId: p.file_id,
-              fileName: p.file_name,
+              fileName: p.file_name ?? 'Материал',
+              fileNameIsFallback: p.file_name == null,
+              subjectId: p.subjectId ?? null,
+              canDownload: p.can_download,
               fileSizeBytes: 8,
               mimeType: 'application/pdf',
-              subjectName: 'Math',
+              subjectName: p.subjectId ? (p.subjectName ?? 'Math') : 'Без предмета',
               uploadedAt: now.toISOString(),
               sharedAt: p.granted_at.toISOString(),
               sharedByTeacherName: 'Teacher',
@@ -260,3 +263,27 @@ test('audit failure is sanitized and never returns a signed URL', async () => {
   expect(JSON.stringify(result.body)).not.toContain('provider secret');
   expect(state.fileAudit).toHaveLength(0);
 });
+
+test.each([false, true])(
+  'TASK-034 metadata distinguishes explicit legacy context/fallback from authored labels; inline=%s',
+  async (inline) => {
+    Object.assign(state.grants[0], {
+      subjectId: inline ? null : subjects[0],
+      subjectName: 'Без предмета',
+      file_name: inline ? null : 'Материал',
+      can_download: !inline,
+    });
+    const response = await get();
+    expect(response.status).toBe(200);
+    expect(response.body.items[0]).toMatchObject({
+      subjectId: inline ? null : subjects[0],
+      fileName: 'Материал',
+      fileNameIsFallback: inline,
+      canDownload: !inline,
+      subjectName: 'Без предмета',
+    });
+    expect(response.headers['cache-control']).toBe('no-store');
+    expect(storage.signRead).not.toHaveBeenCalled();
+    expect(JSON.stringify(response.body)).not.toMatch(/bucket|hidden-key|capability|url/i);
+  },
+);

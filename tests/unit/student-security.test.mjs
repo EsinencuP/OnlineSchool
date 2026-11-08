@@ -113,21 +113,57 @@ test.each([
   expect(publicManagerLink(value, 'whatsapp')).toBe('');
   expect(publicManagerLink(value, 'telegram')).toBe('');
 });
-test('manager query is scoped to pupil and authorized active staff, never global env fallback', async () => {
+test('TASK-027 manager query is scoped to pupil and active staff without fallback', async () => {
   const id = randomUUID(),
     client = {
       $queryRaw: jest.fn(async () => [
-        { whatsapp: 'https://wa.me/37360000123', telegram: 'https://t.me/manager_one' },
+        {
+          whatsapp: 'https://wa.me/37360000123',
+          telegram: 'https://t.me/manager_one',
+          displayName: '  Manager One  ',
+          phoneE164: '+37360000123',
+          phone: '+37369999999',
+          secret: 'forbidden',
+        },
       ]),
     };
   expect(await studentManagerContacts(client, id)).toEqual({
     whatsapp: 'https://wa.me/37360000123',
     telegram: 'https://t.me/manager_one',
+    displayName: 'Manager One',
+    phoneE164: '+37360000123',
   });
   const [strings, ...values] = client.$queryRaw.mock.calls[0];
   expect(values).toContain(id);
-  expect(strings.join('?')).toContain('a.student_id=');
-  expect(strings.join('?')).toContain('u.disabled_at IS NULL');
+  const sql = strings.join('?');
+  for (const clause of [
+    'a.student_id=?::uuid',
+    'a.assigned_at<=statement_timestamp()',
+    'a.ended_at>statement_timestamp()',
+    'ORDER BY a.assigned_at DESC,a.id DESC LIMIT 1',
+    's.deactivated_at IS NULL',
+    'u.disabled_at IS NULL',
+    "u.kind='STAFF'",
+    "r.code IN('MANAGER','DIRECTOR')",
+    'ra.valid_from<=statement_timestamp()',
+    'ra.valid_to>statement_timestamp()',
+  ])
+    expect(sql).toContain(clause);
+  expect(sql).not.toMatch(/\bs\.phone\b|SELECT \*/);
+  client.$queryRaw.mockResolvedValue([
+    {
+      whatsapp: 'http://wa.me/37360000123',
+      telegram: 'javascript:alert(1)',
+      displayName: '   ',
+      phoneE164: 'tel:+37360000123',
+    },
+  ]);
+  expect(await studentManagerContacts(client, id)).toEqual({
+    whatsapp: '',
+    telegram: '',
+    displayName: null,
+    phoneE164: null,
+  });
   client.$queryRaw.mockResolvedValue([]);
   expect(await studentManagerContacts(client, id)).toEqual({ whatsapp: '', telegram: '' });
 });

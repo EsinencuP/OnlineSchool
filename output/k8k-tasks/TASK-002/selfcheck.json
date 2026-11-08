@@ -1,0 +1,38 @@
+{
+  "task": "TASK-002",
+  "sourceDigest": "fa97181d4ba7502ed001cf335e88bf4594bde1802316b4e9bad64a2f9d5d2822",
+  "dirtyDigest": "7004c02408417244f0008373cd1be12d2835a70ab32f577bd1a9324019648bc2",
+  "validInventoryAccepted": true,
+  "negativeFixtures": [
+    {
+      "name": "missing-route",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "write-without-screen",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "invented-existing-api",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "button-only-complete-module",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "capped-list-school-kpi",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "nonexistent-file-reference",
+      "invalidInventoryRejected": true
+    },
+    {
+      "name": "stale-source-digest",
+      "invalidInventoryRejected": true
+    }
+  ],
+  "passed": true,
+  "scope": "in-memory inventory corruption probes only; no source edits, application requests or DB"
+}

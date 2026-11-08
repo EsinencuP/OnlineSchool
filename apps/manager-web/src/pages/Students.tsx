@@ -46,7 +46,7 @@ export default function Students() {
     <>
       <div className="page-heading">
         <div>
-          <p className="eyebrow">
+          <p className="summary-context">
             {ru.portfolio} · {me.portfolioSize}
           </p>
           <h1>{ru.students}</h1>

@@ -1,0 +1,186 @@
+[
+  {
+    "path": "packages/api-contracts/openapi/openapi.json",
+    "sha256": "345ccd24baefdbc2a007161af15fede76b937d28f89267c4adf3e09f5affb55d"
+  },
+  {
+    "path": "packages/db/prisma/baseline-parts/task04-invariants.sql",
+    "sha256": "cfed54392a2b8563c3bf762b7ad2e88534e61c1960c73e3ace97a7f78e2e2ab2"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261025210404_task02_identity_access_crm/migration.sql",
+    "sha256": "c45c2e68a869a3556f1183426c60872756617bf132865d1a2c3485fa5c15621a"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261025210500_task02_identity_access_crm_invariants/migration.sql",
+    "sha256": "d0c17e86fc0540649b68d17fc5477bf6ba149f20ab9805b21edeccbdd5add331"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026010000_task03_schedule_finance/migration.sql",
+    "sha256": "517a61522a36e6739eaed52c7a2cedfe7f5f6932559c57f1c28eeb82bc820e6a"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026010100_task03_financial_invariants/migration.sql",
+    "sha256": "1c5d2c7f652434045fbc731d3ebf167dd31534b4a24b654d887693a9591c4a85"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026020100_task04_education_files_infra/migration.sql",
+    "sha256": "b748f86a233d0f6023affbe665078034ee34106eabd8713524c452654c14b293"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026030000_task05_guards/migration.sql",
+    "sha256": "fd93c2c7e67ed00e6d299d87c03edf547d91b96029b53e572f376fa1c046daf5"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026040000_task07_identity/migration.sql",
+    "sha256": "6626875ff91826483abd1dbe03581bebc0e9180a068a1f8c31c11734811dc251"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026050000_task08_finance/migration.sql",
+    "sha256": "1e706af47eec286e648e83d1aa4775653616db458fb21a9ca44574fd944c8ff4"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026060000_task09_schedule/migration.sql",
+    "sha256": "ed61ee96236261f1935165297f3ae0dfc1dbce96ba7d20eb6e80d17bbe5fe9f5"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026070000_task11_worker/migration.sql",
+    "sha256": "026a795b899e0aca1a9dbfab70ab9699cb12ab63412095fe32d6592856669387"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/20261026080000_task12_qa_runtime/migration.sql",
+    "sha256": "9a9702ecfbe9ab8212f959c53c24bf6618ea63e7b5bf7a9ff8f50103963d108c"
+  },
+  {
+    "path": "packages/db/prisma/migrations-history/task02-task03-sha256.json",
+    "sha256": "614dbd7a2dfb2d46d0545f204ce78eb47c46078581d2cfd143a2a2275327b14f"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026020000_init/migration.sql",
+    "sha256": "497a39872d0cc3edcc3983be942e26a91c1efaf303a5fb783de9435a1fe83772"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026030000_task05_guards/migration.sql",
+    "sha256": "fd93c2c7e67ed00e6d299d87c03edf547d91b96029b53e572f376fa1c046daf5"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026040000_task07_identity/migration.sql",
+    "sha256": "6626875ff91826483abd1dbe03581bebc0e9180a068a1f8c31c11734811dc251"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026050000_task08_finance/migration.sql",
+    "sha256": "1e706af47eec286e648e83d1aa4775653616db458fb21a9ca44574fd944c8ff4"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026060000_task09_schedule/migration.sql",
+    "sha256": "ed61ee96236261f1935165297f3ae0dfc1dbce96ba7d20eb6e80d17bbe5fe9f5"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026070000_task11_worker/migration.sql",
+    "sha256": "026a795b899e0aca1a9dbfab70ab9699cb12ab63412095fe32d6592856669387"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261026080000_task12_qa_runtime/migration.sql",
+    "sha256": "9a9702ecfbe9ab8212f959c53c24bf6618ea63e7b5bf7a9ff8f50103963d108c"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027090000_stu01_student_context/migration.sql",
+    "sha256": "a464af1cf5363f89dd1c3683ac72770cd8828cb6f25ebdc11df908e6d89b715a"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027100000_stu02_dashboard/migration.sql",
+    "sha256": "d8d233dfac8367634028ebca03d8392e581f083ea5b7dddec3a65a2236ad138c"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027110000_stu03_student_lessons/migration.sql",
+    "sha256": "0f494ed24b08a3bc4f1060ccc758234381827b7b3203178198c221f8f9b6c655"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027120000_stu04_dispute_enums/migration.sql",
+    "sha256": "7d0cba9e172373c9eaf448405e0cfcc069f7722c90529a50f0faacd40c90dec9"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027120100_stu04_history_disputes/migration.sql",
+    "sha256": "6b0e29fc9047a46adb156c34a7b8f0c4735246380648c7212a538511ca5f8772"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027130000_stu05_homework/migration.sql",
+    "sha256": "1a059fea68645f21f51c89a27a358f239e74df3d220462524ae455bd92b50a66"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027140000_stu06_materials/migration.sql",
+    "sha256": "905bb7df260b220f2615756dcc21f22b759785c0a6651b28d78430c6cd23af64"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027150000_stu07_subscription/migration.sql",
+    "sha256": "0d8613160967092e46b6bf45d78a4646b80d2b82b654417e5e29db351b66addd"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027160000_stu08_skill_level/migration.sql",
+    "sha256": "27b592ec58f2bf6ebefc442580931c8fa92c4efe31b298896c6b6cd72678b554"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+    "sha256": "1abdfccbc964c2569f0c26df742f8d030e42c77d4be1bc363b587e41f68ec3a1"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+    "sha256": "1188311805a449aed5c0db19a52b6c2760817d181f612c3feaaf5a92c779eefe"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261028100000_stu10_notifications/migration.sql",
+    "sha256": "29764f80aeabcc3d0d5b8b6278e08ffc832649ab1ddf1bb4acf6c975aa4a0683"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261028110000_stu11_profile_security/migration.sql",
+    "sha256": "164e03faf37da470a0d76fc24cf5ae82ce70137b272a6bf025b8b2a277d1b8fb"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261028130000_stu12_runtime_profile_permissions/migration.sql",
+    "sha256": "7bd6ca87fe384017718896bc2bfefd25aadd9aa41fddf1ff19a6ebcb8c2d6ba8"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261031100000_mgr02_student_crm/migration.sql",
+    "sha256": "89b6ff82cce31344297ed81f5bd917654e39deaba307dfbb750288d9cbff9f10"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261031110000_mgr03_student_credentials/migration.sql",
+    "sha256": "771ad041c06e467ebb86b9140e8a730e4569fa14391c3d470c70acda5860e26c"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261031120000_mgr04_managed_subscriptions/migration.sql",
+    "sha256": "7b68c670471e2c6b6982249715ef9593a4adb5a7351e6135f575787c5e5c6b10"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261031130000_mgr05_receipts/migration.sql",
+    "sha256": "0f9ba7cff306da775d381bc02a36e2a4a3c17b7c2d3f97605f672b8a01230a0a"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261031140000_mgr06_schedule/migration.sql",
+    "sha256": "5062d7b7031ecb336aab01caa3004fc3d7cc4e1e9760385f7328df59efed02fc"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261101090000_mgr07_crm_tasks/migration.sql",
+    "sha256": "99d33f5f7142d3413e09ee8abf2a1d55c9b7cbb5e1509ef5e614f873170545c3"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261101100000_mgr08_notifications/migration.sql",
+    "sha256": "abda271dbe19e4ecf9a205f0b8352cff8d8c922a8681b0c29ad39a32edc42633"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261101110000_mgr11_leads/migration.sql",
+    "sha256": "d039da328a93c573c409b650324009a64d11291e48b577e529db3c9f9cbe41ad"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261101120000_mgr02_report_read_permissions/migration.sql",
+    "sha256": "f25622a703cfe56dca44e7a65961b83126c2e9c2a7d3780f1307b98d060f06b5"
+  },
+  {
+    "path": "packages/db/prisma/migrations/20261107120000_k8k_student_manager_phone/migration.sql",
+    "sha256": "2dcec189dfb3e310c5c3b093b90322263c3e2840f58902c0299eb86390e462ab"
+  },
+  {
+    "path": "packages/db/prisma/schema.prisma",
+    "sha256": "92f9d0d7a08839c68195e4a939f65f93ff563f149e57b1489f2f3f5fe2d4775b"
+  }
+]

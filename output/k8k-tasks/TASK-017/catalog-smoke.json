@@ -1,0 +1,73 @@
+{
+  "checks": [
+    {
+      "locale": "ru",
+      "width": 360,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ru",
+      "width": 768,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ru",
+      "width": 1024,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ro",
+      "width": 360,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ro",
+      "width": 768,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ro",
+      "width": 1024,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    {
+      "locale": "ro",
+      "width": 1280,
+      "vis11": 9,
+      "shell": "rendered",
+      "dialog": "keyboard focus and return"
+    },
+    "Primary Button hover changes visual state",
+    "Tabs keyboard navigation, disabled tab skipped and draft retained",
+    "DenseTable keyboard sort, selection and next page",
+    "DatePicker and Segmented keyboard navigation",
+    "Error retry dispatches one synthetic read",
+    "Manager locale toolbar and four viewport controls",
+    "Accessibility addon axe scan, VIS-11 Ready, RO"
+  ],
+  "blocked": [
+    "https://example.invalid/storybook-sentinel",
+    "/api/storybook-sentinel"
+  ],
+  "pageErrors": [],
+  "stories": 46
+}

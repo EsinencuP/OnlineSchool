@@ -1,5 +1,202 @@
 # K8K — выполненный инкремент 03.11.2026
 
+## TASK-035 — приёмочный gate ученика, 08.11.2026
+
+Процедура завершена: локальный student gate PASS; student rollout **NO-GO**.
+На текущем HEAD `60e2a0c47cbcc744dc658a85f386833146e836b3` и сохранённом dirty tree
+заново прошли 680 unit/HTTP/SDK mocks, 14 presentation/locale, 77 design checks,
+200 Chromium cases без skipped/flaky. Получены 597 автоматических снимков,
+RU/RO × 360/768/1024/1280, 58 axe scenes без нарушений, keyboard/focus,
+длинный контент, reduced-motion и эмуляция reflow 200%. Playwright MCP отдельно
+подтвердил RO/360, Escape и возврат фокуса после закрытия меню/колокольчика.
+17 student route patterns: JS/CSS gzip 192490 + все локальные fonts 63492 =
+255982/256000 bytes. RU→RO: дополнительных JS/CSS нет, subset WOFF2 3544 bytes
+уже учтён в общем бюджете. 25 контрастных пар проверены на текущих стилях.
+
+Добавлен изолированный воспроизводимый harness; уточнены устаревшие browser
+ожидания текущего UI. Product source, 149 API operations, SDK и 31 миграция
+не изменялись. 214 исходных byte-копий и 46 contract/migration checksums проверены.
+Внешние DB/schema rollout, S3/PDF worker, email/OTP/cookies, Meet/G4,
+teacher publication, физическая AA/owner visual signoff и общие release/legal gates
+остаются NOT_RUN; rollout не включался. TASK-036 не начат.
+[Отчёт](../output/k8k-tasks/TASK-035/report.md) ·
+[Приёмка и блокеры](../output/k8k-taskpack/task-035/acceptance.json) ·
+[Трассировка DASH-STU-01…07](../output/k8k-taskpack/task-035/coverage.md)
+
+## TASK-034 — RU/RO, материалы, профиль и безопасность, 08.11.2026
+
+Текущие K8K student routes используют единый locale store; typed student namespace
+в shared MessageKey/MessageCall не добавляет copy в staff bundles. Переведены
+materials/profile/security/password/suspended, общие подписи/errors/aria/title/date;
+имена и авторский контент не переводятся. Alias не remountится при /me refetch.
+MaterialItemDto получил3 optional read-only metadata из существующих grant/object
+полей: subjectId/canDownload/fileNameIsFallback. Scope, signing и no-store прежние;
+URL читается только по клику, не сохраняется в state/cache/storage. Secret commands
+не используют generic mutation cache/serialized intent; password/OTP очищаются,
+unknown не success/retry. Неопределённая ротация auth/logout закрывает приватный
+DOM/cache через существующий session boundary; confirm заново читает /me.
+48 material +73 security API/HTTP/SDK mocks,12 presentation,2 locale cases,
+19 Chromium,65 screenshots, RU/RO×4 ширины, axe360 и reflow200% прошли локально.
+149 операций сохранены, только3 optional response fields;31 migration SHA прежние.
+50/50 budget PASS, student255001/256000, max255923. Реальные PostgreSQL/S3/email/
+OTP/session rotation/provider delivery, physical accessibility и TASK-035 gate NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-034/report.md) · [Покрытие](../output/k8k-tasks/TASK-034/coverage.md)
+
+## TASK-033 — единый колокольчик событий, 08.11.2026
+
+Общий Drawer управляется единственным events=1, закрытие сохраняет остальные URL
+параметры. Preview читается только открытым, глобальный count отдельно; page2,
+empty beyond-end, stale, loading, unavailable/403 и late session responses различимы.
+Read/read-all используют прежние CSRF/UUID/204 и first read_at; unknown сверяется
+чтением до повтора того же intent. Повтор read-all не поглощает новое событие.
+Тип и публичный UUID определяют scoped target урока/ДЗ/отчёта/TASK-026 абонемента;
+прочтение события не выполняет команду объекта. Все18 типов сохранены.
+Optional GET locale=ru|ro переводит только catalog key+полные public params;
+historical/неполный и MANUAL_MESSAGE текст остаётся исходным, inbox не переписывается.
+86 API/HTTP/SDK mocks, 12 presentation tests, 13 Chromium, 29 screenshots,
+RU/RO × 4 ширины, axe360 без нарушений и 50/50 бюджетов прошли.
+149 API operations и response schemas сохранены, миграций/зависимостей не добавлено.
+Реальные PostgreSQL/triggers/projector/concurrency/TTL и общий gate NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-033/report.md) · [Передача](../output/k8k-tasks/TASK-033/handoff.md)
+
+## TASK-032 — адресный отчёт и workflow PDF, 08.11.2026
+
+Опубликованный отчёт читается отдельным GET по reportId независимо от страниц
+списка, с той же publishedReportsCte/публичной проекцией. Фокус переходит к его
+заголовку; возврат сохраняет page. Явное прочтение сохраняет empty-response transport
+204/200 и обновляет isNew только после ответа; unknown сначала проверяет detail.
+PDF UI использует существующие enqueue/status: неизменный intent UUID/body,
+GET-сверку потерянного202, четыре job states, polling2s не дольше60s, resume того же
+job и fixed expiry. Скачивание сначала перепроверяет job; URL не хранится в cache/
+storage. Logout/401/403 и межвкладочная смена actor скрывают старые данные.
+86 API/HTTP/worker/SDK mocks, 14 Chromium-сценариев, 43 screenshots и 50/50 бюджетов
+прошли. OpenAPI/SDK созданы штатно: 147 прежних операций сохранены, два GET добавлены.
+Реальные PostgreSQL/S3/worker delivery, teacher publication и полный gate NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-032/report.md) · [Передача](../output/k8k-tasks/TASK-032/handoff.md)
+
+## TASK-031 — карта навыков, срез4 и отчёт8, 08.11.2026
+
+Карта сохраняет четыре серверных enum: нейтральное NOT_STUDIED вне общего трека
+трёх учебных этапов. RU/RO охватывает статусы, историю, цели, даты и состояния.
+Неоценённый навык показывает catalog date без выдуманного преподавателя; цели
+и isAchieved берутся из API. История показывает public comments, включая downgrade/reset.
+Предметный URL включает собственные исторические enrollments и не выбирает первый
+предмет молча. Additive optional subjectId для GET snapshots фильтрует историю до
+count/pagination. Frozen snapshot4 отделён от Reports8; student writes не добавлены.
+На главной — краткий контекст/цель каждого предмета и переход к его карте.
+57 API/HTTP mocks и 10 Chromium-сценариев прошли, исходный four-state тест сохранён.
+Есть 34 screenshots, включая RU/RO × 4 ширины, и 50/50 бюджетов с fonts.
+Фактические PostgreSQL queries/triggers/races, teacher publication workflow и общий
+gate не проверялись. [Отчёт](../output/k8k-tasks/TASK-031/report.md) · [Передача](../output/k8k-tasks/TASK-031/handoff.md)
+
+## TASK-030 — домашние задания и защита редактора, 08.11.2026
+
+Список ДЗ использует ListRow/StatusChip и серверную пагинацию без новых status-tabs.
+Редактор, вложения, доработка и история переведены на общий UI-kit и RU/RO.
+Сохранены debounce 2s, последовательная очередь сохранения и upload/submit intents.
+Неизвестная отправка проверяется существующим GET detail до явного повтора с тем же
+ключом и содержимым; истечение черновика сохраняет ввод без ложного «сохранён».
+Пять исходных baseline-сценариев, 16 итоговых Chromium-сценариев и 55 API/HTTP mocks
+прошли. Есть 26 снимков, включая RU/RO × 4 ширины, и 50/50 бюджетов с fonts.
+Реальные S3/CORS, PostgreSQL write/races и общий gate имеют статус NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-030/report.md) · [Передача](../output/k8k-tasks/TASK-030/handoff.md)
+
+## TASK-029 — расписание, история, перенос и спор, 08.11.2026
+
+Расписание сохраняет period/view/month/page и предмет в URL. Календарь с лимитом
+62 переходит к постраничному списку того же месяца. В разделе есть единая история
+подтверждённых фактов с server total, точными количествами и неизвестными legacy
+остатками. Карточка адресно читает свой history fact, выданное ДЗ и разрешённые
+материалы. Формы переноса и спора используют серверные capabilities и существующие
+команды. Unknown проверяется отдельным GET по исходному ключу, включая reload.
+173 API/HTTP mocks, 11 presentation и 12 Chromium-сценариев прошли. Реальные
+транзакционные гонки/БД и общий ролевой gate имеют статус NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-029/report.md) · [Передача](../output/k8k-tasks/TASK-029/handoff.md)
+
+## TASK-028 — текущий урок и доступ к Meet, 07.11.2026
+
+Dashboard, список, календарь и карточка используют общую серверную проверку
+предметного права, назначения и точного окна T−10…T+60 включительно. Hero получает
+свой status и meetAsOf. Кэш сводки хранит только счётчики и абонемент, урок читается
+для каждого ответа. Клиент запрашивает решение на T−10, скрывает устаревшую ссылку
+и использует монотонное время. Локальные HTTP mocks и RU/RO fixtures проверяют
+границы, отмену, отзыв и два предмета. Проверки SQL на рабочей БД и Meet OAuth,
+POC, provider, G4 имеют статус NOT_RUN.
+[Отчёт](../output/k8k-tasks/TASK-028/report.md) · [Передача](../output/k8k-tasks/TASK-028/handoff.md)
+
+## TASK-027 — назначенный менеджер, 07.11.2026
+
+Главная, помощь и экран приостановки используют одну проекцию `managerContacts`.
+Она возвращает имя действующего назначенного сотрудника и официальные каналы.
+Телефон появляется из отдельного nullable E.164 поля. Additive миграция подготовлена
+для rollout. Смена назначения и сессии проверены на локальных fixtures.
+[Отчёт](../output/k8k-tasks/TASK-027/report.md) · [Передача](../output/k8k-tasks/TASK-027/handoff.md)
+
+## TASK-026 — абонементы по предметам, 07.11.2026
+
+Главная и хаб K8K показывают серверный статус каждого предмета, остаток оплаченных
+занятий, срок, заморозку и отдельный временный допуск. Детали, подтверждённые платежи
+и количественная история сохраняют один финансовый `subscriptionId`. Неизвестные
+снимки старых списаний остаются `null`. Прежний интерфейс сохраняет свой обзор.
+[Отчёт](../output/k8k-tasks/TASK-026/report.md) · [Передача](../output/k8k-tasks/TASK-026/handoff.md)
+
+## TASK-025 — предметный хаб и помощь ученика, 07.11.2026
+
+В K8K добавлены `/student/subjects?subjectId=…` и `/student/help`. Хаб читает
+`getStudentSubjects`, валидирует селектор по собственным предметам и открывает
+разрешённые действия. Главная выделяет одно действие урока. Профиль и безопасность
+открываются из меню аккаунта. Предметный фильтр есть у материалов и карты навыков.
+Из общих списков расписания и ДЗ доступен возврат к предмету.
+[Отчёт](../output/k8k-tasks/TASK-025/report.md) · [Передача](../output/k8k-tasks/TASK-025/handoff.md)
+
+## TASK-024 — серверная проекция предметов ученика, 07.11.2026
+
+`GET /api/v1/student/subjects` отдаёт собственные предметы, подтверждённые остатки,
+отдельный лимит временного допуска и возможности просмотра. `subscriptionId`
+принимают существующие GET деталей, платежей и истории. OpenAPI и SDK обновлены.
+API проверен адресными mock-тестами. Предметный хаб и экран абонементов относятся
+к TASK-025/026. [Отчёт](../output/k8k-tasks/TASK-024/report.md) · [Передача](../output/k8k-tasks/TASK-024/handoff.md)
+
+## TASK-023 — локальная приёмка общей оболочки и SDK, 07.11.2026
+
+Пять кабинетов и общий вход проверены на свежих сборках в RU/RO и четырёх ширинах.
+На 320 px шапка ученика корректно переносит имя рядом с колокольчиком.
+Старые URL и 140 исходных операций сохранены. Сгенерированный SDK воспроизведён
+побайтно. Статус PARTIAL из-за открытого рабочего источника критических событий.
+[Отчёт](../output/k8k-tasks/TASK-023/report.md) · [Передача](../output/k8k-tasks/TASK-023/handoff.md)
+
+## TASK-022 — контракт критического события и очереди CRM, 07.11.2026
+
+Dashboard и SDK принимают опциональный серверный снимок `priority`. Слот подключён к
+существующим карточке и очереди задач. Сбой источника и подтверждённый ноль различаются.
+Статус PARTIAL. Действующий каталог и правило выбора primary не подтверждены, поэтому
+сервер пока опускает `priority`. [Отчёт](../output/k8k-tasks/TASK-022/report.md) · [Аудит источников](../output/k8k-tasks/TASK-022/source-audit.md)
+
+## TASK-021 — одна политика чтения и ясная свежесть, 07.11.2026
+
+Активные оперативные ключи K8K получают фоновые чтения через одного владельца.
+Сигналы фокуса, видимости, сети и таймера объединяются. Ввод и диалог откладывают
+чтение до завершения взаимодействия. Запросы сессии и инвалидация после команды
+сохраняют свои пути. На T−10 ученический обзор запрашивает `canJoin` у сервера.
+Для критичных чтений показаны время получения, доступное время источника и stale.
+[Карта владельцев](../output/k8k-tasks/TASK-021/refresh-map.md) · [Отчёт](../output/k8k-tasks/TASK-021/report.md)
+
+## TASK-020 — адресуемая staff-навигация, 07.11.2026
+
+Platform разделён на оболочку, workspace и объектную карточку. Существующий `section`
+совместим с новыми `filter` и `id`. Back/Forward возвращает фильтр и позицию списка.
+Защищённый GET читает отдельный объект с серверной областью видимости. В K8K ниже
+1024 px работает нижняя навигация с «Ещё» и справкой. Свежие локальные проверки и
+границы фильтрации приведены в [отчёте](../output/k8k-tasks/TASK-020/report.md).
+
+## TASK-019 — жизненный цикл приватной сессии, 07.11.2026
+
+Platform, Manager Web и Student Cabinet отзывают поколение запросов и очищают приватный
+экран на выходе, смене пользователя и 401. Вкладки обмениваются сигналом смены сессии.
+403 удаляет данные запрещённого чтения, а незавершённая MFA блокирует Finance.
+Студенческие команды с паролями и OTP теперь выполняются вне MutationCache (K8K-DEF-074).
+Проверки на локальных фикстурах и замеры 48 маршрутов описаны в [отчёте](../output/k8k-tasks/TASK-019/report.md).
+
 ## TASK-018 — actor context и eligibility, 04.11.2026
 
 StaffActorContextDto различает auth account и собственный teacher/staff profile,
@@ -220,7 +417,7 @@ future before/after сравнения и исправления74 OPEN запи
 Полный переводRU/RO (включая account-ui/CRM/state messages); Radix/Storybook/полный UI-kit; удаление legacy CSS allowlist;
 subject-access/subscriptions/manager contacts DTO; staff контекст/пагинация/action capabilities/priority;
 teacher education/review/report/appeals/current-rate; CRM journal/board pagination; director approvals queues;
-подключение существующих history/dispute/PDF API и глубокая ссылка к старому отчёту за пределами текущей
+подключение существующих PDF API и глубокая ссылка к старому отчёту за пределами текущей
 страницы; общий итоговый regression.
 
 Не изменялись рабочая БД, миграции, финансовые формулы и production. Никаких push/deploy. Новые backend отчётные/педагогические модули не выдаются за завершённые. FND-GATE/LEGAL/FIN-LEGAL/MeetPOC/G4 остаются открытыми.

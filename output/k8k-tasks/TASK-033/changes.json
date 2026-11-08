@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "basis": "task snapshots, not the whole pre-existing dirty diff",
+  "rows": [
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "before": "685d969a2d6004d583f5ef53922f9bb4b62a464ffa5516a7eaf4aa867db96d2b",
+      "after": "d3af98bf345c453ea60bf615cbb17d4748d1135b21f365eda29ca0fe2c977f2d",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "before": "462cea79aae71ead3251795dc6b4a3b1d64bbd553b7c32e8396ea0e8cbe51102",
+      "after": "3b274d4d7d7a6e9cd577f4df0e05a2abfd6564308a8db598b1dd5ef5e4b88508",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "before": "4d790bccb2440c874c39f281a44adc76e7b1203fade4219faccabc4373a589f7",
+      "after": "78cfbd14d5ba6eb5401a0f3dfab72850a444ab4f739ec3f29755981b3b0fb20a",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "before": "3e5383dfcf7d39adbb2abb3b70fa434df63c1abf24722019b8fd3b6002eec217",
+      "after": "3e5383dfcf7d39adbb2abb3b70fa434df63c1abf24722019b8fd3b6002eec217",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "before": "f97464b11840700a087035d3a1c384862a070e823e87b5d6bb0fe50ce52f265e",
+      "after": "68cea10e3e963e2699478a989892da7ca8b9645684d39dbdce857f4233c13f29",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/api.ts",
+      "before": "6cf340ca488bb5aea4d8153d37b08fa23c5e08fb3a43998800093961a2b99ee4",
+      "after": "e2a815fd4feaebd7caeb202d02dec8e504bfb25d6a8832d0d9917785322917cf",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "before": "ba70c56aa90cabf377033b1e3fe14d0b36f109d7094e4689f59af4ce897861a0",
+      "after": "cf4207d53cf1caeb32ba9ff27415a2f3fe692489dc3b80b6e413e2ae21c3e56d",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "before": "c758065ac7fe68c55ce9fa6187934b56e00489d513dc62bab5ae3596654d1fec",
+      "after": "522486268dd1225c437860c7c3fc88b3b6901aa3b811679040c0c89a0ef0a6c7",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/student.spec.mjs",
+      "before": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "after": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "before": "e484429ed1cd24b280303b9fe6f1437ed8299433fd6a7609281ded81ea6a6f62",
+      "after": "8e31db86f1f3804ce4af8a0eafb3883246f4f0f235de613c57c849772b81024e",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "before": "49fdcb90c9af7862ce9b02319bb2efa697f69f3de21e9774998d3097482a547c",
+      "after": "cf26f96ae6f8e852a7e208c75ea8d00defe17bdf83153dedf7869a4e41fdb0cb",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.dto.ts",
+      "before": "db190a21c037cabee964e0333109f6122e44a0f1e0af6e7347e26d332079af11",
+      "after": "b56aae7cc02c58f5b279885f59999b624d6248b49691d4ca6251242e89adeb03",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.controller.ts",
+      "before": "5150338619fe71b80690000c06b1ea9bacfde5a886f85c18d4a12e03026031c8",
+      "after": "a3fb9e2e78bf40a0bcc604dc58b25b6e2a7fe8ef9aa3ee436915fc01535d6fad",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/notifications/notifications.service.ts",
+      "before": "41cc90e3283034a0c4e171f85a1e9163da4621d965df738bab58fe374ed176d6",
+      "after": "8dc6c4555a8677b33cac5c7cfaa5e2cdb03e9cd5d70ac225df362a58c153f5d9",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/notifications/README.md",
+      "before": "6f4276cf1cc431c53892fbb8cb94ac5813d9f18a40e5a8453c2d754308ffe6c6",
+      "after": "47cf2e470ea84c3f0b821338c13e2d2f4023ef0eb75f1efb41c2e1029456a870",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/templates.ts",
+      "before": "004b10c2d2da6b8285d49a3626f1a8f2f637785a58a992417b72f6fb57347952",
+      "after": "004b10c2d2da6b8285d49a3626f1a8f2f637785a58a992417b72f6fb57347952",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/notification.service.ts",
+      "before": "f18261ea0e282c944dcbe9fbb059d3a2c3b705561c139cd604f9654c02abf48c",
+      "after": "f18261ea0e282c944dcbe9fbb059d3a2c3b705561c139cd604f9654c02abf48c",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/modules/notifications/notification-outbox.publisher.ts",
+      "before": "3b3a704c346e712b510988bc4529b09c5ff10292e956f04b2ed960c5be18142c",
+      "after": "3b3a704c346e712b510988bc4529b09c5ff10292e956f04b2ed960c5be18142c",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/worker/src/notifications.ts",
+      "before": "1ac9626bf05e91951bd7dd1e04b2ec2e1b53c02ea626905714bc645887e58d4c",
+      "after": "1ac9626bf05e91951bd7dd1e04b2ec2e1b53c02ea626905714bc645887e58d4c",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-notifications.test.mjs",
+      "before": "55a3e0b0feb456763ada70c4bfa4a4adb17bef3ec6f64c643bde4ce4ca1bb2b9",
+      "after": "f0eb53528a7856ac13db3291c33c90d040976a3a82d7b19ef89697c1ba06ad0e",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-notifications-http.test.mjs",
+      "before": "2b27753a585fbc0705ec886e8f9379833a15a1237720e3166dd8bfa59b6e8dad",
+      "after": "58315ac3f6c5f15dcacd44f9d7c6c1f850917a86527766210280bf31c593b3a3",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "tests/unit/student-notifications-sdk.test.mjs",
+      "before": "d61ed8ec369d61c2ec7b94d5ad4873bcb508a3ed4852050cefcc2ed28aab32d1",
+      "after": "d61ed8ec369d61c2ec7b94d5ad4873bcb508a3ed4852050cefcc2ed28aab32d1",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "before": "962d07dbc5992bd8eaadf4b0824bcbe8cc85838fc79eadaeaa27c9e82eade483",
+      "after": "70a10fffbfefbb8cc608660dc40b0433d1b3d80c282e9486fff6180980258362",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "before": "e4f5e9dbd7bd0b8cdc66ad370c0fc7499862d77d5d0c5fbdfcaa1979a4024987",
+      "after": "1ea0d0db7eeddff979c56084b37ec150d50bce18c367b61b50bcbe50fc083399",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "before": "facd5665ef166c856c8b08351e2683aecb2beccd43dcdc2a2d37f17dc46a6625",
+      "after": "8bcdfb05d914fd087f94358a44bf616b5c416c3ab5bc7bda363ea0b1afffc5e0",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "packages/api-contracts/src/transport.ts",
+      "before": "13c56dd0c70778d654dff08e76d1634cbc3ac65e358395164ccc7559a1d55cf5",
+      "after": "13c56dd0c70778d654dff08e76d1634cbc3ac65e358395164ccc7559a1d55cf5",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "before": "91158da3207ca6d46f4cd39498e51813ddebb76e63fd2580e0adb032e7ab7e5a",
+      "after": "caa6b14f4872f396517f1e2fd18eaea2ffeada944dc232b976cf5abfe7a69017",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "before": "406537bbba62545079ab7e8ab00c859a8771739decf305abb6ddef88919c1763",
+      "after": "f2d3e9e0d7f7b345b736104dc1278dc2de95965df27d58e960d47ecf8cca56e7",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "before": "7341683a237319dcd3a4307671097bd4b9dc0c004e7b8135de03b903634c3678",
+      "after": "ff626860661dec38614ca479a82a7de8e855e3706aba9361494644ac49711e46",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "scripts/k8k-refresh-budget.mjs",
+      "before": "69393d9481d7c5eaebb569bc3335a9a5782c48106325c759111c62a7ba446847",
+      "after": "83921ae346fa7ffd6a8627bae5b1d5b31141564ce2c5196d5431b3861b40480f",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "package.json",
+      "before": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b",
+      "after": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "before": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7",
+      "after": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7",
+      "changed": false,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/api/src/student/notifications/notification-locale.ts",
+      "before": null,
+      "after": "e05c06a190137de7dc837d294b5662852d0de7739aa1dea857ebb5788e2ce78b",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/src/notification-copy.ts",
+      "before": null,
+      "after": "579954224803220981fcd921e0e8e36c1560e993c2c7fbe2f9b86aeff15b85e7",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/bell.spec.mjs",
+      "before": null,
+      "after": "f6b879ba678b440374ffa90520ef902d3109c324eb72340a330065655085ddca",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/tests/bell-fixtures.mjs",
+      "before": null,
+      "after": "0ca0785eb744991723bc53e9287eb1bffe863408863598b803dcc8b38c454b89",
+      "changed": true,
+      "whitespace": "PASS"
+    },
+    {
+      "path": "apps/student-cabinet/playwright.bell.config.mjs",
+      "before": null,
+      "after": "72ed688d942d65131fafb8568a432bd019fdf3bc3956ae7f7dfa41542dd2aa81",
+      "changed": true,
+      "whitespace": "PASS"
+    }
+  ]
+}

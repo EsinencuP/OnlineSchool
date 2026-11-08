@@ -9,6 +9,23 @@ export const skillStatuses = ['NOT_STUDIED', 'FAMILIARIZING', 'PRACTICING', 'APP
 export type SkillStatus = (typeof skillStatuses)[number];
 export type SkillSelection = { subjectId?: string };
 export type SkillAuditQuery = HistoryPage & { skillId: string };
+export type SkillSnapshotQuery = HistoryPage & SkillSelection;
+export class SkillSnapshotQueryDto extends HistoryQueryDto {
+  @ApiPropertyOptional({ format: 'uuid' }) subjectId?: string;
+}
+@Injectable()
+export class SkillSnapshotQueryPipe implements PipeTransform {
+  transform(value: unknown): SkillSnapshotQuery {
+    const input = object(value, ['subjectId', 'page', 'pageSize']);
+    return {
+      ...(input.subjectId === undefined ? {} : { subjectId: uuid(input.subjectId) }),
+      ...new HistoryQueryPipe().transform({
+        ...(input.page === undefined ? {} : { page: input.page }),
+        ...(input.pageSize === undefined ? {} : { pageSize: input.pageSize }),
+      }),
+    };
+  }
+}
 export class SkillMapQueryDto {
   @ApiPropertyOptional({ format: 'uuid' }) subjectId?: string;
 }

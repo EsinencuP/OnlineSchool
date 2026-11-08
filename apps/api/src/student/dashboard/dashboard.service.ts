@@ -8,9 +8,14 @@ import { serialize } from '../../modules/finance/finance-common.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import type { DashboardResponseDto, HomeworkCountsDto, SkillProgressDto } from './dashboard.dto.js';
 
-export const validMeetLink = (value: string | null): value is string =>
-  typeof value === 'string' &&
-  /^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$/.test(value);
+import type { StudentLessonStatus } from '../lessons/lessons.dto.js';
+import {
+  MEET_LATE_MS,
+  MEET_URL_PATTERN,
+  scheduledLessonScopeSql,
+  studentMeetLinkSql,
+  studentMeetProjection,
+} from '../lessons/meet-access.js';
 
 @Injectable()
 export class DashboardService {
@@ -29,38 +34,15 @@ export class DashboardService {
       asOf = new Date();
     try {
       // Invoke all four sources before awaiting: no query depends on another block.
-      const [lessons, homework, subscriptions, skills] = await Promise.all([
-        this.nextLesson(student.studentProfileId, asOf),
+      const [nextLesson, homework, subscriptions, skills] = await Promise.all([
+        this.currentLesson(student, asOf),
         this.homework(student.studentProfileId, asOf),
         this.subscription(student.studentProfileId, asOf),
         this.skills(student.studentProfileId, asOf),
       ]);
-      const now = new Date(),
-        lesson = lessons[0],
-        subscription = subscriptions[0];
-      const minutesUntil = lesson ? (+lesson.scheduled_at - +now) / 60000 : Infinity;
-      const canJoin =
-        !!lesson &&
-        student.hasActiveAccess &&
-        !student.mustChangePassword &&
-        minutesUntil <= 10 &&
-        minutesUntil >= -60 &&
-        validMeetLink(lesson.google_meet_link);
+      const subscription = subscriptions[0];
       const body: DashboardResponseDto = {
-        nextLesson:
-          lesson && lesson.scheduled_at > now
-            ? {
-                lessonId: lesson.id,
-                scheduledAt: lesson.scheduled_at.toISOString(),
-                durationMinutes: Math.round(
-                  (+lesson.scheduled_end_at - +lesson.scheduled_at) / 60000,
-                ),
-                teacherName: lesson.teacher_name,
-                subjectName: lesson.subject_name,
-                canJoin,
-                meetLink: canJoin ? lesson.google_meet_link : null,
-              }
-            : null,
+        nextLesson,
         homework: homework[0] ?? { notSubmitted: 0, submitted: 0, needsRevision: 0, total: 0 },
         subscription: subscription
           ? {
@@ -73,7 +55,7 @@ export class DashboardService {
             }
           : null,
         skillProgress: skills[0] ?? { familiarizing: 0, practicing: 0, applying: 0, notStudied: 0 },
-        generatedAt: now.toISOString(),
+        generatedAt: asOf.toISOString(),
       };
       this.logger.log({
         event: 'student.dashboard.aggregate',
@@ -87,6 +69,20 @@ export class DashboardService {
     }
   }
 
+  async currentLesson(student: IStudentContext, asOf = new Date()) {
+    const [lesson] = await this.nextLesson(student.studentProfileId, asOf);
+    if (!lesson || +lesson.scheduled_at < +asOf - MEET_LATE_MS) return null;
+    return {
+      lessonId: lesson.id,
+      scheduledAt: lesson.scheduled_at.toISOString(),
+      durationMinutes: Math.round((+lesson.scheduled_end_at - +lesson.scheduled_at) / 60000),
+      teacherName: lesson.teacher_name,
+      subjectName: lesson.subject_name,
+      status: lesson.student_status,
+      ...studentMeetProjection(lesson, student, asOf),
+    };
+  }
+
   async nextLesson(studentId: string, time: Date) {
     return this.database.client.$queryRaw<
       {
@@ -95,31 +91,22 @@ export class DashboardService {
         scheduled_end_at: Date;
         teacher_name: string;
         subject_name: string;
+        student_status: StudentLessonStatus;
         google_meet_link: string | null;
       }[]
     >`
-      SELECT l.id,l.scheduled_at,l.scheduled_end_at,t.full_name AS teacher_name,s.name AS subject_name,
-        CASE WHEN EXISTS(SELECT 1 FROM subscriptions sub WHERE sub.enrollment_id=e.id
-          AND sub.valid_from<=${time} AND (sub.valid_to IS NULL OR sub.valid_to>${time})
-          AND NOT coalesce(sub.frozen_from<=${time} AND sub.frozen_until>${time},false)
-          AND ((t03_paid_at(sub.id,${time})>=sub.full_price AND EXISTS(SELECT 1 FROM entitlement_grants g
-            WHERE g.subscription_id=sub.id AND g.granted_at<=${time}
-              AND g.quantity+coalesce((SELECT sum(adj.delta_quantity) FROM entitlement_adjustments adj WHERE adj.grant_id=g.id AND adj.effective_at<=${time}),0)
-                -coalesce((SELECT sum(c.quantity) FROM entitlement_consumptions c WHERE c.grant_id=g.id AND c.consumed_at<=${time}
-                  AND (c.cancelled_at IS NULL OR c.cancelled_at>${time})),0)>0))
-            OR (t03_paid_at(sub.id,${time})<sub.full_price AND EXISTS(SELECT 1 FROM temporary_access_permissions p
-              WHERE p.subscription_id=sub.id AND p.approved_at<=${time} AND p.valid_from<=${time} AND p.valid_to>${time}
-                AND (p.revoked_at IS NULL OR p.revoked_at>${time})
-                AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${time})<p.max_lessons))))
-          THEN CASE WHEN l.meet_link_overridden THEN l.google_meet_link ELSE a.google_meet_link END ELSE NULL END AS google_meet_link
-      FROM lesson_occurrences l JOIN student_subject_enrollments e ON e.id=l.enrollment_id
-      JOIN subjects s ON s.id=e.subject_id JOIN teaching_assignments a ON a.id=l.teaching_assignment_id
-      JOIN teacher_accounts t ON t.id=l.scheduled_teacher_id
-      WHERE e.student_id=${studentId}::uuid AND l.status='SCHEDULED' AND l.scheduled_at>${time}
-        AND e.status='ACTIVE' AND e.valid_from<=${time} AND (e.valid_to IS NULL OR e.valid_to>l.scheduled_at)
-        AND a.enrollment_id=e.id AND a.teacher_id=t.id AND a.valid_from<=l.scheduled_at
-        AND (a.valid_to IS NULL OR a.valid_to>l.scheduled_at) AND t.deactivated_at IS NULL AND s.archived_at IS NULL
-      ORDER BY l.scheduled_at,l.id LIMIT 1`;
+      WITH candidates AS (
+        SELECT l.id,l.scheduled_at,l.scheduled_end_at,t.full_name AS teacher_name,s.name AS subject_name,
+          l.status::text AS student_status,${studentMeetLinkSql(time)} AS google_meet_link
+        FROM lesson_occurrences l JOIN student_subject_enrollments e ON e.id=l.enrollment_id
+        JOIN subjects s ON s.id=e.subject_id JOIN teaching_assignments a ON a.id=l.teaching_assignment_id
+        JOIN teacher_accounts t ON t.id=l.scheduled_teacher_id
+        WHERE e.student_id=${studentId}::uuid AND l.status='SCHEDULED'
+          AND l.scheduled_at>=${time} - interval '60 minutes' AND ${scheduledLessonScopeSql(time)}
+      )
+      SELECT * FROM candidates
+      WHERE scheduled_at>${time} OR google_meet_link~${MEET_URL_PATTERN}
+      ORDER BY scheduled_at,id LIMIT 1`;
   }
 
   async homework(studentId: string, time: Date) {

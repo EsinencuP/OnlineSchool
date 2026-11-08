@@ -1,0 +1,2263 @@
+{
+  "config": {
+    "argv": [
+      "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+      "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "playwright.student-gate.config.mjs",
+      "--grep=TASK-035"
+    ],
+    "configFile": "D:\\OnlineSchool\\apps\\student-cabinet\\playwright.student-gate.config.mjs",
+    "rootDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "studentGate": true,
+      "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/",
+      "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/evidence/TASK-025/",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "student-k8k",
+        "name": "student-k8k",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "id": "editor-preservation",
+        "name": "editor-preservation",
+        "testDir": "D:/OnlineSchool/apps/student-cabinet/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "student.spec.mjs"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": {},
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-51-25.168Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "student-k8k",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": [
+          "subject-hub.spec.mjs",
+          "subject-subscriptions.spec.mjs",
+          "manager-contacts.spec.mjs",
+          "meet-eligibility.spec.mjs",
+          "lesson-journey.spec.mjs",
+          "homework-redesign.spec.mjs",
+          "skill-map.spec.mjs",
+          "report-export.spec.mjs",
+          "bell.spec.mjs",
+          "locales.spec.mjs",
+          "navigation.spec.mjs",
+          "student-gate.spec.mjs"
+        ],
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "student-k8k"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-51-25.168Z\\test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "studentGate": true,
+          "evidenceRoot": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/",
+          "subjectHubEvidence": "file:///D:/OnlineSchool/output/k8k-taskpack/task-035/runs/2026-11-08T10-51-25.168Z/evidence/TASK-025/",
+          "actualWorkers": 1
+        },
+        "name": "editor-preservation",
+        "testDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "snapshotDir": "D:\\OnlineSchool\\apps\\student-cabinet\\tests",
+        "testIgnore": [],
+        "testMatch": "student.spec.mjs",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4175",
+          "browserName": "chromium",
+          "headless": true,
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "reducedMotion": "reduce",
+          "serviceWorkers": "block",
+          "trace": "off",
+          "screenshot": "off",
+          "video": "off",
+          "launchOptions": {
+            "proxy": {
+              "server": "http://127.0.0.1:9",
+              "bypass": "127.0.0.1,localhost"
+            }
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "editor-preservation"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-51-25.168Z\\playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": {
+      "command": "node tests/fixture-server.mjs",
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet\\",
+      "url": "http://127.0.0.1:4175/student",
+      "reuseExistingServer": false,
+      "env": {
+        "STUDENT_FIXTURE_DIST": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\build\\student"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "student-gate.spec.mjs",
+      "file": "student-gate.spec.mjs",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "TASK-035 screen matrix ru home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1871,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:30.734Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-6932c2df163546e67996",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru subjects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1503,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:32.688Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-7aee2051c2570e91f19f",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru help",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1415,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:34.202Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-9a945195554cbd8ec246",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru schedule",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1472,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:35.627Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-09ec7b2f9a42f795489a",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru calendar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1486,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:37.116Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-fd73c2f6700cf2255ecc",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru lesson",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1544,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:38.614Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-16717cdac5d0f9c44219",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru homework",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:40.167Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-70da39e06b45b180b597",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru editor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1421,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:41.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-80dfe0c5ef57f4cca071",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru skills",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1608,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:42.978Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-3664ad8534eea0ed81e4",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru reports",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1493,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:44.595Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-80f6f5a33d023b0ca5df",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru report-detail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:46.098Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-1534b6a3bbd23da36dd2",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru subscriptions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1789,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:47.531Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-a53175a31f760136882d",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru materials",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1678,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:49.331Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-b1a94db9bf5cf325d515",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru profile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:51.017Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-9a5003ee0e879540e489",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru security",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1388,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:52.396Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-c63edcbbb1172690edb6",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru bell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1687,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:53.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-162782c7722ac5414025",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru login",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1223,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:55.488Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-788b0e5217d170d848c7",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru first-password",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:56.720Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-ed0d62a5d23127ae1fb2",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ru suspended",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1286,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:57.993Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-7fc4289b957d1f47b10d",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:51:59.289Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-6b99ef016c04369b8899",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro subjects",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1451,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:00.986Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-cc463a4fa534a6fe61ab",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro help",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:02.446Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-7182ecd9a840d9d8daa4",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro schedule",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1492,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:03.807Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-951d6810ec8854c67e7b",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro calendar",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1478,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:05.308Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-705df67be7f5a7cd41a6",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro lesson",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:06.795Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-2fa2a229fae2cf674b40",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro homework",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:08.309Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-5d2f055f262b7d3c8a10",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro editor",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1413,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:09.673Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-5c2f693e4ac6acb82744",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro skills",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:11.094Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-4d515f0b47bd19a503a3",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro reports",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:12.709Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-30fc80916a898e1ac95c",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro report-detail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:14.229Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-ac5c0861183e7de7e402",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro subscriptions",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1790,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:15.695Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-09345e4a96d677ec5bfd",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro materials",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1713,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:17.493Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-e9cfdf67d1585d054edc",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro profile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:19.214Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-4885ca4d4172f83c2b9e",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro security",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1417,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:20.588Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-fe79169d5c49e698af2f",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro bell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1661,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:22.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-ed714e99ab6f04c10e4a",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro login",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1344,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:23.683Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-f467f1c38ef0b0fc0878",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro first-password",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1347,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:25.037Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-78393e64e72a657841fe",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 screen matrix ro suspended",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1354,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:26.393Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-fec9fdea7579f84b82db",
+          "file": "student-gate.spec.mjs",
+          "line": 38,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 426,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:27.758Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-ebded5ede54c8bc7f716",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:28.193Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-2225ad76c7dc6760ff5c",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 636,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:28.846Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-873736a387ab89b95794",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:29.498Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-284cfc4fcf60c9162dbd",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:30.015Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-d8a6d45e13c27c25b3f6",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:30.572Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-d6a7a3470c23049ce788",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ru session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 611,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:31.143Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-47347cc584f9ca684c01",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro loading",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:31.766Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-05f6b2fcd9c109243965",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro empty",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 471,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:32.231Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-b51b61b376ef4b87d0f8",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 440,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:32.714Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-1adf5ea03181d005f9bc",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro forbidden",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 505,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:33.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-7a7836ae7c3efdabd956",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro limited",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:33.681Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-fc7835a07f0ef3ab4665",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro stale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 555,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:34.172Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-d658de59a6699034264e",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 critical state matrix ro session-expired",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:34.737Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-c5c25b5399be532886cb",
+          "file": "student-gate.spec.mjs",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 complete student journey preserves rights, commands and session boundaries",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 100000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9505,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-skill-status]')\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('[data-skill-status]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-skill-status]')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 24 elements\u001b[22m\n\u001b[2m       - unexpected value \"24\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-skill-status]')\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('[data-skill-status]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-skill-status]')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 24 elements\u001b[22m\n\u001b[2m       - unexpected value \"24\"\u001b[22m\n\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs:115:88",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                      "column": 88,
+                      "line": 115
+                    },
+                    "snippet": "  113 |   await page.locator('.k8k-homework-submit').click();\n  114 |   await expect.poll(async()=>(await state(request)).submitted).toBe(true);\n> 115 |   await page.goto('/student/skills');await expect(page.locator('[data-skill-status]')).toHaveCount(4);\n      |                                                                                        ^\n  116 |   await page.goto('/student/reports?reportId='+oldReport+'&page=3');\n  117 |   await expect(page.locator('[data-report-id=\"'+oldReport+'\"]')).toBeVisible();\n  118 |   await page.getByRole('button',{name:'Подготовить PDF',exact:true}).click();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                        "column": 88,
+                        "line": 115
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('[data-skill-status]')\nExpected: \u001b[32m4\u001b[39m\nReceived: \u001b[31m24\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('[data-skill-status]') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-skill-status]')\u001b[22m\n\u001b[2m    - locator resolved to 0 elements\u001b[22m\n\u001b[2m    - unexpected value \"0\"\u001b[22m\n\u001b[2m    13 × locator resolved to 24 elements\u001b[22m\n\u001b[2m       - unexpected value \"24\"\u001b[22m\n\n\n  113 |   await page.locator('.k8k-homework-submit').click();\n  114 |   await expect.poll(async()=>(await state(request)).submitted).toBe(true);\n> 115 |   await page.goto('/student/skills');await expect(page.locator('[data-skill-status]')).toHaveCount(4);\n      |                                                                                        ^\n  116 |   await page.goto('/student/reports?reportId='+oldReport+'&page=3');\n  117 |   await expect(page.locator('[data-report-id=\"'+oldReport+'\"]')).toBeVisible();\n  118 |   await page.getByRole('button',{name:'Подготовить PDF',exact:true}).click();\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs:115:88"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:35.364Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-51-25.168Z\\test-results\\student-gate-TASK-035-comp-89e45-ands-and-session-boundaries-student-k8k\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                    "column": 88,
+                    "line": 115
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-24df952bc4e71dc01bd4",
+          "file": "student-gate.spec.mjs",
+          "line": 85,
+          "column": 1
+        },
+        {
+          "title": "TASK-035 keyboard, 200% reflow and motion preference preserve the main action",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 611,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1280\u001b[39m\nReceived:    \u001b[31m1832\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1280\u001b[39m\nReceived:    \u001b[31m1832\u001b[39m\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs:147:84",
+                    "location": {
+                      "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                      "column": 84,
+                      "line": 147
+                    },
+                    "snippet": "  145 |   await page.setViewportSize({width:1280,height:900});\n  146 |   await page.evaluate(()=>{globalThis.document.documentElement.style.zoom='2';});\n> 147 |   expect(await page.evaluate(()=>globalThis.document.documentElement.scrollWidth)).toBeLessThanOrEqual(1280);\n      |                                                                                    ^\n  148 |   await capture(page,'ru-home-200-percent');\n  149 |   await page.evaluate(()=>{globalThis.document.documentElement.style.zoom='1';});\n  150 |   await page.emulateMedia({reducedMotion:'no-preference'});await page.setViewportSize({width:360,height:900});"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                        "column": 84,
+                        "line": 147
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1280\u001b[39m\nReceived:    \u001b[31m1832\u001b[39m\n\n  145 |   await page.setViewportSize({width:1280,height:900});\n  146 |   await page.evaluate(()=>{globalThis.document.documentElement.style.zoom='2';});\n> 147 |   expect(await page.evaluate(()=>globalThis.document.documentElement.scrollWidth)).toBeLessThanOrEqual(1280);\n      |                                                                                    ^\n  148 |   await capture(page,'ru-home-200-percent');\n  149 |   await page.evaluate(()=>{globalThis.document.documentElement.style.zoom='1';});\n  150 |   await page.emulateMedia({reducedMotion:'no-preference'});await page.setViewportSize({width:360,height:900});\n    at D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs:147:84"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:45.415Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T10-51-25.168Z\\test-results\\student-gate-TASK-035-keyb-3ebf1-ce-preserve-the-main-action-student-k8k\\error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "D:\\OnlineSchool\\apps\\student-cabinet\\tests\\student-gate.spec.mjs",
+                    "column": 84,
+                    "line": 147
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-999ce9ca612b2eb2acf2",
+          "file": "student-gate.spec.mjs",
+          "line": 135,
+          "column": 1
+        },
+        {
+          "title": "TASK-035 command state matrix ru pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 698,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:46.640Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-75e17adc5fc340e0d679",
+          "file": "student-gate.spec.mjs",
+          "line": 158,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 command state matrix ru unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:47.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-0dbd61fefe434a486072",
+          "file": "student-gate.spec.mjs",
+          "line": 158,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 command state matrix ro pending",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 637,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:48.050Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-0998d4d1549b5e36eb6b",
+          "file": "student-gate.spec.mjs",
+          "line": 158,
+          "column": 3
+        },
+        {
+          "title": "TASK-035 command state matrix ro unknown-result",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "student-k8k",
+              "projectName": "student-k8k",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 589,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T10:52:48.699Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2094b3ca7cf5d7f5f52e-dcdb8281d657dcb305db",
+          "file": "student-gate.spec.mjs",
+          "line": 158,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T10:51:29.596Z",
+    "duration": 79943.499,
+    "expected": 56,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

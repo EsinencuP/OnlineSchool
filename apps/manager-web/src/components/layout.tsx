@@ -15,7 +15,7 @@ import '@online-school/account-ui/style.css';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { deleteSession } from '@online-school/api-contracts';
 import { create } from 'zustand';
-import { clearSession, queryClient, write } from '../api/client.js';
+import { queryClient, write } from '../api/client.js';
 import { useManager } from '../session.js';
 import { MANAGER_ROUTES as routes } from '../routes.js';
 import { Icon } from './icon.js';
@@ -42,11 +42,14 @@ export function Layout() {
     enabled: k8kEnabled,
     context: 'operational',
     refresh: () =>
-      queryClient.refetchQueries({
-        type: 'active',
-        predicate: (query) =>
-          query.queryKey[0] === 'manager' && operationalQueryInterval(query.queryKey) !== false,
-      }),
+      queryClient.refetchQueries(
+        {
+          type: 'active',
+          predicate: (query) =>
+            query.queryKey[0] === 'manager' && operationalQueryInterval(query.queryKey) !== false,
+        },
+        { cancelRefetch: false },
+      ),
   });
   useEffect(() => {
     const keyboard = (event: KeyboardEvent) => {
@@ -60,12 +63,12 @@ export function Layout() {
   }, []);
   async function logout(): Promise<AccountLogoutOutcome> {
     const result = await write((o) => deleteSession({}, o), crypto.randomUUID());
-    clearSession();
-    navigate(routes.login, {
-      replace: true,
-      state: !result.ok && result.error.status !== 401 ? { sessionError: result.error } : null,
-    });
-    return result.ok || result.error.status === 401 ? 'ended' : 'rejected';
+    if (result.ok || result.error.status === 401) return 'ended';
+    return result.error.status === 0 ||
+      result.error.status >= 500 ||
+      result.error.code === 'INVALID_RESPONSE'
+      ? 'unknown'
+      : 'rejected';
   }
   if (k8kEnabled)
     return (
@@ -79,7 +82,14 @@ export function Layout() {
           </Link>
         )}
         mainId="main"
-        account={<AccountMenu name={me.displayName} role="MANAGER" onLogout={logout} />}
+        account={
+          <AccountMenu
+            name={me.displayName}
+            role="MANAGER"
+            onLogout={logout}
+            logoutPath={routes.login}
+          />
+        }
         header={
           <form
             role="search"
@@ -138,7 +148,6 @@ export function Layout() {
             <small>{t('cabinetManager')}</small>
           </span>
         </Link>
-        <div className="sidebar-section-label">{t('workspace')}</div>
         <nav aria-label={t('chrome.menu')}>
           {links.map((link) => (
             <Link
@@ -236,7 +245,12 @@ export function Layout() {
               <small>{me.timezone}</small>
             </time>
           </div>
-          <AccountMenu name={me.displayName} role="MANAGER" onLogout={logout} />
+          <AccountMenu
+            name={me.displayName}
+            role="MANAGER"
+            onLogout={logout}
+            logoutPath={routes.login}
+          />
         </header>
         <main id="main" tabIndex={-1}>
           <Outlet />

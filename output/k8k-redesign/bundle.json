@@ -1,0 +1,118 @@
+{
+  "budget": 256000,
+  "method": "JS+CSS gzip, both WOFF2 subsets at full byte size, recursive static imports plus app entry, per lazy page.",
+  "results": [
+    {
+      "app": "student-cabinet",
+      "route": "all",
+      "codeGzipBytes": 117255,
+      "fontBytes": 59948,
+      "totalBytes": 177203
+    },
+    {
+      "app": "manager-web",
+      "route": "index.html",
+      "codeGzipBytes": 108048,
+      "fontBytes": 59948,
+      "totalBytes": 167996
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Account.tsx",
+      "codeGzipBytes": 154539,
+      "fontBytes": 59948,
+      "totalBytes": 214487
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Dashboard.tsx",
+      "codeGzipBytes": 169440,
+      "fontBytes": 59948,
+      "totalBytes": 229388
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Lead.tsx",
+      "codeGzipBytes": 157133,
+      "fontBytes": 59948,
+      "totalBytes": 217081
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Leads.tsx",
+      "codeGzipBytes": 156594,
+      "fontBytes": 59948,
+      "totalBytes": 216542
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Login.tsx",
+      "codeGzipBytes": 109870,
+      "fontBytes": 59948,
+      "totalBytes": 169818
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Schedule.tsx",
+      "codeGzipBytes": 171330,
+      "fontBytes": 59948,
+      "totalBytes": 231278
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Student.tsx",
+      "codeGzipBytes": 123893,
+      "fontBytes": 59948,
+      "totalBytes": 183841
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Students.tsx",
+      "codeGzipBytes": 168273,
+      "fontBytes": 59948,
+      "totalBytes": 228221
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Task.tsx",
+      "codeGzipBytes": 170016,
+      "fontBytes": 59948,
+      "totalBytes": 229964
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/Tasks.tsx",
+      "codeGzipBytes": 153938,
+      "fontBytes": 59948,
+      "totalBytes": 213886
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Notifications.tsx",
+      "codeGzipBytes": 154634,
+      "fontBytes": 59948,
+      "totalBytes": 214582
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Payments.tsx",
+      "codeGzipBytes": 170308,
+      "fontBytes": 59948,
+      "totalBytes": 230256
+    },
+    {
+      "app": "manager-web",
+      "route": "src/pages/student/Subscriptions.tsx",
+      "codeGzipBytes": 169827,
+      "fontBytes": 59948,
+      "totalBytes": 229775
+    },
+    {
+      "app": "platform",
+      "route": "all",
+      "codeGzipBytes": 61688,
+      "fontBytes": 59948,
+      "totalBytes": 121636
+    }
+  ]
+}

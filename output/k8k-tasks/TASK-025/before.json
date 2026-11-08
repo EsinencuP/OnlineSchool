@@ -1,0 +1,87 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "task024Matches": 26,
+  "paths": [
+    {
+      "path": "package.json",
+      "sha256": "1e839dafeda0fecdb2a948d01e3b3c09b72dab4b010514cf02a2b10d2c38172d"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "sha256": "9bbb68ba30002c53c2021be488a42ba73252e081b9f3bd9ee677adc26593e467"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "sha256": "3f094ec6b4101fc61c84d029966d9f38f300aaadf5afbcb3e9a5531889b992f0"
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "sha256": "cb7481acecd1c3e559239d3db153c62bed3e28c322722ccc486460bede0ba246"
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "sha256": "cd57551dabc6a30a8f862fdbea3dd6277aa60503f71e12aa4fdc385b533830d5"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "sha256": "679448ec586d4540f66202d8f86ceb575231698edc1530f875cb66ed82232f54"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "sha256": "5fb7de68cbfa2ea3a43439e519adf67773fe46982df264eb7807f797de56977b"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Homework.tsx",
+      "sha256": "da463fe1d562fcff777685a8974312d68274a56852de0f070acabe9e09e895b3"
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "sha256": "30c33710599eb00f43b3cc161b1d9032b08011af41ec06552badb5e49cc8bddd"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "sha256": "bd1c3a76e69f8ae002ad9139010836bd6c8bdedbcd194d0b5c155de4fe438cd5"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "sha256": "d558abcbbc46ebd0b332906cb5bbc13730eda67293a09076860cad410a120d4e"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "sha256": "8fad7fa6534518195de3af89b438a5a34adf4c4e0e23d9afb10b7031a617a529"
+    },
+    {
+      "path": "packages/ui/src/navigation.ts",
+      "sha256": "4dd39105d1a8704c87a7b6d7bdfead82e5fba8c41b812af496f944c7895b0019"
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "sha256": "bdb30d53f82a29612fc9db1c06efd16f8500447153a68bdde6016bcd4b619a52"
+    },
+    {
+      "path": "packages/ui/src/refresh.ts",
+      "sha256": "8e010f767fcdf86d355ee436759f6ae5d68d7e419bbeb1c071981aa2b988b183"
+    },
+    {
+      "path": "packages/account-ui/src/index.tsx",
+      "sha256": "e8070491ffb3814287361ddc9047d320e70701c07a6cb737a8459de2c4014051"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "bab6d17f5be6fbb7edf14d6c74aba7a5f62daf7183c483bf940f4fb76b7135bb"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "sha256": "fa095a7cd40d2c517061e57177d3807f39f58ab8e3e589c82d7d4326d5897979"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "sha256": "93ae9767a6a7411edf98a94bbf65698e5ba6bc382d64acb2f88a6af364521d27"
+    }
+  ]
+}

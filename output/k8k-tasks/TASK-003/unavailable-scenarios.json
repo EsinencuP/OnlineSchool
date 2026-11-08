@@ -1,0 +1,527 @@
+{
+  "task": "TASK-003",
+  "meaning": "Explicit NOT_RUN applies to absent/unavailable requirement, not a successful fabricated screen. Current-source screenshots remain the baseline.",
+  "rows": [
+    {
+      "id": "DASH-STU-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "actual server-clock join boundaries/stale handling; not calendar=conducted",
+      "futureTasks": [
+        "TASK-028"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 33
+      }
+    },
+    {
+      "id": "DASH-STU-02:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "single chronological list replaces current status tabs; preserve autosave/upload/version/idempotency",
+      "futureTasks": [
+        "TASK-030"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 34
+      }
+    },
+    {
+      "id": "DASH-STU-03:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "history/deduction dispute APIs exist but have no scoped UI references; complete K8K calendar/detail/history/dispute composition and two locales",
+      "futureTasks": [
+        "TASK-029"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 35
+      }
+    },
+    {
+      "id": "DASH-STU-04:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "PDF request/status APIs exist but have no scoped UI references; published-only report deep link outside loaded page; explicit 4-vs-8 meaning",
+      "futureTasks": [
+        "TASK-031",
+        "TASK-032"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 36
+      }
+    },
+    {
+      "id": "DASH-STU-05:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "per-subject list/access projection; selected/aggregate subscription response does not supply full subject hub",
+      "futureTasks": [
+        "TASK-024",
+        "TASK-026"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 37
+      }
+    },
+    {
+      "id": "DASH-STU-06:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "all source-target cases/unknown result/locales; legacy route is a K8K bell redirect",
+      "futureTasks": [
+        "TASK-033"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 38
+      }
+    },
+    {
+      "id": "DASH-STU-07:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "CRM projection currently exposes only validated whatsapp/telegram links; assigned manager name and official phone absent",
+      "futureTasks": [
+        "TASK-027"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 39
+      }
+    },
+    {
+      "id": "DASH-TCHD-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "read-only list has meetUrl but no authoritative join/action capabilities or detailed current-lesson UI",
+      "futureTasks": [
+        "TASK-036",
+        "TASK-037"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 49
+      }
+    },
+    {
+      "id": "DASH-TCHD-02:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "own uncapped/paginated today/week plan and lesson detail missing",
+      "futureTasks": [
+        "TASK-036",
+        "TASK-037"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 50
+      }
+    },
+    {
+      "id": "DASH-TCHD-03:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "generic schedule commands exist; teacher frontend has no start/result workflow; 24h/version requirements need explicit checks",
+      "futureTasks": [
+        "TASK-038"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 51
+      }
+    },
+    {
+      "id": "DASH-TCHD-04:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "EducationModule is empty; teacher assignment/issue/submitted-review APIs and command UI missing",
+      "futureTasks": [
+        "TASK-039",
+        "TASK-040",
+        "TASK-041"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 52
+      }
+    },
+    {
+      "id": "DASH-TCHD-05:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "teacher read queue/skill assessments/4-review/8-report draft+publish APIs/UI missing; student read API is not teacher publishing",
+      "futureTasks": [
+        "TASK-042",
+        "TASK-043",
+        "TASK-044"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 53
+      }
+    },
+    {
+      "id": "DASH-TCHD-06:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "generic payroll read exists but no own current-rate read projection and no teacher frontend payroll/rate workflow",
+      "futureTasks": [
+        "TASK-045"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 54
+      }
+    },
+    {
+      "id": "DASH-TCHD-07:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "teacher own notification/structured manager appeal read/write APIs/UI missing",
+      "futureTasks": [
+        "TASK-046"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 55
+      }
+    },
+    {
+      "id": "DASH-MGR-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "complete board pagination/filter agreement; keyboard/dnd workflow; real action capabilities",
+      "futureTasks": [
+        "TASK-048",
+        "TASK-053",
+        "TASK-054"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 65
+      }
+    },
+    {
+      "id": "DASH-MGR-02:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "dashboard actionable queue rather than partial widgets; claim is not resolution/contact/payment",
+      "futureTasks": [
+        "TASK-049"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 66
+      }
+    },
+    {
+      "id": "DASH-MGR-03:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "typed critical event/source/claim/escalation projection and director route; no browser-dependent escalation",
+      "futureTasks": [
+        "TASK-022",
+        "TASK-050"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 67
+      }
+    },
+    {
+      "id": "DASH-MGR-04:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "contact edit is not append-only structured contact journal; journal API/UI absent",
+      "futureTasks": [
+        "TASK-051",
+        "TASK-052"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 68
+      }
+    },
+    {
+      "id": "DASH-MGR-05:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "exception action eligibility and director approval/revision agreement",
+      "futureTasks": [
+        "TASK-048",
+        "TASK-057"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 69
+      }
+    },
+    {
+      "id": "DASH-MGR-06:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "director-only receipt/distribution/admission must remain separate; complete financial terminology and capabilities",
+      "futureTasks": [
+        "TASK-055",
+        "TASK-056",
+        "TASK-057"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 70
+      }
+    },
+    {
+      "id": "DASH-MGR-07:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "generic typed task queue is not a completed teacher-appeal workflow",
+      "futureTasks": [
+        "TASK-046",
+        "TASK-050"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 71
+      }
+    },
+    {
+      "id": "DASH-DIR-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "conditional DASH aggregate stays disabled; separately required director read/detail/decision UI missing",
+      "futureTasks": [
+        "TASK-059",
+        "TASK-060"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 81
+      }
+    },
+    {
+      "id": "DASH-DIR-02:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "money-movement aggregate definitions not approved; workspace counts are not revenue/expenses/profit",
+      "futureTasks": [
+        "TASK-063"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 82
+      }
+    },
+    {
+      "id": "DASH-DIR-03:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "conditional aggregate off; approved obligation/payout workflows require dedicated queues/details",
+      "futureTasks": [
+        "TASK-062"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 83
+      }
+    },
+    {
+      "id": "DASH-DIR-04:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "canonical module is financial disputes/open exceptions, not automatic period closure; dispute read registry/detail missing",
+      "futureTasks": [
+        "TASK-061",
+        "TASK-062"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 84
+      }
+    },
+    {
+      "id": "DASH-DIR-05:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "canonical module is urgent operational escalations; existing capped OPEN/IN_PROGRESS tasks are not an approved escalation KPI",
+      "futureTasks": [
+        "TASK-050",
+        "TASK-063"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 85
+      }
+    },
+    {
+      "id": "DASH-DIR-06:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "canonical module is staff/student management context; active denominators/time slice unapproved; current assignments take100",
+      "futureTasks": [
+        "TASK-063"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 86
+      }
+    },
+    {
+      "id": "DASH-DIR-07:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "BI/P&L/financial recognition policy outside this release",
+      "futureTasks": [],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+        "line": 87
+      }
+    },
+    {
+      "id": "OPERATOR-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "health read-only; richer actual timestamps/status context/locales needed",
+      "futureTasks": [
+        "TASK-064",
+        "TASK-065"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "AUTH-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "shared Login has password only; manager Login has passkey flow; recovery backend is not shared recovery UI",
+      "futureTasks": [
+        "TASK-066"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "ACCOUNT-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "private DOM/cache cancellation/cross-tab transition audit and RU/RO",
+      "futureTasks": [
+        "TASK-019",
+        "TASK-067"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "PROFILE-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "frontend profile consumes Me; update exists; full RU/RO/security-copy acceptance pending",
+      "futureTasks": [
+        "TASK-034"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "SECURITY-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "OTP/session/email lifecycle has source implementation; privacy/session-generation proof and full RU/RO remain",
+      "futureTasks": [
+        "TASK-034"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "MATERIALS-01:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "scoped read/download exists; full RU/RO and access/revocation acceptance pending",
+      "futureTasks": [
+        "TASK-034"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "DIRECTOR-DECISIONS:unimplemented-requirement",
+      "status": "NOT_RUN",
+      "reason": "generic write APIs exist; required read queue/detail APIs and frontend decision workflows missing; not conditional DASH approval",
+      "futureTasks": [
+        "TASK-059",
+        "TASK-060",
+        "TASK-061",
+        "TASK-062"
+      ],
+      "scope": "Only missing workflow/fields are NOT_RUN; currently existing partial screens are captured separately",
+      "source": {
+        "path": "docs/k8k-redesign-tasks/TASK-002.md",
+        "line": 102,
+        "symbol": "scope: operator/login/profile/security/materials and required workflows"
+      }
+    },
+    {
+      "id": "one-time-password-output",
+      "status": "NOT_RUN",
+      "reason": "Secret outputs are prohibited in screenshots; current account issue/reset form is captured without executing issuance",
+      "futureTasks": [
+        "TASK-048",
+        "TASK-058",
+        "TASK-067"
+      ]
+    },
+    {
+      "id": "operator:empty-data-state",
+      "status": "NOT_RUN",
+      "reason": "ComponentStatusResponse represents actual health states, not an empty collection. Common empty boundary is captured separately.",
+      "futureTasks": [
+        "TASK-064",
+        "TASK-065"
+      ]
+    },
+    {
+      "id": "real-db-s3-meet-delivery",
+      "status": "NOT_RUN",
+      "reason": "TASK-003 authorizes synthetic local HTTP only; no working DB/S3/Meet/message providers are contacted",
+      "futureTasks": [
+        "TASK-074"
+      ]
+    },
+    {
+      "id": "full-legacy-branch-matrix",
+      "status": "NOT_RUN",
+      "reason": "Current K8K baseline targets ui.k8k=1; historical legacy outputs preserved; exhaustive feature-flag regression belongs to final acceptance",
+      "futureTasks": [
+        "TASK-070",
+        "TASK-071",
+        "TASK-075"
+      ]
+    }
+  ]
+}

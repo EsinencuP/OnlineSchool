@@ -13,7 +13,10 @@ keys are allowed; duplicate/array/nested parameters, non-integers, unsafe offset
 and malformed dates are rejected. `month=YYYY-MM` selects the calendar, with page 1
 and pageSize 62. Mixing that mode with pagination or a different period is a 400.
 More than 62 calendar rows yields 422 CALENDAR_MONTH_LIMIT_EXCEEDED instead of
-silently dropping lessons; paginated `period=month` remains available.
+silently dropping lessons. Explicit `month=YYYY-MM&view=list` permits page/pageSize
+for that same selected month. The default calendar contract keeps rejecting
+pagination. Optional subjectId narrows the authenticated pupil's enrollments in
+both modes and is applied before count/page. A foreign subject yields no owned rows.
 
 StudentAccount now stores an IANA `timezone`, initially Europe/Chisinau. The trusted
 context carries it internally. Today is local midnight to next local midnight;
@@ -35,6 +38,22 @@ allowed only for NOT_CONDUCTED; confirmation uses the existing authorized staff
 workflow. A teacher report alone, elapsed time or a note never proves no-show.
 This classification adds no cancellation charge or attendance automation.
 
+Lesson cards expose optional subjectId and originalScheduledAt from their existing
+enrollment and occurrence. Original/current times identify a recorded move without
+exposing staff reasons or marking the lesson conducted. Actual teacher/duration
+and published quantitative balances come from the separate history read.
+
+## Uncertain request result
+
+GET `/api/v1/student/lessons/:lessonId/requests/:requestKey` checks the current
+student and lesson scope, then reads the existing CRM task by its stable actor,
+command type and original idempotency key. CREATED confirms only task creation.
+Optional type selects the command namespace explicitly when an actor reused one
+UUID in different commands. The UI always supplies it.
+No committed task yields UNKNOWN, including an in-flight command. No body, staff
+identity or other pupil's task is returned. This GET does not retry a command or
+change attendance, rights or money.
+
 The public enum also retains existing STAR_PENDING and DISPUTED so those real CRM
 states are visible rather than being invented as completed/cancelled. An inconsistent
 CONDUCTED record without a confirmed outcome is presented as DISPUTED. Archive
@@ -47,6 +66,9 @@ It requires SCHEDULED, an active matching teacher assignment/enrollment, an enab
 teacher/subject, paid remaining rights or an explicit limited director admission
 for **that enrollment**, and no freeze. Only canonical HTTPS Meet URLs are exposed.
 Access to one subject cannot open another subject's meeting.
+Dashboard, list, calendar and detail share the eligibility SQL and response
+projection. Assignment and enrollment scope cover the scheduled slot and the
+read time. Each lesson card provides `meetAsOf` for that server snapshot.
 
 canJoin uses exact milliseconds, including the endpoints at 10 minutes before and
 60 minutes after scheduled start. A past, unresolved SCHEDULED lesson therefore

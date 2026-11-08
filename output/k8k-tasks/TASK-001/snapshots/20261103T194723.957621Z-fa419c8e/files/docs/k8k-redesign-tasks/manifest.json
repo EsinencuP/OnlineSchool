@@ -1,0 +1,2527 @@
+[
+  {
+    "id": 1,
+    "file": "TASK-001.md",
+    "block": "0",
+    "module": "M00.1 Исходная точка",
+    "title": "Сохранить рабочую основу и восстановимый снимок",
+    "depends": [],
+    "initialStatus": "Частично: manifest и binary patch уже существуют; полный backup untracked не доказан",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "2b104b217f1ddbfa74e7ab3f333bd8a2f213af6021114d43478853215ed39839",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "AGENTS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "output/k8k-implementation/baseline/manifest.json"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 2,
+    "file": "TASK-002.md",
+    "block": "0",
+    "module": "M00.1 Исходная точка",
+    "title": "Полный инвентарь маршрутов, форм, команд и источников",
+    "depends": [
+      1
+    ],
+    "initialStatus": "Матрица28 модулей есть, но не описывает все операции",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "3f72763a7f1a80aa153eaf73d93334a76a2179c45826850b63f748d2fe511d89",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/router.tsx",
+      "apps/manager-web/src/routes.ts",
+      "apps/platform/src/App.tsx",
+      "packages/account-ui/src/index.tsx",
+      "docs/K8K_REQUIREMENTS_MATRIX.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 3,
+    "file": "TASK-003.md",
+    "block": "0",
+    "module": "M00.2 Доказательства",
+    "title": "Воспроизводимая baseline-матрица экранов и состояний",
+    "depends": [
+      2
+    ],
+    "initialStatus": "Есть исторические снимки и новый ограниченный smoke отчётов",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "d28463343cccc69b38449ea64a61299701ca9e932dea91896a260a338ccaa1ae",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "scripts/k8k-implementation-smoke.mjs",
+      "scripts/k8k-phase2-browser.mjs",
+      "apps/student-cabinet/tests/fixture-server.mjs",
+      "apps/manager-web/src/test/fixtures.ts",
+      "packages/ui/tests/browser/fixture.tsx"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 4,
+    "file": "TASK-004.md",
+    "block": "0",
+    "module": "M00.2 Доказательства",
+    "title": "Бюджеты маршрутов и адресный реестр дефектов",
+    "depends": [
+      3
+    ],
+    "initialStatus": "Есть187608/125382 измерения двух сборок; нет полной route delta",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "0a8620b4c97cffd7da3c5a0bf4b8036ddf068e21753204fda7fb72561b9447e0",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "scripts/k8k-size-check.mjs",
+      "scripts/k8k-phase2-bundle.mjs",
+      "output/k8k-implementation/bundle.json",
+      "docs/ui-stack.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 5,
+    "file": "TASK-005.md",
+    "block": "1",
+    "module": "M01.1 Дизайн-основа",
+    "title": "Токены, семантический контраст и Stylelint",
+    "depends": [
+      4
+    ],
+    "initialStatus": "25 документированных сочетаний/17 порогов уже тестируются; Stylelint отсутствует",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "66dcd95cf89c008b10ad7f288213739381a9c91707f06f2f78e89ee21d2d0bfa",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/tokens.css",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/tests/contrast.test.mjs",
+      "scripts/k8k-design-check.mjs"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 6,
+    "file": "TASK-006.md",
+    "block": "1",
+    "module": "M01.1 Дизайн-основа",
+    "title": "Типографика, локальный Golos и единый Icon",
+    "depends": [
+      5
+    ],
+    "initialStatus": "Golos5.2.8 и Lucide0.468.0 уже есть",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "ba7ba4038ac3d0ca7be7a1fc05306bb35d56f7fa9f407694597b0848bacf9cda",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/tokens.css",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/src/icon.tsx",
+      "docs/ui-stack.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 7,
+    "file": "TASK-007.md",
+    "block": "1",
+    "module": "M01.2 Базовые контролы",
+    "title": "Завершить Button, Field, Select, StatusChip и Avatar",
+    "depends": [
+      6
+    ],
+    "initialStatus": "Общие controls.tsx и4 tests уже существуют",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "2f72ed34b7c48d07c10f9d174318d3cf7d7862c34cc8fee6d99978e67a95b4d9",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/tokens.css",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/tests/controls.test.mjs"
+    ],
+    "stepCount": 7,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 8,
+    "file": "TASK-008.md",
+    "block": "1",
+    "module": "M01.2 Базовые контролы",
+    "title": "Radix Dialog, ConfirmDialog, Drawer и Popover",
+    "depends": [
+      7
+    ],
+    "initialStatus": "Native dialogs работают в приложениях; общих wrappers нет",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "f0e7d33b67271d41c55466c5c93485046d7c49413a6f2ce286ea0b60251306c5",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "apps/manager-web/src/components/ui.tsx",
+      "packages/account-ui/src/index.tsx"
+    ],
+    "stepCount": 7,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 9,
+    "file": "TASK-009.md",
+    "block": "1",
+    "module": "M01.3 Составные компоненты",
+    "title": "Tabs, Segmented, Tooltip и Toast",
+    "depends": [
+      8
+    ],
+    "initialStatus": "Общих компонентов не хватает; приложения имеют свои переключатели",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "bb34ffe49058bc6ba420ca290b181b877e033b9b7fbd009e86ba44f4aa076852",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/src/state.tsx"
+    ],
+    "stepCount": 7,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 10,
+    "file": "TASK-010.md",
+    "block": "1",
+    "module": "M01.3 Составные компоненты",
+    "title": "DenseTable, ListRow и server-controlled pagination",
+    "depends": [
+      9
+    ],
+    "initialStatus": "CRM таблицы существуют, общего table adapter нет",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "05967a046f9f409146a0ffcb40093832f8b96d2c2049dd4dadd189651a7fab68",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "apps/manager-web/src/pages/Leads.tsx",
+      "apps/manager-web/src/components/ui.tsx"
+    ],
+    "stepCount": 7,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 11,
+    "file": "TASK-011.md",
+    "block": "1",
+    "module": "M01.3 Составные компоненты",
+    "title": "Calendar и DatePicker с корректными таймзонами",
+    "depends": [
+      10
+    ],
+    "initialStatus": "Student/manager calendars и Temporal adapters уже работают",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "17d3e1addd29a58c2c148fb16cb43cc491ff5fcea42f050628451520e2702da2",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/online_academy_manager_schedule_decisions_2026_10_31.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "apps/manager-web/src/pages/Schedule.tsx",
+      "apps/manager-web/src/lib/time.ts",
+      "apps/student-cabinet/src/pages/Lessons.tsx"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 12,
+    "file": "TASK-012.md",
+    "block": "1",
+    "module": "M01.4 Состояния и каталог",
+    "title": "Девять состояний, FreshnessLabel и стабильность DOM",
+    "depends": [
+      11
+    ],
+    "initialStatus": "StateBoundary уже реализован; интеграции частичны",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "1e29f325dca8d32727998219646210ce9dc2d38ec7ff8a1717be7195ba5c6b4b",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/src/state.tsx",
+      "packages/ui/src/freshness.tsx",
+      "packages/ui/tests/state.test.mjs"
+    ],
+    "stepCount": 7,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 13,
+    "file": "TASK-013.md",
+    "block": "1",
+    "module": "M01.4 Состояния и каталог",
+    "title": "Storybook, истории и component coverage",
+    "depends": [
+      12
+    ],
+    "initialStatus": "Storybook отсутствует; existing fixture не заменяет каталог",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "dc145fefc249be08115b199573d41911bd17789538d00ef6d3eac666216ad755",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/tests/browser/fixture.tsx",
+      "packages/ui/tests/controls.test.mjs"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 14,
+    "file": "TASK-014.md",
+    "block": "1",
+    "module": "M01.5 Локализация",
+    "title": "Typed RU/RO locale contract и форматирование",
+    "depends": [
+      13
+    ],
+    "initialStatus": "locale.tsx есть, но перевод неполон",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "5c1753cb32d7288b5ea18bfa89b46ffde6b4a99db51c064a928a7e86c6e55b32",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/style.css",
+      "packages/ui/package.json",
+      "packages/ui/src/locale.tsx",
+      "apps/manager-web/src/i18n/ru.ts",
+      "apps/manager-web/src/lib/money.ts"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 15,
+    "file": "TASK-015.md",
+    "block": "1",
+    "module": "M01.5 Локализация",
+    "title": "Общая оболочка, контролы и account menu на RU/RO",
+    "depends": [
+      14
+    ],
+    "initialStatus": "Chrome переведён частично; account-ui ещё преимущественно RU",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "51cf327f25f080ee9470fb91cfafd7cf0aaa53d654bd35a51867b9d433dd4b49",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/locale.tsx",
+      "packages/ui/src/shell.tsx",
+      "packages/ui/package.json",
+      "packages/ui/src/navigation.ts",
+      "packages/account-ui/src/index.tsx",
+      "packages/account-ui/package.json"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 16,
+    "file": "TASK-016.md",
+    "block": "1",
+    "module": "M01.5 Локализация",
+    "title": "Локализованные ошибки и валидация без изменения wire codes",
+    "depends": [
+      15
+    ],
+    "initialStatus": "Student errorMessage и manager dictionary разрозненны",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "ba02138c80ac0a819f9a8b3d8ea286b5fd67e94de8a0ccec47cccbcd186760bb",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/api.ts",
+      "apps/manager-web/src/api/error-view.ts",
+      "apps/manager-web/src/i18n/ru.ts",
+      "packages/ui/src/locale.tsx",
+      "packages/api-contracts/src/index.ts"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 17,
+    "file": "TASK-017.md",
+    "block": "1",
+    "module": "M01.6 Gate основы",
+    "title": "Приёмка UI-kit и локализации",
+    "depends": [
+      16
+    ],
+    "initialStatus": "64 UI tests и partial presentation не являются всей приёмкой",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "49c622b9cafe6b93ab9bd1adbdd0e13b34df35898def6397c09d759ceb44f488",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md"
+    ],
+    "files": [
+      "packages/ui/src/index.ts",
+      "packages/ui/src/locale.tsx",
+      "packages/ui/src/shell.tsx",
+      "packages/ui/package.json",
+      "docs/ui-stack.md",
+      "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "packages/ui/tests/state.test.mjs"
+    ],
+    "stepCount": 7,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 18,
+    "file": "TASK-018.md",
+    "block": "2",
+    "module": "M02.1 Контекст и контракты",
+    "title": "Staff actor context и action eligibility из сервера",
+    "depends": [
+      17
+    ],
+    "initialStatus": "Workspace DTO ограничен; broad manager capabilities не соответствуют всем действиям",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "067b4547196a6738f88b9bf6ac819c292c38046ce6c2a67531fd93456d077d16",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md",
+      "docs/online_academy_manager_payment_decisions_2026_10_31.md"
+    ],
+    "files": [
+      "apps/api/src/modules/platform/platform.dto.ts",
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/manager/me/manager-me.service.ts",
+      "apps/api/src/student/me/me.dto.ts",
+      "packages/api-contracts/orval.config.mjs"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 19,
+    "file": "TASK-019.md",
+    "block": "2",
+    "module": "M02.1 Контекст и контракты",
+    "title": "Смена сессии, late response и очистка приватного кэша",
+    "depends": [
+      18
+    ],
+    "initialStatus": "Abort/clear работают частично; staff использует локальный state",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "6f79b2f73d52f1a77559219f50eb80e35ea211ac28ef245c9f7d04205df08719",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/platform_account_switching_2026_11_01.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/api.ts",
+      "apps/manager-web/src/api/client.ts",
+      "packages/account-ui/src/index.tsx",
+      "apps/platform/src/App.tsx",
+      "packages/ui/src/state.tsx"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 20,
+    "file": "TASK-020.md",
+    "block": "2",
+    "module": "M02.2 Навигация",
+    "title": "Устойчивая оболочка и адресуемые staff-разделы",
+    "depends": [
+      19
+    ],
+    "initialStatus": "AppShell иsection query уже добавлены; detail routes неполны",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "e091d0510e8ddb80b6c10a123d32c32369ecb284032a308ff607ff3c3d39bc10",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/shell.tsx",
+      "packages/ui/src/navigation.ts",
+      "apps/platform/src/App.tsx",
+      "apps/student-cabinet/src/router.tsx",
+      "apps/manager-web/src/routes.ts"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 21,
+    "file": "TASK-021.md",
+    "block": "2",
+    "module": "M02.3 Обновление",
+    "title": "Одна политика чтения и ясная свежесть",
+    "depends": [
+      20
+    ],
+    "initialStatus": "refresh.ts есть, дубли polling/focus ещё нужно исключить",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "c66fd11ee826040bf28b82aa62fb89abfbb460fc3ddea0d4f5fb8ead3b173171",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/src/refresh.ts",
+      "packages/ui/src/freshness.tsx",
+      "apps/student-cabinet/src/api.ts",
+      "apps/student-cabinet/src/Layout.tsx",
+      "apps/manager-web/src/api/client.ts",
+      "apps/platform/src/App.tsx"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 22,
+    "file": "TASK-022.md",
+    "block": "2",
+    "module": "M02.3 Обновление",
+    "title": "Серверный источник критического события и очереди",
+    "depends": [
+      21
+    ],
+    "initialStatus": "PriorityEvents есть; product flag выключен из-за отсутствия API",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "bea598b473f5c6cc983c32960c440fa86d22539f483411c77d821ce2904ee10b",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/online_academy_financial_operational_exceptions_part_01_v1.0.md"
+    ],
+    "files": [
+      "packages/ui/src/priority.tsx",
+      "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts",
+      "apps/api/src/modules/schedule/deadline.module.ts"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 23,
+    "file": "TASK-023.md",
+    "block": "2",
+    "module": "M02.4 Gate оболочки",
+    "title": "Приёмка общей оболочки и API-совместимости",
+    "depends": [
+      22
+    ],
+    "initialStatus": "Есть partial smoke, полного нового gate нет",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "eff01804025b2e804d70d8404417d4af792fb7ad55f8c4e839ee10d5041bd9a3",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "packages/ui/tests/state.test.mjs",
+      "scripts/k8k-implementation-smoke.mjs",
+      "apps/platform/src/App.tsx",
+      "docs/K8K_REQUIREMENTS_MATRIX.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 24,
+    "file": "TASK-024.md",
+    "block": "3",
+    "module": "Предметы, права и абонементы",
+    "title": "Серверная проекция предметов, доступа и абонементов ученика",
+    "depends": [
+      23
+    ],
+    "initialStatus": "Не реализовано: текущий API выбирает один абонемент; subjectSubscriptions=false. Серверные правила допуска и ledger существуют и должны переиспользоваться.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "eb7bf56142c657ea40fb32fe83e1a37a904e9c1297a10de7e763774ce2055a25",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "AGENTS.md",
+      "apps/api/src/student/subscription/README.md",
+      "apps/api/src/student/lessons/README.md"
+    ],
+    "files": [
+      "apps/api/src/student/student.module.ts",
+      "apps/api/src/student/me/me.service.ts",
+      "apps/api/src/student/me/me.dto.ts",
+      "apps/api/src/student/subscription/subscription.sql.ts",
+      "apps/api/src/student/subscription/subscription.dto.ts",
+      "apps/api/src/student/active-subscription.guard.ts",
+      "packages/api-contracts/openapi/openapi.json",
+      "tests/unit/student-context.test.mjs",
+      "tests/unit/student-subscription.test.mjs"
+    ],
+    "stepCount": 8,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 25,
+    "file": "TASK-025.md",
+    "block": "3",
+    "module": "Предметы, права и абонементы",
+    "title": "Предметный хаб, навигация и помощь ученику",
+    "depends": [
+      24
+    ],
+    "initialStatus": "Частично: AppShell и ролевое меню есть; отсутствуют «Мои предметы» и «Помощь», новая главная имеет большие пустые зоны и не содержит предметных карточек.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "16b186612a5e480e95434d8da2ebea0703b79f5c3e0c48569a780aa503368943",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "template/newtemp.png",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/router.tsx",
+      "apps/student-cabinet/src/Layout.tsx",
+      "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "apps/student-cabinet/src/student-widgets.tsx",
+      "apps/student-cabinet/src/student.css",
+      "packages/ui/src/navigation.ts",
+      "packages/ui/src/shell.tsx",
+      "packages/ui/src/locale.tsx",
+      "apps/student-cabinet/tests/student.spec.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 26,
+    "file": "TASK-026.md",
+    "block": "3",
+    "module": "Предметы, права и абонементы",
+    "title": "Абонементы по каждому предмету и точные детали прав",
+    "depends": [
+      24,
+      25
+    ],
+    "initialStatus": "Частично: SubjectSubscriptions view-компонент и single-subscription detail есть, но основной блок выключен; histories читаются существующими API.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "cc50eb380c4b0507460a99dec1c6057de61e69a12d317d2cd489129138df159d",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "apps/api/src/student/subscription/README.md",
+      "AGENTS.md",
+      "docs/K8K_REQUIREMENTS_MATRIX.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/student-widgets.tsx",
+      "apps/student-cabinet/src/student-presentation.ts",
+      "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "apps/student-cabinet/src/pages/Learning.tsx",
+      "apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx",
+      "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "apps/api/src/student/subscription/subscription.dto.ts",
+      "apps/api/src/student/subscription/subscription.sql.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 27,
+    "file": "TASK-027.md",
+    "block": "3",
+    "module": "Связь и ближайший урок",
+    "title": "Назначенный менеджер: официальные контакты и безопасная карточка",
+    "depends": [
+      26
+    ],
+    "initialStatus": "Частично: managerContacts возвращает только официальные WhatsApp/Telegram, проверяет назначение. Имя/публичный телефон отсутствуют; StaffAccount.phone помечен PII.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "b6fd5f57f52f030f7d36ed3565809f006123bda4a2dbc543610396ca51e12984",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/student/security/README.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "packages/db/prisma/schema.prisma"
+    ],
+    "files": [
+      "apps/api/src/student/manager-contacts.ts",
+      "apps/api/src/core/errors/error-mapper.ts",
+      "apps/api/src/student/me/me.service.ts",
+      "apps/api/src/student/me/me.dto.ts",
+      "apps/api/src/student/active-subscription.guard.ts",
+      "packages/db/prisma/schema.prisma",
+      "apps/student-cabinet/src/student-widgets.tsx",
+      "apps/student-cabinet/src/pages/Account.tsx",
+      "apps/student-cabinet/src/Layout.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 28,
+    "file": "TASK-028.md",
+    "block": "3",
+    "module": "Связь и ближайший урок",
+    "title": "Текущий/следующий урок: единая серверная доступность Meet и hero",
+    "depends": [
+      27
+    ],
+    "initialStatus": "Частично реализовано: root уже исправил current lesson retention в DashboardService, есть тесты и server-clock countdown. DTO hero всё ещё не содержит status, который UI сопоставляет с другим списком.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "ce8d64ea11b9263f7c3e7a007c81d32b92c41d166b91d57d10f02a3f488d288b",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "apps/api/src/student/lessons/README.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "apps/api/src/student/dashboard/dashboard.service.ts",
+      "apps/api/src/student/dashboard/dashboard.dto.ts",
+      "apps/api/src/student/dashboard/dashboard-cache.interceptor.ts",
+      "apps/api/src/student/lessons/lessons.service.ts",
+      "apps/api/src/student/lessons/lessons.dto.ts",
+      "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "apps/student-cabinet/src/components.tsx",
+      "apps/student-cabinet/src/student-presentation.ts",
+      "tests/unit/student-dashboard.test.mjs",
+      "apps/student-cabinet/tests/k8k-presentation.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 29,
+    "file": "TASK-029.md",
+    "block": "3",
+    "module": "Уроки и домашние задания",
+    "title": "Календарь, карточка урока, история, перенос и предметный спор",
+    "depends": [
+      24,
+      28
+    ],
+    "initialStatus": "Частично: list/calendar/detail и reschedule form работают; серверная история/спор существуют, но полный связанный UI и фактические snapshots/deduction/canDispute ещё нужно довести.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "9009a3e21d160a6bf2f62ab80e8b76a175b15cda27352ef3455954d7a4c66f21",
+    "sources": [
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/lessons/README.md",
+      "apps/api/src/student/history/README.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/pages/Lessons.tsx",
+      "apps/student-cabinet/src/components.tsx",
+      "apps/student-cabinet/src/api.ts",
+      "apps/student-cabinet/src/router.tsx",
+      "apps/api/src/student/lessons/lessons.dto.ts",
+      "apps/api/src/student/lessons/lesson-period.ts",
+      "apps/api/src/student/history/history.dto.ts",
+      "apps/api/src/student/history/dispute.service.ts",
+      "apps/student-cabinet/tests/student.spec.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 30,
+    "file": "TASK-030.md",
+    "block": "3",
+    "module": "Уроки и домашние задания",
+    "title": "Редизайн домашних заданий без потери надёжности редактора",
+    "depends": [
+      29
+    ],
+    "initialStatus": "Рабочий редактор уже реализован: debounce2s, последовательные server saves, upload intent, версии, route blocker. Требуется перенос на общий UI-kit, полная RU/RO и проверка неизвестного результата без переписывания жизненного цикла.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "e0d84f6a5db059a19fa257c31c1ac6727caceb58ee4f36e75def35785fb1383b",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/homework/README.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/student-cabinet/tests/student.spec.mjs"
+    ],
+    "files": [
+      "apps/student-cabinet/src/pages/Homework.tsx",
+      "apps/student-cabinet/src/components.tsx",
+      "apps/student-cabinet/src/api.ts",
+      "apps/student-cabinet/src/student.css",
+      "apps/student-cabinet/tests/fixture-server.mjs",
+      "apps/student-cabinet/tests/student.spec.mjs",
+      "apps/api/src/student/homework/homework.dto.ts",
+      "apps/api/src/student/homework/homework.service.ts",
+      "packages/ui/src/controls.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 31,
+    "file": "TASK-031.md",
+    "block": "3",
+    "module": "Педагогический результат",
+    "title": "Карта навыков: четыре технических состояния, срез4 и отчёт8",
+    "depends": [
+      30
+    ],
+    "initialStatus": "Частично: SkillMap/история навыка/цели/snapshots реализованы, три учебных этапа показаны в StudentHome. Счётчики, source scope и перевод требуют завершения; отчёт8 уже имеет отдельный маршрут.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "7de011a1f30009e1583bd310d6d315913efd6cf2d6a5972e247a0ae9e1705c28",
+    "sources": [
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/skills/README.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/pages/Learning.tsx",
+      "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "apps/student-cabinet/src/components.tsx",
+      "apps/api/src/student/skills/skills.dto.ts",
+      "apps/api/src/student/skills/skills.sql.ts",
+      "apps/api/src/student/skills/skills.service.ts",
+      "apps/student-cabinet/tests/student.spec.mjs",
+      "packages/ui/src/controls.tsx",
+      "packages/ui/src/locale.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 32,
+    "file": "TASK-032.md",
+    "block": "3",
+    "module": "Педагогический результат",
+    "title": "Опубликованный отчёт по deep link и полный workflow PDF",
+    "depends": [
+      24,
+      31
+    ],
+    "initialStatus": "Частично: Reports.tsx уже добавлен, умеет paginated list и mark-read RU/RO. reportId лишь раскрывает элемент текущей страницы; адресное чтение старого отчёта и PDF UI отсутствуют.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "f231c6b5bd6f3952fba794d042d1b6fc2f4f02996a580f3be6d25aa8f1a040fd",
+    "sources": [
+      "apps/api/src/student/reports/README.md",
+      "apps/api/src/student/reports/reports.dto.ts",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/pages/Reports.tsx",
+      "apps/student-cabinet/src/router.tsx",
+      "apps/student-cabinet/src/student-presentation.ts",
+      "apps/api/src/student/reports/reports.controller.ts",
+      "apps/api/src/student/reports/reports.service.ts",
+      "apps/api/src/student/reports/reports.sql.ts",
+      "apps/api/src/student/reports/reports.dto.ts",
+      "packages/api-contracts/src/generated/client.ts",
+      "apps/student-cabinet/tests/fixture-server.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 33,
+    "file": "TASK-033.md",
+    "block": "3",
+    "module": "События, локализация и приёмка",
+    "title": "Колокольчик событий: завершение пагинации, прочтения и переходов",
+    "depends": [
+      32
+    ],
+    "initialStatus": "Частично реализовано root: поповер имеет pages/read-all, /notifications в K8K ведёт на /student?events=1, report deep link добавлен. Требуются полная локализация/доступность, актуальные scope/late-response сценарии и источники без вымышленных событий.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "02d5bedc9abaefa375080474e73b3a4d735c2e60a6a07fb68ae8082cb3c4c122",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/student/notifications/README.md",
+      "apps/api/src/student/notifications/notifications.dto.ts",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "apps/student-cabinet/src/student-presentation.ts",
+      "apps/student-cabinet/src/router.tsx",
+      "apps/student-cabinet/src/pages/Learning.tsx",
+      "apps/student-cabinet/src/Layout.tsx",
+      "apps/api/src/student/notifications/notifications.dto.ts",
+      "apps/api/src/student/notifications/notifications.service.ts",
+      "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "packages/ui/src/locale.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 34,
+    "file": "TASK-034.md",
+    "block": "3",
+    "module": "События, локализация и приёмка",
+    "title": "Полная RU/RO локализация, материалы, профиль и безопасность",
+    "depends": [
+      24,
+      27,
+      33
+    ],
+    "initialStatus": "Частично: locale ru/ro и переведённые nav/freshness/reports уже есть. Materials/profile/security/password/suspended, ошибки и aria требуют полного перевода.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "3a52270569d3acb2a4b3c00eb91b6babed0a4d06b4386035a49116b4bc663fb7",
+    "sources": [
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/student/materials/README.md",
+      "apps/api/src/student/security/README.md",
+      "docs/manager_password_login_owner_decision_2026_11_01.md",
+      "docs/platform_account_switching_2026_11_01.md"
+    ],
+    "files": [
+      "packages/ui/src/locale.tsx",
+      "apps/student-cabinet/src/pages/Account.tsx",
+      "apps/student-cabinet/src/pages/Learning.tsx",
+      "apps/student-cabinet/src/components.tsx",
+      "apps/student-cabinet/src/api.ts",
+      "apps/student-cabinet/src/Layout.tsx",
+      "apps/student-cabinet/src/router.tsx",
+      "packages/account-ui/src/index.tsx",
+      "apps/api/src/student/materials/materials.dto.ts",
+      "apps/api/src/student/security/security.dto.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 10,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 35,
+    "file": "TASK-035.md",
+    "block": "3",
+    "module": "События, локализация и приёмка",
+    "title": "Приёмочный gate ученического кабинета K8K",
+    "depends": [
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "initialStatus": "Не выполнено для полного нового scope: есть исторические STU-12/phase2/phase3 и новый root smoke отчёта/колокольчика. Они не доказывают завершение TASK-024…034 или всей академии.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "42bf448b9504dd7b1b03941b8327eebcb4a574f60f02d99da7ba0161c361bb41",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "apps/student-cabinet/playwright.config.mjs"
+    ],
+    "files": [
+      "apps/student-cabinet/tests/student.spec.mjs",
+      "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "apps/student-cabinet/tests/fixture-server.mjs",
+      "apps/student-cabinet/tests/accessibility.mjs",
+      "apps/student-cabinet/playwright.config.mjs",
+      "apps/student-cabinet/package.json",
+      "scripts/k8k-implementation-smoke.mjs",
+      "scripts/k8k-design-check.mjs",
+      "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "stepCount": 9,
+    "testCount": 10,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 36,
+    "file": "TASK-036.md",
+    "block": "4",
+    "module": "Уроки, собственный контекст и расписание",
+    "title": "Преподаватель: серверный контекст, доступ к собственным объектам и детализация урока",
+    "depends": [
+      35
+    ],
+    "initialStatus": "Частично: PlatformController.workspace отдаёт общую read-only витрину teacher/director с лимитом 100 уроков и 50 выданных ДЗ. TeacherAccount и TeachingAssignment существуют. Отдельных полных teacher read-моделей, безопасной детализации урока и контекстной образовательной карточки пока нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "b5ad928c4c661d057ef6f675ce243d9558f9a8467492af030580d009ced59b40",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md"
+    ],
+    "files": [
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/platform/platform.dto.ts",
+      "apps/api/src/modules/schedule/schedule-access.service.ts",
+      "apps/api/src/modules/schedule/schedule-scope.guard.ts",
+      "apps/api/src/modules/education/education.module.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/api-contracts/src/index.ts",
+      "apps/platform/src/App.tsx"
+    ],
+    "stepCount": 8,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 37,
+    "file": "TASK-037.md",
+    "block": "4",
+    "module": "Уроки, собственный контекст и расписание",
+    "title": "Преподаватель: K8K «Сегодня», недельное расписание и единая карточка урока",
+    "depends": [
+      36
+    ],
+    "initialStatus": "В apps/platform/src/App.tsx есть обзор, список расписания, назначенные ученики и заголовки выданных ДЗ. Это одна read-only витрина, без полноценной карточки, недельного календаря и педагогических действий. Общие компоненты K8K создаются предыдущими блоками.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "dc5bd50b62cb6ff52b41c7bcebe77339ffd59cb968b040d7096e90c5bb29eb20",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/scheduling_logistics_part_1_modules_01-05_v0.1 (1).md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/main.tsx",
+      "apps/platform/src/style.css",
+      "packages/ui/src/tokens.css",
+      "packages/api-contracts/src/index.ts",
+      "apps/api/src/modules/schedule/registry.service.ts",
+      "apps/api/src/modules/schedule/schedule.controller.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 38,
+    "file": "TASK-038.md",
+    "block": "4",
+    "module": "Уроки, собственный контекст и расписание",
+    "title": "Преподаватель: подключить фактическое начало и версионированный результат урока, сохранить срок24ч",
+    "depends": [
+      36,
+      37
+    ],
+    "initialStatus": "Существуют OutcomesService.start/report/confirm, TeacherRateService.snapshotAtStart, ScheduleDeadlines и teacher команды ScheduleController. Report версионируется; окончательное подтверждение выполняет manager/director. Teacher UI не подключает эти операции; отдельного универсального API журнала нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "d7967fb4504608db47d7af2ddcb6a197f2c7058891ae2ee805b72c78fa6dad21",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_financial_operational_exceptions_part_01_v1.0.md"
+    ],
+    "files": [
+      "apps/api/src/modules/schedule/outcomes.service.ts",
+      "apps/api/src/modules/schedule/schedule.controller.ts",
+      "apps/api/src/modules/schedule/schedule-access.service.ts",
+      "apps/api/src/modules/schedule/deadline.module.ts",
+      "apps/api/src/modules/finance/teacher-rate.service.ts",
+      "apps/platform/src/App.tsx",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/rates.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 39,
+    "file": "TASK-039.md",
+    "block": "4",
+    "module": "Выдача и проверка домашних заданий",
+    "title": "Преподаватель: серверные команды создания задания, выдачи и разрешённых материалов",
+    "depends": [
+      36,
+      38
+    ],
+    "initialStatus": "HomeworkAssignment/Delivery/Submission/Review, attachments, S3 и student homework поток существуют. EducationModule пуст. Platform workspace читает issued_by заголовки, но собственных teacher команд создания/выдачи нет. Student hwId — именно HomeworkDelivery.id, не общий assignmentId.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "7bae29a6d78eb0449a46963ace3d078c44c9542f30633a2c34dbdb032005e033",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md",
+      "apps/api/src/student/homework/README.md",
+      "packages/db/EDUCATION_INFRA.md"
+    ],
+    "files": [
+      "apps/api/src/modules/education/education.module.ts",
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/student/homework/homework.service.ts",
+      "apps/api/src/student/homework/homework.dto.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/db/prisma/baseline-parts/task04-invariants.sql",
+      "packages/db/EDUCATION_INFRA.md",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/student-homework.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 40,
+    "file": "TASK-040.md",
+    "block": "4",
+    "module": "Выдача и проверка домашних заданий",
+    "title": "Преподаватель: очередь отправленных работ и версионированная проверка без оценок",
+    "depends": [
+      36,
+      39
+    ],
+    "initialStatus": "Существуют HomeworkSubmission.version, supersedes_submission_id и SubmissionReview с результатами ACCEPTED/NEEDS_REVISION и собственной version. Student service читает эти факты и шлёт версионированные исправления; teacher queue/review commands пока отсутствуют.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "878ae8c845ae5d6f17ff679573f659efa08f97ddef680a20ab32d26c1e91abcf",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md",
+      "apps/api/src/student/homework/README.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md"
+    ],
+    "files": [
+      "apps/api/src/modules/education/education.module.ts",
+      "apps/api/src/student/homework/homework.service.ts",
+      "apps/api/src/student/homework/homework.dto.ts",
+      "apps/api/src/modules/notifications/notification.service.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/db/prisma/baseline-parts/task04-invariants.sql",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/student-homework-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 41,
+    "file": "TASK-041.md",
+    "block": "4",
+    "module": "Выдача и проверка домашних заданий",
+    "title": "Преподаватель: интерфейс выдачи, единой очереди и проверки ДЗ в контексте урока и ученика",
+    "depends": [
+      37,
+      39,
+      40
+    ],
+    "initialStatus": "Teacher homework view в App.tsx выводит заголовки выданных работ. Рабочих форм выдачи/проверки и собственной очереди ещё нет. TASK-039/040 поставляют реальные команды; student homework editor уже имеет действующие autosave/submit правила и должен остаться совместимым.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "7390997a49a617fe2f3aa224030b360e3f783c09917c4c69ce0a39ed5b6a402c",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/style.css",
+      "packages/ui/src/tokens.css",
+      "packages/api-contracts/src/index.ts",
+      "apps/api/src/student/homework/homework.dto.ts",
+      "apps/student-cabinet/src/pages/Learning.tsx",
+      "apps/student-cabinet/src/pages/Dashboard.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 42,
+    "file": "TASK-042.md",
+    "block": "4",
+    "module": "Навыки, цели и образовательные отчёты",
+    "title": "Преподаватель: наступившие контрольные точки4/8 и серверное чтение педагогической очереди",
+    "depends": [
+      36,
+      38,
+      40,
+      41
+    ],
+    "initialStatus": "В БД уже есть ProgressCheckpoint, типы LESSON_4/LESSON_8, completion-поля и SkillSnapshot с SQL freeze guard. STU-08 считает confirmed CONDUCTED уроки по предмету через все enrollment. Teacher workflow создания/чтения/подтверждения контрольных точек и согласованный retro-recompute пока отсутствуют.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "99d9c355c098314e99abd7e85e9174191fa04e3f646d01e427c973fc3a2bdc08",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/skills/README.md",
+      "apps/api/src/student/reports/README.md"
+    ],
+    "files": [
+      "apps/api/src/modules/education/education.module.ts",
+      "apps/api/src/modules/schedule/outcomes.service.ts",
+      "apps/api/src/student/skills/skills.service.ts",
+      "apps/api/src/student/skills/skills.sql.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/student-skills.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 43,
+    "file": "TASK-043.md",
+    "block": "4",
+    "module": "Навыки, цели и образовательные отчёты",
+    "title": "Преподаватель: явная оценка навыков, текстовые цели и подтверждение4-контроля",
+    "depends": [
+      36,
+      41,
+      42
+    ],
+    "initialStatus": "SkillEntry/SkillAssessment с immutable revisions, SkillAuditLog, LearningGoal/History и ProgressCheckpoint completion существуют в schema. STU-08 read API и SQL guards аудита/snapshot подготовлены. Teacher commands редактирования/оценки/целей и соответствующие UI ещё не реализованы.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "cab9e34834c42dd8d8a7da011a8dcdfd9bfd326efd615dc474446e084616d2e7",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/skills/README.md",
+      "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql"
+    ],
+    "files": [
+      "apps/api/src/modules/education/education.module.ts",
+      "apps/api/src/student/skills/skills.service.ts",
+      "apps/api/src/student/skills/skills.dto.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/db/prisma/migrations/20261027160100_stu08_skills/migration.sql",
+      "apps/platform/src/App.tsx",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/student-skills-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 44,
+    "file": "TASK-044.md",
+    "block": "4",
+    "module": "Навыки, цели и образовательные отчёты",
+    "title": "Преподаватель: черновик, явная публикация8-отчёта и безопасные исправления версиями",
+    "depends": [
+      42,
+      43
+    ],
+    "initialStatus": "EducationReport имеет DRAFT/GENERATED/PUBLISHED, версии/supersedes и count snapshot; STU-09 читает только опубликованные LESSON_8 и сохраняет прошлую публикацию при draft correction. SQL publication/freeze guards существуют, worker PDF реализован для student. Teacher editor/publish commands и3-working-day workflow отсутствуют.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "cf910aefaa84eccc6c1fee601e9e31ef93e8dc665e9888064d2d269af4d5c258",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "apps/api/src/student/reports/README.md",
+      "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql"
+    ],
+    "files": [
+      "apps/api/src/modules/education/education.module.ts",
+      "apps/api/src/student/reports/reports.service.ts",
+      "apps/api/src/student/reports/reports.dto.ts",
+      "apps/api/src/student/reports/export-data.ts",
+      "apps/worker/src/education-pdf.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/db/prisma/migrations/20261027170000_stu09_reports_pdf/migration.sql",
+      "apps/platform/src/App.tsx",
+      "tests/unit/student-reports.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 45,
+    "file": "TASK-045.md",
+    "block": "4",
+    "module": "Личные данные работы, коммуникации и приёмка",
+    "title": "Преподаватель: собственная ставка и ведомость с раздельными начислениями, обязательствами и выплатами",
+    "depends": [
+      36,
+      38,
+      44
+    ],
+    "initialStatus": "TeacherRateService уже реализует очковые200/220/250, историю engagements≤6мес, индивидуальные promises и snapshotAtStart. PayrollService.read и GET finance/teacher/:id/payroll существуют, отдают не более100 начислений с obligations/confirmed payouts. Полной period/pagination/свежей rate teacher read-модели и UI нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "cf4cc814f1207b886932d278fd7fb433af3387d777833692db5506f0e1114461",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_financial_operational_exceptions_part_01_v1.0.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md"
+    ],
+    "files": [
+      "apps/api/src/modules/finance/teacher-rate.service.ts",
+      "apps/api/src/modules/finance/payroll.service.ts",
+      "apps/api/src/modules/finance/finance.controller.ts",
+      "apps/api/src/modules/finance/finance-scope.guard.ts",
+      "apps/api/src/modules/finance/finance-common.ts",
+      "packages/db/prisma/schema.prisma",
+      "apps/platform/src/App.tsx",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/rates.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 46,
+    "file": "TASK-046.md",
+    "block": "4",
+    "module": "Личные данные работы, коммуникации и приёмка",
+    "title": "Преподаватель: собственные рабочие уведомления и структурированные обращения менеджеру",
+    "depends": [
+      36,
+      38,
+      41,
+      44,
+      45
+    ],
+    "initialStatus": "NotificationService/NotificationOutboxPublisher и StudentNotification ориентированы на studentId; NotificationDispatch не содержит собственного teacher recipient. CrmTask и schedule-requests существуют, teacher notification/appeal API и UI отсутствуют. Нельзя переиспользовать student inbox под видом teacher или объявить готовый API обращений.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "5b317c6f5fe5060d56ef8027af8a900f8396c54fb72ab57ab7d59107e56b4176",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/regul/online_academy_teacher_regulations_v1.0.md",
+      "docs/online_academy_manager_notification_decisions_2026_11_01.md"
+    ],
+    "files": [
+      "apps/api/src/modules/notifications/notification.service.ts",
+      "apps/api/src/modules/notifications/notification-outbox.publisher.ts",
+      "apps/api/src/modules/notifications/templates.ts",
+      "apps/api/src/modules/schedule/registry.service.ts",
+      "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "apps/api/src/student/notifications/notifications.service.ts",
+      "packages/db/prisma/schema.prisma",
+      "apps/worker/src/notifications.ts",
+      "apps/platform/src/App.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 47,
+    "file": "TASK-047.md",
+    "block": "4",
+    "module": "Личные данные работы, коммуникации и приёмка",
+    "title": "TEACHER-GATE: сквозная функциональная, RU/RO и K8K-приёмка кабинета преподавателя",
+    "depends": [
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "initialStatus": "Полный teacher gate отсутствует: имеющийся platform smoke подтверждал read-only workspace/demo switching. Student targeted suites существуют, но не доказывают готовность teacher write workflows. FND-GATE/рабочая PostgreSQL concurrency и юридические зависимости остаются отдельными открытыми воротами.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "99c696a920d8b05b00b70806a49d5817eb1ed3021f4c4f4327d6ff582819a45e",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "PHASE0_CHECKS.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/platform_account_switching_2026_11_01.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/style.css",
+      "packages/ui/src/tokens.css",
+      "packages/account-ui/src/index.tsx",
+      "playwright.config.mjs",
+      "tests/unit/platform-switch-http.test.mjs",
+      "tests/unit/rates.test.mjs",
+      "tests/unit/student-homework.test.mjs",
+      "tests/unit/student-skills.test.mjs",
+      "tests/unit/student-reports.test.mjs",
+      "tests/FOUNDATION_STATUS.json"
+    ],
+    "stepCount": 10,
+    "testCount": 9,
+    "acceptanceCount": 7
+  },
+  {
+    "id": 48,
+    "file": "TASK-048.md",
+    "block": "5",
+    "module": "Права, рабочая очередь и приоритет",
+    "title": "Capabilities конкретных действий и согласованность сервера с mock",
+    "depends": [
+      47,
+      18
+    ],
+    "initialStatus": "Частично: /manager/me capabilities есть, но PAYMENTS_CONFIRM связан с director permission, TASKS_PROCESS/NOTIFICATIONS_SEND перечислены и не выдаются. UI/mock иногда выводят действия по роли/статусу.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "1daf634c2229fc716d527378e6a6f6b51da5e14b9f6a5efe3084204c50b380d5",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_manager_payment_decisions_2026_10_31.md",
+      "docs/online_academy_manager_task_decisions_2026_11_01.md",
+      "apps/api/src/modules/manager/MANAGER.md",
+      "docs/manager_password_login_owner_decision_2026_11_01.md"
+    ],
+    "files": [
+      "apps/api/src/modules/manager/context/manager-context.ts",
+      "apps/api/src/modules/manager/me/manager-me.service.ts",
+      "apps/api/src/modules/manager/dto/manager-me.response.dto.ts",
+      "apps/api/src/modules/manager/guards/manager-route.decorator.ts",
+      "apps/manager-web/src/session.tsx",
+      "apps/manager-web/src/test/handlers.ts",
+      "apps/manager-web/src/test/fixtures.ts",
+      "apps/manager-web/src/pages/student/Payments.tsx",
+      "apps/manager-web/src/pages/Task.tsx"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 49,
+    "file": "TASK-049.md",
+    "block": "5",
+    "module": "Права, рабочая очередь и приоритет",
+    "title": "Настоящая очередь задач на главной и корректные агрегаты CRM",
+    "depends": [
+      48
+    ],
+    "initialStatus": "Частично: dashboard показывает overdueTasks.top под заголовком «Мои задачи»; полный tasks endpoint с cursor/filter существует. upcomingLessons.length — ограниченный preview, не total.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "b15113b99371964c4f3b3b4186eb2222cc773824295320794f30c1feeb2436cc",
+    "sources": [
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/modules/manager/tasks/MGR-07.md",
+      "docs/online_academy_manager_dashboard_decisions_2026_11_01.md",
+      "docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/Dashboard.tsx",
+      "apps/manager-web/src/pages/Tasks.tsx",
+      "apps/api/src/modules/manager/dashboard/dashboard.sql.ts",
+      "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts",
+      "apps/api/src/modules/manager/dto/manager-dashboard.dto.ts",
+      "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "apps/api/src/modules/manager/tasks/task-cursor.ts",
+      "apps/api/src/modules/manager/tasks/contracts.ts",
+      "apps/manager-web/src/components/ui.tsx"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 50,
+    "file": "TASK-050.md",
+    "block": "5",
+    "module": "Права, рабочая очередь и приоритет",
+    "title": "Критические события, эскалация и обращения преподавателей в CRM",
+    "depends": [
+      22,
+      46,
+      49
+    ],
+    "initialStatus": "Заготовка: PriorityEvents source/flag существует; в продукте нет authoritative critical selection. Teacher own events/appeals реализует TASK-046, их storage не дублировать.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "c71bbc45c67fb5435614236fe0b2f1fb929956d59ddf7a717a812f5f384dc75d",
+    "sources": [
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/modules/manager/tasks/MGR-07.md"
+    ],
+    "files": [
+      "packages/ui/src/priority.tsx",
+      "apps/manager-web/src/components/layout.tsx",
+      "apps/manager-web/src/pages/Dashboard.tsx",
+      "apps/manager-web/src/pages/Tasks.tsx",
+      "apps/manager-web/src/pages/Task.tsx",
+      "apps/api/src/modules/manager/tasks/contracts.ts",
+      "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "apps/api/src/modules/manager/dto/manager-task.dto.ts",
+      "apps/api/src/modules/manager/dashboard/manager-dashboard.service.ts"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 51,
+    "file": "TASK-051.md",
+    "block": "5",
+    "module": "Журнал контактов",
+    "title": "Append-only API структурированного журнала контактов",
+    "depends": [
+      48,
+      50
+    ],
+    "initialStatus": "Модель ContactLog и связи уже существуют; manager contact-log HTTP/API отсутствует. PATCH student contacts — редактирование реквизитов, не журнал взаимодействий.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "3798ab1386c8089ba10b188e7ce6103cef36c0e1b3e6dfa6af29728ce2ddd2ad",
+    "sources": [
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "packages/db/prisma/schema.prisma",
+      "docs/regul/online_academy_manager_regulations_v1.0.md"
+    ],
+    "files": [
+      "packages/db/prisma/schema.prisma",
+      "apps/api/src/modules/manager/manager.module.ts",
+      "apps/api/src/modules/manager/scope/manager-scope.service.ts",
+      "apps/api/src/modules/manager/students/manager-students.controller.ts",
+      "apps/api/src/modules/manager/leads/manager-leads.controller.ts",
+      "apps/api/src/modules/manager/dto/student-crm.dto.ts",
+      "apps/api/src/modules/manager/context/manager-context.ts",
+      "apps/api/src/modules/manager/students/manager-students.service.ts"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 52,
+    "file": "TASK-052.md",
+    "block": "5",
+    "module": "Журнал контактов",
+    "title": "CRM интерфейс истории контактов и фиксации результата",
+    "depends": [
+      51
+    ],
+    "initialStatus": "Не реализован как завершённый сценарий: карточки ученика/лида содержат реквизиты/действия, но не единый structured log. Новый API предоставляет TASK-051.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "ab7fead06d1db4d22b347d656112008ce3d1149755885fc67e341756ef8e06fb",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/regul/online_academy_manager_regulations_v1.0.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/Student.tsx",
+      "apps/manager-web/src/pages/Lead.tsx",
+      "apps/manager-web/src/components/ui.tsx",
+      "apps/manager-web/src/components/business-forms.tsx",
+      "apps/manager-web/src/hooks/use-command.ts",
+      "apps/manager-web/src/hooks/use-idempotency-key.ts",
+      "apps/manager-web/src/pages/Dashboard.tsx",
+      "apps/manager-web/src/i18n/ru.ts",
+      "packages/ui/src/locale.tsx"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 53,
+    "file": "TASK-053.md",
+    "block": "5",
+    "module": "Воронка заявок",
+    "title": "Полная серверная пагинация и согласованные фильтры доски заявок",
+    "depends": [
+      48,
+      52
+    ],
+    "initialStatus": "Частично: lead API имеет secure cursor/limit/filters и summary; текущая board UI фильтрует ограниченный общий page по стадиям. List DTO не несёт version, summary counts глобальны.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "5a2a79a17f104d262cb30ae5b063bf636c6cddae56b60b7dfdbb43ea7c7a5519",
+    "sources": [
+      "apps/api/src/modules/manager/leads/MGR-11.md",
+      "apps/api/src/modules/manager/dto/manager-lead.dto.ts",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/AI Coder Tasks — Модуль 2 — MGR-11.md"
+    ],
+    "files": [
+      "apps/api/src/modules/manager/leads/manager-leads.service.ts",
+      "apps/api/src/modules/manager/leads/manager-leads.controller.ts",
+      "apps/api/src/modules/manager/leads/lead-cursor.ts",
+      "apps/api/src/modules/manager/leads/summary.sql.ts",
+      "apps/api/src/modules/manager/leads/policy.ts",
+      "apps/api/src/modules/manager/dto/manager-lead.dto.ts",
+      "apps/manager-web/src/pages/Leads.tsx",
+      "apps/manager-web/src/test/handlers.ts"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 54,
+    "file": "TASK-054.md",
+    "block": "5",
+    "module": "Воронка заявок",
+    "title": "Доска заявок: клавиатурные переходы и dnd без обхода workflow",
+    "depends": [
+      53
+    ],
+    "initialStatus": "Частично: board/table переключатель и lead commands есть; drag-and-drop и эквивалентное клавиатурное перемещение не завершены. Серверную полноту обеспечивает TASK-053.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "5d34cb6d9cbdd62b3228c1ba61ebd2f2c6bd85c138b207d0d996987b3b2d7be1",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "apps/api/src/modules/manager/leads/policy.ts",
+      "apps/api/src/modules/manager/leads/MGR-11.md",
+      "docs/AI Coder Tasks — Модуль 2 — MGR-11.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/Leads.tsx",
+      "apps/manager-web/src/pages/Lead.tsx",
+      "apps/manager-web/src/components/lead-form.tsx",
+      "apps/manager-web/src/hooks/use-command.ts",
+      "apps/manager-web/src/components/ui.tsx",
+      "apps/api/src/modules/manager/leads/policy.ts",
+      "apps/manager-web/src/test/handlers.ts",
+      "apps/manager-web/src/test/forms.test.tsx",
+      "packages/ui/src/controls.tsx"
+    ],
+    "stepCount": 8,
+    "testCount": 7,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 55,
+    "file": "TASK-055.md",
+    "block": "5",
+    "module": "Абонементы, финансы и исключения",
+    "title": "Абонементы CRM: направление, продление, заморозка и разморозка",
+    "depends": [
+      48,
+      54
+    ],
+    "initialStatus": "Рабочие UI/API существуют; часть кнопок зависит лишь от статуса, UI жёстко пишет60дней и выбирает готовые распределения из отдельных страниц. Нужна функциональная миграция на K8K/actions без изменения финансовых правил.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "bab5422ab642bdec1e0d2d5f3165bbc7aae944b6b1cc7adeb5999b99b5102167",
+    "sources": [
+      "docs/online_academy_manager_subscription_decisions_2026_10_31.md",
+      "apps/api/src/modules/manager/subscriptions/MGR-04.md",
+      "docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "AGENTS.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/student/Subscriptions.tsx",
+      "apps/manager-web/src/components/business-forms.tsx",
+      "apps/manager-web/src/hooks/use-options.ts",
+      "apps/api/src/modules/manager/subscriptions/manager-subscriptions.service.ts",
+      "apps/api/src/modules/manager/dto/manager-subscription.dto.ts",
+      "apps/api/src/modules/manager/options/manager-options.dto.ts",
+      "apps/api/src/modules/manager/options/manager-options.service.ts",
+      "apps/manager-web/src/lib/time.ts",
+      "apps/manager-web/src/lib/money.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 56,
+    "file": "TASK-056.md",
+    "block": "5",
+    "module": "Абонементы, финансы и исключения",
+    "title": "Поступления, распределения и директорские допуски: точный финансовый UI",
+    "depends": [
+      48,
+      55
+    ],
+    "initialStatus": "Существуют receipt/distribution forms и Finance facade; manager-confirm уже отправляет на approval. Требуются K8K/actions, точные подписи всех состояний и полная демонстрация partial admission без обхода директора.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "9c3054a1d2907e12337157a1c7f175337ab58591b79076fa9563d75adfe087a2",
+    "sources": [
+      "docs/online_academy_manager_payment_decisions_2026_10_31.md",
+      "docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "docs/online_academy_manager_dashboard_decisions_2026_11_01.md",
+      "apps/api/src/modules/manager/payments/MGR-05.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/student/Payments.tsx",
+      "apps/manager-web/src/components/business-forms.tsx",
+      "apps/manager-web/src/lib/money.ts",
+      "apps/api/src/modules/manager/payments/manager-payments.service.ts",
+      "apps/api/src/modules/manager/dto/manager-payment.dto.ts",
+      "apps/api/src/modules/manager/finance/manager-finance.facade.ts",
+      "apps/manager-web/src/pages/Student.tsx",
+      "apps/manager-web/src/pages/Account.tsx",
+      "apps/manager-web/src/i18n/error-messages.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 57,
+    "file": "TASK-057.md",
+    "block": "5",
+    "module": "Абонементы, финансы и исключения",
+    "title": "Споры о списании и исключения расписания без обхода директора",
+    "depends": [
+      50,
+      56
+    ],
+    "initialStatus": "Основные API/UI tasks/reschedule/dispute существуют; текущие pending director/manual finance состояния нужно ясно показать. Нельзя возвращаться к историческому самостоятельному ACCEPT менеджером.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "4400ee2a5ccaea14b03454ba3d0a7d3266e6ac80feeaa173926a169f3217843b",
+    "sources": [
+      "docs/online_academy_manager_task_decisions_2026_11_01.md",
+      "docs/online_academy_manager_schedule_decisions_2026_10_31.md",
+      "apps/api/src/modules/manager/tasks/MGR-07.md",
+      "apps/api/src/modules/manager/schedule/MGR-06.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "AGENTS.md"
+    ],
+    "files": [
+      "apps/manager-web/src/pages/Task.tsx",
+      "apps/manager-web/src/pages/Schedule.tsx",
+      "apps/manager-web/src/components/business-forms.tsx",
+      "apps/api/src/modules/manager/tasks/manager-tasks.service.ts",
+      "apps/api/src/modules/manager/tasks/contracts.ts",
+      "apps/api/src/modules/manager/schedule/manager-schedule.service.ts",
+      "apps/api/src/modules/manager/dto/manager-task.dto.ts",
+      "apps/api/src/modules/manager/dto/manager-schedule.dto.ts",
+      "apps/manager-web/src/hooks/use-command.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 58,
+    "file": "TASK-058.md",
+    "block": "5",
+    "module": "Локализация и приёмка CRM",
+    "title": "Полная RU/RO локализация и приёмочный gate менеджерского кабинета",
+    "depends": [
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "initialStatus": "Не выполнено для нового scope: manager-web в основном импортирует ru; shared LanguageSelector уже существует, исторические MGR-10/MSW проверки не доказывают готовность новой CRM.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "e04b5559f5467602bab3c385b68b07decb267c5e1a14dc4f63a3c38d35465fcb",
+    "sources": [
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_manager_frontend_implementation_2026_11_01.md",
+      "apps/api/src/modules/manager/accounts/MGR-03.md",
+      "docs/online_academy_manager_notification_decisions_2026_11_01.md",
+      "PHASE0_CHECKS.md"
+    ],
+    "files": [
+      "apps/manager-web/src/i18n/ru.ts",
+      "apps/manager-web/src/i18n/error-messages.ts",
+      "apps/manager-web/src/api/error-view.ts",
+      "apps/manager-web/src/components/ui.tsx",
+      "apps/manager-web/src/components/layout.tsx",
+      "apps/manager-web/src/pages/Account.tsx",
+      "apps/manager-web/src/pages/student/Notifications.tsx",
+      "apps/manager-web/src/test/forms.test.tsx",
+      "apps/manager-web/src/test/session.test.tsx",
+      "apps/manager-web/playwright.config.mjs",
+      "packages/ui/src/locale.tsx"
+    ],
+    "stepCount": 10,
+    "testCount": 10,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 59,
+    "file": "TASK-059.md",
+    "block": "6",
+    "module": "Директор: решения и предметная очередь",
+    "title": "Директор: единая read-очередь ожидающих решений и безопасные detail-проекции",
+    "depends": [
+      58
+    ],
+    "initialStatus": "Platform workspace читает до50 открытых CRM задач школы. ScheduleChangeApprovalController и DirectorCrmDisputesController имеют detail/approve по ID; FinanceController — команды confirm/approve/temporary-access. Единой директорской discovery/list-очереди с корректными типами решений и метаданными нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "c4839f2c48cce6124450e12f54ffb11343b7e766b87b5dc19c8a4a76faeed264",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_manager_task_decisions_2026_11_01.md",
+      "docs/online_academy_manager_schedule_decisions_2026_10_31.md"
+    ],
+    "files": [
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/platform/platform.dto.ts",
+      "apps/api/src/modules/finance/finance.controller.ts",
+      "apps/api/src/modules/finance/payments.service.ts",
+      "apps/api/src/modules/schedule/manager/approval.controller.ts",
+      "apps/api/src/modules/finance/manager-disputes/director.controller.ts",
+      "apps/api/src/modules/finance/finance-access.service.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/api-contracts/src/index.ts"
+    ],
+    "stepCount": 8,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 60,
+    "file": "TASK-060.md",
+    "block": "6",
+    "module": "Директор: решения и предметная очередь",
+    "title": "Директор: интерфейс подтверждения поступлений, распределений и отдельного частичного допуска",
+    "depends": [
+      59
+    ],
+    "initialStatus": "Finance confirmPayment/approveDistribution/grantTemporaryAccess реализованы, manager-confirm только запрашивает одобрение. Директорский platform UI пока read-only; TASK-059 добавляет discovery/detail. Нет K8K формы независимых финансовых решений и обозримых последствий.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "28e76065641d310f520a1d6a9d37ba1ec7441927de93c029a3857c6b81682ad7",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_manager_payment_decisions_2026_10_31.md",
+      "docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md",
+      "docs/online_academy_economics_11_3_final_register_v1_0.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/style.css",
+      "apps/api/src/modules/finance/finance.controller.ts",
+      "apps/api/src/modules/finance/payments.service.ts",
+      "apps/api/src/modules/finance/entitlements.service.ts",
+      "apps/api/src/modules/finance/finance-scope.guard.ts",
+      "packages/api-contracts/src/index.ts",
+      "packages/ui/src/tokens.css"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 61,
+    "file": "TASK-061.md",
+    "block": "6",
+    "module": "Директор: решения и предметная очередь",
+    "title": "Директор: ревизионное одобрение исключений расписания и исполнение полной отмены спорного списания",
+    "depends": [
+      59,
+      60
+    ],
+    "initialStatus": "Есть get/approve ScheduleChangeApproval и get/approve CrmDisputeResolution, exact lesson/change revision и task version. Partial dispute требует MANUAL_FINANCE_REVIEW. Director UI этих сценариев отсутствует; approval расписания само не применяет перенос.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "848e1c8e52c73ee8954dd9d22e9561a7f0b9f2fdd688ec9e0ea98a3a8370c91d",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_manager_schedule_decisions_2026_10_31.md",
+      "docs/online_academy_manager_task_decisions_2026_11_01.md",
+      "docs/scheduling_logistics_part_1_modules_01-05_v0.1 (1).md"
+    ],
+    "files": [
+      "apps/api/src/modules/schedule/manager/approval.controller.ts",
+      "apps/api/src/modules/schedule/manager/workflow.service.ts",
+      "apps/api/src/modules/finance/manager-disputes/director.controller.ts",
+      "apps/api/src/modules/finance/manager-disputes/dispute.service.ts",
+      "apps/platform/src/App.tsx",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/manager-schedule-http.test.mjs",
+      "tests/unit/manager-tasks-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 62,
+    "file": "TASK-062.md",
+    "block": "6",
+    "module": "Директор: ведомости и операционный обзор",
+    "title": "Директор: подтверждённые обязательства, отдельный реестр споров и корректное закрытие периода OPS-02/B",
+    "depends": [
+      45,
+      59,
+      60,
+      61
+    ],
+    "initialStatus": "PeriodsService.close и listFinancialPeriods существуют, payroll read показывает accrual/obligation/payout. Close сейчас отклоняет unresolved facts, тогда как OPS-02/B допускает закрыть подтверждённую часть с отдельным реестром споров. Полной period detail/read-модели и UI нет; соответствие OPS-02 пока не доказано.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "20b46401f40576694b31f5195814696cd5e1d60d3a6f556edfd4bfbdc8eb3a0d",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_financial_operational_exceptions_part_01_v1.0.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md"
+    ],
+    "files": [
+      "apps/api/src/modules/finance/periods.service.ts",
+      "apps/api/src/modules/finance/payroll.service.ts",
+      "apps/api/src/modules/finance/finance.controller.ts",
+      "apps/api/src/modules/finance/finance-ledger.service.ts",
+      "apps/api/src/modules/finance/finance-scope.guard.ts",
+      "packages/db/prisma/schema.prisma",
+      "apps/platform/src/App.tsx",
+      "packages/api-contracts/src/index.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 63,
+    "file": "TASK-063.md",
+    "block": "6",
+    "module": "Директор: ведомости и операционный обзор",
+    "title": "Директор: честный операционный главный экран и RU/RO-приёмка рабочего кабинета",
+    "depends": [
+      59,
+      60,
+      61,
+      62
+    ],
+    "initialStatus": "Сейчас директор видит overview школы, расписание, учеников/назначения и открытые задачи. Все VIS12 DIR-01…06 имеют conditional scope, DIR-07 POST-MVP. TASK-059…062 добавляют реальные операционные решения; автоматическое одобрение новых финансовых/people KPI не получено.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "f8f924a816f2417d20cce543506332e2c721fd504c6c9d1b5d3f36bf3c3a37fc",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "docs/online_academy_financial_operational_exceptions_part_01_v1.0.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "PHASE0_CHECKS.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/style.css",
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/platform/platform.dto.ts",
+      "packages/ui/src/tokens.css",
+      "packages/account-ui/src/index.tsx",
+      "tests/unit/platform-switch-http.test.mjs",
+      "tests/unit/manager-dashboard-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 64,
+    "file": "TASK-064.md",
+    "block": "6",
+    "module": "Оператор: безопасная диагностика",
+    "title": "Техоператор: контекст здоровья компонентов, устаревание и защищённые read-only diagnostics API",
+    "depends": [
+      63
+    ],
+    "initialStatus": "QaController GET api/v1/qa/components возвращает API/DB/worker, lastSeen, migrationVersion, checkedAt с MFA staff access. Public api/health и api/health/worker только liveness; worker threshold30s уже в коде. Расширенной операторской диагностики/оперативного incident read-контекста нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "a7bb097939e5696a33dc8e84f78ff588039c1193eed6ecde1cfa90bdfa371f20",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "PHASE0_CHECKS.md"
+    ],
+    "files": [
+      "apps/api/src/modules/qa/qa.module.ts",
+      "apps/api/src/modules/qa/qa.dto.ts",
+      "apps/api/src/modules/qa/worker-health.controller.ts",
+      "apps/api/src/core/rbac/decorators.ts",
+      "apps/api/src/core/session/session.service.ts",
+      "apps/worker/src/main.ts",
+      "packages/db/prisma/schema.prisma",
+      "packages/api-contracts/src/index.ts",
+      "apps/platform/src/App.tsx"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 65,
+    "file": "TASK-065.md",
+    "block": "6",
+    "module": "Оператор: безопасная диагностика",
+    "title": "Техоператор: K8K status workspace и RU/RO-приёмка безопасных диагностических сценариев",
+    "depends": [
+      64
+    ],
+    "initialStatus": "Operator view в platform сейчас показывает component status из getComponentStatus, остальные staff вкладки отключены. Самостоятельного полноценного K8K diagnostics представления со stale/source/incident explanation и полностью локализованными состояниями нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "34dcfd40d18ecd51d1f53d81cafdbc49383c6de0b3bc65df83259d731149a699",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "PHASE0_CHECKS.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/platform/src/style.css",
+      "packages/ui/src/tokens.css",
+      "packages/account-ui/src/index.tsx",
+      "apps/api/src/modules/qa/qa.dto.ts",
+      "apps/api/src/modules/qa/qa.module.ts",
+      "packages/api-contracts/src/index.ts",
+      "tests/unit/platform-switch-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 66,
+    "file": "TASK-066.md",
+    "block": "6",
+    "module": "Общий вход, сессии и защита данных",
+    "title": "Общий вход: RU/RO пароль, обязательные проверки, восстановление и доступность без ослабления защиты",
+    "depends": [
+      19,
+      20,
+      65
+    ],
+    "initialStatus": "В platform есть password Login, который при дополнительной MFA/recovery только показывает сообщение. Identity API имеет WebAuthn register/authenticate и initiate/complete recovery; student password/email/sessions отдельные. Manager/demo password-only исключения уже ограничены текущими server policies. Полной общей auth UI последовательности нет.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "25b526a4a38643846e2b618c2eed8ccd5b2fec2ee44275331e06204266dd61be",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md",
+      "docs/manager_password_login_owner_decision_2026_11_01.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "apps/api/src/student/security/README.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "apps/api/src/modules/identity/identity.controller.ts",
+      "apps/api/src/modules/identity/identity.service.ts",
+      "apps/api/src/modules/identity/recovery.service.ts",
+      "apps/api/src/core/session/session.service.ts",
+      "apps/api/src/core/session/manager-password-policy.ts",
+      "apps/api/src/core/session/qa-password-policy.ts",
+      "apps/api/src/student/security/security.controller.ts",
+      "packages/account-ui/src/index.tsx",
+      "packages/api-contracts/src/index.ts"
+    ],
+    "stepCount": 9,
+    "testCount": 8,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 67,
+    "file": "TASK-067.md",
+    "block": "6",
+    "module": "Общий вход, сессии и защита данных",
+    "title": "AccountMenu: RU/RO, demo switching, logout и синхронная смена session во всех вкладках",
+    "depends": [
+      19,
+      20,
+      66
+    ],
+    "initialStatus": "packages/account-ui уже содержит AccountMenu, getAccounts, switchDemoUser/logout, CSRF mutation и BroadcastChannel school-account; полная навигация очищает runtime. Demo switch server ограничен фиксированными аккаунтами и двумя flags. Меню/role labels/ошибки в основном RU, нужна интеграция с foundation session019 и locale.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "32e1beadca7d917979b4d211a67984ca9f306caf0a565dc0751cb6c9eecb3773",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/platform_account_switching_2026_11_01.md",
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/platform_demo_dataset_2026_11_01.md",
+      "docs/manager_password_login_owner_decision_2026_11_01.md"
+    ],
+    "files": [
+      "packages/account-ui/src/index.tsx",
+      "packages/account-ui/src/style.css",
+      "apps/api/src/modules/identity/demo-accounts.ts",
+      "apps/api/src/modules/identity/identity.controller.ts",
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/platform/platform.dto.ts",
+      "apps/platform/src/App.tsx",
+      "tests/unit/platform-switch-http.test.mjs"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 68,
+    "file": "TASK-068.md",
+    "block": "6",
+    "module": "Общий вход, сессии и защита данных",
+    "title": "Права на данные и privacy: понятные интерфейсы, представитель и юридический gate",
+    "depends": [
+      19,
+      20,
+      63,
+      65,
+      66,
+      67
+    ],
+    "initialStatus": "ARCH-20/TECH-14 задают категории данных/основания/access/retention/legal hold, но юридически заполненный каталог и тексты/сроки не утверждены. Student shared child/parent account и suspended-manager contact существуют. Готового автоматического data-subject export/delete/request API в корпусе не установлено.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "072487267e4ccb1a37c7c673705a0a44a67f892f34593b73acae8483182fd3b3",
+    "sources": [
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md",
+      "docs/online_academy_student_architecture_full_decision_log_v2.md",
+      "docs/online_academy_block_13_final_architecture_handoff_v1.0.md",
+      "docs/regul/online_academy_manager_regulations_v1.0.md",
+      "docs/online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "packages/account-ui/src/index.tsx",
+      "apps/student-cabinet/src/pages/Account.tsx",
+      "apps/api/src/student/profile/profile.controller.ts",
+      "apps/api/src/student/security/security.controller.ts",
+      "apps/api/src/core/policy/policy.service.ts",
+      "packages/db/prisma/schema.prisma",
+      "docs/online_academy_technical_architecture_part_01_v3.2.md",
+      "docs/online_academy_detailed_technical_design_part_01_v1.9.md"
+    ],
+    "stepCount": 9,
+    "testCount": 9,
+    "acceptanceCount": 6
+  },
+  {
+    "id": 69,
+    "file": "TASK-069.md",
+    "block": "6",
+    "module": "Приёмка директора, оператора и общей безопасности",
+    "title": "Cross-role gate: director/operator/auth RU/RO, безопасность решений и открытые внешние зависимости",
+    "depends": [
+      59,
+      60,
+      61,
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68
+    ],
+    "initialStatus": "Есть целевые manager/student/security/switch suites и прежние read-only platform smoke. Полной приёмки новых director команд, operator diagnostics, общей auth UI и privacy ещё нет. Расширенный Meet API/OAuth/POC относится к отдельной зависимости TASK-074; правовой/foundation gate этим блоком не закрывается.",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "75cc1f7edc0a73ad2ce08109d01b056040e20302b836fa43e62c8782cfd34f78",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "docs/online_academy_MVP_full_release_architecture_roadmap_v9.7.md",
+      "PHASE0_CHECKS.md",
+      "docs/online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md",
+      "docs/online_academy_block_13_final_architecture_handoff_v1.0.md"
+    ],
+    "files": [
+      "apps/platform/src/App.tsx",
+      "packages/account-ui/src/index.tsx",
+      "apps/api/src/modules/platform/platform.module.ts",
+      "apps/api/src/modules/identity/identity.controller.ts",
+      "apps/api/src/modules/qa/qa.module.ts",
+      "apps/api/src/modules/finance/periods.service.ts",
+      "tests/FOUNDATION_STATUS.json",
+      "playwright.config.mjs",
+      "tests/unit/platform-switch-http.test.mjs",
+      "tests/unit/target-guards.test.mjs",
+      "tests/unit/http-transport.test.mjs"
+    ],
+    "stepCount": 10,
+    "testCount": 9,
+    "acceptanceCount": 7
+  },
+  {
+    "id": 70,
+    "file": "TASK-070.md",
+    "block": "7",
+    "module": "M07.1 Сквозные сценарии",
+    "title": "Сквозная функциональная регрессия пяти кабинетов",
+    "depends": [
+      69
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "1e428ba4a5de429cabf35807502de513354d1289fef7f841b66c7f46bcfda3c1",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "apps/student-cabinet/tests/fixture-server.mjs",
+      "apps/manager-web/test/leads.spec.mjs",
+      "scripts/k8k-implementation-smoke.mjs"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 71,
+    "file": "TASK-071.md",
+    "block": "7",
+    "module": "M07.2 Доступность и визуал",
+    "title": "WCAG 2.2 AA и визуальная регрессия полного интерфейса",
+    "depends": [
+      70
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "f2535d27b70f1d6f21ae5cfb8c69605728a7b41db32f341eeb1a0124037c3d3c",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "packages/ui/tests/browser/fixture.tsx",
+      "scripts/k8k-implementation-smoke.mjs",
+      "apps/manager-web/playwright.config.mjs"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 72,
+    "file": "TASK-072.md",
+    "block": "7",
+    "module": "M07.2 Доступность и визуал",
+    "title": "Финальные бюджеты, производительность и зависимости",
+    "depends": [
+      71
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "15108b4f925d8b05546f6cbf73e4bb34860dc304102cb8a8f8c8c252912512ee",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "docs/ui-stack.md",
+      "scripts/k8k-size-check.mjs",
+      "scripts/k8k-phase2-bundle.mjs",
+      "package.json"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 73,
+    "file": "TASK-073.md",
+    "block": "7",
+    "module": "M07.3 Контрактная совместимость",
+    "title": "Финальная сборка, генерация и безопасная регрессия",
+    "depends": [
+      72
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "4f158be4fdb4465179f02ea0f97801e5ab45aaaa51eba5e81abf4c17fd6aaaae",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "package.json",
+      "packages/api-contracts/orval.config.mjs",
+      "tests/FOUNDATION_STATUS.json",
+      "PHASE0_CHECKS.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 74,
+    "file": "TASK-074.md",
+    "block": "7",
+    "module": "M07.3 Контрактная совместимость",
+    "title": "Реестр LEGAL, FIN-LEGAL, Meet и release-зависимостей",
+    "depends": [
+      73
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "b3aab31081939afd2d7e372f57910686aac0dbbfa5fd0fdd6e3117da33efae45",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "docs/online_academy_REL-01_A_Meet_API_MVP_release_addendum_v1.0.md",
+      "docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md",
+      "tests/FOUNDATION_STATUS.json",
+      "PHASE0_CHECKS.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 75,
+    "file": "TASK-075.md",
+    "block": "7",
+    "module": "M07.4 Передача",
+    "title": "Итоговый отчёт, feature rollout и обратимый cleanup",
+    "depends": [
+      74
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "a518afe5c605a40c40c9d3ffa89830d9ae84b052834b84feecabaf5171080328",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "packages/ui/src/feature.ts",
+      "infra/vercel/README.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  },
+  {
+    "id": 76,
+    "file": "TASK-076.md",
+    "block": "7",
+    "module": "M07.4 Передача",
+    "title": "Финальный handoff и закрытие taskpack",
+    "depends": [
+      75
+    ],
+    "initialStatus": "Не выполнено; запуск после ролевых gates",
+    "executionStatus": "NOT_STARTED",
+    "sha256": "b71870ed360899f8592a3a3bd0d9dde3cde24943c66b1dc4540fd7aac01fd154",
+    "sources": [
+      "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "PHASE0_CHECKS.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md"
+    ],
+    "files": [
+      "docs/K8K_REDESIGN_PLAN.md",
+      "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "AGENTS.md"
+    ],
+    "stepCount": 6,
+    "testCount": 6,
+    "acceptanceCount": 5
+  }
+]

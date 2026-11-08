@@ -1,0 +1,652 @@
+{
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "dirtyDigest": "294f1142304178b9d8984be41bd7f77a98e77a72590464a80d8cede2a71539ae",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "ba31b1856666d6e6b5e159970069fd2e563159e06332d1c01cdceb0b681dba9f",
+      "bytes": 6586
+    },
+    {
+      "path": "apps/manager-web/src/api/client.ts",
+      "sha256": "b7a5b978fdb677ceb1576b1fcb389b7aec47b4b4b813b6429c025ee5c252af6b",
+      "bytes": 3737
+    },
+    {
+      "path": "apps/manager-web/src/api/error-view.ts",
+      "sha256": "7e7e6934e787231c661ec5aca1cea036f80ba85460ae4e5dc3e0ec2fbb282d48",
+      "bytes": 802
+    },
+    {
+      "path": "apps/manager-web/src/components/business-forms.tsx",
+      "sha256": "99434bfc412adf0b67dd3a19ea5db5eab2b4b042eea1c62250ae6ffa00ac24c6",
+      "bytes": 8000
+    },
+    {
+      "path": "apps/manager-web/src/components/error-boundary.tsx",
+      "sha256": "c6e5116a53fdfaacac822238ab7f585b9002e17e2ad36c6e2b66e688955c0c68",
+      "bytes": 701
+    },
+    {
+      "path": "apps/manager-web/src/components/icon.tsx",
+      "sha256": "499568722fd558d64cc6f46f2cdec51c0824428e7abdfc33a0ceb0f9ff7591e5",
+      "bytes": 2197
+    },
+    {
+      "path": "apps/manager-web/src/components/layout.tsx",
+      "sha256": "0e4ea79f4e827f8f2e65d65385a5db3bee46f27badcdb66c1e338011458c2088",
+      "bytes": 8867
+    },
+    {
+      "path": "apps/manager-web/src/components/lead-form.tsx",
+      "sha256": "8ac173ad9cd0822851434651f92ffffaa3b2b58403331a8f3f9d89f62ded4595",
+      "bytes": 5150
+    },
+    {
+      "path": "apps/manager-web/src/components/lead-table.tsx",
+      "sha256": "0420a29e5803ff10b14b07007afc047046d69453245b91912cfc2c7e234cb6bd",
+      "bytes": 2307
+    },
+    {
+      "path": "apps/manager-web/src/components/ui.tsx",
+      "sha256": "bf26002712259c310444022ab134d404d56c3d326dce983a8096b2b417188f88",
+      "bytes": 9918
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-command.ts",
+      "sha256": "918be6e44b0706196cf95f50c87669efafef41239542a76a099899e7039995da",
+      "bytes": 2238
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-idempotency-key.ts",
+      "sha256": "069b96dbac3f99ee2fa247adbc774366f688a591ddf6b3a83b9e8799518b2452",
+      "bytes": 324
+    },
+    {
+      "path": "apps/manager-web/src/hooks/use-options.ts",
+      "sha256": "7e13821c30792dc73d327751270a2d37f88e96f4810ad0cf42828a6e50b9ab72",
+      "bytes": 555
+    },
+    {
+      "path": "apps/manager-web/src/i18n/error-messages.ts",
+      "sha256": "2f9f6e04c3353a91b7b46f3111ed6782054ee1735e721351c3518a9670b28b3f",
+      "bytes": 439
+    },
+    {
+      "path": "apps/manager-web/src/i18n/ru.ts",
+      "sha256": "54236a02425299968f99f6c28bd0b4d3fc3ff219ef9516bbf8617b9a9ee08bb3",
+      "bytes": 23661
+    },
+    {
+      "path": "apps/manager-web/src/lib/money-validation.ts",
+      "sha256": "481d5d317e453fbf3a2de5c7e0322fee99590dd449da3cc50b7d54f0d930c10f",
+      "bytes": 181
+    },
+    {
+      "path": "apps/manager-web/src/lib/money.ts",
+      "sha256": "ebea34c1dd13842da986b48cd98092dd36a325b8eb9096e7b8ca03954e1bed4c",
+      "bytes": 426
+    },
+    {
+      "path": "apps/manager-web/src/lib/time.ts",
+      "sha256": "702533a69b29c038b3e3eb9c407383c3de27951b2a97b71da642e3cd2028b7ef",
+      "bytes": 1360
+    },
+    {
+      "path": "apps/manager-web/src/main.tsx",
+      "sha256": "bb21740197940d8935d538ff467482e4c50d1464fc6c725e4100abebce0174fc",
+      "bytes": 3113
+    },
+    {
+      "path": "apps/manager-web/src/pages/Account.tsx",
+      "sha256": "29e66b882ec04258f93232031b31a86bbcf4f205c03a4f9562e7cd39c4762d9b",
+      "bytes": 5214
+    },
+    {
+      "path": "apps/manager-web/src/pages/Dashboard.tsx",
+      "sha256": "c684dd9bbbc65d1cabaeb604d5de7f936e0e07921b7f9c6f69e98532f530657c",
+      "bytes": 21363
+    },
+    {
+      "path": "apps/manager-web/src/pages/Lead.tsx",
+      "sha256": "740bd100d633207d3f85afaf8ff56065bc8ccad14d4613f4544f8e436e1b3951",
+      "bytes": 13126
+    },
+    {
+      "path": "apps/manager-web/src/pages/Leads.tsx",
+      "sha256": "4a37fd222aa5f6498a7046db43cc527e74e46e70ba06e76fc958b77e677dcdb0",
+      "bytes": 9566
+    },
+    {
+      "path": "apps/manager-web/src/pages/Login.tsx",
+      "sha256": "7f6b49e4a7a034dfbb12c3229c4f016fcd83f546504fa7223d6ed8140e595ce0",
+      "bytes": 6747
+    },
+    {
+      "path": "apps/manager-web/src/pages/Schedule.tsx",
+      "sha256": "c186a2b1daba5644078c2117a1d9dcecbc158869415bf8bdff9539f239c6e1f8",
+      "bytes": 18895
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/BalanceSummary.tsx",
+      "sha256": "b5e4a71e283d7aaf97ba5499707f1b222225cc517191f81884f6b3ee8ad03507",
+      "bytes": 723
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Notifications.tsx",
+      "sha256": "134cd79c607a1190b2a330f1351bfc716d88e8401bc97fca37651cfccf0a533f",
+      "bytes": 5935
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Payments.tsx",
+      "sha256": "e4b75d4ce7aae5707be37b1a5f3dfea38026788cb4249ff6c5f359d5f7e5b058",
+      "bytes": 13626
+    },
+    {
+      "path": "apps/manager-web/src/pages/student/Subscriptions.tsx",
+      "sha256": "5b3a4142e43eedf183bcc19bf337c151833458d6ed6183c68c35a063dbd9e55a",
+      "bytes": 8854
+    },
+    {
+      "path": "apps/manager-web/src/pages/Student.tsx",
+      "sha256": "f61e22dc6b4c0b22d809f875cb701aac28bfe9cd25a1c86da808b510bb9a806e",
+      "bytes": 8370
+    },
+    {
+      "path": "apps/manager-web/src/pages/Students.tsx",
+      "sha256": "377ae9d5c46a1896368e760a57edaf372a3fab627ccc3a7ee02e272f6b65220f",
+      "bytes": 8048
+    },
+    {
+      "path": "apps/manager-web/src/pages/Task.tsx",
+      "sha256": "19d7ac1d2ea50d05f92eb03b7a9358236b06b30b0a0bb26891466b9979fd63cb",
+      "bytes": 9507
+    },
+    {
+      "path": "apps/manager-web/src/pages/Tasks.tsx",
+      "sha256": "d5af06f32167d8da82d3c76f3a6b55fcc377d6c79c47d00289ae65a61587d562",
+      "bytes": 4262
+    },
+    {
+      "path": "apps/manager-web/src/routes.ts",
+      "sha256": "a25f574fbbce07eecd52d2ef184e37132080ee40ebbf0cbd9358511fc88e2a74",
+      "bytes": 515
+    },
+    {
+      "path": "apps/manager-web/src/session.tsx",
+      "sha256": "12d96e87b3409391198f4bc3168cc22c6dde0d351fa430de202fbe671573a759",
+      "bytes": 2705
+    },
+    {
+      "path": "apps/manager-web/src/style.css",
+      "sha256": "8e0778d28cfe0916cc79a446d3743025fa6617c55d56228456cc59145c4446fb",
+      "bytes": 52019
+    },
+    {
+      "path": "apps/manager-web/src/test/browser.ts",
+      "sha256": "b863c4a91754e396de8c65622ed0ae4e974cede882e622d43c8b9b9ba3c0cac0",
+      "bytes": 1150
+    },
+    {
+      "path": "apps/manager-web/src/test/error-policy.test.tsx",
+      "sha256": "44283bb9d50465a497e319cf3cc8a25806c41b342e8d1baac080f32967eb599e",
+      "bytes": 1853
+    },
+    {
+      "path": "apps/manager-web/src/test/fixtures.ts",
+      "sha256": "2cd6a9ad34fe5cf16265ea7d151bb9e35ead785e58cb6174555feecbf1bd2eb5",
+      "bytes": 7219
+    },
+    {
+      "path": "apps/manager-web/src/test/forms.test.tsx",
+      "sha256": "2c4aa2acd011ae033b79d9f90354513f5c29923106188f36eb28aabcd4710cf0",
+      "bytes": 5387
+    },
+    {
+      "path": "apps/manager-web/src/test/handlers.ts",
+      "sha256": "5fcaf470e5da2c5f8695a13a4ccecdca09d302d154903567184d04c86ee38d1f",
+      "bytes": 20099
+    },
+    {
+      "path": "apps/manager-web/src/test/money-validation.test.tsx",
+      "sha256": "417a5e5491aed66f61b505b0d126f4453b3a237512d73acd98d95868fa99a39d",
+      "bytes": 1059
+    },
+    {
+      "path": "apps/manager-web/src/test/session.test.tsx",
+      "sha256": "36d5000bd1f949aecbc957a265c714fda27dcb099d630120f01c48ca2b910477",
+      "bytes": 7119
+    },
+    {
+      "path": "apps/manager-web/src/test/setup.ts",
+      "sha256": "c19656644ed3a5a2f82838b66418a8bfa294e0e263e1da665ae756d6347d7b92",
+      "bytes": 405
+    },
+    {
+      "path": "apps/platform/src/App.tsx",
+      "sha256": "6372168eb4afa3143f3475cf52b355da49729b34847ff4f4a2cf8e98c47b108a",
+      "bytes": 9802
+    },
+    {
+      "path": "apps/platform/src/main.tsx",
+      "sha256": "e2a5436f763fcbd2f5b994f6f820a8a0b8e2c8d2032e135002796571a847ac16",
+      "bytes": 442
+    },
+    {
+      "path": "apps/platform/src/staff/copy.ts",
+      "sha256": "b2b98d37d0d8a588f01ad0dca77fc4f8374a19e62b66441d354d9959f8f097cb",
+      "bytes": 3395
+    },
+    {
+      "path": "apps/platform/src/staff/navigation.ts",
+      "sha256": "ca6c12bfd4e7e5aac2176b5f72f033bd541c0833f0055292be7c1a46777a5f8c",
+      "bytes": 4421
+    },
+    {
+      "path": "apps/platform/src/staff/staff.css",
+      "sha256": "1dd9a155569c92bcda07af13757931236fa2b732f54c6543cf5fa58eb2cff64b",
+      "bytes": 1635
+    },
+    {
+      "path": "apps/platform/src/staff/StaffCabinet.tsx",
+      "sha256": "f885614805da3511e519295233bb3110cf4a28e85ad84526dd3c306cafcbe0de",
+      "bytes": 10051
+    },
+    {
+      "path": "apps/platform/src/staff/StaffDetail.tsx",
+      "sha256": "6fc0ddd4c4bbf0ee3aec3dfbbd434ae4cc7437ddb88e35374b0aca7cb50d9841",
+      "bytes": 4926
+    },
+    {
+      "path": "apps/platform/src/staff/StaffWorkspace.tsx",
+      "sha256": "e37296bcd4904dc26eaf761576ec80f766fd92a829f3e0546185c14c23be9142",
+      "bytes": 8701
+    },
+    {
+      "path": "apps/platform/src/staff-coverage.css",
+      "sha256": "5b3644820701de973f44241ddbc3620837d4becb18e218dccd40761a735c61fc",
+      "bytes": 187
+    },
+    {
+      "path": "apps/platform/src/StaffCoverageNote.tsx",
+      "sha256": "e87f32d84cfdc4e37faefe2ca3bf610b40645368a4f12d2bd37e9493ed13dd59",
+      "bytes": 884
+    },
+    {
+      "path": "apps/platform/src/style.css",
+      "sha256": "391af856392e92473c3f3a5266b35df95d12fcc074cc0fe9e31e45fc6d4d9e2f",
+      "bytes": 10228
+    },
+    {
+      "path": "apps/student-cabinet/src/api.ts",
+      "sha256": "c3e05905a0132f4ffa7c244eb1771f5a736a46a5971130c626923f9d3a8bfd0b",
+      "bytes": 8660
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "sha256": "dd67a11a71d849fdf4f983a11197c9f4b2f1f7020ad1156c8a72fda09f351fb3",
+      "bytes": 14823
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-copy.tsx",
+      "sha256": "604de95165f58397879525f108e92bf87f3bc645a542495492a11f6bac9cfc11",
+      "bytes": 7158
+    },
+    {
+      "path": "apps/student-cabinet/src/homework-navigation.ts",
+      "sha256": "298061672c67cbfe99aeffaeda801bd690d4070950a9568c57b974082e431e70",
+      "bytes": 591
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "sha256": "68cea10e3e963e2699478a989892da7ca8b9645684d39dbdce857f4233c13f29",
+      "bytes": 15905
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-copy.ts",
+      "sha256": "1ad7f30d636306ae460904ccaf822cfa71805738a980475c0ea7738b89bd3a9c",
+      "bytes": 6720
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-navigation.ts",
+      "sha256": "8069fd02e581b0f27d15e6a279628bcbeae30940db424b5f767646a7bfc0c6db",
+      "bytes": 1215
+    },
+    {
+      "path": "apps/student-cabinet/src/lesson-requests.tsx",
+      "sha256": "eed4ae449fd0deda58df23d74ea45113f6fca9948316265b2f38f157bd20eb8b",
+      "bytes": 11494
+    },
+    {
+      "path": "apps/student-cabinet/src/main.tsx",
+      "sha256": "aabb59ccb2d8c7a406d05c4293d89979619a14a608637e84e19cc852a3ceff80",
+      "bytes": 804
+    },
+    {
+      "path": "apps/student-cabinet/src/meet-scope.tsx",
+      "sha256": "5736650cd0366729905f3017fa1e7642acd434d977d1a7ad913aa13366061c2b",
+      "bytes": 4275
+    },
+    {
+      "path": "apps/student-cabinet/src/notification-copy.ts",
+      "sha256": "579954224803220981fcd921e0e8e36c1560e993c2c7fbe2f9b86aeff15b85e7",
+      "bytes": 3425
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Account.tsx",
+      "sha256": "70bf3b35862b3c99582f37b6f84908d39bbb969c2ce0f2ddc49aaa97d372c7d4",
+      "bytes": 18718
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "sha256": "55b33713f146cc81fb33ddd1bb18e6745f53095fb361581664b70ac13fac2978",
+      "bytes": 7108
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Homework.tsx",
+      "sha256": "07c275ce1a678ddcce5454166f95902cdf58145ec72c159f23b2742fbdac6ffe",
+      "bytes": 27860
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "sha256": "ccc8ad83550028ad0c1bf1db1af7843ab3b2c3bfec7753797fe324f737cc5410",
+      "bytes": 11032
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Lessons.tsx",
+      "sha256": "5c309f1d793620bba7cfc2b7734b44d4641f497680c306f37ff764b7cc838ec0",
+      "bytes": 16144
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Reports.tsx",
+      "sha256": "2c0df468e31d5edfef74cc5bb314f9b5ea597c174e8de56967865306032a7e22",
+      "bytes": 7819
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/SkillMap.tsx",
+      "sha256": "50e67abb54550a6707d0c94373f9f9cfc41758d2a77abd28e170ad6a7c38fd37",
+      "bytes": 11620
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "sha256": "8fcba710c453914ef8d9458fc07520541565a4601026eafe966a83f4b350906c",
+      "bytes": 12508
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subjects.tsx",
+      "sha256": "68709f61321a8a04642501e41f5d5bc394b453a574b40e7a2a20ee939ba9b4a5",
+      "bytes": 7678
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Subscription.tsx",
+      "sha256": "ff1ff99f8f30d50ba5edacd351dc3beb4287b564204f7c6af515af07a81ade9f",
+      "bytes": 14757
+    },
+    {
+      "path": "apps/student-cabinet/src/profile-help.tsx",
+      "sha256": "3aaf6ac968fd0861abde23225a7e92a92563e96c0ba3ce37ee6bf7a053fa7427",
+      "bytes": 722
+    },
+    {
+      "path": "apps/student-cabinet/src/report-copy.ts",
+      "sha256": "f4c23f9d316be4e420cece63eb3f2e3e8f97eff78aa5c581607eaa85f31fd5b1",
+      "bytes": 4487
+    },
+    {
+      "path": "apps/student-cabinet/src/report-export.tsx",
+      "sha256": "6fa8ba55efbcfd401f8916b0f8a64bfdb54b5b7bcf67ce952ed8e8fd60cd6f20",
+      "bytes": 16379
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "sha256": "de2800f1d393f0fde517749f44bfac56a128f719a48d60c355e8f37829767479",
+      "bytes": 5364
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-copy.ts",
+      "sha256": "bf8f637d08cccc5b50179b9df77c98fcc11291e8dadcfcabc9032f56628e43e1",
+      "bytes": 5334
+    },
+    {
+      "path": "apps/student-cabinet/src/skill-widgets.tsx",
+      "sha256": "0bf00c505f03709495ca2ab4168f6d5cf5b18d4716077ab0b7a93165531f65a4",
+      "bytes": 1081
+    },
+    {
+      "path": "apps/student-cabinet/src/student-copy.ts",
+      "sha256": "7dfbc2253418a5f92cdf44ebaefd0f88d1404b1bd50e5d7ba54d3987a7572cf4",
+      "bytes": 8484
+    },
+    {
+      "path": "apps/student-cabinet/src/student-locale.ts",
+      "sha256": "8453c3ad64da605c8e1675ec636ca7afdfa04744f35edf545b6e2b95ce772002",
+      "bytes": 280
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "sha256": "765f6944b0a7826087451d92a1916309b59384926cf0320269d3051a341a0070",
+      "bytes": 6846
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "sha256": "55408f4442bb190a32401c82bbe4c9e93222f3f8c212e2c679b62e3494e88576",
+      "bytes": 6179
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "sha256": "5bf0849eaced2d2d57cb58e6ef51241a6f858345a79a6c8f1682ed6b1110d4d3",
+      "bytes": 21369
+    },
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "sha256": "d3af98bf345c453ea60bf615cbb17d4748d1135b21f365eda29ca0fe2c977f2d",
+      "bytes": 11372
+    },
+    {
+      "path": "apps/student-cabinet/src/style.css",
+      "sha256": "ea4b05e5d96766594ff2a6bf507764fec8248a3c8b553b9b5d7e7baafaea84cf",
+      "bytes": 21482
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-copy.ts",
+      "sha256": "b862d1df9ae72f71641b7b1957a77e5ed039cf3bbf5b2ea979aabf2957336671",
+      "bytes": 4179
+    },
+    {
+      "path": "apps/student-cabinet/src/subscription-presentation.ts",
+      "sha256": "25865a69f2d9b78985a9395b3ee866c3f136d39b4aaa367c5c6af542347cabb8",
+      "bytes": 1150
+    },
+    {
+      "path": "apps/student-cabinet/src/ui-store.ts",
+      "sha256": "1639640a37c6f1f9c0a15a08e0e6677662f20eaf28993cdb05b68fc4e9fbbb86",
+      "bytes": 253
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "sha256": "7e0c2015b0bb68ac9f43340dfff0d5275a47c3e09f813ec2bcb6f69286938905",
+      "bytes": 40060
+    },
+    {
+      "path": "packages/account-ui/src/index.tsx",
+      "sha256": "b5310ff908f84e073e2092523a358c5fc131e67d15432f498ac2936ced06fd84",
+      "bytes": 8564
+    },
+    {
+      "path": "packages/account-ui/src/session.tsx",
+      "sha256": "b1478210e82da33790b4b048f5659fe91f7211dfd0ca14ef877816e4a4cb8ac5",
+      "bytes": 3535
+    },
+    {
+      "path": "packages/account-ui/src/style.css",
+      "sha256": "b2a8e37789784dc73ce059998571b4a48c1958fd535a7bb8a279dc25d542b1da",
+      "bytes": 3382
+    },
+    {
+      "path": "packages/ui/src/calendar.css",
+      "sha256": "aab501f7aed9c3fb4fdf7094ceb06f78d49119d29f287b3732e1822397e12dc3",
+      "bytes": 2209
+    },
+    {
+      "path": "packages/ui/src/calendar.tsx",
+      "sha256": "746eea3a519ee3a0fb2968765956e72649b79981513248e4ce19f27ec32d0d5c",
+      "bytes": 7836
+    },
+    {
+      "path": "packages/ui/src/composites.css",
+      "sha256": "d98dfa645fe0ababe119bac24d7d12daf4c9fb150b05ec7d6a7a41f77d4d9f47",
+      "bytes": 3914
+    },
+    {
+      "path": "packages/ui/src/composites.tsx",
+      "sha256": "52652cd86880ebc7ab53077ccedebce8bee5f5e473a7a21cf59c20a4884a1ac4",
+      "bytes": 12723
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "sha256": "15d751445d11cb67d8568164a717df6e7c19aea9f92fc09200b8a527d9b3d3f3",
+      "bytes": 8226
+    },
+    {
+      "path": "packages/ui/src/error-feedback.tsx",
+      "sha256": "67ba3fbab22e7adc69cbda3888de33d74d193cc548c15e25a8a73e4db8e200c7",
+      "bytes": 4539
+    },
+    {
+      "path": "packages/ui/src/error-keys.ts",
+      "sha256": "45205e9c1c43c80b26f18a962364c422f1aa4e51561d315641b5a4769e438db1",
+      "bytes": 685
+    },
+    {
+      "path": "packages/ui/src/error-messages.ts",
+      "sha256": "659430cd317d6a8849244c465769a898f4f8f1c341ce4acc41f714d8ecbb2bb6",
+      "bytes": 32244
+    },
+    {
+      "path": "packages/ui/src/errors.ts",
+      "sha256": "d7463fa4dc44ac4a912a2bf62ff5764fa90fa824e49512508cffe4b185f6bec0",
+      "bytes": 2559
+    },
+    {
+      "path": "packages/ui/src/feature.ts",
+      "sha256": "1fec3fee298d7f2878757b32e935b07b1d0a1afe8b6754601e369943948c5ba2",
+      "bytes": 876
+    },
+    {
+      "path": "packages/ui/src/format.ts",
+      "sha256": "aaa5b184930b2cadf62529dc2546dd6d67755edb2f6740b34d755db4576a7fb3",
+      "bytes": 2547
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "sha256": "f9d28f3034934dc311b6a7cb71468e45d4790d244422d1fbf197674abc356cd6",
+      "bytes": 2005
+    },
+    {
+      "path": "packages/ui/src/icon.tsx",
+      "sha256": "287b2d0e88def78599af6473220081d60690d01fad2911a34db3881a3f9d74bb",
+      "bytes": 1300
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "sha256": "52ea3861f2cf3d741961fe8949aaab015486926b54eb4cb8088b9c2096e0d23b",
+      "bytes": 799
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "sha256": "2ed88addf3d85178b06601a41c83e9be2348c4dbbb0ce8f111d34408eb3b4e18",
+      "bytes": 2519
+    },
+    {
+      "path": "packages/ui/src/messages.ts",
+      "sha256": "df3a5fe3fce0f935132ac05c5fcd322ae1db6426ebdd5bf1bacc6c9f5e870605",
+      "bytes": 22118
+    },
+    {
+      "path": "packages/ui/src/money-format.ts",
+      "sha256": "0bd627e72878261833912050e765b492d825f80fb0527a0ab02925e32b848f7a",
+      "bytes": 1168
+    },
+    {
+      "path": "packages/ui/src/navigation.ts",
+      "sha256": "8e9f007155c94e15596bea44b0379fe3f05f4dc178fa55cc983d58c28762bfc5",
+      "bytes": 4656
+    },
+    {
+      "path": "packages/ui/src/overlays.css",
+      "sha256": "48fc2caca94a1aabee7857d919ae992e3e27986827993accf1327c5e40b9bb2c",
+      "bytes": 2753
+    },
+    {
+      "path": "packages/ui/src/overlays.tsx",
+      "sha256": "57fc52d0cbd5e4d7e3270a734c95b7e6de1f736c149317b29d94d0d5ec4c73c1",
+      "bytes": 14272
+    },
+    {
+      "path": "packages/ui/src/priority.tsx",
+      "sha256": "cc0bae952c3b427291bd456343114ce415f72ccd1b7adc6b31b2b538766dbdb1",
+      "bytes": 97
+    },
+    {
+      "path": "packages/ui/src/refresh.ts",
+      "sha256": "a5969ec5f99e6ad24ff4714b664ef8144db03790584ed9a6ca387b1bd5e2c391",
+      "bytes": 6011
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "sha256": "5d24b3d29a424d4ea7d9bbf097c436c481771eae3262e54e88a79eca2807b4b5",
+      "bytes": 7248
+    },
+    {
+      "path": "packages/ui/src/stages.tsx",
+      "sha256": "07f2c3dc1e981bb37f28ad29b4d44ea1d19e28b0006b6c15ea38426fd9789282",
+      "bytes": 1034
+    },
+    {
+      "path": "packages/ui/src/state.tsx",
+      "sha256": "04a3a5446fb226ae7d5775ee330b0df7e5b057464660924859591d364b2e2794",
+      "bytes": 8562
+    },
+    {
+      "path": "packages/ui/src/student-messages.ts",
+      "sha256": "21cc0b3ca55035514196dfcfa281d7880fb19e1bf3e9c0b7d88538200d1f241f",
+      "bytes": 10562
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "sha256": "1a575d42d9a65409def584a22a99dc816440948071f0ef18e366c68780c9d2d8",
+      "bytes": 18856
+    },
+    {
+      "path": "packages/ui/src/tables.css",
+      "sha256": "2da72c987b509a46be2037f395db06b73013a37f3acbc7793f3c12e0ccbf9c09",
+      "bytes": 2950
+    },
+    {
+      "path": "packages/ui/src/tables.tsx",
+      "sha256": "e7a697c69dd0d9760be2432049f2031811c330e6cd65ea728353213c3e46bb3c",
+      "bytes": 9554
+    },
+    {
+      "path": "packages/ui/src/tokens.css",
+      "sha256": "68629b23aad0c455c3c209bc6260a90b932e77a28f6f7bfd08ae5ec0004e5f8e",
+      "bytes": 2449
+    },
+    {
+      "path": "packages/ui/tests/stylelint-legacy.json",
+      "sha256": "2313a2fbc7164429696c33e92398185fdd1a1f1d4d8d853d7a51584c576927dc",
+      "bytes": 275497
+    },
+    {
+      "path": "packages/ui/tests/contrast-contract.mjs",
+      "sha256": "031b3dd190012389dbed574813cd3e0465ebb5e4003940483c57c7c78b2b1096",
+      "bytes": 2722
+    },
+    {
+      "path": "packages/ui/tests/contrast.test.mjs",
+      "sha256": "bf867b407aefa1afce68c488df75faa77fb2fb7d7a5a2a2dbcfcc7682fdfcff5",
+      "bytes": 4430
+    }
+  ]
+}

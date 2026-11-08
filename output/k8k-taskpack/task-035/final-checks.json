@@ -1,0 +1,49 @@
+{
+  "taskId": "TASK-035",
+  "scope": "Final tooling/docs validation after successful targeted functional runs; no repository recursive regression",
+  "checks": [
+    {
+      "id": "eslint",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "b148a8",
+        "wall_time_seconds": 3.305323,
+        "exit_code": 0,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "id": "prettier",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "8c9a0e",
+        "wall_time_seconds": 1.4626311,
+        "exit_code": 0,
+        "original_token_count": 17,
+        "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+      }
+    },
+    {
+      "id": "diff-head-branch",
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "c4613c",
+        "wall_time_seconds": 0.2804935,
+        "exit_code": 0,
+        "original_token_count": 210,
+        "output": "warning: in the working copy of 'apps/student-cabinet/package.json', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'apps/student-cabinet/tests/fixture-server.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'apps/student-cabinet/tests/student.spec.mjs', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/K8K_IMPLEMENTATION_STATUS.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/K8K_REQUIREMENTS_MATRIX.md', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'docs/k8k-redesign-tasks/EXECUTION_LOG.md', LF will be replaced by CRLF the next time Git touches it\n60e2a0c47cbcc744dc658a85f386833146e836b3\nfeat/k8k-design\n"
+      }
+    }
+  ],
+  "reportGeneration": {
+    "command": "pnpm --filter @online-school/student-cabinet test:k8k-student-gate:report",
+    "exit": 0
+  },
+  "evidenceFinalization": {
+    "command": "node output/k8k-taskpack/task-035/finalize.mjs",
+    "exit": 0
+  },
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design"
+}

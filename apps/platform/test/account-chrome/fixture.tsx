@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { AccountMenu } from '@online-school/account-ui';
+import { AccountMenu, SessionExitBoundary } from '@online-school/account-ui';
 import {
   AppShell,
   Field,
@@ -62,4 +62,8 @@ function Fixture() {
   );
 }
 initializeLocale();
-createRoot(document.getElementById('root')!).render(<Fixture />);
+createRoot(document.getElementById('root')!).render(
+  <SessionExitBoundary>
+    <Fixture />
+  </SessionExitBoundary>,
+);

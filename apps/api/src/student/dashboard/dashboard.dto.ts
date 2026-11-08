@@ -1,4 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { STUDENT_LESSON_STATUSES } from '../lessons/lessons.dto.js';
+import type { StudentLessonStatus } from '../lessons/lessons.dto.js';
 
 export class NextLessonDto {
   @ApiProperty({ format: 'uuid' }) lessonId!: string;
@@ -8,6 +10,8 @@ export class NextLessonDto {
   @ApiProperty() subjectName!: string;
   @ApiProperty({ type: String, nullable: true }) meetLink!: string | null;
   @ApiProperty() canJoin!: boolean;
+  @ApiPropertyOptional({ enum: STUDENT_LESSON_STATUSES }) status?: StudentLessonStatus;
+  @ApiPropertyOptional({ format: 'date-time' }) meetAsOf?: string;
 }
 export class HomeworkCountsDto {
   @ApiProperty({ type: 'integer' }) notSubmitted!: number;

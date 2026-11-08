@@ -1,0 +1,8 @@
+.staff-coverage-note {
+  display: block;
+  color: var(--text-2);
+  font-size: var(--k8k-font-sm);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  margin-block-end: var(--k8k-space-3);
+}

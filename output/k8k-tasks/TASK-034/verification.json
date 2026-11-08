@@ -1,0 +1,184 @@
+{
+  "task": "TASK-034",
+  "scope": "No env-file/live DB/provider/deploy access",
+  "commands": [
+    {
+      "command": "pnpm test:stu06 --roots tests (before changes)",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "materials-baseline.log",
+      "detail": "46 fresh baseline mocks"
+    },
+    {
+      "command": "pnpm test:stu11 --roots tests (before changes)",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "security-baseline.log",
+      "detail": "73 fresh baseline mocks"
+    },
+    {
+      "command": "pnpm --filter @online-school/api typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-check.log",
+      "detail": "Targeted compilation, no API service start"
+    },
+    {
+      "command": "pnpm --filter @online-school/api export:openapi with NODE_OPTIONS=--import=file:///D:/OnlineSchool/output/k8k-tasks/TASK-034/no-db-export.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate-diagnostic.log",
+      "detail": "Standard export, DB-blocking preload/20s diagnostic timeout; NODE_OPTIONS restored;149 operations"
+    },
+    {
+      "command": "pnpm --filter @online-school/api-contracts generate:client",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "detail": "Standard Orval/publish/generate; rerun sequentially after completed export, no manual generated edits"
+    },
+    {
+      "command": "pnpm test:stu06 --roots tests",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "materials-tests.log",
+      "detail": "48 unit/HTTP/SDK mock cases"
+    },
+    {
+      "command": "pnpm test:stu11 --roots tests",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "security-tests.log",
+      "detail": "73 unit/HTTP/SDK mock cases"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "ui-check.log",
+      "detail": "Typed base/student messages and placeholder parity"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "Final consumer/shared UI/account refs; noEmit consumer"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet exec node --input-type=module -e \"import {build} from 'vite'; await build({envDir:false,publicDir:false,logLevel:'error',build:{emptyOutDir:false}})\"",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "build.log",
+      "detail": "Final dist before complete19 browser run; no env-file/public copy"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:presentation",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "presentation.log",
+      "detail": "12/12 presentation cases"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:k8k-student-locales",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "browser.log",
+      "detail": "2/2 locale cases +19/19 Chromium including final reflow method and15 route variants;65 images"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-lint.log",
+      "detail": "Final files,0 warnings"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "ui-lint.log",
+      "detail": "ESLint+Stylelint18 CSS files"
+    },
+    {
+      "command": "pnpm --filter @online-school/account-ui lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "account-lint.log",
+      "detail": "Existing session method public re-export only"
+    },
+    {
+      "command": "pnpm exec eslint apps/api/src/student/materials/materials.dto.ts apps/api/src/student/materials/materials.service.ts tests/unit/student-materials-http.test.mjs --max-warnings 0",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-lint.log",
+      "detail": "Scoped API/HTTP changes"
+    },
+    {
+      "command": "node scripts/k8k-refresh-budget.mjs --task-034",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "budget.log",
+      "detail": "50/50; unchanged gzip+3-font method; student255001,max255923; staff totals unchanged"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-034/verify-contract.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "contracts.log",
+      "detail": "Artifact/source invariant checks; see corresponding JSON"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-034/verify-preservation.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "preservation.log",
+      "detail": "Artifact/source invariant checks; see corresponding JSON"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-034/verify-diff.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "diff-check.log",
+      "detail": "Artifact/source invariant checks; see corresponding JSON"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-034/verify-artifacts.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "artifacts.log",
+      "detail": "Artifact/source invariant checks; see corresponding JSON"
+    }
+  ],
+  "freshBaseline": {
+    "materials": 46,
+    "security": 73
+  },
+  "final": {
+    "materials": 48,
+    "security": 73,
+    "presentation": 12,
+    "locale": 2,
+    "browser": 19,
+    "routeVariants": 15,
+    "screenshots": 65,
+    "matrix": 48,
+    "axeScans": 10,
+    "violations": 0,
+    "budgets": 50
+  },
+  "notRun": [
+    "actual PostgreSQL binding/locks/revocation races",
+    "actual S3 signing/expiry/revocation download",
+    "actual mail/OTP/provider delivery and cookies",
+    "physical device/screen-reader",
+    "TASK-035/full recursive gate/FND-GATE/production GO"
+  ],
+  "manualReview": [
+    "RO360 materials/security/suspended",
+    "RO200% equivalent profile",
+    "ROstale materials",
+    "RU/RO long text layouts"
+  ],
+  "initialChecks": "Failed first export/SDK/type/test harness checks were corrected; first browser log redacts synthetic secret values. Final results only are PASS."
+}

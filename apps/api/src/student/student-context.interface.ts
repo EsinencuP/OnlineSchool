@@ -1,8 +1,9 @@
 import type { HttpRequest } from '../core/http.js';
+import type { ManagerContactsDto } from '../core/errors/error-mapper.js';
 import type { StudentMeResponseDto } from './me/me.dto.js';
 
 export interface IStudentContext {
-  managerContacts?: { whatsapp: string; telegram: string };
+  managerContacts?: ManagerContactsDto;
   timeZone?: string;
   userId: string;
   /** Stable registry Student.id; StudentAccount is the login/activation link, not another person. */

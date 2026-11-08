@@ -1,27 +1,21 @@
 import { useState } from 'react';
-import { Button, Dialog, useLocale } from '@online-school/ui';
+import { Button, Dialog } from '@online-school/ui';
+import { useStudentLocale } from './student-locale.js';
 
 /** Read-only first adoption. Profile writes and their command lifecycle remain in Account.tsx. */
 export function ProfileHelp() {
   const [open, setOpen] = useState(false);
-  const { locale } = useLocale();
-  const ro = locale === 'ro';
+  const { t } = useStudentLocale();
   return (
     <Dialog
       open={open}
       onOpenChange={setOpen}
-      title={ro ? 'Numele afișat în cabinet' : 'Имя в кабинете'}
-      description={
-        ro
-          ? 'Acest nume apare în cabinet. Datele din documentele școlii nu se modifică.'
-          : 'Это имя отображается в кабинете. Данные в документах школы не меняются.'
-      }
-      trigger={
-        <Button variant="ghost">{ro ? 'Despre numele afișat' : 'Об имени в кабинете'}</Button>
-      }
+      title={t('student.aliasTitle')}
+      description={t('student.aliasHelp')}
+      trigger={<Button variant="ghost">{t('student.aliasAbout')}</Button>}
     >
       <Button variant="secondary" onClick={() => setOpen(false)}>
-        {ro ? 'Am înțeles' : 'Понятно'}
+        {t('student.understood')}
       </Button>
     </Dialog>
   );

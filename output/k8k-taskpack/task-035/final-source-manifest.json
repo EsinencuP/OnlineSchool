@@ -1,0 +1,140 @@
+{
+  "taskId": "TASK-035",
+  "head": "60e2a0c47cbcc744dc658a85f386833146e836b3",
+  "branch": "feat/k8k-design",
+  "basisDirtyDigest": "0c04fb3984e35c4275da935e85719b6bd33088622d3c0120d29b47872064bd28",
+  "contractsVerified": 46,
+  "scope": "Explicit TASK-035 own changes only; other pre-existing dirty/untracked work remains outside this delta.",
+  "files": [
+    {
+      "path": "apps/student-cabinet/package.json",
+      "before": "979f5d3e3305f476e7254332a49612482ab2f99c23010b4fb5acafdae4e60925",
+      "after": "1d3695944235e76a1c2008c772b15822b31559a69fcf88ae6de6edf078c5ae4c"
+    },
+    {
+      "path": "apps/student-cabinet/playwright.student-gate-axe.config.mjs",
+      "before": null,
+      "after": "38381f0c369a82ae7b989c62f97c464bd8af26723845722c2d2076156267d33d"
+    },
+    {
+      "path": "apps/student-cabinet/playwright.student-gate.config.mjs",
+      "before": null,
+      "after": "50a2cdff57d62f07c1abb899342a9410bb46c6d4bd8f5989836db380ab45214c"
+    },
+    {
+      "path": "apps/student-cabinet/tests/bell.spec.mjs",
+      "before": "f6b879ba678b440374ffa90520ef902d3109c324eb72340a330065655085ddca",
+      "after": "1ed2058a611b1af3ee835ffa7c9bf2a09b5217de010095052da47a861e9eae95"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "before": "c4238ef674150ac6b6364cab86868fd4cdb3a4063b055dc433e3b5784ace3238",
+      "after": "95bc17f82dc935a17dc19c833999e233695f0afcc309265ff49770893fee7cc6"
+    },
+    {
+      "path": "apps/student-cabinet/tests/gate-fixtures.mjs",
+      "before": null,
+      "after": "c8e2866bd979a5a420abcf917eb3a61793ed4018b206c543e1dcbdcfefd40664"
+    },
+    {
+      "path": "apps/student-cabinet/tests/homework-redesign.spec.mjs",
+      "before": "e9a1cd89b50870c02a7e9fa9a2f217838924859570ba5b48f7fe538200f38228",
+      "after": "23db392157bc0199ec4a97cf8e7d0f6583f3e8e544db9fcf1d9ad1461bfa27d8"
+    },
+    {
+      "path": "apps/student-cabinet/tests/lesson-journey.spec.mjs",
+      "before": "81666723144a70bd0f7a67d02f333d44fca276e4e710a027e5a21d99c644e3cd",
+      "after": "b1503a80d927068fbd23be6d5de548fd91d7c5c9495e32d86c9fee1055510de8"
+    },
+    {
+      "path": "apps/student-cabinet/tests/locales.spec.mjs",
+      "before": "21af526e8f5c13b68be09c14876a671a058a17212cfebda7b5ca188230155b8b",
+      "after": "e272d515238b1059b5a375ec74242696ffd716ff26f6fe78fc81328a9aa924d7"
+    },
+    {
+      "path": "apps/student-cabinet/tests/manager-contacts.spec.mjs",
+      "before": "3463fbb3317d35dc206b859bb3c4d431529b2aa9308446220b7d0f96f15785ce",
+      "after": "d4fd5fae6bb348b9261b80fb29b3ae7fd14a42ef0f4ef2a706631017f4e036b6"
+    },
+    {
+      "path": "apps/student-cabinet/tests/meet-eligibility.spec.mjs",
+      "before": "62fac95f711881fbeec648fa7468278561ee9bf22f079ab532a17c34b5643d93",
+      "after": "a74c5ff071d6c9eaa87b13c79e45bccf39f31d35e7b9d016f3fca634c74ba1f6"
+    },
+    {
+      "path": "apps/student-cabinet/tests/navigation.spec.mjs",
+      "before": "52c57edf4f214d9f8316bc7d0d36c0f92d30c75fa1e0a0ef9e6d519e69a51719",
+      "after": "5b6589597a0cae0e6f386e697164721b259062a64459d0dea4a9c98484324dd7"
+    },
+    {
+      "path": "apps/student-cabinet/tests/report-export.spec.mjs",
+      "before": "02a3fb5716c4829977a407b95b913cca216e9991bfe344e47531a9279177d8e3",
+      "after": "c8f6ffe9b9a6e0f5a2f3365d58ce53f9917b92022731e45aa2c9acad83c6c986"
+    },
+    {
+      "path": "apps/student-cabinet/tests/skill-map.spec.mjs",
+      "before": "0bcbb0244f507fa553789b456fae3cc62e38ba36daf3f69bac6b0a8a05b7cdf6",
+      "after": "ed8dbf792300d4aef8b2d0ec28a86bf3c21917370407ae7b9ee9d7fbc239a699"
+    },
+    {
+      "path": "apps/student-cabinet/tests/student-gate-extra.acceptance.mjs",
+      "before": null,
+      "after": "19dcc2669300ba7057443e5ca7c4d06bdd1ec5b60f3fee25d543531e1e2439d6"
+    },
+    {
+      "path": "apps/student-cabinet/tests/student-gate.acceptance.mjs",
+      "before": null,
+      "after": "8e46e1664260cbc4e265a8bf27f0e96c289452a941de25ada37c13449338a5a2"
+    },
+    {
+      "path": "apps/student-cabinet/tests/student.spec.mjs",
+      "before": "cbaecdae96a25cf9edc6134b65bd23bbd1c102e6b0afd93f4316a4ed6350a10e",
+      "after": "c2cbd593e6a3caed4921c78014f855c93efc00ffb6e538deab207365475360dc"
+    },
+    {
+      "path": "apps/student-cabinet/tests/subject-hub.spec.mjs",
+      "before": "6ff008ab38e96c250c14d768b237140ec412aca6e46eb0d8ae66a8b8df4a9633",
+      "after": "e77ddb2fb4e3e4c2a4fa6e8fb58d5f49644536575cb9baff4cffed2aded902fa"
+    },
+    {
+      "path": "apps/student-cabinet/tests/subject-subscriptions.spec.mjs",
+      "before": "00dcb5a039f55eb823d1e6f874caf6e5dfa86f013db7561b05954d7bba325d18",
+      "after": "8e4b8f857bc2c2f7916ee38c8ac398942913f559e0fe03ae8ab4392ff0d18561"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "before": "7e0c2015b0bb68ac9f43340dfff0d5275a47c3e09f813ec2bcb6f69286938905",
+      "after": "4aff9f2a45a892eea7a537cdfd6d8e01048850c7b2554fefb28f39d883d42ea8"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "before": "072e43eab833825f46ac467cc4af64bdadcc1d807840d67e08481718a4a71b55",
+      "after": "cd8c07227bf6c853989e0af90d2c4938286217ac3dcc91075a65001496131861"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "before": "d0ca8ea15e77349c6c0c40872b078c2828b301c7dbc1fe9f0a66cde5fe8a8794",
+      "after": "2457c000005bcb6c9240039f2c280bc86be0c87356f78ffff3aaf9a6c1fba259"
+    },
+    {
+      "path": "scripts/k8k-student-gate-locale.mjs",
+      "before": null,
+      "after": "e720144220f06d5a569b00aa0eef16b18f7c12c5a8b57d83a1a6356337d3aa4a"
+    },
+    {
+      "path": "scripts/k8k-student-gate-network.mjs",
+      "before": null,
+      "after": "ee579db1cb3adb14996efc2b5cd9dcf27725c115df41bc20c733c698e2c9322a"
+    },
+    {
+      "path": "scripts/k8k-student-gate-report.mjs",
+      "before": null,
+      "after": "393ee658932a491f3dc3b7190068349aa7eaa21c3447530d18b33be2901ff54d"
+    },
+    {
+      "path": "scripts/k8k-student-gate.mjs",
+      "before": null,
+      "after": "922dfeeab1ef85e42fae67eb75d69919f12f5de3f3a4e87f8abd0c0996f182cc"
+    }
+  ]
+}

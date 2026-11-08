@@ -43,6 +43,25 @@ describe('session boundary', () => {
     release(ok('late-secret'));
     await expect(pending).rejects.toMatchObject({ code: 'NETWORK_ERROR' });
   });
+  it('ignores a late 401 from a canceled generation before touching the current cache', async () => {
+    const redirect = vi.fn();
+    setUnauthorizedHandler(redirect);
+    const response = err({ status: 401, code: 'UNAUTHENTICATED', message: '' });
+    let release: (value: typeof response) => void = () => undefined;
+    const pending = read(
+      () =>
+        new Promise<typeof response>((resolve) => {
+          release = resolve;
+        }),
+    );
+    clearSession();
+    queryClient.setQueryData(['current-actor'], 'current');
+    release(response);
+    await expect(pending).rejects.toMatchObject({ code: 'NETWORK_ERROR' });
+    expect(redirect).not.toHaveBeenCalled();
+    expect(queryClient.getQueryData(['current-actor'])).toBe('current');
+    clearSession();
+  });
   it('sends session cookies, CSRF and caller idempotency UUID', async () => {
     const command = vi.fn(
       async (options: import('@online-school/api-contracts').SchoolRequestOptions) => {
@@ -56,6 +75,26 @@ describe('session boundary', () => {
       credentials: 'include',
       headers: { 'X-CSRF-Token': 'fixture-csrf', 'Idempotency-Key': key },
     });
+  });
+  it('a denied object cannot reappear from cache during a later transient failure', async () => {
+    const redirect = vi.fn();
+    setUnauthorizedHandler(redirect);
+    const queryKey = ['protected-object'];
+    queryClient.setQueryData(queryKey, 'old object');
+    queryClient.setQueryData(['other-object'], 'still allowed');
+    for (const status of [403, 503]) {
+      await expect(
+        queryClient.fetchQuery({
+          queryKey,
+          staleTime: 0,
+          queryFn: () => read(async () => err({ status, code: 'READ_FAILED', message: '' })),
+        }),
+      ).rejects.toMatchObject({ status });
+      expect(queryClient.getQueryData(queryKey)).toBeUndefined();
+    }
+    expect(queryClient.getQueryData(['other-object'])).toBe('still allowed');
+    expect(redirect).not.toHaveBeenCalled();
+    clearSession();
   });
 });
 it('idempotency hook remains stable over rerenders and explicitly rotates', () => {

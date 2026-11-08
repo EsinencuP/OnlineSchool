@@ -4,6 +4,9 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsInt, IsOptional, Min, Max } from 'class-validator';
 import { HistoryQueryPipe } from '../history/history.dto.js';
 import type { HistoryPage } from '../history/history.dto.js';
+import { object } from '../../modules/identity/input.js';
+import { domainError, fail } from '../../core/errors/domain-error.js';
+export type NotificationsQuery = HistoryPage & { locale?: 'ru' | 'ro' };
 export const NOTIFICATION_TYPES = [
   'LESSON_SCHEDULED',
   'RESCHEDULE_DECLINED',
@@ -26,6 +29,7 @@ export const NOTIFICATION_TYPES = [
 ] as const;
 export type NotificationType = (typeof NOTIFICATION_TYPES)[number];
 export class NotificationsQueryDto {
+  @ApiPropertyOptional({ enum: ['ru', 'ro'], default: 'ru' }) locale?: 'ru' | 'ro';
   @ApiPropertyOptional({ type: 'integer', minimum: 1, default: 1 })
   @IsOptional()
   @IsInt()
@@ -40,11 +44,16 @@ export class NotificationsQueryDto {
 }
 @Injectable()
 export class NotificationsQueryPipe implements PipeTransform {
-  transform(value: unknown): HistoryPage {
-    const query = new HistoryQueryPipe().transform(value);
+  transform(value: unknown): NotificationsQuery {
+    const input = object(value, ['page', 'pageSize', 'locale']);
+    if (input.locale !== undefined && input.locale !== 'ru' && input.locale !== 'ro')
+      return fail(domainError('INVALID_INPUT', 400));
+    const { locale, ...paging } = input;
+    const query = new HistoryQueryPipe().transform(paging);
     // The common parser validates unknown keys, number strings and bounds first.
     return {
       ...query,
+      ...(locale === undefined ? {} : { locale: locale as 'ru' | 'ro' }),
       pageSize: (value as { pageSize?: unknown })?.pageSize === undefined ? 30 : query.pageSize,
     };
   }

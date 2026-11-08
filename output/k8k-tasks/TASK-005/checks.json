@@ -1,0 +1,33 @@
+[
+  {
+    "name": "ui-build",
+    "command": "pnpm --filter @online-school/ui build",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-test",
+    "command": "pnpm --filter @online-school/ui test",
+    "exitCode": 0
+  },
+  {
+    "name": "ui-lint",
+    "command": "pnpm --filter @online-school/ui lint",
+    "exitCode": 0
+  },
+  {
+    "name": "tooling-eslint",
+    "command": "pnpm exec eslint scripts/stylelint-k8k.mjs scripts/k8k-stylelint.mjs scripts/k8k-design-check.mjs scripts/k8k-design-evidence.mjs stylelint.config.mjs --max-warnings 0",
+    "exitCode": 0
+  },
+  {
+    "name": "format",
+    "command": "pnpm exec prettier --check scripts/stylelint-k8k.mjs scripts/k8k-stylelint.mjs scripts/k8k-design-check.mjs scripts/k8k-design-evidence.mjs stylelint.config.mjs packages/ui/src/tokens.css packages/ui/src/style.css packages/ui/tests/contrast.test.mjs packages/ui/tests/contrast-contract.mjs packages/ui/tests/stylelint.test.mjs packages/ui/tests/stylelint-legacy.json packages/ui/tests/design package.json packages/ui/package.json .github/workflows/ci.yml",
+    "exitCode": 1
+  },
+  {
+    "name": "format-final",
+    "command": "pnpm exec prettier --check scripts/stylelint-k8k.mjs scripts/k8k-stylelint.mjs scripts/k8k-design-check.mjs scripts/k8k-design-evidence.mjs stylelint.config.mjs packages/ui/src/tokens.css packages/ui/src/style.css packages/ui/tests/contrast.test.mjs packages/ui/tests/contrast-contract.mjs packages/ui/tests/stylelint.test.mjs packages/ui/tests/stylelint-legacy.json packages/ui/tests/design package.json packages/ui/package.json .github/workflows/ci.yml",
+    "exitCode": 0,
+    "supersedes": "format; formatter applied to new evidence script only"
+  }
+]

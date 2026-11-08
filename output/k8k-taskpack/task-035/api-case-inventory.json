@@ -1,0 +1,2896 @@
+[
+  {
+    "file": "student-subscription-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "authenticated active student can read own subscription with date-only DTO and no-store",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 expired access blocks the previously exempt subscription read",
+        "status": "passed"
+      },
+      {
+        "name": "NONE has null plan and quantity fields",
+        "status": "passed"
+      },
+      {
+        "name": "active student can read confirmed history without CSRF: /payments",
+        "status": "passed"
+      },
+      {
+        "name": "active student can read confirmed history without CSRF: /ledger",
+        "status": "passed"
+      },
+      {
+        "name": "money remains exact Decimal string with actual MDL currency",
+        "status": "passed"
+      },
+      {
+        "name": "lesson balance history returns quantities as strings",
+        "status": "passed"
+      },
+      {
+        "name": "the owned ledger preserves a missing historical balance snapshot",
+        "status": "passed"
+      },
+      {
+        "name": "selected foreign subscription is 403: ",
+        "status": "passed"
+      },
+      {
+        "name": "selected foreign subscription is 403: /payments",
+        "status": "passed"
+      },
+      {
+        "name": "selected foreign subscription is 403: /ledger",
+        "status": "passed"
+      },
+      {
+        "name": "two accounts select their own plans and histories",
+        "status": "passed"
+      },
+      {
+        "name": "nonexistent subscription ID also returns 403 without enumerating records",
+        "status": "passed"
+      },
+      {
+        "name": "no session is 401, teacher is 403, initial password change still required",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: ?subscriptionId=bad",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: ?studentProfileId=64858338-104e-4b24-92a1-579991585b8d",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: /payments?pageSize=101",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: /ledger?page=0",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: ?page=1",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 blocks subscription, materials and dashboard without paid access",
+        "status": "passed"
+      },
+      {
+        "name": "no post payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "name": "no patch payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "name": "no delete payment/card/checkout mutation exists in this namespace",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: two sessions see only own enrollment and the returned financial ID opens all legacy reads",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: rejects an explicit studentId selector before querying",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: rejects an explicit enrollmentId selector before querying",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: rejects an explicit subjectId selector before querying",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: rejects an explicit subscriptionId selector before querying",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: rejects an explicit timeZone selector before querying",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: unauthorized, foreign role, password and global suspension retain the existing guard responses",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: revoked session or changed password between guard and snapshot hides the subjects",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: parallel reads have no business writes and an outage returns ProblemDetails instead of empty",
+        "status": "passed"
+      },
+      {
+        "name": "subjects: live math does not enable the old physics Meet endpoint",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-homework-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "STU-12 direct homework lookup preserves owner isolation and bootstrap guards",
+        "status": "passed"
+      },
+      {
+        "name": "real Nest routes isolate two students, return DTO with no-store and require no student MFA",
+        "status": "passed"
+      },
+      {
+        "name": "unauthenticated request is 401; TEACHER is 403",
+        "status": "passed"
+      },
+      {
+        "name": "inactive access is 402; forced password change is 403",
+        "status": "passed"
+      },
+      {
+        "name": "every homework mutation checks CSRF: draft",
+        "status": "passed"
+      },
+      {
+        "name": "every homework mutation checks CSRF: submit",
+        "status": "passed"
+      },
+      {
+        "name": "every homework mutation checks CSRF: upload-url",
+        "status": "passed"
+      },
+      {
+        "name": "every homework mutation checks CSRF: files/039495ff-308c-4771-8819-2f8c6562a7cd/confirm",
+        "status": "passed"
+      },
+      {
+        "name": "foreign homework returns 403 before storage or DB writes",
+        "status": "passed"
+      },
+      {
+        "name": "parallel draft commands share a single row in transactional storage mock",
+        "status": "passed"
+      },
+      {
+        "name": "same-key submission replays exact 201, different payload is 422, new command while SUBMITTED is 409",
+        "status": "passed"
+      },
+      {
+        "name": "resubmission preserves version 1 and its teacher comment",
+        "status": "passed"
+      },
+      {
+        "name": "outbox failure rolls back submission and draft erasure",
+        "status": "passed"
+      },
+      {
+        "name": "PUT capability is generated only after commit; idempotency never stores URL; confirm before submit",
+        "status": "passed"
+      },
+      {
+        "name": "cached replay still rechecks current owner and active access",
+        "status": "passed"
+      },
+      {
+        "name": "client cannot inject grades, status or student ownership",
+        "status": "passed"
+      },
+      {
+        "name": "signing failure after commit preserves PENDING intent and same-key retry recovers without another file",
+        "status": "passed"
+      },
+      {
+        "name": "trailing slash still projects the committed file ID into an upload URL",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "GET student/me after password change is 200 without passkeys, including suspended access",
+        "status": "passed"
+      },
+      {
+        "name": "no session is 401 Problem Details; teacher is 403 and cannot read student profile",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 global guards protect profile and future controllers without paid access",
+        "status": "passed"
+      },
+      {
+        "name": "all mutation verbs require CSRF before a student handler (post)",
+        "status": "passed"
+      },
+      {
+        "name": "all mutation verbs require CSRF before a student handler (patch)",
+        "status": "passed"
+      },
+      {
+        "name": "all mutation verbs require CSRF before a student handler (put)",
+        "status": "passed"
+      },
+      {
+        "name": "all mutation verbs require CSRF before a student handler (delete)",
+        "status": "passed"
+      },
+      {
+        "name": "password-change route remains available while access is suspended, but missing CSRF is 403",
+        "status": "passed"
+      },
+      {
+        "name": "initial login -> change password -> cabinet opens, old sessions revoked and mandatory audit/outbox contain no credentials (mock Prisma HTTP contract)",
+        "status": "passed"
+      },
+      {
+        "name": "wrong current password and failed mandatory audit leave flag and hash unchanged",
+        "status": "passed"
+      },
+      {
+        "name": "password DTO and service reject malformed input before writes: {\"currentPassword\":\"Temporary-student-password-2026!\",\"newPassword\":\"short\"}",
+        "status": "passed"
+      },
+      {
+        "name": "password DTO and service reject malformed input before writes: {\"currentPassword\":\"Temporary-student-password-2026!\",\"newPassword\":\"Replaced-student-password-2026!\",\"mustChangePassword\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "password DTO and service reject malformed input before writes: {\"newPassword\":\"Replaced-student-password-2026!\"}",
+        "status": "passed"
+      },
+      {
+        "name": "password DTO and service reject malformed input before writes: null",
+        "status": "passed"
+      },
+      {
+        "name": "student WebAuthn registration and authentication are denied by the existing auth boundary",
+        "status": "passed"
+      },
+      {
+        "name": "student guards and RFC errors do not change non-student API behavior",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-materials-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "actual Nest list returns only explicitly permitted files, DTO and no-store headers",
+        "status": "passed"
+      },
+      {
+        "name": "subject filter cannot cross students and empty page preserves total",
+        "status": "passed"
+      },
+      {
+        "name": "GET URL needs the session but no CSRF or idempotency key, and only returns the capability DTO",
+        "status": "passed"
+      },
+      {
+        "name": "known file ID of another student and an absent file both return 403",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"revoked_at\":\"2026-10-27T12:00:00.000Z\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"expires_at\":\"2026-10-27T12:00:00.000Z\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"granted_at\":\"2026-10-27T12:00:01.000Z\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"status\":\"PENDING\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"status\":\"QUARANTINED\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"status\":\"DELETED\"}",
+        "status": "passed"
+      },
+      {
+        "name": "unavailable or non-teacher permission excluded: {\"teacherGrant\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "revocation between the first guard and locked issuance prevents a capability",
+        "status": "passed"
+      },
+      {
+        "name": "unauthenticated 401, teacher 403, suspended 402 and forced password change 403",
+        "status": "passed"
+      },
+      {
+        "name": "unknown query or invalid ID rejected: ?studentProfileId=9eb5276a-37b0-404e-ae7e-f07166c30691",
+        "status": "passed"
+      },
+      {
+        "name": "unknown query or invalid ID rejected: ?subjectId=bad",
+        "status": "passed"
+      },
+      {
+        "name": "unknown query or invalid ID rejected: ?pageSize=101",
+        "status": "passed"
+      },
+      {
+        "name": "unknown query or invalid ID rejected: /f53953d4-316d-45a1-b78e-117c9bcb22d4/url?download=true",
+        "status": "passed"
+      },
+      {
+        "name": "unknown query or invalid ID rejected: /bad/url",
+        "status": "passed"
+      },
+      {
+        "name": "audit failure is sanitized and never returns a signed URL",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-034 metadata distinguishes explicit legacy context/fallback from authored labels; inline=false",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-034 metadata distinguishes explicit legacy context/fallback from authored labels; inline=true",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-lessons-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "TASK-029 receipt reconciles the original key with owner, lesson and no-store scope",
+        "status": "passed"
+      },
+      {
+        "name": "STU-12 direct lesson lookup is owned, period-independent and non-enumerating",
+        "status": "passed"
+      },
+      {
+        "name": "real Nest GET validates queries and scopes each account independently",
+        "status": "passed"
+      },
+      {
+        "name": "reschedule is 201 and task/audit/outbox refer to the exact task; schedule stays unchanged",
+        "status": "passed"
+      },
+      {
+        "name": "same key replays 201 without duplicate task; changed payload is 422",
+        "status": "passed"
+      },
+      {
+        "name": "missing CSRF/idempotency, wrong role and another student lesson are denied",
+        "status": "passed"
+      },
+      {
+        "name": "less than 24h rejects without any task/outbox at 86399999 ms",
+        "status": "passed"
+      },
+      {
+        "name": "less than 24h rejects without any task/outbox at -1000 ms",
+        "status": "passed"
+      },
+      {
+        "name": "exactly 24 hours is accepted",
+        "status": "passed"
+      },
+      {
+        "name": "cannot reschedule CANCELLED",
+        "status": "passed"
+      },
+      {
+        "name": "cannot reschedule CONDUCTED",
+        "status": "passed"
+      },
+      {
+        "name": "cannot reschedule STAR_PENDING",
+        "status": "passed"
+      },
+      {
+        "name": "cannot reschedule DISPUTED",
+        "status": "passed"
+      },
+      {
+        "name": "failure of auditFailure rolls back task, success audit and idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "failure of outboxFailure rolls back task, success audit and idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "ownership is rechecked even for a cached idempotent reply",
+        "status": "passed"
+      },
+      {
+        "name": "transaction authorizer rechecks ownership and stage after the outer guards",
+        "status": "passed"
+      },
+      {
+        "name": "malformed request cannot write a task: {\"reason\":\" \",\"preferredDate\":\"2026-11-03\"}",
+        "status": "passed"
+      },
+      {
+        "name": "malformed request cannot write a task: {\"reason\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\"preferredDate\":\"2026-11-03\"}",
+        "status": "passed"
+      },
+      {
+        "name": "malformed request cannot write a task: {\"reason\":\"Нужен перенос конкретного урока\",\"preferredDate\":\"2026-02-30\"}",
+        "status": "passed"
+      },
+      {
+        "name": "malformed request cannot write a task: {\"reason\":\"Нужен перенос конкретного урока\",\"preferredDate\":\"2026-10-26\"}",
+        "status": "passed"
+      },
+      {
+        "name": "malformed request cannot write a task: {\"reason\":\"Нужен перенос конкретного урока\",\"preferredDate\":\"2026-11-03\",\"studentProfileId\":\"9e9769f2-3c3d-403d-ad15-ee79521c2566\"}",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-reports-worker.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "committed claim reserves an attempt and an unpredictable attempt-specific object",
+        "status": "passed"
+      },
+      {
+        "name": "complete pipeline freezes source, renders, uploads and atomically publishes one hour of access",
+        "status": "passed"
+      },
+      {
+        "name": "render failure is retryable, safely classified and contains no provider/private error text",
+        "status": "passed"
+      },
+      {
+        "name": "retry uses the frozen projection instead of pulling changed history again",
+        "status": "passed"
+      },
+      {
+        "name": "storage failure never marks READY and cleans only an unpublished attempt",
+        "status": "passed"
+      },
+      {
+        "name": "late attempt cannot publish after another worker obtains a new fencing token",
+        "status": "passed"
+      },
+      {
+        "name": "expired lease cannot publish or generate a download lifetime",
+        "status": "passed"
+      },
+      {
+        "name": "lost commit acknowledgement preserves a successfully published object",
+        "status": "passed"
+      },
+      {
+        "name": "access revoked before generation permanently fails without rendering or storage",
+        "status": "passed"
+      },
+      {
+        "name": "access revoked after upload prevents publication and cleans that private object",
+        "status": "passed"
+      },
+      {
+        "name": "size limit is terminal and does not loop on identical source",
+        "status": "passed"
+      },
+      {
+        "name": "exhausted expired lease settles the unfinished attempt and fails visibly",
+        "status": "passed"
+      },
+      {
+        "name": "stop prevents new claims and drains an in-flight render into retry state",
+        "status": "passed"
+      },
+      {
+        "name": "lease clock is read after the row lock, so waiting past expiry cannot publish",
+        "status": "passed"
+      },
+      {
+        "name": "long PDF work does not block finance/schedule polling, and shutdown drains it",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-security-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "profile updates only own display alias, leaves registry name, email and other pupil intact",
+        "status": "passed"
+      },
+      {
+        "name": "profile selects an owned verified raster and returns a private avatar endpoint",
+        "status": "passed"
+      },
+      {
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index1",
+        "status": "passed"
+      },
+      {
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index2",
+        "status": "passed"
+      },
+      {
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index3",
+        "status": "passed"
+      },
+      {
+        "name": "avatar rejects foreign/quarantined/SVG/oversize index4",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"email\":\"unverified@example.invalid\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"phone\":\"+123456789\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"displayName\":\"\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"displayName\":\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"avatarFileId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {\"studentProfileId\":\"8aae779d-bffb-428c-aff2-26cc7412ad1b\"}",
+        "status": "passed"
+      },
+      {
+        "name": "profile rejects unsupported/invalid fields {}",
+        "status": "passed"
+      },
+      {
+        "name": "profile replay does not duplicate audit/outbox or lose scope",
+        "status": "passed"
+      },
+      {
+        "name": "initial password blocks profile, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "name": "initial password blocks profile/avatar, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "name": "initial password blocks security/sessions, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "name": "initial password blocks subscription, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "name": "initial password blocks notifications/count, including formerly exempt profile/security",
+        "status": "passed"
+      },
+      {
+        "name": "MGR-03 initial password also blocks me before inactive access is considered",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 /me and suspended contact project only the manager of the cookie student",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 ineligible assigned employee yields no contact: {\"ended\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 ineligible assigned employee yields no contact: {\"disabledLogin\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 ineligible assigned employee yields no contact: {\"deactivated\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 ineligible assigned employee yields no contact: {\"role\":\"TECH_OPERATOR\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 changing the assignment changes the contact on a new read",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 initial password and missing session expose no manager details",
+        "status": "passed"
+      },
+      {
+        "name": "inactive protected profile/avatar is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "name": "inactive protected security/sessions is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "name": "inactive protected subscription/payments is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "name": "inactive protected notifications/count is402 with personal manager links",
+        "status": "passed"
+      },
+      {
+        "name": "PATCH password accepts8 chars while initially locked/inactive, clears flag and rotates sessions",
+        "status": "passed"
+      },
+      {
+        "name": "wrong current password401 and composition/length invalid400 without writes",
+        "status": "passed"
+      },
+      {
+        "name": "email request verifies exact current password and does not change login before OTP",
+        "status": "passed"
+      },
+      {
+        "name": "wrong password never sends an email or allocates an OTP",
+        "status": "passed"
+      },
+      {
+        "name": "valid OTP changes AuthAccount login with audit, preserves CRM name/contact identity and rotates cookies",
+        "status": "passed"
+      },
+      {
+        "name": "OTP is single-use even from another still-valid own-session reference",
+        "status": "passed"
+      },
+      {
+        "name": "OTP expires exactly at10 minutes with a mocked database clock",
+        "status": "passed"
+      },
+      {
+        "name": "resend invalidates prior code and refuses a random collision with a live prior OTP",
+        "status": "passed"
+      },
+      {
+        "name": "wrong-code attempts persist despite400; after5 the right code is invalid",
+        "status": "passed"
+      },
+      {
+        "name": "OTP belongs to requesting login and exact new email",
+        "status": "passed"
+      },
+      {
+        "name": "existing email is unavailable after password verification, no mail or merge",
+        "status": "passed"
+      },
+      {
+        "name": "legacy mixed-case login also reserves its email without account merging",
+        "status": "passed"
+      },
+      {
+        "name": "mail failure does not return sent200 and leaves login unchanged",
+        "status": "passed"
+      },
+      {
+        "name": "password change revokes pending email OTP",
+        "status": "passed"
+      },
+      {
+        "name": "confirmation audit/outbox failure rolls back login, used state and revocation",
+        "status": "passed"
+      },
+      {
+        "name": "sessions list has only own active sessions and no token/hash fields",
+        "status": "passed"
+      },
+      {
+        "name": "revoke other own session204 and repeated204; current409, foreign or missing404",
+        "status": "passed"
+      },
+      {
+        "name": "teacher403, no session401, CSRF required for every sensitive mutation",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-dashboard-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "real Nest endpoint aggregates for two separate authenticated sessions and isolates warm caches",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 warm dashboard and lesson reads use fresh authorization without a revision bump",
+        "status": "passed"
+      },
+      {
+        "name": "anonymous and teacher sessions cannot access student dashboards",
+        "status": "passed"
+      },
+      {
+        "name": "suspended, initial-password and revoked sessions cannot read a previously warmed dashboard",
+        "status": "passed"
+      },
+      {
+        "name": "homework commit changes the revision and invalidates the real cache before its TTL",
+        "status": "passed"
+      },
+      {
+        "name": "missing lesson/subscription returns null; inaccessible revision state returns sanitized 503",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-history-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "TASK-029 addressed history does not enumerate another student or scan list pages",
+        "status": "passed"
+      },
+      {
+        "name": "actual Nest history serializes Decimal balances as strings and isolates two authenticated students",
+        "status": "passed"
+      },
+      {
+        "name": "dispute creates one addressed task/audit/outbox and never changes attendance or rights",
+        "status": "passed"
+      },
+      {
+        "name": "another POST with a OPEN dispute is 409",
+        "status": "passed"
+      },
+      {
+        "name": "another POST with a IN_PROGRESS dispute is 409",
+        "status": "passed"
+      },
+      {
+        "name": "same-key network retry replays 201 without another task; changed payload is 422",
+        "status": "passed"
+      },
+      {
+        "name": "simulated parallel commands have one case; real database uniqueness remains a deployment acceptance check",
+        "status": "passed"
+      },
+      {
+        "name": "closed cases permit a new dispute within the window",
+        "status": "passed"
+      },
+      {
+        "name": "foreign lesson, teacher session and missing CSRF cannot create a dispute",
+        "status": "passed"
+      },
+      {
+        "name": "no current published deduction rejects a dispute",
+        "status": "passed"
+      },
+      {
+        "name": "thirty days is allowed, one millisecond later is rejected",
+        "status": "passed"
+      },
+      {
+        "name": "failed auditFailure rolls back task and idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "failed outboxFailure rolls back task and idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "cached replay still rechecks ownership",
+        "status": "passed"
+      },
+      {
+        "name": "invalid description is rejected, length short",
+        "status": "passed"
+      },
+      {
+        "name": "invalid description is rejected, length                     ",
+        "status": "passed"
+      },
+      {
+        "name": "invalid description is rejected, length xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-notifications-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "list defaults30, newest first, private no-store and server pupil ownership",
+        "status": "passed"
+      },
+      {
+        "name": "count is global unread, one COUNT query without JOIN or body load",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 locale changes only the public projection and keeps source/read facts",
+        "status": "passed"
+      },
+      {
+        "name": "pagination keeps total and unreadCount across pages",
+        "status": "passed"
+      },
+      {
+        "name": "single read is204 on first, cached replay and new-key repeat; first timestamp preserved",
+        "status": "passed"
+      },
+      {
+        "name": "read-all204, idempotent, and new arrivals survive same-key replay",
+        "status": "passed"
+      },
+      {
+        "name": "foreign archived expired future item index3 is indistinguishable404",
+        "status": "passed"
+      },
+      {
+        "name": "foreign archived expired future item index4 is indistinguishable404",
+        "status": "passed"
+      },
+      {
+        "name": "foreign archived expired future item index5 is indistinguishable404",
+        "status": "passed"
+      },
+      {
+        "name": "foreign archived expired future item index6 is indistinguishable404",
+        "status": "passed"
+      },
+      {
+        "name": "unknown item404 and malformed UUID400",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query page=0",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query page=1.5",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query pageSize=101",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query pageSize=0",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query studentProfileId=bc862db1-2d89-424c-a0ac-a5364f3f7d3b",
+        "status": "passed"
+      },
+      {
+        "name": "reject invalid or unsupported query type=REPORT_READY",
+        "status": "passed"
+      },
+      {
+        "name": "unauthenticated401 and teacher403",
+        "status": "passed"
+      },
+      {
+        "name": "expired session401",
+        "status": "passed"
+      },
+      {
+        "name": "CSRF and UUID idempotency key required",
+        "status": "passed"
+      },
+      {
+        "name": "reject nonempty mutation body before any read",
+        "status": "passed"
+      },
+      {
+        "name": "atomic rollback when outbox fails",
+        "status": "passed"
+      },
+      {
+        "name": "password change and access checks also apply to cached replay",
+        "status": "passed"
+      },
+      {
+        "name": "student cannot create, delete, or edit notification content",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-skills-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "anonymous request  is 401",
+        "status": "passed"
+      },
+      {
+        "name": "anonymous request /audit?skillId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8 is 401",
+        "status": "passed"
+      },
+      {
+        "name": "anonymous request /snapshots is 401",
+        "status": "passed"
+      },
+      {
+        "name": "maps get server context for each pupil with private no-store responses",
+        "status": "passed"
+      },
+      {
+        "name": "teacher cannot use student route ",
+        "status": "passed"
+      },
+      {
+        "name": "teacher cannot use student route /audit?skillId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8",
+        "status": "passed"
+      },
+      {
+        "name": "teacher cannot use student route /snapshots",
+        "status": "passed"
+      },
+      {
+        "name": "route /audit?skillId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8 has bounded default pagination",
+        "status": "passed"
+      },
+      {
+        "name": "route /snapshots has bounded default pagination",
+        "status": "passed"
+      },
+      {
+        "name": "inactive access remains blocked for ",
+        "status": "passed"
+      },
+      {
+        "name": "inactive access remains blocked for /audit?skillId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8",
+        "status": "passed"
+      },
+      {
+        "name": "inactive access remains blocked for /snapshots",
+        "status": "passed"
+      },
+      {
+        "name": "initial password must change before viewing skill history",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query ?studentProfileId=f3cd4b0b-75c1-4ecf-9cb7-e9e6fb2544b8",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query ?subjectId=bad",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query ?subjectId=x&subjectId=y",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query /audit",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query /audit?skillId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8&page=0",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query /snapshots?pageSize=101",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query /snapshots?subjectId=bad",
+        "status": "passed"
+      },
+      {
+        "name": "rejects untrusted query /snapshots?subjectId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8&subjectId=cfbfab8a-a13d-45f8-90c9-5c1ed8405aa8",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot optional subject is passed with authoritative student and no-store",
+        "status": "passed"
+      },
+      {
+        "name": "student has no post skill mutation route",
+        "status": "passed"
+      },
+      {
+        "name": "student has no put skill mutation route",
+        "status": "passed"
+      },
+      {
+        "name": "student has no patch skill mutation route",
+        "status": "passed"
+      },
+      {
+        "name": "student has no delete skill mutation route",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-reports-http.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "reports default ten, no-store, date-only periods, server pupil ownership",
+        "status": "passed"
+      },
+      {
+        "name": "first read is 204, same-key replay and new-key repeat are 200; isNew changes once",
+        "status": "passed"
+      },
+      {
+        "name": "read mark cannot target another pupil or an unknown report",
+        "status": "passed"
+      },
+      {
+        "name": "queued export is 202 and replay returns the same job without duplicate work",
+        "status": "passed"
+      },
+      {
+        "name": "status progresses to READY with a URL only for its requesting pupil",
+        "status": "passed"
+      },
+      {
+        "name": "third outstanding PDF is rejected with 429",
+        "status": "passed"
+      },
+      {
+        "name": "CSRF required for /export-pdf",
+        "status": "passed"
+      },
+      {
+        "name": "CSRF required for /86713a8c-86c1-4c46-8738-caf9d7c52c15/read",
+        "status": "passed"
+      },
+      {
+        "name": "UUID idempotency key is required before queueing",
+        "status": "passed"
+      },
+      {
+        "name": "same command key with a changed selection is rejected",
+        "status": "passed"
+      },
+      {
+        "name": "outbox failure rolls back read and its idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "outbox failure rolls back queue and its idempotency state",
+        "status": "passed"
+      },
+      {
+        "name": "anonymous GET  is forbidden",
+        "status": "passed"
+      },
+      {
+        "name": "anonymous GET /export-pdf/60c41f4e-849c-4ad1-9aa7-5e27d2cf31c9 is forbidden",
+        "status": "passed"
+      },
+      {
+        "name": "teacher cannot read student reports or queue a student export",
+        "status": "passed"
+      },
+      {
+        "name": "inactive access and initial-password state block report routes",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export body rejected {\"studentProfileId\":\"271e1aac-5de7-4d26-9deb-fa648ed06dc4\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export body rejected {\"subjectId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export body rejected {\"periodFrom\":\"2026-02-30\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export body rejected {\"periodTo\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid list query ?page=0",
+        "status": "passed"
+      },
+      {
+        "name": "invalid list query ?pageSize=101",
+        "status": "passed"
+      },
+      {
+        "name": "invalid list query ?studentId=271e1aac-5de7-4d26-9deb-fa648ed06dc4",
+        "status": "passed"
+      },
+      {
+        "name": "no student route creates or changes an educational report",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-032 report detail uses own scope and returns a normalized public report independently of list page",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-032 enqueue receipt lookup is read-only, actor scoped and does not shadow job route",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-security.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "OTP random six digits, HMAC bound to challenge/account/email and constant-size comparison",
+        "status": "passed"
+      },
+      {
+        "name": "OTP and mail fail closed without configured independent secret/sender",
+        "status": "passed"
+      },
+      {
+        "name": "Resend request uses fixed HTTPS endpoint, text-only OTP and provider idempotency key",
+        "status": "passed"
+      },
+      {
+        "name": "mail provider failure400 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "name": "mail provider failure429 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "name": "mail provider failure500 becomes safe503 without raw diagnostics",
+        "status": "passed"
+      },
+      {
+        "name": "student8-char letter/digit password uses actual scrypt and verifies; standard policy stays12",
+        "status": "passed"
+      },
+      {
+        "name": "session device metadata is bounded and takes socket IP instead of forwarded spoof",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: javascript:alert(1)",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: https://wa.me.evil.invalid/37360000123",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: http://wa.me/37360000123",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: https://wa.me/0000000",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: https://t.me/valid_user?url=evil",
+        "status": "passed"
+      },
+      {
+        "name": "untrusted manager link rejected: https://evil.invalid/manager",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-027 manager query is scoped to pupil and active staff without fallback",
+        "status": "passed"
+      },
+      {
+        "name": "email request rate is capped at5 per identity; persisted sixth attempt429",
+        "status": "passed"
+      },
+      {
+        "name": "private avatar read checks expected size/type and raster signature, no signing URL",
+        "status": "passed"
+      },
+      {
+        "name": "avatar forbidden active MIMEimage/svg+xml",
+        "status": "passed"
+      },
+      {
+        "name": "avatar forbidden active MIMEtext/html",
+        "status": "passed"
+      },
+      {
+        "name": "spoofed PNG signature rejected and provider details sanitized",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-context.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "student context uses only verified session identity, maps existing Student, and returns initial flag",
+        "status": "passed"
+      },
+      {
+        "name": "repeated and concurrent guard calls share one profile load inside the same request",
+        "status": "passed"
+      },
+      {
+        "name": "context cache does not survive into a different HTTP request",
+        "status": "passed"
+      },
+      {
+        "name": "cache cannot reuse another authenticated account",
+        "status": "passed"
+      },
+      {
+        "name": "missing session is 401 and teacher or mixed-kind account is 403 before any profile query",
+        "status": "passed"
+      },
+      {
+        "name": "profile missing or archived/deactivated is denied and query requires active profile/person/account",
+        "status": "passed"
+      },
+      {
+        "name": "database failure is a sanitized 503 and failed audit denies access",
+        "status": "passed"
+      },
+      {
+        "name": "student global guards ignore other API modules",
+        "status": "passed"
+      },
+      {
+        "name": "MGR-03 password change remains available; me requires the password already changed: /me",
+        "status": "passed"
+      },
+      {
+        "name": "MGR-03 password change remains available; me requires the password already changed: /security/change-password",
+        "status": "passed"
+      },
+      {
+        "name": "protected path /dashboard returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "name": "protected path /profile-other returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "name": "protected path /security-other returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "name": "protected path /me/foreign returns 402 and configured manager contacts",
+        "status": "passed"
+      },
+      {
+        "name": "protected routes require initial password change, while paid access is accepted afterwards",
+        "status": "passed"
+      },
+      {
+        "name": "scoped session and CSRF adapters reuse successful core checks and call core when necessary",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-materials.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "pagination defaults 1/30, subject UUID canonicalization and 100 item bound",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"page\":\"1.2\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"pageSize\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"pageSize\":null}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"subjectId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"subjectId\":[\"1144e777-41e9-49e2-8023-90f877a93432\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"studentProfileId\":\"ec352fb4-a31c-4b2b-ad64-dada17cadf4a\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects invalid query {\"page\":\"999999999999999999999\"}",
+        "status": "passed"
+      },
+      {
+        "name": "list query scopes both account and registry student, explicit teacher grants, real context and current verified objects",
+        "status": "passed"
+      },
+      {
+        "name": "URL query applies the same policy and locks permission + object against revocation/quarantine",
+        "status": "passed"
+      },
+      {
+        "name": "READ permission issues 900-second inline URL and audits VIEW without storing capability",
+        "status": "passed"
+      },
+      {
+        "name": "download-enabled grant selects attachment presentation and DOWNLOAD audit",
+        "status": "passed"
+      },
+      {
+        "name": "URL lifetime is capped by the explicit permission expiry",
+        "status": "passed"
+      },
+      {
+        "name": "grant too close to expiry is denied without signing",
+        "status": "passed"
+      },
+      {
+        "name": "missing/revoked/foreign grant is uniformly 403 and records a denial",
+        "status": "passed"
+      },
+      {
+        "name": "session is revalidated inside issuance transaction: {\"kind\":\"TEACHER\",\"roles\":[\"TEACHER\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "session is revalidated inside issuance transaction: {\"accountId\":\"b6e19f35-6665-41d4-863c-84bb2b94d20e\"}",
+        "status": "passed"
+      },
+      {
+        "name": "session is revalidated inside issuance transaction: {\"roles\":[]}",
+        "status": "passed"
+      },
+      {
+        "name": "current student activation is revalidated: {\"mustChangePassword\":true,\"expected\":\"MUST_CHANGE_PASSWORD\"}",
+        "status": "passed"
+      },
+      {
+        "name": "current student activation is revalidated: {\"hasActiveAccess\":false,\"expected\":\"ACCESS_SUSPENDED\"}",
+        "status": "passed"
+      },
+      {
+        "name": "current student activation is revalidated: {\"studentProfileId\":\"337fdee4-a70c-4b65-8c01-0ae24e9ca28d\",\"expected\":\"FILE_ACCESS_DENIED\"}",
+        "status": "passed"
+      },
+      {
+        "name": "revoked session does not issue a new capability",
+        "status": "passed"
+      },
+      {
+        "name": "audit failure rolls back and no URL response escapes",
+        "status": "passed"
+      },
+      {
+        "name": "reused client request ID correlates two events without becoming their identity",
+        "status": "passed"
+      },
+      {
+        "name": "actual AWS GET signer binds filename and no-store overrides, fixed TTL and inline/attachment mode",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-homework.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "newest-first query is student-scoped, paged and includes every version without grades or private keys",
+        "status": "passed"
+      },
+      {
+        "name": "STU-12 detail SQL binds delivery and owner before pagination, preserving visibility guards",
+        "status": "passed"
+      },
+      {
+        "name": "status query accepts NOT_SUBMITTED",
+        "status": "passed"
+      },
+      {
+        "name": "status query accepts SUBMITTED",
+        "status": "passed"
+      },
+      {
+        "name": "status query accepts REVIEWED",
+        "status": "passed"
+      },
+      {
+        "name": "status query accepts NEEDS_REVISION",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: {\"status\":\"GRADED\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: {\"page\":[\"1\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query rejected: {\"studentId\":\"7b47aa78-6874-47e1-8931-44fff6b08030\"}",
+        "status": "passed"
+      },
+      {
+        "name": "late first submission is accepted and clears draft plaintext in the same transaction",
+        "status": "passed"
+      },
+      {
+        "name": "no deadline does not mark a submission late",
+        "status": "passed"
+      },
+      {
+        "name": "exact deadline is on time",
+        "status": "passed"
+      },
+      {
+        "name": "NEEDS_REVISION creates version 2 linked to the previous immutable answer",
+        "status": "passed"
+      },
+      {
+        "name": "submitted/reviewed homework rejects a new command",
+        "status": "passed"
+      },
+      {
+        "name": "submitted/reviewed homework rejects a new command",
+        "status": "passed"
+      },
+      {
+        "name": "draft overwrite preserves whitespace, one identity and rolling 30-day server TTL",
+        "status": "passed"
+      },
+      {
+        "name": "empty draft is allowed",
+        "status": "passed"
+      },
+      {
+        "name": "invalid drafts rejected",
+        "status": "passed"
+      },
+      {
+        "name": "invalid drafts rejected",
+        "status": "passed"
+      },
+      {
+        "name": "invalid drafts rejected",
+        "status": "passed"
+      },
+      {
+        "name": "foreign homework is forbidden before any write",
+        "status": "passed"
+      },
+      {
+        "name": "withdrawn homework cancelled_at cannot be mutated",
+        "status": "passed"
+      },
+      {
+        "name": "withdrawn homework archived_at cannot be mutated",
+        "status": "passed"
+      },
+      {
+        "name": "upload preparation persists only fileId and server-selected keys, exact metadata and PENDING default",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe upload metadata rejected",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe upload metadata rejected",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe upload metadata rejected",
+        "status": "passed"
+      },
+      {
+        "name": "unsafe upload metadata rejected",
+        "status": "passed"
+      },
+      {
+        "name": "pending or foreign attachments cannot enter a submission",
+        "status": "passed"
+      },
+      {
+        "name": "confirmed files are linked to the new version, not only to the delivery",
+        "status": "passed"
+      },
+      {
+        "name": "a confirmed file is never copied again",
+        "status": "passed"
+      },
+      {
+        "name": "provider failure leaves confirmation and VERIFIED status unwritten",
+        "status": "passed"
+      },
+      {
+        "name": "expired drafts are hidden by SQL and worker clears at most 100 plaintext rows with SKIP LOCKED",
+        "status": "passed"
+      },
+      {
+        "name": "real AWS signer fixes 15-minute expiry and signs size + content type without a public ACL",
+        "status": "passed"
+      },
+      {
+        "name": "HEAD checks actual bytes; conditional COPY seals final key and never exposes provider error details",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-lesson-context.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "issued homework is filtered to the owned lesson and its enrollment before pagination",
+        "status": "passed"
+      },
+      {
+        "name": "lesson materials retain all explicit permission, verified file and owner checks",
+        "status": "passed"
+      },
+      {
+        "name": "lesson resource filters validate UUID and preserve old defaults in [Function HomeworkQueryPipe]",
+        "status": "passed"
+      },
+      {
+        "name": "lesson resource filters validate UUID and preserve old defaults in [Function MaterialsQueryPipe]",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-subscription.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "NONE has null for every nullable field, no synthetic balance or plan",
+        "status": "passed"
+      },
+      {
+        "name": "owned selection and strict page parsing use 1/20 defaults",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"subscriptionId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"studentId\":\"76e0395d-5cb7-4792-acc7-81a25582db65\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"subscriptionId\":[\"76e0395d-5cb7-4792-acc7-81a25582db65\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid history query {\"page\":\"1e2\"}",
+        "status": "passed"
+      },
+      {
+        "name": "foreign/nonexistent explicit subscription is forbidden: details",
+        "status": "passed"
+      },
+      {
+        "name": "foreign/nonexistent explicit subscription is forbidden: payments",
+        "status": "passed"
+      },
+      {
+        "name": "foreign/nonexistent explicit subscription is forbidden: ledger",
+        "status": "passed"
+      },
+      {
+        "name": "Decimal 1500 serializes exactly as 1500.00",
+        "status": "passed"
+      },
+      {
+        "name": "Decimal 0.1 serializes exactly as 0.10",
+        "status": "passed"
+      },
+      {
+        "name": "Decimal 1.005 serializes exactly as 1.005",
+        "status": "passed"
+      },
+      {
+        "name": "Decimal 1.2345 serializes exactly as 1.2345",
+        "status": "passed"
+      },
+      {
+        "name": "Decimal 9999999999999999.9999 serializes exactly as 9999999999999999.9999",
+        "status": "passed"
+      },
+      {
+        "name": "date-only values use the student timezone, not the worker host timezone",
+        "status": "passed"
+      },
+      {
+        "name": "history preserves actual MDL and only serializes known DTO money as strings",
+        "status": "passed"
+      },
+      {
+        "name": "ledger preserves 10 before balance and date-only",
+        "status": "passed"
+      },
+      {
+        "name": "ledger preserves null before balance and date-only",
+        "status": "passed"
+      },
+      {
+        "name": "query derives paid rights independently of bookings, temporary admission and money totals",
+        "status": "passed"
+      },
+      {
+        "name": "payment projection uses owned allocation amount, both confirmations and current publication",
+        "status": "passed"
+      },
+      {
+        "name": "ledger replays all facts before pagination, keeps stored deduction snapshots and freeze history",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 requires active access for GET subscription view: ",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 requires active access for GET subscription view: /payments",
+        "status": "passed"
+      },
+      {
+        "name": "STU-11 requires active access for GET subscription view: /ledger",
+        "status": "passed"
+      },
+      {
+        "name": "subscription reads enforce first password change and do not exempt unrelated routes",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-reports.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "report pagination defaults to ten and respects explicit bounds",
+        "status": "passed"
+      },
+      {
+        "name": "invalid report query {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid report query {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid report query {\"page\":\"1e2\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid report query {\"studentId\":\"10000000-0000-4000-8000-000000000002\"}",
+        "status": "passed"
+      },
+      {
+        "name": "optional export selection normalizes owned UUID and inclusive calendar dates",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"studentProfileId\":\"10000000-0000-4000-8000-000000000002\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"subjectId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"periodFrom\":\"2026-02-30\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"periodTo\":\"2026-10-27T00:00:00Z\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"periodFrom\":\"2026-10-28\",\"periodTo\":\"2026-10-27\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid export selection {\"periodTo\":[\"2026-10-27\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "inclusive date bounds handle the 25-hour Chisinau DST day",
+        "status": "passed"
+      },
+      {
+        "name": "normalization exposes only four public fields and date-only periods",
+        "status": "passed"
+      },
+      {
+        "name": "foreign and nonexistent job use same forbidden response with a server ownership predicate",
+        "status": "passed"
+      },
+      {
+        "name": "job state PENDING maps to QUEUED without a download",
+        "status": "passed"
+      },
+      {
+        "name": "job state RETRY_WAIT maps to QUEUED without a download",
+        "status": "passed"
+      },
+      {
+        "name": "job state RUNNING maps to PROCESSING without a download",
+        "status": "passed"
+      },
+      {
+        "name": "job state FAILED maps to FAILED without a download",
+        "status": "passed"
+      },
+      {
+        "name": "job state CANCELLED maps to FAILED without a download",
+        "status": "passed"
+      },
+      {
+        "name": "READY polls retain the original one-hour deadline and signing date",
+        "status": "passed"
+      },
+      {
+        "name": "expired at +3600000ms cannot reissue a capability",
+        "status": "passed"
+      },
+      {
+        "name": "expired at +3600001ms cannot reissue a capability",
+        "status": "passed"
+      },
+      {
+        "name": "expired at +7200000ms cannot reissue a capability",
+        "status": "passed"
+      },
+      {
+        "name": "failure reason never exposes database/provider URLs or raw job error",
+        "status": "passed"
+      },
+      {
+        "name": "expiry reached during signing is presented as expired, not a fresh link or a 409",
+        "status": "passed"
+      },
+      {
+        "name": "worker PDF upload is private and create-only",
+        "status": "passed"
+      },
+      {
+        "name": "ambiguous upload acknowledgement resolves only the same object and its exact metadata",
+        "status": "passed"
+      },
+      {
+        "name": "enqueue creates a job and ownership row, with no source rendering or signed URL in the command result",
+        "status": "passed"
+      },
+      {
+        "name": "limits two outstanding exports without creating work",
+        "status": "passed"
+      },
+      {
+        "name": "foreign subject cannot be exported",
+        "status": "passed"
+      },
+      {
+        "name": "command rechecks the current student context {\"mustChangePassword\":true}",
+        "status": "passed"
+      },
+      {
+        "name": "command rechecks the current student context {\"hasActiveAccess\":false}",
+        "status": "passed"
+      },
+      {
+        "name": "command rechecks the current student context {\"studentProfileId\":\"10000000-0000-4000-8000-000000000002\"}",
+        "status": "passed"
+      },
+      {
+        "name": "first read returns true, semantic repeat false, keeping the original receipt",
+        "status": "passed"
+      },
+      {
+        "name": "foreign/unpublished report cannot be marked read",
+        "status": "passed"
+      },
+      {
+        "name": "real SDK signs only one-hour PDF URLs; material permissions keep their fifteen-minute cap",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-032 detail uses same publication CTE, bound owner/id and strips non-public fields",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-032 absent visible detail has one forbidden result without leaking existence",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-032 request lookup binds requesting actor, student and original export operation",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-dashboard.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "four blocks use the authenticated student ID and one server time; Decimal stays a string",
+        "status": "passed"
+      },
+      {
+        "name": "Meet link stays hidden at 10.001 minutes before the lesson",
+        "status": "passed"
+      },
+      {
+        "name": "Meet link stays hidden at 20 minutes before the lesson",
+        "status": "passed"
+      },
+      {
+        "name": "Meet link stays hidden at 60 minutes before the lesson",
+        "status": "passed"
+      },
+      {
+        "name": "Meet opens at exact boundaries without minute truncation: 10",
+        "status": "passed"
+      },
+      {
+        "name": "Meet opens at exact boundaries without minute truncation: 9.99",
+        "status": "passed"
+      },
+      {
+        "name": "Meet opens at exact boundaries without minute truncation: 0.01",
+        "status": "passed"
+      },
+      {
+        "name": "missing/unsafe links never become joinable: null",
+        "status": "passed"
+      },
+      {
+        "name": "missing/unsafe links never become joinable: javascript:alert(1)",
+        "status": "passed"
+      },
+      {
+        "name": "missing/unsafe links never become joinable: https://meet.google.com.evil.invalid/abc-defg-hij",
+        "status": "passed"
+      },
+      {
+        "name": "missing/unsafe links never become joinable: https://meet.google.com/abc-defg-hij?secret=1",
+        "status": "passed"
+      },
+      {
+        "name": "empty sources return nulls/zero counts, with no fabricated subscription or lesson",
+        "status": "passed"
+      },
+      {
+        "name": "a lesson that started during aggregation remains available as current lesson",
+        "status": "passed"
+      },
+      {
+        "name": "frozen and unbounded subscriptions preserve their real metadata",
+        "status": "passed"
+      },
+      {
+        "name": "all four sources start concurrently; controlled query latency is below 200ms and logged",
+        "status": "passed"
+      },
+      {
+        "name": "query errors return a sanitized Result.Err and never leak driver details",
+        "status": "passed"
+      },
+      {
+        "name": "CacheInterceptor uses student-specific key/30s TTL and does not mutate stored values",
+        "status": "passed"
+      },
+      {
+        "name": "committed homework status change invalidates the cached response using mock CacheManager",
+        "status": "passed"
+      },
+      {
+        "name": "cache expires after 30 seconds, including with a backend that ignores its TTL",
+        "status": "passed"
+      },
+      {
+        "name": "cached summary never stores or shares Meet and current lesson is retained across T0",
+        "status": "passed"
+      },
+      {
+        "name": "in-flight requests for the same student/revision share one aggregate",
+        "status": "passed"
+      },
+      {
+        "name": "a source commit during load cannot be cached as a coherent snapshot",
+        "status": "passed"
+      },
+      {
+        "name": "failed responses are never cached, and a missing revision store fails closed",
+        "status": "passed"
+      },
+      {
+        "name": "CRM rejects unsafe Meet assignment http://meet.google.com/abc-defg-hij",
+        "status": "passed"
+      },
+      {
+        "name": "CRM rejects unsafe Meet assignment https://user:password@meet.google.com/abc-defg-hij",
+        "status": "passed"
+      },
+      {
+        "name": "CRM rejects unsafe Meet assignment https://meet.google.com.evil.invalid/abc-defg-hij",
+        "status": "passed"
+      },
+      {
+        "name": "CRM stores a valid reusable Meet link and allows omission",
+        "status": "passed"
+      },
+      {
+        "name": "current lesson remains in hero at 0 minutes",
+        "status": "passed"
+      },
+      {
+        "name": "current lesson remains in hero at -0.01 minutes",
+        "status": "passed"
+      },
+      {
+        "name": "current lesson remains in hero at -30 minutes",
+        "status": "passed"
+      },
+      {
+        "name": "current lesson remains in hero at -60 minutes",
+        "status": "passed"
+      },
+      {
+        "name": "hero does not retain an expired join window",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-notifications.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "LESSON_SCHEDULED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "RESCHEDULE_DECLINED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "DISPUTE_ACCEPTED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "DISPUTE_REJECTED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "MANUAL_MESSAGE uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_CREATED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_RENEWED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_FROZEN uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_UNFROZEN uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_EXPIRED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "ACCOUNT_CREATED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "HOMEWORK_REVIEWED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "HOMEWORK_NEEDS_REVISION uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "LESSON_RESCHEDULED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "LESSON_CANCELLED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "REPORT_READY uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "SUBSCRIPTION_EXPIRING uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "PAYMENT_CONFIRMED uses fixed public copy and expected entity references only",
+        "status": "passed"
+      },
+      {
+        "name": "expiry3 has correct Russian text and preserves canonical source timestamp",
+        "status": "passed"
+      },
+      {
+        "name": "validated source identifiers retain exact JSON for database provenance equality",
+        "status": "passed"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 0",
+        "status": "passed"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 1",
+        "status": "passed"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 8",
+        "status": "passed"
+      },
+      {
+        "name": "expiry rejects noncontract threshold 7",
+        "status": "passed"
+      },
+      {
+        "name": "expiry rejects noncontract threshold null",
+        "status": "passed"
+      },
+      {
+        "name": "producer cannot put private text or links into payload",
+        "status": "passed"
+      },
+      {
+        "name": "query defaults30 and caps100 with strict ownership-query rejection",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 locale is a strict optional read input without changing existing defaults",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 LESSON_SCHEDULED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 RESCHEDULE_DECLINED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 DISPUTE_ACCEPTED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 DISPUTE_REJECTED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_CREATED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_RENEWED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_FROZEN projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_UNFROZEN projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_EXPIRED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 ACCOUNT_CREATED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 HOMEWORK_REVIEWED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 HOMEWORK_NEEDS_REVISION projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 LESSON_RESCHEDULED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 LESSON_CANCELLED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 REPORT_READY projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 SUBSCRIPTION_EXPIRING projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 PAYMENT_CONFIRMED projects existing catalog RU/RO without altering payload",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 historical/free human text and incomplete catalog metadata are not guessed",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-033 list projection strips internal catalog metadata and preserves historical text/read/payload",
+        "status": "passed"
+      },
+      {
+        "name": "projection scope and TTL are server parameters; paging is stable",
+        "status": "passed"
+      },
+      {
+        "name": "service creates once from canonical source and serializes before pruning",
+        "status": "passed"
+      },
+      {
+        "name": "service rejects nonexistent source and never inserts supplied user data",
+        "status": "passed"
+      },
+      {
+        "name": "future source cannot enter inbox",
+        "status": "passed"
+      },
+      {
+        "name": "worker delivery, inbox row and delivery receipt commit together; replay is empty",
+        "status": "passed"
+      },
+      {
+        "name": "receipt failure rolls back inbox row; next attempt succeeds",
+        "status": "passed"
+      },
+      {
+        "name": "worker stop prevents new claims and maintenance",
+        "status": "passed"
+      },
+      {
+        "name": "expiry uses pupil calendar day, finite validity and versioned idempotency key",
+        "status": "passed"
+      },
+      {
+        "name": "read-all rechecks current owner before any update",
+        "status": "passed"
+      },
+      {
+        "name": "no read status mutation from malformed body",
+        "status": "passed"
+      },
+      {
+        "name": "notification backlog does not block finance or PDF polling; shutdown drains current delivery",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-lessons.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "STU-12 detail SQL binds owner and selected ID without a calendar limit",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 dashboard, list and detail share exact projection at 600001ms",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 dashboard, list and detail share exact projection at 600000ms",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 dashboard, list and detail share exact projection at 0ms",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 dashboard, list and detail share exact projection at -3600000ms",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 dashboard, list and detail share exact projection at -3600001ms",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-028 eligibility SQL binds enrollment, active assignment, freeze and unused director admission",
+        "status": "passed"
+      },
+      {
+        "name": "STU-12 next five lessons cross month boundaries but exclude ended and unscheduled rows",
+        "status": "passed"
+      },
+      {
+        "name": "query defaults and calendar contract are explicit",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"page\":\"1.5\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"page\":[\"1\",\"2\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"pageSize\":\"-1\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"page\":\"9007199254740992\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"page\":\"9007199254740991\",\"pageSize\":\"100\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"period\":\"all\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"month\":\"2025-13\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"month\":\"0000-01\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"month\":\"2025-09-01\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"month\":\"2025-09\",\"page\":\"1\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"month\":\"2025-09\",\"period\":\"archive\"}",
+        "status": "passed"
+      },
+      {
+        "name": "invalid query is rejected before a DB read: {\"studentProfileId\":\"foreign\"}",
+        "status": "passed"
+      },
+      {
+        "name": "today uses the student day at a UTC date boundary",
+        "status": "passed"
+      },
+      {
+        "name": "ISO week starts Monday in the student zone",
+        "status": "passed"
+      },
+      {
+        "name": "calendar month handles DST and end-exclusive boundaries",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 autumn DST keeps the exclusive next local midnight and ISO week",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 overflow fallback paginates the same month within owned subject scope",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 rejects ambiguous view or subject input {\"view\":\"list\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 rejects ambiguous view or subject input {\"month\":\"2026-03\",\"view\":\"other\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 rejects ambiguous view or subject input {\"month\":\"2026-03\",\"view\":\"calendar\",\"page\":\"1\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 rejects ambiguous view or subject input {\"period\":\"today\",\"subjectId\":\"not-an-id\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 request receipt returns only the owned committed task or UNKNOWN",
+        "status": "passed"
+      },
+      {
+        "name": "invalid/past preferred date is rejected: 2026-02-30",
+        "status": "passed"
+      },
+      {
+        "name": "invalid/past preferred date is rejected: 2026-13-01",
+        "status": "passed"
+      },
+      {
+        "name": "invalid/past preferred date is rejected: 2026-10-27T12:00:00Z",
+        "status": "passed"
+      },
+      {
+        "name": "invalid/past preferred date is rejected: 0000-01-01",
+        "status": "passed"
+      },
+      {
+        "name": "invalid/past preferred date is rejected: 2026-10-26",
+        "status": "passed"
+      },
+      {
+        "name": "preferred date allows today and real leap days",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at 600001 milliseconds: false",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at 600000 milliseconds: true",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at 1 milliseconds: true",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at 0 milliseconds: true",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at -3599999 milliseconds: true",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at -3600000 milliseconds: true",
+        "status": "passed"
+      },
+      {
+        "name": "Meet window at -3600001 milliseconds: false",
+        "status": "passed"
+      },
+      {
+        "name": "terminal/unresolved COMPLETED cannot open Meet or request a move",
+        "status": "passed"
+      },
+      {
+        "name": "terminal/unresolved CANCELLED cannot open Meet or request a move",
+        "status": "passed"
+      },
+      {
+        "name": "terminal/unresolved NO_SHOW cannot open Meet or request a move",
+        "status": "passed"
+      },
+      {
+        "name": "terminal/unresolved STAR_PENDING cannot open Meet or request a move",
+        "status": "passed"
+      },
+      {
+        "name": "terminal/unresolved DISPUTED cannot open Meet or request a move",
+        "status": "passed"
+      },
+      {
+        "name": "reschedule eligibility uses exact 24h at 86400000 milliseconds",
+        "status": "passed"
+      },
+      {
+        "name": "reschedule eligibility uses exact 24h at 86399999 milliseconds",
+        "status": "passed"
+      },
+      {
+        "name": "reschedule eligibility uses exact 24h at 86400001 milliseconds",
+        "status": "passed"
+      },
+      {
+        "name": "missing/unsafe Meet links stay hidden within the time window",
+        "status": "passed"
+      },
+      {
+        "name": "page beyond the end keeps the true total; calendar overflow is explicit",
+        "status": "passed"
+      },
+      {
+        "name": "SQL binds ownership, end-exclusive periods and stable archive order",
+        "status": "passed"
+      },
+      {
+        "name": "DB failures become sanitized Result.Err",
+        "status": "passed"
+      },
+      {
+        "name": "CRM task is addressed to one lesson/student and active assigned manager",
+        "status": "passed"
+      },
+      {
+        "name": "teacher cannot label a conducted lesson as student no-show",
+        "status": "passed"
+      },
+      {
+        "name": "explicit absence is stored as a report classification without changing the lesson or finances",
+        "status": "passed"
+      },
+      {
+        "name": "worker recognizes the committed reschedule event instead of dead-lettering an unknown topic",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-history.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "quantitative balances are exact Decimal strings, with no money/account totals",
+        "status": "passed"
+      },
+      {
+        "name": "legacy published charges keep unknown balances null without losing their deduction",
+        "status": "passed"
+      },
+      {
+        "name": "empty pages retain true total, and SQL is scoped with stable descending order",
+        "status": "passed"
+      },
+      {
+        "name": "DB errors are sanitized",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"page\":[\"1\",\"2\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"page\":\"1.1\"}",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"period\":\"archive\"}",
+        "status": "passed"
+      },
+      {
+        "name": "history query rejects invalid/scope-selecting input: {\"studentProfileId\":\"another\"}",
+        "status": "passed"
+      },
+      {
+        "name": "history pagination defaults match the declared contract",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 addresses one historical lesson before count/page without scanning pages",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 validates addressed history inputs {\"lessonId\":\"not-an-id\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 validates addressed history inputs {\"lessonId\":[\"a\",\"b\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 validates addressed history inputs {\"subjectId\":\"foreign\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-029 general pagination consumers do not accept lesson filters",
+        "status": "passed"
+      },
+      {
+        "name": "dispute creates only a typed, lesson-addressed CRM task",
+        "status": "passed"
+      },
+      {
+        "name": "an existing OPEN case is 409 before a new write",
+        "status": "passed"
+      },
+      {
+        "name": "an existing IN_PROGRESS case is 409 before a new write",
+        "status": "passed"
+      },
+      {
+        "name": "exact 30-day window accepts age 2592000000 milliseconds",
+        "status": "passed"
+      },
+      {
+        "name": "exact 30-day window accepts age 2591999999 milliseconds",
+        "status": "passed"
+      },
+      {
+        "name": "old/future lesson age 2592000001 milliseconds is rejected",
+        "status": "passed"
+      },
+      {
+        "name": "old/future lesson age -1 milliseconds is rejected",
+        "status": "passed"
+      },
+      {
+        "name": "cancelled/unpublished/nonexistent consumption cannot be disputed",
+        "status": "passed"
+      },
+      {
+        "name": "another student lesson is 403 even when a service is called directly",
+        "status": "passed"
+      },
+      {
+        "name": "invalid dispute description cannot create a case: length short",
+        "status": "passed"
+      },
+      {
+        "name": "invalid dispute description cannot create a case: length                     ",
+        "status": "passed"
+      },
+      {
+        "name": "invalid dispute description cannot create a case: length xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "status": "passed"
+      },
+      {
+        "name": "finance consumption captures the entire subscription balance before/after with exact decimals",
+        "status": "passed"
+      },
+      {
+        "name": "finance ledger persists quantitative snapshots separately from monetary balance_snapshot",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-subjects.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "math and expired physics retain separate capabilities and paid balances",
+        "status": "passed"
+      },
+      {
+        "name": "freeze keeps owned issued resources visible and closes subject live access",
+        "status": "passed"
+      },
+      {
+        "name": "a separately approved limited admission never adds paid rights; a confirmed last payment uses only the paid grant",
+        "status": "passed"
+      },
+      {
+        "name": "zero rights, unknown history and a subject without a started plan are distinguishable",
+        "status": "passed"
+      },
+      {
+        "name": "wrapper returns one financial anchor; groups are kept separate and unknown siblings propagate null",
+        "status": "passed"
+      },
+      {
+        "name": "one SELECT binds actor and profile, only started periods, confirmed quantity sources and valid admissions",
+        "status": "passed"
+      },
+      {
+        "name": "SDK uses the typed GET, cookies, abort and no-store; OpenAPI has no input selector",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-skills.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "map selection accepts omitted subject and normalizes UUID",
+        "status": "passed"
+      },
+      {
+        "name": "rejects map query {\"subjectId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects map query {\"subjectId\":[\"7d338500-cb6c-4318-a27b-8768110fe919\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects map query {\"studentProfileId\":\"7d338500-cb6c-4318-a27b-8768110fe919\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects map query {\"page\":\"1\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects map query {\"subjectId\":{\"id\":\"7d338500-cb6c-4318-a27b-8768110fe919\"}}",
+        "status": "passed"
+      },
+      {
+        "name": "audit requires skill, has bounded paging and explicit four-state contract",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {\"skillId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {\"skillId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {\"skillId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {\"skillId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"page\":\"1e2\"}",
+        "status": "passed"
+      },
+      {
+        "name": "rejects audit query {\"skillId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"studentId\":\"7d338500-cb6c-4318-a27b-8768110fe919\"}",
+        "status": "passed"
+      },
+      {
+        "name": "map exposes normalized timestamps and keeps date-only goals",
+        "status": "passed"
+      },
+      {
+        "name": "maps fails closed on absent database row",
+        "status": "passed"
+      },
+      {
+        "name": "audit fails closed on absent database row",
+        "status": "passed"
+      },
+      {
+        "name": "snapshots fails closed on absent database row",
+        "status": "passed"
+      },
+      {
+        "name": "maps does not disclose nonexistent versus foreign resource",
+        "status": "passed"
+      },
+      {
+        "name": "audit does not disclose nonexistent versus foreign resource",
+        "status": "passed"
+      },
+      {
+        "name": "snapshots does not disclose nonexistent versus foreign resource",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot selection validates subject without changing paging defaults",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot input rejects {\"subjectId\":\"bad\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot input rejects {\"subjectId\":[\"7d338500-cb6c-4318-a27b-8768110fe919\"]}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot input rejects {\"subjectId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"page\":\"0\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot input rejects {\"subjectId\":\"7d338500-cb6c-4318-a27b-8768110fe919\",\"pageSize\":\"101\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot input rejects {\"studentId\":\"7d338500-cb6c-4318-a27b-8768110fe919\"}",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot subject is bound before shared count and pagination; frozen content is not rebuilt",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 snapshot SDK retains no-filter URL and serializes scoped history input",
+        "status": "passed"
+      },
+      {
+        "name": "TASK-031 counter read retains confirmed conducted subject scope across enrollments without subscription or current teacher filtering",
+        "status": "passed"
+      },
+      {
+        "name": "audit serializes dates, preserves immutable content and empty-page total",
+        "status": "passed"
+      },
+      {
+        "name": "snapshots serializes dates, preserves immutable content and empty-page total",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-transport.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "TASK-027 transport keeps additive contact fields and drops private data",
+        "status": "passed"
+      },
+      {
+        "name": "client preserves RFC Problem Details message and manager contacts for suspended access",
+        "status": "passed"
+      },
+      {
+        "name": "client keeps legacy errors compatible and discards malformed contacts",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-reports-sdk.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "generated read-receipt SDK accepts empty HTTP 204",
+        "status": "passed"
+      },
+      {
+        "name": "generated read-receipt SDK accepts empty HTTP 200",
+        "status": "passed"
+      },
+      {
+        "name": "JSON operations still reject an unexpected empty response",
+        "status": "passed"
+      },
+      {
+        "name": "bodyless operation still preserves JSON errors and never treats 403 as success",
+        "status": "passed"
+      },
+      {
+        "name": "no-content SDK rejects a successful but unexpected JSON response body",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-security-sdk.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "generated change-password uses PATCH and preserves password whitespace",
+        "status": "passed"
+      },
+      {
+        "name": "generated revoke-session consumes empty204",
+        "status": "passed"
+      },
+      {
+        "name": "generated avatar uses Blob without leaking binary transport flag into fetch",
+        "status": "passed"
+      },
+      {
+        "name": "avatar error retains402 manager contacts instead of a successful Blob",
+        "status": "passed"
+      }
+    ]
+  },
+  {
+    "file": "student-notifications-sdk.test.mjs",
+    "status": "passed",
+    "cases": [
+      {
+        "name": "generated one read accepts bodyless204 and sends CSRF/key",
+        "status": "passed"
+      },
+      {
+        "name": "generated all read accepts bodyless204 and sends CSRF/key",
+        "status": "passed"
+      },
+      {
+        "name": "badge SDK preserves numeric count",
+        "status": "passed"
+      },
+      {
+        "name": "read SDK preserves404 instead of treating missing item as successful void",
+        "status": "passed"
+      }
+    ]
+  }
+]

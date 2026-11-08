@@ -1,0 +1,569 @@
+[
+  {
+    "name": "@online-school/ui",
+    "version": "0.0.0",
+    "path": "D:\\OnlineSchool\\packages\\ui",
+    "private": true,
+    "dependencies": {
+      "@fontsource-variable/golos-text": {
+        "from": "@fontsource-variable/golos-text",
+        "version": "5.2.8",
+        "resolved": "https://registry.npmjs.org/@fontsource-variable/golos-text/-/golos-text-5.2.8.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@fontsource-variable+golos-text@5.2.8\\node_modules\\@fontsource-variable\\golos-text"
+      },
+      "@radix-ui/react-alert-dialog": {
+        "from": "@radix-ui/react-alert-dialog",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-alert-dialog/-/react-alert-dialog-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-alert-dialo_a1a23861c543386307a5a4f1ead3679c\\node_modules\\@radix-ui\\react-alert-dialog",
+        "dependencies": {
+          "@radix-ui/primitive": {
+            "from": "@radix-ui/primitive",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/primitive/-/primitive-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+primitive@1.1.1\\node_modules\\@radix-ui\\primitive"
+          },
+          "@radix-ui/react-compose-refs": {
+            "from": "@radix-ui/react-compose-refs",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-compose-ref_e08faa18db608a966b2b768604739fea\\node_modules\\@radix-ui\\react-compose-refs"
+          },
+          "@radix-ui/react-context": {
+            "from": "@radix-ui/react-context",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-context/-/react-context-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-context@1.1_95780d216c4bdf385471558720d8829c\\node_modules\\@radix-ui\\react-context"
+          },
+          "@radix-ui/react-dialog": {
+            "from": "@radix-ui/react-dialog",
+            "version": "1.1.6",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-dialog/-/react-dialog-1.1.6.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dialog@1.1._9111ebc3bb5cbd8b04040ff4b116758b\\node_modules\\@radix-ui\\react-dialog"
+          },
+          "@radix-ui/react-primitive": {
+            "from": "@radix-ui/react-primitive",
+            "version": "2.0.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-2.0.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-primitive@2_d3238b7e116110d41548e23db79a8a76\\node_modules\\@radix-ui\\react-primitive"
+          },
+          "@radix-ui/react-slot": {
+            "from": "@radix-ui/react-slot",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-slot@1.1.2_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-slot"
+          },
+          "@types/react": {
+            "from": "@types/react",
+            "version": "18.3.31",
+            "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+          },
+          "@types/react-dom": {
+            "from": "@types/react-dom",
+            "version": "18.3.7",
+            "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom"
+          },
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          },
+          "react-dom": {
+            "from": "react-dom",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom"
+          }
+        }
+      },
+      "@radix-ui/react-dialog": {
+        "from": "@radix-ui/react-dialog",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-dialog/-/react-dialog-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dialog@1.1._9111ebc3bb5cbd8b04040ff4b116758b\\node_modules\\@radix-ui\\react-dialog",
+        "dependencies": {
+          "@radix-ui/primitive": {
+            "from": "@radix-ui/primitive",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/primitive/-/primitive-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+primitive@1.1.1\\node_modules\\@radix-ui\\primitive"
+          },
+          "@radix-ui/react-compose-refs": {
+            "from": "@radix-ui/react-compose-refs",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-compose-ref_e08faa18db608a966b2b768604739fea\\node_modules\\@radix-ui\\react-compose-refs"
+          },
+          "@radix-ui/react-context": {
+            "from": "@radix-ui/react-context",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-context/-/react-context-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-context@1.1_95780d216c4bdf385471558720d8829c\\node_modules\\@radix-ui\\react-context"
+          },
+          "@radix-ui/react-dismissable-layer": {
+            "from": "@radix-ui/react-dismissable-layer",
+            "version": "1.1.5",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-dismissable-layer/-/react-dismissable-layer-1.1.5.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dismissable_e89532d76c271cae2a047555f58e6901\\node_modules\\@radix-ui\\react-dismissable-layer"
+          },
+          "@radix-ui/react-focus-guards": {
+            "from": "@radix-ui/react-focus-guards",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-focus-guards/-/react-focus-guards-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-focus-guard_542d319b65fe79d9dcbdda26050ed61a\\node_modules\\@radix-ui\\react-focus-guards"
+          },
+          "@radix-ui/react-focus-scope": {
+            "from": "@radix-ui/react-focus-scope",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-focus-scope/-/react-focus-scope-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-focus-scope_bee09347e64a2dc097b496315f4bf319\\node_modules\\@radix-ui\\react-focus-scope"
+          },
+          "@radix-ui/react-id": {
+            "from": "@radix-ui/react-id",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-id/-/react-id-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-id@1.1.0_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-id"
+          },
+          "@radix-ui/react-portal": {
+            "from": "@radix-ui/react-portal",
+            "version": "1.1.4",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-portal/-/react-portal-1.1.4.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-portal@1.1._5b0cf1502e2062b514a1c141a6ba53c8\\node_modules\\@radix-ui\\react-portal"
+          },
+          "@radix-ui/react-presence": {
+            "from": "@radix-ui/react-presence",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-presence@1._7f804af4f09b8f72579e1c97f0d0c923\\node_modules\\@radix-ui\\react-presence"
+          },
+          "@radix-ui/react-primitive": {
+            "from": "@radix-ui/react-primitive",
+            "version": "2.0.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-2.0.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-primitive@2_d3238b7e116110d41548e23db79a8a76\\node_modules\\@radix-ui\\react-primitive"
+          },
+          "@radix-ui/react-slot": {
+            "from": "@radix-ui/react-slot",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-slot@1.1.2_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-slot"
+          },
+          "@radix-ui/react-use-controllable-state": {
+            "from": "@radix-ui/react-use-controllable-state",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-use-controllable-state/-/react-use-controllable-state-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-use-control_b6184d3e803fe2f97b66250a7724519f\\node_modules\\@radix-ui\\react-use-controllable-state"
+          },
+          "@types/react": {
+            "from": "@types/react",
+            "version": "18.3.31",
+            "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+          },
+          "@types/react-dom": {
+            "from": "@types/react-dom",
+            "version": "18.3.7",
+            "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom"
+          },
+          "aria-hidden": {
+            "from": "aria-hidden",
+            "version": "1.2.6",
+            "resolved": "https://registry.npmjs.org/aria-hidden/-/aria-hidden-1.2.6.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\aria-hidden@1.2.6\\node_modules\\aria-hidden"
+          },
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          },
+          "react-dom": {
+            "from": "react-dom",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom"
+          },
+          "react-remove-scroll": {
+            "from": "react-remove-scroll",
+            "version": "2.7.2",
+            "resolved": "https://registry.npmjs.org/react-remove-scroll/-/react-remove-scroll-2.7.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-remove-scroll@2.7.2_@types+react@18.3.31_react@18.3.1\\node_modules\\react-remove-scroll"
+          }
+        }
+      },
+      "@radix-ui/react-dropdown-menu": {
+        "from": "@radix-ui/react-dropdown-menu",
+        "version": "2.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-dropdown-menu/-/react-dropdown-menu-2.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dropdown-me_77e918aa902a1e9042bc0e96e051d4ba\\node_modules\\@radix-ui\\react-dropdown-menu",
+        "dependencies": {
+          "@radix-ui/primitive": {
+            "from": "@radix-ui/primitive",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/primitive/-/primitive-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+primitive@1.1.1\\node_modules\\@radix-ui\\primitive"
+          },
+          "@radix-ui/react-compose-refs": {
+            "from": "@radix-ui/react-compose-refs",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-compose-ref_e08faa18db608a966b2b768604739fea\\node_modules\\@radix-ui\\react-compose-refs"
+          },
+          "@radix-ui/react-context": {
+            "from": "@radix-ui/react-context",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-context/-/react-context-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-context@1.1_95780d216c4bdf385471558720d8829c\\node_modules\\@radix-ui\\react-context"
+          },
+          "@radix-ui/react-id": {
+            "from": "@radix-ui/react-id",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-id/-/react-id-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-id@1.1.0_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-id"
+          },
+          "@radix-ui/react-menu": {
+            "from": "@radix-ui/react-menu",
+            "version": "2.1.6",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-menu/-/react-menu-2.1.6.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-menu@2.1.6__aada1c8bf0087427613767e24bbdaed5\\node_modules\\@radix-ui\\react-menu"
+          },
+          "@radix-ui/react-primitive": {
+            "from": "@radix-ui/react-primitive",
+            "version": "2.0.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-2.0.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-primitive@2_d3238b7e116110d41548e23db79a8a76\\node_modules\\@radix-ui\\react-primitive"
+          },
+          "@radix-ui/react-use-controllable-state": {
+            "from": "@radix-ui/react-use-controllable-state",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-use-controllable-state/-/react-use-controllable-state-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-use-control_b6184d3e803fe2f97b66250a7724519f\\node_modules\\@radix-ui\\react-use-controllable-state"
+          },
+          "@types/react": {
+            "from": "@types/react",
+            "version": "18.3.31",
+            "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+          },
+          "@types/react-dom": {
+            "from": "@types/react-dom",
+            "version": "18.3.7",
+            "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom"
+          },
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          },
+          "react-dom": {
+            "from": "react-dom",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom"
+          }
+        }
+      },
+      "@radix-ui/react-popover": {
+        "from": "@radix-ui/react-popover",
+        "version": "1.1.6",
+        "resolved": "https://registry.npmjs.org/@radix-ui/react-popover/-/react-popover-1.1.6.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-popover@1.1_f4f9861f7864e88ad08732e1cf7ad163\\node_modules\\@radix-ui\\react-popover",
+        "dependencies": {
+          "@radix-ui/primitive": {
+            "from": "@radix-ui/primitive",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/primitive/-/primitive-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+primitive@1.1.1\\node_modules\\@radix-ui\\primitive"
+          },
+          "@radix-ui/react-compose-refs": {
+            "from": "@radix-ui/react-compose-refs",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-compose-refs/-/react-compose-refs-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-compose-ref_e08faa18db608a966b2b768604739fea\\node_modules\\@radix-ui\\react-compose-refs"
+          },
+          "@radix-ui/react-context": {
+            "from": "@radix-ui/react-context",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-context/-/react-context-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-context@1.1_95780d216c4bdf385471558720d8829c\\node_modules\\@radix-ui\\react-context"
+          },
+          "@radix-ui/react-dismissable-layer": {
+            "from": "@radix-ui/react-dismissable-layer",
+            "version": "1.1.5",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-dismissable-layer/-/react-dismissable-layer-1.1.5.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-dismissable_e89532d76c271cae2a047555f58e6901\\node_modules\\@radix-ui\\react-dismissable-layer"
+          },
+          "@radix-ui/react-focus-guards": {
+            "from": "@radix-ui/react-focus-guards",
+            "version": "1.1.1",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-focus-guards/-/react-focus-guards-1.1.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-focus-guard_542d319b65fe79d9dcbdda26050ed61a\\node_modules\\@radix-ui\\react-focus-guards"
+          },
+          "@radix-ui/react-focus-scope": {
+            "from": "@radix-ui/react-focus-scope",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-focus-scope/-/react-focus-scope-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-focus-scope_bee09347e64a2dc097b496315f4bf319\\node_modules\\@radix-ui\\react-focus-scope"
+          },
+          "@radix-ui/react-id": {
+            "from": "@radix-ui/react-id",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-id/-/react-id-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-id@1.1.0_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-id"
+          },
+          "@radix-ui/react-popper": {
+            "from": "@radix-ui/react-popper",
+            "version": "1.2.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-popper/-/react-popper-1.2.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-popper@1.2._f4efcddfde86c5fe9b32b4f08411f17f\\node_modules\\@radix-ui\\react-popper"
+          },
+          "@radix-ui/react-portal": {
+            "from": "@radix-ui/react-portal",
+            "version": "1.1.4",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-portal/-/react-portal-1.1.4.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-portal@1.1._5b0cf1502e2062b514a1c141a6ba53c8\\node_modules\\@radix-ui\\react-portal"
+          },
+          "@radix-ui/react-presence": {
+            "from": "@radix-ui/react-presence",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-presence@1._7f804af4f09b8f72579e1c97f0d0c923\\node_modules\\@radix-ui\\react-presence"
+          },
+          "@radix-ui/react-primitive": {
+            "from": "@radix-ui/react-primitive",
+            "version": "2.0.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-primitive/-/react-primitive-2.0.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-primitive@2_d3238b7e116110d41548e23db79a8a76\\node_modules\\@radix-ui\\react-primitive"
+          },
+          "@radix-ui/react-slot": {
+            "from": "@radix-ui/react-slot",
+            "version": "1.1.2",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-slot/-/react-slot-1.1.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-slot@1.1.2_@types+react@18.3.31_react@18.3.1\\node_modules\\@radix-ui\\react-slot"
+          },
+          "@radix-ui/react-use-controllable-state": {
+            "from": "@radix-ui/react-use-controllable-state",
+            "version": "1.1.0",
+            "resolved": "https://registry.npmjs.org/@radix-ui/react-use-controllable-state/-/react-use-controllable-state-1.1.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@radix-ui+react-use-control_b6184d3e803fe2f97b66250a7724519f\\node_modules\\@radix-ui\\react-use-controllable-state"
+          },
+          "@types/react": {
+            "from": "@types/react",
+            "version": "18.3.31",
+            "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+          },
+          "@types/react-dom": {
+            "from": "@types/react-dom",
+            "version": "18.3.7",
+            "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom"
+          },
+          "aria-hidden": {
+            "from": "aria-hidden",
+            "version": "1.2.6",
+            "resolved": "https://registry.npmjs.org/aria-hidden/-/aria-hidden-1.2.6.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\aria-hidden@1.2.6\\node_modules\\aria-hidden"
+          },
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          },
+          "react-dom": {
+            "from": "react-dom",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom"
+          },
+          "react-remove-scroll": {
+            "from": "react-remove-scroll",
+            "version": "2.7.2",
+            "resolved": "https://registry.npmjs.org/react-remove-scroll/-/react-remove-scroll-2.7.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-remove-scroll@2.7.2_@types+react@18.3.31_react@18.3.1\\node_modules\\react-remove-scroll"
+          }
+        }
+      },
+      "lucide-react": {
+        "from": "lucide-react",
+        "version": "0.468.0",
+        "resolved": "https://registry.npmjs.org/lucide-react/-/lucide-react-0.468.0.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\lucide-react@0.468.0_react@18.3.1\\node_modules\\lucide-react",
+        "dependencies": {
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          }
+        }
+      },
+      "react": {
+        "from": "react",
+        "version": "18.3.1",
+        "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react",
+        "dependencies": {
+          "loose-envify": {
+            "from": "loose-envify",
+            "version": "1.4.0",
+            "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\loose-envify@1.4.0\\node_modules\\loose-envify"
+          }
+        }
+      },
+      "react-dom": {
+        "from": "react-dom",
+        "version": "18.3.1",
+        "resolved": "https://registry.npmjs.org/react-dom/-/react-dom-18.3.1.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react-dom@18.3.1_react@18.3.1\\node_modules\\react-dom",
+        "dependencies": {
+          "loose-envify": {
+            "from": "loose-envify",
+            "version": "1.4.0",
+            "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\loose-envify@1.4.0\\node_modules\\loose-envify"
+          },
+          "react": {
+            "from": "react",
+            "version": "18.3.1",
+            "resolved": "https://registry.npmjs.org/react/-/react-18.3.1.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\react@18.3.1\\node_modules\\react"
+          },
+          "scheduler": {
+            "from": "scheduler",
+            "version": "0.23.2",
+            "resolved": "https://registry.npmjs.org/scheduler/-/scheduler-0.23.2.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\scheduler@0.23.2\\node_modules\\scheduler"
+          }
+        }
+      }
+    },
+    "devDependencies": {
+      "typescript": {
+        "from": "typescript",
+        "version": "6.0.3",
+        "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript"
+      },
+      "@types/react": {
+        "from": "@types/react",
+        "version": "18.3.31",
+        "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react",
+        "dependencies": {
+          "@types/prop-types": {
+            "from": "@types/prop-types",
+            "version": "15.7.15",
+            "resolved": "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.15.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+prop-types@15.7.15\\node_modules\\@types\\prop-types"
+          },
+          "csstype": {
+            "from": "csstype",
+            "version": "3.2.3",
+            "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.2.3.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\csstype@3.2.3\\node_modules\\csstype"
+          }
+        }
+      },
+      "@types/react-dom": {
+        "from": "@types/react-dom",
+        "version": "18.3.7",
+        "resolved": "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.3.7.tgz",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react-dom@18.3.7_@types+react@18.3.31\\node_modules\\@types\\react-dom",
+        "dependencies": {
+          "@types/react": {
+            "from": "@types/react",
+            "version": "18.3.31",
+            "resolved": "https://registry.npmjs.org/@types/react/-/react-18.3.31.tgz",
+            "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+react@18.3.31\\node_modules\\@types\\react"
+          }
+        }
+      }
+    },
+    "unsavedDependencies": {
+      "culori": {
+        "from": "culori",
+        "version": "link:../../node_modules/.pnpm/culori@4.0.2/node_modules/culori",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\culori@4.0.2\\node_modules\\culori"
+      },
+      "eslint": {
+        "from": "eslint",
+        "version": "link:../../node_modules/.pnpm/eslint@9.39.5_jiti@2.7.0/node_modules/eslint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\eslint@9.39.5_jiti@2.7.0\\node_modules\\eslint"
+      },
+      "eslint-config-prettier": {
+        "from": "eslint-config-prettier",
+        "version": "link:../../node_modules/.pnpm/eslint-config-prettier@10.1.8_eslint@9.39.5_jiti@2.7.0_/node_modules/eslint-config-prettier",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\eslint-config-prettier@10.1.8_eslint@9.39.5_jiti@2.7.0_\\node_modules\\eslint-config-prettier"
+      },
+      "globals": {
+        "from": "globals",
+        "version": "link:../../node_modules/.pnpm/globals@17.13.0/node_modules/globals",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\globals@17.13.0\\node_modules\\globals"
+      },
+      "jest": {
+        "from": "jest",
+        "version": "link:../../node_modules/.pnpm/jest@30.5.2_@types+node@24.19.2/node_modules/jest",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\jest@30.5.2_@types+node@24.19.2\\node_modules\\jest"
+      },
+      "postcss-value-parser": {
+        "from": "postcss-value-parser",
+        "version": "link:../../node_modules/.pnpm/postcss-value-parser@4.2.0/node_modules/postcss-value-parser",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\postcss-value-parser@4.2.0\\node_modules\\postcss-value-parser"
+      },
+      "prettier": {
+        "from": "prettier",
+        "version": "link:../../node_modules/.pnpm/prettier@3.9.10/node_modules/prettier",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\prettier@3.9.10\\node_modules\\prettier"
+      },
+      "stylelint": {
+        "from": "stylelint",
+        "version": "link:../../node_modules/.pnpm/stylelint@16.26.1_typescript@6.0.3/node_modules/stylelint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\stylelint@16.26.1_typescript@6.0.3\\node_modules\\stylelint"
+      },
+      "supertest": {
+        "from": "supertest",
+        "version": "link:../../node_modules/.pnpm/supertest@7.3.1/node_modules/supertest",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\supertest@7.3.1\\node_modules\\supertest"
+      },
+      "@eslint/js": {
+        "from": "@eslint/js",
+        "version": "link:../../node_modules/.pnpm/@eslint+js@9.39.5/node_modules/@eslint/js",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@eslint+js@9.39.5\\node_modules\\@eslint\\js"
+      },
+      "typescript-eslint": {
+        "from": "typescript-eslint",
+        "version": "link:../../node_modules/.pnpm/typescript-eslint@8.72.0_es_0cf7ec737a232f6a7bbff28cdbde1a06/node_modules/typescript-eslint",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\typescript-eslint@8.72.0_es_0cf7ec737a232f6a7bbff28cdbde1a06\\node_modules\\typescript-eslint"
+      },
+      "@jest/globals": {
+        "from": "@jest/globals",
+        "version": "link:../../node_modules/.pnpm/@jest+globals@30.5.2/node_modules/@jest/globals",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@jest+globals@30.5.2\\node_modules\\@jest\\globals"
+      },
+      "turbo": {
+        "from": "turbo",
+        "version": "link:../../node_modules/.pnpm/turbo@2.11.10/node_modules/turbo",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\turbo@2.11.10\\node_modules\\turbo"
+      },
+      "@playwright/test": {
+        "from": "@playwright/test",
+        "version": "link:../../node_modules/.pnpm/@playwright+test@1.64.1/node_modules/@playwright/test",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@playwright+test@1.64.1\\node_modules\\@playwright\\test"
+      },
+      "@types/node": {
+        "from": "@types/node",
+        "version": "link:../../node_modules/.pnpm/@types+node@24.19.2/node_modules/@types/node",
+        "path": "D:\\OnlineSchool\\node_modules\\.pnpm\\@types+node@24.19.2\\node_modules\\@types\\node"
+      }
+    }
+  }
+]

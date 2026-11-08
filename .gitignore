@@ -17,3 +17,9 @@ packages/db/src/generated/
 
 .vercel
 .env*
+
+# Temporary nested repositories from recovery rehearsals stay local.
+# Their non-Git contents are preserved in output/recovery-workspaces-2026-11-08.tar.gz.
+output/k8k-tasks/TASK-001/recovery-checks/*/index/
+output/k8k-tasks/TASK-001/recovery-checks/*/worktree/
+output/k8k-tasks/TASK-006/patch-recovery/

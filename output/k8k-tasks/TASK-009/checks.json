@@ -1,0 +1,78 @@
+{
+  "basis": {
+    "head": "171db2142858e035594737e141d422fa5378e844",
+    "branch": "feat/k8k-design",
+    "sourceDigest": "f4020b54cbb4f47cc3da5e42171b697f2c604e432f09774c0c2a2c408f25c79d",
+    "dirtyDigest": "90d3461a10826873673eb101d747dbd1ac9ac73454140362af7c0aa3a62078e7"
+  },
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/ui build",
+      "log": "ui-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/ui test",
+      "log": "ui-test.log",
+      "passedTests": 119,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "log": "ui-lint.log",
+      "cssFiles": 14,
+      "legacyDeclarations": 715,
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck:ui-composites",
+      "log": "typecheck.log",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm exec eslint apps/student-cabinet/src/pages/Lessons.tsx apps/student-cabinet/tests/ui-composites/fixture.tsx scripts/k8k-composites-evidence.mjs --max-warnings 0",
+      "log": "targeted-lint.log",
+      "exitCode": 0
+    },
+    {
+      "command": "pnpm k8k:composites:evidence",
+      "log": "evidence.log",
+      "run": "output/k8k-tasks/TASK-009/runs/2026-11-04T04-40-16.278Z",
+      "summary": {
+        "passed": true,
+        "browserCases": 44,
+        "screenshots": 36,
+        "routes": 48,
+        "maxTotal": 244331,
+        "sourceFiles": 484,
+        "mockLessonReads": 32,
+        "mockResults": 32,
+        "unexpectedNetworkOrBrowserErrors": []
+      },
+      "exitCode": 0
+    }
+  ],
+  "routeMaxima": {
+    "student-cabinet": 205971,
+    "manager-web": 244331,
+    "platform": 131523
+  },
+  "gzipDeltas": {
+    "student-cabinet": [
+      1107
+    ],
+    "manager-web": [
+      661,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668
+    ],
+    "platform": [
+      669
+    ]
+  },
+  "optionalPasskey": 184696
+}

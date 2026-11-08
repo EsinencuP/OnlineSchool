@@ -1,0 +1,687 @@
+{
+  "oldCommit": "171db2142858e035594737e141d422fa5378e844",
+  "sameCommit": true,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/api/src/student/dashboard/dashboard.service.ts",
+      "state": "changed"
+    },
+    {
+      "path": "apps/platform/src/App.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/package.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/student-cabinet/src/Layout.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/main.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Account.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Dashboard.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Learning.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/src/router.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/tests/fixture-server.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/ui-stack.md",
+      "state": "changed"
+    },
+    {
+      "path": "output/stu12/browser/.last-run.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "output/stu12/desktop.png",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "output/stu12/mobile.png",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "output/stu12/playwright.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "package.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "packages/ui/src/freshness.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "packages/ui/src/icon.tsx",
+      "state": "same"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "state": "changed"
+    },
+    {
+      "path": "packages/ui/src/shell.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "packages/ui/src/style.css",
+      "state": "changed"
+    },
+    {
+      "path": "packages/ui/tests/contrast.test.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "tests/unit/student-dashboard.test.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "REDESIGN_REPORT.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/student-cabinet/src/StudentNotificationMenu.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/Reports.tsx",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-presentation.ts",
+      "state": "changed"
+    },
+    {
+      "path": "apps/student-cabinet/src/student-widgets.tsx",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/src/student.css",
+      "state": "same"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/fixture.tsx",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "apps/student-cabinet/tests/k8k-subscriptions/index.html",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/K8K_AI_CODER_TASKS.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/K8K_Academy_UX_decision_register_v0.9.md",
+      "state": "same"
+    },
+    {
+      "path": "docs/K8K_Academy_VIS12_dashboard_module_contracts_v1.0.md",
+      "state": "same"
+    },
+    {
+      "path": "docs/K8K_DESIGN_INSTRUCTIONS.md",
+      "state": "changed"
+    },
+    {
+      "path": "docs/K8K_IMPLEMENTATION_STATUS.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/K8K_REDESIGN_PLAN.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/K8K_REQUIREMENTS_MATRIX.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/EXECUTION_LOG.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/README.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/SOURCES.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-001.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-002.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-003.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-004.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-005.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-006.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-007.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-008.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-009.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-010.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-011.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-012.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-013.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-014.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-015.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-016.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-017.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-018.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-019.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-020.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-021.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-022.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-023.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-024.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-025.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-026.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-027.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-028.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-029.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-030.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-031.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-032.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-033.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-034.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-035.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-036.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-037.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-038.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-039.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-040.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-041.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-042.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-043.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-044.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-045.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-046.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-047.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-048.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-049.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-050.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-051.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-052.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-053.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-054.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-055.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-056.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-057.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-058.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-059.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-060.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-061.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-062.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-063.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-064.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-065.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-066.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-067.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-068.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-069.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-070.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-071.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-072.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-073.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-074.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-075.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASK-076.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/TASKS_ALL.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/manifest.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-0-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-0-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-05.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-1-MODULE-06.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-2-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-2-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-2-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-2-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-3-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-3-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-3-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-3-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-3-MODULE-05.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-4-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-4-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-4-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-4-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-5-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-5-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-5-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-5-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-5-MODULE-05.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-6-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-6-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-6-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-6-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-6-MODULE-05.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-7-MODULE-01.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-7-MODULE-02.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-7-MODULE-03.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/modules/BLOCK-7-MODULE-04.md",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "docs/k8k-redesign-tasks/task-specifications.json",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "packages/ui/src/controls.tsx",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "packages/ui/src/locale.tsx",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "packages/ui/tests/controls.test.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-baseline.py",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-browser-smoke.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-design-check.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-implementation-smoke.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-phase3-browser.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/k8k-size-check.mjs",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "scripts/validate-k8k-taskpack.py",
+      "state": "not-in-old-manifest"
+    },
+    {
+      "path": "template/newtemp.png",
+      "state": "not-in-old-manifest"
+    }
+  ],
+  "scope": "currently captured files; historical manifest is hashes only"
+}

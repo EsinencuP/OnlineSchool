@@ -1,0 +1,125 @@
+{
+  "task": "TASK-032",
+  "scope": "No env-file/live DB/provider/deploy access",
+  "commands": [
+    {
+      "command": "pnpm --filter @online-school/api typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-check.log",
+      "detail": "targeted tsc -b"
+    },
+    {
+      "command": "pnpm --filter @online-school/worker typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "worker-check.log",
+      "detail": "targeted dist compilation only, no worker start"
+    },
+    {
+      "command": "pnpm test:stu09 --roots tests",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-tests.log",
+      "detail": "86/86 across4 named unit/HTTP/worker/SDK mock suites"
+    },
+    {
+      "command": "pnpm --filter @online-school/api export:openapi with DB-blocking NODE_OPTIONS preload",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "detail": "standard script; preload path in report; NODE_OPTIONS restored"
+    },
+    {
+      "command": "pnpm --filter @online-school/api-contracts generate:client",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "generate.log",
+      "detail": "Orval, publish-client, generate-openapi;149 ops"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "tsc -b"
+    },
+    {
+      "command": "safe programmatic Vite build shown in report.md",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-check.log",
+      "detail": "envDir:false/publicDir:false; silent build, student-check contains tsc only"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet lint",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "student-lint.log",
+      "detail": "eslint --max-warnings0"
+    },
+    {
+      "command": "pnpm exec eslint apps/api/src/student/reports/reports.controller.ts apps/api/src/student/reports/reports.dto.ts apps/api/src/student/reports/reports.service.ts apps/api/src/student/reports/reports.sql.ts tests/unit/student-reports.test.mjs tests/unit/student-reports-http.test.mjs --max-warnings 0",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "api-lint.log",
+      "detail": "changed API/tests only"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:report-export --grep \"polling stops\"",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "poll-timing.log",
+      "detail": "targeted fake-clock timing smoke after fixture correction"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet test:report-export",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "browser.log",
+      "detail": "14/14 Chromium final suite"
+    },
+    {
+      "command": "node scripts/k8k-refresh-budget.mjs --task-032",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "budget.log",
+      "detail": "50/50 routes with fonts"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-032/verify-contract.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "contracts.log",
+      "detail": "147 prior ops preserved;2 new GET; protected sources unchanged"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-032/verify-preservation.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "preservation.log",
+      "detail": "31 snapshots/31 migration checksums/original paths"
+    },
+    {
+      "command": "git -c core.safecrlf=false diff --check -- $task032Paths",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "diff-check.log",
+      "detail": "before.json paths.path; scoped dirty work"
+    },
+    {
+      "command": "node output/k8k-tasks/TASK-032/verify-artifacts.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "log": "artifacts-check.log",
+      "detail": "43 screenshots/14 browser stats/50 budgets/all report links"
+    }
+  ],
+  "initialTestHarnessCorrections": [
+    "Matrix create helper now uses current URL jobId instead of first historical fixture job",
+    "Skills link scoped to main to avoid navigation duplicate",
+    "Fake clock pauses after initial UI/queued read rather than before React Query bootstrap; timing proof retained"
+  ],
+  "generation": "Standard no-db export then Orval; no generated hand edits",
+  "baseline": "Existing Reports/list/read/worker source saved before editing; no new pre-change browser baseline run claimed"
+}

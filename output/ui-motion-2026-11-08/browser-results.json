@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "rows: 30ms stagger",
+    "press: 0.97",
+    "popover origin and entrance: false",
+    "popover exit and focus: false",
+    "dialog origin / Escape: false",
+    "drawer and rapid reopen: false",
+    "dropdown 200/160 / keyboard: false",
+    "native account disclosure: false",
+    "overlapping tabs, inert outgoing, draft retention: false",
+    "confirmed-only success pulse: false",
+    "icon crossfade: false",
+    "rows: reduced",
+    "press: reduced",
+    "popover origin and entrance: true",
+    "popover exit and focus: true",
+    "dialog origin / Escape: true",
+    "drawer and rapid reopen: true",
+    "dropdown 200/160 / keyboard: true",
+    "native account disclosure: true",
+    "overlapping tabs, inert outgoing, draft retention: true",
+    "confirmed-only success pulse: true",
+    "icon crossfade: true"
+  ],
+  "errors": []
+}

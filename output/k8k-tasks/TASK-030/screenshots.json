@@ -1,0 +1,291 @@
+{
+  "task": "TASK-030",
+  "screenshots": [
+    {
+      "path": "after/ro-1024-editor.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "5eae290d34d0f6c9f010625e7685a0d2a308183476e8555f2242d55e212ba2c0"
+    },
+    {
+      "path": "after/ro-1024-history.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "5eae290d34d0f6c9f010625e7685a0d2a308183476e8555f2242d55e212ba2c0"
+    },
+    {
+      "path": "after/ro-1024-list.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1024,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "e1ff90d801849b569f5000fdf1a3e3da0e3792c7d83153b152a1823f2a77fa5b"
+    },
+    {
+      "path": "after/ro-1280-editor.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "6313636e5540deebdc4e9fbad80dc1ed51a8a35021ba953d29418661360344e3"
+    },
+    {
+      "path": "after/ro-1280-history.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "6313636e5540deebdc4e9fbad80dc1ed51a8a35021ba953d29418661360344e3"
+    },
+    {
+      "path": "after/ro-1280-list.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1280,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "bf01732981b751f8bfa6d2b85236b429d23b4f92b2ee37e42017c75a1545be14"
+    },
+    {
+      "path": "after/ro-360-editor.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 800,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "ccdd492269a84b9eeca7040b5798ddbf9f613a78a3509af254b62e380ff9c66a"
+    },
+    {
+      "path": "after/ro-360-history.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 800,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "dc742924c490ac497bf32a6b31f6cd004ce058bc447eee81eb430eb8a4e9cde5"
+    },
+    {
+      "path": "after/ro-360-list.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 360,
+      "height": 800,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "99585d69c7ff7289ed66a563b37949fecc9a33ea268bf311c4d9952ec23431af"
+    },
+    {
+      "path": "after/ro-768-editor.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "c2c9994c2cbab7fcde4fd68052466c3b56b0e7cb1f7ea374e9888cca27119ef4"
+    },
+    {
+      "path": "after/ro-768-history.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "c2c9994c2cbab7fcde4fd68052466c3b56b0e7cb1f7ea374e9888cca27119ef4"
+    },
+    {
+      "path": "after/ro-768-list.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 768,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "d2096d47207d75e4e6d839b7c3938a8e88c513c17ef0b2163bf09ffd79feac5a"
+    },
+    {
+      "path": "after/ro-submit-unknown.png",
+      "role": "STUDENT",
+      "locale": "ro",
+      "width": 1600,
+      "height": 1000,
+      "view": "unknown",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "47f022633064e9842e9084766794460479eaa129213d2c63e91a21a6f63ede02"
+    },
+    {
+      "path": "after/ru-1024-editor.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "a45325fdd6e8a78596a0bdd0fd9db55a887692d5e18e9d6f062f7d1727ee67f2"
+    },
+    {
+      "path": "after/ru-1024-history.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "a45325fdd6e8a78596a0bdd0fd9db55a887692d5e18e9d6f062f7d1727ee67f2"
+    },
+    {
+      "path": "after/ru-1024-list.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1024,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "7ebb6e2827bc779a056c29822ff005d8e7c265515ad88d350790b9715dd413af"
+    },
+    {
+      "path": "after/ru-1280-editor.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "7e63f78ab71bcc305e10e09875c036c5ce341ba11de3871afb20fe317db12596"
+    },
+    {
+      "path": "after/ru-1280-history.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "7e63f78ab71bcc305e10e09875c036c5ce341ba11de3871afb20fe317db12596"
+    },
+    {
+      "path": "after/ru-1280-list.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1280,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "a7ba8ed615f48f1c45a9682a99bf4df64fab98b0f9712c80b66039c5c7b1793c"
+    },
+    {
+      "path": "after/ru-360-editor.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 800,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "74ad1be5f3c7229687c360e00d2d03e836d41ce1a10036d85bb9c02ca3bfcdd8"
+    },
+    {
+      "path": "after/ru-360-history.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 800,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "74ad1be5f3c7229687c360e00d2d03e836d41ce1a10036d85bb9c02ca3bfcdd8"
+    },
+    {
+      "path": "after/ru-360-list.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 360,
+      "height": 800,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "b35673ef86cd71bb5bd14e9417ba99ab7f0d7ab572fc7c07c36ba762eb8792ae"
+    },
+    {
+      "path": "after/ru-768-editor.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "view": "editor",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "e7a512952930fcb8970547f49c8f26a805398dbe4ad73e472648b2c58e53f092"
+    },
+    {
+      "path": "after/ru-768-history.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "view": "history",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "e7a512952930fcb8970547f49c8f26a805398dbe4ad73e472648b2c58e53f092"
+    },
+    {
+      "path": "after/ru-768-list.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 768,
+      "height": 900,
+      "view": "list",
+      "route": "/student/homework?status=NEEDS_REVISION&page=1&ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "12687199d089fa0b57c0105d008cba7e6077a0856e6da41391c8331ef0b4de8f"
+    },
+    {
+      "path": "after/ru-save-failed.png",
+      "role": "STUDENT",
+      "locale": "ru",
+      "width": 1600,
+      "height": 1000,
+      "view": "failed",
+      "route": "/student/homework/20000000-0000-4000-8000-000000000001?ui.k8k=1",
+      "fixture": "synthetic local fixture; no live provider",
+      "sha256": "2b967a74a13c3beb6972888e11b5aeb171e73625856e6e620af3157893c76c67"
+    }
+  ]
+}

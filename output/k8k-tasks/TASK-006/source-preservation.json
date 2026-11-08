@@ -1,0 +1,68 @@
+{
+  "task": "TASK-006",
+  "passed": true,
+  "checks": {
+    "onlyAuthorizedSnapshotPathsChanged": true,
+    "all456FinalRunSourcesUnchanged": true,
+    "task005ListedSourcesMatchedBeforeTask006": true,
+    "expandedSourceCoverageResolved": true,
+    "CSSCanonicalRecoveryMatched": true,
+    "preTaskReconstructedBuildCssMatchesTask005": true,
+    "protectedOriginalOutputsAndArchivesUnchanged": true,
+    "task001AcceptedManifestsUnchanged": true,
+    "task002InventoryUnchanged": true,
+    "task003AuditUnchanged": true,
+    "JSLockfileUnchanged": true,
+    "originalCyrillicLatinFontHashesUnchanged": true,
+    "legacyStylelintAllowlistUnchanged": true,
+    "headBranchUnchanged": true,
+    "indexStillEmpty": true,
+    "uiStackHistoricalTextPreserved": true,
+    "reportLinksResolve": true,
+    "bookkeepingDigestMatches": true,
+    "scopedDiffWhitespaceCheck": true
+  },
+  "changedInitiallySnapshottedInputs": [
+    "docs/ui-stack.md",
+    "package.json",
+    "packages/ui/src/controls.tsx",
+    "packages/ui/src/icon.tsx",
+    "scripts/k8k-design-evidence.mjs",
+    "scripts/k8k-route-budget-core.mjs"
+  ],
+  "CSSChanges": "packages/ui/src/style.css known TASK-006 hunks, pre-task Git-canonical recovery and previous emitted CSS comparison in source-coverage.json/css-task006.patch",
+  "unexpectedInputChanges": [],
+  "initialSnapshotInputs": 429,
+  "acceptedRunInputs": 456,
+  "acceptedBuildBasis": {
+    "head": "171db2142858e035594737e141d422fa5378e844",
+    "branch": "feat/k8k-design",
+    "dirtyDigest": "59e4a81081966a3b5f6c4fa0eaeccc04585d102987cf79765f226de3556049c3",
+    "sourceDigest": "0eadb8c2ebb7f0a0bbf4390d75672d2d32882fef94610f7a04ea06bc4ce5a0bc"
+  },
+  "protectedOriginalHashes": {
+    "output/k8k-implementation/baseline/manifest.json": {
+      "sha256": "a7d84075bc8e5925c0f7500c84498e3e02325b8f80f2bbdfb4679d434207c6d4",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/status.txt": {
+      "sha256": "3d0924c29c85ac087181685229ae6eeae823bd0f8a7eab057a71e31a2626312b",
+      "unchanged": true
+    },
+    "output/k8k-implementation/baseline/tracked.patch": {
+      "sha256": "3379e13e28811809aa57714813a99e1d1a12801d6eec86742dd989bb747af902",
+      "unchanged": true
+    },
+    "apps/apps.rar": {
+      "sha256": "1e819a62692e21c21aac31b1dd17588b7ac5930e4d6bb17eb0537a4d92740737",
+      "unchanged": true
+    },
+    "uiux.rar": {
+      "sha256": "563b6e6d2ff5e0fd6aafb5bc960065ac8dcb9368671dcaaf276ac55a4943d740",
+      "unchanged": true
+    }
+  },
+  "missingLinks": [],
+  "finalTrackedPatchSha256": "0af8d105494cca1f123e1e9c12d6bb37cf8d3975d60aeca94e28c3c2403f9894",
+  "limits": "Prior inventory manifests omitted shared sources. Initial429 copy list unchanged. Canonical CSS recovered from original HEAD+binary patch; original raw line-ending hashes not claimed. Build-time dirty digest precedes bookkeeping. No production gate claim."
+}

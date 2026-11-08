@@ -1,0 +1,16 @@
+{
+  "task": "TASK-004",
+  "scope": "Pure in-memory/temporary local graph fixtures and subprocess exit status; no app/DB/network",
+  "checks": {
+    "sharedChunkExactlyOnce": true,
+    "bothFontSubsetsCharged": true,
+    "explicitLazyIncluded": true,
+    "missingManifestUnavailable": true,
+    "missingAssetUnavailable": true,
+    "missingImportUnavailable": true,
+    "overLimitFails": true,
+    "over-budget-nonzero-exit": true,
+    "missing-manifest-nonzero-exit": true
+  },
+  "passed": true
+}

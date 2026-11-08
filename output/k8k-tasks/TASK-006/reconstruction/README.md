@@ -1,0 +1,1 @@
+This is NOT a contemporaneous snapshot. Initial TASK-006 before.json omitted shared CSS. This candidate pre-TASK-006 CSS is reconstructed by reversing only the known TASK-006 CSS edits. Prior TASK-005 build CSS is used to verify equivalent emitted CSS; do not claim an original byte hash that was never captured. Original before.json remains unchanged.

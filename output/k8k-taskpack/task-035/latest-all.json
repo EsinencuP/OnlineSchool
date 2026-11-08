@@ -1,0 +1,133 @@
+{
+  "run": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z",
+  "phase": "all",
+  "results": [
+    {
+      "id": "compile",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/typescript/bin/tsc",
+        "-b",
+        "packages/ui",
+        "packages/account-ui",
+        "packages/api-contracts",
+        "apps/student-cabinet",
+        "apps/api",
+        "apps/worker",
+        "--pretty",
+        "false"
+      ],
+      "cwd": "D:\\OnlineSchool\\",
+      "exit": 0,
+      "durationMs": 168,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/compile.log"
+    },
+    {
+      "id": "student-lint",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "node_modules/eslint/bin/eslint.js",
+        "apps/student-cabinet",
+        "--max-warnings",
+        "0"
+      ],
+      "cwd": "D:\\OnlineSchool\\",
+      "exit": 0,
+      "durationMs": 2624,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/student-lint.log"
+    },
+    {
+      "id": "presentation",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "--test",
+        "apps/student-cabinet/tests/k8k-presentation.test.mjs",
+        "apps/student-cabinet/tests/locales.test.mjs"
+      ],
+      "cwd": "D:\\OnlineSchool\\",
+      "exit": 0,
+      "durationMs": 744,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/presentation.log"
+    },
+    {
+      "id": "design",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "scripts/k8k-design-check.mjs"
+      ],
+      "cwd": "D:\\OnlineSchool\\",
+      "exit": 0,
+      "durationMs": 2652,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/design.log"
+    },
+    {
+      "id": "api-http-sdk",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "--import",
+        "./scripts/k8k-student-gate-network.mjs",
+        "--experimental-vm-modules",
+        "node_modules/jest/bin/jest.js",
+        "--roots",
+        "tests",
+        "--runInBand",
+        "--runTestsByPath",
+        "tests/unit/student-context.test.mjs",
+        "tests/unit/student-dashboard-http.test.mjs",
+        "tests/unit/student-dashboard.test.mjs",
+        "tests/unit/student-history-http.test.mjs",
+        "tests/unit/student-history.test.mjs",
+        "tests/unit/student-homework-http.test.mjs",
+        "tests/unit/student-homework.test.mjs",
+        "tests/unit/student-http.test.mjs",
+        "tests/unit/student-lesson-context.test.mjs",
+        "tests/unit/student-lessons-http.test.mjs",
+        "tests/unit/student-lessons.test.mjs",
+        "tests/unit/student-materials-http.test.mjs",
+        "tests/unit/student-materials.test.mjs",
+        "tests/unit/student-notifications-http.test.mjs",
+        "tests/unit/student-notifications-sdk.test.mjs",
+        "tests/unit/student-notifications.test.mjs",
+        "tests/unit/student-reports-http.test.mjs",
+        "tests/unit/student-reports-sdk.test.mjs",
+        "tests/unit/student-reports-worker.test.mjs",
+        "tests/unit/student-reports.test.mjs",
+        "tests/unit/student-security-http.test.mjs",
+        "tests/unit/student-security-sdk.test.mjs",
+        "tests/unit/student-security.test.mjs",
+        "tests/unit/student-skills-http.test.mjs",
+        "tests/unit/student-skills.test.mjs",
+        "tests/unit/student-subjects.test.mjs",
+        "tests/unit/student-subscription-http.test.mjs",
+        "tests/unit/student-subscription.test.mjs",
+        "tests/unit/student-transport.test.mjs",
+        "--json",
+        "--outputFile=D:\\OnlineSchool\\output\\k8k-taskpack\\task-035\\runs\\2026-11-08T11-01-50.634Z\\api-results.json"
+      ],
+      "cwd": "D:\\OnlineSchool\\",
+      "exit": 0,
+      "durationMs": 28247,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/api-http-sdk.log"
+    },
+    {
+      "id": "source-build-budget",
+      "command": "programmatic Vite source build / evaluateRoute",
+      "exit": 0,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/budgets.json"
+    },
+    {
+      "id": "browser",
+      "command": [
+        "D:\\AI\\runtimes\\node-v24.21.0-win-x64\\node.exe",
+        "D:\\OnlineSchool\\node_modules\\@playwright\\test\\cli.js",
+        "test",
+        "--config",
+        "playwright.student-gate.config.mjs"
+      ],
+      "cwd": "D:\\OnlineSchool\\apps\\student-cabinet",
+      "exit": 0,
+      "durationMs": 228972,
+      "evidence": "output/k8k-taskpack/task-035/runs/2026-11-08T11-01-50.634Z/browser.log"
+    }
+  ]
+}

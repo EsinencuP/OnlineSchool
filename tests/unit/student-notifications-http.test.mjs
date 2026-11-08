@@ -64,6 +64,10 @@ beforeAll(async () => {
               payload: n.payload,
               isRead: !!n.read_at,
               createdAt: n.created_at.toISOString(),
+              catalog:
+                n.catalog === undefined
+                  ? { code: n.type, params: n.payload, kind: 'source' }
+                  : n.catalog,
             })),
           },
         ];
@@ -228,6 +232,18 @@ test('count is global unread, one COUNT query without JOIN or body load', async 
   expect(query).toHaveLength(1);
   expect(query[0]).toMatch(/SELECT count\(\*\)/);
   expect(query[0]).not.toMatch(/JOIN|title|payload|body/);
+});
+
+test('TASK-033 locale changes only the public projection and keeps source/read facts', async () => {
+  const before = structuredClone([...state.items.values()]);
+  const result = await get('?locale=ro&pageSize=1');
+  expect(result.status).toBe(200);
+  expect(result.body.items[0].title).toBe('Tema a fost verificată');
+  expect(result.body.items[0]).not.toHaveProperty('catalog');
+  expect(result.body).not.toHaveProperty('locale');
+  expect([...state.items.values()]).toEqual(before);
+  for (const query of ['?locale=en', '?locale=RO', '?locale=ru&locale=ro', '?locale=ro&other=1'])
+    expect((await get(query)).status).toBe(400);
 });
 test('pagination keeps total and unreadCount across pages', async () => {
   const r = await get('?page=2&pageSize=1');

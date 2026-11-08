@@ -1,0 +1,54 @@
+# TASK-009 — route budgets
+
+JS/CSS gzip9 plus all three raw fonts (63492 bytes).
+
+| Route | Total | Δcode | Δfont |
+|---|---:|---:|---:|
+| student:/student/login | 205971 | 1107 | 0 |
+| student:/student/suspended | 205971 | 1107 | 0 |
+| student:/student/security/change-password | 205971 | 1107 | 0 |
+| student:/student | 205971 | 1107 | 0 |
+| student:/student/lessons | 205971 | 1107 | 0 |
+| student:/student/lessons/:id | 205971 | 1107 | 0 |
+| student:/student/homework | 205971 | 1107 | 0 |
+| student:/student/homework/:id | 205971 | 1107 | 0 |
+| student:/student/skills | 205971 | 1107 | 0 |
+| student:/student/reports | 205971 | 1107 | 0 |
+| student:/student/materials | 205971 | 1107 | 0 |
+| student:/student/subscription | 205971 | 1107 | 0 |
+| student:/student/notifications | 205971 | 1107 | 0 |
+| student:/student/profile | 205971 | 1107 | 0 |
+| student:/student/security | 205971 | 1107 | 0 |
+| manager:/manager/login | 180937 | 664 | 0 |
+| manager:/manager | 240107 | 668 | 0 |
+| manager:/manager/leads | 227549 | 663 | 0 |
+| manager:/manager/leads/:id | 228083 | 664 | 0 |
+| manager:/manager/students | 239212 | 666 | 0 |
+| manager:/manager/students/:id | 194947 | 664 | 0 |
+| manager:/manager/students/:id/account | 225489 | 667 | 0 |
+| manager:/manager/schedule | 242287 | 667 | 0 |
+| manager:/manager/tasks | 224897 | 667 | 0 |
+| manager:/manager/tasks/:id | 240952 | 665 | 0 |
+| manager:* | 179117 | 666 | 0 |
+| manager:/manager/students/:id?tab=overview | 194947 | 664 | 0 |
+| manager:/manager/students/:id?tab=subscriptions | 242812 | 664 | 0 |
+| manager:/manager/students/:id?tab=payments | 243287 | 665 | 0 |
+| manager:/manager/students/:id?tab=schedule | 244331 | 666 | 0 |
+| manager:/manager/students/:id?tab=tasks | 240727 | 665 | 0 |
+| manager:/manager/students/:id?tab=notifications | 240901 | 661 | 0 |
+| TEACHER:/teacher | 131523 | 669 | 0 |
+| TEACHER:/teacher?section=overview | 131523 | 669 | 0 |
+| TEACHER:/teacher?section=lessons | 131523 | 669 | 0 |
+| TEACHER:/teacher?section=students | 131523 | 669 | 0 |
+| TEACHER:/teacher?section=homework | 131523 | 669 | 0 |
+| DIRECTOR:/director | 131523 | 669 | 0 |
+| DIRECTOR:/director?section=overview | 131523 | 669 | 0 |
+| DIRECTOR:/director?section=lessons | 131523 | 669 | 0 |
+| DIRECTOR:/director?section=students | 131523 | 669 | 0 |
+| DIRECTOR:/director?section=tasks | 131523 | 669 | 0 |
+| TECH_OPERATOR:/operator | 131523 | 669 | 0 |
+| TECH_OPERATOR:/operator?section=overview | 131523 | 669 | 0 |
+| shared:/account | 131523 | 669 | 0 |
+| shared:/ | 131523 | 669 | 0 |
+| shared:account-menu | 205971 | 1107 | 0 |
+| student:route-error | 205971 | 1107 | 0 |

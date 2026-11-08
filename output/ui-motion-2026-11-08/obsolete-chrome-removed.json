@@ -1,0 +1,410 @@
+[
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".badge",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".badge",
+    "property": "border-radius",
+    "value": "20px"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".panel",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".panel",
+    "property": "border",
+    "value": "1px solid var(--line)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".panel",
+    "property": "border-radius",
+    "value": "12px"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".summary",
+    "property": "border",
+    "value": "1px solid var(--line)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".summary",
+    "property": "border-radius",
+    "value": "11px"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".summary",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".summary:hover",
+    "property": "border-color",
+    "value": "var(--border)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".summary-icon",
+    "property": "border-radius",
+    "value": "10px"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status",
+    "property": "border-radius",
+    "value": "7px"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-scheduled,\n.status-not_submitted,\n.status-familiarizing",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-completed,\n.status-reviewed,\n.status-applying,\n.status-active",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-no_show,\n.status-needs_revision,\n.status-expired",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-practicing,\n.status-star_pending,\n.status-frozen",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-submitted",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".status-disputed",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/student-cabinet/src/style.css",
+    "selector": ".panel",
+    "property": "border-radius",
+    "value": "10px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel",
+    "property": "border",
+    "value": "1px solid var(--line)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".record-cards > li",
+    "property": "border",
+    "value": "0"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".record-cards > li",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".record-cards > li",
+    "property": "border-radius",
+    "value": "0"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".notice",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".notice",
+    "property": "border-radius",
+    "value": "5px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".badge",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-active,\n.status-confirmed,\n.status-sent,\n.status-resolved,\n.status-approved",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-frozen,\n.status-awaiting_approval,\n.status-pending,\n.status-in_progress,\n.status-queued",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-failed,\n.status-disputed,\n.status-rejected",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lesson-card",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lesson-card",
+    "property": "border",
+    "value": "1px solid var(--line)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lesson-card",
+    "property": "border-radius",
+    "value": "8px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lesson-card",
+    "property": "border-radius",
+    "value": "11px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel",
+    "property": "border-color",
+    "value": "var(--border)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel",
+    "property": "border-radius",
+    "value": "12px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel",
+    "property": "box-shadow",
+    "value": "none"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".count",
+    "property": "border-radius",
+    "value": "6px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".count",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".row-icon",
+    "property": "border-radius",
+    "value": "8px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".badge",
+    "property": "border-radius",
+    "value": "5px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-awaiting_approval",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".record-cards > li",
+    "property": "border-color",
+    "value": "var(--border)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-card",
+    "property": "border",
+    "value": "1px solid var(--border)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-card",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-card",
+    "property": "border-radius",
+    "value": "11px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-card:hover",
+    "property": "border-color",
+    "value": "var(--border)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-card:hover",
+    "property": "box-shadow",
+    "value": "none"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-icon",
+    "property": "border-radius",
+    "value": "11px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".panel-tabs .selected",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".empty-icon",
+    "property": "border-radius",
+    "value": "12px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".empty-icon",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".currency-tag",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".currency-tag",
+    "property": "border-radius",
+    "value": "10px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-icon",
+    "property": "border-radius",
+    "value": "8px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".metric-icon",
+    "property": "border-radius",
+    "value": "8px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lead-column",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".lead-column",
+    "property": "border-radius",
+    "value": "14px"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-trial,\n.status-awaiting_payment",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-new",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-converted",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/manager-web/src/style.css",
+    "selector": ".status-lost",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".panel",
+    "property": "background",
+    "value": "var(--surface)"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".panel",
+    "property": "border",
+    "value": "1px solid var(--border)"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".panel",
+    "property": "border-radius",
+    "value": "12px"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".badge",
+    "property": "border",
+    "value": "1px solid var(--border)"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".badge",
+    "property": "background",
+    "value": "transparent"
+  },
+  {
+    "path": "apps/platform/src/style.css",
+    "selector": ".badge",
+    "property": "border-radius",
+    "value": "6px"
+  }
+]

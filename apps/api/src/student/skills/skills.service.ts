@@ -3,12 +3,12 @@ import type { Prisma } from '@online-school/db';
 import { DatabaseService } from '../../core/database/database.module.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import type { IStudentContext } from '../student-context.interface.js';
-import type { HistoryPage } from '../history/history.dto.js';
 import type {
   SkillAuditQuery,
   SkillAuditResponseDto,
   SkillSelection,
   SkillSnapshotResponseDto,
+  SkillSnapshotQuery,
   SubjectSkillMapDto,
 } from './skills.dto.js';
 import { skillAuditSql, skillMapSql, skillSnapshotsSql } from './skills.sql.js';
@@ -40,7 +40,10 @@ export class StudentSkillsService {
     for (const entry of data.items) entry.changedAt = new Date(entry.changedAt).toISOString();
     return { ...data, page: query.page, pageSize: query.pageSize };
   }
-  async snapshots(student: IStudentContext, query: HistoryPage): Promise<SkillSnapshotResponseDto> {
+  async snapshots(
+    student: IStudentContext,
+    query: SkillSnapshotQuery,
+  ): Promise<SkillSnapshotResponseDto> {
     const data = await this.read<Pick<SkillSnapshotResponseDto, 'items' | 'total'>>(
       skillSnapshotsSql(student.studentProfileId, query, new Date()),
     );

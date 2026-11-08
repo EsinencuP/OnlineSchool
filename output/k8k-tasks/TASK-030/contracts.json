@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "unchangedPaths": [
+    {
+      "path": "apps/api/src/student/homework/homework.dto.ts",
+      "before": "b79d8767809cbdc57ebb253b040d6ed815c3f7350ea24aef00a33d232bd07e11",
+      "after": "b79d8767809cbdc57ebb253b040d6ed815c3f7350ea24aef00a33d232bd07e11"
+    },
+    {
+      "path": "apps/api/src/student/homework/homework.service.ts",
+      "before": "31a2bd9c7419a1c851b17c0258c3ac1631f21eb515c2b5c003c3e1bb8e5a8326",
+      "after": "31a2bd9c7419a1c851b17c0258c3ac1631f21eb515c2b5c003c3e1bb8e5a8326"
+    },
+    {
+      "path": "packages/api-contracts/openapi/openapi.json",
+      "before": "7d3adda7eff8b406e248c6968a9d0742c989f7b431ab8bf4c7e4940548922a04",
+      "after": "7d3adda7eff8b406e248c6968a9d0742c989f7b431ab8bf4c7e4940548922a04"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/client.ts",
+      "before": "7eec1f9a72749bbc2d4d56968fe98f37c6e272375fa8d2fc5b95b85808cf4a5c",
+      "after": "7eec1f9a72749bbc2d4d56968fe98f37c6e272375fa8d2fc5b95b85808cf4a5c"
+    },
+    {
+      "path": "packages/api-contracts/src/generated/openapi.ts",
+      "before": "9cec3007f5a11deca26b7fe5c888a4cc6176174c9c38b85802b68dbb238ab0f2",
+      "after": "9cec3007f5a11deca26b7fe5c888a4cc6176174c9c38b85802b68dbb238ab0f2"
+    },
+    {
+      "path": "apps/student-cabinet/src/components.tsx",
+      "before": "f648824aa18f8ad8d51b7fa19f5790cfceff7c65eabee3b3266ccd6c67a0da53",
+      "after": "f648824aa18f8ad8d51b7fa19f5790cfceff7c65eabee3b3266ccd6c67a0da53"
+    },
+    {
+      "path": "apps/student-cabinet/src/pages/StudentHome.tsx",
+      "before": "d5fd4e2ada1a8bce9189fcc8b1e109ceb6dbe2616bbf18bc49045a0bde55e13a",
+      "after": "d5fd4e2ada1a8bce9189fcc8b1e109ceb6dbe2616bbf18bc49045a0bde55e13a"
+    },
+    {
+      "path": "package.json",
+      "before": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b",
+      "after": "d8cc69526b369453be742f3fe20ede4afac191dd3d4ed484bdf7856888770f9b"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "before": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7",
+      "after": "ad5ac313ac77b64019b40b5a7928dd2ed677e909b6d17b8bc5f80c9e5eaa26e7"
+    }
+  ],
+  "operations": 147,
+  "apiChanges": false,
+  "sdkRegeneration": "NOT_REQUIRED: unchanged source/contracts",
+  "dependenciesAdded": 0,
+  "migrationsAdded": 0,
+  "migrationsExecuted": false,
+  "note": "Historical provider evidence is not a TASK-030 rerun."
+}

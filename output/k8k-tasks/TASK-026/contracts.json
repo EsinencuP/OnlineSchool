@@ -1,0 +1,33 @@
+{
+  "operations": 146,
+  "unchangedPaths": true,
+  "changes": [
+    {
+      "field": "balanceBefore",
+      "previous": {
+        "type": "string",
+        "description": "Lesson quantities, not monetary account totals"
+      },
+      "current": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Lesson quantity. Null when a historical deduction snapshot was not recorded."
+      }
+    },
+    {
+      "field": "balanceAfter",
+      "previous": {
+        "type": "string"
+      },
+      "current": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "description": "Lesson quantity. Null when a historical deduction snapshot was not recorded."
+      }
+    }
+  ]
+}

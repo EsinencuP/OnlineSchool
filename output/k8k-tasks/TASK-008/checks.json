@@ -1,0 +1,67 @@
+{
+  "head": "171db2142858e035594737e141d422fa5378e844",
+  "branch": "feat/k8k-design",
+  "sourceDigest": "b72b6e077624c707227fe8be3b02543f85075ce84bbe943075bb09debd9ff6d0",
+  "dirtyDigest": "3c1036a16e8e2693ec0238c6f97eda4d7320ad97f65ada37bc2cce234018b5ba",
+  "checks": [
+    {
+      "command": "pnpm --filter @online-school/ui build",
+      "exitCode": 0,
+      "log": "ui-build.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui test",
+      "exitCode": 0,
+      "tests": 116,
+      "log": "ui-test.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/ui lint",
+      "exitCode": 0,
+      "cssFiles": 12,
+      "legacyUnchanged": 715,
+      "log": "ui-lint.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet typecheck:ui-overlays",
+      "exitCode": 0,
+      "log": "fixture-typecheck.log"
+    },
+    {
+      "command": "pnpm --filter @online-school/student-cabinet exec tsc -p tsconfig.json --pretty false",
+      "exitCode": 0,
+      "log": "student-typecheck.log"
+    },
+    {
+      "command": "pnpm exec eslint packages/ui/stories/overlays.stories.tsx apps/student-cabinet/src/profile-help.tsx apps/student-cabinet/src/pages/Account.tsx apps/student-cabinet/tests/ui-overlays/fixture.tsx scripts/k8k-overlays-evidence.mjs --max-warnings 0",
+      "exitCode": 0,
+      "log": "consumer-lint.log"
+    },
+    {
+      "command": "pnpm k8k:overlays:evidence",
+      "exitCode": 0,
+      "log": "evidence-command.log",
+      "run": "output/k8k-tasks/TASK-008/runs/2026-11-03T22-51-32.206Z",
+      "summary": {
+        "passed": true,
+        "browserCases": 71,
+        "screenshots": 66,
+        "externalSentinelsBlocked": 8,
+        "unexpectedApiRequests": 0,
+        "browserErrors": [],
+        "browserWarnings": [],
+        "routes": 48,
+        "maxTotal": 243665,
+        "sourceFiles": 475
+      }
+    }
+  ],
+  "notRun": [
+    "full recursive regression",
+    "DB/providers",
+    "production deploy",
+    "native AT speech",
+    "full WCAG/role gate"
+  ],
+  "developmentAttempts": "Earlier runs retained, not accepted. Corrected unsupported old-version Dropdown focus prop during compilation; harness timing/AX-hidden ancestor assumptions, a local width/quote typo and expected exact-URL sentinel console classification. Final accepted run passes every assertion."
+}

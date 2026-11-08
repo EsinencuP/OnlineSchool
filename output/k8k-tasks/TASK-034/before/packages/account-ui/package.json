@@ -1,0 +1,28 @@
+{
+  "name": "@online-school/account-ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./src/style.css"
+  },
+  "scripts": {
+    "build": "tsc -b --pretty false",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@online-school/api-contracts": "workspace:*",
+    "@online-school/shared": "workspace:*",
+    "@online-school/ui": "workspace:*",
+    "react": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "typescript": "6.0.3"
+  }
+}

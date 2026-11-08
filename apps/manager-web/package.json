@@ -10,6 +10,7 @@
     "typecheck:ui-tables": "tsc -p tsconfig.ui-tables.json --pretty false",
     "typecheck:ui-calendar": "tsc -p tsconfig.ui-calendar.json --pretty false",
     "typecheck:ui-states": "tsc -p tsconfig.ui-states.json --pretty false",
+    "typecheck:ui-refresh": "tsc -p tsconfig.ui-refresh.json --pretty false",
     "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:errors": "node test/ui-errors/smoke.mjs",
