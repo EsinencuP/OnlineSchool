@@ -172,6 +172,11 @@ before(async () => {
   const student = await client.studentAccount.findFirstOrThrow({
     where: { student_id: QA.students[0] },
   });
+  // Seeded students start on a temporary password; policy probes need a settled account.
+  await client.studentAccount.update({
+    where: { id: student.id },
+    data: { must_change_password: false },
+  });
   sessions.student = await issue(student.account_id, false);
 });
 after(async () => {

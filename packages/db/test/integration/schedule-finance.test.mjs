@@ -129,8 +129,9 @@ test('money is NUMERIC(20,4), command identities are unique, consumption has its
     const numeric = await db.query(
       "SELECT table_name,column_name,numeric_precision,numeric_scale FROM information_schema.columns WHERE table_schema='public' AND data_type='numeric'",
     );
-    // TASK-08 adds two explicit promise money fields; keep checking every numeric column.
-    assert.equal(numeric.rowCount, 23);
+    // TASK-08 adds two explicit promise money fields; later ledger columns add two integer
+    // entitlement balances (scale 0) that are lesson counts, not money.
+    assert.equal(numeric.rowCount, 25);
     assert.deepEqual(
       numeric.rows
         .filter((r) => r.table_name === 'teacher_rate_promises')
@@ -138,7 +139,14 @@ test('money is NUMERIC(20,4), command identities are unique, consumption has its
         .sort(),
       ['additive_rate', 'minimum_rate'],
     );
-    assert.ok(numeric.rows.every((row) => row.numeric_precision === 20 && row.numeric_scale === 4));
+    const unitCounters = ['entitlement_balance_before', 'entitlement_balance_after'];
+    assert.ok(
+      numeric.rows
+        .filter(
+          (row) => !(row.table_name === 'ledger_entries' && unitCounters.includes(row.column_name)),
+        )
+        .every((row) => row.numeric_precision === 20 && row.numeric_scale === 4),
+    );
     assert.equal(
       (
         await db.query(

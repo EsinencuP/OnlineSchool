@@ -46,13 +46,17 @@ export async function apiFixture() {
       ...(await db.$transaction((tx) => store.issue(tx, accountId, new Date()))),
     };
   }
-  await db.assignedManager.create({
-    data: {
-      manager_id: QA.managers[0],
-      student_id: QA.students[0],
-      assigned_at: new Date('2026-10-01Z'),
-    },
-  });
+  // The reference seed already assigns manager 1 to student 1; keep the fixture idempotent.
+  if (
+    !(await db.assignedManager.findFirst({ where: { student_id: QA.students[0], ended_at: null } }))
+  )
+    await db.assignedManager.create({
+      data: {
+        manager_id: QA.managers[0],
+        student_id: QA.students[0],
+        assigned_at: new Date('2026-10-01Z'),
+      },
+    });
   async function call(
     path,
     { actor = 'manager', body = {}, method = 'POST', key = randomUUID() } = {},

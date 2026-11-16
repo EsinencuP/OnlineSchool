@@ -9572,6 +9572,140 @@
         ]
       }
     },
+    "/api/v1/manager/tasks/{taskId}/resolve": {
+      "post": {
+        "description": "Closes a general follow-up (including a teacher schedule-change request) from IN_PROGRESS with a note.",
+        "operationId": "resolveManagerTaskGeneral",
+        "parameters": [
+          {
+            "name": "taskId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveManagerGeneralDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerTaskDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TASK_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/tasks/{taskId}/resolve-dispute": {
       "post": {
         "description": "ACCEPT proposes a bounded Finance correction. Full reversal requires director execution; partial requests remain in manual review. No cash payout.",
@@ -16909,6 +17043,2895 @@
         ]
       }
     },
+    "/api/v1/teacher/availability": {
+      "get": {
+        "operationId": "getTeacherAvailability",
+        "parameters": [
+          {
+            "name": "from",
+            "required": false,
+            "in": "query",
+            "description": "Defaults to now",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": false,
+            "in": "query",
+            "description": "Defaults to from + 90 days; the span is at most 366 days",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeCancelled",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "false",
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherAvailabilityResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_RANGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "The teacher's own availability windows with an occupied flag",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/checkpoints": {
+      "get": {
+        "operationId": "getTeacherCheckpoints",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "COMPLETED"
+              ]
+            }
+          },
+          {
+            "name": "type",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "LESSON_4",
+                "LESSON_8"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherCheckpointPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Skill reviews (4 lessons) and education reports (8 lessons) of taught students",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/checkpoints/{checkpointId}": {
+      "get": {
+        "operationId": "getTeacherCheckpoint",
+        "parameters": [
+          {
+            "name": "checkpointId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherCheckpointCardDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "One checkpoint with its summary, frozen snapshot and report draft",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/checkpoints/{checkpointId}/complete": {
+      "post": {
+        "operationId": "completeTeacherCheckpoint",
+        "parameters": [
+          {
+            "name": "checkpointId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteCheckpointDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompleteCheckpointResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already completed or not a LESSON_4 checkpoint",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Finish a 4-lesson skill review; freezes the skill snapshot the student sees",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/checkpoints/{checkpointId}/report": {
+      "post": {
+        "operationId": "saveTeacherReportDraft",
+        "parameters": [
+          {
+            "name": "checkpointId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveReportDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaveReportResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Published, other author or no report here",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Create or update the draft education report of an 8-lesson checkpoint",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/checkpoints/{checkpointId}/report/publish": {
+      "post": {
+        "operationId": "publishTeacherReport",
+        "parameters": [
+          {
+            "name": "checkpointId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishReportResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No draft, already published or other author",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Publish the draft report to the student (immutable afterwards)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments": {
+      "get": {
+        "operationId": "getTeacherEnrollments",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherEnrollmentsResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Active enrollments the teacher currently teaches (roster)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/goals": {
+      "get": {
+        "operationId": "getTeacherGoals",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherGoalsResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "A taught student's learning goals",
+        "tags": [
+          "teacher"
+        ]
+      },
+      "post": {
+        "operationId": "createTeacherGoal",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGoalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalCommandResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Set a learning goal for a taught student",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/goals/{goalId}": {
+      "patch": {
+        "operationId": "updateTeacherGoal",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "goalId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGoalDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoalCommandResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Edit a goal, mark it achieved, pause or archive it (history is kept by the database)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/materials": {
+      "get": {
+        "operationId": "getTeacherSharedMaterials",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherSharedMaterialsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Files this teacher shared with a taught student, for the enrollment subject",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/overview": {
+      "get": {
+        "operationId": "getTeacherStudentOverview",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherStudentOverviewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Student card: progress counters, upcoming/recent lessons, homework, skills and goals",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills": {
+      "get": {
+        "operationId": "getTeacherSkillMap",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherSkillMapDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "A taught student's skill map with current public statuses",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills/{skillId}/assessments": {
+      "post": {
+        "operationId": "assessTeacherSkill",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "skillId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessSkillDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessSkillResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "SKILL_LEVEL_UNCHANGED or concurrent change",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record a new level of a skill for a taught student",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills/{skillId}/history": {
+      "get": {
+        "operationId": "getTeacherSkillHistory",
+        "parameters": [
+          {
+            "name": "enrollmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "skillId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherSkillHistoryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not taught by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Status changes of one skill, newest first (last 50)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/homework": {
+      "get": {
+        "operationId": "getTeacherHomework",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NOT_SUBMITTED",
+                "AWAITING_REVIEW",
+                "NEEDS_REVISION",
+                "REVIEWED",
+                "CANCELLED"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherHomeworkPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Homework the teacher issued; state=AWAITING_REVIEW is the review queue",
+        "tags": [
+          "teacher"
+        ]
+      },
+      "post": {
+        "operationId": "issueTeacherHomework",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueHomeworkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueHomeworkResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation or subject/due rule",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Issue homework to assigned students (one delivery per enrollment)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/homework/{deliveryId}": {
+      "get": {
+        "operationId": "getTeacherHomeworkCard",
+        "parameters": [
+          {
+            "name": "deliveryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherHomeworkCardDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or issued by another teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "One issued homework with submission versions and reviews",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/homework/{deliveryId}/review": {
+      "post": {
+        "operationId": "reviewTeacherHomework",
+        "parameters": [
+          {
+            "name": "deliveryId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewHomeworkDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewHomeworkResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or issued by another teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale submission or already reviewed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Accept or return the latest submission of an issued homework",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/journal": {
+      "get": {
+        "operationId": "getTeacherJournal",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AWAITING_REPORT",
+                "AWAITING_CONFIRMATION",
+                "CONDUCTED",
+                "CANCELLED",
+                "DISPUTED"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherJournalPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "The teacher's ended lessons with their outcome-report state, newest first",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/lessons/{id}": {
+      "get": {
+        "operationId": "getTeacherLesson",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherLessonCardDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not the teacher’s lesson",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own lesson card with report history and the confirmed outcome",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/materials": {
+      "get": {
+        "operationId": "getTeacherMaterials",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "VERIFIED"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMaterialPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "The teacher's private material library",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/materials/{fileId}/confirm": {
+      "post": {
+        "operationId": "confirmTeacherMaterialUpload",
+        "parameters": [
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialConfirmResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or not uploaded by this teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify the uploaded staging object and publish it as a private file",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/materials/{fileId}/grants": {
+      "post": {
+        "operationId": "shareTeacherMaterial",
+        "parameters": [
+          {
+            "name": "fileId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShareMaterialDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareMaterialResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Not verified, already shared or no student account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Give a taught student access to a verified file (optionally tied to a lesson)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/materials/grants/{permissionId}": {
+      "delete": {
+        "operationId": "revokeTeacherMaterial",
+        "parameters": [
+          {
+            "name": "permissionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokeMaterialResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found or granted by another teacher",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Withdraw a student’s access to a file",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/materials/uploads": {
+      "post": {
+        "operationId": "requestTeacherMaterialUpload",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestMaterialUploadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaterialUploadResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Register a file and get a short-lived signed URL to upload it to staging",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/me": {
+      "get": {
+        "operationId": "getTeacherMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Current teacher profile",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/notifications": {
+      "get": {
+        "operationId": "getTeacherNotifications",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": "ALL",
+              "type": "string",
+              "enum": [
+                "ALL",
+                "UNREAD"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherNotificationPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Work notifications of the last 90 days (lessons, homework, checkpoints, requests)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/notifications/read": {
+      "post": {
+        "operationId": "markTeacherNotificationsRead",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkReadResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Mark listed events read",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/notifications/read-all": {
+      "post": {
+        "operationId": "markAllTeacherNotificationsRead",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarkReadResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Mark everything up to now read; later events stay unread",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/notifications/summary": {
+      "get": {
+        "operationId": "getTeacherNotificationSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherNotificationSummaryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Unread indicator for the notification bell",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/payroll": {
+      "get": {
+        "operationId": "getTeacherPayrollStatement",
+        "parameters": [
+          {
+            "name": "month",
+            "required": false,
+            "in": "query",
+            "description": "School-timezone calendar month; defaults to the current one",
+            "schema": {
+              "example": "2026-11",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherPayrollResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "The teacher's own monthly statement: confirmed lessons, accruals and payouts (read-only)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/profile": {
+      "get": {
+        "operationId": "getTeacherProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherProfileDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Own contact data and active passkeys (no credential material)",
+        "tags": [
+          "teacher"
+        ]
+      },
+      "patch": {
+        "operationId": "updateTeacherProfile",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTeacherProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateTeacherProfileResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Change the own phone number (the only self-service contact field)",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/schedule-requests": {
+      "get": {
+        "operationId": "getTeacherScheduleRequests",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "RESOLVED"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherScheduleRequestPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Schedule change requests the teacher sent to the manager, newest first",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/today": {
+      "get": {
+        "operationId": "getTeacherToday",
+        "parameters": [
+          {
+            "name": "date",
+            "required": false,
+            "in": "query",
+            "description": "Calendar day in the school timezone; defaults to the current day",
+            "schema": {
+              "example": "2026-11-16",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherTodayResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_DATE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "The teacher's own lessons for one school-timezone calendar day",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
     "/api/v1/teaching-assignments": {
       "post": {
         "description": "MFA required. MANAGER/DIRECTOR, assigned student; explicit teacher period and basis.",
@@ -17546,6 +20569,89 @@
         "properties": {},
         "additionalProperties": false
       },
+      "AssessSkillDto": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 1000,
+            "description": "Internal pedagogical evidence; never shown to the student"
+          },
+          "publicComment": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "Shown to the student"
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Confirmed conducted lesson of this enrollment as evidence"
+          }
+        },
+        "required": [
+          "level",
+          "basis"
+        ]
+      },
+      "AssessSkillResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Assessment id"
+          },
+          "skillId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fromStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "toStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "assessedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "skillId",
+          "enrollmentId",
+          "fromStatus",
+          "toStatus",
+          "assessedAt"
+        ]
+      },
       "CancelManagerLessonDto": {
         "type": "object",
         "properties": {
@@ -17651,6 +20757,46 @@
         "type": "object",
         "properties": {},
         "additionalProperties": false
+      },
+      "CompleteCheckpointDto": {
+        "type": "object",
+        "properties": {
+          "teacherSummary": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 2000,
+            "description": "Shown with the frozen skill snapshot"
+          }
+        },
+        "required": [
+          "teacherSummary"
+        ]
+      },
+      "CompleteCheckpointResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Checkpoint id"
+          },
+          "completedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "snapshotId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "completedAt",
+          "snapshotId"
+        ]
       },
       "ComponentStatusResponse": {
         "type": "object",
@@ -17813,6 +20959,29 @@
         "required": [
           "fileId",
           "status"
+        ]
+      },
+      "CreateGoalDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500,
+            "description": "Shown to the student"
+          },
+          "targetDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "skillId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A skill of the enrollment subject"
+          }
+        },
+        "required": [
+          "text"
         ]
       },
       "CreateLeadDto": {
@@ -19098,6 +22267,29 @@
         "properties": {},
         "additionalProperties": false
       },
+      "GoalCommandResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Goal id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ACHIEVED",
+              "PAUSED",
+              "ARCHIVED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      },
       "HealthProbeResponse": {
         "type": "object",
         "properties": {
@@ -19439,6 +22631,97 @@
           "householdId"
         ],
         "additionalProperties": false
+      },
+      "IssuedDeliveryDto": {
+        "type": "object",
+        "properties": {
+          "deliveryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "deliveryId",
+          "enrollmentId",
+          "studentId"
+        ]
+      },
+      "IssueHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000,
+            "description": "Plain text instructions"
+          },
+          "dueAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Must be in the future"
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The teacher's own lesson of one enrollment"
+          },
+          "enrollmentIds": {
+            "minItems": 1,
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "attachmentFileIds": {
+            "maxItems": 5,
+            "description": "Verified files from the teacher's material library; students get read access",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "enrollmentIds"
+        ]
+      },
+      "IssueHomeworkResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Assignment id"
+          },
+          "deliveries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IssuedDeliveryDto"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "deliveries"
+        ]
       },
       "LeadDto": {
         "type": "object",
@@ -21887,6 +25170,54 @@
         ],
         "additionalProperties": false
       },
+      "MarkReadDto": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "minItems": 1,
+            "maxItems": 50,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "keys"
+        ]
+      },
+      "MarkReadResponseDto": {
+        "type": "object",
+        "properties": {
+          "marked": {
+            "type": "integer",
+            "description": "Events newly marked read"
+          }
+        },
+        "required": [
+          "marked"
+        ]
+      },
+      "MaterialConfirmResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "File id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
+      },
       "MaterialItemDto": {
         "type": "object",
         "properties": {
@@ -21977,6 +25308,29 @@
           "total",
           "page",
           "pageSize"
+        ]
+      },
+      "MaterialUploadResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "File id"
+          },
+          "uploadUrl": {
+            "type": "string",
+            "description": "Short-lived signed PUT URL for the staging object"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "uploadUrl",
+          "expiresAt"
         ]
       },
       "NextLessonDto": {
@@ -22122,6 +25476,80 @@
           "unreadCount",
           "page",
           "pageSize"
+        ]
+      },
+      "OverviewHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "notSubmitted": {
+            "type": "integer"
+          },
+          "awaitingReview": {
+            "type": "integer"
+          },
+          "needsRevision": {
+            "type": "integer"
+          },
+          "reviewed": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "notSubmitted",
+          "awaitingReview",
+          "needsRevision",
+          "reviewed"
+        ]
+      },
+      "OverviewLessonDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "STAR_PENDING",
+              "CONDUCTED",
+              "CANCELLED",
+              "DISPUTED"
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "startsAt",
+          "status"
+        ]
+      },
+      "OverviewSkillsDto": {
+        "type": "object",
+        "properties": {
+          "notStudied": {
+            "type": "integer"
+          },
+          "familiarizing": {
+            "type": "integer"
+          },
+          "practicing": {
+            "type": "integer"
+          },
+          "applying": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "notStudied",
+          "familiarizing",
+          "practicing",
+          "applying"
         ]
       },
       "PasskeyRegisteredResponse": {
@@ -22637,6 +26065,127 @@
         ],
         "additionalProperties": false
       },
+      "PayrollLineDto": {
+        "type": "object",
+        "properties": {
+          "outcomeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lessonStartedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMin": {
+            "type": "integer"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "string",
+            "example": "200.0000",
+            "description": "Rate frozen at the actual lesson start"
+          },
+          "points": {
+            "type": "integer"
+          },
+          "rateBasis": {
+            "type": "string",
+            "example": "ORDINARY_POINTS"
+          },
+          "currency": {
+            "type": "string",
+            "example": "MDL"
+          },
+          "amount": {
+            "type": "string",
+            "example": "200.0000",
+            "description": "Accrued amount; equals the rate for an ordinary accrual"
+          },
+          "paid": {
+            "type": "string",
+            "example": "0.0000"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING_ACCRUAL",
+              "ACCRUED",
+              "PARTIALLY_PAID",
+              "PAID",
+              "NO_PAYMENT"
+            ]
+          },
+          "accruedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "lastPaidAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "outcomeId",
+          "lessonStartedAt",
+          "durationMin",
+          "studentName",
+          "subjectName",
+          "rate",
+          "points",
+          "rateBasis",
+          "currency",
+          "amount",
+          "paid",
+          "status",
+          "accruedAt",
+          "lastPaidAt"
+        ]
+      },
+      "PayrollTotalDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "example": "MDL"
+          },
+          "accrued": {
+            "type": "string",
+            "example": "200.0000"
+          },
+          "paid": {
+            "type": "string",
+            "example": "0.0000"
+          },
+          "outstanding": {
+            "type": "string",
+            "example": "200.0000",
+            "description": "Accrued minus paid"
+          },
+          "pendingAccrual": {
+            "type": "string",
+            "example": "0.0000",
+            "description": "Confirmed lessons not accrued yet, at their frozen rate"
+          }
+        },
+        "required": [
+          "currency",
+          "accrued",
+          "paid",
+          "outstanding",
+          "pendingAccrual"
+        ]
+      },
       "PdfExportRequestResultDto": {
         "type": "object",
         "properties": {
@@ -22843,6 +26392,31 @@
           "instance",
           "code",
           "requestId"
+        ]
+      },
+      "PublishReportResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Report id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PUBLISHED"
+            ]
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "publishedAt"
         ]
       },
       "RecoveryCompleteRequest": {
@@ -23091,6 +26665,30 @@
           "pageSize"
         ]
       },
+      "RequestMaterialUploadDto": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 255
+          },
+          "fileSizeBytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 52428800
+          },
+          "mimeType": {
+            "type": "string",
+            "example": "application/pdf"
+          }
+        },
+        "required": [
+          "fileName",
+          "fileSizeBytes",
+          "mimeType"
+        ]
+      },
       "RequestUploadUrlDto": {
         "type": "object",
         "properties": {
@@ -23224,6 +26822,25 @@
         ],
         "additionalProperties": false
       },
+      "ResolveManagerGeneralDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "note": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500,
+            "description": "Outcome of the follow-up, kept in the task history"
+          }
+        },
+        "required": [
+          "version",
+          "note"
+        ]
+      },
       "ResolveManagerRescheduleDto": {
         "type": "object",
         "properties": {
@@ -23263,6 +26880,82 @@
         ],
         "additionalProperties": false
       },
+      "ReviewHomeworkDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Must be the latest submission of the delivery"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "NEEDS_REVISION"
+            ]
+          },
+          "comment": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 2000,
+            "description": "Required for NEEDS_REVISION"
+          }
+        },
+        "required": [
+          "submissionId",
+          "result"
+        ]
+      },
+      "ReviewHomeworkResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Review id"
+          },
+          "deliveryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "NEEDS_REVISION"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "deliveryId",
+          "submissionId",
+          "result"
+        ]
+      },
+      "RevokeMaterialResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Permission id"
+          },
+          "revokedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "revokedAt"
+        ]
+      },
       "SavedDraftDto": {
         "type": "object",
         "properties": {
@@ -23297,6 +26990,57 @@
         },
         "required": [
           "content"
+        ]
+      },
+      "SaveReportDto": {
+        "type": "object",
+        "properties": {
+          "achievements": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "growthAreas": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "recommendations": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "teacherSignature": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        },
+        "required": [
+          "achievements",
+          "growthAreas",
+          "recommendations",
+          "teacherSignature"
+        ]
+      },
+      "SaveReportResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Report id"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
         ]
       },
       "ScheduleChangeApprovalDto": {
@@ -23654,6 +27398,57 @@
           "url"
         ],
         "additionalProperties": false
+      },
+      "ShareMaterialDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A taught enrollment; the student gets the file for its subject"
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional lesson of this enrollment the file belongs to"
+          },
+          "lessonTitle": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Display title shown with the lesson"
+          },
+          "canDownload": {
+            "type": "boolean",
+            "description": "Allow saving (attachment) instead of in-browser viewing only"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Access ends at this instant"
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "canDownload"
+        ]
+      },
+      "ShareMaterialResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Permission id"
+          },
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "fileId"
+        ]
       },
       "SkillAuditEntryDto": {
         "type": "object",
@@ -25483,6 +29278,1196 @@
         ],
         "additionalProperties": true
       },
+      "TeacherAvailabilityResponseDto": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "to": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "windows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherAvailabilityWindowDto"
+            }
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "asOf",
+          "windows"
+        ]
+      },
+      "TeacherAvailabilityWindowDto": {
+        "type": "object",
+        "properties": {
+          "availabilityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "cancelledAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "occupied": {
+            "type": "boolean",
+            "description": "Non-cancelled lessons overlap the window: edits need a manager request"
+          },
+          "lessonCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "availabilityId",
+          "startsAt",
+          "endsAt",
+          "timezone",
+          "cancelledAt",
+          "occupied",
+          "lessonCount"
+        ]
+      },
+      "TeacherCheckpointCardDto": {
+        "type": "object",
+        "properties": {
+          "checkpointId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON_4",
+              "LESSON_8"
+            ]
+          },
+          "confirmedLessonCount": {
+            "type": "integer"
+          },
+          "triggeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "COMPLETED"
+            ]
+          },
+          "completedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "teacherSummary": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "snapshotId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Frozen skill snapshot (LESSON_4, once completed)"
+          },
+          "suggestedPeriodStart": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Suggested report period start (last eight lessons)"
+          },
+          "suggestedPeriodEnd": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeacherReportDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "checkpointId",
+          "type",
+          "confirmedLessonCount",
+          "triggeredAt",
+          "state",
+          "completedAt",
+          "enrollmentId",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "teacherSummary",
+          "snapshotId",
+          "suggestedPeriodStart",
+          "suggestedPeriodEnd",
+          "report"
+        ]
+      },
+      "TeacherCheckpointItemDto": {
+        "type": "object",
+        "properties": {
+          "checkpointId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON_4",
+              "LESSON_8"
+            ]
+          },
+          "confirmedLessonCount": {
+            "type": "integer"
+          },
+          "triggeredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "COMPLETED"
+            ]
+          },
+          "completedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "checkpointId",
+          "type",
+          "confirmedLessonCount",
+          "triggeredAt",
+          "state",
+          "completedAt",
+          "enrollmentId",
+          "studentId",
+          "studentName",
+          "subjectName"
+        ]
+      },
+      "TeacherCheckpointPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherCheckpointItemDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeacherConfirmedOutcomeDto": {
+        "type": "object",
+        "properties": {
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actualStartedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "durationMin": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "confirmedAt",
+          "actualStartedAt",
+          "durationMin"
+        ]
+      },
+      "TeacherEnrollmentDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "assignedFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "confirmedLessons": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Confirmed conducted lessons in this subject"
+          },
+          "nextLessonAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "studentId",
+          "studentName",
+          "subjectId",
+          "subjectName",
+          "assignedFrom",
+          "confirmedLessons",
+          "nextLessonAt"
+        ]
+      },
+      "TeacherEnrollmentsResponseDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherEnrollmentDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "TeacherGoalDto": {
+        "type": "object",
+        "properties": {
+          "goalId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "targetDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ACHIEVED",
+              "PAUSED",
+              "ARCHIVED"
+            ]
+          },
+          "skillId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "goalId",
+          "text",
+          "targetDate",
+          "status",
+          "skillId",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "TeacherGoalsResponseDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "goals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherGoalDto"
+            }
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "goals"
+        ]
+      },
+      "TeacherHomeworkCardDto": {
+        "type": "object",
+        "properties": {
+          "deliveryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "NOT_SUBMITTED",
+              "AWAITING_REVIEW",
+              "NEEDS_REVISION",
+              "REVIEWED",
+              "CANCELLED"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "submissionCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "latestSubmittedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "isLate": {
+            "type": "boolean",
+            "description": "The latest submission came after dueAt"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lessonId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "submissions": {
+            "description": "Newest version first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherHomeworkSubmissionDto"
+            }
+          },
+          "canReview": {
+            "type": "boolean",
+            "description": "The latest submission has no review yet"
+          }
+        },
+        "required": [
+          "deliveryId",
+          "title",
+          "issuedAt",
+          "dueAt",
+          "state",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "submissionCount",
+          "latestSubmittedAt",
+          "isLate",
+          "description",
+          "lessonId",
+          "submissions",
+          "canReview"
+        ]
+      },
+      "TeacherHomeworkItemDto": {
+        "type": "object",
+        "properties": {
+          "deliveryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "NOT_SUBMITTED",
+              "AWAITING_REVIEW",
+              "NEEDS_REVISION",
+              "REVIEWED",
+              "CANCELLED"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "submissionCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "latestSubmittedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "isLate": {
+            "type": "boolean",
+            "description": "The latest submission came after dueAt"
+          }
+        },
+        "required": [
+          "deliveryId",
+          "title",
+          "issuedAt",
+          "dueAt",
+          "state",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "submissionCount",
+          "latestSubmittedAt",
+          "isLate"
+        ]
+      },
+      "TeacherHomeworkPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherHomeworkItemDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeacherHomeworkReviewDto": {
+        "type": "object",
+        "properties": {
+          "reviewId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED",
+              "NEEDS_REVISION"
+            ]
+          },
+          "comment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "reviewId",
+          "result",
+          "comment",
+          "reviewedAt"
+        ]
+      },
+      "TeacherHomeworkSubmissionDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "submittedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "text": {
+            "type": "string",
+            "description": "The student's text answer"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeacherHomeworkReviewDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "submissionId",
+          "version",
+          "submittedAt",
+          "text",
+          "review"
+        ]
+      },
+      "TeacherJournalItemDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "AWAITING_REPORT",
+              "AWAITING_CONFIRMATION",
+              "CONDUCTED",
+              "CANCELLED",
+              "DISPUTED"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "TRIAL"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "reportDeadlineAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Lesson end + 24 hours"
+          },
+          "overdue": {
+            "type": "boolean",
+            "description": "AWAITING_REPORT and past the 24 hour deadline"
+          },
+          "latestReportResult": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "CONDUCTED",
+              "NOT_CONDUCTED",
+              "DISPUTED",
+              null
+            ],
+            "description": "Latest report of this lesson version"
+          }
+        },
+        "required": [
+          "lessonId",
+          "startsAt",
+          "endsAt",
+          "state",
+          "kind",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "reportDeadlineAt",
+          "overdue",
+          "latestReportResult"
+        ]
+      },
+      "TeacherJournalPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherJournalItemDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor",
+          "asOf"
+        ]
+      },
+      "TeacherLessonCardDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "AWAITING_REPORT",
+              "AWAITING_CONFIRMATION",
+              "CONDUCTED",
+              "CANCELLED",
+              "DISPUTED"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "TRIAL"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "reportDeadlineAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Lesson end + 24 hours"
+          },
+          "overdue": {
+            "type": "boolean",
+            "description": "AWAITING_REPORT and past the 24 hour deadline"
+          },
+          "latestReportResult": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "CONDUCTED",
+              "NOT_CONDUCTED",
+              "DISPUTED",
+              null
+            ],
+            "description": "Latest report of this lesson version"
+          },
+          "actualStartedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Server-recorded actual start; a CONDUCTED report must use exactly this value"
+          },
+          "canReport": {
+            "type": "boolean",
+            "description": "The lesson has ended and may still receive a (new) report"
+          },
+          "reports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherLessonReportDto"
+            }
+          },
+          "confirmedOutcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeacherConfirmedOutcomeDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "startsAt",
+          "endsAt",
+          "state",
+          "kind",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "reportDeadlineAt",
+          "overdue",
+          "latestReportResult",
+          "actualStartedAt",
+          "canReport",
+          "reports",
+          "confirmedOutcome"
+        ]
+      },
+      "TeacherLessonReportDto": {
+        "type": "object",
+        "properties": {
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "integer"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "CONDUCTED",
+              "NOT_CONDUCTED",
+              "DISPUTED"
+            ]
+          },
+          "studentNoShow": {
+            "type": "boolean"
+          },
+          "actualStartedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "durationMin": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "reportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "current": {
+            "type": "boolean",
+            "description": "Latest report of the current lesson version"
+          }
+        },
+        "required": [
+          "reportId",
+          "version",
+          "result",
+          "studentNoShow",
+          "actualStartedAt",
+          "durationMin",
+          "note",
+          "reportedAt",
+          "current"
+        ]
+      },
+      "TeacherMaterialDto": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "sizeBytes": {
+            "type": "integer"
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "VERIFIED"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "activeGrants": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Currently active grants of this file"
+          }
+        },
+        "required": [
+          "fileId",
+          "fileName",
+          "sizeBytes",
+          "mimeType",
+          "status",
+          "createdAt",
+          "activeGrants"
+        ]
+      },
+      "TeacherMaterialPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherMaterialDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeacherMeResponseDto": {
+        "type": "object",
+        "properties": {
+          "actorContext": {
+            "$ref": "#/components/schemas/StaffActorContextDto"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "TEACHER"
+            ]
+          },
+          "activeStudentCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Students with an active assignment"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          }
+        },
+        "required": [
+          "actorContext",
+          "teacherId",
+          "displayName",
+          "role",
+          "activeStudentCount",
+          "timezone"
+        ]
+      },
+      "TeacherNotificationDto": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "Stable event key; use it to mark the event read"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "LESSON_SCHEDULED",
+              "LESSON_RESCHEDULED",
+              "LESSON_CANCELLED",
+              "HOMEWORK_SUBMITTED",
+              "CHECKPOINT_DUE",
+              "SCHEDULE_REQUEST_RESOLVED"
+            ]
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "lessonAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Lesson time when the event is about a lesson"
+          },
+          "targetKind": {
+            "type": "string",
+            "enum": [
+              "LESSON",
+              "HOMEWORK",
+              "CHECKPOINT",
+              "SCHEDULE_REQUEST"
+            ],
+            "description": "Where the notification leads"
+          },
+          "targetId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "key",
+          "type",
+          "occurredAt",
+          "read",
+          "studentName",
+          "subjectName",
+          "lessonAt",
+          "targetKind",
+          "targetId"
+        ]
+      },
+      "TeacherNotificationPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherNotificationDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeacherNotificationSummaryDto": {
+        "type": "object",
+        "properties": {
+          "unreadCount": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Unread events of the last 90 days (capped at 500)"
+          },
+          "latestAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "unreadCount",
+          "latestAt"
+        ]
+      },
+      "TeacherPasskeyDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUsedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "backedUp": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "lastUsedAt",
+          "backedUp"
+        ]
+      },
       "TeacherPayrollResponse": {
         "type": "object",
         "properties": {
@@ -25503,6 +30488,661 @@
           "items"
         ],
         "additionalProperties": false
+      },
+      "TeacherPayrollResponseDto": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string",
+            "example": "2026-11"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "totals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollTotalDto"
+            }
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollLineDto"
+            }
+          }
+        },
+        "required": [
+          "month",
+          "timezone",
+          "totals",
+          "lines"
+        ]
+      },
+      "TeacherProfileDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "email": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Read-only: changed by school staff after identity checks"
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "+37360000000"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "passkeys": {
+            "description": "Active passkeys (MFA); credential material is never exposed",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherPasskeyDto"
+            }
+          }
+        },
+        "required": [
+          "teacherId",
+          "fullName",
+          "email",
+          "phone",
+          "timezone",
+          "passkeys"
+        ]
+      },
+      "TeacherReportDto": {
+        "type": "object",
+        "properties": {
+          "achievements": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "growthAreas": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "recommendations": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 5000
+          },
+          "teacherSignature": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PUBLISHED"
+            ]
+          },
+          "periodStart": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "periodEnd": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "publishedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "achievements",
+          "growthAreas",
+          "recommendations",
+          "teacherSignature",
+          "reportId",
+          "status",
+          "periodStart",
+          "periodEnd",
+          "publishedAt"
+        ]
+      },
+      "TeacherScheduleRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "RESOLVED"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "requestedStartAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "requestedEndAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "lessonId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "slotId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "lessonStartsAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Current time of the targeted lesson"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "requestId",
+          "status",
+          "createdAt",
+          "reason",
+          "requestedStartAt",
+          "requestedEndAt",
+          "lessonId",
+          "slotId",
+          "lessonStartsAt",
+          "studentName",
+          "subjectName"
+        ]
+      },
+      "TeacherScheduleRequestPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherScheduleRequestDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "TeacherSharedMaterialDto": {
+        "type": "object",
+        "properties": {
+          "permissionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "canDownload": {
+            "type": "boolean"
+          },
+          "lessonId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "lessonTitle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sharedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "revokedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "permissionId",
+          "fileId",
+          "fileName",
+          "canDownload",
+          "lessonId",
+          "lessonTitle",
+          "sharedAt",
+          "expiresAt",
+          "revokedAt"
+        ]
+      },
+      "TeacherSharedMaterialsDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "items": {
+            "description": "Grants issued by this teacher, newest first (max 200)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherSharedMaterialDto"
+            }
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "items"
+        ]
+      },
+      "TeacherSkillDto": {
+        "type": "object",
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "personal": {
+            "type": "boolean",
+            "description": "A skill of this student only (not the subject catalog)"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "assessedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "assessedByName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "publicComment": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Student-visible comment of the last change"
+          }
+        },
+        "required": [
+          "skillId",
+          "name",
+          "category",
+          "personal",
+          "status",
+          "assessedAt",
+          "assessedByName",
+          "publicComment"
+        ]
+      },
+      "TeacherSkillHistoryDto": {
+        "type": "object",
+        "properties": {
+          "skillId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "skillName": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherSkillHistoryItemDto"
+            }
+          }
+        },
+        "required": [
+          "skillId",
+          "skillName",
+          "items"
+        ]
+      },
+      "TeacherSkillHistoryItemDto": {
+        "type": "object",
+        "properties": {
+          "auditId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fromStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "toStatus": {
+            "type": "string",
+            "enum": [
+              "NOT_STUDIED",
+              "FAMILIARIZING",
+              "PRACTICING",
+              "APPLYING"
+            ]
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "publicComment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "basis": {
+            "type": "string",
+            "description": "Internal evidence (teacher view only)"
+          }
+        },
+        "required": [
+          "auditId",
+          "changedAt",
+          "fromStatus",
+          "toStatus",
+          "teacherName",
+          "publicComment",
+          "basis"
+        ]
+      },
+      "TeacherSkillMapDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherSkillDto"
+            }
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "studentName",
+          "subjectName",
+          "skills"
+        ]
+      },
+      "TeacherStudentOverviewDto": {
+        "type": "object",
+        "properties": {
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "confirmedLessons": {
+            "type": "integer"
+          },
+          "lessonsToNextReview": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4,
+            "description": "Confirmed lessons until the next skill review"
+          },
+          "upcomingLessons": {
+            "description": "Next lessons of this teacher (max 5)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OverviewLessonDto"
+            }
+          },
+          "recentLessons": {
+            "description": "Latest past lessons of this teacher (max 5)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OverviewLessonDto"
+            }
+          },
+          "homework": {
+            "$ref": "#/components/schemas/OverviewHomeworkDto"
+          },
+          "skills": {
+            "$ref": "#/components/schemas/OverviewSkillsDto"
+          },
+          "activeGoals": {
+            "type": "integer"
+          },
+          "pendingCheckpoints": {
+            "type": "integer",
+            "description": "Skill reviews and reports waiting for this teacher"
+          }
+        },
+        "required": [
+          "enrollmentId",
+          "studentId",
+          "studentName",
+          "subjectName",
+          "confirmedLessons",
+          "lessonsToNextReview",
+          "upcomingLessons",
+          "recentLessons",
+          "homework",
+          "skills",
+          "activeGoals",
+          "pendingCheckpoints"
+        ]
+      },
+      "TeacherTodayLessonDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SCHEDULED",
+              "STAR_PENDING",
+              "CONDUCTED",
+              "CANCELLED",
+              "DISPUTED"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "REGULAR",
+              "TRIAL"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectCode": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "joinOpensAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Join window opens 10 minutes before start"
+          },
+          "meetLinkState": {
+            "type": "string",
+            "enum": [
+              "PRESENT",
+              "MISSING"
+            ],
+            "description": "The URL itself is not exposed here"
+          },
+          "outcomeRecorded": {
+            "type": "boolean",
+            "description": "A confirmed actual outcome exists for this lesson"
+          }
+        },
+        "required": [
+          "lessonId",
+          "startsAt",
+          "endsAt",
+          "status",
+          "kind",
+          "studentId",
+          "studentName",
+          "subjectCode",
+          "subjectName",
+          "joinOpensAt",
+          "meetLinkState",
+          "outcomeRecorded"
+        ]
+      },
+      "TeacherTodayResponseDto": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "example": "2026-11-16"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lessons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherTodayLessonDto"
+            }
+          }
+        },
+        "required": [
+          "date",
+          "timezone",
+          "asOf",
+          "lessons"
+        ]
       },
       "TeachingAssignmentCreateRequest": {
         "type": "object",
@@ -25791,6 +31431,33 @@
           "unreadCount"
         ]
       },
+      "UpdateGoalDto": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          },
+          "targetDate": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date",
+            "description": "null clears the date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "ACHIEVED",
+              "PAUSED",
+              "ARCHIVED"
+            ]
+          }
+        }
+      },
       "UpdateLeadDto": {
         "type": "object",
         "properties": {
@@ -25911,6 +31578,42 @@
         },
         "required": [
           "version"
+        ]
+      },
+      "UpdateTeacherProfileDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "+37360000000",
+            "description": "E.164; null clears the number"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "UpdateTeacherProfileResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Teacher id"
+          },
+          "phone": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "phone"
         ]
       },
       "UploadUrlResponseDto": {

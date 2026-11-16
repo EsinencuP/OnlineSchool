@@ -12,6 +12,13 @@ import { SessionStore } from '../../dist/core/session/session.store.js';
 import { ScheduleEvents } from '../../dist/modules/schedule/schedule-events.service.js';
 import { ScheduleDeadlines } from '../../dist/modules/schedule/deadline.module.js';
 import { QA, qaId, seedQA } from '../../../../packages/db/dist-tools/seed.js';
+// Fixture dates were authored for late October 2026; availability must be in the future,
+// so move them forward by whole weeks (weekday and winter-time offset are preserved).
+const SHIFT_MS =
+  Math.ceil((Date.now() + 7 * 86400000 - Date.parse('2026-10-27T00:00:00Z')) / (7 * 86400000)) *
+  7 *
+  86400000;
+const shift = (iso) => new Date(Date.parse(iso) + SHIFT_MS).toISOString();
 const url = process.env.SCHEDULE_TEST_DATABASE_URL;
 assert.ok(url);
 const target = new URL(url);
@@ -142,7 +149,7 @@ test('manager creates scoped subject/enrollment/assignment without granting acco
         enrollmentId: state.enrollment.id,
         teacherId: QA.teachers[1],
         validFrom: '2026-10-01T00:00:00Z',
-        validTo: '2026-12-01T00:00:00Z',
+        validTo: shift('2026-12-01T00:00:00Z'),
         basis: 'Synthetic assigned teaching period',
       },
     }),
@@ -157,22 +164,27 @@ test('free availability is owned by teacher; concurrent overlapping bookings ret
     await call('teacher-availability', {
       actor: 'teacher',
       body: {
-        startsAt: '2026-10-27T00:00:00Z',
-        endsAt: '2026-11-12T00:00:00Z',
+        startsAt: shift('2026-10-27T00:00:00Z'),
+        endsAt: shift('2026-11-12T00:00:00Z'),
         timezone: 'Europe/Chisinau',
       },
     }),
   );
   const body = {
     teachingAssignmentId: state.assignment.id,
-    startsAt: '2026-10-28T09:00:00Z',
-    endsAt: '2026-10-28T10:00:00Z',
+    startsAt: shift('2026-10-28T09:00:00Z'),
+    endsAt: shift('2026-10-28T10:00:00Z'),
     basis: 'Synthetic concurrent booking',
   };
   const result = await Promise.all([
-    call('lessons', { body }),
+    call('lessons', { actor: 'director', body }),
     call('lessons', {
-      body: { ...body, startsAt: '2026-10-28T09:30:00Z', endsAt: '2026-10-28T10:30:00Z' },
+      actor: 'director',
+      body: {
+        ...body,
+        startsAt: shift('2026-10-28T09:30:00Z'),
+        endsAt: shift('2026-10-28T10:30:00Z'),
+      },
     }),
   ]);
   assert.equal(result.filter((r) => r.status === 200).length, 1, JSON.stringify(result));
@@ -188,8 +200,8 @@ test('recurring generation uses stable calendar-day identity even with a differe
         teachingAssignmentId: state.assignment.id,
         rule: 'FREQ=WEEKLY;BYDAY=TU;BYHOUR=14;BYMINUTE=0',
         timezone: 'Europe/Chisinau',
-        activeFrom: '2026-10-27T00:00:00Z',
-        activeUntil: '2026-11-11T00:00:00Z',
+        activeFrom: shift('2026-10-27T00:00:00Z'),
+        activeUntil: shift('2026-11-11T00:00:00Z'),
         durationMin: 60,
         basis: 'Synthetic finite reserved series',
       },
@@ -208,10 +220,11 @@ test('rescheduling keeps lesson ID, original date and audit history; replay cann
   const old = state.slot.occurrences[0];
   const moved = good(
     await call(`lessons/${old.id}/reschedule`, {
+      actor: 'director',
       method: 'PATCH',
       body: {
-        startsAt: '2026-10-29T12:00:00Z',
-        endsAt: '2026-10-29T13:00:00Z',
+        startsAt: shift('2026-10-29T12:00:00Z'),
+        endsAt: shift('2026-10-29T13:00:00Z'),
         reason: 'Synthetic authorized reschedule',
       },
     }),
@@ -232,7 +245,7 @@ test('manager changes only future template instances, preserves same-day IDs and
       method: 'PATCH',
       body: {
         rule: 'FREQ=WEEKLY;BYDAY=TU;BYHOUR=16;BYMINUTE=0',
-        effectiveFrom: '2026-10-30T00:00:00Z',
+        effectiveFrom: shift('2026-10-30T00:00:00Z'),
         reason: 'Synthetic future template revision',
       },
     }),
@@ -250,7 +263,7 @@ test('manager changes only future template instances, preserves same-day IDs and
         where: { id: state.slot.occurrences[0].id },
       })
     ).scheduled_at.toISOString(),
-    '2026-10-29T12:00:00.000Z',
+    shift('2026-10-29T12:00:00.000Z'),
   );
   assert.equal(await client.slotChangeEvent.count({ where: { slot_id: state.slot.id } }), 2);
 });
@@ -377,6 +390,7 @@ test('manager may correct historical calendar time with an event while actual te
   });
   const corrected = good(
     await call(`lessons/${l.id}/reschedule`, {
+      actor: 'director',
       method: 'PATCH',
       body: {
         startsAt: new Date(+l.scheduled_at - 60000).toISOString(),
@@ -557,6 +571,7 @@ test('manager cancellation is explicit and recurring generation never resurrects
   const id = state.slot.occurrences[1].id;
   const cancelled = good(
     await call(`lessons/${id}`, {
+      actor: 'director',
       method: 'DELETE',
       body: { reason: 'Synthetic authorized future cancellation' },
     }),

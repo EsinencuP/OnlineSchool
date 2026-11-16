@@ -1,0 +1,13 @@
+{
+  "model": "sonnet",
+  "effortLevel": "medium",
+  "availableModels": ["sonnet", "haiku"],
+  "enforceAvailableModels": true,
+  "ultracode": false,
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "0",
+    "CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH": "1",
+    "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "1",
+    "CLAUDE_CODE_DISABLE_ADVISOR_TOOL": "1"
+  }
+}

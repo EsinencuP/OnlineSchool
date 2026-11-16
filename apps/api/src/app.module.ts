@@ -12,6 +12,7 @@ import { StorageModule } from './modules/storage/storage.module.js';
 import { IntegrationsModule } from './modules/integrations/integrations.module.js';
 import { CoreModule } from './core/core.module.js';
 import { ManagerModule } from './modules/manager/manager.module.js';
+import { TeacherModule } from './modules/teacher/teacher.module.js';
 import { Public } from './core/rbac/decorators.js';
 import { QaModule } from './modules/qa/qa.module.js';
 import { StudentModule } from './student/student.module.js';
@@ -56,6 +57,7 @@ export class HealthController {
   imports: [
     CoreModule,
     ManagerModule,
+    TeacherModule,
     IdentityModule,
     CrmModule,
     ScheduleModule,

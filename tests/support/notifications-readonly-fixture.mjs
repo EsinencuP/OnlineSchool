@@ -44,7 +44,7 @@ export function notificationFixtureCte(tables) {
         const columns = model.fields
           .map(
             (f) =>
-              `"${f.column}" ${f.native?.[0] === 'Uuid' ? 'uuid' : f.type === 'Json' ? 'jsonb' : f.type === 'DateTime' ? 'timestamptz' : f.type === 'Int' ? 'integer' : f.type === 'Boolean' ? 'boolean' : 'text'}`,
+              `"${f.column}" ${f.native?.[0] === 'Uuid' ? 'uuid' : f.type === 'Json' ? 'jsonb' : f.type === 'DateTime' ? 'timestamptz' : f.type === 'Int' ? 'integer' : f.type === 'Boolean' ? 'boolean' : f.type === 'StudentNotificationType' ? 'student_notification_type' : 'text'}`,
           )
           .join(',');
         return `${table} AS(SELECT * FROM jsonb_to_recordset('${JSON.stringify(rows).replaceAll("'", "''")}'::jsonb) AS fixture(${columns}))`;

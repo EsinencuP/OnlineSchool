@@ -73,7 +73,10 @@ export async function schoolFetch<T>(
             : typeof error.detail === 'string'
               ? error.detail
               : 'Request failed',
-        ...(Object.keys(details).length ? { details } : {}),
+        // A duplicate-lead conflict may carry private contact fields: only `existingId` is forwarded.
+        ...(Object.keys(details).length && error.code !== 'LEAD_DUPLICATE_SUSPECTED'
+          ? { details }
+          : {}),
         ...(contacts &&
         typeof contacts.whatsapp === 'string' &&
         typeof contacts.telegram === 'string'

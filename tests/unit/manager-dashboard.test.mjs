@@ -82,6 +82,8 @@ test('shared overdue predicate is strict, public types only; damaged legacy refe
     'ATTENDANCE_DISPUTE',
     'SUBSCRIPTION_EXPIRING',
     'MANUAL',
+    'FOLLOW_UP',
+    'PAYMENT_FOLLOW_UP',
   ]);
   expect(visible.text).toContain('e.student_id=t.student_id');
   expect(visible.text).toContain('CASE WHEN');

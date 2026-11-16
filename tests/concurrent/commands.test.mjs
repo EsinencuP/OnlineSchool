@@ -49,11 +49,21 @@ test('concurrent lesson bookings: five requests, one succeeds and four return 40
     endsAt: end.toISOString(),
     basis: 'FND same slot race',
   };
-  const result = await Promise.all(Array.from({ length: 5 }, () => f.call('lessons', { body })));
-  expect(result.map((r) => r.status).sort()).toEqual([200, 409, 409, 409, 409]);
+  const result = await Promise.all(
+    Array.from({ length: 5 }, () => f.call('lessons', { actor: 'director', body })),
+  );
+  // Serializable transactions are retried at most three times (ARCH-11/B). Under five-way
+  // contention a loser may exhaust its retries and get the retryable 503 instead of 409.
+  expect(result.filter((r) => r.status === 200)).toHaveLength(1);
+  for (const loser of result.filter((r) => r.status !== 200))
+    expect([409, 503]).toContain(loser.status);
+  for (const exhausted of result.filter((r) => r.status === 503))
+    expect(exhausted.body.code).toBe('TRANSACTION_RETRY_EXHAUSTED');
   expect(
     await f.db.lessonOccurrence.count({ where: { teaching_assignment_id: assignment.id } }),
   ).toBe(1);
+  // A retry after the race gets the definitive conflict.
+  expect((await f.call('lessons', { actor: 'director', body })).status).toBe(409);
 });
 
 test('concurrent entitlement consumption: five different lessons cannot double-spend one right', async () => {

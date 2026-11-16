@@ -1338,6 +1338,7 @@ model ManagerSubscriptionOperation {
   distribution          PaymentDistribution? @relation(fields: [distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   ledger_publication    LedgerEntry? @relation(fields: [ledger_publication_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   manager               StaffAccount? @relation(fields: [created_by_manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  @@unique([source_operation_id, type], map: "uq_manager_subscription_operations_source_type")
   @@index([subscription_id, created_at])
   @@map("manager_subscription_operations")
 }

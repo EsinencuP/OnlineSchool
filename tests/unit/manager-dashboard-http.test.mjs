@@ -176,7 +176,7 @@ test('overdue count/top agree with MGR07 and ignore hidden, closed, future, malf
   for (let i = 0; i < 8; i++)
     await fx.addTask(own, 'MANUAL', { due_at: new Date(+f.state.now - 100 - i) });
   await fx.addTask(other, 'MANUAL', { due_at: new Date(+f.state.now - 1000) });
-  await fx.addTask(own, 'FOLLOW_UP', { due_at: new Date(+f.state.now - 1000) });
+  await fx.addTask(own, 'TRIAL_FOLLOW_UP', { due_at: new Date(+f.state.now - 1000) });
   await fx.addTask(own, 'MANUAL', { status: 'REJECTED', due_at: new Date(+f.state.now - 1) });
   await fx.addTask(own, 'MANUAL', { due_at: f.state.now });
   await fx.addTask(own, 'SUBSCRIPTION_EXPIRING', {

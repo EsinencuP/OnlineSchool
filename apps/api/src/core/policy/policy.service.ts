@@ -48,7 +48,7 @@ const permissions: Record<RoleCode, readonly string[]> = {
     'student:create',
     'household:manage',
   ],
-  TEACHER: ['student:read', 'payroll:read', 'schedule:teacher'],
+  TEACHER: ['student:read', 'payroll:read', 'schedule:teacher', 'education:teacher'],
   STUDENT: ['student:read'],
   TECH_OPERATOR: [],
 };

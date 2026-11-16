@@ -16,6 +16,9 @@ export const TASK_STORAGE_TYPES = [
   'ATTENDANCE_DISPUTE',
   'SUBSCRIPTION_EXPIRING',
   'MANUAL',
+  // System follow-ups (teacher requests, overdue outcomes, payment follow-ups) are shown as GENERAL.
+  'FOLLOW_UP',
+  'PAYMENT_FOLLOW_UP',
 ] as const;
 export const TYPE_STORAGE = {
   LEAD_FOLLOWUP: 'LEAD_FOLLOWUP',
@@ -25,6 +28,9 @@ export const TYPE_STORAGE = {
   SUBSCRIPTION_EXPIRING: 'SUBSCRIPTION_EXPIRING',
   GENERAL: 'MANUAL',
 } as const;
+export const GENERAL_STORAGE = ['MANUAL', 'FOLLOW_UP', 'PAYMENT_FOLLOW_UP'] as const;
+export const storageTypes = (type: ManagerTaskType): readonly string[] =>
+  type === 'GENERAL' ? GENERAL_STORAGE : [TYPE_STORAGE[type]];
 export type TaskPayload =
   | { kind: 'LEAD_FOLLOWUP' | 'ASSIGN_TEACHER'; leadId: string }
   | {
@@ -63,6 +69,7 @@ export type ResolveTaskReschedule = {
   overrideLateRule?: boolean;
   version: number;
 };
+export type ResolveTaskGeneral = { note: string; version: number };
 export type ResolveTaskDispute = {
   decision: 'ACCEPT' | 'REJECT' | 'ESCALATE';
   reason: string;

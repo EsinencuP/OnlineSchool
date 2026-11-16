@@ -22,7 +22,8 @@ import { ManagerFinanceFacade } from '../finance/manager-finance.facade.js';
 import { ManagerScheduleService } from '../schedule/manager-schedule.service.js';
 import type { DisputeProposal } from '../../finance/manager-disputes/dispute.service.js';
 import { positiveReceiptAmount } from '../../finance/receipt-policy.js';
-import { TYPE_STORAGE } from './contracts.js';
+import { GENERAL_STORAGE, storageTypes } from './contracts.js';
+import type { ResolveTaskGeneral } from './contracts.js';
 import type {
   TaskView,
   TaskPayload,
@@ -241,7 +242,8 @@ export class ManagerTasksService {
         if (!allowed.ok) return allowed;
         conditions.push({ student_id: q.studentId });
       }
-      if (q.type?.length) conditions.push({ type: { in: q.type.map((t) => TYPE_STORAGE[t]) } });
+      if (q.type?.length)
+        conditions.push({ type: { in: q.type.flatMap((t) => storageTypes(t)) as never } });
       if (q.status?.length) {
         const statuses: StoredStatus[] = q.status.flatMap((s) =>
           s === 'REJECTED' ? ['REJECTED', 'CANCELLED'] : [s],
@@ -481,6 +483,42 @@ export class ManagerTasksService {
           true,
         ),
       );
+      return this.project(ctx, next, c.tx, now);
+    } catch (error: unknown) {
+      return err(subscriptionFailure(error));
+    }
+  }
+  async resolveGeneral(
+    ctx: ManagerContext,
+    id: string,
+    input: ResolveTaskGeneral,
+    c: CriticalContext,
+  ): Promise<Result<TaskView, DomainError>> {
+    try {
+      unwrap(await this.authorize(ctx, c));
+      const row = unwrap(await this.find(ctx, id, c.tx));
+      if (!(GENERAL_STORAGE as readonly string[]).includes(row.type))
+        return err(domainError('TASK_TYPE_MISMATCH', 409));
+      unwrap(this.check(row, input.version));
+      const note = input.note.trim();
+      if (note.length < 3 || note.length > 500) return err(domainError('INVALID_INPUT', 422));
+      const now = await at(c.tx);
+      const next = unwrap(
+        await this.update(c, row, {
+          status: 'RESOLVED',
+          resolved_at: now,
+          resolved_by_staff_id: ctx.managerId,
+          decision: { kind: 'GENERAL', note },
+        }),
+      );
+      // A teacher's schedule-change request is answered once its manager task is resolved.
+      const request = /^schedule-request:([0-9a-f-]{36})$/.exec(row.idempotency_key ?? '');
+      if (request)
+        await c.tx.scheduleChangeRequest.updateMany({
+          where: { id: request[1]!, status: 'PENDING' },
+          data: { status: 'RESOLVED' },
+        });
+      unwrap(await this.record(c, row, 'TASK_RESOLVED', { note, status: 'RESOLVED' }));
       return this.project(ctx, next, c.tx, now);
     } catch (error: unknown) {
       return err(subscriptionFailure(error));

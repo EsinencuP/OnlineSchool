@@ -6939,6 +6939,10 @@
     ],
     "uniqueSets": [
       [
+        "source_operation_id",
+        "type"
+      ],
+      [
         "id"
       ],
       [
@@ -12099,6 +12103,15 @@
       {
         "name": "student_telegram_url",
         "column": "student_telegram_url",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "student_phone_e164",
+        "column": "student_phone_e164",
         "type": "String",
         "list": false,
         "nullable": true,

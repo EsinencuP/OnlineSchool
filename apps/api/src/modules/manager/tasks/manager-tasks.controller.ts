@@ -36,6 +36,7 @@ import {
   ManagerTaskDto,
   ManagerTaskPageDto,
   ResolveManagerDisputeDto,
+  ResolveManagerGeneralDto,
   ResolveManagerRescheduleDto,
 } from '../dto/manager-task.dto.js';
 import { ManagerTasksService } from './manager-tasks.service.js';
@@ -102,6 +103,22 @@ export class ManagerTasksController {
     @CurrentTransaction() c: CriticalContext,
   ): Promise<ManagerTaskDto> {
     return unwrap(await this.tasks.claim(r.managerCtx!, id, body.version, c));
+  }
+  @Post(':taskId/resolve')
+  @ApiOperation({
+    operationId: 'resolveManagerTaskGeneral',
+    description:
+      'Closes a general follow-up (including a teacher schedule-change request) from IN_PROGRESS with a note.',
+  })
+  @ApiOkResponse({ type: ManagerTaskDto })
+  @command('resolve')
+  async resolveGeneral(
+    @Req() r: ManagerRequest,
+    @Param('taskId') id: string,
+    @Body() body: ResolveManagerGeneralDto,
+    @CurrentTransaction() c: CriticalContext,
+  ): Promise<ManagerTaskDto> {
+    return unwrap(await this.tasks.resolveGeneral(r.managerCtx!, id, body, c));
   }
   @Post(':taskId/resolve-reschedule')
   @ApiOperation({

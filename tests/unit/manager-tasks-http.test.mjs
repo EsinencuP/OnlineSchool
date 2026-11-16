@@ -159,7 +159,7 @@ test('queue filters compose, keyset order is stable, terminal tasks are never ov
     future = await fx.addTask(own),
     closed = await fx.addTask(own, 'MANUAL', { status: 'REJECTED', due_at: a.due_at });
   await fx.addTask(foreign, 'MANUAL', { due_at: a.due_at });
-  await fx.addTask(own, 'FOLLOW_UP', { due_at: a.due_at });
+  await fx.addTask(own, 'TRIAL_FOLLOW_UP', { due_at: a.due_at });
   const base = '/api/v1/manager/tasks?type=GENERAL&status=OPEN,IN_PROGRESS&overdue=true&limit=1';
   const first = await f.api('get', base);
   expect(first.status).toBe(200);
@@ -202,7 +202,7 @@ test.each([
   expect((await f.api('get', '/api/v1/manager/tasks?' + query)).status).toBe(422);
 });
 test('foreign, disallowed and absent tasks produce identical TASK_NOT_FOUND', async () => {
-  const hidden = await fx.addTask(own, 'FOLLOW_UP', { title: 'PRIVATE EDUCATION' }),
+  const hidden = await fx.addTask(own, 'TRIAL_FOLLOW_UP', { title: 'PRIVATE EDUCATION' }),
     other = await fx.addTask(foreign, 'MANUAL', { title: 'PRIVATE PORTFOLIO' });
   for (const id of [hidden.id, other.id, randomUUID()]) {
     const r = await get(id);
@@ -596,4 +596,33 @@ test('subscription-expiring uses the scoped managed subscription and ignores arb
   expect(r.body.payload.endsAt).toBe('2026-12-01T00:00:00.000Z');
   expect(JSON.stringify(r.body)).not.toContain('PRIVATE');
   expect(r.body.isOverdue).toBe(false);
+});
+
+test('system follow-ups are shown to the manager as general tasks and can be resolved', async () => {
+  const follow = await fx.addTask(own, 'FOLLOW_UP', { title: 'Teacher asked to move a lesson' });
+  const payment = await fx.addTask(own, 'PAYMENT_FOLLOW_UP', { title: 'Check the payment' });
+  const list = await f.api('get', '/api/v1/manager/tasks?type=GENERAL&limit=100');
+  expect(list.status).toBe(200);
+  const shown = new Map(list.body.items.map((i) => [i.taskId, i]));
+  expect(shown.has(follow.id)).toBe(true);
+  expect(shown.has(payment.id)).toBe(true);
+  expect(shown.get(follow.id).payload).toEqual({
+    kind: 'GENERAL',
+    text: 'Teacher asked to move a lesson',
+  });
+  const claimed = await claim(follow);
+  expect(claimed.status).toBe(200);
+  const resolved = await call(follow.id, 'resolve', {
+    version: claimed.body.version,
+    note: 'Moved to Friday',
+  });
+  expect(resolved.status).toBe(200);
+  expect(resolved.body.status).toBe('RESOLVED');
+  const again = await call(
+    follow.id,
+    'resolve',
+    { version: claimed.body.version, note: 'Moved to Friday' },
+    randomUUID(),
+  );
+  expect(again.status).toBe(409);
 });

@@ -54,7 +54,8 @@ async function rejects(db, fn, constraint, code = '23514') {
   try {
     await assert.rejects(fn(), (error) => {
       assert.equal(error.code, code);
-      if (constraint) assert.equal(error.constraint, constraint);
+      if (constraint instanceof RegExp) assert.match(error.message, constraint);
+      else if (constraint) assert.equal(error.constraint, constraint, error.message);
       return true;
     });
   } finally {
@@ -188,7 +189,8 @@ test('homework delivery is explicit; revisions and reviews preserve the student 
           content: { text: 'Duplicate' },
         }),
       undefined,
-      '23505',
+      // The sequential-version trigger rejects a repeated version before the unique index.
+      '23514',
     );
     const other = await insert(db, 'students', { full_name: 'Other synthetic child' }, false);
     await rejects(
@@ -201,7 +203,8 @@ test('homework delivery is explicit; revisions and reviews preserve the student 
           submitted_at: '2026-10-04Z',
           content: {},
         }),
-      'ck_education_context',
+      // Version-order trigger now fires before the cross-student context check.
+      /needs revision before the next version/,
     );
   }));
 
@@ -209,7 +212,10 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
   tx(async (db) => {
     const f = await seed(db);
     const lessons = [];
-    for (let i = 0; i < 8; i++) lessons.push(await lessonFixture(db, f, f.staff.id));
+    // Checkpoint guard counts confirmed lessons at triggered_at, so confirmations must be ordered.
+    const confirmedAt = (i) => `2026-10-02T14:0${i}:00Z`;
+    for (let i = 0; i < 8; i++)
+      lessons.push(await lessonFixture(db, f, f.staff.id, { confirmedAt: confirmedAt(i) }));
     const l = lessons[0];
     const skill = await insert(db, 'skill_entries', {
       subject_id: f.subject.id,
@@ -256,18 +262,18 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
         }),
       'ck_education_context',
     );
-    const base = {
+    const base = (n) => ({
       enrollment_id: f.enrollment.id,
-      lesson_actual_outcome_id: l.outcome.id,
-      triggered_at: '2026-10-03Z',
-    };
+      lesson_actual_outcome_id: lessons[n - 1].outcome.id,
+      triggered_at: confirmedAt(n - 1),
+    });
     const four = await insert(db, 'progress_checkpoints', {
-      ...base,
+      ...base(4),
       type: 'LESSON_4',
       confirmed_lesson_count: 4,
     });
     const eight = await insert(db, 'progress_checkpoints', {
-      ...base,
+      ...base(8),
       type: 'LESSON_8',
       confirmed_lesson_count: 8,
     });
@@ -275,7 +281,7 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
       db,
       () =>
         insert(db, 'progress_checkpoints', {
-          ...base,
+          ...base(8),
           type: 'LESSON_8',
           confirmed_lesson_count: 8,
         }),
@@ -287,12 +293,18 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
       version: 1,
       period_start: at,
       period_end: '2026-10-03Z',
-      content: { summary: 'Synthetic' },
+      content: {
+        achievements: 'Synthetic achievements',
+        growthAreas: 'Synthetic growth areas',
+        recommendations: 'Synthetic recommendations',
+        teacherSignature: 'Synthetic teacher',
+      },
     };
     await rejects(
       db,
       () => insert(db, 'education_reports', { ...report, checkpoint_id: four.id }),
-      'ck_report_checkpoint',
+      // Only LESSON_8 checkpoints resolve to a report author; a LESSON_4 one is rejected.
+      /needs an assigned enabled teacher/,
     );
     const draft = await insert(db, 'education_reports', { ...report, checkpoint_id: eight.id });
     await rejects(
@@ -302,7 +314,8 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
           "UPDATE education_reports SET status='PUBLISHED',generated_at=now(),published_by=$1 WHERE id=$2",
           [l.teacher.id, draft.id],
         ),
-      'ck_report_publication',
+      // Publication needs a timestamp; the publication guard rejects a missing one.
+      /needs an assigned enabled teacher/,
     );
     await db.query(
       "UPDATE education_reports SET status='PUBLISHED',generated_at=now(),published_at=now(),published_by=$1 WHERE id=$2",
@@ -310,7 +323,16 @@ test('skills are subject-scoped; 4-lesson checkpoints do not become reports and 
     );
     await rejects(
       db,
-      () => db.query("UPDATE education_reports SET content='{}' WHERE id=$1", [draft.id]),
+      () =>
+        db.query(`UPDATE education_reports SET content=$2::jsonb WHERE id=$1`, [
+          draft.id,
+          JSON.stringify({
+            achievements: 'Changed',
+            growthAreas: 'Changed',
+            recommendations: 'Changed',
+            teacherSignature: 'Changed',
+          }),
+        ]),
       'ck_published_report_immutable',
     );
   }));

@@ -63,6 +63,8 @@ export async function securityFixtureQuery(item) {
         deactivated_at: null,
         student_whatsapp_url: 'https://wa.me/37360000123',
         student_telegram_url: 'https://t.me/manager_one',
+        full_name: 'Manager One',
+        student_phone_e164: null,
       },
       {
         id: id(21),
@@ -70,11 +72,13 @@ export async function securityFixtureQuery(item) {
         deactivated_at: null,
         student_whatsapp_url: 'https://wa.me/37360000456',
         student_telegram_url: 'https://t.me/manager_two',
+        full_name: 'Manager Two',
+        student_phone_e164: null,
       },
     ],
     auth_accounts: [
-      { id: id(30), disabled_at: item.disabled ? '2001-01-01T00:00:00Z' : null },
-      { id: id(31), disabled_at: null },
+      { id: id(30), kind: 'STAFF', disabled_at: item.disabled ? '2001-01-01T00:00:00Z' : null },
+      { id: id(31), kind: 'STAFF', disabled_at: null },
     ],
     roles: [{ id: id(40), code: 'MANAGER' }],
     role_assignments: [

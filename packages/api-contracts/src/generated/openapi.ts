@@ -1201,6 +1201,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/tasks/{taskId}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Closes a general follow-up (including a teacher schedule-change request) from IN_PROGRESS with a note. */
+        post: operations["resolveManagerTaskGeneral"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/tasks/{taskId}/resolve-dispute": {
         parameters: {
             query?: never;
@@ -2517,6 +2534,570 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/teacher/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The teacher's own availability windows with an occupied flag */
+        get: operations["getTeacherAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/checkpoints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Skill reviews (4 lessons) and education reports (8 lessons) of taught students */
+        get: operations["getTeacherCheckpoints"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/checkpoints/{checkpointId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One checkpoint with its summary, frozen snapshot and report draft */
+        get: operations["getTeacherCheckpoint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/checkpoints/{checkpointId}/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Finish a 4-lesson skill review; freezes the skill snapshot the student sees */
+        post: operations["completeTeacherCheckpoint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/checkpoints/{checkpointId}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create or update the draft education report of an 8-lesson checkpoint */
+        post: operations["saveTeacherReportDraft"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/checkpoints/{checkpointId}/report/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish the draft report to the student (immutable afterwards) */
+        post: operations["publishTeacherReport"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Active enrollments the teacher currently teaches (roster) */
+        get: operations["getTeacherEnrollments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/goals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A taught student's learning goals */
+        get: operations["getTeacherGoals"];
+        put?: never;
+        /** Set a learning goal for a taught student */
+        post: operations["createTeacherGoal"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/goals/{goalId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Edit a goal, mark it achieved, pause or archive it (history is kept by the database) */
+        patch: operations["updateTeacherGoal"];
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Files this teacher shared with a taught student, for the enrollment subject */
+        get: operations["getTeacherSharedMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Student card: progress counters, upcoming/recent lessons, homework, skills and goals */
+        get: operations["getTeacherStudentOverview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A taught student's skill map with current public statuses */
+        get: operations["getTeacherSkillMap"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills/{skillId}/assessments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a new level of a skill for a taught student */
+        post: operations["assessTeacherSkill"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/enrollments/{enrollmentId}/skills/{skillId}/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Status changes of one skill, newest first (last 50) */
+        get: operations["getTeacherSkillHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/homework": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Homework the teacher issued; state=AWAITING_REVIEW is the review queue */
+        get: operations["getTeacherHomework"];
+        put?: never;
+        /** Issue homework to assigned students (one delivery per enrollment) */
+        post: operations["issueTeacherHomework"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/homework/{deliveryId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One issued homework with submission versions and reviews */
+        get: operations["getTeacherHomeworkCard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/homework/{deliveryId}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept or return the latest submission of an issued homework */
+        post: operations["reviewTeacherHomework"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/journal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The teacher's ended lessons with their outcome-report state, newest first */
+        get: operations["getTeacherJournal"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/lessons/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Own lesson card with report history and the confirmed outcome */
+        get: operations["getTeacherLesson"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/materials": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The teacher's private material library */
+        get: operations["getTeacherMaterials"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/materials/{fileId}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify the uploaded staging object and publish it as a private file */
+        post: operations["confirmTeacherMaterialUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/materials/{fileId}/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Give a taught student access to a verified file (optionally tied to a lesson) */
+        post: operations["shareTeacherMaterial"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/materials/grants/{permissionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Withdraw a student’s access to a file */
+        delete: operations["revokeTeacherMaterial"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/materials/uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a file and get a short-lived signed URL to upload it to staging */
+        post: operations["requestTeacherMaterialUpload"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current teacher profile */
+        get: operations["getTeacherMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Work notifications of the last 90 days (lessons, homework, checkpoints, requests) */
+        get: operations["getTeacherNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/notifications/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark listed events read */
+        post: operations["markTeacherNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark everything up to now read; later events stay unread */
+        post: operations["markAllTeacherNotificationsRead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/notifications/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Unread indicator for the notification bell */
+        get: operations["getTeacherNotificationSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/payroll": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The teacher's own monthly statement: confirmed lessons, accruals and payouts (read-only) */
+        get: operations["getTeacherPayrollStatement"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Own contact data and active passkeys (no credential material) */
+        get: operations["getTeacherProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Change the own phone number (the only self-service contact field) */
+        patch: operations["updateTeacherProfile"];
+        trace?: never;
+    };
+    "/api/v1/teacher/schedule-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Schedule change requests the teacher sent to the manager, newest first */
+        get: operations["getTeacherScheduleRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/today": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The teacher's own lessons for one school-timezone calendar day */
+        get: operations["getTeacherToday"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/teaching-assignments": {
         parameters: {
             query?: never;
@@ -2629,6 +3210,36 @@ export interface components {
         };
         ApproveDistributionRequest: Record<string, never>;
         ApproveScheduleChangeDto: Record<string, never>;
+        AssessSkillDto: {
+            /** @enum {string} */
+            level: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** @description Internal pedagogical evidence; never shown to the student */
+            basis: string;
+            /** @description Shown to the student */
+            publicComment?: string;
+            /**
+             * Format: uuid
+             * @description Confirmed conducted lesson of this enrollment as evidence
+             */
+            lessonId?: string;
+        };
+        AssessSkillResponseDto: {
+            /**
+             * Format: uuid
+             * @description Assessment id
+             */
+            id: string;
+            /** Format: uuid */
+            skillId: string;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** @enum {string} */
+            fromStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** @enum {string} */
+            toStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** Format: date-time */
+            assessedAt: string;
+        };
         CancelManagerLessonDto: {
             reason: string;
             chargeable: boolean;
@@ -2657,6 +3268,21 @@ export interface components {
             version: number;
         };
         CloseFinancialPeriodRequest: Record<string, never>;
+        CompleteCheckpointDto: {
+            /** @description Shown with the frozen skill snapshot */
+            teacherSummary: string;
+        };
+        CompleteCheckpointResponseDto: {
+            /**
+             * Format: uuid
+             * @description Checkpoint id
+             */
+            id: string;
+            /** Format: date-time */
+            completedAt: string;
+            /** Format: uuid */
+            snapshotId: string | null;
+        };
         ComponentStatusResponse: {
             /** @enum {string} */
             api: "ok";
@@ -2705,6 +3331,17 @@ export interface components {
             fileId: string;
             /** @enum {string} */
             status: "VERIFIED";
+        };
+        CreateGoalDto: {
+            /** @description Shown to the student */
+            text: string;
+            /** Format: date */
+            targetDate?: string;
+            /**
+             * Format: uuid
+             * @description A skill of the enrollment subject
+             */
+            skillId?: string;
         };
         CreateLeadDto: {
             /** @enum {string} */
@@ -3104,6 +3741,15 @@ export interface components {
             cancelConflictingLessons?: boolean;
         };
         GenerateSlotOccurrencesRequest: Record<string, never>;
+        GoalCommandResponseDto: {
+            /**
+             * Format: uuid
+             * @description Goal id
+             */
+            id: string;
+            /** @enum {string} */
+            status: "ACTIVE" | "ACHIEVED" | "PAUSED" | "ARCHIVED";
+        };
         HealthProbeResponse: {
             /** @enum {string} */
             status: "ok" | "unavailable";
@@ -3187,6 +3833,40 @@ export interface components {
             id: string;
             /** Format: uuid */
             householdId: string;
+        };
+        IssuedDeliveryDto: {
+            /** Format: uuid */
+            deliveryId: string;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            studentId: string;
+        };
+        IssueHomeworkDto: {
+            title: string;
+            /** @description Plain text instructions */
+            description: string;
+            /**
+             * Format: date-time
+             * @description Must be in the future
+             */
+            dueAt?: string;
+            /**
+             * Format: uuid
+             * @description The teacher's own lesson of one enrollment
+             */
+            lessonId?: string;
+            enrollmentIds: string[];
+            /** @description Verified files from the teacher's material library; students get read access */
+            attachmentFileIds?: string[];
+        };
+        IssueHomeworkResponseDto: {
+            /**
+             * Format: uuid
+             * @description Assignment id
+             */
+            id: string;
+            deliveries: components["schemas"]["IssuedDeliveryDto"][];
         };
         LeadDto: {
             /** Format: uuid */
@@ -3820,6 +4500,22 @@ export interface components {
             items: components["schemas"]["ManagerTaskDto"][];
             nextCursor: string | null;
         };
+        MarkReadDto: {
+            keys: string[];
+        };
+        MarkReadResponseDto: {
+            /** @description Events newly marked read */
+            marked: number;
+        };
+        MaterialConfirmResponseDto: {
+            /**
+             * Format: uuid
+             * @description File id
+             */
+            id: string;
+            /** @enum {string} */
+            status: "VERIFIED";
+        };
         MaterialItemDto: {
             /**
              * Format: uuid
@@ -3849,6 +4545,17 @@ export interface components {
             total: number;
             page: number;
             pageSize: number;
+        };
+        MaterialUploadResponseDto: {
+            /**
+             * Format: uuid
+             * @description File id
+             */
+            id: string;
+            /** @description Short-lived signed PUT URL for the staging object */
+            uploadUrl: string;
+            /** Format: date-time */
+            expiresAt: string;
         };
         NextLessonDto: {
             /** Format: uuid */
@@ -3886,6 +4593,26 @@ export interface components {
             unreadCount: number;
             page: number;
             pageSize: number;
+        };
+        OverviewHomeworkDto: {
+            notSubmitted: number;
+            awaitingReview: number;
+            needsRevision: number;
+            reviewed: number;
+        };
+        OverviewLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** @enum {string} */
+            status: "SCHEDULED" | "STAR_PENDING" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+        };
+        OverviewSkillsDto: {
+            notStudied: number;
+            familiarizing: number;
+            practicing: number;
+            applying: number;
         };
         PasskeyRegisteredResponse: {
             /** Format: uuid */
@@ -4046,6 +4773,56 @@ export interface components {
             /** Format: date-time */
             confirmed_at: string;
         };
+        PayrollLineDto: {
+            /** Format: uuid */
+            outcomeId: string;
+            /** Format: date-time */
+            lessonStartedAt: string;
+            durationMin: number;
+            studentName: string;
+            subjectName: string;
+            /**
+             * @description Rate frozen at the actual lesson start
+             * @example 200.0000
+             */
+            rate: string;
+            points: number;
+            /** @example ORDINARY_POINTS */
+            rateBasis: string;
+            /** @example MDL */
+            currency: string;
+            /**
+             * @description Accrued amount; equals the rate for an ordinary accrual
+             * @example 200.0000
+             */
+            amount: string;
+            /** @example 0.0000 */
+            paid: string;
+            /** @enum {string} */
+            status: "PENDING_ACCRUAL" | "ACCRUED" | "PARTIALLY_PAID" | "PAID" | "NO_PAYMENT";
+            /** Format: date-time */
+            accruedAt: string | null;
+            /** Format: date-time */
+            lastPaidAt: string | null;
+        };
+        PayrollTotalDto: {
+            /** @example MDL */
+            currency: string;
+            /** @example 200.0000 */
+            accrued: string;
+            /** @example 0.0000 */
+            paid: string;
+            /**
+             * @description Accrued minus paid
+             * @example 200.0000
+             */
+            outstanding: string;
+            /**
+             * @description Confirmed lessons not accrued yet, at their frozen rate
+             * @example 0.0000
+             */
+            pendingAccrual: string;
+        };
         PdfExportRequestResultDto: {
             /** @enum {string} */
             status: "ACCEPTED" | "UNKNOWN";
@@ -4096,6 +4873,17 @@ export interface components {
             /** Format: uuid */
             requestId: string;
             managerContacts?: components["schemas"]["ManagerContactsDto"];
+        };
+        PublishReportResponseDto: {
+            /**
+             * Format: uuid
+             * @description Report id
+             */
+            id: string;
+            /** @enum {string} */
+            status: "PUBLISHED";
+            /** Format: date-time */
+            publishedAt: string;
         };
         RecoveryCompleteRequest: {
             /** Format: uuid */
@@ -4170,6 +4958,12 @@ export interface components {
             page: number;
             pageSize: number;
         };
+        RequestMaterialUploadDto: {
+            fileName: string;
+            fileSizeBytes: number;
+            /** @example application/pdf */
+            mimeType: string;
+        };
         RequestUploadUrlDto: {
             fileName: string;
             mimeType: string;
@@ -4208,6 +5002,11 @@ export interface components {
             refundLessons?: number;
             version: number;
         };
+        ResolveManagerGeneralDto: {
+            version: number;
+            /** @description Outcome of the follow-up, kept in the task history */
+            note: string;
+        };
         ResolveManagerRescheduleDto: {
             /** @enum {string} */
             decision: "APPROVE" | "DECLINE";
@@ -4223,6 +5022,39 @@ export interface components {
             overrideLateRule?: boolean;
             version: number;
         };
+        ReviewHomeworkDto: {
+            /**
+             * Format: uuid
+             * @description Must be the latest submission of the delivery
+             */
+            submissionId: string;
+            /** @enum {string} */
+            result: "ACCEPTED" | "NEEDS_REVISION";
+            /** @description Required for NEEDS_REVISION */
+            comment?: string;
+        };
+        ReviewHomeworkResponseDto: {
+            /**
+             * Format: uuid
+             * @description Review id
+             */
+            id: string;
+            /** Format: uuid */
+            deliveryId: string;
+            /** Format: uuid */
+            submissionId: string;
+            /** @enum {string} */
+            result: "ACCEPTED" | "NEEDS_REVISION";
+        };
+        RevokeMaterialResponseDto: {
+            /**
+             * Format: uuid
+             * @description Permission id
+             */
+            id: string;
+            /** Format: date-time */
+            revokedAt: string;
+        };
         SavedDraftDto: {
             /** Format: uuid */
             homeworkId: string;
@@ -4233,6 +5065,21 @@ export interface components {
         };
         SaveDraftDto: {
             content: string;
+        };
+        SaveReportDto: {
+            achievements: string;
+            growthAreas: string;
+            recommendations: string;
+            teacherSignature: string;
+        };
+        SaveReportResponseDto: {
+            /**
+             * Format: uuid
+             * @description Report id
+             */
+            id: string;
+            /** @enum {string} */
+            status: "DRAFT";
         };
         ScheduleChangeApprovalDto: {
             /** Format: uuid */
@@ -4339,6 +5186,36 @@ export interface components {
         };
         SetManagerMeetDto: {
             url: string;
+        };
+        ShareMaterialDto: {
+            /**
+             * Format: uuid
+             * @description A taught enrollment; the student gets the file for its subject
+             */
+            enrollmentId: string;
+            /**
+             * Format: uuid
+             * @description Optional lesson of this enrollment the file belongs to
+             */
+            lessonId?: string;
+            /** @description Display title shown with the lesson */
+            lessonTitle?: string;
+            /** @description Allow saving (attachment) instead of in-browser viewing only */
+            canDownload: boolean;
+            /**
+             * Format: date-time
+             * @description Access ends at this instant
+             */
+            expiresAt?: string;
+        };
+        ShareMaterialResponseDto: {
+            /**
+             * Format: uuid
+             * @description Permission id
+             */
+            id: string;
+            /** Format: uuid */
+            fileId: string;
         };
         SkillAuditEntryDto: {
             /** Format: uuid */
@@ -4850,10 +5727,552 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        TeacherAvailabilityResponseDto: {
+            /** Format: date-time */
+            from: string;
+            /** Format: date-time */
+            to: string;
+            /** Format: date-time */
+            asOf: string;
+            windows: components["schemas"]["TeacherAvailabilityWindowDto"][];
+        };
+        TeacherAvailabilityWindowDto: {
+            /** Format: uuid */
+            availabilityId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            /** Format: date-time */
+            cancelledAt: string | null;
+            /** @description Non-cancelled lessons overlap the window: edits need a manager request */
+            occupied: boolean;
+            lessonCount: number;
+        };
+        TeacherCheckpointCardDto: {
+            /** Format: uuid */
+            checkpointId: string;
+            /** @enum {string} */
+            type: "LESSON_4" | "LESSON_8";
+            confirmedLessonCount: number;
+            /** Format: date-time */
+            triggeredAt: string;
+            /** @enum {string} */
+            state: "PENDING" | "COMPLETED";
+            /** Format: date-time */
+            completedAt: string | null;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            teacherSummary: string | null;
+            /**
+             * Format: uuid
+             * @description Frozen skill snapshot (LESSON_4, once completed)
+             */
+            snapshotId: string | null;
+            /**
+             * Format: date-time
+             * @description Suggested report period start (last eight lessons)
+             */
+            suggestedPeriodStart: string | null;
+            /** Format: date-time */
+            suggestedPeriodEnd: string | null;
+            report: components["schemas"]["TeacherReportDto"] | null;
+        };
+        TeacherCheckpointItemDto: {
+            /** Format: uuid */
+            checkpointId: string;
+            /** @enum {string} */
+            type: "LESSON_4" | "LESSON_8";
+            confirmedLessonCount: number;
+            /** Format: date-time */
+            triggeredAt: string;
+            /** @enum {string} */
+            state: "PENDING" | "COMPLETED";
+            /** Format: date-time */
+            completedAt: string | null;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+        };
+        TeacherCheckpointPageDto: {
+            items: components["schemas"]["TeacherCheckpointItemDto"][];
+            nextCursor: string | null;
+        };
+        TeacherConfirmedOutcomeDto: {
+            /** Format: date-time */
+            confirmedAt: string;
+            /** Format: date-time */
+            actualStartedAt: string;
+            durationMin: number;
+        };
+        TeacherEnrollmentDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            /** Format: uuid */
+            subjectId: string;
+            subjectName: string;
+            /** Format: date-time */
+            assignedFrom: string;
+            /** @description Confirmed conducted lessons in this subject */
+            confirmedLessons: number;
+            /** Format: date-time */
+            nextLessonAt: string | null;
+        };
+        TeacherEnrollmentsResponseDto: {
+            items: components["schemas"]["TeacherEnrollmentDto"][];
+        };
+        TeacherGoalDto: {
+            /** Format: uuid */
+            goalId: string;
+            text: string;
+            /** Format: date */
+            targetDate: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "ACHIEVED" | "PAUSED" | "ARCHIVED";
+            /** Format: uuid */
+            skillId: string | null;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        TeacherGoalsResponseDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            goals: components["schemas"]["TeacherGoalDto"][];
+        };
+        TeacherHomeworkCardDto: {
+            /** Format: uuid */
+            deliveryId: string;
+            title: string;
+            /** Format: date-time */
+            issuedAt: string;
+            /** Format: date-time */
+            dueAt: string | null;
+            /** @enum {string} */
+            state: "NOT_SUBMITTED" | "AWAITING_REVIEW" | "NEEDS_REVISION" | "REVIEWED" | "CANCELLED";
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            submissionCount: number;
+            /** Format: date-time */
+            latestSubmittedAt: string | null;
+            /** @description The latest submission came after dueAt */
+            isLate: boolean;
+            description: string;
+            /** Format: uuid */
+            lessonId: string | null;
+            /** @description Newest version first */
+            submissions: components["schemas"]["TeacherHomeworkSubmissionDto"][];
+            /** @description The latest submission has no review yet */
+            canReview: boolean;
+        };
+        TeacherHomeworkItemDto: {
+            /** Format: uuid */
+            deliveryId: string;
+            title: string;
+            /** Format: date-time */
+            issuedAt: string;
+            /** Format: date-time */
+            dueAt: string | null;
+            /** @enum {string} */
+            state: "NOT_SUBMITTED" | "AWAITING_REVIEW" | "NEEDS_REVISION" | "REVIEWED" | "CANCELLED";
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            submissionCount: number;
+            /** Format: date-time */
+            latestSubmittedAt: string | null;
+            /** @description The latest submission came after dueAt */
+            isLate: boolean;
+        };
+        TeacherHomeworkPageDto: {
+            items: components["schemas"]["TeacherHomeworkItemDto"][];
+            nextCursor: string | null;
+        };
+        TeacherHomeworkReviewDto: {
+            /** Format: uuid */
+            reviewId: string;
+            /** @enum {string} */
+            result: "ACCEPTED" | "NEEDS_REVISION";
+            comment: string | null;
+            /** Format: date-time */
+            reviewedAt: string;
+        };
+        TeacherHomeworkSubmissionDto: {
+            /** Format: uuid */
+            submissionId: string;
+            version: number;
+            /** Format: date-time */
+            submittedAt: string;
+            /** @description The student's text answer */
+            text: string;
+            review: components["schemas"]["TeacherHomeworkReviewDto"] | null;
+        };
+        TeacherJournalItemDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** @enum {string} */
+            state: "AWAITING_REPORT" | "AWAITING_CONFIRMATION" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+            /** @enum {string} */
+            kind: "REGULAR" | "TRIAL";
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            /**
+             * Format: date-time
+             * @description Lesson end + 24 hours
+             */
+            reportDeadlineAt: string;
+            /** @description AWAITING_REPORT and past the 24 hour deadline */
+            overdue: boolean;
+            /**
+             * @description Latest report of this lesson version
+             * @enum {string|null}
+             */
+            latestReportResult: "CONDUCTED" | "NOT_CONDUCTED" | "DISPUTED" | null;
+        };
+        TeacherJournalPageDto: {
+            items: components["schemas"]["TeacherJournalItemDto"][];
+            nextCursor: string | null;
+            /** Format: date-time */
+            asOf: string;
+        };
+        TeacherLessonCardDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** @enum {string} */
+            state: "AWAITING_REPORT" | "AWAITING_CONFIRMATION" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+            /** @enum {string} */
+            kind: "REGULAR" | "TRIAL";
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            /**
+             * Format: date-time
+             * @description Lesson end + 24 hours
+             */
+            reportDeadlineAt: string;
+            /** @description AWAITING_REPORT and past the 24 hour deadline */
+            overdue: boolean;
+            /**
+             * @description Latest report of this lesson version
+             * @enum {string|null}
+             */
+            latestReportResult: "CONDUCTED" | "NOT_CONDUCTED" | "DISPUTED" | null;
+            /**
+             * Format: date-time
+             * @description Server-recorded actual start; a CONDUCTED report must use exactly this value
+             */
+            actualStartedAt: string | null;
+            /** @description The lesson has ended and may still receive a (new) report */
+            canReport: boolean;
+            reports: components["schemas"]["TeacherLessonReportDto"][];
+            confirmedOutcome: components["schemas"]["TeacherConfirmedOutcomeDto"] | null;
+        };
+        TeacherLessonReportDto: {
+            /** Format: uuid */
+            reportId: string;
+            version: number;
+            /** @enum {string} */
+            result: "CONDUCTED" | "NOT_CONDUCTED" | "DISPUTED";
+            studentNoShow: boolean;
+            /** Format: date-time */
+            actualStartedAt: string | null;
+            durationMin: number | null;
+            note: string;
+            /** Format: date-time */
+            reportedAt: string;
+            /** @description Latest report of the current lesson version */
+            current: boolean;
+        };
+        TeacherMaterialDto: {
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            sizeBytes: number;
+            mimeType: string;
+            /** @enum {string} */
+            status: "PENDING" | "VERIFIED";
+            /** Format: date-time */
+            createdAt: string;
+            /** @description Currently active grants of this file */
+            activeGrants: number;
+        };
+        TeacherMaterialPageDto: {
+            items: components["schemas"]["TeacherMaterialDto"][];
+            nextCursor: string | null;
+        };
+        TeacherMeResponseDto: {
+            actorContext: components["schemas"]["StaffActorContextDto"];
+            /** Format: uuid */
+            teacherId: string;
+            displayName: string;
+            /** @enum {string} */
+            role: "TEACHER";
+            /** @description Students with an active assignment */
+            activeStudentCount: number;
+            /** @example Europe/Chisinau */
+            timezone: string;
+        };
+        TeacherNotificationDto: {
+            /** @description Stable event key; use it to mark the event read */
+            key: string;
+            /** @enum {string} */
+            type: "LESSON_SCHEDULED" | "LESSON_RESCHEDULED" | "LESSON_CANCELLED" | "HOMEWORK_SUBMITTED" | "CHECKPOINT_DUE" | "SCHEDULE_REQUEST_RESOLVED";
+            /** Format: date-time */
+            occurredAt: string;
+            read: boolean;
+            studentName: string;
+            subjectName: string;
+            /**
+             * Format: date-time
+             * @description Lesson time when the event is about a lesson
+             */
+            lessonAt: string | null;
+            /**
+             * @description Where the notification leads
+             * @enum {string}
+             */
+            targetKind: "LESSON" | "HOMEWORK" | "CHECKPOINT" | "SCHEDULE_REQUEST";
+            /** Format: uuid */
+            targetId: string;
+        };
+        TeacherNotificationPageDto: {
+            items: components["schemas"]["TeacherNotificationDto"][];
+            nextCursor: string | null;
+        };
+        TeacherNotificationSummaryDto: {
+            /** @description Unread events of the last 90 days (capped at 500) */
+            unreadCount: number;
+            /** Format: date-time */
+            latestAt: string | null;
+        };
+        TeacherPasskeyDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            lastUsedAt: string | null;
+            backedUp: boolean;
+        };
         TeacherPayrollResponse: {
             /** Format: uuid */
             teacherId: string;
             items: components["schemas"]["PayrollItem"][];
+        };
+        TeacherPayrollResponseDto: {
+            /** @example 2026-11 */
+            month: string;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            totals: components["schemas"]["PayrollTotalDto"][];
+            lines: components["schemas"]["PayrollLineDto"][];
+        };
+        TeacherProfileDto: {
+            /** Format: uuid */
+            teacherId: string;
+            fullName: string;
+            /** @description Read-only: changed by school staff after identity checks */
+            email: string | null;
+            /** @example +37360000000 */
+            phone: string | null;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            /** @description Active passkeys (MFA); credential material is never exposed */
+            passkeys: components["schemas"]["TeacherPasskeyDto"][];
+        };
+        TeacherReportDto: {
+            achievements: string;
+            growthAreas: string;
+            recommendations: string;
+            teacherSignature: string;
+            /** Format: uuid */
+            reportId: string;
+            /** @enum {string} */
+            status: "DRAFT" | "PUBLISHED";
+            /** Format: date-time */
+            periodStart: string;
+            /** Format: date-time */
+            periodEnd: string;
+            /** Format: date-time */
+            publishedAt: string | null;
+        };
+        TeacherScheduleRequestDto: {
+            /** Format: uuid */
+            requestId: string;
+            /** @enum {string} */
+            status: "PENDING" | "RESOLVED";
+            /** Format: date-time */
+            createdAt: string;
+            reason: string;
+            /** Format: date-time */
+            requestedStartAt: string | null;
+            /** Format: date-time */
+            requestedEndAt: string | null;
+            /** Format: uuid */
+            lessonId: string | null;
+            /** Format: uuid */
+            slotId: string | null;
+            /**
+             * Format: date-time
+             * @description Current time of the targeted lesson
+             */
+            lessonStartsAt: string | null;
+            studentName: string;
+            subjectName: string;
+        };
+        TeacherScheduleRequestPageDto: {
+            items: components["schemas"]["TeacherScheduleRequestDto"][];
+            nextCursor: string | null;
+        };
+        TeacherSharedMaterialDto: {
+            /** Format: uuid */
+            permissionId: string;
+            /** Format: uuid */
+            fileId: string;
+            fileName: string;
+            canDownload: boolean;
+            /** Format: uuid */
+            lessonId: string | null;
+            lessonTitle: string | null;
+            /** Format: date-time */
+            sharedAt: string;
+            /** Format: date-time */
+            expiresAt: string | null;
+            /** Format: date-time */
+            revokedAt: string | null;
+        };
+        TeacherSharedMaterialsDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            /** @description Grants issued by this teacher, newest first (max 200) */
+            items: components["schemas"]["TeacherSharedMaterialDto"][];
+        };
+        TeacherSkillDto: {
+            /** Format: uuid */
+            skillId: string;
+            name: string;
+            category: string;
+            /** @description A skill of this student only (not the subject catalog) */
+            personal: boolean;
+            /** @enum {string} */
+            status: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** Format: date-time */
+            assessedAt: string | null;
+            assessedByName: string | null;
+            /** @description Student-visible comment of the last change */
+            publicComment: string | null;
+        };
+        TeacherSkillHistoryDto: {
+            /** Format: uuid */
+            skillId: string;
+            skillName: string;
+            items: components["schemas"]["TeacherSkillHistoryItemDto"][];
+        };
+        TeacherSkillHistoryItemDto: {
+            /** Format: uuid */
+            auditId: string;
+            /** Format: date-time */
+            changedAt: string;
+            /** @enum {string} */
+            fromStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            /** @enum {string} */
+            toStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
+            teacherName: string;
+            publicComment: string | null;
+            /** @description Internal evidence (teacher view only) */
+            basis: string;
+        };
+        TeacherSkillMapDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            studentName: string;
+            subjectName: string;
+            skills: components["schemas"]["TeacherSkillDto"][];
+        };
+        TeacherStudentOverviewDto: {
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectName: string;
+            confirmedLessons: number;
+            /** @description Confirmed lessons until the next skill review */
+            lessonsToNextReview: number;
+            /** @description Next lessons of this teacher (max 5) */
+            upcomingLessons: components["schemas"]["OverviewLessonDto"][];
+            /** @description Latest past lessons of this teacher (max 5) */
+            recentLessons: components["schemas"]["OverviewLessonDto"][];
+            homework: components["schemas"]["OverviewHomeworkDto"];
+            skills: components["schemas"]["OverviewSkillsDto"];
+            activeGoals: number;
+            /** @description Skill reviews and reports waiting for this teacher */
+            pendingCheckpoints: number;
+        };
+        TeacherTodayLessonDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** @enum {string} */
+            status: "SCHEDULED" | "STAR_PENDING" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+            /** @enum {string} */
+            kind: "REGULAR" | "TRIAL";
+            /** Format: uuid */
+            studentId: string;
+            studentName: string;
+            subjectCode: string;
+            subjectName: string;
+            /**
+             * Format: date-time
+             * @description Join window opens 10 minutes before start
+             */
+            joinOpensAt: string;
+            /**
+             * @description The URL itself is not exposed here
+             * @enum {string}
+             */
+            meetLinkState: "PRESENT" | "MISSING";
+            /** @description A confirmed actual outcome exists for this lesson */
+            outcomeRecorded: boolean;
+        };
+        TeacherTodayResponseDto: {
+            /** @example 2026-11-16 */
+            date: string;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            /** Format: date-time */
+            asOf: string;
+            lessons: components["schemas"]["TeacherTodayLessonDto"][];
         };
         TeachingAssignmentCreateRequest: {
             googleMeetLink?: string;
@@ -4939,6 +6358,16 @@ export interface components {
         UnreadCountDto: {
             unreadCount: number;
         };
+        UpdateGoalDto: {
+            text?: string;
+            /**
+             * Format: date
+             * @description null clears the date
+             */
+            targetDate?: string | null;
+            /** @enum {string} */
+            status?: "ACTIVE" | "ACHIEVED" | "PAUSED" | "ARCHIVED";
+        };
         UpdateLeadDto: {
             /** @enum {string} */
             audience?: "CHILD" | "ADULT";
@@ -4970,6 +6399,21 @@ export interface components {
             guardianName?: string | null;
             managerNote?: string | null;
             version: number;
+        };
+        UpdateTeacherProfileDto: {
+            /**
+             * @description E.164; null clears the number
+             * @example +37360000000
+             */
+            phone: string | null;
+        };
+        UpdateTeacherProfileResponseDto: {
+            /**
+             * Format: uuid
+             * @description Teacher id
+             */
+            id: string;
+            phone: string | null;
         };
         UploadUrlResponseDto: {
             uploadUrl: string;
@@ -11349,6 +12793,95 @@ export interface operations {
             };
         };
     };
+    resolveManagerTaskGeneral: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                taskId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveManagerGeneralDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerTaskDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TASK_ALREADY_RESOLVED, TASK_VERSION_CONFLICT, TASK_TYPE_MISMATCH, TASK_NOT_IN_PROGRESS, SLOT_CONFLICT, DISPUTE_REFUND_EXCEEDS_CHARGE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REFUND_REQUIRED, INVALID_CURSOR, INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     resolveManagerTaskDispute: {
         parameters: {
             query?: never;
@@ -16023,6 +17556,1854 @@ export interface operations {
                 };
             };
             /** @description Unified domain/security error */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherAvailability: {
+        parameters: {
+            query?: {
+                /** @description Defaults to now */
+                from?: string;
+                /** @description Defaults to from + 90 days; the span is at most 366 days */
+                to?: string;
+                includeCancelled?: "true" | "false";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherAvailabilityResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_RANGE */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherCheckpoints: {
+        parameters: {
+            query?: {
+                state?: "PENDING" | "COMPLETED";
+                type?: "LESSON_4" | "LESSON_8";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherCheckpointPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherCheckpoint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                checkpointId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherCheckpointCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    completeTeacherCheckpoint: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                checkpointId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompleteCheckpointDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompleteCheckpointResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already completed or not a LESSON_4 checkpoint */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    saveTeacherReportDraft: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                checkpointId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SaveReportDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaveReportResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Published, other author or no report here */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    publishTeacherReport: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                checkpointId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublishReportResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description No draft, already published or other author */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherEnrollments: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherEnrollmentsResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherGoals: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherGoalsResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createTeacherGoal: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                enrollmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateGoalDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GoalCommandResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    updateTeacherGoal: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                enrollmentId: string;
+                goalId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateGoalDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GoalCommandResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherSharedMaterials: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherSharedMaterialsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherStudentOverview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherStudentOverviewDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherSkillMap: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherSkillMapDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    assessTeacherSkill: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                enrollmentId: string;
+                skillId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessSkillDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessSkillResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SKILL_LEVEL_UNCHANGED or concurrent change */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherSkillHistory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollmentId: string;
+                skillId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherSkillHistoryDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not taught by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherHomework: {
+        parameters: {
+            query?: {
+                state?: "NOT_SUBMITTED" | "AWAITING_REVIEW" | "NEEDS_REVISION" | "REVIEWED" | "CANCELLED";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherHomeworkPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    issueTeacherHomework: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueHomeworkDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssueHomeworkResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Validation or subject/due rule */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherHomeworkCard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                deliveryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherHomeworkCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or issued by another teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reviewTeacherHomework: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                deliveryId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewHomeworkDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReviewHomeworkResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or issued by another teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Stale submission or already reviewed */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherJournal: {
+        parameters: {
+            query?: {
+                state?: "AWAITING_REPORT" | "AWAITING_CONFIRMATION" | "CONDUCTED" | "CANCELLED" | "DISPUTED";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherJournalPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherLesson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherLessonCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not the teacher’s lesson */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherMaterials: {
+        parameters: {
+            query?: {
+                state?: "PENDING" | "VERIFIED";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMaterialPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    confirmTeacherMaterialUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialConfirmResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or not uploaded by this teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    shareTeacherMaterial: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                fileId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShareMaterialDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShareMaterialResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not verified, already shared or no student account */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    revokeTeacherMaterial: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                permissionId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RevokeMaterialResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not found or granted by another teacher */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    requestTeacherMaterialUpload: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RequestMaterialUploadDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MaterialUploadResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherNotifications: {
+        parameters: {
+            query?: {
+                state?: "ALL" | "UNREAD";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherNotificationPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    markTeacherNotificationsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkReadDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkReadResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    markAllTeacherNotificationsRead: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MarkReadResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherNotificationSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherNotificationSummaryDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherPayrollStatement: {
+        parameters: {
+            query?: {
+                /** @description School-timezone calendar month; defaults to the current one */
+                month?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherPayrollResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherProfileDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    updateTeacherProfile: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateTeacherProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpdateTeacherProfileResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherScheduleRequests: {
+        parameters: {
+            query?: {
+                status?: "PENDING" | "RESOLVED";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherScheduleRequestPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherToday: {
+        parameters: {
+            query?: {
+                /** @description Calendar day in the school timezone; defaults to the current day */
+                date?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherTodayResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_DATE */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
             503: {
                 headers: {
                     [name: string]: unknown;

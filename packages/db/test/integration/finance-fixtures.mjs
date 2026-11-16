@@ -139,7 +139,7 @@ export async function lessonFixture(db, finance, staffId, options = {}) {
     actual_teacher_id: teacher.id,
     actual_started_at: later,
     duration_min: 60,
-    confirmed_at: '2026-10-02T13:00:00Z',
+    confirmed_at: options.confirmedAt ?? '2026-10-02T13:00:00Z',
     confirmed_by_id: staffId,
     rate_snapshot: options.rate ?? '200.0000',
     points_snapshot: options.points ?? 4,

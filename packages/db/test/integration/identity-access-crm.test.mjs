@@ -33,12 +33,13 @@ async function transaction(run) {
   }
 }
 
-async function rejected(db, code, constraint, sql, values = []) {
+async function rejected(db, code, constraint, sql, values = [], message) {
   await db.query('SAVEPOINT expected_failure');
   try {
     await assert.rejects(db.query(sql, values), (error) => {
       assert.equal(error.code, code);
       if (constraint) assert.equal(error.constraint, constraint);
+      if (message) assert.match(error.message, message);
       return true;
     });
   } finally {
@@ -235,15 +236,22 @@ test('student account requires a director, admission reference and unique active
       (id, student_id, account_id, activation_basis, activation_payment_confirmation_id,
        activation_confirmed_by_staff_id, activated_at, activation_subscription_id)
       VALUES ($1, $2, $3, $4, $5, $6, now(), $7)`;
-    await rejected(db, '23514', 'ck_student_activation_director', insert, [
-      randomUUID(),
-      child,
-      firstAuth,
-      'FULL_PAYMENT',
-      randomUUID(),
-      manager.id,
-      finance.subscription.id,
-    ]);
+    await rejected(
+      db,
+      '23514',
+      undefined,
+      insert,
+      [
+        randomUUID(),
+        child,
+        firstAuth,
+        'FULL_PAYMENT',
+        randomUUID(),
+        manager.id,
+        finance.subscription.id,
+      ],
+      /director/i,
+    );
     await rejected(db, '23514', 'ck_activation_payment_basis', insert, [
       randomUUID(),
       child,

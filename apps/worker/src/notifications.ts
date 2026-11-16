@@ -18,7 +18,7 @@ export function subscriptionNotificationSql(now: Date): Prisma.Sql {
     JOIN auth_accounts u ON u.id=a.account_id AND u.disabled_at IS NULL
     JOIN students pupil ON pupil.id=e.student_id AND pupil.archived_at IS NULL
     CROSS JOIN LATERAL (SELECT (s.valid_to AT TIME ZONE a.timezone)::date-(${now}::timestamptz AT TIME ZONE a.timezone)::date AS days) d
-    WHERE s.valid_from<=${now} AND s.valid_to>${now} AND s.valid_to<=${now}+interval '9 days' AND d.days IN(7,3)
+    WHERE s.valid_from<=${now} AND s.valid_to>${now} AND s.valid_to<=${now}::timestamptz+interval '9 days' AND d.days IN(7,3)
       AND NOT EXISTS(SELECT 1 FROM student_notification_sources old WHERE old.event_key=
         'subscription-expiry:'||s.id::text||':'||(extract(epoch FROM s.valid_to)*1000)::bigint::text||':'||d.days::text)
     ORDER BY s.valid_to,s.id LIMIT 50 ON CONFLICT(event_key) DO NOTHING`;

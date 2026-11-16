@@ -9,6 +9,7 @@ import { ScheduleEvents } from './schedule-events.service.js';
 import { admission } from './booking.service.js';
 import type { LessonOccurrence } from '@online-school/db';
 import { actionEligibility } from '../../core/actor/action-eligibility.js';
+import { recordCheckpoints } from '../education/checkpoints.js';
 
 @Injectable()
 export class OutcomesService {
@@ -251,6 +252,14 @@ export class OutcomesService {
       where: { id },
       data: { status, confirmed_report_id: report.id },
     });
+    // 4th/8th confirmed lesson of the subject opens the skill review / education report checkpoint.
+    if (outcome)
+      await recordCheckpoints(ctx.tx, {
+        enrollmentId: lesson.enrollment_id,
+        outcomeId: outcome.id,
+        confirmedAt: outcome.confirmed_at,
+        operationId: ctx.operationId,
+      });
     await this.events.change(ctx, id, lesson, updated, basis);
     return { id, lesson: updated, outcome };
   }

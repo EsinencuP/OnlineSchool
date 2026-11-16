@@ -1150,6 +1150,7 @@ erDiagram
   staff_accounts {
     String student_whatsapp_url
     String student_telegram_url
+    String student_phone_e164
     String id PK
     String account_id
     AccountKind account_kind

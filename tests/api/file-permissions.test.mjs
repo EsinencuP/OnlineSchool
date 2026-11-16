@@ -1,6 +1,8 @@
 import { beforeAll, afterAll, expect, test } from '@jest/globals';
 import { randomUUID } from 'node:crypto';
 import { apiFixture } from '../support/api-fixture.mjs';
+// Tolerate a few seconds of clock skew between the host and the PostgreSQL server.
+const past = () => new Date(Date.now() - 60_000);
 let f, object, permission;
 beforeAll(async () => {
   f = await apiFixture();
@@ -11,8 +13,8 @@ beforeAll(async () => {
       size: 1n,
       content_type: 'text/plain',
       status: 'VERIFIED',
-      uploaded_at: new Date(),
-      verified_at: new Date(),
+      uploaded_at: past(),
+      verified_at: past(),
       uploaded_by: f.actors.director.accountId,
       source_operation_id: randomUUID(),
     },
@@ -23,7 +25,8 @@ beforeAll(async () => {
       subject_id: f.actors.manager.accountId,
       subject_type: 'STAFF',
       granted_by: f.actors.director.accountId,
-      granted_at: new Date(),
+      granted_at: past(),
+      can_download: true,
       source_operation_id: randomUUID(),
     },
   });

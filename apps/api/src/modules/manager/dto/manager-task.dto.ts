@@ -84,6 +84,19 @@ export class ClaimManagerTaskDto {
   @ApiProperty({ type: 'integer', minimum: 1 }) @IsInt() @Min(1) version!: number;
 }
 @SetMetadata(STRICT_INPUT_DTO, true)
+export class ResolveManagerGeneralDto {
+  @ApiProperty({ type: 'integer', minimum: 1 }) @IsInt() @Min(1) version!: number;
+  @ApiProperty({
+    minLength: 3,
+    maxLength: 500,
+    description: 'Outcome of the follow-up, kept in the task history',
+  })
+  @IsString()
+  @MinLength(3)
+  @MaxLength(500)
+  note!: string;
+}
+@SetMetadata(STRICT_INPUT_DTO, true)
 export class ResolveManagerRescheduleDto {
   @ApiProperty({ enum: ['APPROVE', 'DECLINE'] }) @IsIn(['APPROVE', 'DECLINE']) decision!:
     'APPROVE' | 'DECLINE';
