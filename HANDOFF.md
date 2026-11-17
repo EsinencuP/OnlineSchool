@@ -1,13 +1,16 @@
-# HANDOFF — backend: teacher + student complete (uncommitted)
+# HANDOFF — backend: teacher + student committed; director D1–D4, D6 and manager M1–M3 uncommitted
 
-State: all work is in the working tree, nothing committed. Test DB: Docker `online-school-fnd-ci-pg18`
-(WSL `Codex-Docker`, port 55500, `pg_hba` = trust, keep WSL alive with `wsl … sleep infinity`).
+State: teacher/student are in `5e1e5fb`. Working tree: director module (inbox D1 incl. request kinds, commands D2,
+escalations D3, staff/hand-over/lifecycle D4, payroll/periods/unresolved D6), manager `teachers/` (M1), `availability/`, `contacts/` (M2),
+`requests/` (M3), `operations/task-escalation.module.ts` (worker timer), Prisma models `ManagerAvailability`,
+`TaskEscalation`, `ManagerRequest`, extended `ContactLog`, `scope/assignment-stamp.ts`.
+Migrations (uncommitted): `20261116100000_dir02…`, `…110000_m1_students_insert_locale`, `…120000_dir03…`,
+`…130000_mgr04_contact_journal`, `…140000_mgr_family_requests`, `…150000_dir04_staff_lifecycle`
+(also redefines `mgr07_task_guard` to allow OPEN→OPEN re-addressing).
+Test DB: Docker `online-school-fnd-ci-pg18` (WSL `Codex-Docker`, port 55500, `pg_hba` trust, keep WSL alive).
+Clock skew between the API host and the DB container flakes some time-based tests by ±1–2 s; rerun once.
 
-Done: `apps/api/src/modules/teacher/*` (me, today, journal, availability/requests, homework, skills,
-goals, checkpoints/reports, payroll, notifications, materials, profile, student card); migrations
-`20261115120000…190000` (+`160000` notification state); manager: system follow-ups visible + `resolve`
-command (closes teacher schedule requests); worker topics + SQL typing fix; SDK stops leaking duplicate-lead details.
-Tests: `apps/api/test/integration/teacher-*.test.mjs`, `student-cabinet-http.test.mjs`.
-
-Open: apply migrations + duplicate check on Neon before deploy; orval client not rebuilt; Meet (stage 2),
-public lead form, ops/backup/CI hardening (stage 3–5); `erd-contract` unit test needs LF checkout.
+Next: D5 refunds (needs owner formula) → D7 subjects/sale conditions → M4 reconciliation/lead intake.
+Open: period bounds are chosen by the director (recognition rules not approved); apply migrations + duplicate check on Neon; orval client not rebuilt; owner decisions (who may hand over besides
+the director, urgent task catalog, shift schedule, director fallback, contact-journal roles/retention,
+temporary-access limits, refund formula, KPI, teacher↔subject link); `erd-contract` unit test needs an LF checkout.

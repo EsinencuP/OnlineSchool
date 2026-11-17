@@ -1509,6 +1509,2476 @@
         ]
       }
     },
+    "/api/v1/director/decisions": {
+      "get": {
+        "operationId": "getDirectorDecisions",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PAYMENT",
+                "DISTRIBUTION",
+                "SCHEDULE_EXCEPTION",
+                "DISPUTE",
+                "TEMPORARY_ACCESS",
+                "REFUND_REQUEST"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Everything that waits for a director decision, oldest first",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/decisions/{kind}/{id}": {
+      "get": {
+        "operationId": "getDirectorDecision",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "PAYMENT",
+                "DISTRIBUTION",
+                "SCHEDULE_EXCEPTION",
+                "DISPUTE",
+                "TEMPORARY_ACCESS",
+                "REFUND_REQUEST"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionDetailDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending (anymore) or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Facts of one pending decision and the existing commands that decide it",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/decisions/summary": {
+      "get": {
+        "operationId": "getDirectorDecisionSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionCountsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Pending decisions per kind",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/disputes/{id}/approve": {
+      "post": {
+        "operationId": "directorApproveDispute",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApproveDisputeCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Execute the full-reversal proposal of an escalated attendance dispute",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/distributions/{id}/approve": {
+      "post": {
+        "operationId": "directorApproveDistribution",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Approve the allocation of a confirmed payment to a subscription",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/escalations": {
+      "get": {
+        "operationId": "listDirectorEscalations",
+        "parameters": [
+          {
+            "name": "state",
+            "required": false,
+            "in": "query",
+            "description": "OPEN: not accepted yet; ACCEPTED: director took it; CLOSED: the task is finished",
+            "schema": {
+              "default": "OPEN",
+              "type": "string",
+              "enum": [
+                "OPEN",
+                "ACCEPTED",
+                "CLOSED"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EscalationPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT or INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Urgent tasks routed to the director (OPS-01/B), oldest first",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/escalations/{id}": {
+      "get": {
+        "operationId": "getDirectorEscalation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EscalationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ESCALATION_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "One escalation with its source task",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/escalations/{id}/accept": {
+      "post": {
+        "operationId": "acceptDirectorEscalation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EscalationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ESCALATION_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ESCALATION_ALREADY_ACCEPTED, ESCALATION_CLOSED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Take responsibility for an escalated task; the task stays open, the client keeps their manager",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/finance/unresolved": {
+      "get": {
+        "operationId": "getDirectorUnresolvedFinance",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "description": "Only accruals recognised in this financial period; default: all time",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnresolvedDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "PERIOD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Registry of open financial facts that block closing a period: unaccrued or disputed lessons, open payouts, draft entries",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/handovers": {
+      "get": {
+        "operationId": "listDirectorHandovers",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "leadId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandoverListDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Manager hand-over journal, newest first; filter by student or lead",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/leads/{leadId}/manager": {
+      "post": {
+        "operationId": "reassignLeadManager",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HandoverCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandoverDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LEAD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "SAME_MANAGER",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "MANAGER_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Hand the lead over to another active manager; open tasks move with it",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/managers/availability": {
+      "get": {
+        "operationId": "listDirectorManagerAvailability",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerAvailabilityListDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Working status of every active manager",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/me": {
+      "get": {
+        "operationId": "getDirectorMe",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DirectorMeDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Data store unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Director profile with pending decision counters",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/payments/{id}/confirm": {
+      "post": {
+        "operationId": "directorConfirmPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Confirm a received payment: posts it to the ledger once; allocation is a separate decision",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/payments/{id}/reject": {
+      "post": {
+        "operationId": "directorRejectPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectPaymentCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Reject a pending payment receipt with a reason (not possible after confirmation)",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/payroll/summary": {
+      "get": {
+        "operationId": "getDirectorPayrollSummary",
+        "parameters": [
+          {
+            "name": "periodId",
+            "required": false,
+            "in": "query",
+            "description": "Only accruals recognised in this financial period; default: all time",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayrollSummaryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "PERIOD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "What teachers earned, what was actually paid and what is still owed, per currency and teacher",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/payroll/teachers/{teacherId}": {
+      "get": {
+        "operationId": "getDirectorPayrollTeacher",
+        "parameters": [
+          {
+            "name": "teacherId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayrollTeacherDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TEACHER_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Obligations of one teacher with paid and outstanding amounts",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/periods": {
+      "get": {
+        "operationId": "listDirectorPeriods",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodListDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Financial periods with the number of blockers and readiness to close",
+        "tags": [
+          "director"
+        ]
+      },
+      "post": {
+        "operationId": "createDirectorPeriod",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePeriodDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PERIOD_OVERLAP",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_PERIOD",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Open a financial period (UTC bounds chosen by the director). Without one no accrual or posting is possible",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/periods/{id}/close": {
+      "post": {
+        "operationId": "closeDirectorPeriod",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PERIOD_ALREADY_CLOSED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "PERIOD_NOT_FINISHED, PERIOD_HAS_DRAFT_ENTRIES, PERIOD_HAS_UNRESOLVED_FACTS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Close a finished period once nothing blocks it (same rules and audit as the generic period close)",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/requests/{id}/approve": {
+      "post": {
+        "operationId": "directorApproveRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApproveRequestCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Approve a manager request: temporary access (limit and expiry, not a payment) or a refund calculation (no money moves)",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/requests/{id}/decline": {
+      "post": {
+        "operationId": "directorDeclineRequest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeclineRequestCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Decline a manager request with a reason the manager sees",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/schedule-exceptions/{id}/approve": {
+      "post": {
+        "operationId": "directorApproveScheduleException",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResultDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not pending or unknown",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already decided, stale or not ready",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Approve one exact lesson version and change; the manager then applies it",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/staff": {
+      "get": {
+        "operationId": "listDirectorStaff",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MANAGER",
+                "TEACHER"
+              ]
+            }
+          },
+          {
+            "name": "active",
+            "required": false,
+            "in": "query",
+            "description": "true: only active, false: only deactivated; default: all",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive name fragment",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffListDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Managers and teachers with their load; deactivated people included on request",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/staff/{kind}/{id}": {
+      "get": {
+        "operationId": "getDirectorStaffCard",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "MANAGER",
+                "TEACHER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffCardDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STAFF_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "One manager or teacher: load, status history and (managers) hand-overs",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/staff/{kind}/{id}/deactivate": {
+      "post": {
+        "operationId": "deactivateDirectorStaff",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "MANAGER",
+                "TEACHER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffStatusCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffItemDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STAFF_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "MANAGER_HAS_PORTFOLIO, TEACHER_HAS_FUTURE_LESSONS, STAFF_ALREADY_INACTIVE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Stop a manager or teacher from working. A manager must hand over every client and task first; a teacher must have no future lessons",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/staff/{kind}/{id}/reactivate": {
+      "post": {
+        "operationId": "reactivateDirectorStaff",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "enum": [
+                "MANAGER",
+                "TEACHER"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffStatusCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffItemDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STAFF_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "STAFF_ALREADY_ACTIVE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Let a deactivated person work again",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/students/{studentId}/manager": {
+      "post": {
+        "operationId": "reassignStudentManager",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HandoverCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HandoverDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STUDENT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "SAME_MANAGER",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "MANAGER_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Hand the student over to another active manager. Open tasks of the client move with them; history keeps the old executor",
+        "tags": [
+          "director"
+        ]
+      }
+    },
     "/api/v1/dispute-resolutions/{taskId}": {
       "get": {
         "description": "Director review; full reversal restores rights and subscription advance, never cash. Partial requests require separate Finance processing.",
@@ -3859,6 +6329,392 @@
         ]
       }
     },
+    "/api/v1/manager/availability": {
+      "get": {
+        "operationId": "getManagerAvailability",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerAvailabilityDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Working status that decides how urgent tasks are routed (OPS-01/B)",
+        "tags": [
+          "manager"
+        ]
+      },
+      "put": {
+        "operationId": "setManagerAvailability",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetManagerAvailabilityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerAvailabilityDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Set the working status; UNAVAILABLE / OFF_SHIFT send urgent tasks to the director",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/contacts": {
+      "get": {
+        "operationId": "listManagerContacts",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": false,
+            "in": "query",
+            "description": "Exactly one of leadId, studentId, teacherId",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "studentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "teacherId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "CONTACT_SUBJECT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "CONTACT_SUBJECT_REQUIRED, INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Contact history of one lead, student or own-portfolio teacher, newest first",
+        "tags": [
+          "manager"
+        ]
+      },
+      "post": {
+        "operationId": "recordManagerContact",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecordContactDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "CONTACT_SUBJECT_NOT_FOUND, CONTACT_NOT_FOUND, REPRESENTATIVE_NOT_FOUND, TASK_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "CONTACT_ALREADY_CORRECTED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "CONTACT_SUBJECT_REQUIRED, CONTACT_SUBJECT_MISMATCH, CONTACT_IN_FUTURE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record a manual contact attempt or conversation. Append-only: fix mistakes with correctsId. Sends nothing to the family.",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/contacts/pending": {
+      "get": {
+        "operationId": "listManagerPendingContacts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PendingContactsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Open contact obligations from tasks with the latest recorded result (MGR-04)",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/dashboard": {
       "get": {
         "description": "One READ ONLY snapshot; no cache. Pending receipts include unpublished unallocated remainder under the owner decision; mixed-portfolio households are excluded from financial aggregates.",
@@ -4949,6 +7805,83 @@
           }
         ],
         "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/leads/{leadId}/teacher-candidates": {
+      "get": {
+        "operationId": "listManagerLeadTeacherCandidates",
+        "parameters": [
+          {
+            "name": "leadId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "days",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 14,
+              "default": 7,
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherCandidatesDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TEACHER_NOT_FOUND, LEAD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Teachers with free trial slots for the lead; schedule the trial with scheduleManagerTrial",
         "tags": [
           "manager"
         ]
@@ -6774,6 +9707,210 @@
         ]
       }
     },
+    "/api/v1/manager/requests": {
+      "get": {
+        "operationId": "listManagerRequests",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "APPROVED",
+                "DECLINED",
+                "WITHDRAWN"
+              ]
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 50,
+              "default": 20,
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Opaque cursor from the previous page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerRequestPageDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_CURSOR",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Requests to the director for the own portfolio, newest first",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/requests/{requestId}/withdraw": {
+      "post": {
+        "operationId": "withdrawManagerRequest",
+        "parameters": [
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "REQUEST_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "REQUEST_NOT_PENDING",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Take back a request the director has not decided yet",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/schedule": {
       "get": {
         "operationId": "listManagerSchedule",
@@ -8530,6 +11667,119 @@
         ]
       }
     },
+    "/api/v1/manager/students/{studentId}/requests": {
+      "post": {
+        "operationId": "createManagerRequest",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerRequestDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "REQUEST_ALREADY_PENDING",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "FULLY_PAID_USES_NORMAL_ACCESS, NOTHING_TO_REFUND, INVALID_ACCESS_EXPIRY",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Formalise a family request for the director: temporary access (partial payment) or a refund calculation",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/students/{studentId}/subscriptions": {
       "get": {
         "operationId": "listManagerSubscriptions",
@@ -8765,6 +12015,119 @@
           }
         ],
         "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/students/{studentId}/teaching-assignments": {
+      "post": {
+        "operationId": "assignManagerTeacher",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignTeacherCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherAssignmentDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STUDENT_NOT_FOUND, ASSIGNMENT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "TEACHER_ALREADY_ASSIGNED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "TEACHER_INACTIVE, SUBJECT_INACTIVE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Assign a teacher to the student for a subject (creates the enrollment when missing)",
         "tags": [
           "manager"
         ]
@@ -9969,6 +13332,292 @@
           }
         ],
         "summary": "",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/teachers": {
+      "get": {
+        "operationId": "listManagerTeachers",
+        "parameters": [
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Case-insensitive name fragment",
+            "schema": {
+              "maxLength": 100,
+              "type": "string"
+            }
+          },
+          {
+            "name": "subjectId",
+            "required": false,
+            "in": "query",
+            "description": "Put teachers who already teach it first",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherDirectoryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TEACHER_NOT_FOUND, LEAD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Teacher directory: subjects, load and free time for the next 7 days",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/teachers/{teacherId}/availability": {
+      "get": {
+        "operationId": "getManagerTeacherAvailability",
+        "parameters": [
+          {
+            "name": "teacherId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "required": true,
+            "in": "query",
+            "description": "At most 31 days after from",
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherWindowsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "TEACHER_NOT_FOUND, LEAD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_RANGE, RANGE_TOO_LARGE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Availability windows with booked and free intervals (range up to 31 days)",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/teaching-assignments/{assignmentId}/revoke": {
+      "post": {
+        "operationId": "revokeManagerTeacher",
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeAssignmentCommandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherAssignmentDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "STUDENT_NOT_FOUND, ASSIGNMENT_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "TEACHER_ALREADY_ASSIGNED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "TEACHER_INACTIVE, SUBJECT_INACTIVE",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "End a current assignment; future held lessons get a follow-up task",
         "tags": [
           "manager"
         ]
@@ -20559,10 +24208,45 @@
         ],
         "additionalProperties": false
       },
+      "ApproveDisputeCommandDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "taskVersion from the decision card (optimistic lock)"
+          }
+        },
+        "required": [
+          "version"
+        ]
+      },
       "ApproveDistributionRequest": {
         "type": "object",
         "properties": {},
         "additionalProperties": false
+      },
+      "ApproveRequestCommandDto": {
+        "type": "object",
+        "properties": {
+          "maxLessons": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "TEMPORARY_ACCESS: lesson limit; defaults to the manager proposal"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "TEMPORARY_ACCESS: when the access ends; defaults to the manager proposal"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500,
+            "description": "Kept with the decision"
+          }
+        }
       },
       "ApproveScheduleChangeDto": {
         "type": "object",
@@ -20650,6 +24334,30 @@
           "fromStatus",
           "toStatus",
           "assessedAt"
+        ]
+      },
+      "AssignTeacherCommandDto": {
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500,
+            "description": "Why this teacher; kept in history"
+          }
+        },
+        "required": [
+          "subjectId",
+          "teacherId",
+          "basis"
         ]
       },
       "CancelManagerLessonDto": {
@@ -20961,6 +24669,142 @@
           "status"
         ]
       },
+      "ContactDto": {
+        "type": "object",
+        "properties": {
+          "contactId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectKind": {
+            "type": "string",
+            "enum": [
+              "LEAD",
+              "STUDENT",
+              "TEACHER"
+            ]
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "representativeId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "taskId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "correctsId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "supersededById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Set when a later entry fixed this one; show the fixing entry instead"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "CALL",
+              "WHATSAPP",
+              "TELEGRAM",
+              "MESSAGE",
+              "EMAIL",
+              "OTHER"
+            ]
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "REACHED",
+              "NO_ANSWER",
+              "CALLBACK_REQUESTED",
+              "DECLINED",
+              "WRONG_CONTACT",
+              "OTHER"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "nextAction": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the contact happened"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the server recorded it"
+          },
+          "managerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "managerName": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "contactId",
+          "subjectKind",
+          "subjectId",
+          "representativeId",
+          "taskId",
+          "correctsId",
+          "supersededById",
+          "channel",
+          "result",
+          "summary",
+          "nextAction",
+          "occurredAt",
+          "recordedAt",
+          "managerId",
+          "managerName"
+        ]
+      },
+      "ContactPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContactDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
       "CreateGoalDto": {
         "type": "object",
         "properties": {
@@ -21172,6 +25016,65 @@
           "distributionId"
         ],
         "additionalProperties": false
+      },
+      "CreatePeriodDto": {
+        "type": "object",
+        "properties": {
+          "startsAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Inclusive start (UTC instant)"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Exclusive end; 1 to 32 days after the start"
+          }
+        },
+        "required": [
+          "startsAt",
+          "endsAt"
+        ]
+      },
+      "CreateRequestDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "TEMPORARY_ACCESS",
+              "REFUND"
+            ],
+            "description": "TEMPORARY_ACCESS: admit the student to limited lessons while the subscription is partly paid. REFUND: ask the director to prepare a refund calculation"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Financial subscription of this student"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500,
+            "description": "The family's request in short"
+          },
+          "proposedLessons": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "TEMPORARY_ACCESS hint only; the director sets the real limit"
+          },
+          "proposedUntil": {
+            "type": "string",
+            "format": "date-time",
+            "description": "TEMPORARY_ACCESS hint only; the director sets the real expiry"
+          }
+        },
+        "required": [
+          "kind",
+          "subscriptionId",
+          "reason"
+        ]
       },
       "CreateSessionResponse": {
         "oneOf": [
@@ -21697,6 +25600,335 @@
         ],
         "additionalProperties": false
       },
+      "DecisionCommandDto": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "example": "confirmPayment"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "POST",
+              "PATCH",
+              "DELETE"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "example": "/api/v1/payments/{id}/confirm"
+          },
+          "effect": {
+            "type": "string",
+            "description": "What the decision does"
+          }
+        },
+        "required": [
+          "operationId",
+          "method",
+          "path",
+          "effect"
+        ]
+      },
+      "DecisionCountsDto": {
+        "type": "object",
+        "properties": {
+          "payment": {
+            "type": "integer"
+          },
+          "distribution": {
+            "type": "integer"
+          },
+          "scheduleException": {
+            "type": "integer"
+          },
+          "dispute": {
+            "type": "integer"
+          },
+          "temporaryAccess": {
+            "type": "integer"
+          },
+          "refundRequest": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer",
+            "description": "Sum of all kinds"
+          }
+        },
+        "required": [
+          "payment",
+          "distribution",
+          "scheduleException",
+          "dispute",
+          "temporaryAccess",
+          "refundRequest",
+          "total"
+        ]
+      },
+      "DecisionDetailDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAYMENT",
+              "DISTRIBUTION",
+              "SCHEDULE_EXCEPTION",
+              "DISPUTE",
+              "TEMPORARY_ACCESS",
+              "REFUND_REQUEST"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the payment, distribution, approval or task"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the decision became due (oldest first)"
+          },
+          "requestedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Manager who asked for the decision"
+          },
+          "studentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "amount": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "1200.0000"
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "MDL"
+          },
+          "ready": {
+            "type": "boolean",
+            "description": "The decision can be executed right now with the existing command"
+          },
+          "blockedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Why it is not ready yet"
+          },
+          "facts": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Facts needed to decide (kind specific, no secrets)"
+          },
+          "commands": {
+            "description": "Existing commands that decide this item",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DecisionCommandDto"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "requestedAt",
+          "requestedBy",
+          "studentId",
+          "studentName",
+          "amount",
+          "currency",
+          "ready",
+          "blockedBy",
+          "facts",
+          "commands"
+        ]
+      },
+      "DecisionItemDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAYMENT",
+              "DISTRIBUTION",
+              "SCHEDULE_EXCEPTION",
+              "DISPUTE",
+              "TEMPORARY_ACCESS",
+              "REFUND_REQUEST"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the payment, distribution, approval or task"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the decision became due (oldest first)"
+          },
+          "requestedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Manager who asked for the decision"
+          },
+          "studentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "amount": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "1200.0000"
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "MDL"
+          },
+          "ready": {
+            "type": "boolean",
+            "description": "The decision can be executed right now with the existing command"
+          },
+          "blockedBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Why it is not ready yet"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "requestedAt",
+          "requestedBy",
+          "studentId",
+          "studentName",
+          "amount",
+          "currency",
+          "ready",
+          "blockedBy"
+        ]
+      },
+      "DecisionPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DecisionItemDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "DecisionResultDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAYMENT",
+              "DISTRIBUTION",
+              "SCHEDULE_EXCEPTION",
+              "DISPUTE",
+              "TEMPORARY_ACCESS",
+              "REFUND_REQUEST"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Id of the decided item"
+          },
+          "outcome": {
+            "type": "string",
+            "enum": [
+              "CONFIRMED",
+              "REJECTED",
+              "APPROVED",
+              "DECLINED"
+            ]
+          },
+          "decidedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "result": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "What the underlying finance/schedule command returned"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "outcome",
+          "decidedAt",
+          "result"
+        ]
+      },
+      "DeclineRequestCommandDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500,
+            "description": "Shown to the manager"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
       "DemoAccountDto": {
         "type": "object",
         "properties": {
@@ -21722,6 +25954,51 @@
           "role",
           "login",
           "home"
+        ]
+      },
+      "DirectorEmptyCommandDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "DirectorMeDto": {
+        "type": "object",
+        "properties": {
+          "actorContext": {
+            "$ref": "#/components/schemas/StaffActorContextDto"
+          },
+          "staffId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "DIRECTOR"
+            ]
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "pending": {
+            "$ref": "#/components/schemas/DecisionCountsDto"
+          },
+          "openEscalations": {
+            "type": "integer",
+            "description": "Urgent tasks routed to the director and not accepted yet (OPS-01/B)"
+          }
+        },
+        "required": [
+          "actorContext",
+          "staffId",
+          "displayName",
+          "role",
+          "timezone",
+          "pending",
+          "openEscalations"
         ]
       },
       "DisputeRequestDto": {
@@ -22103,6 +26380,159 @@
         ],
         "additionalProperties": true
       },
+      "EscalationDto": {
+        "type": "object",
+        "properties": {
+          "escalationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "taskType": {
+            "type": "string",
+            "example": "ATTENDANCE_DISPUTE"
+          },
+          "title": {
+            "type": "string",
+            "description": "Task description (restricted to staff)"
+          },
+          "taskStatus": {
+            "type": "string",
+            "example": "OPEN"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "OPEN",
+              "ACCEPTED",
+              "CLOSED"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "MANAGER_UNAVAILABLE",
+              "ACCEPT_TIMEOUT"
+            ],
+            "description": "MANAGER_UNAVAILABLE: routed at once; ACCEPT_TIMEOUT: nobody accepted within the window"
+          },
+          "managerStatus": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "UNAVAILABLE",
+              "OFF_SHIFT",
+              "UNASSIGNED"
+            ],
+            "description": "Primary manager status when the task was escalated"
+          },
+          "primaryManagerId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "primaryManagerName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "studentId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "studentName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "leadId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "leadName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "acceptDueAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the manager had to accept the task"
+          },
+          "escalatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acceptedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "acceptedByName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "escalationId",
+          "taskId",
+          "taskType",
+          "title",
+          "taskStatus",
+          "state",
+          "reason",
+          "managerStatus",
+          "primaryManagerId",
+          "primaryManagerName",
+          "studentId",
+          "studentName",
+          "leadId",
+          "leadName",
+          "acceptDueAt",
+          "escalatedAt",
+          "acceptedAt",
+          "acceptedByName"
+        ]
+      },
+      "EscalationPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EscalationDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
       "ExportPdfRequestDto": {
         "type": "object",
         "properties": {
@@ -22288,6 +26718,105 @@
         "required": [
           "id",
           "status"
+        ]
+      },
+      "HandoverCommandDto": {
+        "type": "object",
+        "properties": {
+          "managerId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Active manager who becomes responsible"
+          },
+          "comment": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "managerId"
+        ]
+      },
+      "HandoverDto": {
+        "type": "object",
+        "properties": {
+          "handoverId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectKind": {
+            "type": "string",
+            "enum": [
+              "STUDENT",
+              "LEAD"
+            ]
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fromManagerId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "fromManagerName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "toManagerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "toManagerName": {
+            "type": "string"
+          },
+          "movedTasks": {
+            "type": "integer",
+            "description": "Open tasks that moved with the client"
+          },
+          "comment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "handedOverAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "handoverId",
+          "subjectKind",
+          "subjectId",
+          "fromManagerId",
+          "fromManagerName",
+          "toManagerId",
+          "toManagerName",
+          "movedTasks",
+          "comment",
+          "handedOverAt"
+        ]
+      },
+      "HandoverListDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Newest first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HandoverDto"
+            }
+          }
+        },
+        "required": [
+          "items"
         ]
       },
       "HealthProbeResponse": {
@@ -22721,6 +27250,42 @@
         "required": [
           "id",
           "deliveries"
+        ]
+      },
+      "LastContactDto": {
+        "type": "object",
+        "properties": {
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "CALL",
+              "WHATSAPP",
+              "TELEGRAM",
+              "MESSAGE",
+              "EMAIL",
+              "OTHER"
+            ]
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "REACHED",
+              "NO_ANSWER",
+              "CALLBACK_REQUESTED",
+              "DECLINED",
+              "WRONG_CONTACT",
+              "OTHER"
+            ]
+          }
+        },
+        "required": [
+          "occurredAt",
+          "channel",
+          "result"
         ]
       },
       "LeadDto": {
@@ -24094,6 +28659,78 @@
           "reason"
         ]
       },
+      "ManagerAvailabilityDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "UNAVAILABLE",
+              "OFF_SHIFT"
+            ]
+          },
+          "changedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "null while the manager never set a status (treated as AVAILABLE)"
+          }
+        },
+        "required": [
+          "status",
+          "changedAt"
+        ]
+      },
+      "ManagerAvailabilityListDto": {
+        "type": "object",
+        "properties": {
+          "managers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerAvailabilityRowDto"
+            }
+          }
+        },
+        "required": [
+          "managers"
+        ]
+      },
+      "ManagerAvailabilityRowDto": {
+        "type": "object",
+        "properties": {
+          "managerId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "UNAVAILABLE",
+              "OFF_SHIFT"
+            ]
+          },
+          "changedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "managerId",
+          "fullName",
+          "status",
+          "changedAt"
+        ]
+      },
       "ManagerContactsDto": {
         "type": "object",
         "properties": {
@@ -24790,6 +29427,117 @@
           "price",
           "currency",
           "lessonCount"
+        ]
+      },
+      "ManagerRequestDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "TEMPORARY_ACCESS",
+              "REFUND"
+            ]
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "proposedLessons": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "proposedUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "DECLINED",
+              "WITHDRAWN"
+            ],
+            "description": "APPROVED for REFUND means: accepted for calculation. No money moves with this decision"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decidedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "decisionNote": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Director's note or reason"
+          },
+          "permissionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid",
+            "description": "Granted temporary access, when approved"
+          }
+        },
+        "required": [
+          "requestId",
+          "kind",
+          "studentId",
+          "subscriptionId",
+          "reason",
+          "proposedLessons",
+          "proposedUntil",
+          "status",
+          "requestedAt",
+          "decidedAt",
+          "decisionNote",
+          "permissionId"
+        ]
+      },
+      "ManagerRequestPageDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerRequestDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
         ]
       },
       "ManagerSubscriptionDto": {
@@ -26152,6 +30900,166 @@
           "lastPaidAt"
         ]
       },
+      "PayrollObligationDto": {
+        "type": "object",
+        "properties": {
+          "obligationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accrualId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recognizedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string",
+            "example": "50.0000"
+          },
+          "paid": {
+            "type": "string",
+            "example": "0.0000"
+          },
+          "outstanding": {
+            "type": "string",
+            "example": "50.0000"
+          },
+          "openAttempts": {
+            "type": "integer"
+          },
+          "exception": {
+            "type": "boolean",
+            "description": "Accrued by a director exception (unpaid lesson)"
+          }
+        },
+        "required": [
+          "obligationId",
+          "accrualId",
+          "lessonId",
+          "recognizedAt",
+          "currency",
+          "amount",
+          "paid",
+          "outstanding",
+          "openAttempts",
+          "exception"
+        ]
+      },
+      "PayrollSummaryDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "totals": {
+            "description": "One row per currency",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollTotalDto"
+            }
+          },
+          "teachers": {
+            "description": "Largest outstanding first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollTeacherRowDto"
+            }
+          }
+        },
+        "required": [
+          "totals",
+          "teachers"
+        ]
+      },
+      "PayrollTeacherDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "totals": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollTotalDto"
+            }
+          },
+          "obligations": {
+            "description": "Newest first, at most 200",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollObligationDto"
+            }
+          }
+        },
+        "required": [
+          "teacherId",
+          "teacherName",
+          "totals",
+          "obligations"
+        ]
+      },
+      "PayrollTeacherRowDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string",
+            "example": "MDL"
+          },
+          "accrued": {
+            "type": "string",
+            "example": "1200.0000",
+            "description": "Recognised teacher accruals"
+          },
+          "paid": {
+            "type": "string",
+            "example": "800.0000",
+            "description": "Confirmed payouts only"
+          },
+          "outstanding": {
+            "type": "string",
+            "example": "400.0000",
+            "description": "accrued − paid: still owed to teachers"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherName": {
+            "type": "string"
+          },
+          "openAttempts": {
+            "type": "integer",
+            "description": "Payout attempts waiting for confirmation or reconciliation"
+          }
+        },
+        "required": [
+          "currency",
+          "accrued",
+          "paid",
+          "outstanding",
+          "teacherId",
+          "teacherName",
+          "openAttempts"
+        ]
+      },
       "PayrollTotalDto": {
         "type": "object",
         "properties": {
@@ -26251,6 +31159,139 @@
           "downloadUrl",
           "expiresAt",
           "failureReason"
+        ]
+      },
+      "PendingContactDto": {
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "taskType": {
+            "type": "string",
+            "example": "FOLLOW_UP"
+          },
+          "title": {
+            "type": "string"
+          },
+          "dueAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "overdue": {
+            "type": "boolean"
+          },
+          "subjectKind": {
+            "type": "string",
+            "enum": [
+              "LEAD",
+              "STUDENT"
+            ]
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "lastContact": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LastContactDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "taskId",
+          "taskType",
+          "title",
+          "dueAt",
+          "overdue",
+          "subjectKind",
+          "subjectId",
+          "subjectName",
+          "lastContact"
+        ]
+      },
+      "PendingContactsDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Most overdue first, at most 50",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PendingContactDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "PeriodDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "finished": {
+            "type": "boolean",
+            "description": "The period has finished, so it can be closed"
+          },
+          "blockers": {
+            "type": "integer",
+            "description": "Unresolved facts that block closing (0 when closed)"
+          },
+          "readyToClose": {
+            "type": "boolean",
+            "description": "finished, not closed and nothing blocks it"
+          }
+        },
+        "required": [
+          "id",
+          "startsAt",
+          "endsAt",
+          "closedAt",
+          "finished",
+          "blockers",
+          "readyToClose"
+        ]
+      },
+      "PeriodListDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "Newest first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodDto"
+            }
+          }
+        },
+        "required": [
+          "items"
         ]
       },
       "PlatformAccountsDto": {
@@ -26417,6 +31458,84 @@
           "id",
           "status",
           "publishedAt"
+        ]
+      },
+      "RecordContactDto": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Exactly one of leadId, studentId, teacherId"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A teacher of one of your students"
+          },
+          "representativeId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Linked representative; student contacts only"
+          },
+          "taskId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Related CRM task; recording does not close it"
+          },
+          "correctsId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Fixes an earlier entry; the subject is taken from it and the old entry stays"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "CALL",
+              "WHATSAPP",
+              "TELEGRAM",
+              "MESSAGE",
+              "EMAIL",
+              "OTHER"
+            ]
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "REACHED",
+              "NO_ANSWER",
+              "CALLBACK_REQUESTED",
+              "DECLINED",
+              "WRONG_CONTACT",
+              "OTHER"
+            ],
+            "description": "NO_ANSWER is an attempt, not an informed family"
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300,
+            "description": "Short result; no message texts"
+          },
+          "nextAction": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 300
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the contact happened; defaults to now, never in the future"
+          }
+        },
+        "required": [
+          "channel",
+          "result",
+          "summary"
         ]
       },
       "RecoveryCompleteRequest": {
@@ -26622,6 +31741,20 @@
         ],
         "additionalProperties": false
       },
+      "RejectPaymentCommandDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500,
+            "description": "Kept in the audit trail; shown to the manager"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
       "RenewManagerSubscriptionDto": {
         "type": "object",
         "properties": {
@@ -26680,6 +31813,23 @@
           },
           "mimeType": {
             "type": "string",
+            "enum": [
+              "application/pdf",
+              "image/png",
+              "image/jpeg",
+              "image/webp",
+              "image/gif",
+              "text/plain",
+              "audio/mpeg",
+              "video/mp4",
+              "application/msword",
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "application/vnd.ms-excel",
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "application/vnd.ms-powerpoint",
+              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+              "application/vnd.oasis.opendocument.text"
+            ],
             "example": "application/pdf"
           }
         },
@@ -26936,6 +32086,19 @@
           "deliveryId",
           "submissionId",
           "result"
+        ]
+      },
+      "RevokeAssignmentCommandDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "reason"
         ]
       },
       "RevokeMaterialResponseDto": {
@@ -27385,6 +32548,23 @@
           "roles"
         ],
         "additionalProperties": false
+      },
+      "SetManagerAvailabilityDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "AVAILABLE",
+              "UNAVAILABLE",
+              "OFF_SHIFT"
+            ],
+            "description": "AVAILABLE: urgent tasks wait up to the acceptance window. UNAVAILABLE / OFF_SHIFT: they go to the director at once"
+          }
+        },
+        "required": [
+          "status"
+        ]
       },
       "SetManagerMeetDto": {
         "type": "object",
@@ -27844,10 +33024,165 @@
           "profileUpdatedAt"
         ]
       },
+      "StaffCardDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "MANAGER",
+              "TEACHER"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "deactivatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons"
+          },
+          "statusHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatusChangeDto"
+            }
+          },
+          "handovers": {
+            "description": "MANAGER: latest hand-overs to or from this manager",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HandoverDto"
+            }
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "fullName",
+          "active",
+          "deactivatedAt",
+          "metrics",
+          "statusHistory",
+          "handovers"
+        ]
+      },
+      "StaffItemDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "MANAGER",
+              "TEACHER"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "deactivatedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "fullName",
+          "active",
+          "deactivatedAt",
+          "metrics"
+        ]
+      },
+      "StaffListDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StaffItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "StaffStatusCommandDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500,
+            "description": "Kept in the status history"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
       "StartLessonRequest": {
         "type": "object",
         "properties": {},
         "additionalProperties": false
+      },
+      "StatusChangeDto": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "DEACTIVATED",
+              "REACTIVATED"
+            ]
+          },
+          "reason": {
+            "type": "string"
+          },
+          "byDirectorName": {
+            "type": "string"
+          },
+          "changedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "action",
+          "reason",
+          "byDirectorName",
+          "changedAt"
+        ]
       },
       "StudentAccountIssuedDto": {
         "type": "object",
@@ -29214,6 +34549,55 @@
         ],
         "additionalProperties": true
       },
+      "TeacherAssignmentDto": {
+        "type": "object",
+        "properties": {
+          "assignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "enrollmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validTo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "basis": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "assignmentId",
+          "studentId",
+          "enrollmentId",
+          "subjectId",
+          "teacherId",
+          "validFrom",
+          "validTo",
+          "basis"
+        ]
+      },
       "TeacherAvailabilityRequest": {
         "type": "object",
         "properties": {
@@ -29350,6 +34734,96 @@
           "cancelledAt",
           "occupied",
           "lessonCount"
+        ]
+      },
+      "TeacherCandidateDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "subjects": {
+            "description": "Subjects with a current assignment",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherSubjectDto"
+            }
+          },
+          "activeStudents": {
+            "type": "integer",
+            "description": "Students with a current assignment"
+          },
+          "lessonsNext7Days": {
+            "type": "integer",
+            "description": "Lessons in the next 7 days"
+          },
+          "availableMinutesNext7Days": {
+            "type": "integer",
+            "description": "Published availability in the next 7 days"
+          },
+          "freeMinutesNext7Days": {
+            "type": "integer",
+            "description": "Availability minus booked lessons, next 7 days"
+          },
+          "teachesSubject": {
+            "type": "boolean",
+            "description": "Teaches the requested subject (only with subjectId)"
+          },
+          "trialSlots": {
+            "description": "Free intervals that fit a trial lesson, after the minimum lead time (max 10)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeIntervalDto"
+            }
+          }
+        },
+        "required": [
+          "teacherId",
+          "fullName",
+          "subjects",
+          "activeStudents",
+          "lessonsNext7Days",
+          "availableMinutesNext7Days",
+          "freeMinutesNext7Days",
+          "teachesSubject",
+          "trialSlots"
+        ]
+      },
+      "TeacherCandidatesDto": {
+        "type": "object",
+        "properties": {
+          "leadId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subjectId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "trialMinutes": {
+            "type": "integer",
+            "description": "Trial lesson length"
+          },
+          "candidates": {
+            "description": "Teachers with trial slots, best first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherCandidateDto"
+            }
+          }
+        },
+        "required": [
+          "leadId",
+          "subjectId",
+          "trialMinutes",
+          "candidates"
         ]
       },
       "TeacherCheckpointCardDto": {
@@ -29562,6 +35036,69 @@
           "confirmedAt",
           "actualStartedAt",
           "durationMin"
+        ]
+      },
+      "TeacherDirectoryDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherDirectoryItemDto"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
+      "TeacherDirectoryItemDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "subjects": {
+            "description": "Subjects with a current assignment",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherSubjectDto"
+            }
+          },
+          "activeStudents": {
+            "type": "integer",
+            "description": "Students with a current assignment"
+          },
+          "lessonsNext7Days": {
+            "type": "integer",
+            "description": "Lessons in the next 7 days"
+          },
+          "availableMinutesNext7Days": {
+            "type": "integer",
+            "description": "Published availability in the next 7 days"
+          },
+          "freeMinutesNext7Days": {
+            "type": "integer",
+            "description": "Availability minus booked lessons, next 7 days"
+          },
+          "teachesSubject": {
+            "type": "boolean",
+            "description": "Teaches the requested subject (only with subjectId)"
+          }
+        },
+        "required": [
+          "teacherId",
+          "fullName",
+          "subjects",
+          "activeStudents",
+          "lessonsNext7Days",
+          "availableMinutesNext7Days",
+          "freeMinutesNext7Days",
+          "teachesSubject"
         ]
       },
       "TeacherEnrollmentDto": {
@@ -31037,6 +36574,22 @@
           "pendingCheckpoints"
         ]
       },
+      "TeacherSubjectDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
       "TeacherTodayLessonDto": {
         "type": "object",
         "properties": {
@@ -31142,6 +36695,72 @@
           "timezone",
           "asOf",
           "lessons"
+        ]
+      },
+      "TeacherWindowDto": {
+        "type": "object",
+        "properties": {
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "availabilityId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timezone": {
+            "type": "string",
+            "example": "Europe/Chisinau"
+          },
+          "busy": {
+            "description": "Booked lessons inside the window",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeIntervalDto"
+            }
+          },
+          "free": {
+            "description": "Window minus booked lessons",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TimeIntervalDto"
+            }
+          }
+        },
+        "required": [
+          "startsAt",
+          "endsAt",
+          "availabilityId",
+          "timezone",
+          "busy",
+          "free"
+        ]
+      },
+      "TeacherWindowsDto": {
+        "type": "object",
+        "properties": {
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fullName": {
+            "type": "string"
+          },
+          "windows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TeacherWindowDto"
+            }
+          }
+        },
+        "required": [
+          "teacherId",
+          "fullName",
+          "windows"
         ]
       },
       "TeachingAssignmentCreateRequest": {
@@ -31292,6 +36911,23 @@
         ],
         "additionalProperties": true
       },
+      "TimeIntervalDto": {
+        "type": "object",
+        "properties": {
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "startsAt",
+          "endsAt"
+        ]
+      },
       "TransitionLeadDto": {
         "type": "object",
         "properties": {
@@ -31429,6 +37065,99 @@
         },
         "required": [
           "unreadCount"
+        ]
+      },
+      "UnresolvedDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "counts": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Total per kind (items are capped at 100 per kind)"
+          },
+          "items": {
+            "description": "Oldest first",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UnresolvedItemDto"
+            }
+          }
+        },
+        "required": [
+          "periodId",
+          "counts",
+          "items"
+        ]
+      },
+      "UnresolvedItemDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "UNACCRUED_LESSON",
+              "DISPUTED_LESSON",
+              "OPEN_PAYOUT_ATTEMPT",
+              "DRAFT_LEDGER_ENTRY"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Lesson, payout attempt or ledger entry"
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "teacherName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "studentName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "amount": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "example": "50.0000"
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "example": "Conducted lesson has no teacher accrual"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "at",
+          "teacherName",
+          "studentName",
+          "amount",
+          "currency",
+          "detail"
         ]
       },
       "UpdateGoalDto": {
@@ -31730,6 +37459,16 @@
           "options"
         ],
         "additionalProperties": false
+      },
+      "WithdrawRequestDto": {
+        "type": "object",
+        "properties": {
+          "note": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 500
+          }
+        }
       },
       "WorkspaceCoverageDto": {
         "type": "object",

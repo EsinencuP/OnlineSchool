@@ -22,6 +22,7 @@ import { MeetLinkPort, UnavailableMeetLink } from './manager/meet-link.port.js';
     { provide: MeetLinkPort, useClass: UnavailableMeetLink },
   ],
   exports: [
+    ScheduleRegistry,
     ScheduleAccess,
     ScheduleEvents,
     BookingService,

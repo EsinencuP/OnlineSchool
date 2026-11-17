@@ -40,6 +40,14 @@ import { NotificationOutboxPublisher } from '../notifications/notification-outbo
 import { ManagerNotificationsController } from './notifications/manager-notifications.controller.js';
 import { ManagerNotificationsService } from './notifications/manager-notifications.service.js';
 import { ManagerNotificationsGuard } from './notifications/manager-notifications.guard.js';
+import { ManagerAvailabilityController } from './availability/manager-availability.controller.js';
+import { ManagerAvailabilityService } from './availability/manager-availability.service.js';
+import { ManagerContactsController } from './contacts/manager-contacts.controller.js';
+import { ManagerContactsService } from './contacts/manager-contacts.service.js';
+import { ManagerRequestsController } from './requests/manager-requests.controller.js';
+import { ManagerRequestsService } from './requests/manager-requests.service.js';
+import { ManagerTeachersController } from './teachers/manager-teachers.controller.js';
+import { ManagerTeachersService } from './teachers/manager-teachers.service.js';
 
 @Module({
   imports: [
@@ -61,6 +69,10 @@ import { ManagerNotificationsGuard } from './notifications/manager-notifications
     ManagerPaymentsController,
     ManagerScheduleController,
     ManagerTasksController,
+    ManagerTeachersController,
+    ManagerAvailabilityController,
+    ManagerContactsController,
+    ManagerRequestsController,
   ],
   providers: [
     ManagerLeadsService,
@@ -73,6 +85,10 @@ import { ManagerNotificationsGuard } from './notifications/manager-notifications
     ManagerNotificationsGuard,
     ManagerTasksService,
     ManagerTasksGuard,
+    ManagerTeachersService,
+    ManagerAvailabilityService,
+    ManagerContactsService,
+    ManagerRequestsService,
     ManagerScheduleService,
     ManagerScheduleGuard,
     ManagerFinanceFacade,

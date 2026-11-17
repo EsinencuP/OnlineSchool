@@ -92,6 +92,11 @@ erDiagram
     String manager_id
     ContactChannel channel
     String outcome
+    String teacher_id
+    String task_id
+    String corrects_id
+    String result
+    String next_action
     DateTime occurred_at
     DateTime created_at
     DateTime updated_at
@@ -99,6 +104,9 @@ erDiagram
   leads o|--o{ contact_logs : "fk_contact_lead"
   students o|--o{ contact_logs : "fk_contact_student"
   representatives o|--o{ contact_logs : "fk_contact_representative"
+  teacher_accounts o|--o{ contact_logs : "fk_contact_teacher"
+  crm_tasks o|--o{ contact_logs : "fk_contact_task"
+  contact_logs o|--o| contact_logs : "fk_contact_corrects"
   staff_accounts ||--o{ contact_logs : "fk_contact_staff"
   crm_tasks {
     Boolean system_resolved
@@ -646,6 +654,33 @@ erDiagram
   }
   lesson_occurrences ||--o{ lesson_outcome_reports : "fk_report_lesson"
   teacher_accounts ||--o{ lesson_outcome_reports : "fk_report_teacher"
+  manager_availability {
+    String manager_id PK
+    String status
+    DateTime changed_at
+  }
+  staff_accounts ||--o| manager_availability : "manager_availability_manager_id_fkey"
+  manager_requests {
+    String id PK
+    String kind
+    String student_id
+    String subscription_id
+    String requested_by_id
+    String reason
+    Int proposed_lessons
+    DateTime proposed_until
+    String status
+    DateTime requested_at
+    String decided_by_id
+    DateTime decided_at
+    String decision_note
+    String permission_id
+  }
+  students ||--o{ manager_requests : "manager_requests_student_id_fkey"
+  subscriptions ||--o{ manager_requests : "manager_requests_subscription_id_fkey"
+  staff_accounts ||--o{ manager_requests : "manager_requests_requested_by_id_fkey"
+  staff_accounts o|--o{ manager_requests : "manager_requests_decided_by_id_fkey"
+  temporary_access_permissions o|--o{ manager_requests : "manager_requests_permission_id_fkey"
   manager_subscription_operations {
     String id PK
     String subscription_id
@@ -1345,6 +1380,20 @@ erDiagram
   }
   student_subject_enrollments ||--o{ subscriptions : "fk_t03_subscription_enrollment"
   sale_conditions ||--o{ subscriptions : "fk_t03_subscription_sale_condition"
+  task_escalations {
+    String id PK
+    String task_id
+    String primary_manager_id
+    String reason
+    String manager_status
+    DateTime accept_due_at
+    DateTime escalated_at
+    String accepted_by_id
+    DateTime accepted_at
+  }
+  crm_tasks ||--o| task_escalations : "task_escalations_task_id_fkey"
+  staff_accounts o|--o{ task_escalations : "task_escalations_primary_manager_id_fkey"
+  staff_accounts o|--o{ task_escalations : "task_escalations_accepted_by_id_fkey"
   teacher_accounts {
     String id PK
     String account_id

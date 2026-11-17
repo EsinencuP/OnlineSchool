@@ -12,6 +12,7 @@ import { databaseError } from '../../../core/errors/database-error.js';
 import type { CriticalContext } from '../../../core/http.js';
 import { TransactionService } from '../../../core/transaction/transaction.service.js';
 import { ManagerScopeService } from '../scope/manager-scope.service.js';
+import { assignmentStamp } from '../scope/assignment-stamp.js';
 import type { ManagerContext } from '../context/manager-context.js';
 import { ManagerStudentsService } from '../students/manager-students.service.js';
 import { ManagerScheduleService } from '../schedule/manager-schedule.service.js';
@@ -369,7 +370,13 @@ export class ManagerLeadsService implements LeadIntakePort {
         stage_changed_at: now,
       },
     });
-    await c.tx.assignedManager.create({ data: { lead_id: row.id, manager_id: ctx.managerId } });
+    await c.tx.assignedManager.create({
+      data: {
+        lead_id: row.id,
+        manager_id: ctx.managerId,
+        assigned_at: await assignmentStamp(c.tx),
+      },
+    });
     await stageEvent(c.tx, row.id, null, 'NEW', !system, now);
     const due = new Date(+now + config.followupMinutes * 60000);
     for (const type of ['LEAD_FOLLOWUP', 'ASSIGN_TEACHER'] as const)

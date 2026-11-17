@@ -916,6 +916,57 @@
         "native": null
       },
       {
+        "name": "teacher_id",
+        "column": "teacher_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "task_id",
+        "column": "task_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "corrects_id",
+        "column": "corrects_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "result",
+        "column": "result",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "next_action",
+        "column": "next_action",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "occurred_at",
         "column": "occurred_at",
         "type": "DateTime",
@@ -987,6 +1038,39 @@
         "constraint": "fk_contact_representative"
       },
       {
+        "field": "teacher",
+        "type": "TeacherAccount",
+        "from": [
+          "teacher_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_contact_teacher"
+      },
+      {
+        "field": "task",
+        "type": "CrmTask",
+        "from": [
+          "task_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_contact_task"
+      },
+      {
+        "field": "corrects",
+        "type": "ContactLog",
+        "from": [
+          "corrects_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_contact_corrects"
+      },
+      {
         "field": "manager",
         "type": "StaffAccount",
         "from": [
@@ -1001,6 +1085,9 @@
     "uniqueSets": [
       [
         "id"
+      ],
+      [
+        "corrects_id"
       ]
     ]
   },
@@ -6787,6 +6874,277 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "ManagerAvailability",
+    "table": "manager_availability",
+    "fields": [
+      {
+        "name": "manager_id",
+        "column": "manager_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "status",
+        "column": "status",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "changed_at",
+        "column": "changed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "manager",
+        "type": "StaffAccount",
+        "from": [
+          "manager_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_availability_manager_id_fkey"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "manager_id"
+      ]
+    ]
+  },
+  {
+    "name": "ManagerRequest",
+    "table": "manager_requests",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "kind",
+        "column": "kind",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "student_id",
+        "column": "student_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "subscription_id",
+        "column": "subscription_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "requested_by_id",
+        "column": "requested_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "reason",
+        "column": "reason",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "proposed_lessons",
+        "column": "proposed_lessons",
+        "type": "Int",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "proposed_until",
+        "column": "proposed_until",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "status",
+        "column": "status",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "requested_at",
+        "column": "requested_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "decided_by_id",
+        "column": "decided_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "decided_at",
+        "column": "decided_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "decision_note",
+        "column": "decision_note",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "permission_id",
+        "column": "permission_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "student",
+        "type": "Student",
+        "from": [
+          "student_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_requests_student_id_fkey"
+      },
+      {
+        "field": "subscription",
+        "type": "Subscription",
+        "from": [
+          "subscription_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_requests_subscription_id_fkey"
+      },
+      {
+        "field": "requested_by",
+        "type": "StaffAccount",
+        "from": [
+          "requested_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_requests_requested_by_id_fkey"
+      },
+      {
+        "field": "decided_by",
+        "type": "StaffAccount",
+        "from": [
+          "decided_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_requests_decided_by_id_fkey"
+      },
+      {
+        "field": "permission",
+        "type": "TemporaryAccessPermission",
+        "from": [
+          "permission_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "manager_requests_permission_id_fkey"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
       ]
     ]
   },
@@ -14152,6 +14510,153 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "TaskEscalation",
+    "table": "task_escalations",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "task_id",
+        "column": "task_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "primary_manager_id",
+        "column": "primary_manager_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "reason",
+        "column": "reason",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "manager_status",
+        "column": "manager_status",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "accept_due_at",
+        "column": "accept_due_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "escalated_at",
+        "column": "escalated_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "accepted_by_id",
+        "column": "accepted_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "accepted_at",
+        "column": "accepted_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "task",
+        "type": "CrmTask",
+        "from": [
+          "task_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "task_escalations_task_id_fkey"
+      },
+      {
+        "field": "primary_manager",
+        "type": "StaffAccount",
+        "from": [
+          "primary_manager_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "task_escalations_primary_manager_id_fkey"
+      },
+      {
+        "field": "accepted_by",
+        "type": "StaffAccount",
+        "from": [
+          "accepted_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "task_escalations_accepted_by_id_fkey"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "task_id"
       ]
     ]
   },

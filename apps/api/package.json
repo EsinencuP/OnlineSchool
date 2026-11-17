@@ -8,6 +8,10 @@
       "types": "./dist/modules/manager/leads/worker.d.ts",
       "import": "./dist/modules/manager/leads/worker.js"
     },
+    "./manager-task-escalation": {
+      "types": "./dist/modules/operations/task-escalation.module.d.ts",
+      "import": "./dist/modules/operations/task-escalation.module.js"
+    },
     "./manager-subscription-lifecycle": {
       "types": "./dist/modules/finance/manager-subscriptions/lifecycle.module.d.ts",
       "import": "./dist/modules/finance/manager-subscriptions/lifecycle.module.js"

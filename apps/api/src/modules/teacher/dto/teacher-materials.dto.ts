@@ -11,7 +11,6 @@ import {
   IsString,
   IsUUID,
   Length,
-  Matches,
   Max,
   MaxLength,
   Min,
@@ -19,6 +18,24 @@ import {
 import { STRICT_INPUT_DTO } from '../../../openapi/dto-validation.pipe.js';
 
 export const MAX_MATERIAL_BYTES = 52_428_800;
+// Only passive document/media types: active content (html, svg, xml, js) can never be stored as a material.
+export const MATERIAL_MIME_TYPES = [
+  'application/pdf',
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
+  'text/plain',
+  'audio/mpeg',
+  'video/mp4',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-powerpoint',
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'application/vnd.oasis.opendocument.text',
+] as const;
 export const MATERIAL_STATES = ['PENDING', 'VERIFIED'] as const;
 
 @SetMetadata(STRICT_INPUT_DTO, true)
@@ -29,9 +46,8 @@ export class RequestMaterialUploadDto {
   @Min(1)
   @Max(MAX_MATERIAL_BYTES)
   fileSizeBytes!: number;
-  @ApiProperty({ example: 'application/pdf' })
-  @IsString()
-  @Matches(/^[a-zA-Z0-9!#$&^_.+-]+\/[a-zA-Z0-9!#$&^_.+-]+$/)
+  @ApiProperty({ enum: MATERIAL_MIME_TYPES, example: 'application/pdf' })
+  @IsIn(MATERIAL_MIME_TYPES)
   mimeType!: string;
 }
 export class MaterialUploadResponseDto {

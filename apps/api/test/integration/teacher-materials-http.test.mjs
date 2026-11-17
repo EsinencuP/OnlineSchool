@@ -117,6 +117,8 @@ test('upload registration validates input and returns a signed staging URL', asy
     { ...upload, fileSizeBytes: 0 },
     { ...upload, fileSizeBytes: 60_000_000 },
     { ...upload, mimeType: 'pdf' },
+    { ...upload, mimeType: 'text/html' },
+    { ...upload, mimeType: 'image/svg+xml' },
     { ...upload, extra: 1 },
   ])
     assert.equal(

@@ -457,8 +457,8 @@ test('CRM preserves duplicate contacts and enforces targets and task idempotency
     await rejected(
       db,
       '23514',
-      'ck_contact_target',
-      "INSERT INTO contact_logs (id, manager_id, channel, outcome) VALUES ($1, $2, 'CALL', 'Synthetic')",
+      'ck_contact_subject',
+      "INSERT INTO contact_logs (id, manager_id, channel, outcome, result) VALUES ($1, $2, 'CALL', 'Synthetic', 'OTHER')",
       [randomUUID(), recorder.id],
     );
     const key = randomUUID();

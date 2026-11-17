@@ -246,6 +246,466 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/director/decisions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Everything that waits for a director decision, oldest first */
+        get: operations["getDirectorDecisions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/decisions/{kind}/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Facts of one pending decision and the existing commands that decide it */
+        get: operations["getDirectorDecision"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/decisions/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Pending decisions per kind */
+        get: operations["getDirectorDecisionSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/disputes/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Execute the full-reversal proposal of an escalated attendance dispute */
+        post: operations["directorApproveDispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/distributions/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve the allocation of a confirmed payment to a subscription */
+        post: operations["directorApproveDistribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/escalations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Urgent tasks routed to the director (OPS-01/B), oldest first */
+        get: operations["listDirectorEscalations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/escalations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One escalation with its source task */
+        get: operations["getDirectorEscalation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/escalations/{id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Take responsibility for an escalated task; the task stays open, the client keeps their manager */
+        post: operations["acceptDirectorEscalation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/finance/unresolved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Registry of open financial facts that block closing a period: unaccrued or disputed lessons, open payouts, draft entries */
+        get: operations["getDirectorUnresolvedFinance"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/handovers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Manager hand-over journal, newest first; filter by student or lead */
+        get: operations["listDirectorHandovers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/leads/{leadId}/manager": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hand the lead over to another active manager; open tasks move with it */
+        post: operations["reassignLeadManager"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/managers/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Working status of every active manager */
+        get: operations["listDirectorManagerAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Director profile with pending decision counters */
+        get: operations["getDirectorMe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/payments/{id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm a received payment: posts it to the ledger once; allocation is a separate decision */
+        post: operations["directorConfirmPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/payments/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject a pending payment receipt with a reason (not possible after confirmation) */
+        post: operations["directorRejectPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/payroll/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** What teachers earned, what was actually paid and what is still owed, per currency and teacher */
+        get: operations["getDirectorPayrollSummary"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/payroll/teachers/{teacherId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Obligations of one teacher with paid and outstanding amounts */
+        get: operations["getDirectorPayrollTeacher"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Financial periods with the number of blockers and readiness to close */
+        get: operations["listDirectorPeriods"];
+        put?: never;
+        /** Open a financial period (UTC bounds chosen by the director). Without one no accrual or posting is possible */
+        post: operations["createDirectorPeriod"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/periods/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a finished period once nothing blocks it (same rules and audit as the generic period close) */
+        post: operations["closeDirectorPeriod"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/requests/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve a manager request: temporary access (limit and expiry, not a payment) or a refund calculation (no money moves) */
+        post: operations["directorApproveRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/requests/{id}/decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decline a manager request with a reason the manager sees */
+        post: operations["directorDeclineRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/schedule-exceptions/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve one exact lesson version and change; the manager then applies it */
+        post: operations["directorApproveScheduleException"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/staff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Managers and teachers with their load; deactivated people included on request */
+        get: operations["listDirectorStaff"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/staff/{kind}/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One manager or teacher: load, status history and (managers) hand-overs */
+        get: operations["getDirectorStaffCard"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/staff/{kind}/{id}/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop a manager or teacher from working. A manager must hand over every client and task first; a teacher must have no future lessons */
+        post: operations["deactivateDirectorStaff"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/staff/{kind}/{id}/reactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Let a deactivated person work again */
+        post: operations["reactivateDirectorStaff"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/students/{studentId}/manager": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hand the student over to another active manager. Open tasks of the client move with them; history keeps the old executor */
+        post: operations["reassignStudentManager"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/dispute-resolutions/{taskId}": {
         parameters: {
             query?: never;
@@ -600,6 +1060,59 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Working status that decides how urgent tasks are routed (OPS-01/B) */
+        get: operations["getManagerAvailability"];
+        /** Set the working status; UNAVAILABLE / OFF_SHIFT send urgent tasks to the director */
+        put: operations["setManagerAvailability"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Contact history of one lead, student or own-portfolio teacher, newest first */
+        get: operations["listManagerContacts"];
+        put?: never;
+        /** Record a manual contact attempt or conversation. Append-only: fix mistakes with correctsId. Sends nothing to the family. */
+        post: operations["recordManagerContact"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/contacts/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Open contact obligations from tasks with the latest recorded result (MGR-04) */
+        get: operations["listManagerPendingContacts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/dashboard": {
         parameters: {
             query?: never;
@@ -691,6 +1204,23 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["reopenManagerLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/leads/{leadId}/teacher-candidates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Teachers with free trial slots for the lead; schedule the trial with scheduleManagerTrial */
+        get: operations["listManagerLeadTeacherCandidates"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -928,6 +1458,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests to the director for the own portfolio, newest first */
+        get: operations["listManagerRequests"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/requests/{requestId}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Take back a request the director has not decided yet */
+        post: operations["withdrawManagerRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/schedule": {
         parameters: {
             query?: never;
@@ -1089,6 +1653,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/students/{studentId}/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Formalise a family request for the director: temporary access (partial payment) or a refund calculation */
+        post: operations["createManagerRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/students/{studentId}/subscriptions": {
         parameters: {
             query?: never;
@@ -1099,6 +1680,23 @@ export interface paths {
         get: operations["listManagerSubscriptions"];
         put?: never;
         post: operations["createManagerSubscription"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/teaching-assignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign a teacher to the student for a subject (creates the enrollment when missing) */
+        post: operations["assignManagerTeacher"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1246,6 +1844,57 @@ export interface paths {
         put?: never;
         /** @description A pending director schedule exception keeps the task IN_PROGRESS. Retry after approval using current task version and a new command key. */
         post: operations["resolveManagerTaskReschedule"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/teachers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Teacher directory: subjects, load and free time for the next 7 days */
+        get: operations["listManagerTeachers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/teachers/{teacherId}/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Availability windows with booked and free intervals (range up to 31 days) */
+        get: operations["getManagerTeacherAvailability"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/teaching-assignments/{assignmentId}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** End a current assignment; future held lessons get a follow-up task */
+        post: operations["revokeManagerTeacher"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3208,7 +3857,22 @@ export interface components {
         ApproveCrmDisputeDto: {
             version: number;
         };
+        ApproveDisputeCommandDto: {
+            /** @description taskVersion from the decision card (optimistic lock) */
+            version: number;
+        };
         ApproveDistributionRequest: Record<string, never>;
+        ApproveRequestCommandDto: {
+            /** @description TEMPORARY_ACCESS: lesson limit; defaults to the manager proposal */
+            maxLessons?: number;
+            /**
+             * Format: date-time
+             * @description TEMPORARY_ACCESS: when the access ends; defaults to the manager proposal
+             */
+            expiresAt?: string;
+            /** @description Kept with the decision */
+            note?: string;
+        };
         ApproveScheduleChangeDto: Record<string, never>;
         AssessSkillDto: {
             /** @enum {string} */
@@ -3239,6 +3903,14 @@ export interface components {
             toStatus: "NOT_STUDIED" | "FAMILIARIZING" | "PRACTICING" | "APPLYING";
             /** Format: date-time */
             assessedAt: string;
+        };
+        AssignTeacherCommandDto: {
+            /** Format: uuid */
+            subjectId: string;
+            /** Format: uuid */
+            teacherId: string;
+            /** @description Why this teacher; kept in history */
+            basis: string;
         };
         CancelManagerLessonDto: {
             reason: string;
@@ -3332,6 +4004,48 @@ export interface components {
             /** @enum {string} */
             status: "VERIFIED";
         };
+        ContactDto: {
+            /** Format: uuid */
+            contactId: string;
+            /** @enum {string} */
+            subjectKind: "LEAD" | "STUDENT" | "TEACHER";
+            /** Format: uuid */
+            subjectId: string;
+            /** Format: uuid */
+            representativeId: string | null;
+            /** Format: uuid */
+            taskId: string | null;
+            /** Format: uuid */
+            correctsId: string | null;
+            /**
+             * Format: uuid
+             * @description Set when a later entry fixed this one; show the fixing entry instead
+             */
+            supersededById: string | null;
+            /** @enum {string} */
+            channel: "CALL" | "WHATSAPP" | "TELEGRAM" | "MESSAGE" | "EMAIL" | "OTHER";
+            /** @enum {string} */
+            result: "REACHED" | "NO_ANSWER" | "CALLBACK_REQUESTED" | "DECLINED" | "WRONG_CONTACT" | "OTHER";
+            summary: string;
+            nextAction: string | null;
+            /**
+             * Format: date-time
+             * @description When the contact happened
+             */
+            occurredAt: string;
+            /**
+             * Format: date-time
+             * @description When the server recorded it
+             */
+            recordedAt: string;
+            /** Format: uuid */
+            managerId: string;
+            managerName: string;
+        };
+        ContactPageDto: {
+            items: components["schemas"]["ContactDto"][];
+            nextCursor: string | null;
+        };
         CreateGoalDto: {
             /** @description Shown to the student */
             text: string;
@@ -3405,6 +4119,39 @@ export interface components {
              * @description Must match the prepared financial package start.
              */
             startsAt?: string;
+        };
+        CreatePeriodDto: {
+            /**
+             * Format: date-time
+             * @description Inclusive start (UTC instant)
+             */
+            startsAt: string;
+            /**
+             * Format: date-time
+             * @description Exclusive end; 1 to 32 days after the start
+             */
+            endsAt: string;
+        };
+        CreateRequestDto: {
+            /**
+             * @description TEMPORARY_ACCESS: admit the student to limited lessons while the subscription is partly paid. REFUND: ask the director to prepare a refund calculation
+             * @enum {string}
+             */
+            kind: "TEMPORARY_ACCESS" | "REFUND";
+            /**
+             * Format: uuid
+             * @description Financial subscription of this student
+             */
+            subscriptionId: string;
+            /** @description The family's request in short */
+            reason: string;
+            /** @description TEMPORARY_ACCESS hint only; the director sets the real limit */
+            proposedLessons?: number;
+            /**
+             * Format: date-time
+             * @description TEMPORARY_ACCESS hint only; the director sets the real expiry
+             */
+            proposedUntil?: string;
         };
         CreateSessionResponse: components["schemas"]["SessionResponse"] | components["schemas"]["WebAuthnStartResponse"];
         CreateStudentAccountDto: {
@@ -3545,12 +4292,131 @@ export interface components {
             /** Format: date-time */
             dueAt: string;
         };
+        DecisionCommandDto: {
+            /** @example confirmPayment */
+            operationId: string;
+            /** @enum {string} */
+            method: "GET" | "POST" | "PATCH" | "DELETE";
+            /** @example /api/v1/payments/{id}/confirm */
+            path: string;
+            /** @description What the decision does */
+            effect: string;
+        };
+        DecisionCountsDto: {
+            payment: number;
+            distribution: number;
+            scheduleException: number;
+            dispute: number;
+            temporaryAccess: number;
+            refundRequest: number;
+            /** @description Sum of all kinds */
+            total: number;
+        };
+        DecisionDetailDto: {
+            /** @enum {string} */
+            kind: "PAYMENT" | "DISTRIBUTION" | "SCHEDULE_EXCEPTION" | "DISPUTE" | "TEMPORARY_ACCESS" | "REFUND_REQUEST";
+            /**
+             * Format: uuid
+             * @description Id of the payment, distribution, approval or task
+             */
+            id: string;
+            /**
+             * Format: date-time
+             * @description When the decision became due (oldest first)
+             */
+            requestedAt: string;
+            /** @description Manager who asked for the decision */
+            requestedBy: string | null;
+            /** Format: uuid */
+            studentId: string | null;
+            studentName: string | null;
+            /** @example 1200.0000 */
+            amount: string | null;
+            /** @example MDL */
+            currency: string | null;
+            /** @description The decision can be executed right now with the existing command */
+            ready: boolean;
+            /** @description Why it is not ready yet */
+            blockedBy: string | null;
+            /** @description Facts needed to decide (kind specific, no secrets) */
+            facts: {
+                [key: string]: unknown;
+            };
+            /** @description Existing commands that decide this item */
+            commands: components["schemas"]["DecisionCommandDto"][];
+        };
+        DecisionItemDto: {
+            /** @enum {string} */
+            kind: "PAYMENT" | "DISTRIBUTION" | "SCHEDULE_EXCEPTION" | "DISPUTE" | "TEMPORARY_ACCESS" | "REFUND_REQUEST";
+            /**
+             * Format: uuid
+             * @description Id of the payment, distribution, approval or task
+             */
+            id: string;
+            /**
+             * Format: date-time
+             * @description When the decision became due (oldest first)
+             */
+            requestedAt: string;
+            /** @description Manager who asked for the decision */
+            requestedBy: string | null;
+            /** Format: uuid */
+            studentId: string | null;
+            studentName: string | null;
+            /** @example 1200.0000 */
+            amount: string | null;
+            /** @example MDL */
+            currency: string | null;
+            /** @description The decision can be executed right now with the existing command */
+            ready: boolean;
+            /** @description Why it is not ready yet */
+            blockedBy: string | null;
+        };
+        DecisionPageDto: {
+            items: components["schemas"]["DecisionItemDto"][];
+            nextCursor: string | null;
+        };
+        DecisionResultDto: {
+            /** @enum {string} */
+            kind: "PAYMENT" | "DISTRIBUTION" | "SCHEDULE_EXCEPTION" | "DISPUTE" | "TEMPORARY_ACCESS" | "REFUND_REQUEST";
+            /**
+             * Format: uuid
+             * @description Id of the decided item
+             */
+            id: string;
+            /** @enum {string} */
+            outcome: "CONFIRMED" | "REJECTED" | "APPROVED" | "DECLINED";
+            /** Format: date-time */
+            decidedAt: string;
+            /** @description What the underlying finance/schedule command returned */
+            result: {
+                [key: string]: unknown;
+            };
+        };
+        DeclineRequestCommandDto: {
+            /** @description Shown to the manager */
+            reason: string;
+        };
         DemoAccountDto: {
             key: string;
             name: string;
             role: string;
             login: string;
             home: string;
+        };
+        DirectorEmptyCommandDto: Record<string, never>;
+        DirectorMeDto: {
+            actorContext: components["schemas"]["StaffActorContextDto"];
+            /** Format: uuid */
+            staffId: string;
+            displayName: string;
+            /** @enum {string} */
+            role: "DIRECTOR";
+            /** @example Europe/Chisinau */
+            timezone: string;
+            pending: components["schemas"]["DecisionCountsDto"];
+            /** @description Urgent tasks routed to the director and not accepted yet (OPS-01/B) */
+            openEscalations: number;
         };
         DisputeRequestDto: {
             description: string;
@@ -3677,6 +4543,53 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        EscalationDto: {
+            /** Format: uuid */
+            escalationId: string;
+            /** Format: uuid */
+            taskId: string;
+            /** @example ATTENDANCE_DISPUTE */
+            taskType: string;
+            /** @description Task description (restricted to staff) */
+            title: string;
+            /** @example OPEN */
+            taskStatus: string;
+            /** @enum {string} */
+            state: "OPEN" | "ACCEPTED" | "CLOSED";
+            /**
+             * @description MANAGER_UNAVAILABLE: routed at once; ACCEPT_TIMEOUT: nobody accepted within the window
+             * @enum {string}
+             */
+            reason: "MANAGER_UNAVAILABLE" | "ACCEPT_TIMEOUT";
+            /**
+             * @description Primary manager status when the task was escalated
+             * @enum {string}
+             */
+            managerStatus: "AVAILABLE" | "UNAVAILABLE" | "OFF_SHIFT" | "UNASSIGNED";
+            /** Format: uuid */
+            primaryManagerId: string | null;
+            primaryManagerName: string | null;
+            /** Format: uuid */
+            studentId: string | null;
+            studentName: string | null;
+            /** Format: uuid */
+            leadId: string | null;
+            leadName: string | null;
+            /**
+             * Format: date-time
+             * @description When the manager had to accept the task
+             */
+            acceptDueAt: string;
+            /** Format: date-time */
+            escalatedAt: string;
+            /** Format: date-time */
+            acceptedAt: string | null;
+            acceptedByName: string | null;
+        };
+        EscalationPageDto: {
+            items: components["schemas"]["EscalationDto"][];
+            nextCursor: string | null;
+        };
         ExportPdfRequestDto: {
             /** Format: uuid */
             subjectId?: string;
@@ -3749,6 +4662,37 @@ export interface components {
             id: string;
             /** @enum {string} */
             status: "ACTIVE" | "ACHIEVED" | "PAUSED" | "ARCHIVED";
+        };
+        HandoverCommandDto: {
+            /**
+             * Format: uuid
+             * @description Active manager who becomes responsible
+             */
+            managerId: string;
+            comment?: string;
+        };
+        HandoverDto: {
+            /** Format: uuid */
+            handoverId: string;
+            /** @enum {string} */
+            subjectKind: "STUDENT" | "LEAD";
+            /** Format: uuid */
+            subjectId: string;
+            /** Format: uuid */
+            fromManagerId: string | null;
+            fromManagerName: string | null;
+            /** Format: uuid */
+            toManagerId: string;
+            toManagerName: string;
+            /** @description Open tasks that moved with the client */
+            movedTasks: number;
+            comment: string | null;
+            /** Format: date-time */
+            handedOverAt: string;
+        };
+        HandoverListDto: {
+            /** @description Newest first */
+            items: components["schemas"]["HandoverDto"][];
         };
         HealthProbeResponse: {
             /** @enum {string} */
@@ -3867,6 +4811,14 @@ export interface components {
              */
             id: string;
             deliveries: components["schemas"]["IssuedDeliveryDto"][];
+        };
+        LastContactDto: {
+            /** Format: date-time */
+            occurredAt: string;
+            /** @enum {string} */
+            channel: "CALL" | "WHATSAPP" | "TELEGRAM" | "MESSAGE" | "EMAIL" | "OTHER";
+            /** @enum {string} */
+            result: "REACHED" | "NO_ANSWER" | "CALLBACK_REQUESTED" | "DECLINED" | "WRONG_CONTACT" | "OTHER";
         };
         LeadDto: {
             /** Format: uuid */
@@ -4239,6 +5191,27 @@ export interface components {
             reason: "NOT_INTERESTED" | "PRICE" | "NO_CONTACT" | "COMPETITOR" | "SCHEDULE_MISMATCH" | "TRIAL_NO_SHOW" | "OTHER";
             comment?: string;
         };
+        ManagerAvailabilityDto: {
+            /** @enum {string} */
+            status: "AVAILABLE" | "UNAVAILABLE" | "OFF_SHIFT";
+            /**
+             * Format: date-time
+             * @description null while the manager never set a status (treated as AVAILABLE)
+             */
+            changedAt: string | null;
+        };
+        ManagerAvailabilityListDto: {
+            managers: components["schemas"]["ManagerAvailabilityRowDto"][];
+        };
+        ManagerAvailabilityRowDto: {
+            /** Format: uuid */
+            managerId: string;
+            fullName: string;
+            /** @enum {string} */
+            status: "AVAILABLE" | "UNAVAILABLE" | "OFF_SHIFT";
+            /** Format: date-time */
+            changedAt: string | null;
+        };
         ManagerContactsDto: {
             whatsapp: string;
             telegram: string;
@@ -4410,6 +5383,40 @@ export interface components {
             price: string;
             currency: string;
             lessonCount: number;
+        };
+        ManagerRequestDto: {
+            /** Format: uuid */
+            requestId: string;
+            /** @enum {string} */
+            kind: "TEMPORARY_ACCESS" | "REFUND";
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            subscriptionId: string;
+            reason: string;
+            proposedLessons: number | null;
+            /** Format: date-time */
+            proposedUntil: string | null;
+            /**
+             * @description APPROVED for REFUND means: accepted for calculation. No money moves with this decision
+             * @enum {string}
+             */
+            status: "PENDING" | "APPROVED" | "DECLINED" | "WITHDRAWN";
+            /** Format: date-time */
+            requestedAt: string;
+            /** Format: date-time */
+            decidedAt: string | null;
+            /** @description Director's note or reason */
+            decisionNote: string | null;
+            /**
+             * Format: uuid
+             * @description Granted temporary access, when approved
+             */
+            permissionId: string | null;
+        };
+        ManagerRequestPageDto: {
+            items: components["schemas"]["ManagerRequestDto"][];
+            nextCursor: string | null;
         };
         ManagerSubscriptionDto: {
             /** Format: uuid */
@@ -4805,6 +5812,66 @@ export interface components {
             /** Format: date-time */
             lastPaidAt: string | null;
         };
+        PayrollObligationDto: {
+            /** Format: uuid */
+            obligationId: string;
+            /** Format: uuid */
+            accrualId: string;
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: date-time */
+            recognizedAt: string;
+            currency: string;
+            /** @example 50.0000 */
+            amount: string;
+            /** @example 0.0000 */
+            paid: string;
+            /** @example 50.0000 */
+            outstanding: string;
+            openAttempts: number;
+            /** @description Accrued by a director exception (unpaid lesson) */
+            exception: boolean;
+        };
+        PayrollSummaryDto: {
+            /** Format: uuid */
+            periodId?: string | null;
+            /** @description One row per currency */
+            totals: components["schemas"]["PayrollTotalDto"][];
+            /** @description Largest outstanding first */
+            teachers: components["schemas"]["PayrollTeacherRowDto"][];
+        };
+        PayrollTeacherDto: {
+            /** Format: uuid */
+            teacherId: string;
+            teacherName: string;
+            totals: components["schemas"]["PayrollTotalDto"][];
+            /** @description Newest first, at most 200 */
+            obligations: components["schemas"]["PayrollObligationDto"][];
+        };
+        PayrollTeacherRowDto: {
+            /** @example MDL */
+            currency: string;
+            /**
+             * @description Recognised teacher accruals
+             * @example 1200.0000
+             */
+            accrued: string;
+            /**
+             * @description Confirmed payouts only
+             * @example 800.0000
+             */
+            paid: string;
+            /**
+             * @description accrued − paid: still owed to teachers
+             * @example 400.0000
+             */
+            outstanding: string;
+            /** Format: uuid */
+            teacherId: string;
+            teacherName: string;
+            /** @description Payout attempts waiting for confirmation or reconciliation */
+            openAttempts: number;
+        };
         PayrollTotalDto: {
             /** @example MDL */
             currency: string;
@@ -4838,6 +5905,46 @@ export interface components {
             /** Format: date-time */
             expiresAt: string | null;
             failureReason: string | null;
+        };
+        PendingContactDto: {
+            /** Format: uuid */
+            taskId: string;
+            /** @example FOLLOW_UP */
+            taskType: string;
+            title: string;
+            /** Format: date-time */
+            dueAt: string;
+            overdue: boolean;
+            /** @enum {string} */
+            subjectKind: "LEAD" | "STUDENT";
+            /** Format: uuid */
+            subjectId: string;
+            subjectName: string;
+            lastContact: components["schemas"]["LastContactDto"] | null;
+        };
+        PendingContactsDto: {
+            /** @description Most overdue first, at most 50 */
+            items: components["schemas"]["PendingContactDto"][];
+        };
+        PeriodDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** Format: date-time */
+            closedAt: string | null;
+            /** @description The period has finished, so it can be closed */
+            finished: boolean;
+            /** @description Unresolved facts that block closing (0 when closed) */
+            blockers: number;
+            /** @description finished, not closed and nothing blocks it */
+            readyToClose: boolean;
+        };
+        PeriodListDto: {
+            /** @description Newest first */
+            items: components["schemas"]["PeriodDto"][];
         };
         PlatformAccountsDto: {
             enabled: boolean;
@@ -4884,6 +5991,50 @@ export interface components {
             status: "PUBLISHED";
             /** Format: date-time */
             publishedAt: string;
+        };
+        RecordContactDto: {
+            /**
+             * Format: uuid
+             * @description Exactly one of leadId, studentId, teacherId
+             */
+            leadId?: string;
+            /** Format: uuid */
+            studentId?: string;
+            /**
+             * Format: uuid
+             * @description A teacher of one of your students
+             */
+            teacherId?: string;
+            /**
+             * Format: uuid
+             * @description Linked representative; student contacts only
+             */
+            representativeId?: string;
+            /**
+             * Format: uuid
+             * @description Related CRM task; recording does not close it
+             */
+            taskId?: string;
+            /**
+             * Format: uuid
+             * @description Fixes an earlier entry; the subject is taken from it and the old entry stays
+             */
+            correctsId?: string;
+            /** @enum {string} */
+            channel: "CALL" | "WHATSAPP" | "TELEGRAM" | "MESSAGE" | "EMAIL" | "OTHER";
+            /**
+             * @description NO_ANSWER is an attempt, not an informed family
+             * @enum {string}
+             */
+            result: "REACHED" | "NO_ANSWER" | "CALLBACK_REQUESTED" | "DECLINED" | "WRONG_CONTACT" | "OTHER";
+            /** @description Short result; no message texts */
+            summary: string;
+            nextAction?: string;
+            /**
+             * Format: date-time
+             * @description When the contact happened; defaults to now, never in the future
+             */
+            occurredAt?: string;
         };
         RecoveryCompleteRequest: {
             /** Format: uuid */
@@ -4946,6 +6097,10 @@ export interface components {
         RejectManagerPaymentDto: {
             reason: string;
         };
+        RejectPaymentCommandDto: {
+            /** @description Kept in the audit trail; shown to the manager */
+            reason: string;
+        };
         RenewManagerSubscriptionDto: {
             /** Format: uuid */
             distributionId: string;
@@ -4961,8 +6116,11 @@ export interface components {
         RequestMaterialUploadDto: {
             fileName: string;
             fileSizeBytes: number;
-            /** @example application/pdf */
-            mimeType: string;
+            /**
+             * @example application/pdf
+             * @enum {string}
+             */
+            mimeType: "application/pdf" | "image/png" | "image/jpeg" | "image/webp" | "image/gif" | "text/plain" | "audio/mpeg" | "video/mp4" | "application/msword" | "application/vnd.openxmlformats-officedocument.wordprocessingml.document" | "application/vnd.ms-excel" | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" | "application/vnd.ms-powerpoint" | "application/vnd.openxmlformats-officedocument.presentationml.presentation" | "application/vnd.oasis.opendocument.text";
         };
         RequestUploadUrlDto: {
             fileName: string;
@@ -5045,6 +6203,9 @@ export interface components {
             submissionId: string;
             /** @enum {string} */
             result: "ACCEPTED" | "NEEDS_REVISION";
+        };
+        RevokeAssignmentCommandDto: {
+            reason: string;
         };
         RevokeMaterialResponseDto: {
             /**
@@ -5183,6 +6344,13 @@ export interface components {
             kind: "STAFF" | "TEACHER" | "STUDENT";
             roles: ("DIRECTOR" | "MANAGER" | "TEACHER" | "STUDENT" | "TECH_OPERATOR")[];
             role?: string;
+        };
+        SetManagerAvailabilityDto: {
+            /**
+             * @description AVAILABLE: urgent tasks wait up to the acceptance window. UNAVAILABLE / OFF_SHIFT: they go to the director at once
+             * @enum {string}
+             */
+            status: "AVAILABLE" | "UNAVAILABLE" | "OFF_SHIFT";
         };
         SetManagerMeetDto: {
             url: string;
@@ -5326,7 +6494,53 @@ export interface components {
             /** Format: date-time */
             profileUpdatedAt: string | null;
         };
+        StaffCardDto: {
+            /** @enum {string} */
+            kind: "MANAGER" | "TEACHER";
+            /** Format: uuid */
+            id: string;
+            fullName: string;
+            active: boolean;
+            /** Format: date-time */
+            deactivatedAt: string | null;
+            /** @description MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons */
+            metrics: {
+                [key: string]: unknown;
+            };
+            statusHistory: components["schemas"]["StatusChangeDto"][];
+            /** @description MANAGER: latest hand-overs to or from this manager */
+            handovers: components["schemas"]["HandoverDto"][];
+        };
+        StaffItemDto: {
+            /** @enum {string} */
+            kind: "MANAGER" | "TEACHER";
+            /** Format: uuid */
+            id: string;
+            fullName: string;
+            active: boolean;
+            /** Format: date-time */
+            deactivatedAt: string | null;
+            /** @description MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons */
+            metrics: {
+                [key: string]: unknown;
+            };
+        };
+        StaffListDto: {
+            items: components["schemas"]["StaffItemDto"][];
+        };
+        StaffStatusCommandDto: {
+            /** @description Kept in the status history */
+            reason: string;
+        };
         StartLessonRequest: Record<string, never>;
+        StatusChangeDto: {
+            /** @enum {string} */
+            action: "DEACTIVATED" | "REACTIVATED";
+            reason: string;
+            byDirectorName: string;
+            /** Format: date-time */
+            changedAt: string;
+        };
         StudentAccountIssuedDto: {
             /** Format: uuid */
             accountId: string;
@@ -5702,6 +6916,23 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        TeacherAssignmentDto: {
+            /** Format: uuid */
+            assignmentId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            enrollmentId: string;
+            /** Format: uuid */
+            subjectId: string;
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: date-time */
+            validFrom: string;
+            /** Format: date-time */
+            validTo: string | null;
+            basis: string;
+        };
         TeacherAvailabilityRequest: {
             /** Format: uuid */
             availabilityId?: string;
@@ -5750,6 +6981,35 @@ export interface components {
             /** @description Non-cancelled lessons overlap the window: edits need a manager request */
             occupied: boolean;
             lessonCount: number;
+        };
+        TeacherCandidateDto: {
+            /** Format: uuid */
+            teacherId: string;
+            fullName: string;
+            /** @description Subjects with a current assignment */
+            subjects: components["schemas"]["TeacherSubjectDto"][];
+            /** @description Students with a current assignment */
+            activeStudents: number;
+            /** @description Lessons in the next 7 days */
+            lessonsNext7Days: number;
+            /** @description Published availability in the next 7 days */
+            availableMinutesNext7Days: number;
+            /** @description Availability minus booked lessons, next 7 days */
+            freeMinutesNext7Days: number;
+            /** @description Teaches the requested subject (only with subjectId) */
+            teachesSubject: boolean;
+            /** @description Free intervals that fit a trial lesson, after the minimum lead time (max 10) */
+            trialSlots: components["schemas"]["TimeIntervalDto"][];
+        };
+        TeacherCandidatesDto: {
+            /** Format: uuid */
+            leadId: string;
+            /** Format: uuid */
+            subjectId: string | null;
+            /** @description Trial lesson length */
+            trialMinutes: number;
+            /** @description Teachers with trial slots, best first */
+            candidates: components["schemas"]["TeacherCandidateDto"][];
         };
         TeacherCheckpointCardDto: {
             /** Format: uuid */
@@ -5813,6 +7073,26 @@ export interface components {
             /** Format: date-time */
             actualStartedAt: string;
             durationMin: number;
+        };
+        TeacherDirectoryDto: {
+            items: components["schemas"]["TeacherDirectoryItemDto"][];
+        };
+        TeacherDirectoryItemDto: {
+            /** Format: uuid */
+            teacherId: string;
+            fullName: string;
+            /** @description Subjects with a current assignment */
+            subjects: components["schemas"]["TeacherSubjectDto"][];
+            /** @description Students with a current assignment */
+            activeStudents: number;
+            /** @description Lessons in the next 7 days */
+            lessonsNext7Days: number;
+            /** @description Published availability in the next 7 days */
+            availableMinutesNext7Days: number;
+            /** @description Availability minus booked lessons, next 7 days */
+            freeMinutesNext7Days: number;
+            /** @description Teaches the requested subject (only with subjectId) */
+            teachesSubject: boolean;
         };
         TeacherEnrollmentDto: {
             /** Format: uuid */
@@ -6236,6 +7516,11 @@ export interface components {
             /** @description Skill reviews and reports waiting for this teacher */
             pendingCheckpoints: number;
         };
+        TeacherSubjectDto: {
+            /** Format: uuid */
+            id: string;
+            name: string;
+        };
         TeacherTodayLessonDto: {
             /** Format: uuid */
             lessonId: string;
@@ -6273,6 +7558,26 @@ export interface components {
             /** Format: date-time */
             asOf: string;
             lessons: components["schemas"]["TeacherTodayLessonDto"][];
+        };
+        TeacherWindowDto: {
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** Format: uuid */
+            availabilityId: string;
+            /** @example Europe/Chisinau */
+            timezone: string;
+            /** @description Booked lessons inside the window */
+            busy: components["schemas"]["TimeIntervalDto"][];
+            /** @description Window minus booked lessons */
+            free: components["schemas"]["TimeIntervalDto"][];
+        };
+        TeacherWindowsDto: {
+            /** Format: uuid */
+            teacherId: string;
+            fullName: string;
+            windows: components["schemas"]["TeacherWindowDto"][];
         };
         TeachingAssignmentCreateRequest: {
             googleMeetLink?: string;
@@ -6324,6 +7629,12 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        TimeIntervalDto: {
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+        };
         TransitionLeadDto: {
             version: number;
             /** @enum {string} */
@@ -6357,6 +7668,34 @@ export interface components {
         };
         UnreadCountDto: {
             unreadCount: number;
+        };
+        UnresolvedDto: {
+            /** Format: uuid */
+            periodId: string | null;
+            /** @description Total per kind (items are capped at 100 per kind) */
+            counts: {
+                [key: string]: number;
+            };
+            /** @description Oldest first */
+            items: components["schemas"]["UnresolvedItemDto"][];
+        };
+        UnresolvedItemDto: {
+            /** @enum {string} */
+            kind: "UNACCRUED_LESSON" | "DISPUTED_LESSON" | "OPEN_PAYOUT_ATTEMPT" | "DRAFT_LEDGER_ENTRY";
+            /**
+             * Format: uuid
+             * @description Lesson, payout attempt or ledger entry
+             */
+            id: string;
+            /** Format: date-time */
+            at: string;
+            teacherName: string | null;
+            studentName: string | null;
+            /** @example 50.0000 */
+            amount: string | null;
+            currency: string | null;
+            /** @example Conducted lesson has no teacher accrual */
+            detail: string;
         };
         UpdateGoalDto: {
             text?: string;
@@ -6455,6 +7794,9 @@ export interface components {
             /** Format: uuid */
             challengeId: string;
             options: components["schemas"]["WebAuthnOptions"];
+        };
+        WithdrawRequestDto: {
+            note?: string;
         };
         WorkspaceCoverageDto: {
             /** @enum {string} */
@@ -7515,6 +8857,1565 @@ export interface operations {
             };
             /** @description Unified domain/security error */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorDecisions: {
+        parameters: {
+            query?: {
+                kind?: "PAYMENT" | "DISTRIBUTION" | "SCHEDULE_EXCEPTION" | "DISPUTE" | "TEMPORARY_ACCESS" | "REFUND_REQUEST";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorDecision: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kind: "PAYMENT" | "DISTRIBUTION" | "SCHEDULE_EXCEPTION" | "DISPUTE" | "TEMPORARY_ACCESS" | "REFUND_REQUEST";
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionDetailDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending (anymore) or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorDecisionSummary: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionCountsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorApproveDispute: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApproveDisputeCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorApproveDistribution: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorEscalations: {
+        parameters: {
+            query?: {
+                /** @description OPEN: not accepted yet; ACCEPTED: director took it; CLOSED: the task is finished */
+                state?: "OPEN" | "ACCEPTED" | "CLOSED";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EscalationPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT or INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorEscalation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EscalationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description ESCALATION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    acceptDirectorEscalation: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EscalationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description ESCALATION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description ESCALATION_ALREADY_ACCEPTED, ESCALATION_CLOSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorUnresolvedFinance: {
+        parameters: {
+            query?: {
+                /** @description Only accruals recognised in this financial period; default: all time */
+                periodId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UnresolvedDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorHandovers: {
+        parameters: {
+            query?: {
+                studentId?: string;
+                leadId?: string;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HandoverListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reassignLeadManager: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HandoverCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HandoverDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LEAD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SAME_MANAGER */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description MANAGER_NOT_FOUND */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorManagerAvailability: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerAvailabilityListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DirectorMeDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorConfirmPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorRejectPayment: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RejectPaymentCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorPayrollSummary: {
+        parameters: {
+            query?: {
+                /** @description Only accruals recognised in this financial period; default: all time */
+                periodId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayrollSummaryDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorPayrollTeacher: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                teacherId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayrollTeacherDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorPeriods: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createDirectorPeriod: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreatePeriodDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_OVERLAP */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_PERIOD */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    closeDirectorPeriod: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_ALREADY_CLOSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_NOT_FINISHED, PERIOD_HAS_DRAFT_ENTRIES, PERIOD_HAS_UNRESOLVED_FACTS */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorApproveRequest: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ApproveRequestCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorDeclineRequest: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeclineRequestCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    directorApproveScheduleException: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DecisionResultDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Not pending or unknown */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Already decided, stale or not ready */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorStaff: {
+        parameters: {
+            query?: {
+                kind?: "MANAGER" | "TEACHER";
+                /** @description true: only active, false: only deactivated; default: all */
+                active?: string;
+                /** @description Case-insensitive name fragment */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorStaffCard: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kind: "MANAGER" | "TEACHER";
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffCardDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STAFF_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    deactivateDirectorStaff: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                kind: "MANAGER" | "TEACHER";
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffStatusCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffItemDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STAFF_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description MANAGER_HAS_PORTFOLIO, TEACHER_HAS_FUTURE_LESSONS, STAFF_ALREADY_INACTIVE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reactivateDirectorStaff: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                kind: "MANAGER" | "TEACHER";
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffStatusCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffItemDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STAFF_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STAFF_ALREADY_ACTIVE */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reassignStudentManager: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HandoverCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HandoverDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description SAME_MANAGER */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description MANAGER_NOT_FOUND */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8971,6 +11872,258 @@ export interface operations {
             };
         };
     };
+    getManagerAvailability: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerAvailabilityDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    setManagerAvailability: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SetManagerAvailabilityDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerAvailabilityDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerContacts: {
+        parameters: {
+            query?: {
+                /** @description Exactly one of leadId, studentId, teacherId */
+                leadId?: string;
+                studentId?: string;
+                teacherId?: string;
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContactPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description CONTACT_SUBJECT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description CONTACT_SUBJECT_REQUIRED, INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    recordManagerContact: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecordContactDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ContactDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description CONTACT_SUBJECT_NOT_FOUND, CONTACT_NOT_FOUND, REPRESENTATIVE_NOT_FOUND, TASK_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description CONTACT_ALREADY_CORRECTED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description CONTACT_SUBJECT_REQUIRED, CONTACT_SUBJECT_MISMATCH, CONTACT_IN_FUTURE */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerPendingContacts: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PendingContactsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     getManagerDashboard: {
         parameters: {
             query?: {
@@ -9688,6 +12841,56 @@ export interface operations {
                 };
             };
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerLeadTeacherCandidates: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                leadId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherCandidatesDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_NOT_FOUND, LEAD_NOT_FOUND */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -10970,6 +14173,122 @@ export interface operations {
             };
         };
     };
+    listManagerRequests: {
+        parameters: {
+            query?: {
+                studentId?: string;
+                status?: "PENDING" | "APPROVED" | "DECLINED" | "WITHDRAWN";
+                limit?: number;
+                /** @description Opaque cursor from the previous page */
+                cursor?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerRequestPageDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_CURSOR */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    withdrawManagerRequest: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WithdrawRequestDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerRequestDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REQUEST_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REQUEST_NOT_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     listManagerSchedule: {
         parameters: {
             query: {
@@ -12094,6 +15413,79 @@ export interface operations {
             };
         };
     };
+    createManagerRequest: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRequestDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerRequestDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, SUBSCRIPTION_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description REQUEST_ALREADY_PENDING */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FULLY_PAID_USES_NORMAL_ACCESS, NOTHING_TO_REFUND, INVALID_ACCESS_EXPIRY */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     listManagerSubscriptions: {
         parameters: {
             query?: never;
@@ -12256,6 +15648,79 @@ export interface operations {
                 };
             };
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    assignManagerTeacher: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignTeacherCommandDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherAssignmentDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, ASSIGNMENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_ALREADY_ASSIGNED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_INACTIVE, SUBJECT_INACTIVE */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -13051,6 +16516,191 @@ export interface operations {
                 };
             };
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listManagerTeachers: {
+        parameters: {
+            query?: {
+                /** @description Case-insensitive name fragment */
+                search?: string;
+                /** @description Put teachers who already teach it first */
+                subjectId?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherDirectoryDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_NOT_FOUND, LEAD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getManagerTeacherAvailability: {
+        parameters: {
+            query: {
+                from: string;
+                /** @description At most 31 days after from */
+                to: string;
+            };
+            header?: never;
+            path: {
+                teacherId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherWindowsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_NOT_FOUND, LEAD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_RANGE, RANGE_TOO_LARGE */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    revokeManagerTeacher: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevokeAssignmentCommandDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherAssignmentDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description STUDENT_NOT_FOUND, ASSIGNMENT_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_ALREADY_ASSIGNED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description TEACHER_INACTIVE, SUBJECT_INACTIVE */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

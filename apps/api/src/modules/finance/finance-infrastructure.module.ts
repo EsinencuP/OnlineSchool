@@ -11,6 +11,7 @@ import { FinanceAccess } from './finance-access.service.js';
 import { FinanceEvents } from './finance-events.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';
 import { PaymentsService } from './payments.service.js';
+import { PeriodsService } from './periods.service.js';
 import { ManagerPaymentWorkflow } from './manager-payments/workflow.service.js';
 import { EntitlementsService } from './entitlements.service.js';
 import { ManagerLessonRights } from './manager-payments/lesson-rights.service.js';
@@ -28,6 +29,7 @@ import { DisputeFinanceService } from './manager-disputes/dispute.service.js';
     FinanceEvents,
     FinanceLedger,
     PaymentsService,
+    PeriodsService,
     ManagerPaymentWorkflow,
   ],
   exports: [
@@ -37,6 +39,7 @@ import { DisputeFinanceService } from './manager-disputes/dispute.service.js';
     FinanceEvents,
     FinanceLedger,
     PaymentsService,
+    PeriodsService,
     ManagerPaymentWorkflow,
     EntitlementsService,
     ManagerLessonRights,

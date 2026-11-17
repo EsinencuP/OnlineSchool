@@ -39,6 +39,7 @@ export async function managerTasksFixture() {
             }
           : null;
       const tasks = (where) => [...s().tasks.values()].map(task).filter((r) => match(r, where));
+      db.taskEscalation = { findUnique: jest.fn(async () => null) };
       db.crmTask = {
         create: jest.fn(async ({ data }) => {
           const row = {

@@ -17,6 +17,7 @@ import type {
   UpdateStudentContactsDto,
 } from '../dto/student-crm.dto.js';
 import { ManagerScopeService } from '../scope/manager-scope.service.js';
+import { assignmentStamp } from '../scope/assignment-stamp.js';
 import { ManagerStudentsRead, projectListItem } from './students.read.js';
 import { readCursor, writeCursor } from './student-cursor.js';
 
@@ -159,7 +160,12 @@ export class ManagerStudentsService {
         },
       });
       await command.tx.assignedManager.create({
-        data: { student_id: student.id, manager_id: ctx.managerId },
+        // Stamped with the database clock: same-transaction scope checks compare against it.
+        data: {
+          student_id: student.id,
+          manager_id: ctx.managerId,
+          assigned_at: await assignmentStamp(command.tx),
+        },
       });
       const guardian = await this.guardian(command.tx, student.id, dto.guardianName);
       if (!guardian.ok) return guardian;

@@ -391,6 +391,13 @@ export class ManagerTasksService {
       if (closed(row.status)) return err(domainError('TASK_ALREADY_RESOLVED', 409));
       if (row.version !== version || row.status !== 'OPEN')
         return err(domainError('TASK_VERSION_CONFLICT', 409));
+      // OPS-01/B: once the acceptance window passed the urgent task belongs to the director;
+      // a late manager acceptance must not start a second, independent execution.
+      const escalated = await c.tx.taskEscalation.findUnique({
+        where: { task_id: row.id },
+        select: { id: true },
+      });
+      if (escalated) return err(domainError('TASK_ESCALATED', 409));
       const next = unwrap(
         await this.update(c, row, { status: 'IN_PROGRESS', assigned_manager_id: ctx.managerId }),
       );

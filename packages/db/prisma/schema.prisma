@@ -72,6 +72,8 @@ enum ContactChannel {
   MESSAGE
   EMAIL
   OTHER
+  WHATSAPP
+  TELEGRAM
 }
 
 enum CrmTaskType {
@@ -96,6 +98,7 @@ enum CrmTaskStatus {
 
 // Owner: Student registry / Relations. Contacts never identify/deduplicate a person.
 model Student {
+  manager_requests ManagerRequest[] @relation("RequestStudent")
   notification_locale String @default("ru")
   notification_dispatches NotificationDispatch[]
   version              Int     @default(1)
@@ -446,6 +449,11 @@ model StudentAccount {
 }
 
 model StaffAccount {
+  requested_manager_requests ManagerRequest[] @relation("RequestRequester")
+  decided_manager_requests ManagerRequest[] @relation("RequestDecider")
+  availability_state ManagerAvailability? @relation("ManagerAvailabilityStaff")
+  primary_escalations TaskEscalation[] @relation("EscalationPrimaryManager")
+  accepted_escalations TaskEscalation[] @relation("EscalationAcceptedBy")
   notification_dispatches NotificationDispatch[]
   requested_schedule_approvals ScheduleChangeApproval[] @relation("ScheduleApprovalRequester")
   approved_schedule_approvals ScheduleChangeApproval[] @relation("ScheduleApprovalDirector")
@@ -501,6 +509,7 @@ model StaffAccount {
 }
 
 model TeacherAccount {
+  contact_logs ContactLog[] @relation("TeacherContacts")
   skill_audit_logs     SkillAuditLog[]
   reviewed_checkpoints ProgressCheckpoint[] @relation("CheckpointReviewer")
   authored_goals       LearningGoal[]       @relation("GoalAuthor")
@@ -831,6 +840,11 @@ model ContactLog {
   manager_id        String         @db.Uuid
   channel           ContactChannel
   outcome           String // PII: minimal necessary communication result
+  teacher_id        String?        @db.Uuid
+  task_id           String?        @db.Uuid
+  corrects_id       String?        @unique(map: "uq_contact_one_correction") @db.Uuid
+  result            String // REACHED | NO_ANSWER | CALLBACK_REQUESTED | DECLINED | WRONG_CONTACT | OTHER
+  next_action       String? // PII: minimal necessary follow-up
   occurred_at       DateTime       @default(now()) @db.Timestamptz(3)
   created_at        DateTime       @default(now()) @db.Timestamptz(3)
   updated_at        DateTime       @default(now()) @updatedAt @db.Timestamptz(3)
@@ -838,6 +852,10 @@ model ContactLog {
   lead           Lead?           @relation("LeadContacts", fields: [lead_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_lead")
   student        Student?        @relation("StudentContacts", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_student")
   representative Representative? @relation("RepresentativeContacts", fields: [representative_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_representative")
+  teacher        TeacherAccount? @relation("TeacherContacts", fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_teacher")
+  task           CrmTask?        @relation("TaskContacts", fields: [task_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_task")
+  corrects       ContactLog?     @relation("ContactCorrection", fields: [corrects_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_corrects")
+  correction     ContactLog?     @relation("ContactCorrection")
   manager        StaffAccount    @relation("ContactRecordedBy", fields: [manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_contact_staff")
 
   @@index([lead_id, occurred_at])
@@ -848,6 +866,8 @@ model ContactLog {
 }
 
 model CrmTask {
+  contact_logs ContactLog[] @relation("TaskContacts")
+  escalation TaskEscalation? @relation("TaskEscalationTask")
   system_resolved Boolean @default(false)
   version Int @default(1)
   escalated_at DateTime? @db.Timestamptz(3)
@@ -1215,6 +1235,7 @@ model SaleCondition {
 }
 
 model Subscription {
+  manager_requests ManagerRequest[] @relation("RequestSubscription")
   managed_period                                 ManagerSubscriptionPeriod?
   freeze_history                                 SubscriptionFreezeHistory[]
   id                                             String                      @id @default(uuid()) @db.Uuid
@@ -1460,6 +1481,7 @@ model PaymentDistribution {
 }
 
 model TemporaryAccessPermission {
+  manager_requests ManagerRequest[] @relation("RequestPermission")
   id                                                     String                @id @default(uuid()) @db.Uuid
   subscription_id                                        String                @db.Uuid
   approved_by_director_id                                String                @db.Uuid
@@ -2629,4 +2651,59 @@ model PdfExportJob {
   @@index([student_id, requested_at])
   @@index([expires_at])
   @@map("pdf_export_jobs")
+}
+
+// OPS-01/B: manager working status and server-side escalation of urgent tasks to the director.
+model ManagerAvailability {
+  manager_id String   @id @db.Uuid
+  status     String // AVAILABLE | UNAVAILABLE | OFF_SHIFT (CHECK in the database)
+  changed_at DateTime @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+
+  manager StaffAccount @relation("ManagerAvailabilityStaff", fields: [manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_availability_manager_id_fkey")
+
+  @@map("manager_availability")
+}
+
+model TaskEscalation {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  task_id            String    @unique(map: "uq_task_escalation_task") @db.Uuid
+  primary_manager_id String?   @db.Uuid
+  reason             String // MANAGER_UNAVAILABLE | ACCEPT_TIMEOUT
+  manager_status     String // AVAILABLE | UNAVAILABLE | OFF_SHIFT | UNASSIGNED
+  accept_due_at      DateTime  @db.Timestamptz(3)
+  escalated_at       DateTime  @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+  accepted_by_id     String?   @db.Uuid
+  accepted_at        DateTime? @db.Timestamptz(3)
+
+  task            CrmTask       @relation("TaskEscalationTask", fields: [task_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "task_escalations_task_id_fkey")
+  primary_manager StaffAccount? @relation("EscalationPrimaryManager", fields: [primary_manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "task_escalations_primary_manager_id_fkey")
+  accepted_by     StaffAccount? @relation("EscalationAcceptedBy", fields: [accepted_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "task_escalations_accepted_by_id_fkey")
+
+  @@map("task_escalations")
+}
+
+// DEV-17/C, DEV-21/B: family requests formalised by a manager; the director decides.
+model ManagerRequest {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind             String // TEMPORARY_ACCESS | REFUND
+  student_id       String    @db.Uuid
+  subscription_id  String    @db.Uuid
+  requested_by_id  String    @db.Uuid
+  reason           String
+  proposed_lessons Int?
+  proposed_until   DateTime? @db.Timestamptz(3)
+  status           String    @default("PENDING") // PENDING | APPROVED | DECLINED | WITHDRAWN
+  requested_at     DateTime  @default(dbgenerated("clock_timestamp()")) @db.Timestamptz(3)
+  decided_by_id    String?   @db.Uuid
+  decided_at       DateTime? @db.Timestamptz(3)
+  decision_note    String?
+  permission_id    String?   @db.Uuid
+
+  student      Student                    @relation("RequestStudent", fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_requests_student_id_fkey")
+  subscription Subscription               @relation("RequestSubscription", fields: [subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_requests_subscription_id_fkey")
+  requested_by StaffAccount               @relation("RequestRequester", fields: [requested_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_requests_requested_by_id_fkey")
+  decided_by   StaffAccount?              @relation("RequestDecider", fields: [decided_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_requests_decided_by_id_fkey")
+  permission   TemporaryAccessPermission? @relation("RequestPermission", fields: [permission_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "manager_requests_permission_id_fkey")
+
+  @@map("manager_requests")
 }

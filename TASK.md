@@ -1,22 +1,23 @@
-# TASK — TEACH-05: teacher roster and skill map (assess a skill)
+# TASK — DIR-D6: payroll overview, financial periods and the unresolved registry (DIR-03/DIR-04)
 
-Outcome: a teacher sees who they currently teach (and the enrollment ids every teacher command needs),
-reads a student's skill map and records a skill level change that the student then sees in "Мой путь знаний".
+Outcome: the director sees what teachers earned vs. were actually paid vs. still owed, which open facts block a
+period, and can open and close periods. Money commands stay where they are (`/accruals`, `/payouts/*`).
 
-In scope:
-- `GET /api/v1/teacher/enrollments` — active enrollments with an active assignment to the teacher
-  (student, subject, confirmed lessons in the subject, next lesson). ≤ 200 rows.
-- `GET /api/v1/teacher/enrollments/:enrollmentId/skills` — subject catalog (global + the student's personal skills)
-  with the current public status (`NOT_STUDIED|FAMILIARIZING|PRACTICING|APPLYING`), same "current" rule as the student map
-  (latest assessment across the student's enrollments of the subject).
-- `POST /api/v1/teacher/enrollments/:enrollmentId/skills/:skillId/assessments` (critical command): new level, internal
-  `basis`, optional student-visible `publicComment`, optional confirmed `lessonId`. Computes version/supersedes itself; unchanged level → 409.
-- `GET /api/v1/teacher/enrollments/:enrollmentId/skills/:skillId/history` — audit trail, newest first (≤ 50).
-- Migration: runtime role gets INSERT on `skill_assessments` (audit row is written by the existing SECURITY DEFINER trigger).
-Out of scope: 4-lesson checkpoints, 8-lesson reports, learning goals, skill catalog admin, frontend, orval client.
+`/api/v1/director` (director only):
+- `GET /payroll/summary?periodId=` — per currency and per teacher: accrued (recognised accruals), paid (confirmed
+  payouts only), outstanding = accrued − paid, openAttempts (PENDING/UNKNOWN or succeeded without confirmation).
+- `GET /payroll/teachers/:teacherId` — obligations with paid/outstanding, open attempts, director-exception flag.
+- `GET /finance/unresolved?periodId=` — the same facts the period close refuses over: UNACCRUED_LESSON (conducted,
+  no accrual), DISPUTED_LESSON, OPEN_PAYOUT_ATTEMPT, DRAFT_LEDGER_ENTRY; counts + items (≤100 per kind).
+- `GET /periods` — periods with `blockers`, `finished`, `readyToClose`.
+- `POST /periods {startsAt, endsAt}` — opens a period (1–32 days, no overlap: 409 `PERIOD_OVERLAP`; 422
+  `INVALID_PERIOD`). Before this no API could create a period, so accruals/postings failed with `CLOSED_PERIOD`.
+- `POST /periods/:id/close` — facade over the existing close (same command type, topic, rules and errors).
+`PeriodsService` is now exported from `FinanceInfrastructureModule`. No schema change.
 
-Acceptance:
-1. Only the actively assigned teacher reads/assesses; foreign enrollment/role → 404/403; archived/foreign-subject skill → 404.
-2. Student-side `GET /student/skills` logic (same SQL rules) shows the new status; audit has from/to, teacher, public comment.
-3. Replay of the same Idempotency-Key creates one assessment; sequential changes chain via supersedes/version.
-4. PostgreSQL 18 integration tests, API+worker build, OpenAPI regenerated.
+Out of scope (owner decisions): revenue/profit/cash KPIs (DIR-02, definitions not approved), recognition-period
+rules and month boundaries (director chooses UTC bounds), period reopening/corrections after close, payout
+execution through a bank, frontend.
+
+Acceptance: PG18 `director-payroll-http.test.mjs` (3 pass: access/empty, accrual+payout totals and blockers, period
+create/close incl. a disputed-lesson blocker) and the full PG regression; OpenAPI 227 operations; builds and eslint clean.

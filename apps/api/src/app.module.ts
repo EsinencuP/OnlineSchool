@@ -13,6 +13,7 @@ import { IntegrationsModule } from './modules/integrations/integrations.module.j
 import { CoreModule } from './core/core.module.js';
 import { ManagerModule } from './modules/manager/manager.module.js';
 import { TeacherModule } from './modules/teacher/teacher.module.js';
+import { DirectorModule } from './modules/director/director.module.js';
 import { Public } from './core/rbac/decorators.js';
 import { QaModule } from './modules/qa/qa.module.js';
 import { StudentModule } from './student/student.module.js';
@@ -58,6 +59,7 @@ export class HealthController {
     CoreModule,
     ManagerModule,
     TeacherModule,
+    DirectorModule,
     IdentityModule,
     CrmModule,
     ScheduleModule,

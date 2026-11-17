@@ -245,6 +245,8 @@ export class ManagerPaymentWorkflow {
     studentId: string,
     id: string,
     reason: string,
+    // The director may also reject a receipt the manager already submitted for approval.
+    allowAwaitingApproval = false,
   ): Promise<Result<ReceiptView, DomainError>> {
     try {
       await ctx.tx.$queryRaw`SELECT id FROM payment_receipts WHERE id=${id}::uuid FOR UPDATE`;
@@ -254,7 +256,11 @@ export class ManagerPaymentWorkflow {
       });
       if (!row) return err(domainError('PAYMENT_NOT_FOUND', 404));
       if (row.confirmed_by_director_at) return err(domainError('PAYMENT_IMMUTABLE', 409));
-      if (this.project(row).status !== 'PENDING')
+      const current = this.project(row).status;
+      if (
+        current !== 'PENDING' &&
+        !(allowAwaitingApproval && current === ManagerPaymentStatus.AWAITING_APPROVAL)
+      )
         return err(domainError('PAYMENT_NOT_PENDING', 409));
       if (reason.trim().length < 3 || reason.length > 500)
         return err(domainError('INVALID_INPUT', 422));
