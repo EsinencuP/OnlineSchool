@@ -16,6 +16,8 @@ import { createPoolClient } from '@online-school/db';
 import type { PrismaClient } from '@online-school/db';
 import { readOptions, rollback } from './contracts.js';
 import { OutboxWorker } from './outbox.js';
+import { ExpiredUploadCleanup, expiredUploadHandler } from './expired-upload-cleanup.js';
+import { createHandlers } from './handlers.js';
 import { RecoveryWorker } from './recovery.js';
 import type { RecoveryProvider } from './recovery.js';
 import { WorkerHeartbeat } from './heartbeat.js';
@@ -39,6 +41,7 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
   private stopping: Promise<void> | undefined;
   private client: PrismaClient | undefined;
   private outbox: OutboxWorker | undefined;
+  private uploadCleanup: ExpiredUploadCleanup | undefined;
   private recovery: RecoveryWorker | undefined;
   private heartbeat: WorkerHeartbeat | undefined;
   private pdf: PdfExportWorker | undefined;
@@ -65,7 +68,11 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
       const connection = createPoolClient();
       if (!connection.ok) return rollback(connection.error.code);
       this.client = connection.value;
-      this.outbox = new OutboxWorker(this.client, options.value);
+      const cleanupEnabled = process.env.S3_UPLOAD_CLEANUP_ENABLED === 'true';
+      const cleanupHandler = cleanupEnabled ? expiredUploadHandler(this.pdfStorage) : undefined;
+      if (cleanupEnabled)
+        this.uploadCleanup = new ExpiredUploadCleanup(this.client, this.pdfStorage);
+      this.outbox = new OutboxWorker(this.client, options.value, createHandlers(cleanupHandler));
       this.recovery = new RecoveryWorker(this.client, options.value, this.providers);
       this.pdf = new PdfExportWorker(this.client, this.me, this.pdfStorage);
       this.notifications = new StudentNotificationProjector(this.client, new NotificationService());
@@ -91,19 +98,40 @@ export class WorkerLifecycle implements OnModuleInit, OnModuleDestroy {
   }
 
   private async process(): Promise<void> {
-    for (const processor of [
-      this.expiry,
-      this.schedule,
-      this.drafts,
-      this.subscriptions,
-      this.escalation,
-    ]) {
+    const stages = [
+      ['ACCESS_EXPIRY_POLL_FAILED', () => this.expiry.enabled()],
+      ['SCHEDULE_DEADLINE_POLL_FAILED', () => this.schedule.enabled()],
+      ['HOMEWORK_DRAFT_EXPIRY_POLL_FAILED', () => this.drafts.enabled()],
+      ['SUBSCRIPTION_EXPIRY_POLL_FAILED', () => this.subscriptions.enabled()],
+      ['TASK_ESCALATION_POLL_FAILED', () => this.escalation.enabled()],
+      [
+        'UPLOAD_CLEANUP_POLL_FAILED',
+        async () => {
+          await this.uploadCleanup?.enqueueDue();
+        },
+      ],
+      [
+        'OUTBOX_POLL_FAILED',
+        async () => {
+          await this.outbox?.processDue();
+        },
+      ],
+      [
+        'RECOVERY_POLL_FAILED',
+        async () => {
+          await this.recovery?.processDue();
+        },
+      ],
+    ] as const;
+    for (const [code, poll] of stages) {
       if (this.stopped) return;
-      const result = await processor.enabled();
-      if (!result.ok) this.logger.error(result.error.code);
+      try {
+        const result = await poll();
+        if (result && !result.ok) this.logger.error(result.error.code);
+      } catch {
+        this.logger.error(code);
+      }
     }
-    if (!this.stopped) await this.outbox?.processDue();
-    if (!this.stopped) await this.recovery?.processDue();
     if (!this.stopped && this.notifications && !this.notificationsRunning) {
       this.notificationsRunning = this.notifications
         .processDue()

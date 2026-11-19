@@ -13,6 +13,7 @@ import {
   MAX_HOMEWORK_FILE_BYTES,
   UPLOAD_TTL_SECONDS,
 } from '../../modules/storage/private-uploads.service.js';
+import { supportsUploadMime } from '../../modules/storage/upload-format.js';
 import { MeService } from '../me/me.service.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import type {
@@ -214,6 +215,7 @@ export class StudentHomeworkService {
       !/^[a-zA-Z0-9!#$&^_.+-]+\/[a-zA-Z0-9!#$&^_.+-]+$/.test(mimeType)
     )
       return fail(domainError('INVALID_INPUT', 400));
+    if (!supportsUploadMime(mimeType)) return fail(domainError('UPLOAD_TYPE_UNSUPPORTED', 422));
     const { now } = await this.editable(ctx, student, id),
       fileId = randomUUID();
     await ctx.tx.s3Object.create({

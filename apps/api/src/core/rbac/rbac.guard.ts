@@ -70,7 +70,8 @@ export class AccessService {
         permissions ||
         authenticated ||
         student ||
-        this.metadata<boolean>(ACCESS.mfa, context)
+        this.metadata<boolean>(ACCESS.mfa, context) ||
+        this.metadata<boolean>(ACCESS.verifiedMfa, context)
       )
         return err(domainError('ACCESS_CONFIGURATION_ERROR', 403));
       return ok(undefined);
@@ -82,6 +83,8 @@ export class AccessService {
       return err(domainError(roleErrorCode, 403));
     if (!roles?.length && !permissions?.length && !authenticated)
       return err(domainError('FORBIDDEN', 403));
+    if (this.metadata<boolean>(ACCESS.verifiedMfa, context) && !actor.mfaCompleted)
+      return err(domainError('MFA_REQUIRED', 403));
     const req = context.switchToHttp().getRequest<HttpRequest>();
     const preMfa =
       this.metadata<boolean>(ACCESS.preMfa, context) &&

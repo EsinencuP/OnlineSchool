@@ -19,6 +19,28 @@ test('bounded retry schedule and strict environment config', () => {
   assert.equal(safeCode(new WorkerFailure('HANDLER_REJECTED')), 'HANDLER_REJECTED');
 });
 
+test('demo switches are acknowledged as audit-only outbox events', async () => {
+  await import('reflect-metadata');
+  const { createHandlers } = await import('../dist/handlers.js');
+  const topic = 'auth.demo.switch.v1';
+  const event = {
+    id: 'event-1',
+    topic,
+    aggregate_type: 'Session',
+    aggregate_id: 'session-1',
+    source_operation_id: 'switch-1',
+  };
+  const written = [];
+  const tx = { auditEvent: { createMany: async ({ data }) => written.push(...data) } };
+  const handler = createHandlers().get(topic);
+  assert.ok(handler);
+  assert.equal((await handler(tx, event, new Date())).ok, true);
+  assert.equal(written.length, 1);
+  assert.equal(written[0].event_key, 'worker:observed:event-1');
+  assert.equal(written[0].source_operation_id, 'switch-1');
+  assert.equal(written[0].resource_id, 'session-1');
+});
+
 test('worker application context starts and shuts down without an HTTP listener', async () => {
   const { createRequire } = await import('node:module');
   const require = createRequire(new URL('../package.json', import.meta.url));

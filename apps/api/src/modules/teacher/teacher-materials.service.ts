@@ -121,6 +121,7 @@ export class TeacherMaterialsService {
     const file = upload ? await ctx.tx.s3Object.findUnique({ where: { id: fileId } }) : null;
     if (!upload || !file) return fail(domainError('NOT_FOUND', 404));
     if (file.status === 'VERIFIED') return { id: fileId, status: 'VERIFIED' };
+    if (file.status !== 'PENDING') return fail(domainError('UPLOAD_NOT_PENDING', 409));
     await this.storage.confirm({
       bucket: file.bucket,
       key: file.key,
@@ -157,7 +158,7 @@ export class TeacherMaterialsService {
                (SELECT count(*)::int FROM file_permissions p WHERE p.s3_object_id = o.id
                   AND p.revoked_at IS NULL AND (p.expires_at IS NULL OR p.expires_at > clock_timestamp())) AS active_grants
         FROM teacher_material_uploads u JOIN s3_objects o ON o.id = u.file_id
-        WHERE u.teacher_id = ${ctx.teacherId}::uuid
+        WHERE u.teacher_id = ${ctx.teacherId}::uuid AND o.status IN ('PENDING','VERIFIED')
           ${query.state ? Prisma.sql`AND o.status::text = ${query.state}` : Prisma.empty}
           ${cursor ? Prisma.sql`AND (o.created_at, o.id) < (${cursor.at}::timestamptz, ${cursor.id}::uuid)` : Prisma.empty}
         ORDER BY o.created_at DESC, o.id DESC LIMIT ${limit + 1}`);

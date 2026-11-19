@@ -163,6 +163,10 @@ export class LoseLeadDto extends LeadVersionDto {
   comment?: string;
 }
 export class LeadListItemDto {
+  @ApiPropertyOptional({
+    description: 'A matching contact in the intake portfolio requires staff review',
+  })
+  possibleDuplicateAtIntake?: boolean;
   @ApiProperty({ format: 'uuid' }) leadId!: string;
   @ApiProperty({ enum: LEAD_STAGES }) stage!: LeadStage;
   @ApiProperty({ enum: ['CHILD', 'ADULT'] }) audience!: 'CHILD' | 'ADULT';

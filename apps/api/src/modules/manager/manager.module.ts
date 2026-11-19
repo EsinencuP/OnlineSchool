@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ManagerLeadsService } from './leads/manager-leads.service.js';
 import { ManagerLeadsController } from './leads/manager-leads.controller.js';
+import { PublicLeadController } from '../crm/public-lead.controller.js';
 import { ManagerLeadsGuard } from './leads/manager-leads.guard.js';
 import { ManagerOptionsController } from './options/manager-options.controller.js';
 import { ManagerOptionsService } from './options/manager-options.service.js';
@@ -25,6 +26,7 @@ import { ManagerSubscriptionsController } from './subscriptions/manager-subscrip
 import { ManagerSubscriptionsService } from './subscriptions/manager-subscriptions.service.js';
 import { ManagerSubscriptionsGuard } from './subscriptions/manager-subscriptions.guard.js';
 import { FinanceInfrastructureModule } from '../finance/finance-infrastructure.module.js';
+import { ManagerRefundsController } from '../finance/refunds/refunds.controller.js';
 import { ManagerFinanceFacade } from './finance/manager-finance.facade.js';
 import { ManagerPaymentsController } from './payments/manager-payments.controller.js';
 import { ManagerPaymentsService } from './payments/manager-payments.service.js';
@@ -58,6 +60,8 @@ import { ManagerTeachersService } from './teachers/manager-teachers.service.js';
     ScheduleInfrastructureModule,
   ],
   controllers: [
+    PublicLeadController,
+    ManagerRefundsController,
     ManagerLeadsController,
     ManagerOptionsController,
     ManagerDashboardController,

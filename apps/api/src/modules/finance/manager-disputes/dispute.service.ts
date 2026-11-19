@@ -147,25 +147,12 @@ export class DisputeFinanceService {
         proposal.sourceEntryId !== source.value.entryId
       )
         return err(domainError('DISPUTE_REFUND_EXCEEDS_CHARGE', 409));
-      let publication: string | undefined;
-      try {
-        await this.entitlements.adjust(
-          { ...ctx, operationId: disputeOperationId(id) },
-          {
-            grantId: source.value.grantId,
-            originalConsumptionId: source.value.consumptionId,
-            kind: 'CONSUMPTION_CANCELLATION',
-            reason: `Approved CRM dispute:${id}`,
-          },
-          (entryId) => {
-            publication = entryId;
-          },
-        );
-      } catch (error: unknown) {
-        const failure = subscriptionFailure(error);
-        return err(failure.retryable ? failure : domainError('LEDGER_PUBLICATION_FAILED', 503));
-      }
-      if (!publication) return err(domainError('LEDGER_PUBLICATION_FAILED', 503));
+      const correction = await this.entitlements.reverseDisputeCharge(
+        { ...ctx, operationId: disputeOperationId(id) },
+        source.value,
+        `Approved CRM dispute:${id}`,
+      );
+      const publication = correction.entryId;
       const now = await at(ctx.tx),
         staff = await this.access.staff(ctx, true);
       const changed = await ctx.tx.crmTask.updateMany({
@@ -197,6 +184,9 @@ export class DisputeFinanceService {
           metadata: {
             studentId: task.student_id,
             lessonId: task.lesson_id,
+            originPeriodId: correction.originPeriodId,
+            sourceEntryId: source.value.entryId,
+            adjustmentId: correction.adjustmentId,
             ledgerPublicationId: publication,
             disputeKey: `dispute:${id}`,
             reason: redactMeet(proposal.reason) as string,

@@ -694,6 +694,43 @@ test('unknown payout reserves the obligation until reconciliation and cannot be 
     409,
   );
   assert.equal(await client.confirmedPayout.count({ where: { attempt_id: pending.id } }), 0);
+  const path = `payouts/${pending.id}/reconcile`;
+  const body = { status: 'FAILED', evidenceReference: 'synthetic-bank-not-executed' };
+  assert.equal((await call(path, { actor: 'manager', body })).status, 403);
+  const key = randomUUID();
+  const resolved = good(await call(path, { key, body }));
+  assert.deepEqual(resolved, {
+    id: pending.id,
+    status: 'FAILED',
+    payoutId: null,
+    ledgerEntryId: null,
+  });
+  assert.deepEqual(good(await call(path, { key, body })), resolved);
+  assert.equal(
+    await client.auditEvent.count({
+      where: { action: 'PAYOUT_EVIDENCE_VERIFIED', resource_id: pending.id },
+    }),
+    1,
+  );
+  assert.equal(
+    await client.outboxEvent.count({
+      where: { topic: 'payroll.payout.reconciled.v1', aggregate_id: pending.id },
+    }),
+    1,
+  );
+  assert.equal(await client.confirmedPayout.count({ where: { attempt_id: pending.id } }), 0);
+  const retry = good(
+    await call('payouts/attempt', {
+      actor: 'manager',
+      body: {
+        obligationId: accrued.obligationId,
+        amount: '200',
+        provider: 'synthetic',
+        providerRequestId: randomUUID(),
+      },
+    }),
+  );
+  assert.notEqual(retry.id, pending.id);
 });
 test('failure of mandatory audit rolls back confirmation, posting, task and idempotency result', async () => {
   const payment = await receipt('5'),

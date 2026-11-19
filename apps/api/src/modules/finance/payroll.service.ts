@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Injectable } from '@nestjs/common';
+import type { PayoutAttempt, PayrollObligation } from '@online-school/db';
+import { AuditService } from '../../core/audit/audit.service.js';
 import type { AccountContext, CriticalContext } from '../../core/http.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import { DatabaseService } from '../../core/database/database.module.js';
@@ -14,6 +16,7 @@ export class PayrollService {
     private readonly access: FinanceAccess,
     private readonly ledger: FinanceLedger,
     private readonly db: DatabaseService,
+    private readonly audit: AuditService,
   ) {}
   async accrue(ctx: CriticalContext, body: unknown) {
     const input = object(body, ['outcomeId', 'basis', 'exceptionAmount']);
@@ -29,16 +32,25 @@ export class PayrollService {
     });
     await this.access.student(ctx, enrollment.student_id);
     if (lesson.status !== 'CONDUCTED') return fail(domainError('CONFIRMED_LESSON_REQUIRED', 422));
+    const dispute = await ctx.tx.lessonOutcomeDisputeDecision.findUnique({
+      where: { outcome_id: outcomeId },
+      select: { id: true },
+    });
+    const exception = input.exceptionAmount !== undefined;
+    if (dispute) {
+      if (!ctx.actor.mfaCompleted) return fail(domainError('MFA_REQUIRED', 403));
+      await this.access.staff(ctx, true);
+      if (!exception) return fail(domainError('DISPUTED_LESSON_REQUIRES_DIRECTOR_AMOUNT', 422));
+    }
     const now = await at(ctx.tx);
     if (outcome.confirmed_at > now) return fail(domainError('CONFIRMED_LESSON_REQUIRED', 422));
     const period = await this.ledger.period(ctx.tx, now);
     const paid = await ctx.tx.$queryRaw<
       { ok: boolean }[]
     >`SELECT EXISTS(SELECT 1 FROM subscriptions s JOIN entitlement_grants g ON g.subscription_id=s.id WHERE s.enrollment_id=${enrollment.id}::uuid AND g.granted_at<=${outcome.actual_started_at} AND t03_paid_at(s.id,${outcome.actual_started_at})>=s.full_price) AS ok`;
-    const exception = input.exceptionAmount !== undefined;
     if (!paid[0]!.ok && !exception)
       return fail(domainError('UNPAID_LESSON_REQUIRES_DIRECTOR_DECISION', 422));
-    if (exception) await this.access.staff(ctx, true);
+    if (exception && !dispute) await this.access.staff(ctx, true);
     const amount = exception
       ? input.exceptionAmount === '0' || input.exceptionAmount === '0.0000'
         ? new Decimal(0)
@@ -143,20 +155,26 @@ export class PayrollService {
       },
     });
   }
-  async confirm(ctx: CriticalContext, id: string, body: unknown) {
-    const input = object(body, ['providerConfirmationId', 'amount']);
+  private async lockedAttempt(ctx: CriticalContext, id: string) {
     id = uuid(id);
     await ctx.tx.$queryRaw`SELECT id FROM payout_attempts WHERE id=${id}::uuid FOR UPDATE`;
     const attempt = await ctx.tx.payoutAttempt.findUnique({ where: { id } });
     if (!attempt) return fail(domainError('NOT_FOUND', 404));
-    const obligation = await this.obligation(ctx, attempt.obligation_id);
-    const staff = await this.access.staff(ctx);
-    if (attempt.status !== 'PENDING')
-      return fail(domainError('PAYOUT_RECONCILIATION_REQUIRED', 409));
+    return attempt;
+  }
+
+  private async publishPayout(
+    ctx: CriticalContext,
+    attempt: PayoutAttempt,
+    obligation: PayrollObligation,
+    staff: string,
+    amount: PayoutAttempt['amount'],
+    providerConfirmationId: string,
+  ) {
+    const id = attempt.id;
     const paid = await ctx.tx.$queryRaw<
       { paid: string }[]
     >`SELECT coalesce(sum(p.amount),0)::text AS paid FROM confirmed_payouts p JOIN payout_attempts a ON a.id=p.attempt_id WHERE a.obligation_id=${obligation.id}::uuid`;
-    const amount = input.amount === undefined ? attempt.amount : money(input.amount);
     if (amount.gt(attempt.amount) || amount.gt(new Decimal(obligation.amount).sub(paid[0]!.paid)))
       return fail(domainError('PAYOUT_EXCEEDS_OBLIGATION', 422));
     const now = await at(ctx.tx);
@@ -170,7 +188,7 @@ export class PayrollService {
         confirmed_at: now,
         confirmed_by_id: staff,
         provider: attempt.provider,
-        provider_confirmation_id: string(input.providerConfirmationId, 1, 200),
+        provider_confirmation_id: providerConfirmationId,
         ...operation(ctx.operationId),
       },
     });
@@ -180,6 +198,70 @@ export class PayrollService {
       ...operation(randomUUID()),
     });
     return { ...payout, ledgerEntryId: entry.id };
+  }
+
+  async confirm(ctx: CriticalContext, id: string, body: unknown) {
+    const input = object(body, ['providerConfirmationId', 'amount']);
+    const attempt = await this.lockedAttempt(ctx, id);
+    const obligation = await this.obligation(ctx, attempt.obligation_id);
+    const staff = await this.access.staff(ctx);
+    if (attempt.status !== 'PENDING')
+      return fail(domainError('PAYOUT_RECONCILIATION_REQUIRED', 409));
+    return this.publishPayout(
+      ctx,
+      attempt,
+      obligation,
+      staff,
+      input.amount === undefined ? attempt.amount : money(input.amount),
+      string(input.providerConfirmationId, 1, 200),
+    );
+  }
+
+  async reconcile(ctx: CriticalContext, id: string, body: unknown) {
+    if (!ctx.actor.mfaCompleted) return fail(domainError('MFA_REQUIRED', 403));
+    const staff = await this.access.staff(ctx, true);
+    const input = object(body, ['status', 'evidenceReference', 'amount']);
+    const status = input.status;
+    if (status !== 'SUCCEEDED' && status !== 'FAILED')
+      return fail(domainError('INVALID_INPUT', 400));
+    if (status === 'FAILED' && input.amount !== undefined)
+      return fail(domainError('INVALID_INPUT', 400));
+    const reference = string(input.evidenceReference, 1, 200);
+    const amount = status === 'SUCCEEDED' ? money(input.amount) : null;
+    const attempt = await this.lockedAttempt(ctx, id);
+    const obligation = await this.obligation(ctx, attempt.obligation_id);
+    if (attempt.status !== 'UNKNOWN' && attempt.status !== 'PENDING')
+      return fail(domainError('PAYOUT_ATTEMPT_ALREADY_FINAL', 409));
+    const payout = amount
+      ? await this.publishPayout(ctx, attempt, obligation, staff, amount, reference)
+      : null;
+    if (!payout) await ctx.tx.payoutAttempt.update({ where: { id: attempt.id }, data: { status } });
+    const result = {
+      id: attempt.id,
+      status,
+      payoutId: payout?.id ?? null,
+      ledgerEntryId: payout?.ledgerEntryId ?? null,
+    } as const;
+    await this.audit.record(
+      {
+        actor_kind: 'ACCOUNT',
+        actor_id: ctx.actor.accountId,
+        action: 'PAYOUT_EVIDENCE_VERIFIED',
+        resource_type: 'PayoutAttempt',
+        resource_id: attempt.id,
+        result: 'SUCCESS',
+        request_id: ctx.requestId,
+        source_operation_id: ctx.operationId,
+        event_key: `payout:reconcile:${attempt.id}`,
+        metadata: {
+          ...result,
+          previousStatus: attempt.status,
+          evidenceReference: reference,
+        },
+      },
+      ctx.tx,
+    );
+    return result;
   }
   async read(actor: AccountContext, id: string) {
     id = uuid(id);

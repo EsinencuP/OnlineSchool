@@ -4,6 +4,14 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./outbox-replay": {
+      "types": "./dist/modules/qa/outbox-replay.d.ts",
+      "import": "./dist/modules/qa/outbox-replay.js"
+    },
+    "./google-meet": {
+      "types": "./dist/modules/schedule/google-meet/worker-port.d.ts",
+      "import": "./dist/modules/schedule/google-meet/worker-port.js"
+    },
     "./manager-leads": {
       "types": "./dist/modules/manager/leads/worker.d.ts",
       "import": "./dist/modules/manager/leads/worker.js"
@@ -54,11 +62,13 @@
     "test": "node --test test/*.test.mjs",
     "test:unit": "node --test test/*.test.mjs",
     "test:integration": "pnpm run build && node --test --test-concurrency=1 test/integration/*.test.mjs",
+    "meet:poc": "node scripts/probe-google-meet.mjs",
     "export:openapi": "node scripts/export-openapi.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1157.0",
     "@aws-sdk/s3-request-presigner": "3.1157.0",
+    "@file-type/cfbf": "0.2.2",
     "@js-temporal/polyfill": "0.5.1",
     "@nestjs/cache-manager": "12.0.1",
     "@nestjs/common": "12.2.0",
@@ -72,6 +82,7 @@
     "cache-manager": "7.2.9",
     "class-transformer": "0.5.1",
     "class-validator": "0.15.1",
+    "file-type": "22.3.0",
     "keyv": "5.6.0",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2"

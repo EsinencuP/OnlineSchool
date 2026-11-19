@@ -7,7 +7,11 @@ import type { DomainError } from '../../core/errors/domain-error.js';
 import { StudentErrors } from '../student-context.interface.js';
 import type { IStudentContext, StudentRequest } from '../student-context.interface.js';
 import type { StudentMeResponseDto } from './me.dto.js';
-import type { Prisma } from '@online-school/db';
+import { Prisma } from '@online-school/db';
+import {
+  directorAdmissionWindowSql,
+  inProgressDirectorAdmissionSql,
+} from '../../modules/finance/lesson-access.sql.js';
 import { studentManagerContacts } from '../manager-contacts.js';
 
 export type LoadedStudent = { context: IStudentContext; me: StudentMeResponseDto };
@@ -58,9 +62,8 @@ export class MeService {
                     -coalesce((SELECT sum(c.quantity) FROM entitlement_consumptions c WHERE c.grant_id=g.id AND c.consumed_at<=t.now AND (c.cancelled_at IS NULL OR c.cancelled_at>t.now)),0)>0
                 )) OR (t03_paid_at(s.id,t.now)<s.full_price AND EXISTS(
                   SELECT 1 FROM temporary_access_permissions p WHERE p.subscription_id=s.id
-                    AND p.approved_at<=t.now AND p.valid_from<=t.now AND p.valid_to>t.now
-                    AND (p.revoked_at IS NULL OR p.revoked_at>t.now)
-                    AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=t.now)<p.max_lessons
+                    AND ${directorAdmissionWindowSql(Prisma.sql`t.now`)}
+                    AND (t03_admission_slots_used(p.id,NULL,t.now)<p.max_lessons OR ${inProgressDirectorAdmissionSql(Prisma.sql`t.now`)})
                 ))
               )
           ) AS has_active_access`;

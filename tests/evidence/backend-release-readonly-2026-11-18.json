@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-18",
+  "mode": "READ_ONLY_CATALOG_AND_PUBLIC_HEALTH",
+  "git": {
+    "localHead": "163f3b82025bbbc5446327452a195252074f8b3d",
+    "remoteMain": "163f3b82025bbbc5446327452a195252074f8b3d",
+    "localValidationIncludedWorktreeChanges": true
+  },
+  "deployment": {
+    "productionAlias": "onlineschool-xi.vercel.app",
+    "servingCommit": "9fac9500079b02bb3adabe264c23dbb9da3445c1",
+    "commitsBehindMain": 4,
+    "latestMainBuild": "ERROR",
+    "latestMainBuildPrismaCode": "P3009",
+    "apiHealthHttp": 200,
+    "workerHealthHttp": 503
+  },
+  "database": {
+    "branch": "main",
+    "database": "online_school",
+    "serverVersion": 180007,
+    "transactionReadOnly": true,
+    "applicationTables": 101,
+    "appliedPrefix": 44,
+    "appliedChecksumMismatches": 0,
+    "matchedAfterLineEndingNormalization": ["20261101120000_mgr02_report_read_permissions"],
+    "failedMigration": {
+      "name": "20261116150000_dir04_staff_lifecycle",
+      "appliedSteps": 0,
+      "rolledBack": false,
+      "recordedDollarQuoteSyntaxError": true,
+      "managerHandoversTablePresent": false,
+      "staffStatusChangesTablePresent": false
+    },
+    "pendingIncludingFailure": [
+      "20261116150000_dir04_staff_lifecycle",
+      "20261117100000_ops02_period_disputes",
+      "20261117110000_director_lesson_dispute_decisions",
+      "20261118090000_verified_refunds",
+      "20261118100000_sale_condition_versions",
+      "20261118110000_public_crm_intake",
+      "20261118120000_teacher_meet_oauth",
+      "20261118130000_teacher_meet_spaces"
+    ]
+  },
+  "worker": {
+    "freshHeartbeats": 0,
+    "lastSeenAt": "2026-11-07T04:38:43.023Z",
+    "lastRecordedStopAt": "2026-11-07T04:38:43.175Z",
+    "dueOutboxEvents": 22,
+    "dueEventsByTopic": {
+      "auth.demo.switch.v1": 15,
+      "auth.password.v1": 6,
+      "auth.logout.v1": 1
+    },
+    "deadOutboxEvents": 11,
+    "deadTopic": "auth.demo.switch.v1",
+    "deadCode": "OUTBOX_HANDLER_NOT_REGISTERED",
+    "demoSwitchHandlerRegisteredLocally": true,
+    "runtimeStopCause": "UNCONFIRMED"
+  },
+  "recoveryAudit": {
+    "capturedAt": "2026-11-18T19:08:02.816Z",
+    "mode": "REPEATABLE_READ_READ_ONLY",
+    "migrationVersion": "20261116140000_mgr_family_requests",
+    "invariantsChecked": 9,
+    "violations": 0,
+    "fingerprintedTables": 20,
+    "verifiedFileRows": 1,
+    "filePermissionRows": 0,
+    "incompleteFileRows": 0,
+    "activePermissionsToUnavailableFiles": 0,
+    "externalBackupAndRestoreRehearsal": "NOT_RUN"
+  },
+  "lessonAdmissionAudit": {
+    "mode": "READ_ONLY_SYNTHETIC_SQL_AND_WORKING_COUNTS",
+    "syntheticCases": 15,
+    "mismatches": 0,
+    "eligibleUnderPreviousQuery": 0,
+    "eligibleUnderUpdatedQuery": 0
+  },
+  "lessonAdmissionCapacity": {
+    "mode": "READ_ONLY_SYNTHETIC_SQL_AND_WORKING_SCHEMA",
+    "syntheticCases": 13,
+    "mismatches": 0,
+    "existingOutcomeGuardPresent": true,
+    "admissionMigrationPresent": false,
+    "concurrentCommands": "NOT_RUN"
+  },
+  "allocationCorrectionPreview": {
+    "mode": "READ_ONLY_SYNTHETIC_SQL",
+    "publishedSourceRows": 1,
+    "rowsBeforePublication": 0,
+    "syntheticReceiptUnallocated": "550",
+    "syntheticSourceAdvance": "200",
+    "syntheticGrantedLessons": 8,
+    "syntheticUsedLessons": 1,
+    "closedOriginAndOpenCurrentPeriodMatched": true,
+    "productionWorkflow": "NOT_RUN"
+  },
+  "localVerification": {
+    "jestSuitesPassed": 80,
+    "jestTestsPassed": 1507,
+    "backendPackageTestsPassed": 33,
+    "activeMigrationFilesParsed": 52,
+    "postgresqlSyntaxParser": "18.6",
+    "sqlSyntaxErrorsAfterCorrection": 0,
+    "prismaSchemaValidation": "PASSED",
+    "databaseRehearsal": "NOT_RUN",
+    "liveGooglePoc": "NOT_RUN",
+    "fndGate": "NOT_PASSED"
+  }
+}

@@ -5,6 +5,10 @@ import { DatabaseService } from '../../core/database/database.module.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import type { DomainError } from '../../core/errors/domain-error.js';
 import { serialize } from '../../modules/finance/finance-common.js';
+import {
+  directorAdmissionWindowSql,
+  inProgressDirectorAdmissionSql,
+} from '../../modules/finance/lesson-access.sql.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import type { DashboardResponseDto, HomeworkCountsDto, SkillProgressDto } from './dashboard.dto.js';
 
@@ -133,7 +137,7 @@ export class DashboardService {
         frozen_until: Date | null;
       }[]
     >`
-      SELECT CASE WHEN t03_paid_at(s.id,${time})>=s.full_price THEN b.remaining ELSE p.remaining END::int AS remaining,
+      SELECT CASE WHEN t03_paid_at(s.id,${time})>=s.full_price THEN b.remaining ELSE admission.remaining END::int AS remaining,
         s.valid_to,coalesce(s.frozen_from<=${time} AND s.frozen_until>${time},false) AS is_frozen,s.frozen_until
       FROM subscriptions s JOIN student_subject_enrollments e ON e.id=s.enrollment_id
       CROSS JOIN LATERAL (SELECT coalesce(sum(g.quantity
@@ -144,16 +148,15 @@ export class DashboardService {
           SELECT sibling.financial_subscription_id FROM manager_subscription_periods own
           JOIN manager_subscription_periods sibling ON sibling.manager_subscription_id=own.manager_subscription_id
           WHERE own.financial_subscription_id=s.id)) AND g.granted_at<=${time}) b
-      LEFT JOIN LATERAL (SELECT (ta.max_lessons-(SELECT count(*) FROM lesson_actual_outcomes o
-        WHERE o.temporary_access_permission_id=ta.id AND o.confirmed_at<=${time}))::int AS remaining
-        FROM temporary_access_permissions ta WHERE ta.subscription_id=s.id AND ta.approved_at<=${time}
-          AND ta.valid_from<=${time} AND ta.valid_to>${time} AND (ta.revoked_at IS NULL OR ta.revoked_at>${time})
-          AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=ta.id AND o.confirmed_at<=${time})<ta.max_lessons
-        ORDER BY ta.valid_to,ta.id LIMIT 1) p ON true
+      LEFT JOIN LATERAL (SELECT greatest(p.max_lessons-t03_admission_slots_used(p.id,NULL,${time}),0) AS remaining
+        FROM temporary_access_permissions p WHERE p.subscription_id=s.id
+          AND ${directorAdmissionWindowSql(time)}
+          AND (t03_admission_slots_used(p.id,NULL,${time})<p.max_lessons OR ${inProgressDirectorAdmissionSql(time)})
+        ORDER BY p.valid_to,p.id LIMIT 1) admission ON true
       WHERE e.student_id=${studentId}::uuid AND e.status IN ('ACTIVE','PAUSED') AND e.valid_from<=${time}
         AND (e.valid_to IS NULL OR e.valid_to>${time}) AND s.valid_from<=${time} AND (s.valid_to IS NULL OR s.valid_to>${time})
         AND (e.status='ACTIVE' OR (s.frozen_from<=${time} AND s.frozen_until>${time}))
-        AND ((t03_paid_at(s.id,${time})>=s.full_price AND b.remaining>0) OR (t03_paid_at(s.id,${time})<s.full_price AND p.remaining>0))
+        AND ((t03_paid_at(s.id,${time})>=s.full_price AND b.remaining>0) OR (t03_paid_at(s.id,${time})<s.full_price AND admission.remaining IS NOT NULL))
       ORDER BY s.valid_to ASC NULLS LAST,s.valid_from,s.id LIMIT 1`;
   }
 

@@ -41,7 +41,7 @@ export class FinanceLedger {
     private readonly access: FinanceAccess,
     private readonly events: FinanceEvents,
   ) {}
-  async period(tx: Prisma.TransactionClient, time: Date, id?: string, lock = true) {
+  async periodState(tx: Prisma.TransactionClient, time: Date, lock = true) {
     const rows = lock
       ? await tx.$queryRaw<
           { id: string; closed_at: Date | null }[]
@@ -49,9 +49,13 @@ export class FinanceLedger {
       : await tx.$queryRaw<
           { id: string; closed_at: Date | null }[]
         >`SELECT id,closed_at FROM financial_periods WHERE starts_at<=${time} AND ends_at>${time}`;
-    if (!rows.length || rows[0]!.closed_at || (id && id !== rows[0]!.id))
+    return rows[0] ?? null;
+  }
+  async period(tx: Prisma.TransactionClient, time: Date, id?: string, lock = true) {
+    const period = await this.periodState(tx, time, lock);
+    if (!period || period.closed_at || (id && id !== period.id))
       return fail(domainError('CLOSED_PERIOD', 422));
-    return rows[0]!.id;
+    return period.id;
   }
   parseLines(value: unknown): JournalLine[] {
     if (!Array.isArray(value) || value.length < 2 || value.length > 500)
@@ -123,6 +127,22 @@ export class FinanceLedger {
     if (doc.payout_id) {
       const r = await tx.confirmedPayout.findUniqueOrThrow({ where: { id: doc.payout_id } });
       return pair(r.amount, r.currency, 'TEACHER_PAYABLE', 'CASH');
+    }
+    if (doc.refund_approval_id) {
+      const r = await tx.refundRecord.findUniqueOrThrow({ where: { id: doc.refund_approval_id } });
+      if (!r.approved_amount) return fail(domainError('REFUND_NOT_APPROVED', 422));
+      return pair(r.approved_amount, r.currency, 'CUSTOMER_ADVANCE', 'REFUND_PAYABLE');
+    }
+    if (doc.refund_transfer_id) {
+      const r = await tx.refundTransfer.findUniqueOrThrow({
+        where: { id: doc.refund_transfer_id },
+        include: { refund: { select: { currency: true } } },
+      });
+      if (r.status !== 'VERIFIED' || r.kind === 'FAILED')
+        return fail(domainError('REFUND_TRANSFER_NOT_POSTABLE', 422));
+      return r.kind === 'PAID'
+        ? pair(r.amount, r.refund.currency, 'REFUND_PAYABLE', 'CASH')
+        : pair(r.amount, r.refund.currency, 'CASH', 'REFUND_PAYABLE');
     }
     if (doc.refund_id) {
       const r = await tx.refundRecord.findUniqueOrThrow({ where: { id: doc.refund_id } });
@@ -287,13 +307,20 @@ export class FinanceLedger {
     const corrected = await this.post(ctx, correctedDoc, replacement, period);
     return { id: corrected.id, reversalEntryId: reverse.id };
   }
-  async reverseConsumption(ctx: CriticalContext, consumptionId: string, reason: string) {
+  async reverseConsumption(
+    ctx: CriticalContext,
+    consumptionId: string,
+    reason: string,
+    expectedEntryId?: string,
+  ) {
     const doc = await ctx.tx.ledgerDocument.findUnique({
       where: { consumption_id: consumptionId },
     });
     if (!doc) return;
     const entry = await ctx.tx.ledgerEntry.findUnique({ where: { document_id: doc.id } });
     if (!entry?.published_at) return;
+    if (expectedEntryId && entry.id !== expectedEntryId)
+      return fail(domainError('DISPUTE_SOURCE_UNAVAILABLE', 409));
     const lines = await ctx.tx.ledgerLine.findMany({ where: { entry_id: entry.id } });
     const reversal = await ctx.tx.ledgerDocument.create({
       data: { correction_of_document_id: doc.id, basis: reason, source_operation_id: randomUUID() },

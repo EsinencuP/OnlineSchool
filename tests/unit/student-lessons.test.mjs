@@ -12,6 +12,12 @@ import { studentMeetLinkSql } from '../../apps/api/dist/student/lessons/meet-acc
 import { StudentCrmTaskService } from '../../apps/api/dist/student/lessons/student-crm-task.service.js';
 import { OutcomesService } from '../../apps/api/dist/modules/schedule/outcomes.service.js';
 import { createHandlers } from '../../apps/worker/dist/handlers.js';
+import { Prisma } from '../../packages/db/dist/index.js';
+import { admission } from '../../apps/api/dist/modules/schedule/booking.service.js';
+import {
+  directorAdmissionWindowSql,
+  lessonSubscriptionWindowSql,
+} from '../../apps/api/dist/modules/finance/lesson-access.sql.js';
 const pipe = new LessonsQueryPipe(),
   student = {
     userId: randomUUID(),
@@ -98,6 +104,41 @@ test('TASK-028 eligibility SQL binds enrollment, active assignment, freeze and u
   expect(expression.sql).not.toMatch(/\b(UPDATE|INSERT|DELETE)\b/);
   await service.list(student, pipe.transform({ period: 'today' }));
   expect(client.$queryRaw.mock.calls[0][0].sql).toContain(expression.sql);
+});
+
+test('booking and Meet apply the same subscription window and superseding allocation check', async () => {
+  const enrollment = randomUUID(),
+    permission = randomUUID();
+  const statements = [];
+  const tx = {
+    $queryRaw: async (parts, ...values) => {
+      const query = Prisma.sql(parts, ...values);
+      statements.push(query);
+      return statements.length === 1 ? [{ ok: false }] : [{ id: permission }];
+    },
+  };
+  await expect(admission(tx, enrollment, fixed, permission)).resolves.toEqual({
+    paid: false,
+    permissionId: permission,
+  });
+  const window = lessonSubscriptionWindowSql(fixed).sql;
+  const directorDecision = directorAdmissionWindowSql(fixed).sql;
+  const [paidQuery, limitedQuery] = statements;
+  expect(window).toContain('subscription_freeze_history');
+  expect(directorDecision).toContain('d.approved_at>p.approved_at');
+  expect(directorDecision).toContain('r.confirmed_by_director_at<=');
+  expect(paidQuery.sql).toContain(window);
+  expect(limitedQuery.sql).toContain(window);
+  expect(limitedQuery.sql).toContain(directorDecision);
+  expect(limitedQuery.sql).toContain('<sub.full_price');
+  expect(limitedQuery.sql).toContain('<p.max_lessons');
+  expect(limitedQuery.sql).toContain('t03_admission_slots_used(p.id,NULL,NULL)');
+  expect(limitedQuery.values).toContain(enrollment);
+  expect(limitedQuery.values).toContain(permission);
+  const meet = studentMeetLinkSql(fixed).sql;
+  expect(meet).toContain(window);
+  expect(meet).toContain(directorDecision);
+  expect(meet).toContain('t03_admission_slots_used(p.id,l.id,');
 });
 
 test('STU-12 next five lessons cross month boundaries but exclude ended and unscheduled rows', async () => {

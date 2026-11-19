@@ -1,4 +1,5 @@
 import { Prisma } from '@online-school/db';
+import { inProgressDirectorAdmissionSql } from '../../modules/finance/lesson-access.sql.js';
 import { issuedHomeworkSql } from '../homework/homework.service.js';
 import { visibleMaterialSubjectsSql } from '../materials/materials.service.js';
 import type { IStudentContext } from '../student-context.interface.js';
@@ -58,14 +59,13 @@ export function studentSubjectsSql(student: IStudentContext): Prisma.Sql {
     WHERE p.approved_at<=${now} AND (epoch.latest IS NULL OR p.approved_at>=epoch.latest)
       AND p.valid_from<=${now} AND p.valid_to>${now} AND (p.revoked_at IS NULL OR p.revoked_at>${now})
   ), permission_use AS (
-    SELECT o.temporary_access_permission_id,count(*)::int AS used FROM lesson_actual_outcomes o
-    JOIN permissions p ON p.id=o.temporary_access_permission_id
-    WHERE o.confirmed_at<=${now} GROUP BY o.temporary_access_permission_id
+    SELECT p.id,t03_admission_slots_used(p.id,NULL,${now}) AS used FROM permissions p
   ), admissions AS (
     SELECT DISTINCT ON (p.subscription_id) p.subscription_id,p.valid_to,p.max_lessons,
-      p.max_lessons-coalesce(u.used,0) AS remaining
-    FROM permissions p LEFT JOIN permission_use u ON u.temporary_access_permission_id=p.id
-    WHERE coalesce(u.used,0)<p.max_lessons ORDER BY p.subscription_id,p.valid_to,p.id
+      greatest(p.max_lessons-u.used,0) AS remaining
+    FROM permissions p JOIN permission_use u ON u.id=p.id
+    WHERE u.used<p.max_lessons OR ${inProgressDirectorAdmissionSql(now)}
+    ORDER BY p.subscription_id,p.valid_to,p.id
   ), homework AS (
     SELECT DISTINCT e.subject_id FROM enrollments e JOIN homework_deliveries d ON d.enrollment_id=e.id
     JOIN homework_assignments a ON a.id=d.assignment_id AND a.subject_id=e.subject_id

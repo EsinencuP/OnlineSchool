@@ -314,6 +314,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/director/distribution-corrections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List open allocation corrections */
+        get: operations["listDirectorAllocationCorrections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/distribution-corrections/{id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decline a proposal or refer it for manual financial settlement */
+        post: operations["reviewAllocationCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/director/distributions/{id}/approve": {
         parameters: {
             query?: never;
@@ -389,7 +423,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Registry of open financial facts that block closing a period: unaccrued or disputed lessons, open payouts, draft entries */
+        /** Open financial items: unaccrued or disputed lessons, open payouts and draft entries */
         get: operations["getDirectorUnresolvedFinance"];
         put?: never;
         post?: never;
@@ -433,6 +467,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/director/lessons/{id}/outcome-dispute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Review the confirmed disputed report and any later director decision */
+        get: operations["getDirectorLessonOutcomeDispute"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/lessons/{id}/outcome-dispute/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record the evidenced lesson result. Payroll remains a separate decision. */
+        post: operations["resolveDirectorLessonOutcomeDispute"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/director/managers/availability": {
         parameters: {
             query?: never;
@@ -461,6 +529,57 @@ export interface paths {
         get: operations["getDirectorMe"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/meet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read unresolved creation attempts and published pair spaces */
+        get: operations["getDirectorMeetInventory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/meet/operations/{id}/close-without-space": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record that an external investigation found no created space and allow a new request */
+        post: operations["closeDirectorUnknownMeetCreation"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/meet/spaces/{id}/retire": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retire the future-use link after reviewing the need for replacement */
+        post: operations["retireDirectorMeetSpace"];
         delete?: never;
         options?: never;
         head?: never;
@@ -562,8 +681,42 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Close a finished period once nothing blocks it (same rules and audit as the generic period close) */
+        /** Close a finished period with confirmation of any outstanding dispute register */
         post: operations["closeDirectorPeriod"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/periods/{id}/disputes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preview open disputes or read the register preserved at period closure */
+        get: operations["getDirectorPeriodDisputes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List accepted refund requests, decisions and pending transfer reviews */
+        get: operations["listDirectorRefundCases"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -598,6 +751,108 @@ export interface paths {
         put?: never;
         /** Decline a manager request with a reason the manager sees */
         post: operations["directorDeclineRequest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/requests/{requestId}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Review the documented refund calculation and transfer evidence */
+        get: operations["getDirectorRefund"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/requests/{requestId}/refund/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve the evidenced amount or decline the refund project */
+        post: operations["decideDirectorRefund"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/requests/{requestId}/refund/transfers/{transferId}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify or reject a reported external transfer or return */
+        post: operations["reviewDirectorRefundTransfer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/sale-conditions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List current and historical sale condition versions */
+        get: operations["listDirectorSaleConditions"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/sale-conditions/{id}/retire": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a sale condition for new purchases */
+        post: operations["retireDirectorSaleCondition"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/director/sale-conditions/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish a new sale condition version for future purchases */
+        post: operations["publishDirectorSaleCondition"];
         delete?: never;
         options?: never;
         head?: never;
@@ -740,6 +995,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/distribution-corrections/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Review the proposed allocation correction and current financial facts */
+        get: operations["getAllocationCorrection"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/distributions/{id}/approve": {
         parameters: {
             query?: never;
@@ -754,6 +1026,23 @@ export interface paths {
          * @description MFA required. DIRECTOR only, confirmed receipt required; recognizes customer advance.
          */
         post: operations["approveDistribution"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/distributions/{id}/correction-proposals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record an erroneous allocation and its proposed correction */
+        post: operations["proposeAllocationCorrection"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1670,6 +1959,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the refund calculation and external transfer register */
+        get: operations["getManagerRefund"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund/prepare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit the refund calculation for director approval */
+        post: operations["prepareManagerRefund"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund/transfers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Report evidence of an external transfer or return */
+        post: operations["reportManagerRefundTransfer"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/manager/students/{studentId}/subscriptions": {
         parameters: {
             query?: never;
@@ -1981,6 +2321,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/payouts/{id}/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Record a verified external payout result
+         * @description Verified MFA and DIRECTOR only. Resolves a pending or unknown attempt based on external evidence. This command does not initiate a transfer.
+         */
+        post: operations["reconcilePayout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/payouts/attempt": {
         parameters: {
             query?: never;
@@ -2032,7 +2392,7 @@ export interface paths {
         put?: never;
         /**
          * Close financial period
-         * @description MFA required. DIRECTOR only; past completed period without draft/unresolved financial facts.
+         * @description MFA required. DIRECTOR only; verified disputes remain in a separate confirmed register.
          */
         post: operations["closeFinancialPeriod"];
         delete?: never;
@@ -2143,6 +2503,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/public/leads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit a public enquiry into the existing CRM and acknowledge the saved request */
+        post: operations["submitPublicLead"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/qa/components": {
         parameters: {
             query?: never;
@@ -2155,6 +2532,43 @@ export interface paths {
          * @description Requires an ordinary MFA staff/teacher session. Worker heartbeat is process liveness, not queue or release readiness.
          */
         get: operations["getComponentStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qa/outbox/{id}/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Queue recovery of a failed demo-switch acknowledgement */
+        post: operations["replayAuditOutboxEvent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qa/queues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Inspect outbox lag, job leases and outstanding reconciliation
+         * @description Directors and technical operators with verified MFA. Includes aggregate counts and up to 20 failure references.
+         */
+        get: operations["getQueueHealth"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2362,7 +2776,7 @@ export interface paths {
         put?: never;
         /**
          * Verify S3 upload and seal a server-only final object
-         * @description HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+         * @description Inspect the staging bytes and require a clean malware verdict before copying the verified ETag to the private final key.
          */
         post: operations["confirmStudentHomeworkUpload"];
         delete?: never;
@@ -2402,7 +2816,7 @@ export interface paths {
         put?: never;
         /**
          * Create PENDING file and 15-minute private S3 PUT capability
-         * @description PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+         * @description PUT the file bytes with the exact declared Content-Type and size. Confirmation accepts the supported document and media types, including a verified format under application/octet-stream. Maximum 50 MiB. A cached result never extends URL expiry.
          */
         post: operations["requestStudentHomeworkUpload"];
         delete?: never;
@@ -3183,6 +3597,74 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/teacher/assignments/{assignmentId}/meet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the Meet space and operation state for an active teaching assignment */
+        get: operations["getTeacherMeetPair"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/assignments/{assignmentId}/meet/create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Queue a single Google Meet space creation for the pair */
+        post: operations["createTeacherMeetSpace"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/assignments/{assignmentId}/meet/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify the teacher-supplied recovery reference for an unresolved creation */
+        post: operations["reconcileTeacherMeetSpace"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/assignments/{assignmentId}/meet/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Queue confirmation of the published Meet resource by name */
+        post: operations["verifyTeacherMeetSpace"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/teacher/availability": {
         parameters: {
             query?: never;
@@ -3534,7 +4016,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Verify the uploaded staging object and publish it as a private file */
+        /**
+         * Verify the uploaded staging object and publish it as a private file
+         * @description Require a clean malware verdict on the staging bytes before copying the verified ETag to the private final key.
+         */
         post: operations["confirmTeacherMaterialUpload"];
         delete?: never;
         options?: never;
@@ -3604,6 +4089,74 @@ export interface paths {
         get: operations["getTeacherMe"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/meet/oauth": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read the connection state for the signed-in teacher */
+        get: operations["getTeacherMeetConnection"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/meet/oauth/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete consent once using the originating teacher session */
+        post: operations["completeTeacherMeetOAuth"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/meet/oauth/disconnect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Disable the connection locally and request Google token revocation */
+        post: operations["disconnectTeacherMeetOAuth"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/teacher/meet/oauth/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start the teacher Google consent flow */
+        post: operations["startTeacherMeetOAuth"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3843,6 +4396,77 @@ export interface components {
             subscriptionId: string;
             amount: string;
         };
+        AllocationCorrectionDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            sourceDistributionId: string;
+            /** Format: uuid */
+            targetSubscriptionId: string | null;
+            /** @enum {string} */
+            status: "PENDING" | "REJECTED" | "MANUAL_REVIEW";
+            amount: string;
+            reason: string;
+            /** Format: uuid */
+            proposedById: string;
+            /** Format: date-time */
+            proposedAt: string;
+            /** Format: uuid */
+            decidedById: string | null;
+            /** Format: date-time */
+            decidedAt: string | null;
+            decisionReason: string | null;
+            facts: components["schemas"]["AllocationCorrectionFactsDto"];
+        };
+        AllocationCorrectionFactsDto: {
+            /** Format: uuid */
+            receiptId: string;
+            /** Format: uuid */
+            sourceSubscriptionId: string;
+            /** Format: uuid */
+            sourceEntryId: string;
+            /** Format: uuid */
+            originPeriodId: string;
+            currency: string;
+            originalAmount: string;
+            receiptAmount: string;
+            /** @description Visible to the director. */
+            receiptUnallocated: string | null;
+            sourceAdvanceBalance: string;
+            targetAvailableAmount: string | null;
+            sourceGrantedLessons: number;
+            sourceUsedLessons: number;
+            sourceStartedLessons: number;
+            reviewReasons: string[];
+            /** Format: date-time */
+            asOf: string;
+        };
+        AllocationCorrectionQueueDto: {
+            items: components["schemas"]["AllocationCorrectionSummaryDto"][];
+            /** Format: uuid */
+            nextCursor: string | null;
+        };
+        AllocationCorrectionSummaryDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            sourceDistributionId: string;
+            /** Format: uuid */
+            targetSubscriptionId: string | null;
+            /** @enum {string} */
+            status: "PENDING" | "REJECTED" | "MANUAL_REVIEW";
+            amount: string;
+            reason: string;
+            /** Format: uuid */
+            proposedById: string;
+            /** Format: date-time */
+            proposedAt: string;
+            /** Format: uuid */
+            decidedById: string | null;
+            /** Format: date-time */
+            decidedAt: string | null;
+            decisionReason: string | null;
+        };
         ApiError: {
             code: string;
             message: string;
@@ -3939,7 +4563,10 @@ export interface components {
         ClaimManagerTaskDto: {
             version: number;
         };
-        CloseFinancialPeriodRequest: Record<string, never>;
+        CloseFinancialPeriodRequest: {
+            /** @description Revision from the director dispute register preview. Required if cases remain open. */
+            disputesRevision?: string;
+        };
         CompleteCheckpointDto: {
             /** @description Shown with the frozen skill snapshot */
             teacherSummary: string;
@@ -3954,6 +4581,10 @@ export interface components {
             completedAt: string;
             /** Format: uuid */
             snapshotId: string | null;
+        };
+        CompleteTeacherMeetOAuthDto: {
+            state: string;
+            code: string;
         };
         ComponentStatusResponse: {
             /** @enum {string} */
@@ -4291,6 +4922,25 @@ export interface components {
             studentName: string;
             /** Format: date-time */
             dueAt: string;
+        };
+        DeadOutboxStatus: {
+            /** Format: uuid */
+            id: string;
+            topic: string;
+            attempts: number;
+            lastErrorCode: string | null;
+            /** Format: date-time */
+            failedAt: string;
+            /** @enum {string|null} */
+            replayStatus: "PENDING" | "DELIVERED" | null;
+        };
+        DecideRefundDto: {
+            /** @enum {string} */
+            decision: "APPROVE" | "DECLINE";
+            version: number;
+            /** @description Required for approval, in the subscription currency */
+            amount?: string;
+            basis: string;
         };
         DecisionCommandDto: {
             /** @example confirmPayment */
@@ -4812,6 +5462,15 @@ export interface components {
             id: string;
             deliveries: components["schemas"]["IssuedDeliveryDto"][];
         };
+        JobHealthCounts: {
+            waiting: number;
+            ready: number;
+            oldestReadySeconds: number | null;
+            running: number;
+            expiredLeases: number;
+            failed: number;
+            reconciliationRequired: number;
+        };
         LastContactDto: {
             /** Format: date-time */
             occurredAt: string;
@@ -4821,6 +5480,8 @@ export interface components {
             result: "REACHED" | "NO_ANSWER" | "CALLBACK_REQUESTED" | "DECLINED" | "WRONG_CONTACT" | "OTHER";
         };
         LeadDto: {
+            /** @description A matching contact in the intake portfolio requires staff review */
+            possibleDuplicateAtIntake?: boolean;
             /** Format: uuid */
             leadId: string;
             /** @enum {string} */
@@ -4870,6 +5531,8 @@ export interface components {
             byManager: boolean;
         };
         LeadListItemDto: {
+            /** @description A matching contact in the intake portfolio requires staff review */
+            possibleDuplicateAtIntake?: boolean;
             /** Format: uuid */
             leadId: string;
             /** @enum {string} */
@@ -5059,6 +5722,49 @@ export interface components {
             /** @enum {string} */
             status?: "SCHEDULED" | "STAR_PENDING";
             basis: string;
+        };
+        LessonDisputeDecisionDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            reportId: string;
+            /** Format: uuid */
+            outcomeId: string | null;
+            /** Format: uuid */
+            originPeriodId: string | null;
+            /** Format: uuid */
+            directorId: string;
+            /** @enum {string} */
+            result: "CONDUCTED" | "NOT_CONDUCTED";
+            reconstructedSnapshot: boolean;
+            /** Format: date-time */
+            decidedAt: string;
+            /** @description Confirmed facts will require a separate approved payroll accrual */
+            requiresFinancialDecision: boolean;
+        };
+        LessonDisputeReviewDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            reportId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: date-time */
+            scheduledAt: string;
+            /** Format: date-time */
+            scheduledEndAt: string;
+            /** Format: date-time */
+            reportedAt: string;
+            reportNote: string;
+            /** Format: date-time */
+            actualStartedAt: string | null;
+            decision: components["schemas"]["LessonDisputeDecisionDto"] | null;
+            decisionEvidenceReference: string | null;
+            decisionReason: string | null;
         };
         LessonHistoryItemDto: {
             /** Format: uuid */
@@ -5564,6 +6270,48 @@ export interface components {
             /** Format: date-time */
             expiresAt: string;
         };
+        MeetDecisionInputDto: {
+            basis: string;
+        };
+        MeetDirectorDecisionDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            state: "CLOSED_WITHOUT_SPACE" | "RETIRED";
+        };
+        MeetDirectorInventoryDto: {
+            unresolved: components["schemas"]["MeetDirectorUnknownDto"][];
+            spaces: components["schemas"]["MeetDirectorSpaceDto"][];
+            /** Format: uuid */
+            nextUnresolved: string | null;
+            /** Format: uuid */
+            nextSpace: string | null;
+        };
+        MeetDirectorSpaceDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: date-time */
+            publishedAt: string;
+            /** Format: date-time */
+            lastVerifiedAt: string;
+        };
+        MeetDirectorUnknownDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            teacherId: string;
+            /** Format: uuid */
+            assignmentId: string;
+            diagnosticCode: string | null;
+            /** Format: date-time */
+            queuedAt: string;
+        };
         NextLessonDto: {
             /** Format: uuid */
             lessonId: string;
@@ -5600,6 +6348,21 @@ export interface components {
             unreadCount: number;
             page: number;
             pageSize: number;
+        };
+        OutboxHealthCounts: {
+            pending: number;
+            ready: number;
+            waitingRetry: number;
+            inFlight: number;
+            expiredLeases: number;
+            dead: number;
+            oldestReadySeconds: number | null;
+        };
+        OutboxReplayResponse: {
+            /** Format: uuid */
+            eventId: string;
+            /** @enum {string} */
+            status: "QUEUED";
         };
         OverviewHomeworkDto: {
             notSubmitted: number;
@@ -5832,6 +6595,18 @@ export interface components {
             /** @description Accrued by a director exception (unpaid lesson) */
             exception: boolean;
         };
+        PayrollReviewItemDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            reportId: string;
+            /** Format: date-time */
+            lessonAt: string;
+            studentName: string;
+            subjectName: string;
+            /** @enum {string} */
+            status: "DISPUTED_REPORT" | "AWAITING_DIRECTOR_ACCRUAL";
+        };
         PayrollSummaryDto: {
             /** Format: uuid */
             periodId?: string | null;
@@ -5926,6 +6701,44 @@ export interface components {
             /** @description Most overdue first, at most 50 */
             items: components["schemas"]["PendingContactDto"][];
         };
+        PeriodDisputeDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            taskId: string | null;
+            /** Format: uuid */
+            reportId: string | null;
+            /** Format: uuid */
+            sourceEntryId: string | null;
+            /** Format: uuid */
+            managerId: string | null;
+            /** Format: uuid */
+            managerAtCloseId: string | null;
+            sourceVersion: number;
+            statusAtClose: string | null;
+            currentStatus: string;
+            /** Format: date-time */
+            resolvedAt: string | null;
+            /** Format: uuid */
+            correctionEntryId: string | null;
+        };
+        PeriodDisputesDto: {
+            /** Format: uuid */
+            periodId: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            /** Format: date-time */
+            closedAt: string | null;
+            /** Format: uuid */
+            closedById: string | null;
+            /** @description Closure confirmation for an open period */
+            revision: string | null;
+            total: number;
+            page: number;
+            items: components["schemas"]["PeriodDisputeDto"][];
+        };
         PeriodDto: {
             /** Format: uuid */
             id: string;
@@ -5970,6 +6783,13 @@ export interface components {
             /** Format: date-time */
             startsAt?: string;
         };
+        PrepareRefundDto: {
+            version: number;
+            revision: string;
+            /** @description Use zero to submit the evidence for an ineligible or held case */
+            quantity: number;
+            basis: string;
+        };
         ProblemDetails: {
             type: string;
             title: string;
@@ -5981,6 +6801,33 @@ export interface components {
             requestId: string;
             managerContacts?: components["schemas"]["ManagerContactsDto"];
         };
+        ProposeAllocationCorrectionDto: {
+            /** @example 100.0000 */
+            amount: string;
+            /**
+             * Format: uuid
+             * @description Omit to request a return to the unallocated receipt balance.
+             */
+            targetSubscriptionId?: string;
+            reason: string;
+        };
+        PublicLeadReceiptDto: {
+            /** @enum {string} */
+            status: "ACCEPTED";
+        };
+        PublicLeadSubmissionDto: {
+            /** @enum {string} */
+            audience: "CHILD" | "ADULT";
+            contactName: string;
+            guardianName?: string;
+            phone?: string;
+            email?: string;
+            /** Format: uuid */
+            subjectId: string;
+            privacyNoticeVersion: string;
+            /** @enum {boolean} */
+            privacyNoticeAcknowledged: true;
+        };
         PublishReportResponseDto: {
             /**
              * Format: uuid
@@ -5991,6 +6838,53 @@ export interface components {
             status: "PUBLISHED";
             /** Format: date-time */
             publishedAt: string;
+        };
+        PublishSaleConditionDto: {
+            code: string;
+            /** @description Latest catalog version, or zero for a new code */
+            expectedVersion: number;
+            lessonCount: number;
+            durationDays: number;
+            /** @description Original package price in MDL */
+            priceBeforeDiscount: string;
+            /** @description Absolute package discount in MDL */
+            discount: string;
+            basis: string;
+        };
+        QueueHealthResponse: {
+            /** Format: date-time */
+            checkedAt: string;
+            outbox: components["schemas"]["OutboxHealthCounts"];
+            jobs: components["schemas"]["JobHealthCounts"];
+            recovery: components["schemas"]["RecoveryHealthCounts"];
+            latestDead: components["schemas"]["DeadOutboxStatus"][];
+        };
+        ReconcilePayoutRequest: {
+            /** @enum {string} */
+            status: "SUCCEEDED" | "FAILED";
+            /** @description Reference to verified external evidence */
+            evidenceReference: string;
+            /** @description Actual confirmed amount as a decimal string. Required for SUCCEEDED. */
+            amount?: string;
+        };
+        ReconcilePayoutResponse: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            status: "SUCCEEDED" | "FAILED";
+            /** Format: uuid */
+            payoutId: string | null;
+            /** Format: uuid */
+            ledgerEntryId: string | null;
+        };
+        ReconcileTeacherMeetDto: {
+            /** Format: uuid */
+            operationId: string;
+            /**
+             * Format: uri
+             * @description The recovered link of the unresolved create operation
+             */
+            meetingUri: string;
         };
         RecordContactDto: {
             /**
@@ -6040,6 +6934,10 @@ export interface components {
             /** Format: uuid */
             recoveryId: string;
             token: string;
+        };
+        RecoveryHealthCounts: {
+            waiting: number;
+            needsManual: number;
         };
         RecoveryInitiatedResponse: {
             /** Format: uuid */
@@ -6094,6 +6992,156 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        RefundCaseDto: {
+            /** Format: uuid */
+            requestId: string;
+            /** Format: uuid */
+            studentId: string;
+            /** Format: uuid */
+            subscriptionId: string;
+            decision: components["schemas"]["RefundDecisionDto"] | null;
+            pendingTransfers: number;
+            /** Format: date-time */
+            requestedAt: string;
+        };
+        RefundCasesDto: {
+            items: components["schemas"]["RefundCaseDto"][];
+            /** Format: uuid */
+            next: string | null;
+        };
+        RefundDecisionDto: {
+            /** Format: uuid */
+            id: string;
+            version: number;
+            /** @enum {string} */
+            status: "DRAFT" | "APPROVED" | "DECLINED";
+        };
+        RefundDetailDto: {
+            /** Format: uuid */
+            id: string;
+            version: number;
+            /** @enum {string} */
+            status: "DRAFT" | "APPROVED" | "DECLINED";
+            /** Format: uuid */
+            preparedById: string | null;
+            /** Format: date-time */
+            preparedAt: string | null;
+            quantity: number;
+            calculatedAmount: string;
+            calculationBasis: string;
+            revision: string | null;
+            calculationSnapshot: components["schemas"]["RefundQuoteDto"] | null;
+            currency: string;
+            approvedAmount: string | null;
+            /** Format: uuid */
+            decidedById: string | null;
+            /** Format: date-time */
+            decidedAt: string | null;
+            decisionBasis: string | null;
+        };
+        RefundQuoteAdvanceDto: {
+            currency: string;
+            amount: string;
+        };
+        RefundQuoteAllocationDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: uuid */
+            paymentId: string;
+            currency: string;
+            amount: string;
+        };
+        RefundQuoteChargeDto: {
+            /** Format: uuid */
+            lessonId: string;
+            /** Format: uuid */
+            consumptionId: string;
+            quantity: number;
+            /** @enum {string} */
+            category: "CONDUCTED" | "APPROVED_CANCELLATION";
+        };
+        RefundQuoteDto: {
+            currency: string;
+            unitPrice: string;
+            fullPrice: string;
+            lessonCount: number;
+            allocations: components["schemas"]["RefundQuoteAllocationDto"][];
+            advances: components["schemas"]["RefundQuoteAdvanceDto"][];
+            grants: components["schemas"]["RefundQuoteGrantDto"][];
+            charges: components["schemas"]["RefundQuoteChargeDto"][];
+            holds: components["schemas"]["RefundQuoteHoldDto"][];
+            allocated: string;
+            advance: string;
+            eligibleQuantity: number;
+            maximumAmount: string;
+            revision: string;
+        };
+        RefundQuoteGrantDto: {
+            /** Format: uuid */
+            id: string;
+            remaining: number;
+        };
+        RefundQuoteHoldDto: {
+            id: string;
+            reason: string;
+        };
+        RefundSettlementDto: {
+            verifiedNet: string;
+            remaining: string;
+            /** @enum {string} */
+            status: "AWAITING_REVIEW" | "AWAITING_EXECUTION" | "PARTIALLY_EXECUTED" | "EXECUTED";
+        };
+        RefundTransferDetailDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            kind: "PAID" | "FAILED" | "RETURNED";
+            channel: string;
+            /** @enum {string} */
+            status: "REPORTED" | "VERIFIED" | "REJECTED";
+            amount: string;
+            /** Format: date-time */
+            occurredAt: string;
+            /** Format: uuid */
+            originalTransferId: string | null;
+            reference: string;
+            evidence: string;
+            /** Format: uuid */
+            reportedById: string;
+            /** Format: date-time */
+            reportedAt: string;
+            /** Format: uuid */
+            reviewedById: string | null;
+            /** Format: date-time */
+            reviewedAt: string | null;
+            reviewReason: string | null;
+        };
+        RefundTransferDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            kind: "PAID" | "FAILED" | "RETURNED";
+            channel: string;
+            /** @enum {string} */
+            status: "REPORTED" | "VERIFIED" | "REJECTED";
+            amount: string;
+            /** Format: date-time */
+            occurredAt: string;
+            /** Format: uuid */
+            originalTransferId: string | null;
+        };
+        RefundViewDto: {
+            /** Format: uuid */
+            requestId: string;
+            /** @enum {string} */
+            requestStatus: "PENDING" | "APPROVED" | "DECLINED" | "WITHDRAWN";
+            /** Format: uuid */
+            subscriptionId: string;
+            quote: components["schemas"]["RefundQuoteDto"] | null;
+            decision: components["schemas"]["RefundDetailDto"] | null;
+            transfers: components["schemas"]["RefundTransferDetailDto"][];
+            settlement: components["schemas"]["RefundSettlementDto"] | null;
+        };
         RejectManagerPaymentDto: {
             reason: string;
         };
@@ -6106,6 +7154,21 @@ export interface components {
             distributionId: string;
             /** Format: uuid */
             planId?: string;
+        };
+        ReportRefundTransferDto: {
+            /** @enum {string} */
+            kind: "PAID" | "FAILED" | "RETURNED";
+            amount: string;
+            /** Format: date-time */
+            occurredAt: string;
+            /** Format: uuid */
+            originalTransferId?: string;
+            /** @description External transfer method */
+            channel: string;
+            /** @description Unique bank or reconciliation reference */
+            reference: string;
+            /** @description Opaque reference to protected payment evidence */
+            evidence: string;
         };
         ReportsResponseDto: {
             items: components["schemas"]["EducationalReportDto"][];
@@ -6151,6 +7214,26 @@ export interface components {
             /** @enum {string} */
             status: "CREATED";
         };
+        ResolveLessonDisputeDto: {
+            /** Format: uuid */
+            reportId: string;
+            /** @enum {string} */
+            result: "CONDUCTED" | "NOT_CONDUCTED";
+            evidenceReference: string;
+            reason: string;
+            /**
+             * Format: date-time
+             * @description Documented UTC start; required only when the recorded start is missing.
+             */
+            actualStartedAt?: string;
+            /** @description Documented duration for a conducted lesson. */
+            durationMin?: number;
+            /**
+             * Format: uuid
+             * @description Existing director admission applicable at actual start.
+             */
+            temporaryAccessPermissionId?: string;
+        };
         ResolveManagerDisputeDto: {
             /** @enum {string} */
             decision: "ACCEPT" | "REJECT" | "ESCALATE";
@@ -6180,6 +7263,14 @@ export interface components {
             overrideLateRule?: boolean;
             version: number;
         };
+        RetireSaleConditionDto: {
+            basis: string;
+        };
+        ReviewAllocationCorrectionDto: {
+            /** @enum {string} */
+            decision: "REJECTED" | "MANUAL_REVIEW";
+            reason: string;
+        };
         ReviewHomeworkDto: {
             /**
              * Format: uuid
@@ -6204,6 +7295,11 @@ export interface components {
             /** @enum {string} */
             result: "ACCEPTED" | "NEEDS_REVISION";
         };
+        ReviewRefundTransferDto: {
+            /** @enum {string} */
+            decision: "VERIFY" | "REJECT";
+            basis: string;
+        };
         RevokeAssignmentCommandDto: {
             reason: string;
         };
@@ -6215,6 +7311,36 @@ export interface components {
             id: string;
             /** Format: date-time */
             revokedAt: string;
+        };
+        SaleConditionVersionDto: {
+            /** Format: uuid */
+            id: string;
+            code: string;
+            version: number;
+            lessonCount: number;
+            durationDays: number | null;
+            priceBeforeDiscount: string;
+            discount: string;
+            price: string;
+            unitPrice: string;
+            currency: string;
+            /** Format: date-time */
+            validFrom: string;
+            /** Format: date-time */
+            validTo: string | null;
+            /** @enum {string} */
+            status: "ACTIVE" | "SCHEDULED" | "RETIRED";
+            /** Format: uuid */
+            publishedById: string | null;
+            publicationBasis: string | null;
+            /** Format: uuid */
+            retiredById: string | null;
+            retirementBasis: string | null;
+        };
+        SaleConditionVersionsDto: {
+            items: components["schemas"]["SaleConditionVersionDto"][];
+            /** Format: uuid */
+            next: string | null;
         };
         SavedDraftDto: {
             /** Format: uuid */
@@ -6533,6 +7659,12 @@ export interface components {
             reason: string;
         };
         StartLessonRequest: Record<string, never>;
+        StartTeacherMeetOAuthResponseDto: {
+            /** Format: uri */
+            authorizationUrl: string;
+            /** Format: date-time */
+            expiresAt: string;
+        };
         StatusChangeDto: {
             /** @enum {string} */
             action: "DEACTIVATED" | "REACTIVATED";
@@ -7307,6 +8439,40 @@ export interface components {
             items: components["schemas"]["TeacherMaterialDto"][];
             nextCursor: string | null;
         };
+        TeacherMeetConnectionDto: {
+            /** @enum {string} */
+            state: "DISCONNECTED" | "REVOCATION_PENDING" | "CONNECTED";
+            available: boolean;
+        };
+        TeacherMeetOperationDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            kind: "CREATE" | "VERIFY" | "RECONCILE";
+            /** @enum {string} */
+            state: "QUEUED" | "DISPATCHING" | "SUCCEEDED" | "FAILED" | "UNKNOWN" | "RECONCILED" | "CLOSED_WITHOUT_SPACE";
+            /** Format: date-time */
+            queuedAt: string;
+            /** Format: date-time */
+            finishedAt: string | null;
+            diagnosticCode: string | null;
+            /** Format: date-time */
+            retryAt: string | null;
+        };
+        TeacherMeetPairDto: {
+            /** Format: uuid */
+            assignmentId: string;
+            published: components["schemas"]["TeacherMeetSpaceDto"] | null;
+            latestOperation: components["schemas"]["TeacherMeetOperationDto"] | null;
+            /** Format: uuid */
+            unresolvedOperationId: string | null;
+        };
+        TeacherMeetSpaceDto: {
+            /** Format: uri */
+            meetLink: string;
+            /** Format: date-time */
+            lastVerifiedAt: string;
+        };
         TeacherMeResponseDto: {
             actorContext: components["schemas"]["StaffActorContextDto"];
             /** Format: uuid */
@@ -7373,6 +8539,8 @@ export interface components {
             timezone: string;
             totals: components["schemas"]["PayrollTotalDto"][];
             lines: components["schemas"]["PayrollLineDto"][];
+            /** @description Own lessons awaiting a decision, without an estimated amount. */
+            reviewItems?: components["schemas"]["PayrollReviewItemDto"][];
         };
         TeacherProfileDto: {
             /** Format: uuid */
@@ -9067,6 +10235,103 @@ export interface operations {
             };
         };
     };
+    listDirectorAllocationCorrections: {
+        parameters: {
+            query?: {
+                after?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AllocationCorrectionQueueDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reviewAllocationCorrection: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewAllocationCorrectionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AllocationCorrectionSummaryDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     directorApproveDistribution: {
         parameters: {
             query?: never;
@@ -9458,6 +10723,127 @@ export interface operations {
             };
         };
     };
+    getDirectorLessonOutcomeDispute: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonDisputeReviewDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_DISPUTE_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    resolveDirectorLessonOutcomeDispute: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolveLessonDisputeDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LessonDisputeDecisionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_DISPUTE_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description LESSON_DISPUTE_ALREADY_RESOLVED or LESSON_DISPUTE_REPORT_CHANGED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Insufficient or inconsistent evidence */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     listDirectorManagerAvailability: {
         parameters: {
             query?: never;
@@ -9532,6 +10918,186 @@ export interface operations {
             };
             /** @description Data store unavailable */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorMeetInventory: {
+        parameters: {
+            query?: {
+                afterUnresolved?: string;
+                afterSpace?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeetDirectorInventoryDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    closeDirectorUnknownMeetCreation: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeetDecisionInputDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeetDirectorDecisionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    retireDirectorMeetSpace: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeetDecisionInputDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeetDirectorDecisionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9879,7 +11445,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["DirectorEmptyCommandDto"];
+                "application/json": components["schemas"]["CloseFinancialPeriodRequest"];
             };
         };
         responses: {
@@ -9918,7 +11484,7 @@ export interface operations {
                     "application/json": components["schemas"]["ApiError"];
                 };
             };
-            /** @description PERIOD_ALREADY_CLOSED */
+            /** @description PERIOD_ALREADY_CLOSED, PERIOD_DISPUTES_CONFIRMATION_REQUIRED, PERIOD_DISPUTES_CHANGED */
             409: {
                 headers: {
                     [name: string]: unknown;
@@ -9929,6 +11495,103 @@ export interface operations {
             };
             /** @description PERIOD_NOT_FINISHED, PERIOD_HAS_DRAFT_ENTRIES, PERIOD_HAS_UNRESOLVED_FACTS */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorPeriodDisputes: {
+        parameters: {
+            query?: {
+                page?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PeriodDisputesDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PERIOD_NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorRefundCases: {
+        parameters: {
+            query?: {
+                after?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundCasesDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -10057,6 +11720,372 @@ export interface operations {
             };
             /** @description Already decided, stale or not ready */
             409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getDirectorRefund: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundViewDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    decideDirectorRefund: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecideRefundDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundDecisionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reviewDirectorRefundTransfer: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                requestId: string;
+                transferId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewRefundTransferDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundTransferDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    listDirectorSaleConditions: {
+        parameters: {
+            query?: {
+                after?: string;
+                code?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaleConditionVersionsDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    retireDirectorSaleCondition: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RetireSaleConditionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaleConditionVersionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    publishDirectorSaleCondition: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublishSaleConditionDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaleConditionVersionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -10570,6 +12599,43 @@ export interface operations {
             };
         };
     };
+    getAllocationCorrection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AllocationCorrectionDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     approveDistribution: {
         parameters: {
             query?: never;
@@ -10647,6 +12713,66 @@ export interface operations {
             };
             /** @description Unified domain/security error */
             503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    proposeAllocationCorrection: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProposeAllocationCorrectionDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AllocationCorrectionDto"];
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -15486,6 +17612,196 @@ export interface operations {
             };
         };
     };
+    getManagerRefund: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                studentId: string;
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundViewDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    prepareManagerRefund: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrepareRefundDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundDecisionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reportManagerRefundTransfer: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                studentId: string;
+                requestId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReportRefundTransferDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RefundTransferDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     listManagerSubscriptions: {
         parameters: {
             query?: never;
@@ -17052,6 +19368,97 @@ export interface operations {
             };
         };
     };
+    reconcilePayout: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconcilePayoutRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconcilePayoutResponse"];
+                };
+            };
+            /** @description INVALID_INPUT */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN, MFA_REQUIRED */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description NOT_FOUND */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description PAYOUT_ATTEMPT_ALREADY_FINAL, IDEMPOTENCY_KEY_REUSED */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description INVALID_INPUT, INVALID_MONEY, PAYOUT_EXCEEDS_OBLIGATION, CLOSED_PERIOD */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description Command unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     createPayoutAttempt: {
         parameters: {
             query?: never;
@@ -17611,6 +20018,65 @@ export interface operations {
             };
         };
     };
+    submitPublicLead: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                /** @description Same-origin anonymous CSRF token */
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublicLeadSubmissionDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PublicLeadReceiptDto"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     getComponentStatus: {
         parameters: {
             query?: never;
@@ -17627,6 +20093,105 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ComponentStatusResponse"];
                 };
+            };
+        };
+    };
+    replayAuditOutboxEvent: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+                "Idempotency-Key": string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OutboxReplayResponse"];
+                };
+            };
+            /** @description Invalid event identifier or command headers */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Session required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Privileged role, verified MFA and CSRF required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Outbox event not found */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Replay unavailable or already queued */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getQueueHealth: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QueueHealthResponse"];
+                };
+            };
+            /** @description Session required */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Privileged role and verified MFA required */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Queue snapshot unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -18454,21 +21019,19 @@ export interface operations {
                     "application/json": components["schemas"]["ProblemDetails"];
                 };
             };
+            /** @description Staging object changed or upload is no longer pending */
             409: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["ProblemDetails"];
-                };
+                content?: never;
             };
+            /** @description Upload type, size, file contents or malware verdict failed validation */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["ProblemDetails"];
-                };
+                content?: never;
             };
             503: {
                 headers: {
@@ -18630,13 +21193,12 @@ export interface operations {
                     "application/json": components["schemas"]["ProblemDetails"];
                 };
             };
+            /** @description Unsupported upload type */
             422: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["ProblemDetails"];
-                };
+                content?: never;
             };
             503: {
                 headers: {
@@ -21216,6 +23778,207 @@ export interface operations {
             };
         };
     };
+    getTeacherMeetPair: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetPairDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    createTeacherMeetSpace: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetOperationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    reconcileTeacherMeetSpace: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconcileTeacherMeetDto"];
+            };
+        };
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetOperationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    verifyTeacherMeetSpace: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+                "X-CSRF-Token": string;
+            };
+            path: {
+                assignmentId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetOperationDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
     getTeacherAvailability: {
         parameters: {
             query?: {
@@ -22622,6 +25385,196 @@ export interface operations {
                 };
             };
             /** @description Data store unavailable */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    getTeacherMeetConnection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetConnectionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    completeTeacherMeetOAuth: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompleteTeacherMeetOAuthDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetConnectionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    disconnectTeacherMeetOAuth: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TeacherMeetConnectionDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+        };
+    };
+    startTeacherMeetOAuth: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-CSRF-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StartTeacherMeetOAuthResponseDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
+            /** @description FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ApiError"];
+                };
+            };
             503: {
                 headers: {
                     [name: string]: unknown;

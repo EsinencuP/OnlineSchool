@@ -351,12 +351,19 @@ test('no read status mutation from malformed body', async () => {
   expect(me.load).not.toHaveBeenCalled();
 });
 test('notification backlog does not block finance or PDF polling; shutdown drains current delivery', async () => {
-  const processors = Array.from({ length: 3 }, () => ({
+  const [expiry, schedule, drafts, subscriptions, escalation] = Array.from({ length: 5 }, () => ({
     enabled: jest.fn(async () => ({ ok: true, value: 0 })),
   }));
-  const lifecycle = new WorkerLifecycle(...processors, {}, {}, new Map(), {
-    enabled: async () => ({ ok: true, value: 0 }),
-  });
+  const lifecycle = new WorkerLifecycle(
+    expiry,
+    schedule,
+    drafts,
+    {},
+    {},
+    new Map(),
+    subscriptions,
+    escalation,
+  );
   let finish;
   const pending = new Promise((resolve) => {
     finish = resolve;
@@ -365,7 +372,7 @@ test('notification backlog does not block finance or PDF polling; shutdown drain
   lifecycle.pdf = { processDue: jest.fn(async () => 0), stop: jest.fn() };
   await lifecycle.process();
   await lifecycle.process();
-  expect(processors[0].enabled).toHaveBeenCalledTimes(2);
+  expect(expiry.enabled).toHaveBeenCalledTimes(2);
   expect(lifecycle.notifications.processDue).toHaveBeenCalledTimes(1);
   expect(lifecycle.pdf.processDue).toHaveBeenCalled();
   await lifecycle.onModuleDestroy();

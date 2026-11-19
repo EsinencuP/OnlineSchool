@@ -307,10 +307,20 @@ test('lease clock is read after the row lock, so waiting past expiry cannot publ
   expect(state.pdf.ready_at).toBeNull();
 });
 test('long PDF work does not block finance/schedule polling, and shutdown drains it', async () => {
-  const processors = Array.from({ length: 3 }, () => ({
+  const processors = Array.from({ length: 5 }, () => ({
     enabled: jest.fn(async () => ({ ok: true, value: 0 })),
   }));
-  const lifecycle = new WorkerLifecycle(...processors, me, storage, new Map(), { enabled: async () => ({ ok: true, value: 0 }) });
+  const [expiry, schedule, drafts, subscriptions, escalation] = processors;
+  const lifecycle = new WorkerLifecycle(
+    expiry,
+    schedule,
+    drafts,
+    me,
+    storage,
+    new Map(),
+    subscriptions,
+    escalation,
+  );
   let finish;
   const pending = new Promise((resolve) => {
     finish = resolve;
@@ -318,9 +328,49 @@ test('long PDF work does not block finance/schedule polling, and shutdown drains
   lifecycle.pdf = { processDue: jest.fn(() => pending), stop: jest.fn(() => finish(0)) };
   await lifecycle.process();
   await lifecycle.process();
-  expect(processors[0].enabled).toHaveBeenCalledTimes(2);
-  expect(processors[1].enabled).toHaveBeenCalledTimes(2);
+  expect(expiry.enabled).toHaveBeenCalledTimes(2);
+  expect(schedule.enabled).toHaveBeenCalledTimes(2);
+  expect(escalation.enabled).toHaveBeenCalledTimes(2);
   expect(lifecycle.pdf.processDue).toHaveBeenCalledTimes(1);
   await lifecycle.onModuleDestroy();
   expect(lifecycle.pdf.stop).toHaveBeenCalledTimes(1);
+});
+
+test('a failing poll stage leaves subsequent queue and document processors runnable', async () => {
+  const expiry = { enabled: jest.fn(async () => ({ ok: true, value: 0 })) };
+  const schedule = {
+    enabled: jest.fn(async () => {
+      throw new Error('private database diagnostic');
+    }),
+  };
+  const lifecycle = new WorkerLifecycle(
+    expiry,
+    schedule,
+    expiry,
+    me,
+    storage,
+    new Map(),
+    expiry,
+    expiry,
+  );
+  lifecycle.logger.error = jest.fn();
+  lifecycle.outbox = {
+    processDue: jest.fn(async () => {
+      throw new Error('private queue diagnostic');
+    }),
+  };
+  lifecycle.recovery = { processDue: jest.fn(async () => 0) };
+  lifecycle.notifications = { processDue: jest.fn(async () => 0) };
+  lifecycle.pdf = { processDue: jest.fn(async () => 0) };
+
+  await lifecycle.process();
+
+  expect(expiry.enabled).toHaveBeenCalledTimes(4);
+  expect(lifecycle.recovery.processDue).toHaveBeenCalledTimes(1);
+  expect(lifecycle.notifications.processDue).toHaveBeenCalledTimes(1);
+  expect(lifecycle.pdf.processDue).toHaveBeenCalledTimes(1);
+  expect(lifecycle.logger.error.mock.calls).toEqual([
+    ['SCHEDULE_DEADLINE_POLL_FAILED'],
+    ['OUTBOX_POLL_FAILED'],
+  ]);
 });

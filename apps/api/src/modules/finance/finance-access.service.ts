@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { CriticalContext } from '../../core/http.js';
-import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
+import { AppException, domainError, fail, unwrap } from '../../core/errors/domain-error.js';
 import { PolicyService } from '../../core/policy/policy.service.js';
 import { managerPasswordOnlyLogin } from '../../core/session/manager-password-policy.js';
 import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
@@ -48,5 +48,31 @@ export class FinanceAccess {
       await this.student(ctx, receipt.student_id);
     }
     return receipt;
+  }
+
+  async allocationCorrectionScope(ctx: CriticalContext, sourceId: string, targetId: string | null) {
+    await this.staff(ctx);
+    try {
+      const source = await this.distribution(ctx, sourceId);
+      const target = targetId ? (await this.subscription(ctx, targetId)).sub : null;
+      return { source, target };
+    } catch (error) {
+      if (
+        error instanceof AppException &&
+        error.domain.status === 403 &&
+        !ctx.actor.roles.includes('DIRECTOR')
+      ) {
+        return fail(domainError('NOT_FOUND', 404));
+      }
+      return Promise.reject(error);
+    }
+  }
+
+  async distribution(ctx: CriticalContext, id: string) {
+    const row = await ctx.tx.paymentDistribution.findUnique({ where: { id: uuid(id) } });
+    if (!row) return fail(domainError('NOT_FOUND', 404));
+    await this.payment(ctx, row.payment_id);
+    await this.subscription(ctx, row.subscription_id);
+    return row;
   }
 }

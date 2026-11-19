@@ -46,11 +46,15 @@ export async function dbNow(tx: Tx): Promise<Date> {
 
 // Only this boundary rejects to roll back an interactive transaction on a Result failure.
 export class WorkerFailure extends Error {
-  constructor(readonly code: string) {
+  constructor(
+    readonly code: string,
+    readonly retryAfterMs?: number,
+  ) {
     super(code);
   }
 }
-export const rollback = (code: string): Promise<never> => Promise.reject(new WorkerFailure(code));
+export const rollback = (code: string, retryAfterMs?: number): Promise<never> =>
+  Promise.reject(new WorkerFailure(code, retryAfterMs));
 export const safeCode = (error: unknown): string =>
   error instanceof WorkerFailure && /^[A-Z][A-Z0-9_]{0,79}$/.test(error.code)
     ? error.code

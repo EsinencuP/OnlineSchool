@@ -125,11 +125,12 @@ export class StudentHomeworkController {
   @Post(':hwId/upload-url')
   @ApiBody({ type: RequestUploadUrlDto })
   @ApiResponse({ status: 201, type: UploadUrlResponseDto })
+  @ApiResponse({ status: 422, description: 'Unsupported upload type' })
   @ApiOperation({
     operationId: 'requestStudentHomeworkUpload',
     summary: 'Create PENDING file and 15-minute private S3 PUT capability',
     description:
-      'PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.',
+      'PUT the file bytes with the exact declared Content-Type and size. Confirmation accepts the supported document and media types, including a verified format under application/octet-stream. Maximum 50 MiB. A cached result never extends URL expiry.',
   })
   @Mutation(
     'student.homework.upload',
@@ -149,11 +150,19 @@ export class StudentHomeworkController {
   @Post(':hwId/files/:fileId/confirm')
   @ApiParam({ name: 'fileId', type: String, format: 'uuid' })
   @ApiResponse({ status: 200, type: ConfirmUploadResponseDto })
+  @ApiResponse({
+    status: 409,
+    description: 'Staging object changed or upload is no longer pending',
+  })
+  @ApiResponse({
+    status: 422,
+    description: 'Upload type, size, file contents or malware verdict failed validation',
+  })
   @ApiOperation({
     operationId: 'confirmStudentHomeworkUpload',
     summary: 'Verify S3 upload and seal a server-only final object',
     description:
-      'HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.',
+      'Inspect the staging bytes and require a clean malware verdict before copying the verified ETag to the private final key.',
   })
   @Mutation(
     'student.homework.file-confirm',

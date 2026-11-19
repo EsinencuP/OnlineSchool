@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import type { AccountContext } from '../../core/http.js';
+import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 
 const namespace = 'platform-demo-2026-11-01-v1';
 export function demoAccountId(key: string): string {
@@ -76,18 +77,17 @@ export const demoAccounts = [
 ] as const;
 
 // Existing owner-provisioned synthetic staff may enter the same demo school.
-const legacyLogins = new Set([
-  'manager@onlineschool.test',
-  'qa.director@onlineschool.test',
-  'qa.teacher@onlineschool.test',
-  'qa.tech@onlineschool.test',
+const legacyLogins = new Map([
+  ['manager@onlineschool.test', 'MANAGER'],
+  ['qa.director@onlineschool.test', 'DIRECTOR'],
+  ['qa.teacher@onlineschool.test', 'TEACHER'],
+  ['qa.tech@onlineschool.test', 'TECH_OPERATOR'],
 ]);
 export function demoSwitchAllowed(actor: AccountContext | undefined, login: string): boolean {
   return (
     process.env.PLATFORM_DEMO_SWITCHING === 'true' &&
-    process.env.QA_PASSWORD_ONLY_LOGIN === 'true' &&
     !!actor &&
-    !actor.recoveryOnly &&
+    qaPasswordOnlyLogin(actor) &&
     (demoAccounts.some(
       (a) =>
         a.login === login &&
@@ -95,6 +95,6 @@ export function demoSwitchAllowed(actor: AccountContext | undefined, login: stri
         actor.roles.length === 1 &&
         actor.role === a.role,
     ) ||
-      (legacyLogins.has(login) && actor.kind !== 'STUDENT'))
+      legacyLogins.get(login) === actor.roles[0])
   );
 }

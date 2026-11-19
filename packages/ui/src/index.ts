@@ -16,6 +16,7 @@ export {
   formatDateTime,
   formatRelativeTime,
   formatTime,
+  localDateTimeToIso,
 } from './format.js';
 export * from './money-format.js';
 export * from './controls.js';

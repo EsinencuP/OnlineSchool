@@ -6,7 +6,7 @@ import { DatabaseService } from '../../core/database/database.module.js';
 import { AppException, domainError } from '../../core/errors/domain-error.js';
 import type { DomainError } from '../../core/errors/domain-error.js';
 import type { AccountContext } from '../../core/http.js';
-import { MEET_LINK_REGEX } from '../schedule/meet-link.js';
+import { effectiveMeetLink, readPublishedMeetLinks } from '../schedule/meet-link.js';
 import type { TeacherContext } from './context/teacher-context.js';
 import type { TeacherMeResponseDto, TeacherTodayResponseDto } from './dto/teacher.dto.js';
 
@@ -96,14 +96,20 @@ export class TeacherService {
           },
         },
       });
+      const meetLinks = await readPublishedMeetLinks(
+        this.db.client,
+        rows.filter((row) => !row.meet_link_overridden).map((row) => row.id),
+      );
       return ok({
         date: day,
         timezone,
         asOf: now.toISOString(),
         lessons: rows.map((l) => {
-          const link = l.meet_link_overridden
-            ? l.google_meet_link
-            : l.teaching_assignment_ref.google_meet_link;
+          const link = effectiveMeetLink(
+            l.meet_link_overridden,
+            l.google_meet_link,
+            meetLinks.get(l.id) ?? l.teaching_assignment_ref.google_meet_link,
+          );
           const student = l.enrollment_ref.student_ref;
           return {
             lessonId: l.id,
@@ -116,8 +122,7 @@ export class TeacherService {
             subjectCode: l.enrollment_ref.subject_ref.code,
             subjectName: l.enrollment_ref.subject_ref.name,
             joinOpensAt: new Date(+l.scheduled_at - JOIN_OPENS_MS).toISOString(),
-            meetLinkState:
-              link && MEET_LINK_REGEX.test(link) ? ('PRESENT' as const) : ('MISSING' as const),
+            meetLinkState: link ? ('PRESENT' as const) : ('MISSING' as const),
             outcomeRecorded: l.t03_lessonactualoutcome_lesson_occurrence_id !== null,
           };
         }),

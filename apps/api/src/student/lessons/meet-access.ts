@@ -1,4 +1,9 @@
 import { Prisma } from '@online-school/db';
+import {
+  directorAdmissionWindowSql,
+  lessonSubscriptionWindowSql,
+} from '../../modules/finance/lesson-access.sql.js';
+import { effectiveLessonMeetLinkSql } from '../../modules/schedule/meet-link.js';
 import type { IStudentContext } from '../student-context.interface.js';
 import type { StudentLessonStatus } from './lessons.dto.js';
 
@@ -46,8 +51,7 @@ export function studentMeetLinkSql(time: Date): Prisma.Sql {
     AND (e.valid_to IS NULL OR e.valid_to>${time}) AND a.valid_from<=${time}
     AND (a.valid_to IS NULL OR a.valid_to>${time}) AND EXISTS(
       SELECT 1 FROM subscriptions sub WHERE sub.enrollment_id=e.id
-        AND sub.valid_from<=${time} AND (sub.valid_to IS NULL OR sub.valid_to>${time})
-        AND NOT coalesce(sub.frozen_from<=${time} AND sub.frozen_until>${time},false)
+        AND ${lessonSubscriptionWindowSql(time)}
         AND ((t03_paid_at(sub.id,${time})>=sub.full_price AND EXISTS(
           SELECT 1 FROM entitlement_grants g WHERE g.subscription_id=sub.id AND g.granted_at<=${time}
             AND g.quantity+coalesce((SELECT sum(adj.delta_quantity) FROM entitlement_adjustments adj WHERE adj.grant_id=g.id AND adj.effective_at<=${time}),0)
@@ -55,8 +59,7 @@ export function studentMeetLinkSql(time: Date): Prisma.Sql {
                 AND (c.cancelled_at IS NULL OR c.cancelled_at>${time})),0)>0))
           OR (t03_paid_at(sub.id,${time})<sub.full_price AND EXISTS(
             SELECT 1 FROM temporary_access_permissions p WHERE p.subscription_id=sub.id
-              AND p.approved_at<=${time} AND p.valid_from<=${time} AND p.valid_to>${time}
-              AND (p.revoked_at IS NULL OR p.revoked_at>${time})
-              AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${time})<p.max_lessons))))
-    THEN CASE WHEN l.meet_link_overridden THEN l.google_meet_link ELSE a.google_meet_link END ELSE NULL END`;
+              AND ${directorAdmissionWindowSql(time)}
+              AND t03_admission_slots_used(p.id,l.id,${time})<p.max_lessons))))
+    THEN ${effectiveLessonMeetLinkSql()} ELSE NULL END`;
 }

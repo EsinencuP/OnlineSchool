@@ -22,10 +22,16 @@ import { TeacherPayrollService } from './teacher-payroll.service.js';
 import { TeacherSkillsController } from './teacher-skills.controller.js';
 import { TeacherSkillsService } from './teacher-skills.service.js';
 import { TeacherService } from './teacher.service.js';
+import { TeacherMeetOAuthController } from './teacher-meet-oauth.controller.js';
+import { TeacherMeetOAuthService } from './teacher-meet-oauth.service.js';
+import { TeacherMeetOperationsController } from './teacher-meet-operations.controller.js';
+import { TeacherMeetOperationsService } from './teacher-meet-operations.service.js';
 
 @Module({
   imports: [CoreModule, StorageModule],
   controllers: [
+    TeacherMeetOAuthController,
+    TeacherMeetOperationsController,
     TeacherController,
     TeacherHomeworkController,
     TeacherSkillsController,
@@ -37,6 +43,8 @@ import { TeacherService } from './teacher.service.js';
     TeacherProfileController,
   ],
   providers: [
+    TeacherMeetOAuthService,
+    TeacherMeetOperationsService,
     TeacherService,
     TeacherJournalService,
     TeacherAvailabilityService,

@@ -127,8 +127,12 @@ export async function managerPaymentsFixture(extension = {}) {
         if (
           sql.includes('SELECT id,closed_at FROM financial_periods') ||
           sql.includes('SELECT closed_at FROM financial_periods')
-        )
+        ) {
+          const archived = s().closedLessonPeriod;
+          if (archived && params[0] instanceof Date && +params[0] === +archived.scheduledAt)
+            return [{ id: archived.id, closed_at: archived.closedAt }];
           return [{ id: s().periodId, closed_at: s().closedPeriod ? s().now : null }];
+        }
         if (sql.includes('sum(amount) FILTER')) {
           const rows = s().lines.filter((l) => l.entry_id === params[0]);
           return [...new Set(rows.map((l) => l.currency))].map((currency) => ({

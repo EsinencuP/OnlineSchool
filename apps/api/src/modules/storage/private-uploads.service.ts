@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { OnModuleDestroy } from '@nestjs/common';
+import { addAbortSignal, Readable } from 'node:stream';
 import {
   CopyObjectCommand,
   DeleteObjectCommand,
@@ -7,14 +8,20 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   S3Client,
+  S3ServiceException,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { AppException, domainError, fail } from '../../core/errors/domain-error.js';
+import { UUID } from '../../core/http.js';
+import { matchesUploadFormat, supportsUploadMime } from './upload-format.js';
+import { UploadMalwareScanner } from './upload-malware-scanner.js';
 
 export const UPLOAD_TTL_SECONDS = 900;
 export const READ_TTL_SECONDS = 900;
 export const PDF_READ_TTL_SECONDS = 3600;
 export const MAX_HOMEWORK_FILE_BYTES = 52428800;
+const INSPECTION_TIMEOUT_MS = 10_000;
+const MAX_SIMULTANEOUS_INSPECTIONS = 2;
 export interface PrivateUpload {
   bucket: string;
   key: string;
@@ -32,9 +39,18 @@ export interface PrivateRead {
   expiresIn: number;
 }
 
+export interface UploadCleanupTarget {
+  bucket: string;
+  fileId: string;
+  scope: 'homework' | 'materials';
+  mode: 'STAGING_ONLY' | 'ABANDONED';
+}
+
 @Injectable()
 export class PrivateUploads implements OnModuleDestroy {
   private connection: S3Client | undefined;
+  private inspections = 0;
+  private readonly malwareScanner = new UploadMalwareScanner();
   onModuleDestroy(): void {
     this.connection?.destroy();
   }
@@ -127,15 +143,51 @@ export class PrivateUploads implements OnModuleDestroy {
     }
   }
   async confirm(input: PrivateUpload): Promise<void> {
+    if (!supportsUploadMime(input.mimeType))
+      return fail(domainError('UPLOAD_TYPE_UNSUPPORTED', 422));
+    if (!Number.isSafeInteger(input.size) || input.size < 1 || input.size > MAX_HOMEWORK_FILE_BYTES)
+      return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
+    if (this.inspections >= MAX_SIMULTANEOUS_INSPECTIONS)
+      return fail(domainError('STORAGE_INSPECTION_BUSY', 503));
+
+    this.inspections++;
+    const signal = AbortSignal.timeout(INSPECTION_TIMEOUT_MS);
+    const options = { abortSignal: signal };
     try {
       const client = this.client();
       const head = await client.send(
         new HeadObjectCommand({ Bucket: input.bucket, Key: input.stagingKey }),
+        options,
       );
       if (head.ContentLength !== input.size || head.ContentType !== input.mimeType || !head.ETag)
         return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
+      const staged = await client.send(
+        new GetObjectCommand({
+          Bucket: input.bucket,
+          Key: input.stagingKey,
+          IfMatch: head.ETag,
+        }),
+        options,
+      );
+      if (!(staged.Body instanceof Readable))
+        return fail(domainError('PRIVATE_STORAGE_UNAVAILABLE', 503));
+      const stream = addAbortSignal(signal, staged.Body);
+      try {
+        if (staged.ETag !== head.ETag) return fail(domainError('UPLOAD_OBJECT_CHANGED', 409));
+        if (staged.ContentLength !== input.size || staged.ContentType !== input.mimeType)
+          return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
+        const bytes = await this.readExact(stream, input.size);
+        if (!(await matchesUploadFormat(bytes, input.mimeType, signal)))
+          return fail(domainError('UPLOAD_CONTENT_MISMATCH', 422));
+        const scan = await this.malwareScanner.scan(bytes, signal);
+        if (scan === 'REJECTED') return fail(domainError('UPLOAD_SCAN_REJECTED', 422));
+        if (scan === 'NOT_CONFIGURED') return fail(domainError('UPLOAD_SCAN_NOT_CONFIGURED', 503));
+        if (scan !== 'CLEAN') return fail(domainError('UPLOAD_SCAN_UNAVAILABLE', 503));
+      } finally {
+        stream.destroy();
+      }
       // PUT URLs grant access only to staging. A verified final object is never writable by that URL.
-      // Conditional server-side copy also rejects a replacement between HEAD and COPY.
+      // COPY uses the same ETag as the inspected GET.
       await client.send(
         new CopyObjectCommand({
           Bucket: input.bucket,
@@ -149,15 +201,33 @@ export class PrivateUploads implements OnModuleDestroy {
           ContentDisposition: 'attachment',
           CacheControl: 'private, no-store',
         }),
+        options,
       );
       const final = await client.send(
         new HeadObjectCommand({ Bucket: input.bucket, Key: input.key }),
+        options,
       );
       if (final.ContentLength !== input.size || final.ContentType !== input.mimeType)
         return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
     } catch (error) {
+      if (error instanceof S3ServiceException && error.$metadata.httpStatusCode === 412)
+        return fail(domainError('UPLOAD_OBJECT_CHANGED', 409));
       return this.unavailable(error);
+    } finally {
+      this.inspections--;
     }
+  }
+
+  private async readExact(stream: Readable, size: number): Promise<Buffer> {
+    const bytes = Buffer.alloc(size);
+    let offset = 0;
+    for await (const chunk of stream as AsyncIterable<Uint8Array>) {
+      if (offset + chunk.length > size) return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
+      bytes.set(chunk, offset);
+      offset += chunk.length;
+    }
+    if (offset !== size) return fail(domainError('UPLOAD_METADATA_MISMATCH', 422));
+    return bytes;
   }
   async putPdf(
     bucket: string,
@@ -229,6 +299,33 @@ export class PrivateUploads implements OnModuleDestroy {
       return fail(domainError('PDF_OBJECT_INVALID', 422));
     try {
       await this.client().send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
+    } catch (error) {
+      return this.unavailable(error);
+    }
+  }
+
+  async deleteExpiredUpload(target: UploadCleanupTarget): Promise<void> {
+    if (
+      target.bucket !== this.bucket() ||
+      !UUID.test(target.fileId) ||
+      (target.scope !== 'homework' && target.scope !== 'materials') ||
+      (target.mode !== 'STAGING_ONLY' && target.mode !== 'ABANDONED')
+    )
+      return fail(domainError('UPLOAD_CLEANUP_TARGET_INVALID', 422));
+    const { bucket: Bucket, scope, fileId, mode } = target;
+    const options = { abortSignal: AbortSignal.timeout(6000) };
+    try {
+      const client = this.client();
+      await client.send(
+        new DeleteObjectCommand({ Bucket, Key: `${scope}/incoming/${fileId}` }),
+        options,
+      );
+      if (mode === 'ABANDONED') {
+        await client.send(
+          new DeleteObjectCommand({ Bucket, Key: `${scope}/final/${fileId}` }),
+          options,
+        );
+      }
     } catch (error) {
       return this.unavailable(error);
     }

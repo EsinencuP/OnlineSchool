@@ -2,6 +2,7 @@ import '../../apps/api/node_modules/reflect-metadata/Reflect.js';
 import { beforeEach, afterEach, expect, jest, test } from '@jest/globals';
 import { createRequire } from 'node:module';
 import { randomUUID } from 'node:crypto';
+import { Readable } from 'node:stream';
 import {
   StudentHomeworkService,
   DRAFT_TTL_MS,
@@ -10,8 +11,10 @@ import {
 import { HomeworkQueryPipe } from '../../apps/api/dist/student/homework/homework.dto.js';
 import { HomeworkDraftExpiry } from '../../apps/api/dist/student/homework/draft-expiry.module.js';
 import { PrivateUploads } from '../../apps/api/dist/modules/storage/private-uploads.service.js';
+import { matchesUploadFormat } from '../../apps/api/dist/modules/storage/upload-format.js';
+import { UploadMalwareScanner } from '../../apps/api/dist/modules/storage/upload-malware-scanner.js';
 const requireApi = createRequire(new URL('../../apps/api/package.json', import.meta.url));
-const { S3Client } = requireApi('@aws-sdk/client-s3');
+const { S3Client, S3ServiceException } = requireApi('@aws-sdk/client-s3');
 const student = {
   userId: randomUUID(),
   studentProfileId: randomUUID(),
@@ -340,7 +343,7 @@ test('real AWS signer fixes 15-minute expiry and signs size + content type witho
     }
   }
 });
-test('HEAD checks actual bytes; conditional COPY seals final key and never exposes provider error details', async () => {
+test('verification reads a fixed object before sealing it and rejects mismatches before COPY', async () => {
   const before = Object.fromEntries(envNames.map((k) => [k, process.env[k]]));
   Object.assign(process.env, {
     S3_ENDPOINT: 'https://storage.example.invalid',
@@ -348,11 +351,19 @@ test('HEAD checks actual bytes; conditional COPY seals final key and never expos
     S3_ACCESS_KEY: 'test-key',
     S3_SECRET_KEY: 'test-secret',
   });
+  const head = { ContentLength: 8, ContentType: 'text/plain', ETag: '"etag"' };
+  const read = (contents, etag = head.ETag) => ({
+    ...head,
+    ETag: etag,
+    Body: Readable.from([contents]),
+  });
+  const scan = jest.spyOn(UploadMalwareScanner.prototype, 'scan').mockResolvedValue('CLEAN');
   const send = jest
     .spyOn(S3Client.prototype, 'send')
-    .mockResolvedValueOnce({ ContentLength: 8, ContentType: 'text/plain', ETag: '"etag"' })
+    .mockResolvedValueOnce(head)
+    .mockResolvedValueOnce(read(Buffer.from('answer!\n')))
     .mockResolvedValueOnce({})
-    .mockResolvedValueOnce({ ContentLength: 8, ContentType: 'text/plain' });
+    .mockResolvedValueOnce(head);
   const input = {
     bucket: 'online-school-files',
     key: 'final/one',
@@ -363,20 +374,101 @@ test('HEAD checks actual bytes; conditional COPY seals final key and never expos
   };
   try {
     await new PrivateUploads().confirm(input);
-    expect(send.mock.calls[1][0].input).toMatchObject({
+    expect(scan).toHaveBeenCalledWith(Buffer.from('answer!\n'), send.mock.calls[0][1].abortSignal);
+    expect(send.mock.calls[1][0].input).toMatchObject({ Key: 'incoming/one', IfMatch: '"etag"' });
+    expect(send.mock.calls[2][0].input).toMatchObject({
       Key: 'final/one',
       CopySourceIfMatch: '"etag"',
       ContentDisposition: 'attachment',
     });
+    expect(
+      send.mock.calls.every(
+        ([, options]) => options.abortSignal === send.mock.calls[0][1].abortSignal,
+      ),
+    ).toBe(true);
     send.mockReset().mockResolvedValue({ ContentLength: 9, ContentType: 'text/plain' });
     await expectCode(new PrivateUploads().confirm(input), 'UPLOAD_METADATA_MISMATCH');
     expect(send).toHaveBeenCalledTimes(1);
+
+    send
+      .mockReset()
+      .mockResolvedValueOnce(head)
+      .mockResolvedValueOnce(read(Buffer.from('short')));
+    await expectCode(new PrivateUploads().confirm(input), 'UPLOAD_METADATA_MISMATCH');
+    expect(send).toHaveBeenCalledTimes(2);
+
+    send
+      .mockReset()
+      .mockResolvedValueOnce(head)
+      .mockResolvedValueOnce(read(Buffer.from('<html>ok')));
+    await expectCode(new PrivateUploads().confirm(input), 'UPLOAD_CONTENT_MISMATCH');
+    expect(send).toHaveBeenCalledTimes(2);
+
+    for (const [verdict, code] of [
+      ['REJECTED', 'UPLOAD_SCAN_REJECTED'],
+      ['UNAVAILABLE', 'UPLOAD_SCAN_UNAVAILABLE'],
+      ['NOT_CONFIGURED', 'UPLOAD_SCAN_NOT_CONFIGURED'],
+    ]) {
+      scan.mockResolvedValueOnce(verdict);
+      send
+        .mockReset()
+        .mockResolvedValueOnce(head)
+        .mockResolvedValueOnce(read(Buffer.from('answer!\n')));
+      await expectCode(new PrivateUploads().confirm(input), code);
+      expect(send).toHaveBeenCalledTimes(2);
+    }
+
+    send
+      .mockReset()
+      .mockResolvedValueOnce(head)
+      .mockResolvedValueOnce(read(Buffer.from('answer!\n'), '"changed"'));
+    await expectCode(new PrivateUploads().confirm(input), 'UPLOAD_OBJECT_CHANGED');
+    expect(send).toHaveBeenCalledTimes(2);
+
+    send
+      .mockReset()
+      .mockResolvedValueOnce(head)
+      .mockResolvedValueOnce(read(Buffer.from('answer!\n')))
+      .mockRejectedValueOnce(
+        new S3ServiceException({
+          name: 'PreconditionFailed',
+          $fault: 'client',
+          $metadata: { httpStatusCode: 412 },
+        }),
+      );
+    await expectCode(new PrivateUploads().confirm(input), 'UPLOAD_OBJECT_CHANGED');
+    expect(send).toHaveBeenCalledTimes(3);
+
     send.mockReset().mockRejectedValue(Error('secret signed credential'));
     await expectCode(new PrivateUploads().confirm(input), 'PRIVATE_STORAGE_UNAVAILABLE');
+
+    send.mockReset();
+    await expectCode(
+      new PrivateUploads().confirm({ ...input, mimeType: 'text/html' }),
+      'UPLOAD_TYPE_UNSUPPORTED',
+    );
+    expect(send).not.toHaveBeenCalled();
   } finally {
+    scan.mockRestore();
+    send.mockRestore();
     for (const [k, v] of Object.entries(before)) {
       if (v === undefined) delete process.env[k];
       else process.env[k] = v;
     }
   }
+});
+
+test('format checks support documents and text while rejecting wrong types and invalid text', async () => {
+  const check = (bytes, type) => matchesUploadFormat(bytes, type, AbortSignal.timeout(1000));
+  const document = Buffer.from('%PDF-1.7\n1 0 obj\n<< /Type /Catalog >>\nendobj\n%%EOF\n');
+  await expect(check(document, 'application/pdf')).resolves.toBe(true);
+  await expect(check(document, 'application/octet-stream')).resolves.toBe(true);
+  await expect(check(document, 'image/png')).resolves.toBe(false);
+  await expect(check(Buffer.from('Ответ на задание\n'), 'text/plain')).resolves.toBe(true);
+  await expect(
+    check(Buffer.from(' '.repeat(65_535) + '<html>Lesson sample</html>'), 'text/plain'),
+  ).resolves.toBe(false);
+  await expect(
+    check(Buffer.from([0xff, 0xfe, 0x10, 0x00]), 'application/octet-stream'),
+  ).resolves.toBe(false);
 });

@@ -217,7 +217,9 @@ test('one SELECT binds actor and profile, only started periods, confirmed quanti
   expect(sql.text).toContain('p.approved_at>=epoch.latest');
   expect(sql.text).toContain('p.valid_to>(SELECT as_of FROM snapshot)');
   expect(sql.text).toContain('p.revoked_at IS NULL OR p.revoked_at>');
-  expect(sql.text).toContain('coalesce(u.used,0)<p.max_lessons');
+  expect(sql.text).toContain('t03_admission_slots_used(p.id,NULL,');
+  expect(sql.text).toContain('u.used<p.max_lessons');
+  expect(sql.text).toContain('FROM lesson_admission_starts admission');
   expect(sql.text).not.toMatch(/\b(INSERT|UPDATE|DELETE|FOR UPDATE|FOR SHARE)\b/i);
 });
 

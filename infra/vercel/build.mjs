@@ -1,7 +1,7 @@
 // Runs inside the existing Vercel project's protected production build environment.
 // No credentials are sent to GitHub, command arguments, generated files or build logs.
 import { spawnSync } from 'node:child_process';
-import { cpSync } from 'node:fs';
+import { checkReleaseMigrations, parseDatabaseTarget } from './migration-preflight.mjs';
 
 function run(args, env = process.env, quiet = false) {
   const result = spawnSync('pnpm', args, {
@@ -17,6 +17,13 @@ function run(args, env = process.env, quiet = false) {
   }
 }
 
+async function checkMigrations(direct, expectCurrent) {
+  const result = await checkReleaseMigrations(direct, expectCurrent);
+  console.log(JSON.stringify(result));
+  if (result.status === 'BLOCKED')
+    throw new Error('Working database migration history check failed');
+}
+
 if (process.env.VERCEL_ENV !== 'production') {
   throw new Error('Only the single working production target is configured; previews are disabled');
 }
@@ -26,16 +33,16 @@ if (process.env.VERCEL_GIT_COMMIT_REF !== 'main') {
 const direct = process.env.DIRECT_DATABASE_URL;
 if (!direct || !process.env.DATABASE_URL)
   throw new Error('Deployment database configuration missing');
-const migration = new URL(direct);
-const runtime = new URL(process.env.DATABASE_URL);
+const migration = parseDatabaseTarget(direct);
+const runtime = parseDatabaseTarget(process.env.DATABASE_URL);
 if (
-  !['postgres:', 'postgresql:'].includes(migration.protocol) ||
+  !migration ||
+  !runtime ||
   migration.hostname.includes('-pooler.') ||
-  migration.pathname !== runtime.pathname ||
+  migration.database !== runtime.database ||
   migration.hostname !== runtime.hostname.replace('-pooler.', '.') ||
-  migration.username === runtime.username ||
-  !migration.password ||
-  !runtime.password
+  migration.port !== runtime.port ||
+  migration.username === runtime.username
 )
   throw new Error(
     'Direct migration and pooled runtime must target the same database with separate roles',
@@ -46,11 +53,8 @@ const buildEnv = { ...process.env };
 delete buildEnv.DIRECT_DATABASE_URL;
 delete buildEnv.DIRECT_URL;
 run(['--filter', '@online-school/api', 'build'], buildEnv);
+await checkMigrations(direct, false);
 run(['--filter', '@online-school/platform', 'build'], buildEnv);
-run(['--filter', '@online-school/student-cabinet', 'build'], buildEnv);
-cpSync('apps/student-cabinet/dist', 'apps/platform/dist/student', { recursive: true });
-run(['--filter', '@online-school/manager-web', 'build'], buildEnv);
-cpSync('apps/manager-web/dist', 'apps/platform/dist/manager', { recursive: true });
 run(
   ['--filter', '@online-school/db', 'exec', 'prisma', 'migrate', 'deploy'],
   {
@@ -59,6 +63,7 @@ run(
   },
   true,
 );
+await checkMigrations(direct, true);
 console.log('Working database migrations applied; deployment may be published');
 if (process.env.PLATFORM_DEMO_SETUP_UNTIL) {
   run(['exec', 'node', 'scripts/provision-platform-demo.mjs'], { ...buildEnv, DIRECT_URL: direct });

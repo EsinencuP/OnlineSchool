@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuditModule } from '../../core/audit/audit.service.js';
 import { DatabaseModule } from '../../core/database/database.module.js';
 import { PolicyModule } from '../../core/policy/policy.service.js';
+import { TransactionModule } from '../../core/transaction/transaction.service.js';
+import { RefundsService } from './refunds/refunds.service.js';
 import {
   ContextualLedgerPublicationPolicy,
   LedgerPublicationPolicy,
@@ -18,8 +20,9 @@ import { ManagerLessonRights } from './manager-payments/lesson-rights.service.js
 import { DisputeFinanceService } from './manager-disputes/dispute.service.js';
 // Shared domain providers have explicit dependencies and no HTTP controllers.
 @Module({
-  imports: [DatabaseModule, AuditModule, PolicyModule],
+  imports: [DatabaseModule, AuditModule, PolicyModule, TransactionModule],
   providers: [
+    RefundsService,
     DisputeFinanceService,
     EntitlementsService,
     ManagerLessonRights,
@@ -33,6 +36,7 @@ import { DisputeFinanceService } from './manager-disputes/dispute.service.js';
     ManagerPaymentWorkflow,
   ],
   exports: [
+    RefundsService,
     DisputeFinanceService,
     LedgerPublicationService,
     FinanceAccess,

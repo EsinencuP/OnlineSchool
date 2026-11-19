@@ -25,17 +25,15 @@ test('generated lead client preserves false filters, scoped cursor and stage CSV
 });
 test('duplicate forwards only its explicitly allowed existingId and never retries mutations', async () => {
   const id = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa',
-    spy = jest
-      .spyOn(globalThis, 'fetch')
-      .mockResolvedValue(
-        new Response(
-          JSON.stringify({
-            code: 'LEAD_DUPLICATE_SUSPECTED',
-            details: { existingId: id, phone: 'private', note: 'private' },
-          }),
-          { status: 409 },
-        ),
-      );
+    spy = jest.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          code: 'LEAD_DUPLICATE_SUSPECTED',
+          details: { existingId: id, phone: 'private', note: 'private' },
+        }),
+        { status: 409 },
+      ),
+    );
   try {
     const r = await createManagerLead(
       {
@@ -55,7 +53,7 @@ test('duplicate forwards only its explicitly allowed existingId and never retrie
     spy.mockRestore();
   }
 });
-test('trial client carries version and command headers; OpenAPI includes all ten endpoints', async () => {
+test('the trial client carries command headers and OpenAPI documents the lead routes', async () => {
   const spy = jest
     .spyOn(globalThis, 'fetch')
     .mockResolvedValue(
@@ -79,7 +77,27 @@ test('trial client carries version and command headers; OpenAPI includes all ten
   const operations = Object.entries(api.paths)
     .filter(([path]) => path.startsWith('/api/v1/manager/leads'))
     .flatMap(([, item]) => Object.values(item).filter((v) => v.operationId));
-  expect(operations).toHaveLength(10);
+  expect(operations.map((operation) => operation.operationId).sort()).toEqual([
+    'claimManagerLead',
+    'createManagerLead',
+    'getManagerLead',
+    'getManagerLeadSummary',
+    'listManagerLeadTeacherCandidates',
+    'listManagerLeads',
+    'loseManagerLead',
+    'reopenManagerLead',
+    'scheduleManagerTrial',
+    'transitionManagerLead',
+    'updateManagerLead',
+  ]);
+  const submit = api.paths['/api/v1/public/leads'].post;
+  expect(submit.operationId).toBe('submitPublicLead');
+  expect(submit.security).toBeUndefined();
+  expect(submit.responses['202']).toBeDefined();
+  for (const header of ['Idempotency-Key', 'X-CSRF-Token'])
+    expect(submit.parameters).toContainEqual(
+      expect.objectContaining({ name: header, in: 'header', required: true }),
+    );
   expect(api.components.schemas.ManagerDashboardDto.properties.leads).toBeTruthy();
   const handlers = createHandlers();
   for (const topic of [

@@ -11,6 +11,7 @@ import { qaSetupInput, provisionQaAccess } from '../../scripts/provision-qa-acce
 
 const previous = {
   qa: process.env.QA_PASSWORD_ONLY_LOGIN,
+  ids: process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS,
   manager: process.env.MANAGER_PASSWORD_ONLY_LOGIN,
   csrf: process.env.CSRF_SIGNING_SECRET,
 };
@@ -28,6 +29,9 @@ beforeEach(async () => {
   process.env.QA_PASSWORD_ONLY_LOGIN = 'true';
   delete process.env.MANAGER_PASSWORD_ONLY_LOGIN;
   await f.reset();
+  process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = [0, 2, 3, 4, 5]
+    .map((index) => f.accounts[index].id)
+    .join(',');
   f.client.student.count = async () => 0;
   for (const account of f.state.auth.values()) account.password_hash = hash;
 });
@@ -35,6 +39,7 @@ afterAll(async () => {
   await f?.app.close();
   for (const [key, value] of [
     ['QA_PASSWORD_ONLY_LOGIN', previous.qa],
+    ['QA_PASSWORD_ONLY_ACCOUNT_IDS', previous.ids],
     ['MANAGER_PASSWORD_ONLY_LOGIN', previous.manager],
     ['CSRF_SIGNING_SECRET', previous.csrf],
   ]) {
@@ -91,9 +96,9 @@ test('wrong password, missing CSRF, recovery sessions and disabling QA mode do n
     .post('/api/v1/auth/session')
     .send({ email: 'qa@example.invalid', password });
   expect(noCsrf.status).toBe(403);
-  expect(qaPasswordOnlyLogin({ kind: 'STAFF', roles: ['DIRECTOR'], recoveryOnly: true })).toBe(
-    false,
-  );
+  const director = { accountId: f.accounts[4].id, kind: 'STAFF', roles: ['DIRECTOR'] };
+  expect(qaPasswordOnlyLogin(director)).toBe(true);
+  expect(qaPasswordOnlyLogin({ ...director, recoveryOnly: true })).toBe(false);
   const signed = await login(0);
   process.env.QA_PASSWORD_ONLY_LOGIN = 'false';
   const blocked = await request(f.app.getHttpServer())
@@ -105,33 +110,61 @@ test('wrong password, missing CSRF, recovery sessions and disabling QA mode do n
     .set('Cookie', jar(signed));
   expect(current.body.password_only).toBeUndefined();
 });
-test.each([
-  ['STAFF', 'DIRECTOR'],
-  ['STAFF', 'MANAGER'],
-  ['STAFF', 'TECH_OPERATOR'],
-  ['TEACHER', 'TEACHER'],
-])('password mode preserves permissions and role boundaries for %s/%s', async (kind, role) => {
-  const metadata = {
-    [ACCESS.authenticated]: true,
-    [ACCESS.mfa]: true,
-    [ACCESS.roles]: ['DIRECTOR', 'MANAGER'],
-    [ACCESS.permissions]: ['payment:register'],
-  };
-  const service = new AccessService(
-    { getAllAndOverride: (key) => metadata[key] },
-    new PolicyService({}),
-  );
-  const context = {
-    getHandler: () => ({}),
-    getClass: () => ({}),
-    switchToHttp: () => ({
-      getRequest: () => ({ method: 'POST', originalUrl: '/api/v1/finance/payments' }),
-    }),
-  };
-  const result = await service.authorize(context, { kind, roles: [role], mfaCompleted: false });
-  expect(result.ok).toBe(['DIRECTOR', 'MANAGER'].includes(role));
-  if (!result.ok) expect(result.error.code).toBe('FORBIDDEN');
+test('the QA flag alone never grants a director MFA exemption', async () => {
+  delete process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS;
+  const signed = await login(4);
+  expect(signed.status).toBe(200);
+  expect(signed.body.password_only).toBeUndefined();
+  const response = await request(f.app.getHttpServer())
+    .get('/api/v1/director/me')
+    .set('Cookie', jar(signed));
+  expect(response.status).toBe(403);
+  expect(response.body.code).toBe('MFA_REQUIRED');
 });
+test('allowlisted password-only director cannot review documentary lesson-dispute evidence', async () => {
+  const signed = await login(4);
+  expect(signed.body.password_only).toBe(true);
+  const response = await request(f.app.getHttpServer())
+    .get(`/api/v1/director/lessons/${f.accounts[4].id}/outcome-dispute`)
+    .set('Cookie', jar(signed));
+  expect(response.status).toBe(403);
+  expect(response.body.code).toBe('MFA_REQUIRED');
+});
+test.each([
+  ['STAFF', 'DIRECTOR', 4],
+  ['STAFF', 'MANAGER', 0],
+  ['STAFF', 'TECH_OPERATOR', 5],
+  ['TEACHER', 'TEACHER', 3],
+])(
+  'password mode preserves permissions and role boundaries for %s/%s',
+  async (kind, role, index) => {
+    const metadata = {
+      [ACCESS.authenticated]: true,
+      [ACCESS.mfa]: true,
+      [ACCESS.roles]: ['DIRECTOR', 'MANAGER'],
+      [ACCESS.permissions]: ['payment:register'],
+    };
+    const service = new AccessService(
+      { getAllAndOverride: (key) => metadata[key] },
+      new PolicyService({}),
+    );
+    const context = {
+      getHandler: () => ({}),
+      getClass: () => ({}),
+      switchToHttp: () => ({
+        getRequest: () => ({ method: 'POST', originalUrl: '/api/v1/finance/payments' }),
+      }),
+    };
+    const result = await service.authorize(context, {
+      accountId: f.accounts[index].id,
+      kind,
+      roles: [role],
+      mfaCompleted: false,
+    });
+    expect(result.ok).toBe(['DIRECTOR', 'MANAGER'].includes(role));
+    if (!result.ok) expect(result.error.code).toBe('FORBIDDEN');
+  },
+);
 test('QA setup accepts only exact project/role/hash set in a short-lived production window', () => {
   const env = {
     VERCEL_ENV: 'production',

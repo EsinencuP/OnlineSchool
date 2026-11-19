@@ -12,11 +12,11 @@ export function studentLedgerBalanceSql(studentId: Prisma.Sql, now: Date): Prism
         WHERE pd.payment_id=d.payment_id AND pe.published_at<=${now} AND pe.effective_at<=${now})
       AND d.subscription_id IN(SELECT id FROM owned_subscriptions)),
   sources AS (
-    SELECT d.id,d.distribution_id,d.consumption_id,d.refund_id FROM ledger_documents d
+    SELECT d.id FROM ledger_documents d
     WHERE d.correction_of_document_id IS NULL AND (d.distribution_id IN(SELECT id FROM owned_distributions)
       OR d.consumption_id IN(SELECT c.id FROM entitlement_consumptions c WHERE c.subscription_id IN(SELECT id FROM owned_subscriptions))
-      OR d.refund_id IN(SELECT r.id FROM refund_records r WHERE r.subscription_id IN(SELECT id FROM owned_subscriptions)))
-    UNION ALL SELECT d.id,p.distribution_id,p.consumption_id,p.refund_id
+      OR coalesce(d.refund_approval_id,d.refund_id) IN(SELECT r.id FROM refund_records r WHERE r.subscription_id IN(SELECT id FROM owned_subscriptions)))
+    UNION ALL SELECT d.id
       FROM ledger_documents d JOIN sources p ON d.correction_of_document_id=p.id
   ), movements AS (
     SELECT l.currency,l.amount,l.direction FROM sources s JOIN ledger_entries e ON e.document_id=s.id

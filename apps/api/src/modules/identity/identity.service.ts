@@ -181,15 +181,12 @@ export class IdentityService {
     recoveryOnly = false,
   ): Promise<unknown> {
     const roles = await this.roles(tx, account.id);
+    const actor = { accountId: account.id, kind: account.kind, roles, recoveryOnly };
     return {
       account: { id: account.id, kind: account.kind, roles },
       mfa_completed: mfa,
-      ...(qaPasswordOnlyLogin({ kind: account.kind, roles, recoveryOnly })
-        ? { password_only: true }
-        : {}),
-      ...(managerPasswordOnlyLogin({ kind: account.kind, roles, recoveryOnly })
-        ? { manager_password_only: true }
-        : {}),
+      ...(qaPasswordOnlyLogin(actor) ? { password_only: true } : {}),
+      ...(managerPasswordOnlyLogin(actor) ? { manager_password_only: true } : {}),
       recovery_only: recoveryOnly,
       expires_at: issued.expiresAt.toISOString(),
       csrfToken: issued.csrfToken,
@@ -299,8 +296,8 @@ export class IdentityService {
       if (
         account.login_id !== target.login ||
         account.kind !== kind ||
-        roles.length !== 1 ||
-        roles[0] !== target.role
+        roles[0] !== target.role ||
+        !qaPasswordOnlyLogin({ accountId: account.id, kind, roles })
       )
         return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
       await this.revoke(

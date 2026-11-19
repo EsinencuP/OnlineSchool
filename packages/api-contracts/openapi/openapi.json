@@ -1837,6 +1837,167 @@
         ]
       }
     },
+    "/api/v1/director/distribution-corrections": {
+      "get": {
+        "operationId": "listDirectorAllocationCorrections",
+        "parameters": [
+          {
+            "name": "after",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationCorrectionQueueDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "List open allocation corrections",
+        "tags": [
+          "Finance"
+        ]
+      }
+    },
+    "/api/v1/director/distribution-corrections/{id}/review": {
+      "post": {
+        "operationId": "reviewAllocationCorrection",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewAllocationCorrectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationCorrectionSummaryDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Decline a proposal or refer it for manual financial settlement",
+        "tags": [
+          "Finance"
+        ]
+      }
+    },
     "/api/v1/director/distributions/{id}/approve": {
       "post": {
         "operationId": "directorApproveDistribution",
@@ -2267,7 +2428,7 @@
             "sessionCookie": []
           }
         ],
-        "summary": "Registry of open financial facts that block closing a period: unaccrued or disputed lessons, open payouts, draft entries",
+        "summary": "Open financial items: unaccrued or disputed lessons, open payouts and draft entries",
         "tags": [
           "director"
         ]
@@ -2463,6 +2624,187 @@
         ]
       }
     },
+    "/api/v1/director/lessons/{id}/outcome-dispute": {
+      "get": {
+        "operationId": "getDirectorLessonOutcomeDispute",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonDisputeReviewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LESSON_DISPUTE_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Review the confirmed disputed report and any later director decision",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/lessons/{id}/outcome-dispute/resolve": {
+      "post": {
+        "operationId": "resolveDirectorLessonOutcomeDispute",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveLessonDisputeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LessonDisputeDecisionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "LESSON_DISPUTE_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "LESSON_DISPUTE_ALREADY_RESOLVED or LESSON_DISPUTE_REPORT_CHANGED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Insufficient or inconsistent evidence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record the evidenced lesson result. Payroll remains a separate decision.",
+        "tags": [
+          "director"
+        ]
+      }
+    },
     "/api/v1/director/managers/availability": {
       "get": {
         "operationId": "listDirectorManagerAvailability",
@@ -2562,6 +2904,298 @@
           }
         ],
         "summary": "Director profile with pending decision counters",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/meet": {
+      "get": {
+        "operationId": "getDirectorMeetInventory",
+        "parameters": [
+          {
+            "name": "afterUnresolved",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "afterSpace",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetDirectorInventoryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read unresolved creation attempts and published pair spaces",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/meet/operations/{id}/close-without-space": {
+      "post": {
+        "operationId": "closeDirectorUnknownMeetCreation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetDecisionInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetDirectorDecisionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record that an external investigation found no created space and allow a new request",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/meet/spaces/{id}/retire": {
+      "post": {
+        "operationId": "retireDirectorMeetSpace",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeetDecisionInputDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeetDirectorDecisionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Retire the future-use link after reviewing the need for replacement",
         "tags": [
           "director"
         ]
@@ -3086,7 +3720,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DirectorEmptyCommandDto"
+                "$ref": "#/components/schemas/CloseFinancialPeriodRequest"
               }
             }
           }
@@ -3133,7 +3767,7 @@
             }
           },
           "409": {
-            "description": "PERIOD_ALREADY_CLOSED",
+            "description": "PERIOD_ALREADY_CLOSED, PERIOD_DISPUTES_CONFIRMATION_REQUIRED, PERIOD_DISPUTES_CHANGED",
             "content": {
               "application/json": {
                 "schema": {
@@ -3158,7 +3792,151 @@
             "sessionCookie": []
           }
         ],
-        "summary": "Close a finished period once nothing blocks it (same rules and audit as the generic period close)",
+        "summary": "Close a finished period with confirmation of any outstanding dispute register",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/periods/{id}/disputes": {
+      "get": {
+        "operationId": "getDirectorPeriodDisputes",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "pattern": "^[1-9][0-9]{0,3}$",
+              "default": "1",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeriodDisputesDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "PERIOD_NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Preview open disputes or read the register preserved at period closure",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/refunds": {
+      "get": {
+        "operationId": "listDirectorRefundCases",
+        "parameters": [
+          {
+            "name": "after",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundCasesDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "List accepted refund requests, decisions and pending transfer reviews",
         "tags": [
           "director"
         ]
@@ -3367,6 +4145,589 @@
           }
         ],
         "summary": "Decline a manager request with a reason the manager sees",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/requests/{requestId}/refund": {
+      "get": {
+        "operationId": "getDirectorRefund",
+        "parameters": [
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundViewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Review the documented refund calculation and transfer evidence",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/requests/{requestId}/refund/decide": {
+      "post": {
+        "operationId": "decideDirectorRefund",
+        "parameters": [
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecideRefundDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundDecisionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Approve the evidenced amount or decline the refund project",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/requests/{requestId}/refund/transfers/{transferId}/review": {
+      "post": {
+        "operationId": "reviewDirectorRefundTransfer",
+        "parameters": [
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transferId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewRefundTransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundTransferDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify or reject a reported external transfer or return",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/sale-conditions": {
+      "get": {
+        "operationId": "listDirectorSaleConditions",
+        "parameters": [
+          {
+            "name": "after",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleConditionVersionsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "List current and historical sale condition versions",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/sale-conditions/{id}/retire": {
+      "post": {
+        "operationId": "retireDirectorSaleCondition",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetireSaleConditionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleConditionVersionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Close a sale condition for new purchases",
+        "tags": [
+          "director"
+        ]
+      }
+    },
+    "/api/v1/director/sale-conditions/publish": {
+      "post": {
+        "operationId": "publishDirectorSaleCondition",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishSaleConditionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaleConditionVersionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, DIRECTOR_INACTIVE, DIRECTOR_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Publish a new sale condition version for future purchases",
         "tags": [
           "director"
         ]
@@ -4200,6 +5561,63 @@
         ]
       }
     },
+    "/api/v1/distribution-corrections/{id}": {
+      "get": {
+        "operationId": "getAllocationCorrection",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationCorrectionDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Review the proposed allocation correction and current financial facts",
+        "tags": [
+          "Finance"
+        ]
+      }
+    },
     "/api/v1/distributions/{id}/approve": {
       "post": {
         "description": "MFA required. DIRECTOR only, confirmed receipt required; recognizes customer advance.",
@@ -4340,6 +5758,110 @@
         "summary": "Approve distribution",
         "tags": [
           "Finance",
+          "Finance"
+        ]
+      }
+    },
+    "/api/v1/distributions/{id}/correction-proposals": {
+      "post": {
+        "operationId": "proposeAllocationCorrection",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposeAllocationCorrectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllocationCorrectionDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record an erroneous allocation and its proposed correction",
+        "tags": [
           "Finance"
         ]
       }
@@ -11780,6 +13302,322 @@
         ]
       }
     },
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund": {
+      "get": {
+        "operationId": "getManagerRefund",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundViewDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read the refund calculation and external transfer register",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund/prepare": {
+      "post": {
+        "operationId": "prepareManagerRefund",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrepareRefundDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundDecisionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Submit the refund calculation for director approval",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
+    "/api/v1/manager/students/{studentId}/requests/{requestId}/refund/transfers": {
+      "post": {
+        "operationId": "reportManagerRefundTransfer",
+        "parameters": [
+          {
+            "name": "studentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "requestId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRefundTransferDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundTransferDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, MANAGER_INACTIVE, MANAGER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Report evidence of an external transfer or return",
+        "tags": [
+          "manager"
+        ]
+      }
+    },
     "/api/v1/manager/students/{studentId}/subscriptions": {
       "get": {
         "operationId": "listManagerSubscriptions",
@@ -14190,6 +16028,142 @@
         ]
       }
     },
+    "/api/v1/payouts/{id}/reconcile": {
+      "post": {
+        "description": "Verified MFA and DIRECTOR only. Resolves a pending or unknown attempt based on external evidence. This command does not initiate a transfer.",
+        "operationId": "reconcilePayout",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconcilePayoutRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReconcilePayoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "INVALID_INPUT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN, MFA_REQUIRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT_FOUND",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "PAYOUT_ATTEMPT_ALREADY_FINAL, IDEMPOTENCY_KEY_REUSED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "INVALID_INPUT, INVALID_MONEY, PAYOUT_EXCEEDS_OBLIGATION, CLOSED_PERIOD",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Command unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Record a verified external payout result",
+        "tags": [
+          "Finance",
+          "Finance"
+        ]
+      }
+    },
     "/api/v1/payouts/attempt": {
       "post": {
         "description": "MFA required. MANAGER/DIRECTOR, assigned student; recognizes an attempt, not a transfer. Pending/UNKNOWN reservations block another attempt.",
@@ -14447,7 +16421,7 @@
     },
     "/api/v1/periods/{id}/close": {
       "post": {
-        "description": "MFA required. DIRECTOR only; past completed period without draft/unresolved financial facts.",
+        "description": "MFA required. DIRECTOR only; verified disputes remain in a separate confirmed register.",
         "operationId": "closeFinancialPeriod",
         "parameters": [
           {
@@ -15000,6 +16974,97 @@
         ]
       }
     },
+    "/api/v1/public/leads": {
+      "post": {
+        "operationId": "submitPublicLead",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "description": "Same-origin anonymous CSRF token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublicLeadSubmissionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicLeadReceiptDto"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Submit a public enquiry into the existing CRM and acknowledge the saved request",
+        "tags": [
+          "PublicLead"
+        ]
+      }
+    },
     "/api/v1/qa/components": {
       "get": {
         "description": "Requires an ordinary MFA staff/teacher session. Worker heartbeat is process liveness, not queue or release readiness.",
@@ -15023,6 +17088,112 @@
           }
         ],
         "summary": "Read actual API/DB/worker liveness",
+        "tags": [
+          "QA diagnostics"
+        ]
+      }
+    },
+    "/api/v1/qa/outbox/{id}/replay": {
+      "post": {
+        "operationId": "replayAuditOutboxEvent",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OutboxReplayResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid event identifier or command headers"
+          },
+          "401": {
+            "description": "Session required"
+          },
+          "403": {
+            "description": "Privileged role, verified MFA and CSRF required"
+          },
+          "404": {
+            "description": "Outbox event not found"
+          },
+          "409": {
+            "description": "Replay unavailable or already queued"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Queue recovery of a failed demo-switch acknowledgement",
+        "tags": [
+          "QA diagnostics"
+        ]
+      }
+    },
+    "/api/v1/qa/queues": {
+      "get": {
+        "description": "Directors and technical operators with verified MFA. Includes aggregate counts and up to 20 failure references.",
+        "operationId": "getQueueHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueueHealthResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required"
+          },
+          "403": {
+            "description": "Privileged role and verified MFA required"
+          },
+          "503": {
+            "description": "Queue snapshot unavailable"
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Inspect outbox lag, job leases and outstanding reconciliation",
         "tags": [
           "QA diagnostics"
         ]
@@ -16251,7 +18422,7 @@
     },
     "/api/v1/student/homework/{hwId}/files/{fileId}/confirm": {
       "post": {
-        "description": "HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.",
+        "description": "Inspect the staging bytes and require a clean malware verdict before copying the verified ETag to the private final key.",
         "operationId": "confirmStudentHomeworkUpload",
         "parameters": [
           {
@@ -16342,24 +18513,10 @@
             }
           },
           "409": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
+            "description": "Staging object changed or upload is no longer pending"
           },
           "422": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
+            "description": "Upload type, size, file contents or malware verdict failed validation"
           },
           "503": {
             "description": "",
@@ -16520,7 +18677,7 @@
     },
     "/api/v1/student/homework/{hwId}/upload-url": {
       "post": {
-        "description": "PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.",
+        "description": "PUT the file bytes with the exact declared Content-Type and size. Confirmation accepts the supported document and media types, including a verified format under application/octet-stream. Maximum 50 MiB. A cached result never extends URL expiry.",
         "operationId": "requestStudentHomeworkUpload",
         "parameters": [
           {
@@ -16622,14 +18779,7 @@
             }
           },
           "422": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
+            "description": "Unsupported upload type"
           },
           "503": {
             "description": "",
@@ -20692,6 +22842,335 @@
         ]
       }
     },
+    "/api/v1/teacher/assignments/{assignmentId}/meet": {
+      "get": {
+        "operationId": "getTeacherMeetPair",
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetPairDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read the Meet space and operation state for an active teaching assignment",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/assignments/{assignmentId}/meet/create": {
+      "post": {
+        "operationId": "createTeacherMeetSpace",
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetOperationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Queue a single Google Meet space creation for the pair",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/assignments/{assignmentId}/meet/reconcile": {
+      "post": {
+        "operationId": "reconcileTeacherMeetSpace",
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconcileTeacherMeetDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetOperationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Verify the teacher-supplied recovery reference for an unresolved creation",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/assignments/{assignmentId}/meet/verify": {
+      "post": {
+        "operationId": "verifyTeacherMeetSpace",
+        "parameters": [
+          {
+            "name": "assignmentId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetOperationDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Queue confirmation of the published Meet resource by name",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
     "/api/v1/teacher/availability": {
       "get": {
         "operationId": "getTeacherAvailability",
@@ -22561,6 +25040,7 @@
     },
     "/api/v1/teacher/materials/{fileId}/confirm": {
       "post": {
+        "description": "Require a clean malware verdict on the staging bytes before copying the verified ETag to the private final key.",
         "operationId": "confirmTeacherMaterialUpload",
         "parameters": [
           {
@@ -22948,6 +25428,271 @@
           }
         ],
         "summary": "Current teacher profile",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/meet/oauth": {
+      "get": {
+        "operationId": "getTeacherMeetConnection",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetConnectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Read the connection state for the signed-in teacher",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/meet/oauth/complete": {
+      "post": {
+        "operationId": "completeTeacherMeetOAuth",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteTeacherMeetOAuthDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetConnectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Complete consent once using the originating teacher session",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/meet/oauth/disconnect": {
+      "post": {
+        "operationId": "disconnectTeacherMeetOAuth",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TeacherMeetConnectionDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Disable the connection locally and request Google token revocation",
+        "tags": [
+          "teacher"
+        ]
+      }
+    },
+    "/api/v1/teacher/meet/oauth/start": {
+      "post": {
+        "operationId": "startTeacherMeetOAuth",
+        "parameters": [
+          {
+            "name": "X-CSRF-Token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StartTeacherMeetOAuthResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UNAUTHENTICATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "FORBIDDEN_ROLE, TEACHER_INACTIVE, TEACHER_PROFILE_NOT_FOUND or core security denial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "summary": "Start the teacher Google consent flow",
         "tags": [
           "teacher"
         ]
@@ -24165,6 +26910,264 @@
         ],
         "additionalProperties": false
       },
+      "AllocationCorrectionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceDistributionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "targetSubscriptionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "REJECTED",
+              "MANUAL_REVIEW"
+            ]
+          },
+          "amount": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "proposedById": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "proposedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decidedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "decidedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "decisionReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "facts": {
+            "$ref": "#/components/schemas/AllocationCorrectionFactsDto"
+          }
+        },
+        "required": [
+          "id",
+          "sourceDistributionId",
+          "targetSubscriptionId",
+          "status",
+          "amount",
+          "reason",
+          "proposedById",
+          "proposedAt",
+          "decidedById",
+          "decidedAt",
+          "decisionReason",
+          "facts"
+        ]
+      },
+      "AllocationCorrectionFactsDto": {
+        "type": "object",
+        "properties": {
+          "receiptId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceSubscriptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceEntryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "originPeriodId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "originalAmount": {
+            "type": "string"
+          },
+          "receiptAmount": {
+            "type": "string"
+          },
+          "receiptUnallocated": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Visible to the director."
+          },
+          "sourceAdvanceBalance": {
+            "type": "string"
+          },
+          "targetAvailableAmount": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceGrantedLessons": {
+            "type": "number"
+          },
+          "sourceUsedLessons": {
+            "type": "number"
+          },
+          "sourceStartedLessons": {
+            "type": "number"
+          },
+          "reviewReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "asOf": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "receiptId",
+          "sourceSubscriptionId",
+          "sourceEntryId",
+          "originPeriodId",
+          "currency",
+          "originalAmount",
+          "receiptAmount",
+          "receiptUnallocated",
+          "sourceAdvanceBalance",
+          "targetAvailableAmount",
+          "sourceGrantedLessons",
+          "sourceUsedLessons",
+          "sourceStartedLessons",
+          "reviewReasons",
+          "asOf"
+        ]
+      },
+      "AllocationCorrectionQueueDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AllocationCorrectionSummaryDto"
+            }
+          },
+          "nextCursor": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items",
+          "nextCursor"
+        ]
+      },
+      "AllocationCorrectionSummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceDistributionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "targetSubscriptionId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "REJECTED",
+              "MANUAL_REVIEW"
+            ]
+          },
+          "amount": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "proposedById": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "proposedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decidedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "decidedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "decisionReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "sourceDistributionId",
+          "targetSubscriptionId",
+          "status",
+          "amount",
+          "reason",
+          "proposedById",
+          "proposedAt",
+          "decidedById",
+          "decidedAt",
+          "decisionReason"
+        ]
+      },
       "ApiError": {
         "type": "object",
         "properties": {
@@ -24463,7 +27466,13 @@
       },
       "CloseFinancialPeriodRequest": {
         "type": "object",
-        "properties": {},
+        "properties": {
+          "disputesRevision": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "Revision from the director dispute register preview. Required if cases remain open."
+          }
+        },
         "additionalProperties": false
       },
       "CompleteCheckpointDto": {
@@ -24504,6 +27513,21 @@
           "id",
           "completedAt",
           "snapshotId"
+        ]
+      },
+      "CompleteTeacherMeetOAuthDto": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "state",
+          "code"
         ]
       },
       "ComponentStatusResponse": {
@@ -25599,6 +28623,81 @@
           "dueAt"
         ],
         "additionalProperties": false
+      },
+      "DeadOutboxStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "topic": {
+            "type": "string"
+          },
+          "attempts": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "lastErrorCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "failedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replayStatus": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "PENDING",
+              "DELIVERED",
+              null
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "attempts",
+          "lastErrorCode",
+          "failedAt",
+          "replayStatus"
+        ]
+      },
+      "DecideRefundDto": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "APPROVE",
+              "DECLINE"
+            ]
+          },
+          "version": {
+            "type": "number",
+            "minimum": 1
+          },
+          "amount": {
+            "type": "string",
+            "description": "Required for approval, in the subscription currency"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "decision",
+          "version",
+          "basis"
+        ]
       },
       "DecisionCommandDto": {
         "type": "object",
@@ -27252,6 +30351,51 @@
           "deliveries"
         ]
       },
+      "JobHealthCounts": {
+        "type": "object",
+        "properties": {
+          "waiting": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "ready": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oldestReadySeconds": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "running": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expiredLeases": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "reconciliationRequired": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "waiting",
+          "ready",
+          "oldestReadySeconds",
+          "running",
+          "expiredLeases",
+          "failed",
+          "reconciliationRequired"
+        ]
+      },
       "LastContactDto": {
         "type": "object",
         "properties": {
@@ -27291,6 +30435,10 @@
       "LeadDto": {
         "type": "object",
         "properties": {
+          "possibleDuplicateAtIntake": {
+            "type": "boolean",
+            "description": "A matching contact in the intake portfolio requires staff review"
+          },
           "leadId": {
             "type": "string",
             "format": "uuid"
@@ -27541,6 +30689,10 @@
       "LeadListItemDto": {
         "type": "object",
         "properties": {
+          "possibleDuplicateAtIntake": {
+            "type": "boolean",
+            "description": "A matching contact in the intake portfolio requires staff review"
+          },
           "leadId": {
             "type": "string",
             "format": "uuid"
@@ -28196,6 +31348,150 @@
           "basis"
         ],
         "additionalProperties": false
+      },
+      "LessonDisputeDecisionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "outcomeId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "originPeriodId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "directorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "CONDUCTED",
+              "NOT_CONDUCTED"
+            ]
+          },
+          "reconstructedSnapshot": {
+            "type": "boolean"
+          },
+          "decidedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requiresFinancialDecision": {
+            "type": "boolean",
+            "description": "Confirmed facts will require a separate approved payroll accrual"
+          }
+        },
+        "required": [
+          "id",
+          "lessonId",
+          "reportId",
+          "outcomeId",
+          "originPeriodId",
+          "directorId",
+          "result",
+          "reconstructedSnapshot",
+          "decidedAt",
+          "requiresFinancialDecision"
+        ]
+      },
+      "LessonDisputeReviewDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "scheduledEndAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reportNote": {
+            "type": "string"
+          },
+          "actualStartedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LessonDisputeDecisionDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "decisionEvidenceReference": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "decisionReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "reportId",
+          "studentId",
+          "teacherId",
+          "scheduledAt",
+          "scheduledEndAt",
+          "reportedAt",
+          "reportNote",
+          "actualStartedAt",
+          "decision",
+          "decisionEvidenceReference",
+          "decisionReason"
+        ]
       },
       "LessonHistoryItemDto": {
         "type": "object",
@@ -30081,6 +33377,147 @@
           "expiresAt"
         ]
       },
+      "MeetDecisionInputDto": {
+        "type": "object",
+        "properties": {
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "basis"
+        ]
+      },
+      "MeetDirectorDecisionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "CLOSED_WITHOUT_SPACE",
+              "RETIRED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "state"
+        ]
+      },
+      "MeetDirectorInventoryDto": {
+        "type": "object",
+        "properties": {
+          "unresolved": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetDirectorUnknownDto"
+            }
+          },
+          "spaces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeetDirectorSpaceDto"
+            }
+          },
+          "nextUnresolved": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "nextSpace": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "unresolved",
+          "spaces",
+          "nextUnresolved",
+          "nextSpace"
+        ]
+      },
+      "MeetDirectorSpaceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastVerifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "studentId",
+          "teacherId",
+          "publishedAt",
+          "lastVerifiedAt"
+        ]
+      },
+      "MeetDirectorUnknownDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "teacherId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "assignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "diagnosticCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "queuedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "studentId",
+          "teacherId",
+          "assignmentId",
+          "diagnosticCode",
+          "queuedAt"
+        ]
+      },
       "NextLessonDto": {
         "type": "object",
         "properties": {
@@ -30224,6 +33661,70 @@
           "unreadCount",
           "page",
           "pageSize"
+        ]
+      },
+      "OutboxHealthCounts": {
+        "type": "object",
+        "properties": {
+          "pending": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "ready": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "waitingRetry": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "inFlight": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "expiredLeases": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "dead": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "oldestReadySeconds": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        },
+        "required": [
+          "pending",
+          "ready",
+          "waitingRetry",
+          "inFlight",
+          "expiredLeases",
+          "dead",
+          "oldestReadySeconds"
+        ]
+      },
+      "OutboxReplayResponse": {
+        "type": "object",
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "QUEUED"
+            ]
+          }
+        },
+        "required": [
+          "eventId",
+          "status"
         ]
       },
       "OverviewHomeworkDto": {
@@ -30955,6 +34456,44 @@
           "exception"
         ]
       },
+      "PayrollReviewItemDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lessonAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "studentName": {
+            "type": "string"
+          },
+          "subjectName": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DISPUTED_REPORT",
+              "AWAITING_DIRECTOR_ACCRUAL"
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "reportId",
+          "lessonAt",
+          "studentName",
+          "subjectName",
+          "status"
+        ]
+      },
       "PayrollSummaryDto": {
         "type": "object",
         "properties": {
@@ -31234,6 +34773,150 @@
           "items"
         ]
       },
+      "PeriodDisputeDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "taskId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "reportId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "sourceEntryId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "managerId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "managerAtCloseId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "sourceVersion": {
+            "type": "integer"
+          },
+          "statusAtClose": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currentStatus": {
+            "type": "string"
+          },
+          "resolvedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "correctionEntryId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "lessonId",
+          "taskId",
+          "reportId",
+          "sourceEntryId",
+          "managerId",
+          "managerAtCloseId",
+          "sourceVersion",
+          "statusAtClose",
+          "currentStatus",
+          "resolvedAt",
+          "correctionEntryId"
+        ]
+      },
+      "PeriodDisputesDto": {
+        "type": "object",
+        "properties": {
+          "periodId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "startsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endsAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "closedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Closure confirmation for an open period"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PeriodDisputeDto"
+            }
+          }
+        },
+        "required": [
+          "periodId",
+          "startsAt",
+          "endsAt",
+          "closedAt",
+          "closedById",
+          "revision",
+          "total",
+          "page",
+          "items"
+        ]
+      },
       "PeriodDto": {
         "type": "object",
         "properties": {
@@ -31396,6 +35079,34 @@
         ],
         "additionalProperties": false
       },
+      "PrepareRefundDto": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "number",
+            "minimum": 0
+          },
+          "revision": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Use zero to submit the evidence for an ineligible or held case"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "version",
+          "revision",
+          "quantity",
+          "basis"
+        ]
+      },
       "ProblemDetails": {
         "type": "object",
         "properties": {
@@ -31435,6 +35146,91 @@
           "requestId"
         ]
       },
+      "ProposeAllocationCorrectionDto": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "string",
+            "example": "100.0000"
+          },
+          "targetSubscriptionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Omit to request a return to the unallocated receipt balance."
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "amount",
+          "reason"
+        ]
+      },
+      "PublicLeadReceiptDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACCEPTED"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "PublicLeadSubmissionDto": {
+        "type": "object",
+        "properties": {
+          "audience": {
+            "type": "string",
+            "enum": [
+              "CHILD",
+              "ADULT"
+            ]
+          },
+          "contactName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120
+          },
+          "guardianName": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "maxLength": 254
+          },
+          "subjectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "privacyNoticeVersion": {
+            "type": "string"
+          },
+          "privacyNoticeAcknowledged": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "audience",
+          "contactName",
+          "subjectId",
+          "privacyNoticeVersion",
+          "privacyNoticeAcknowledged"
+        ]
+      },
       "PublishReportResponseDto": {
         "type": "object",
         "properties": {
@@ -31458,6 +35254,163 @@
           "id",
           "status",
           "publishedAt"
+        ]
+      },
+      "PublishSaleConditionDto": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "expectedVersion": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Latest catalog version, or zero for a new code"
+          },
+          "lessonCount": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10000
+          },
+          "durationDays": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 3660
+          },
+          "priceBeforeDiscount": {
+            "type": "string",
+            "description": "Original package price in MDL"
+          },
+          "discount": {
+            "type": "string",
+            "description": "Absolute package discount in MDL"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "code",
+          "expectedVersion",
+          "lessonCount",
+          "durationDays",
+          "priceBeforeDiscount",
+          "discount",
+          "basis"
+        ]
+      },
+      "QueueHealthResponse": {
+        "type": "object",
+        "properties": {
+          "checkedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "outbox": {
+            "$ref": "#/components/schemas/OutboxHealthCounts"
+          },
+          "jobs": {
+            "$ref": "#/components/schemas/JobHealthCounts"
+          },
+          "recovery": {
+            "$ref": "#/components/schemas/RecoveryHealthCounts"
+          },
+          "latestDead": {
+            "maxItems": 20,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeadOutboxStatus"
+            }
+          }
+        },
+        "required": [
+          "checkedAt",
+          "outbox",
+          "jobs",
+          "recovery",
+          "latestDead"
+        ]
+      },
+      "ReconcilePayoutRequest": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "evidenceReference": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "Reference to verified external evidence"
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9]\\d{0,15})(?:\\.\\d{1,4})?$",
+            "description": "Actual confirmed amount as a decimal string. Required for SUCCEEDED."
+          }
+        },
+        "required": [
+          "status",
+          "evidenceReference"
+        ]
+      },
+      "ReconcilePayoutResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "SUCCEEDED",
+              "FAILED"
+            ]
+          },
+          "payoutId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "ledgerEntryId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "payoutId",
+          "ledgerEntryId"
+        ]
+      },
+      "ReconcileTeacherMeetDto": {
+        "type": "object",
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "meetingUri": {
+            "type": "string",
+            "format": "uri",
+            "description": "The recovered link of the unresolved create operation"
+          }
+        },
+        "required": [
+          "operationId",
+          "meetingUri"
         ]
       },
       "RecordContactDto": {
@@ -31556,6 +35509,23 @@
           "token"
         ],
         "additionalProperties": false
+      },
+      "RecoveryHealthCounts": {
+        "type": "object",
+        "properties": {
+          "waiting": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "needsManual": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "waiting",
+          "needsManual"
+        ]
       },
       "RecoveryInitiatedResponse": {
         "type": "object",
@@ -31727,6 +35697,613 @@
         ],
         "additionalProperties": true
       },
+      "RefundCaseDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "studentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RefundDecisionDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "pendingTransfers": {
+            "type": "number"
+          },
+          "requestedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "requestId",
+          "studentId",
+          "subscriptionId",
+          "decision",
+          "pendingTransfers",
+          "requestedAt"
+        ]
+      },
+      "RefundCasesDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundCaseDto"
+            }
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items",
+          "next"
+        ]
+      },
+      "RefundDecisionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "APPROVED",
+              "DECLINED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "status"
+        ]
+      },
+      "RefundDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "APPROVED",
+              "DECLINED"
+            ]
+          },
+          "preparedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "preparedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "calculatedAmount": {
+            "type": "string"
+          },
+          "calculationBasis": {
+            "type": "string"
+          },
+          "revision": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "calculationSnapshot": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RefundQuoteDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currency": {
+            "type": "string"
+          },
+          "approvedAmount": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "decidedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "decidedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "decisionBasis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "version",
+          "status",
+          "preparedById",
+          "preparedAt",
+          "quantity",
+          "calculatedAmount",
+          "calculationBasis",
+          "revision",
+          "calculationSnapshot",
+          "currency",
+          "approvedAmount",
+          "decidedById",
+          "decidedAt",
+          "decisionBasis"
+        ]
+      },
+      "RefundQuoteAdvanceDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "amount"
+        ]
+      },
+      "RefundQuoteAllocationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "paymentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "paymentId",
+          "currency",
+          "amount"
+        ]
+      },
+      "RefundQuoteChargeDto": {
+        "type": "object",
+        "properties": {
+          "lessonId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "consumptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "CONDUCTED",
+              "APPROVED_CANCELLATION"
+            ]
+          }
+        },
+        "required": [
+          "lessonId",
+          "consumptionId",
+          "quantity",
+          "category"
+        ]
+      },
+      "RefundQuoteDto": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "string"
+          },
+          "fullPrice": {
+            "type": "string"
+          },
+          "lessonCount": {
+            "type": "number"
+          },
+          "allocations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundQuoteAllocationDto"
+            }
+          },
+          "advances": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundQuoteAdvanceDto"
+            }
+          },
+          "grants": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundQuoteGrantDto"
+            }
+          },
+          "charges": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundQuoteChargeDto"
+            }
+          },
+          "holds": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundQuoteHoldDto"
+            }
+          },
+          "allocated": {
+            "type": "string"
+          },
+          "advance": {
+            "type": "string"
+          },
+          "eligibleQuantity": {
+            "type": "number"
+          },
+          "maximumAmount": {
+            "type": "string"
+          },
+          "revision": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "unitPrice",
+          "fullPrice",
+          "lessonCount",
+          "allocations",
+          "advances",
+          "grants",
+          "charges",
+          "holds",
+          "allocated",
+          "advance",
+          "eligibleQuantity",
+          "maximumAmount",
+          "revision"
+        ]
+      },
+      "RefundQuoteGrantDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "remaining": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "remaining"
+        ]
+      },
+      "RefundQuoteHoldDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "reason"
+        ]
+      },
+      "RefundSettlementDto": {
+        "type": "object",
+        "properties": {
+          "verifiedNet": {
+            "type": "string"
+          },
+          "remaining": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "AWAITING_REVIEW",
+              "AWAITING_EXECUTION",
+              "PARTIALLY_EXECUTED",
+              "EXECUTED"
+            ]
+          }
+        },
+        "required": [
+          "verifiedNet",
+          "remaining",
+          "status"
+        ]
+      },
+      "RefundTransferDetailDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAID",
+              "FAILED",
+              "RETURNED"
+            ]
+          },
+          "channel": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "REPORTED",
+              "VERIFIED",
+              "REJECTED"
+            ]
+          },
+          "amount": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "originalTransferId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "reportedById": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "reviewedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "reviewReason": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "channel",
+          "status",
+          "amount",
+          "occurredAt",
+          "originalTransferId",
+          "reference",
+          "evidence",
+          "reportedById",
+          "reportedAt",
+          "reviewedById",
+          "reviewedAt",
+          "reviewReason"
+        ]
+      },
+      "RefundTransferDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAID",
+              "FAILED",
+              "RETURNED"
+            ]
+          },
+          "channel": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "REPORTED",
+              "VERIFIED",
+              "REJECTED"
+            ]
+          },
+          "amount": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "originalTransferId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "channel",
+          "status",
+          "amount",
+          "occurredAt",
+          "originalTransferId"
+        ]
+      },
+      "RefundViewDto": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "requestStatus": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "APPROVED",
+              "DECLINED",
+              "WITHDRAWN"
+            ]
+          },
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "quote": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RefundQuoteDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RefundDetailDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transfers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RefundTransferDetailDto"
+            }
+          },
+          "settlement": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RefundSettlementDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "requestId",
+          "requestStatus",
+          "subscriptionId",
+          "quote",
+          "decision",
+          "transfers",
+          "settlement"
+        ]
+      },
       "RejectManagerPaymentDto": {
         "type": "object",
         "properties": {
@@ -31771,6 +36348,56 @@
           "distributionId"
         ],
         "additionalProperties": false
+      },
+      "ReportRefundTransferDto": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "PAID",
+              "FAILED",
+              "RETURNED"
+            ]
+          },
+          "amount": {
+            "type": "string"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "originalTransferId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "channel": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 40,
+            "description": "External transfer method"
+          },
+          "reference": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "description": "Unique bank or reconciliation reference"
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 160,
+            "description": "Opaque reference to protected payment evidence"
+          }
+        },
+        "required": [
+          "kind",
+          "amount",
+          "occurredAt",
+          "channel",
+          "reference",
+          "evidence"
+        ]
       },
       "ReportsResponseDto": {
         "type": "object",
@@ -31935,6 +36562,53 @@
           "status"
         ]
       },
+      "ResolveLessonDisputeDto": {
+        "type": "object",
+        "properties": {
+          "reportId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "CONDUCTED",
+              "NOT_CONDUCTED"
+            ]
+          },
+          "evidenceReference": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          },
+          "actualStartedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Documented UTC start; required only when the recorded start is missing."
+          },
+          "durationMin": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 480,
+            "description": "Documented duration for a conducted lesson."
+          },
+          "temporaryAccessPermissionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Existing director admission applicable at actual start."
+          }
+        },
+        "required": [
+          "reportId",
+          "result",
+          "evidenceReference",
+          "reason"
+        ]
+      },
       "ResolveManagerDisputeDto": {
         "type": "object",
         "properties": {
@@ -32030,6 +36704,40 @@
         ],
         "additionalProperties": false
       },
+      "RetireSaleConditionDto": {
+        "type": "object",
+        "properties": {
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "basis"
+        ]
+      },
+      "ReviewAllocationCorrectionDto": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "MANUAL_REVIEW"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "decision",
+          "reason"
+        ]
+      },
       "ReviewHomeworkDto": {
         "type": "object",
         "properties": {
@@ -32088,6 +36796,27 @@
           "result"
         ]
       },
+      "ReviewRefundTransferDto": {
+        "type": "object",
+        "properties": {
+          "decision": {
+            "type": "string",
+            "enum": [
+              "VERIFY",
+              "REJECT"
+            ]
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "decision",
+          "basis"
+        ]
+      },
       "RevokeAssignmentCommandDto": {
         "type": "object",
         "properties": {
@@ -32117,6 +36846,131 @@
         "required": [
           "id",
           "revokedAt"
+        ]
+      },
+      "SaleConditionVersionDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "code": {
+            "type": "string"
+          },
+          "version": {
+            "type": "number"
+          },
+          "lessonCount": {
+            "type": "number"
+          },
+          "durationDays": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "priceBeforeDiscount": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validTo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "SCHEDULED",
+              "RETIRED"
+            ]
+          },
+          "publishedById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "publicationBasis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retiredById": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "retirementBasis": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "version",
+          "lessonCount",
+          "durationDays",
+          "priceBeforeDiscount",
+          "discount",
+          "price",
+          "unitPrice",
+          "currency",
+          "validFrom",
+          "validTo",
+          "status",
+          "publishedById",
+          "publicationBasis",
+          "retiredById",
+          "retirementBasis"
+        ]
+      },
+      "SaleConditionVersionsDto": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SaleConditionVersionDto"
+            }
+          },
+          "next": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items",
+          "next"
         ]
       },
       "SavedDraftDto": {
@@ -33155,6 +38009,23 @@
         "type": "object",
         "properties": {},
         "additionalProperties": false
+      },
+      "StartTeacherMeetOAuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "authorizationUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "authorizationUrl",
+          "expiresAt"
+        ]
       },
       "StatusChangeDto": {
         "type": "object",
@@ -35830,6 +40701,147 @@
           "nextCursor"
         ]
       },
+      "TeacherMeetConnectionDto": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "DISCONNECTED",
+              "REVOCATION_PENDING",
+              "CONNECTED"
+            ]
+          },
+          "available": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "state",
+          "available"
+        ]
+      },
+      "TeacherMeetOperationDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "CREATE",
+              "VERIFY",
+              "RECONCILE"
+            ]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "QUEUED",
+              "DISPATCHING",
+              "SUCCEEDED",
+              "FAILED",
+              "UNKNOWN",
+              "RECONCILED",
+              "CLOSED_WITHOUT_SPACE"
+            ]
+          },
+          "queuedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "finishedAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "diagnosticCode": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "retryAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "state",
+          "queuedAt",
+          "finishedAt",
+          "diagnosticCode",
+          "retryAt"
+        ]
+      },
+      "TeacherMeetPairDto": {
+        "type": "object",
+        "properties": {
+          "assignmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "published": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeacherMeetSpaceDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "latestOperation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TeacherMeetOperationDto"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unresolvedOperationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "assignmentId",
+          "published",
+          "latestOperation",
+          "unresolvedOperationId"
+        ]
+      },
+      "TeacherMeetSpaceDto": {
+        "type": "object",
+        "properties": {
+          "meetLink": {
+            "type": "string",
+            "format": "uri"
+          },
+          "lastVerifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "meetLink",
+          "lastVerifiedAt"
+        ]
+      },
       "TeacherMeResponseDto": {
         "type": "object",
         "properties": {
@@ -36047,6 +41059,13 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PayrollLineDto"
+            }
+          },
+          "reviewItems": {
+            "description": "Own lessons awaiting a decision, without an estimated amount.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PayrollReviewItemDto"
             }
           }
         },

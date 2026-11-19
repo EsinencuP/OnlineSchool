@@ -42,10 +42,20 @@ export class FinanceScopeGuard implements CanActivate {
       return;
     }
     if (name === 'approve') {
-      const d = await ctx.tx.paymentDistribution.findUnique({ where: { id: uuid(req.params.id) } });
-      if (!d) return fail(domainError('NOT_FOUND', 404));
-      await this.access.payment(ctx, d.payment_id);
-      await this.access.subscription(ctx, d.subscription_id);
+      await this.access.distribution(ctx, uuid(req.params.id));
+      return;
+    }
+    if (name === 'proposeCorrection') {
+      await this.access.allocationCorrectionScope(
+        ctx,
+        uuid(req.params.id),
+        body.targetSubscriptionId === undefined ? null : uuid(body.targetSubscriptionId),
+      );
+      return;
+    }
+    if (name === 'reviewCorrection') {
+      if (!ctx.actor.mfaCompleted) return fail(domainError('MFA_REQUIRED', 403));
+      await this.access.staff(ctx, true);
       return;
     }
     if (['consume', 'adjust'].includes(name)) {
@@ -54,15 +64,17 @@ export class FinanceScopeGuard implements CanActivate {
       await this.access.subscription(ctx, g.subscription_id);
       return;
     }
-    if (['accrue', 'payoutAttempt', 'payoutConfirm'].includes(name)) {
+    if (['accrue', 'payoutAttempt', 'payoutConfirm', 'payoutReconcile'].includes(name)) {
+      if (name === 'payoutReconcile' && !ctx.actor.mfaCompleted)
+        return fail(domainError('MFA_REQUIRED', 403));
       let outcomeId: string;
       if (name === 'accrue') outcomeId = uuid(body.outcomeId);
       else {
-        const attempt =
-          name === 'payoutConfirm'
-            ? await ctx.tx.payoutAttempt.findUnique({ where: { id: uuid(req.params.id) } })
-            : null;
-        if (name === 'payoutConfirm' && !attempt) return fail(domainError('NOT_FOUND', 404));
+        const existingAttempt = name === 'payoutConfirm' || name === 'payoutReconcile';
+        const attempt = existingAttempt
+          ? await ctx.tx.payoutAttempt.findUnique({ where: { id: uuid(req.params.id) } })
+          : null;
+        if (existingAttempt && !attempt) return fail(domainError('NOT_FOUND', 404));
         const obligation = await ctx.tx.payrollObligation.findUnique({
           where: { id: attempt?.obligation_id ?? uuid(body.obligationId) },
         });
@@ -81,6 +93,16 @@ export class FinanceScopeGuard implements CanActivate {
           where: { id: lesson.enrollment_id },
         });
       await this.access.student(ctx, en.student_id);
+      if (
+        name === 'accrue' &&
+        (await ctx.tx.lessonOutcomeDisputeDecision.findUnique({
+          where: { outcome_id: outcomeId },
+          select: { id: true },
+        }))
+      ) {
+        if (!ctx.actor.mfaCompleted) return fail(domainError('MFA_REQUIRED', 403));
+        await this.access.staff(ctx, true);
+      }
       return;
     }
     if (name === 'teacherPayroll') {

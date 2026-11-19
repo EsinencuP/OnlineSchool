@@ -24,6 +24,7 @@ live('working API denies anonymous business and private-file access', async () =
   for (const path of [
     '/api/v1/auth/session',
     '/api/v1/qa/components',
+    '/api/v1/qa/queues',
     '/api/v1/files/00000000-0000-4000-8000-000000000001/access',
   ]) {
     const response = await fetch(origin + path, { signal: AbortSignal.timeout(20000) });
@@ -44,4 +45,8 @@ live('working Swagger exposes real contracts for security and worker liveness', 
       .$ref,
   ).toBe('#/components/schemas/HealthProbeResponse');
   expect(document.paths['/api/v1/auth/session'].post.operationId).toBeTruthy();
+  expect(document.paths['/api/v1/qa/queues'].get).toMatchObject({
+    operationId: 'getQueueHealth',
+    security: [{ sessionCookie: [] }],
+  });
 });

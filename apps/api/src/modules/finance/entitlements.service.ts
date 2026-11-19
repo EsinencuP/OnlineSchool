@@ -124,7 +124,35 @@ export class EntitlementsService {
       ledgerEntryId: entry.id,
     };
   }
-  async adjust(ctx: CriticalContext, body: unknown, onReversal?: (entryId: string) => void) {
+  async adjust(ctx: CriticalContext, body: unknown) {
+    return (await this.applyAdjustment(ctx, body)).adjustment;
+  }
+
+  async reverseDisputeCharge(
+    ctx: CriticalContext,
+    source: { grantId: string; consumptionId: string; entryId: string },
+    reason: string,
+  ) {
+    const result = await this.applyAdjustment(
+      ctx,
+      {
+        grantId: source.grantId,
+        originalConsumptionId: source.consumptionId,
+        kind: 'CONSUMPTION_CANCELLATION',
+        reason,
+      },
+      source.entryId,
+    );
+    if (!result.reversal || !result.originPeriodId)
+      return fail(domainError('PUBLISHED_SOURCE_REQUIRED', 422));
+    return {
+      entryId: result.reversal.id,
+      adjustmentId: result.adjustment.id,
+      originPeriodId: result.originPeriodId,
+    };
+  }
+
+  private async applyAdjustment(ctx: CriticalContext, body: unknown, disputeSourceEntry?: string) {
     const input = object(body, [
       'grantId',
       'originalConsumptionId',
@@ -150,8 +178,10 @@ export class EntitlementsService {
       return fail(domainError('ADJUSTMENT_SOURCE_MISMATCH', 422));
     if (!['GRANT_DELTA', 'CONSUMPTION_CANCELLATION'].includes(input.kind as string))
       return fail(domainError('INVALID_ADJUSTMENT_KIND', 422));
+    let kind = input.kind as 'GRANT_DELTA' | 'CONSUMPTION_CANCELLATION';
+    let originPeriodId: string | null = null;
     let delta = 0;
-    if (input.kind === 'GRANT_DELTA') {
+    if (kind === 'GRANT_DELTA') {
       delta = count(input.deltaQuantity, -10000, 10000);
       if (!delta || (delta > 0 && !original))
         return fail(domainError('ADJUSTMENT_SOURCE_REQUIRED', 422));
@@ -167,13 +197,36 @@ export class EntitlementsService {
       const lesson = await ctx.tx.lessonOccurrence.findUniqueOrThrow({
         where: { id: original.lesson_occurrence_id },
       });
-      await this.ledger.period(ctx.tx, lesson.scheduled_at);
+      if (disputeSourceEntry) {
+        // The grant is already locked. A concurrent resolution or correction cannot
+        // restore these rights twice, even when it used a different CRM task.
+        if (
+          (await ctx.tx.entitlementAdjustment.findFirst({
+            where: { original_consumption_id: original.id },
+            select: { id: true },
+          })) ||
+          (await ctx.tx.ledgerEntry.findFirst({
+            where: { reverses_entry_id: disputeSourceEntry },
+            select: { id: true },
+          }))
+        )
+          return fail(domainError('CHARGE_ALREADY_REVERSED', 409));
+        const period = await this.ledger.periodState(ctx.tx, lesson.scheduled_at);
+        if (!period) return fail(domainError('CLOSED_PERIOD', 422));
+        originPeriodId = period.id;
+        if (period.closed_at) {
+          // Keep the closed-period consumption intact. The new grant delta and
+          // monetary reversal take effect together in the current open period.
+          kind = 'GRANT_DELTA';
+          delta = original.quantity;
+        }
+      } else await this.ledger.period(ctx.tx, lesson.scheduled_at);
     }
     const adjustment = await ctx.tx.entitlementAdjustment.create({
       data: {
         grant_id: grantId,
         original_consumption_id: originalId,
-        kind: input.kind as 'GRANT_DELTA' | 'CONSUMPTION_CANCELLATION',
+        kind,
         delta_quantity: delta,
         author_id: staff,
         reason,
@@ -182,17 +235,20 @@ export class EntitlementsService {
         ...operation(ctx.operationId),
       },
     });
-    if (input.kind === 'CONSUMPTION_CANCELLATION' && original) {
+    if (kind === 'CONSUMPTION_CANCELLATION' && original) {
       await ctx.tx.entitlementConsumption.update({
         where: { id: original.id },
         data: { cancelled_at: now, cancellation_adjustment_id: adjustment.id },
       });
-      const reversal = await this.ledger.reverseConsumption(ctx, original.id, reason);
-      if (onReversal) {
-        if (!reversal) return fail(domainError('PUBLISHED_SOURCE_REQUIRED', 422));
-        onReversal(reversal.id);
-      }
     }
-    return { ...adjustment, remaining_count: await this.remaining(ctx, grantId) };
+    const reversal =
+      input.kind === 'CONSUMPTION_CANCELLATION' && original
+        ? await this.ledger.reverseConsumption(ctx, original.id, reason, disputeSourceEntry)
+        : undefined;
+    return {
+      adjustment: { ...adjustment, remaining_count: await this.remaining(ctx, grantId) },
+      reversal,
+      originPeriodId,
+    };
   }
 }

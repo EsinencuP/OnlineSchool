@@ -98,6 +98,8 @@ enum CrmTaskStatus {
 
 // Owner: Student registry / Relations. Contacts never identify/deduplicate a person.
 model Student {
+  meet_spaces TeacherMeetSpace[]
+  meet_operations TeacherMeetOperation[]
   manager_requests ManagerRequest[] @relation("RequestStudent")
   notification_locale String @default("ru")
   notification_dispatches NotificationDispatch[]
@@ -449,6 +451,18 @@ model StudentAccount {
 }
 
 model StaffAccount {
+  proposed_allocation_corrections PaymentAllocationCorrection[] @relation("AllocationCorrectionProposer")
+  decided_allocation_corrections  PaymentAllocationCorrection[] @relation("AllocationCorrectionDecider")
+  retired_meet_spaces TeacherMeetSpace[]
+  closed_meet_operations TeacherMeetOperation[]
+  published_sale_conditions SaleCondition[] @relation("PublishedSaleCondition")
+  retired_sale_conditions SaleCondition[] @relation("RetiredSaleCondition")
+  prepared_refunds RefundRecord[] @relation("PreparedRefund")
+  declined_refunds RefundRecord[] @relation("DeclinedRefund")
+  observed_refund_transfers RefundTransfer[] @relation("ObservedRefundTransfer")
+  reviewed_refund_transfers RefundTransfer[] @relation("ReviewedRefundTransfer")
+  lesson_outcome_dispute_decisions LessonOutcomeDisputeDecision[]
+  financial_period_disputes FinancialPeriodDispute[]
   requested_manager_requests ManagerRequest[] @relation("RequestRequester")
   decided_manager_requests ManagerRequest[] @relation("RequestDecider")
   availability_state ManagerAvailability? @relation("ManagerAvailabilityStaff")
@@ -509,6 +523,10 @@ model StaffAccount {
 }
 
 model TeacherAccount {
+  meet_spaces TeacherMeetSpace[]
+  meet_operations TeacherMeetOperation[]
+  meet_oauth_challenge TeacherMeetOAuthChallenge?
+  meet_oauth_grant TeacherMeetOAuthGrant?
   contact_logs ContactLog[] @relation("TeacherContacts")
   skill_audit_logs     SkillAuditLog[]
   reviewed_checkpoints ProgressCheckpoint[] @relation("CheckpointReviewer")
@@ -579,6 +597,7 @@ model RoleAssignment {
 }
 
 model Session {
+  meet_oauth_challenges TeacherMeetOAuthChallenge[]
   user_agent      String?
   ip_address      String?   @db.Inet
   id              String    @id @default(uuid()) @db.Uuid
@@ -601,6 +620,37 @@ model Session {
   @@index([account_id, expires_at])
   @@index([expires_at])
   @@map("sessions")
+}
+
+model TeacherMeetOAuthChallenge {
+  teacher_id String @id @db.Uuid
+  session_id String @db.Uuid
+  state_hash String @unique @db.Char(64)
+  verifier_ciphertext String
+  grant_generation Int
+  expires_at DateTime @db.Timestamptz(3)
+  claimed_at DateTime? @db.Timestamptz(3)
+  teacher TeacherAccount @relation(fields: [teacher_id], references: [id], onDelete: Cascade, onUpdate: Restrict)
+  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade, onUpdate: Restrict)
+
+  @@index([session_id])
+  @@map("teacher_meet_oauth_challenges")
+}
+
+model TeacherMeetOAuthGrant {
+  teacher_id String @id @db.Uuid
+  google_subject String // PII: stable identifier from Google userinfo.
+  generation Int
+  refresh_ciphertext String? // AUTH_SECRET: encrypted with teacher, Google subject and generation as context.
+  authorized_at DateTime @db.Timestamptz(3)
+  disconnected_at DateTime? @db.Timestamptz(3)
+  provider_revoked_at DateTime? @db.Timestamptz(3)
+  revocation_claim_id String? @db.Uuid
+  revocation_claimed_at DateTime? @db.Timestamptz(3)
+  teacher TeacherAccount @relation(fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([google_subject], map: "uq_teacher_meet_oauth_active_subject", where: raw("refresh_ciphertext IS NOT NULL"))
+  @@map("teacher_meet_oauth_grants")
 }
 
 model WebAuthnCredential {
@@ -750,6 +800,10 @@ model LeadStageEvent {
 }
 
 model Lead {
+  public_submission_id String? @unique @db.Uuid
+  public_submission_hash String? @db.Char(64)
+  public_privacy_notice String?
+  public_duplicate_suspected Boolean @default(false)
   archived_student_at DateTime? @db.Timestamptz(3)
   audience LeadAudience @default(ADULT)
   guardian_name String?
@@ -866,6 +920,7 @@ model ContactLog {
 }
 
 model CrmTask {
+  financial_period_disputes FinancialPeriodDispute[]
   contact_logs ContactLog[] @relation("TaskContacts")
   escalation TaskEscalation? @relation("TaskEscalationTask")
   system_resolved Boolean @default(false)
@@ -1021,6 +1076,7 @@ model StudentSubjectEnrollment {
 }
 
 model TeachingAssignment {
+  meet_operations TeacherMeetOperation[]
   google_meet_link                            String?
   id                                          String                   @id @default(uuid()) @db.Uuid
   enrollment_id                               String                   @db.Uuid
@@ -1042,6 +1098,83 @@ model TeachingAssignment {
   @@index([teacher_id])
   @@index([assigned_by_id])
   @@map("teaching_assignments")
+}
+
+enum TeacherMeetOperationKind {
+  CREATE
+  VERIFY
+  RECONCILE
+}
+
+enum TeacherMeetOperationState {
+  QUEUED
+  DISPATCHING
+  SUCCEEDED
+  FAILED
+  UNKNOWN
+  RECONCILED
+  CLOSED_WITHOUT_SPACE
+}
+
+model TeacherMeetSpace {
+  id String @id @default(uuid()) @db.Uuid
+  student_id String @db.Uuid
+  teacher_id String @db.Uuid
+  google_subject String
+  resource_name String @unique
+  meeting_uri String
+  published_at DateTime @db.Timestamptz(3)
+  last_verified_at DateTime @db.Timestamptz(3)
+  retired_at DateTime? @db.Timestamptz(3)
+  retired_by_id String? @db.Uuid
+  retirement_basis String?
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  teacher TeacherAccount @relation(fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  operations TeacherMeetOperation[]
+  retired_by StaffAccount? @relation(fields: [retired_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([student_id, teacher_id], map: "uq_teacher_meet_active_pair", where: raw("retired_at IS NULL"))
+  @@unique([meeting_uri], map: "uq_teacher_meet_active_uri", where: raw("retired_at IS NULL"))
+  @@index([student_id, teacher_id, published_at])
+  @@map("teacher_meet_spaces")
+}
+
+model TeacherMeetOperation {
+  id String @id @default(uuid()) @db.Uuid
+  student_id String @db.Uuid
+  teacher_id String @db.Uuid
+  assignment_id String @db.Uuid
+  grant_generation Int
+  google_subject String // PII: identity that accepted the operation.
+  kind TeacherMeetOperationKind
+  state TeacherMeetOperationState @default(QUEUED)
+  request_operation_id String @unique @db.Uuid
+  queued_at DateTime @db.Timestamptz(3)
+  dispatch_token String?
+  finished_at DateTime? @db.Timestamptz(3)
+  diagnostic_code String?
+  retry_at DateTime? @db.Timestamptz(3)
+  candidate_code String? // PII: validate and keep out of audit and outbox payloads.
+  resolves_operation_id String? @db.Uuid
+  space_id String? @db.Uuid
+  closed_at DateTime? @db.Timestamptz(3)
+  closed_by_id String? @db.Uuid
+  closure_basis String?
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  teacher TeacherAccount @relation(fields: [teacher_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  assignment TeachingAssignment @relation(fields: [assignment_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  space TeacherMeetSpace? @relation(fields: [space_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  resolves_operation TeacherMeetOperation? @relation("MeetOperationResolution", fields: [resolves_operation_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  resolution_attempts TeacherMeetOperation[] @relation("MeetOperationResolution")
+  closed_by StaffAccount? @relation(fields: [closed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([student_id, teacher_id, queued_at])
+  @@index([assignment_id])
+  @@index([resolves_operation_id])
+  @@index([space_id])
+  @@unique([student_id, teacher_id], map: "uq_teacher_meet_running_pair", where: raw("state IN ('QUEUED'::\"TeacherMeetOperationState\", 'DISPATCHING'::\"TeacherMeetOperationState\")"))
+  @@unique([student_id, teacher_id], map: "uq_teacher_meet_unknown_pair", where: raw("state = 'UNKNOWN'::\"TeacherMeetOperationState\""))
+  @@map("teacher_meet_operations")
 }
 
 // Transactional invalidation token; runtime reads it, only DB triggers advance it.
@@ -1095,6 +1228,9 @@ model RecurringSlot {
 }
 
 model LessonOccurrence {
+  admission_start LessonAdmissionStart?
+  outcome_dispute_decision LessonOutcomeDisputeDecision?
+  financial_period_disputes FinancialPeriodDispute[]
   trial_lead_id String? @db.Uuid
   trial_source_lead Lead? @relation("LeadTrials",fields:[trial_lead_id],references:[id],onDelete:Restrict,onUpdate:Restrict)
   trial_started_at DateTime? @db.Timestamptz(3)
@@ -1159,6 +1295,18 @@ model LessonOccurrence {
   @@map("lesson_occurrences")
 }
 
+model LessonAdmissionStart {
+  lesson_id           String                    @id @db.Uuid
+  permission_id       String                    @db.Uuid
+  admitted_at         DateTime                  @db.Timestamptz(3)
+  source_operation_id String                   @unique @db.Uuid
+  lesson              LessonOccurrence          @relation(fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  permission          TemporaryAccessPermission @relation(fields: [permission_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([permission_id])
+  @@map("lesson_admission_starts")
+}
+
 model LessonChangeEvent {
   id                    String           @id @default(uuid()) @db.Uuid
   lesson_occurrence_id  String           @db.Uuid
@@ -1180,6 +1328,7 @@ model LessonChangeEvent {
 }
 
 model LessonActualOutcome {
+  dispute_decision LessonOutcomeDisputeDecision?
   report_id                                       String?                    @unique @db.Uuid
   report_ref                                      LessonOutcomeReport?       @relation("ConfirmedReport", fields: [report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_outcome_report")
   currency                                        String                     @db.VarChar(3)
@@ -1212,6 +1361,12 @@ model LessonActualOutcome {
 }
 
 model SaleCondition {
+  published_by_id String? @db.Uuid
+  publication_basis String?
+  retired_by_id String? @db.Uuid
+  retirement_basis String?
+  published_by StaffAccount? @relation("PublishedSaleCondition", fields: [published_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  retired_by StaffAccount? @relation("RetiredSaleCondition", fields: [retired_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   duration_days                      Int?
   managed_subscriptions              ManagerSubscription[]
   id                                 String         @id @default(uuid()) @db.Uuid
@@ -1235,6 +1390,7 @@ model SaleCondition {
 }
 
 model Subscription {
+  replacement_proposals PaymentAllocationCorrection[] @relation("AllocationCorrectionTarget")
   manager_requests ManagerRequest[] @relation("RequestSubscription")
   managed_period                                 ManagerSubscriptionPeriod?
   freeze_history                                 SubscriptionFreezeHistory[]
@@ -1453,6 +1609,7 @@ model PaymentReceipt {
 }
 
 model PaymentDistribution {
+  correction_proposals PaymentAllocationCorrection[] @relation("AllocationCorrectionSource")
   manager_prepared Boolean @default(false)
   manager_operation ManagerSubscriptionOperation?
   activated_accounts StudentAccount[] @relation("StudentActivationDistribution")
@@ -1480,7 +1637,40 @@ model PaymentDistribution {
   @@map("payment_distributions")
 }
 
+enum AllocationCorrectionStatus {
+  PENDING
+  REJECTED
+  MANUAL_REVIEW
+
+  @@map("allocation_correction_status")
+}
+
+model PaymentAllocationCorrection {
+  id                     String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  source_distribution_id String                    @db.Uuid
+  target_subscription_id String?                    @db.Uuid
+  amount                 Decimal                    @db.Decimal(20, 4)
+  reason                 String
+  proposed_by_id         String                     @db.Uuid
+  proposed_at            DateTime                   @db.Timestamptz(3)
+  source_operation_id    String                     @unique @db.Uuid
+  status                 AllocationCorrectionStatus @default(PENDING)
+  decided_by_id          String?                    @db.Uuid
+  decided_at             DateTime?                  @db.Timestamptz(3)
+  decision_reason        String?
+  decision_operation_id  String?                    @unique @db.Uuid
+  source_distribution    PaymentDistribution        @relation("AllocationCorrectionSource", fields: [source_distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  target_subscription     Subscription?              @relation("AllocationCorrectionTarget", fields: [target_subscription_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  proposer               StaffAccount               @relation("AllocationCorrectionProposer", fields: [proposed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  decider                StaffAccount?              @relation("AllocationCorrectionDecider", fields: [decided_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([source_distribution_id])
+  @@index([status,id])
+  @@map("payment_allocation_corrections")
+}
+
 model TemporaryAccessPermission {
+  lesson_starts LessonAdmissionStart[]
   manager_requests ManagerRequest[] @relation("RequestPermission")
   id                                                     String                @id @default(uuid()) @db.Uuid
   subscription_id                                        String                @db.Uuid
@@ -1561,6 +1751,8 @@ model EntitlementConsumption {
 }
 
 model EntitlementAdjustment {
+  refund_id String? @db.Uuid
+  refund RefundRecord? @relation(fields: [refund_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   id                                                    String                    @id @default(uuid()) @db.Uuid
   grant_id                                              String                    @db.Uuid
   original_consumption_id                               String?                   @db.Uuid
@@ -1579,6 +1771,7 @@ model EntitlementAdjustment {
   financial_period_ref                                  FinancialPeriod           @relation("EntitlementAdjustment_financial_period_id", fields: [financial_period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_t03_entitlement_adjustment_financial_period")
   t03_entitlementconsumption_cancellation_adjustment_id EntitlementConsumption?   @relation("EntitlementConsumption_cancellation_adjustment_id")
 
+  @@unique([refund_id, grant_id])
   @@index([grant_id])
   @@index([original_consumption_id])
   @@index([author_id])
@@ -1587,6 +1780,8 @@ model EntitlementAdjustment {
 }
 
 model FinancialPeriod {
+  lesson_outcome_dispute_decisions LessonOutcomeDisputeDecision[]
+  disputes FinancialPeriodDispute[]
   id                                            String                  @id @default(uuid()) @db.Uuid
   starts_at                                     DateTime                @db.Timestamptz(3)
   ends_at                                       DateTime                @db.Timestamptz(3)
@@ -1606,7 +1801,46 @@ model FinancialPeriod {
   @@map("financial_periods")
 }
 
+model FinancialPeriodDispute {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  period_id       String   @db.Uuid
+  lesson_id       String   @db.Uuid
+  task_id         String?  @db.Uuid
+  report_id       String?  @db.Uuid
+  source_entry_id String?  @db.Uuid
+  manager_id      String?  @db.Uuid
+  source_version  Int
+  status_at_close String
+  registered_at   DateTime @db.Timestamptz(3)
+  period          FinancialPeriod @relation(fields: [period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_period")
+  lesson          LessonOccurrence @relation(fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_lesson")
+  task            CrmTask? @relation(fields: [task_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_task")
+  report          LessonOutcomeReport? @relation(fields: [report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_report")
+  source_entry    LedgerEntry? @relation(fields: [source_entry_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_entry")
+  manager         StaffAccount? @relation(fields: [manager_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_period_dispute_manager")
+
+  @@unique([period_id, task_id], map: "uq_period_dispute_task")
+  @@unique([period_id, report_id], map: "uq_period_dispute_report")
+  @@map("financial_period_disputes")
+}
+
 model RefundRecord {
+  request_id String? @unique @db.Uuid
+  prepared_by_id String? @db.Uuid
+  prepared_at DateTime? @db.Timestamptz(3)
+  version Int @default(1)
+  calculation_snapshot Json?
+  quote_revision String?
+  approval_basis String?
+  declined_by_id String? @db.Uuid
+  declined_at DateTime? @db.Timestamptz(3)
+  decline_reason String?
+  request ManagerRequest? @relation(fields: [request_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  prepared_by StaffAccount? @relation("PreparedRefund", fields: [prepared_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  declined_by StaffAccount? @relation("DeclinedRefund", fields: [declined_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  approval_document LedgerDocument? @relation("RefundApprovalDocument")
+  retired_rights EntitlementAdjustment[]
+  transfers RefundTransfer[]
   id                           String          @id @default(uuid()) @db.Uuid
   subscription_id              String          @db.Uuid
   calculated_amount            Decimal         @db.Decimal(20, 4)
@@ -1631,6 +1865,49 @@ model RefundRecord {
   @@index([subscription_id])
   @@index([approved_by_director_id])
   @@map("refund_records")
+}
+
+enum RefundTransferKind {
+  PAID
+  FAILED
+  RETURNED
+}
+
+enum RefundTransferStatus {
+  REPORTED
+  VERIFIED
+  REJECTED
+}
+
+model RefundTransfer {
+  id String @id @default(uuid()) @db.Uuid
+  refund_id String @db.Uuid
+  kind RefundTransferKind
+  status RefundTransferStatus @default(REPORTED)
+  amount Decimal @db.Decimal(20, 4)
+  occurred_at DateTime @db.Timestamptz(3)
+  reference String
+  channel String
+  evidence String // PII: opaque staff-only reference to external evidence
+  original_transfer_id String? @db.Uuid
+  reported_by_id String @db.Uuid
+  reported_at DateTime @db.Timestamptz(3)
+  reviewed_by_id String? @db.Uuid
+  reviewed_at DateTime? @db.Timestamptz(3)
+  review_reason String?
+  source_operation_id String @unique @db.Uuid
+  review_operation_id String? @unique @db.Uuid
+  refund RefundRecord @relation(fields: [refund_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  reported_by StaffAccount @relation("ObservedRefundTransfer", fields: [reported_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  reviewed_by StaffAccount? @relation("ReviewedRefundTransfer", fields: [reviewed_by_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  original_transfer RefundTransfer? @relation("RefundTransferReturn", fields: [original_transfer_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  returns RefundTransfer[] @relation("RefundTransferReturn")
+  journal_document LedgerDocument?
+
+  @@index([refund_id, reported_at])
+  @@index([original_transfer_id])
+  @@unique([reference], map: "uq_refund_transfer_active_reference", where: raw("status <> 'REJECTED'::\"RefundTransferStatus\""))
+  @@map("refund_transfers")
 }
 
 model TeacherAccrual {
@@ -1726,6 +2003,10 @@ model ConfirmedPayout {
 }
 
 model LedgerDocument {
+  refund_approval_id String? @unique @db.Uuid
+  refund_transfer_id String? @unique @db.Uuid
+  refund_approval RefundRecord? @relation("RefundApprovalDocument", fields: [refund_approval_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  refund_transfer RefundTransfer? @relation(fields: [refund_transfer_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
   distribution_id                              String?                 @unique @db.Uuid
   consumption_id                               String?                 @unique @db.Uuid
   distribution                                 PaymentDistribution?    @relation("DistributionLedgerDocument", fields: [distribution_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_ledger_document_distribution")
@@ -1753,6 +2034,7 @@ model LedgerDocument {
 }
 
 model LedgerEntry {
+  financial_period_disputes FinancialPeriodDispute[]
   resolved_dispute CrmTask? @relation("TaskResolutionPublication")
   manager_operations ManagerSubscriptionOperation[]
   // Quantitative subscription rights, not monetary account balances. Immutable once captured.
@@ -2148,6 +2430,7 @@ model HomeworkUpload {
   delivery     HomeworkDelivery @relation(fields: [delivery_id], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
   @@index([delivery_id])
+  @@index([expires_at, file_id], map: "idx_homework_uploads_cleanup_expiry")
   @@map("homework_uploads")
 }
 
@@ -2464,6 +2747,8 @@ enum ScheduleRequestStatus {
 }
 
 model LessonOutcomeReport {
+  dispute_decision LessonOutcomeDisputeDecision?
+  financial_period_disputes FinancialPeriodDispute[]
   student_no_show      Boolean              @default(false)
   resolved_lesson      LessonOccurrence?    @relation("ResolvedLessonReport")
   id                   String               @id @default(uuid()) @db.Uuid
@@ -2486,6 +2771,28 @@ model LessonOutcomeReport {
   @@unique([lesson_occurrence_id, version], map: "uq_outcome_report_version")
   @@index([reported_by_id])
   @@map("lesson_outcome_reports")
+}
+
+model LessonOutcomeDisputeDecision {
+  id                     String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  lesson_id              String   @unique @db.Uuid
+  report_id              String   @unique @db.Uuid
+  outcome_id             String?  @unique @db.Uuid
+  origin_period_id       String?  @db.Uuid
+  director_id            String   @db.Uuid
+  result                 String
+  evidence_reference     String
+  reason                 String
+  reconstructed_snapshot Boolean
+  decided_at             DateTime @db.Timestamptz(3)
+  source_operation_id    String   @unique @db.Uuid
+  lesson                 LessonOccurrence @relation(fields: [lesson_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lod_lesson")
+  report                 LessonOutcomeReport @relation(fields: [report_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lod_report")
+  outcome                LessonActualOutcome? @relation(fields: [outcome_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lod_outcome")
+  origin_period          FinancialPeriod? @relation(fields: [origin_period_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lod_period")
+  director               StaffAccount @relation(fields: [director_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "fk_lod_director")
+
+  @@map("lesson_outcome_dispute_decisions")
 }
 
 model ScheduleChangeRequest {
@@ -2684,6 +2991,7 @@ model TaskEscalation {
 
 // DEV-17/C, DEV-21/B: family requests formalised by a manager; the director decides.
 model ManagerRequest {
+  refund RefundRecord?
   id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   kind             String // TEMPORARY_ACCESS | REFUND
   student_id       String    @db.Uuid

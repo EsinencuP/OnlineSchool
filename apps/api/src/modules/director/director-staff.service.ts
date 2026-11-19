@@ -7,6 +7,7 @@ import { AppException, domainError, fail } from '../../core/errors/domain-error.
 import type { DomainError } from '../../core/errors/domain-error.js';
 import type { CriticalContext } from '../../core/http.js';
 import { at } from '../finance/finance-common.js';
+import { MEET_REVOCATION_TOPIC } from '../schedule/google-meet/meet-operations.js';
 import type {
   HandoverDto,
   HandoverListDto,
@@ -311,7 +312,10 @@ export class DirectorStaffService {
       const value = action === 'DEACTIVATED' ? now : null;
       if (kind === 'MANAGER')
         await tx.staffAccount.update({ where: { id }, data: { deactivated_at: value } });
-      else await tx.teacherAccount.update({ where: { id }, data: { deactivated_at: value } });
+      else {
+        await tx.teacherAccount.update({ where: { id }, data: { deactivated_at: value } });
+        if (action === 'DEACTIVATED') await this.queueMeetRevocation(ctx, id);
+      }
       await tx.$executeRaw`
         INSERT INTO staff_status_changes (staff_id, teacher_id, action, reason, by_director_id, changed_at)
         VALUES (${kind === 'MANAGER' ? id : null}::uuid, ${kind === 'TEACHER' ? id : null}::uuid, ${action}, ${reason.trim()}, ${director}::uuid, ${now})`;
@@ -322,5 +326,40 @@ export class DirectorStaffService {
     } catch (error: unknown) {
       return err(failure(error));
     }
+  }
+
+  private async queueMeetRevocation(ctx: CriticalContext, teacherId: string) {
+    const tx = ctx.tx;
+    const grant = await tx.teacherMeetOAuthGrant.findUnique({
+      where: { teacher_id: teacherId },
+      select: { generation: true, disconnected_at: true, provider_revoked_at: true },
+    });
+    if (!grant?.disconnected_at || grant.provider_revoked_at) return;
+    const key = `teacher-meet-deactivation:${ctx.operationId}`;
+    const audit = await tx.auditEvent.create({
+      data: {
+        actor_kind: 'ACCOUNT',
+        actor_id: ctx.actor.accountId,
+        action: 'teacher.meet-oauth.termination-queued',
+        resource_type: 'TeacherMeetOAuthGrant',
+        resource_id: teacherId,
+        result: 'SUCCESS',
+        request_id: ctx.requestId,
+        source_operation_id: ctx.operationId,
+        event_key: key,
+      },
+      select: { id: true },
+    });
+    await tx.outboxEvent.create({
+      data: {
+        topic: MEET_REVOCATION_TOPIC,
+        aggregate_type: 'TeacherMeetOAuthGrant',
+        aggregate_id: teacherId,
+        source_operation_id: ctx.operationId,
+        audit_event_id: audit.id,
+        event_key: key,
+        payload: { schemaVersion: 1, teacherId, generation: grant.generation },
+      },
+    });
   }
 }

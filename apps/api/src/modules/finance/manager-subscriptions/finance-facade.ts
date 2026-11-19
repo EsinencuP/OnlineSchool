@@ -116,7 +116,7 @@ export class ManagerAllocationFinance {
           SELECT p.id FROM temporary_access_permissions p WHERE p.subscription_id=${sub.id}::uuid
             AND p.approved_at>=${facts.latest} AND p.approved_at<=${now} AND p.valid_from<=${now} AND p.valid_to>${now}
             AND (p.revoked_at IS NULL OR p.revoked_at>${now})
-            AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${now})<p.max_lessons
+            AND t03_admission_slots_used(p.id,NULL,${now})<p.max_lessons
           ORDER BY p.approved_at DESC,p.id LIMIT 1`;
         if (!permissions.length) return err(domainError('PAYMENT_NOT_CONFIRMED', 409));
       }

@@ -5,6 +5,10 @@ import type { CriticalContext } from '../../core/http.js';
 import { domainError, fail } from '../../core/errors/domain-error.js';
 import { object, string, uuid } from '../identity/input.js';
 import { at, count, date } from '../finance/finance-common.js';
+import {
+  directorAdmissionWindowSql,
+  lessonSubscriptionWindowSql,
+} from '../finance/lesson-access.sql.js';
 import { ScheduleAccess } from './schedule-access.service.js';
 import { ScheduleEvents } from './schedule-events.service.js';
 import { occurrences, timezone } from './recurrence.js';
@@ -15,13 +19,24 @@ export async function admission(
   time: Date,
   preferredPermissionId?: string,
 ) {
-  const paid = await tx.$queryRaw<
-    { ok: boolean }[]
-  >`SELECT EXISTS(SELECT 1 FROM subscriptions s JOIN entitlement_grants g ON g.subscription_id=s.id WHERE s.enrollment_id=${enrollment}::uuid AND s.valid_from<=${time} AND (s.valid_to IS NULL OR s.valid_to>${time}) AND g.granted_at<=${time} AND t03_paid_at(s.id,${time})>=s.full_price AND g.quantity+coalesce((SELECT sum(delta_quantity) FROM entitlement_adjustments WHERE grant_id=g.id AND effective_at<=${time}),0)-coalesce((SELECT sum(quantity) FROM entitlement_consumptions WHERE grant_id=g.id AND consumed_at<=${time} AND (cancelled_at IS NULL OR cancelled_at>${time})),0)>0 AND NOT(coalesce(s.frozen_from<=${time} AND s.frozen_until>${time},false))) AS ok`;
+  const paid = await tx.$queryRaw<{ ok: boolean }[]>`SELECT EXISTS(
+    SELECT 1 FROM subscriptions sub JOIN entitlement_grants g ON g.subscription_id=sub.id
+    WHERE sub.enrollment_id=${enrollment}::uuid AND ${lessonSubscriptionWindowSql(time)}
+      AND g.granted_at<=${time} AND t03_paid_at(sub.id,${time})>=sub.full_price
+      AND g.quantity+coalesce((SELECT sum(delta_quantity) FROM entitlement_adjustments WHERE grant_id=g.id AND effective_at<=${time}),0)
+        -coalesce((SELECT sum(quantity) FROM entitlement_consumptions WHERE grant_id=g.id AND consumed_at<=${time}
+          AND (cancelled_at IS NULL OR cancelled_at>${time})),0)>0
+  ) AS ok`;
   if (paid[0]!.ok) return { paid: true, permissionId: null };
   const permissions = await tx.$queryRaw<
     { id: string }[]
-  >`SELECT p.id FROM temporary_access_permissions p JOIN subscriptions s ON s.id=p.subscription_id WHERE s.enrollment_id=${enrollment}::uuid AND (${preferredPermissionId ?? null}::uuid IS NULL OR p.id=${preferredPermissionId ?? null}::uuid) AND p.approved_at<=${time} AND p.valid_from<=${time} AND p.valid_to>${time} AND (p.revoked_at IS NULL OR p.revoked_at>${time}) AND (SELECT count(*) FROM lesson_actual_outcomes WHERE temporary_access_permission_id=p.id)<p.max_lessons ORDER BY p.valid_to,p.id LIMIT 1`;
+  >`SELECT p.id FROM temporary_access_permissions p JOIN subscriptions sub ON sub.id=p.subscription_id
+    WHERE sub.enrollment_id=${enrollment}::uuid AND ${lessonSubscriptionWindowSql(time)}
+      AND t03_paid_at(sub.id,${time})<sub.full_price
+      AND (${preferredPermissionId ?? null}::uuid IS NULL OR p.id=${preferredPermissionId ?? null}::uuid)
+      AND ${directorAdmissionWindowSql(time)}
+      AND t03_admission_slots_used(p.id,NULL,NULL)<p.max_lessons
+    ORDER BY p.valid_to,p.id LIMIT 1`;
   return { paid: false, permissionId: permissions[0]?.id ?? null };
 }
 @Injectable()

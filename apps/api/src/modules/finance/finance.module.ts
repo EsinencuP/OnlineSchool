@@ -9,11 +9,19 @@ import { FinanceExpiryModule } from './expiry.module.js';
 import { FinanceScopeGuard } from './finance-scope.guard.js';
 import { DirectorCrmDisputesController } from './manager-disputes/director.controller.js';
 import { TransactionModule } from '../../core/transaction/transaction.service.js';
+import { AllocationCorrectionsController } from './allocation-corrections/allocation-corrections.controller.js';
+import { AllocationCorrectionsService } from './allocation-corrections/allocation-corrections.service.js';
 
 @Module({
   imports: [FinanceInfrastructureModule, FinanceExpiryModule, AuditModule, TransactionModule],
-  controllers: [FinanceController, DirectorCrmDisputesController],
-  providers: [PayrollService, PeriodsService, TeacherRateService, FinanceScopeGuard],
+  controllers: [FinanceController, DirectorCrmDisputesController, AllocationCorrectionsController],
+  providers: [
+    PayrollService,
+    PeriodsService,
+    TeacherRateService,
+    FinanceScopeGuard,
+    AllocationCorrectionsService,
+  ],
   exports: [FinanceInfrastructureModule, TeacherRateService],
 })
 export class FinanceModule {}

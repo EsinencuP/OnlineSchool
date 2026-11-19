@@ -1,10 +1,14 @@
 import type { OutboxEvent } from '@online-school/db';
 import { err, ok } from '@online-school/shared';
 import type { Handler, Tx } from './contracts.js';
+import { UPLOAD_CLEANUP_TOPIC } from './expired-upload-cleanup.js';
 import { systemAudit } from './contracts.js';
 import { NotificationOutboxPublisher } from '@online-school/api/notifications';
 import { applyLeadEvent } from '@online-school/api/manager-leads';
 import { notificationDeliveryHandler } from './notification-delivery.js';
+import { MEET_REVOCATION_TOPIC } from '@online-school/api/google-meet';
+import { loadAuditReplaySource, OUTBOX_AUDIT_REPLAY_TOPIC } from '@online-school/api/outbox-replay';
+import { revokeDeactivatedMeetGrant } from './meet-revocation.js';
 
 export const StudentAccountCreatedHandler: Handler = async (tx, event) => {
   const payload = event.payload as {
@@ -205,23 +209,48 @@ export const EntitlementGrantedHandler: Handler = async (tx, event) => {
   return ok(undefined);
 };
 
-const observed: Handler = async (tx, event) => {
-  await systemAudit(tx, {
+function recordObservation(
+  tx: Tx,
+  event: Pick<OutboxEvent, 'id' | 'aggregate_type' | 'aggregate_id' | 'source_operation_id'>,
+) {
+  return systemAudit(tx, {
     key: `worker:observed:${event.id}`,
     action: 'worker.event-observed',
     resourceType: event.aggregate_type,
     resourceId: event.aggregate_id,
     operationId: event.source_operation_id,
   });
+}
+
+const observed: Handler = async (tx, event) => {
+  await recordObservation(tx, event);
   return ok(undefined);
 };
 
-export function createHandlers(): ReadonlyMap<string, Handler> {
+export const AuditOutboxReplayHandler: Handler = async (tx, event) => {
+  const payload = event.payload;
+  if (
+    event.aggregate_type !== 'OutboxEvent' ||
+    payload === null ||
+    typeof payload !== 'object' ||
+    Array.isArray(payload) ||
+    payload.resourceId !== event.aggregate_id
+  )
+    return err({ code: 'OUTBOX_REPLAY_INVALID_REFERENCE' });
+  const lookup = await loadAuditReplaySource(tx, event.aggregate_id);
+  if (lookup.status !== 'eligible') return err({ code: 'OUTBOX_REPLAY_INELIGIBLE' });
+  await recordObservation(tx, lookup.source);
+  return ok(undefined);
+};
+
+export function createHandlers(uploadCleanup?: Handler): ReadonlyMap<string, Handler> {
   const handlers = new Map<string, Handler>([
+    [OUTBOX_AUDIT_REPLAY_TOPIC, AuditOutboxReplayHandler],
     ['schedule.trial.outcome.v1', applyLeadEvent],
     ['schedule.lesson.changed.v1', applyLeadEvent],
     ['finance.lead-first-payment.allocated.v1', applyLeadEvent],
     ['notification.deliver.v1', notificationDeliveryHandler()],
+    [MEET_REVOCATION_TOPIC, revokeDeactivatedMeetGrant],
     ...Object.keys(subscriptionNoticeTypes).map(
       (topic) => [topic, ManagerSubscriptionNoticeHandler] as const,
     ),
@@ -235,10 +264,22 @@ export function createHandlers(): ReadonlyMap<string, Handler> {
   ]);
   // These existing Phase-0 events have no secondary business effect. Record receipt explicitly.
   for (const topic of OBSERVED_TOPICS) if (!handlers.has(topic)) handlers.set(topic, observed);
+  if (uploadCleanup) handlers.set(UPLOAD_CLEANUP_TOPIC, uploadCleanup);
   return handlers;
 }
 
 const OBSERVED_TOPICS = [
+  'director.meet.close-without-space.v1',
+  'director.meet.retire-space.v1',
+  'director.sale-condition.publish.v1',
+  'director.sale-condition.retire.v1',
+  'manager.refund.prepared.v1',
+  'finance.allocation-correction.proposed.v1',
+  'finance.allocation-correction.reviewed.v1',
+  'manager.refund.transfer-reported.v1',
+  'director.refund.decided.v1',
+  'director.refund.transfer-reviewed.v1',
+  'director.lesson-outcome-dispute.resolved.v1',
   'manager.lead.changed.v1',
   ...['create', 'update', 'claim', 'trial', 'transition', 'lose', 'reopen'].map(
     (name) => `manager.lead.command-${name}.v1`,
@@ -298,6 +339,7 @@ const OBSERVED_TOPICS = [
   'payroll.accrued.v1',
   'payroll.payout.attempted.v1',
   'payroll.payout.confirmed.v1',
+  'payroll.payout.reconciled.v1',
   'finance.temporary-access.expiry-scheduled.v1',
   'finance.temporary-access.expired.v1',
   'schedule.jobs.v1',
@@ -358,6 +400,7 @@ const OBSERVED_TOPICS = [
   ...[
     'logout',
     'password',
+    'demo.switch',
     'recovery.initiate',
     'recovery.complete',
     'webauthn.register.start',

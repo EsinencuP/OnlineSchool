@@ -49,7 +49,7 @@ CREATE TRIGGER trg_dir04_status_history BEFORE UPDATE OR DELETE ON staff_status_
 
 
 -- A hand-over re-addresses an open task without claiming it: OPEN -> OPEN is allowed when only the assignee changes.
-CREATE OR REPLACE FUNCTION mgr07_task_guard() RETURNS trigger LANGUAGE plpgsql SET search_path=pg_catalog,public AS $
+CREATE OR REPLACE FUNCTION mgr07_task_guard() RETURNS trigger LANGUAGE plpgsql SET search_path=pg_catalog,public AS $task_guard$
 BEGIN
  IF TG_OP='UPDATE' THEN
   IF OLD.status::text IN ('RESOLVED','REJECTED','CANCELLED') THEN RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Closed CRM task is immutable'; END IF;
@@ -76,7 +76,7 @@ BEGIN
   RAISE EXCEPTION USING ERRCODE='23514',MESSAGE='Published matching reversal required';
  END IF;
  RETURN NEW;
-END $;
+END $task_guard$;
 
 REVOKE ALL ON manager_handovers, staff_status_changes FROM PUBLIC;
 GRANT SELECT, INSERT ON manager_handovers, staff_status_changes TO online_school_runtime;

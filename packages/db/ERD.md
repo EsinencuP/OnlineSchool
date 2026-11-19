@@ -174,6 +174,7 @@ erDiagram
   teacher_accounts o|--o{ education_reports : "fk_t04_education_report_published_by"
   education_reports o|--o| education_reports : "fk_t04_education_report_supersedes_report"
   entitlement_adjustments {
+    String refund_id
     String id PK
     String grant_id
     String original_consumption_id
@@ -187,6 +188,7 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  refund_records o|--o{ entitlement_adjustments : "refund"
   entitlement_grants ||--o{ entitlement_adjustments : "fk_t03_entitlement_adjustment_grant"
   entitlement_consumptions o|--o{ entitlement_adjustments : "fk_t03_entitlement_adjustment_original_consumption"
   staff_accounts ||--o{ entitlement_adjustments : "fk_t03_entitlement_adjustment_author"
@@ -267,6 +269,24 @@ erDiagram
   auth_accounts ||--o{ file_permissions : "fk_t04_file_permission_granted_by"
   auth_accounts o|--o{ file_permissions : "fk_t04_file_permission_revoked_by"
   auth_accounts ||--o{ file_permissions : "fk_t04_permission_subject"
+  financial_period_disputes {
+    String id PK
+    String period_id
+    String lesson_id
+    String task_id
+    String report_id
+    String source_entry_id
+    String manager_id
+    Int source_version
+    String status_at_close
+    DateTime registered_at
+  }
+  financial_periods ||--o{ financial_period_disputes : "fk_period_dispute_period"
+  lesson_occurrences ||--o{ financial_period_disputes : "fk_period_dispute_lesson"
+  crm_tasks o|--o{ financial_period_disputes : "fk_period_dispute_task"
+  lesson_outcome_reports o|--o{ financial_period_disputes : "fk_period_dispute_report"
+  ledger_entries o|--o{ financial_period_disputes : "fk_period_dispute_entry"
+  staff_accounts o|--o{ financial_period_disputes : "fk_period_dispute_manager"
   financial_periods {
     String id PK
     DateTime starts_at
@@ -452,6 +472,10 @@ erDiagram
   students ||--o{ lead_student_links : "fk_lead_link_student"
   staff_accounts ||--o{ lead_student_links : "fk_lead_link_staff"
   leads {
+    String public_submission_id
+    String public_submission_hash
+    String public_privacy_notice
+    Boolean public_duplicate_suspected
     DateTime archived_student_at
     LeadAudience audience
     String guardian_name
@@ -503,6 +527,8 @@ erDiagram
   teacher_accounts ||--o{ learning_goals : "author_ref"
   teacher_accounts ||--o{ learning_goals : "editor_ref"
   ledger_documents {
+    String refund_approval_id
+    String refund_transfer_id
     String distribution_id
     String consumption_id
     String id PK
@@ -516,6 +542,8 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  refund_records o|--o| ledger_documents : "refund_approval"
+  refund_transfers o|--o| ledger_documents : "refund_transfer"
   payment_distributions o|--o| ledger_documents : "fk_ledger_document_distribution"
   entitlement_consumptions o|--o| ledger_documents : "fk_ledger_document_consumption"
   payment_receipts o|--o| ledger_documents : "fk_t03_ledger_document_payment"
@@ -581,6 +609,14 @@ erDiagram
   teacher_accounts ||--o{ lesson_actual_outcomes : "fk_t03_lesson_actual_outcome_actual_teacher"
   staff_accounts ||--o{ lesson_actual_outcomes : "fk_t03_lesson_actual_outcome_confirmed_by"
   temporary_access_permissions o|--o{ lesson_actual_outcomes : "fk_t03_lesson_actual_outcome_temporary_access_permission"
+  lesson_admission_starts {
+    String lesson_id PK
+    String permission_id
+    DateTime admitted_at
+    String source_operation_id
+  }
+  lesson_occurrences ||--o| lesson_admission_starts : "lesson"
+  temporary_access_permissions ||--o{ lesson_admission_starts : "permission"
   lesson_change_events {
     String id PK
     String lesson_occurrence_id
@@ -636,6 +672,25 @@ erDiagram
   teaching_assignments ||--o{ lesson_occurrences : "fk_t03_lesson_occurrence_teaching_assignment"
   recurring_slots o|--o{ lesson_occurrences : "fk_t03_lesson_occurrence_recurring_slot"
   teacher_accounts ||--o{ lesson_occurrences : "fk_t03_lesson_occurrence_scheduled_teacher"
+  lesson_outcome_dispute_decisions {
+    String id PK
+    String lesson_id
+    String report_id
+    String outcome_id
+    String origin_period_id
+    String director_id
+    String result
+    String evidence_reference
+    String reason
+    Boolean reconstructed_snapshot
+    DateTime decided_at
+    String source_operation_id
+  }
+  lesson_occurrences ||--o| lesson_outcome_dispute_decisions : "fk_lod_lesson"
+  lesson_outcome_reports ||--o| lesson_outcome_dispute_decisions : "fk_lod_report"
+  lesson_actual_outcomes o|--o| lesson_outcome_dispute_decisions : "fk_lod_outcome"
+  financial_periods o|--o{ lesson_outcome_dispute_decisions : "fk_lod_period"
+  staff_accounts ||--o{ lesson_outcome_dispute_decisions : "fk_lod_director"
   lesson_outcome_reports {
     Boolean student_no_show
     String id PK
@@ -779,6 +834,25 @@ erDiagram
     DateTime updated_at
   }
   audit_events ||--o{ outbox_events : "fk_t04_outbox_event_audit_event"
+  payment_allocation_corrections {
+    String id PK
+    String source_distribution_id
+    String target_subscription_id
+    Decimal amount
+    String reason
+    String proposed_by_id
+    DateTime proposed_at
+    String source_operation_id
+    AllocationCorrectionStatus status
+    String decided_by_id
+    DateTime decided_at
+    String decision_reason
+    String decision_operation_id
+  }
+  payment_distributions ||--o{ payment_allocation_corrections : "source_distribution"
+  subscriptions o|--o{ payment_allocation_corrections : "target_subscription"
+  staff_accounts ||--o{ payment_allocation_corrections : "proposer"
+  staff_accounts o|--o{ payment_allocation_corrections : "decider"
   payment_distributions {
     Boolean manager_prepared
     String id PK
@@ -953,6 +1027,16 @@ erDiagram
   student_subject_enrollments ||--o{ recurring_slots : "fk_t03_recurring_slot_enrollment"
   teaching_assignments ||--o{ recurring_slots : "fk_t03_recurring_slot_teaching_assignment"
   refund_records {
+    String request_id
+    String prepared_by_id
+    DateTime prepared_at
+    Int version
+    Json calculation_snapshot
+    String quote_revision
+    String approval_basis
+    String declined_by_id
+    DateTime declined_at
+    String decline_reason
     String id PK
     String subscription_id
     Decimal calculated_amount
@@ -971,8 +1055,34 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  manager_requests o|--o| refund_records : "request"
+  staff_accounts o|--o{ refund_records : "prepared_by"
+  staff_accounts o|--o{ refund_records : "declined_by"
   subscriptions ||--o{ refund_records : "fk_t03_refund_record_subscription"
   staff_accounts o|--o{ refund_records : "fk_t03_refund_record_approved_by_director"
+  refund_transfers {
+    String id PK
+    String refund_id
+    RefundTransferKind kind
+    RefundTransferStatus status
+    Decimal amount
+    DateTime occurred_at
+    String reference
+    String channel
+    String evidence
+    String original_transfer_id
+    String reported_by_id
+    DateTime reported_at
+    String reviewed_by_id
+    DateTime reviewed_at
+    String review_reason
+    String source_operation_id
+    String review_operation_id
+  }
+  refund_records ||--o{ refund_transfers : "refund"
+  staff_accounts ||--o{ refund_transfers : "reported_by"
+  staff_accounts o|--o{ refund_transfers : "reviewed_by"
+  refund_transfers o|--o{ refund_transfers : "original_transfer"
   relationship_verifications {
     String id PK
     String link_id
@@ -1038,6 +1148,10 @@ erDiagram
   }
   auth_accounts ||--o{ s3_objects : "fk_t04_s3_object_uploaded_by"
   sale_conditions {
+    String published_by_id
+    String publication_basis
+    String retired_by_id
+    String retirement_basis
     Int duration_days
     String id PK
     String code
@@ -1054,6 +1168,8 @@ erDiagram
     DateTime created_at
     DateTime updated_at
   }
+  staff_accounts o|--o{ sale_conditions : "published_by"
+  staff_accounts o|--o{ sale_conditions : "retired_by"
   schedule_change_approvals {
     String id PK
     String lesson_id
@@ -1454,6 +1570,73 @@ erDiagram
   }
   teacher_accounts ||--o{ teacher_engagements : "fk_engagement_teacher"
   staff_accounts ||--o{ teacher_engagements : "fk_engagement_recorder"
+  teacher_meet_oauth_challenges {
+    String teacher_id PK
+    String session_id
+    String state_hash
+    String verifier_ciphertext
+    Int grant_generation
+    DateTime expires_at
+    DateTime claimed_at
+  }
+  teacher_accounts ||--o| teacher_meet_oauth_challenges : "teacher"
+  sessions ||--o{ teacher_meet_oauth_challenges : "session"
+  teacher_meet_oauth_grants {
+    String teacher_id PK
+    String google_subject
+    Int generation
+    String refresh_ciphertext
+    DateTime authorized_at
+    DateTime disconnected_at
+    DateTime provider_revoked_at
+    String revocation_claim_id
+    DateTime revocation_claimed_at
+  }
+  teacher_accounts ||--o| teacher_meet_oauth_grants : "teacher"
+  teacher_meet_operations {
+    String id PK
+    String student_id
+    String teacher_id
+    String assignment_id
+    Int grant_generation
+    String google_subject
+    TeacherMeetOperationKind kind
+    TeacherMeetOperationState state
+    String request_operation_id
+    DateTime queued_at
+    String dispatch_token
+    DateTime finished_at
+    String diagnostic_code
+    DateTime retry_at
+    String candidate_code
+    String resolves_operation_id
+    String space_id
+    DateTime closed_at
+    String closed_by_id
+    String closure_basis
+  }
+  students ||--o{ teacher_meet_operations : "student"
+  teacher_accounts ||--o{ teacher_meet_operations : "teacher"
+  teaching_assignments ||--o{ teacher_meet_operations : "assignment"
+  teacher_meet_spaces o|--o{ teacher_meet_operations : "space"
+  teacher_meet_operations o|--o{ teacher_meet_operations : "resolves_operation"
+  staff_accounts o|--o{ teacher_meet_operations : "closed_by"
+  teacher_meet_spaces {
+    String id PK
+    String student_id
+    String teacher_id
+    String google_subject
+    String resource_name
+    String meeting_uri
+    DateTime published_at
+    DateTime last_verified_at
+    DateTime retired_at
+    String retired_by_id
+    String retirement_basis
+  }
+  students ||--o{ teacher_meet_spaces : "student"
+  teacher_accounts ||--o{ teacher_meet_spaces : "teacher"
+  staff_accounts o|--o{ teacher_meet_spaces : "retired_by"
   teacher_rate_promises {
     String id PK
     String teacher_id

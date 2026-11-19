@@ -6,15 +6,23 @@ import { DatabaseService } from '../../core/database/database.module.js';
 import { AppException, domainError } from '../../core/errors/domain-error.js';
 import type { DomainError } from '../../core/errors/domain-error.js';
 import type { CriticalContext } from '../../core/http.js';
+import { TransactionService } from '../../core/transaction/transaction.service.js';
 import { at } from '../finance/finance-common.js';
 import { FinanceAccess } from '../finance/finance-access.service.js';
 import { PeriodsService } from '../finance/periods.service.js';
+import {
+  openPeriodDisputes,
+  periodClosureBlockers,
+  periodDisputesRevision,
+} from '../finance/period-disputes.js';
+import type { PeriodDisputeSource } from '../finance/period-disputes.js';
 import type {
   PayrollSummaryDto,
   PayrollTeacherDto,
   PayrollTeacherRowDto,
   PayrollTotalDto,
   PeriodDto,
+  PeriodDisputesDto,
   PeriodListDto,
   UnresolvedDto,
   UnresolvedItemDto,
@@ -34,7 +42,7 @@ const money = (r: { accrued: string; paid: string }): Money => ({
   outstanding: new Prisma.Decimal(r.accrued).minus(r.paid).toFixed(4),
 });
 
-// Same facts the generic period close refuses to close over.
+// Date scopes for the open-items read model.
 const blockerSql = (from: Date | null, to: Date | null) => {
   const lessonRange =
     from && to
@@ -54,6 +62,7 @@ export class DirectorPayrollService {
     private readonly db: DatabaseService,
     private readonly periods: PeriodsService,
     private readonly access: FinanceAccess,
+    private readonly transactions: TransactionService,
   ) {}
 
   private async period(id: string) {
@@ -213,7 +222,7 @@ export class DirectorPayrollService {
 
   async list(): Promise<Result<PeriodListDto, DomainError>> {
     try {
-      const now = new Date();
+      const now = await at(this.db.client);
       const rows = await this.db.client.financialPeriod.findMany({
         orderBy: { starts_at: 'desc' },
         take: 60,
@@ -223,7 +232,7 @@ export class DirectorPayrollService {
         const finished = p.ends_at <= now;
         const blockers = p.closed_at
           ? 0
-          : Object.values(await this.blockerCounts(p.starts_at, p.ends_at)).reduce(
+          : Object.values(await periodClosureBlockers(this.db.client, p)).reduce(
               (a, b) => a + b,
               0,
             );
@@ -241,6 +250,121 @@ export class DirectorPayrollService {
     } catch (error: unknown) {
       return err(failure(error));
     }
+  }
+
+  async disputes(id: string, page: number): Promise<Result<PeriodDisputesDto, DomainError>> {
+    if (!UUID_RE.test(id)) return err(domainError('PERIOD_NOT_FOUND', 404));
+    return this.transactions.runReadOnly<PeriodDisputesDto>(async (tx) => {
+      const period = await tx.financialPeriod.findUnique({ where: { id } });
+      if (!period) return err(domainError('PERIOD_NOT_FOUND', 404));
+      const meta = {
+        periodId: period.id,
+        startsAt: period.starts_at.toISOString(),
+        endsAt: period.ends_at.toISOString(),
+        closedAt: period.closed_at?.toISOString() ?? null,
+        closedById: period.closed_by_id,
+        page,
+      };
+      const projection = (row: PeriodDisputeSource) => ({
+        lessonId: row.lesson_id,
+        taskId: row.task_id,
+        reportId: row.report_id,
+        sourceEntryId: row.source_entry_id,
+        sourceVersion: row.source_version,
+      });
+      const skip = (page - 1) * CAP;
+      if (!period.closed_at) {
+        const rows = await openPeriodDisputes(tx, period);
+        return ok({
+          ...meta,
+          revision: periodDisputesRevision(period.id, rows),
+          total: rows.length,
+          items: rows.slice(skip, skip + CAP).map((row) => ({
+            ...projection(row),
+            managerId: row.manager_id,
+            managerAtCloseId: null,
+            currentStatus: row.status_at_close,
+            statusAtClose: null,
+            resolvedAt: null,
+            correctionEntryId: null,
+          })),
+        });
+      }
+      const where = { period_id: id };
+      const total = await tx.financialPeriodDispute.count({ where });
+      const rows = await tx.financialPeriodDispute.findMany({
+        where,
+        orderBy: [{ lesson_id: 'asc' }, { task_id: 'asc' }, { report_id: 'asc' }],
+        skip,
+        take: CAP,
+        include: {
+          task: {
+            select: {
+              status: true,
+              assigned_manager_id: true,
+              resolved_at: true,
+              ledger_publication_id: true,
+            },
+          },
+          lesson: {
+            select: {
+              status: true,
+              outcome_dispute_decision: {
+                select: {
+                  decided_at: true,
+                  outcome: {
+                    select: {
+                      t03_teacheraccrual_lesson_actual_outcome_id: {
+                        select: {
+                          t03_payrollobligation_accrual_id: {
+                            select: { recognition_entry_id: true },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              enrollment_ref: {
+                select: {
+                  student_ref: {
+                    select: {
+                      manager_assignments: {
+                        where: { ended_at: null },
+                        select: { manager_id: true },
+                        take: 1,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+      return ok({
+        ...meta,
+        revision: null,
+        total,
+        items: rows.map((row) => ({
+          ...projection(row),
+          managerId: row.task
+            ? row.task.assigned_manager_id
+            : (row.lesson.enrollment_ref.student_ref.manager_assignments[0]?.manager_id ?? null),
+          managerAtCloseId: row.manager_id,
+          currentStatus: row.task?.status ?? row.lesson.status,
+          statusAtClose: row.status_at_close,
+          resolvedAt: row.task
+            ? (row.task.resolved_at?.toISOString() ?? null)
+            : (row.lesson.outcome_dispute_decision?.decided_at.toISOString() ?? null),
+          correctionEntryId: row.task
+            ? row.task.ledger_publication_id
+            : (row.lesson.outcome_dispute_decision?.outcome
+                ?.t03_teacheraccrual_lesson_actual_outcome_id?.t03_payrollobligation_accrual_id
+                ?.recognition_entry_id ?? null),
+        })),
+      });
+    });
   }
 
   async unresolved(periodId?: string): Promise<Result<UnresolvedDto, DomainError>> {
@@ -310,7 +434,7 @@ export class DirectorPayrollService {
           currency: null,
           detail:
             l.kind === 'DISPUTED_LESSON'
-              ? 'Lesson is disputed: resolve the dispute before closing'
+              ? 'Disputed lesson: review the confirmed report and the period dispute register'
               : 'Conducted lesson has no teacher accrual',
         })),
         ...attempts.map((a) => ({
@@ -393,9 +517,13 @@ export class DirectorPayrollService {
     }
   }
 
-  async close(ctx: CriticalContext, id: string): Promise<Result<PeriodDto, DomainError>> {
+  async close(
+    ctx: CriticalContext,
+    id: string,
+    body: unknown,
+  ): Promise<Result<PeriodDto, DomainError>> {
     try {
-      const closed = (await this.periods.close(ctx, id, {})) as {
+      const closed = (await this.periods.close(ctx, id, body)) as {
         id: string;
         starts_at: Date;
         ends_at: Date;

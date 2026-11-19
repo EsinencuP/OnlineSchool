@@ -3,7 +3,12 @@ import { afterAll, beforeAll, beforeEach, expect, test } from '@jest/globals';
 import request from 'supertest';
 import { managerAccountsFixture } from '../support/manager-accounts-fixture.mjs';
 import { Passwords } from '../../apps/api/dist/modules/identity/passwords.js';
-const keys = ['PLATFORM_DEMO_SWITCHING', 'QA_PASSWORD_ONLY_LOGIN', 'CSRF_SIGNING_SECRET'];
+const keys = [
+  'PLATFORM_DEMO_SWITCHING',
+  'QA_PASSWORD_ONLY_LOGIN',
+  'QA_PASSWORD_ONLY_ACCOUNT_IDS',
+  'CSRF_SIGNING_SECRET',
+];
 const previous = keys.map((key) => process.env[key]);
 const jar = (response) =>
   (response.headers['set-cookie'] ?? []).map((c) => c.split(';')[0]).join('; ');
@@ -20,6 +25,7 @@ beforeEach(async () => {
   process.env.PLATFORM_DEMO_SWITCHING = 'true';
   process.env.QA_PASSWORD_ONLY_LOGIN = 'true';
   await f.reset();
+  process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = f.accounts[0].id;
   for (const a of f.state.auth.values()) a.password_hash = hash;
 });
 afterAll(async () => {

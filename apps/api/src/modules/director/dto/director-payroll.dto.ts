@@ -1,6 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsISO8601, IsOptional, IsUUID } from 'class-validator';
+import { IsISO8601, IsOptional, IsUUID, Matches } from 'class-validator';
 import { STRICT_INPUT_DTO } from '../../../openapi/dto-validation.pipe.js';
 
 export class PayrollTotalDto {
@@ -111,6 +111,45 @@ export class PeriodDto {
 
 export class PeriodListDto {
   @ApiProperty({ type: [PeriodDto], description: 'Newest first' }) items!: PeriodDto[];
+}
+
+@SetMetadata(STRICT_INPUT_DTO, true)
+export class PeriodDisputesQueryDto {
+  @ApiPropertyOptional({ type: String, pattern: '^[1-9][0-9]{0,3}$', default: '1' })
+  @IsOptional()
+  @Matches(/^[1-9][0-9]{0,3}$/)
+  page?: string;
+}
+
+export class PeriodDisputeDto {
+  @ApiProperty({ format: 'uuid' }) lessonId!: string;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) taskId!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) reportId!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) sourceEntryId!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) managerId!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) managerAtCloseId!: string | null;
+  @ApiProperty({ type: 'integer' }) sourceVersion!: number;
+  @ApiProperty({ type: String, nullable: true }) statusAtClose!: string | null;
+  @ApiProperty() currentStatus!: string;
+  @ApiProperty({ type: String, format: 'date-time', nullable: true }) resolvedAt!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) correctionEntryId!: string | null;
+}
+
+export class PeriodDisputesDto {
+  @ApiProperty({ format: 'uuid' }) periodId!: string;
+  @ApiProperty({ format: 'date-time' }) startsAt!: string;
+  @ApiProperty({ format: 'date-time' }) endsAt!: string;
+  @ApiProperty({ type: String, format: 'date-time', nullable: true }) closedAt!: string | null;
+  @ApiProperty({ type: String, format: 'uuid', nullable: true }) closedById!: string | null;
+  @ApiProperty({
+    type: String,
+    nullable: true,
+    description: 'Closure confirmation for an open period',
+  })
+  revision!: string | null;
+  @ApiProperty({ type: 'integer' }) total!: number;
+  @ApiProperty({ type: 'integer' }) page!: number;
+  @ApiProperty({ type: [PeriodDisputeDto] }) items!: PeriodDisputeDto[];
 }
 
 @SetMetadata(STRICT_INPUT_DTO, true)

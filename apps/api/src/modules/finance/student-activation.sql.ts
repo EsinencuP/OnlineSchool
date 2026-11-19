@@ -24,7 +24,7 @@ export function studentActivationSql(studentId: string, now: Date): Prisma.Sql {
     LEFT JOIN LATERAL (SELECT p.id,p.approved_by_director_id FROM temporary_access_permissions p WHERE p.subscription_id=candidate.id
       AND p.approved_at>=facts.latest_payment_at AND p.approved_at<=${now} AND p.valid_from<=${now} AND p.valid_to>${now}
       AND (p.revoked_at IS NULL OR p.revoked_at>${now})
-      AND (SELECT count(*) FROM lesson_actual_outcomes o WHERE o.temporary_access_permission_id=p.id AND o.confirmed_at<=${now})<p.max_lessons
+      AND t03_admission_slots_used(p.id,NULL,${now})<p.max_lessons
       ORDER BY p.approved_at DESC,p.id LIMIT 1) admission ON true
     WHERE enrollment.student_id=${studentId}::uuid
       AND facts.paid>0 AND (facts.paid>=candidate.full_price OR admission.id IS NOT NULL)

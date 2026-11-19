@@ -11,6 +11,7 @@ import { FinanceAccess } from '../../apps/api/dist/modules/finance/finance-acces
 import { ScheduleAccess } from '../../apps/api/dist/modules/schedule/schedule-access.service.js';
 
 const previous = process.env.MANAGER_PASSWORD_ONLY_LOGIN;
+const previousIds = process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS;
 const previousCsrf = process.env.CSRF_SIGNING_SECRET;
 let f, passwordHash;
 const password = 'Fixture-Password-Only!47';
@@ -26,6 +27,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   process.env.MANAGER_PASSWORD_ONLY_LOGIN = 'true';
   await f.reset();
+  process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS = f.accounts[0].id;
   f.client.student.count = async () => 0;
   for (const a of f.state.auth.values()) a.password_hash = passwordHash;
 });
@@ -33,6 +35,8 @@ afterAll(async () => {
   await f?.app.close();
   if (previous === undefined) delete process.env.MANAGER_PASSWORD_ONLY_LOGIN;
   else process.env.MANAGER_PASSWORD_ONLY_LOGIN = previous;
+  if (previousIds === undefined) delete process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS;
+  else process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS = previousIds;
   if (previousCsrf === undefined) delete process.env.CSRF_SIGNING_SECRET;
   else process.env.CSRF_SIGNING_SECRET = previousCsrf;
 });
@@ -107,7 +111,12 @@ test('wrong password and revoked session are still rejected', async () => {
   ).toBe(401);
 });
 test('manager exception does not grant generic staff APIs or explicit RequireMfa', async () => {
-  const actor = { kind: 'STAFF', roles: ['MANAGER'], mfaCompleted: false };
+  const actor = {
+    accountId: f.accounts[0].id,
+    kind: 'STAFF',
+    roles: ['MANAGER'],
+    mfaCompleted: false,
+  };
   for (const [path, marked, requireMfa] of [
     ['/api/v1/finance/receipts', false, false],
     ['/api/v1/manager/me', true, true],
@@ -127,8 +136,9 @@ test('manager exception does not grant generic staff APIs or explicit RequireMfa
   }
 });
 test('temporary policy rejects mixed roles, recovery and non-exact configuration', () => {
-  const actor = { kind: 'STAFF', roles: ['MANAGER'] };
+  const actor = { accountId: f.accounts[0].id, kind: 'STAFF', roles: ['MANAGER'] };
   expect(managerPasswordOnlyLogin(actor)).toBe(true);
+  expect(managerPasswordOnlyLogin({ ...actor, accountId: f.accounts[1].id })).toBe(false);
   expect(managerPasswordOnlyLogin({ ...actor, roles: ['MANAGER', 'DIRECTOR'] })).toBe(false);
   expect(managerPasswordOnlyLogin({ ...actor, recoveryOnly: true })).toBe(false);
   for (const value of ['false', '1', 'TRUE', '']) {
@@ -140,7 +150,12 @@ test('temporary policy rejects mixed roles, recovery and non-exact configuration
 });
 
 test('manager workflow staff checks allow password mode while director and teacher checks still deny', async () => {
-  const actor = { kind: 'STAFF', roles: ['MANAGER'], mfaCompleted: false };
+  const actor = {
+    accountId: f.accounts[0].id,
+    kind: 'STAFF',
+    roles: ['MANAGER'],
+    mfaCompleted: false,
+  };
   const ctx = {
     actor,
     tx: { staffAccount: { findFirst: async () => ({ id: 'manager-profile' }) } },

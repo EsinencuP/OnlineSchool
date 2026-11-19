@@ -55,9 +55,23 @@ export class PayrollTotalDto {
   })
   pendingAccrual!: string;
 }
+export class PayrollReviewItemDto {
+  @ApiProperty({ format: 'uuid' }) lessonId!: string;
+  @ApiProperty({ format: 'uuid' }) reportId!: string;
+  @ApiProperty({ format: 'date-time' }) lessonAt!: string;
+  @ApiProperty() studentName!: string;
+  @ApiProperty() subjectName!: string;
+  @ApiProperty({ enum: ['DISPUTED_REPORT', 'AWAITING_DIRECTOR_ACCRUAL'] })
+  status!: 'DISPUTED_REPORT' | 'AWAITING_DIRECTOR_ACCRUAL';
+}
 export class TeacherPayrollResponseDto {
   @ApiProperty({ example: '2026-11' }) month!: string;
   @ApiProperty({ example: 'Europe/Chisinau' }) timezone!: string;
   @ApiProperty({ type: [PayrollTotalDto] }) @IsArray() totals!: PayrollTotalDto[];
   @ApiProperty({ type: [PayrollLineDto] }) @IsArray() lines!: PayrollLineDto[];
+  @ApiPropertyOptional({
+    type: [PayrollReviewItemDto],
+    description: 'Own lessons awaiting a decision, without an estimated amount.',
+  })
+  reviewItems?: PayrollReviewItemDto[];
 }

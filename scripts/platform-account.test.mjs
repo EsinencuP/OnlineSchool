@@ -5,17 +5,21 @@ const require = createRequire(new URL('../apps/api/package.json', import.meta.ur
 require('reflect-metadata');
 const { IdentityService } = await import('../apps/api/dist/modules/identity/identity.service.js');
 const { PlatformController } = await import('../apps/api/dist/modules/platform/platform.module.js');
+const { PlatformWorkspaceService } =
+  await import('../apps/api/dist/modules/platform/workspace.service.js');
 const { demoAccounts, demoAccountId, demoSwitchAllowed } =
   await import('../apps/api/dist/modules/identity/demo-accounts.js');
 const { accounts, demoId } = await import('./platform-demo-plan.mjs');
 const previous = {
   switch: process.env.PLATFORM_DEMO_SWITCHING,
   password: process.env.QA_PASSWORD_ONLY_LOGIN,
+  ids: process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS,
 };
 test.after(() => {
   for (const [key, value] of [
     ['PLATFORM_DEMO_SWITCHING', previous.switch],
     ['QA_PASSWORD_ONLY_LOGIN', previous.password],
+    ['QA_PASSWORD_ONLY_ACCOUNT_IDS', previous.ids],
   ]) {
     if (value === undefined) delete process.env[key];
     else process.env[key] = value;
@@ -24,6 +28,7 @@ test.after(() => {
 test.beforeEach(() => {
   process.env.PLATFORM_DEMO_SWITCHING = 'true';
   process.env.QA_PASSWORD_ONLY_LOGIN = 'true';
+  process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = accounts.map((a) => demoAccountId(a.key)).join(',');
 });
 const actor = (key = 'anna', role = 'STUDENT') => ({
   accountId: demoAccountId(key),
@@ -113,6 +118,13 @@ test('invalid source and disabled target fail before revocation or session issua
     /DEMO_ACCOUNT_UNAVAILABLE/,
   );
   assert.deepEqual(writes, []);
+  service.roles = async () => ['DIRECTOR'];
+  process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = demoAccountId('anna');
+  await assert.rejects(
+    () => service.switchDemo({ body: { key: 'pasha' } }),
+    /DEMO_ACCOUNT_UNAVAILABLE/,
+  );
+  assert.deepEqual(writes, []);
 });
 test('arbitrary account IDs, roles and unlisted keys are never accepted as a switch target', async () => {
   const { service, writes } = identityFixture();
@@ -127,9 +139,6 @@ test('arbitrary account IDs, roles and unlisted keys are never accepted as a swi
 test('teacher workspace scopes lessons, assignments and homework to its profile; no CRM tasks queried', async () => {
   const calls = [];
   const client = {
-    teacherAccount: {
-      findFirstOrThrow: async () => ({ id: 'teacher-profile', full_name: 'Teacher' }),
-    },
     lessonOccurrence: {
       findMany: async (args) => {
         calls.push(['lessons', args.where]);
@@ -150,9 +159,20 @@ test('teacher workspace scopes lessons, assignments and homework to its profile;
     },
     crmTask: { findMany: async () => assert.fail('Teacher must not read manager tasks') },
   };
-  const controller = new PlatformController({ client });
+  const workspaces = new PlatformWorkspaceService(
+    {
+      get: async () => ({
+        role: 'TEACHER',
+        teacherProfileId: 'teacher-profile',
+        displayName: 'Teacher',
+        asOf: '2026-11-01T12:00:00.000Z',
+      }),
+    },
+    { runReadOnly: (work) => work(client) },
+  );
+  const controller = new PlatformController({ client }, undefined, undefined, workspaces);
   const result = await controller.workspace(
-    { account: { ...actor(), role: 'TEACHER' } },
+    { account: { ...actor(), kind: 'TEACHER', role: 'TEACHER', roles: ['TEACHER'] } },
     { setHeader() {} },
   );
   assert.equal(calls[0][1].scheduled_teacher_id, 'teacher-profile');

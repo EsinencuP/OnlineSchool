@@ -51,6 +51,11 @@ export function historyRecords(
         FROM entitlement_consumptions c JOIN subscriptions sub ON sub.id=c.subscription_id AND sub.enrollment_id=e.id
           JOIN ledger_documents d ON d.consumption_id=c.id JOIN ledger_entries le ON le.document_id=d.id
         WHERE c.lesson_occurrence_id=l.id AND c.consumed_at<=${time} AND (c.cancelled_at IS NULL OR c.cancelled_at>${time}) AND le.published_at<=${time}
+          AND NOT EXISTS(
+            SELECT 1 FROM ledger_entries reversal JOIN crm_tasks resolved ON resolved.ledger_publication_id=reversal.id
+            WHERE reversal.reverses_entry_id=le.id AND reversal.published_at<=${time}
+              AND resolved.type='ATTENDANCE_DISPUTE' AND resolved.status='RESOLVED' AND resolved.original_consumption_id=c.id
+          )
         ORDER BY c.consumed_at DESC,c.id DESC LIMIT 1) charge ON true
     WHERE e.student_id=${studentId}::uuid AND l.scheduled_at<=${time} ${lesson} ${subject}
       AND ((l.status='CONDUCTED' AND o.id IS NOT NULL) OR

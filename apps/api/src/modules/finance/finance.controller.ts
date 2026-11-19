@@ -8,7 +8,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Header, Param, Post, UseGuards } from '@nestjs/common';
 import { FinanceScopeGuard } from './finance-scope.guard.js';
 import type { AccountContext, CriticalContext } from '../../core/http.js';
 import { CriticalCommand, CurrentTransaction } from '../../core/idempotency/idempotency.module.js';
@@ -23,6 +23,7 @@ import { EntitlementsService } from './entitlements.service.js';
 import { FinanceLedger } from './finance-ledger.service.js';
 import { PeriodsService } from './periods.service.js';
 import { PayrollService } from './payroll.service.js';
+import { ReconcilePayoutRequest, ReconcilePayoutResponse } from './payout-reconciliation.dto.js';
 import { serialize } from './finance-common.js';
 
 @Controller('api/v1')
@@ -547,7 +548,7 @@ export class FinanceController {
     operationId: 'closeFinancialPeriod',
     summary: 'Close financial period',
     description:
-      'MFA required. DIRECTOR only; past completed period without draft/unresolved financial facts.',
+      'MFA required. DIRECTOR only; verified disputes remain in a separate confirmed register.',
   })
   @ApiResponse({
     status: 200,
@@ -716,6 +717,56 @@ export class FinanceController {
   ) {
     return serialize(await this.payroll.confirm(ctx, id, body));
   }
+
+  @ApiOperation({
+    operationId: 'reconcilePayout',
+    summary: 'Record a verified external payout result',
+    description:
+      'Verified MFA and DIRECTOR only. Resolves a pending or unknown attempt based on external evidence. This command does not initiate a transfer.',
+  })
+  @ApiResponse({ status: 200, type: ReconcilePayoutResponse })
+  @ApiResponse({ status: 400, type: ApiDto.ApiError, description: 'INVALID_INPUT' })
+  @ApiResponse({ status: 401, type: ApiDto.ApiError, description: 'UNAUTHENTICATED' })
+  @ApiResponse({ status: 403, type: ApiDto.ApiError, description: 'FORBIDDEN, MFA_REQUIRED' })
+  @ApiResponse({ status: 404, type: ApiDto.ApiError, description: 'NOT_FOUND' })
+  @ApiResponse({
+    status: 409,
+    type: ApiDto.ApiError,
+    description: 'PAYOUT_ATTEMPT_ALREADY_FINAL, IDEMPOTENCY_KEY_REUSED',
+  })
+  @ApiResponse({
+    status: 422,
+    type: ApiDto.ApiError,
+    description: 'INVALID_INPUT, INVALID_MONEY, PAYOUT_EXCEEDS_OBLIGATION, CLOSED_PERIOD',
+  })
+  @ApiResponse({ status: 503, type: ApiDto.ApiError, description: 'Command unavailable' })
+  @ApiHeader({
+    name: 'Idempotency-Key',
+    required: true,
+    schema: { type: 'string', format: 'uuid' },
+  })
+  @ApiHeader({ name: 'X-CSRF-Token', required: true, schema: { type: 'string' } })
+  @ApiParam({ name: 'id', type: String, format: 'uuid' })
+  @ApiCookieAuth('sessionCookie')
+  @ApiTags('Finance')
+  @Post('payouts/:id/reconcile')
+  @Header('Cache-Control', 'private, no-store')
+  @RequireRole('DIRECTOR')
+  @RequirePermission('payroll:payout')
+  @CriticalCommand({
+    type: 'payroll.payout.reconcile',
+    resourceType: 'PayoutAttempt',
+    topic: 'payroll.payout.reconciled.v1',
+    conflictOnPayloadMismatch: true,
+  })
+  async payoutReconcile(
+    @CurrentTransaction() ctx: CriticalContext,
+    @Param('id') id: string,
+    @Body() body: ReconcilePayoutRequest,
+  ): Promise<ReconcilePayoutResponse> {
+    return this.payroll.reconcile(ctx, id, body);
+  }
+
   @ApiOperation({
     operationId: 'getTeacherPayroll',
     summary: 'Get teacher payroll',

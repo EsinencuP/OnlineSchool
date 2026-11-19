@@ -400,6 +400,32 @@ test('full director reversal restores exact posted advance and rights, without c
   expect(f.state.lessons.get(task.lesson_id).status).toBe('CANCELLED');
   expect(f.state.adjustments.size).toBe(1);
 });
+test('late dispute approval restores rights and reverses money without updating a closed-period consumption', async () => {
+  const task = await disputeTask();
+  const original = { ...f.state.consumptions.get(task.original_consumption_id) };
+  const lesson = f.state.lessons.get(task.lesson_id);
+  const originPeriodId = randomUUID();
+  f.state.closedLessonPeriod = {
+    id: originPeriodId,
+    scheduledAt: lesson.scheduled_at,
+    closedAt: new Date(+f.state.now - 1),
+  };
+  const before = advance();
+  await propose(task);
+  const key = randomUUID();
+  const result = await approve(task.id, 3, key);
+  expect(result.status).toBe(200);
+  expect((await approve(task.id, 3, key)).body).toEqual(result.body);
+  expect(f.state.consumptions.get(original.id)).toEqual(original);
+  expect(f.state.adjustments.size).toBe(1);
+  expect([...f.state.adjustments.values()][0]).toMatchObject({
+    kind: 'GRANT_DELTA',
+    delta_quantity: original.quantity,
+    original_consumption_id: original.id,
+    financial_period_id: f.state.periodId,
+  });
+  expect(advance().sub(before).toFixed(4)).toBe('125.0000');
+});
 test.each(['ledger', 'closed', 'audit', 'outbox', 'cas'])(
   'director %s failure rolls back adjustment, Ledger and task completion',
   async (failure) => {
@@ -412,7 +438,8 @@ test.each(['ledger', 'closed', 'audit', 'outbox', 'cas'])(
     if (failure === 'outbox') f.state.failOutbox = true;
     if (failure === 'cas') f.state.failTaskCas = true;
     const r = await approve(task.id);
-    expect(r.status).toBe(failure === 'cas' ? 409 : 503);
+    expect(r.status).toBe({ cas: 409, closed: 422 }[failure] ?? 503);
+    if (failure === 'closed') expect(r.body.code).toBe('CLOSED_PERIOD');
     expect(f.state.tasks.get(task.id)).toMatchObject({
       status: 'IN_PROGRESS',
       version: 3,

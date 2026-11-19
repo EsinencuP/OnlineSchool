@@ -1,0 +1,30 @@
+name: Runtime health monitor
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-health-monitor
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    if: >-
+      vars.OPS_RUNTIME_MONITOR_ENABLED == 'true' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with: { node-version-file: .nvmrc, package-manager-cache: false }
+      - run: node infra/ops/runtime-monitor.mjs --publish
+        env:
+          OPS_RUNTIME_ORIGIN: ${{ vars.OPS_RUNTIME_ORIGIN }}
+          OPS_RUNTIME_MONITOR_ENABLED: ${{ vars.OPS_RUNTIME_MONITOR_ENABLED }}
+          OPS_RUNTIME_PING_URL: ${{ secrets.OPS_RUNTIME_PING_URL }}

@@ -1,8 +1,18 @@
 import { randomUUID } from 'node:crypto';
 import type { JobRecord, OutboxEvent, PrismaClient } from '@online-school/db';
+import { MEET_OPERATION_TOPIC } from '@online-school/api/google-meet';
 import type { Handler, Tx, WorkerOptions } from './contracts.js';
-import { dbNow, retryDelay, rollback, safeCode, systemAudit } from './contracts.js';
+import { dbNow, retryDelay, rollback, safeCode, systemAudit, WorkerFailure } from './contracts.js';
 import { createHandlers } from './handlers.js';
+import { UPLOAD_CLEANUP_TOPIC } from './expired-upload-cleanup.js';
+import {
+  confirmMeetDispatch,
+  deadMeetOperation,
+  invokeMeetProvider,
+  meetReadRetry,
+  prepareMeetOperation,
+  settleMeetOperation,
+} from './meet-operations.js';
 
 export type Claim = { event: OutboxEvent; job: JobRecord; token: string };
 const transactionOptions = {
@@ -10,6 +20,17 @@ const transactionOptions = {
   timeout: 10000,
   maxWait: 5000,
 } as const;
+
+function supported(event: OutboxEvent) {
+  const p = event.payload;
+  return (
+    event.schema_version === 1 &&
+    p &&
+    typeof p === 'object' &&
+    !Array.isArray(p) &&
+    p.schemaVersion === 1
+  );
+}
 
 export class OutboxWorker {
   private readonly workerId = `outbox:${randomUUID()}`;
@@ -43,6 +64,7 @@ export class OutboxWorker {
       const rows = await tx.$queryRaw<{ id: string }[]>`
         SELECT id FROM outbox_events WHERE status='PENDING' AND next_attempt_at<=clock_timestamp()
           AND (locked_until IS NULL OR locked_until<=clock_timestamp())
+          AND (${this.handlers.has(UPLOAD_CLEANUP_TOPIC)} OR topic<>${UPLOAD_CLEANUP_TOPIC})
         ORDER BY next_attempt_at,id FOR UPDATE SKIP LOCKED LIMIT 1`;
       if (!rows.length) return null;
       const event = await tx.outboxEvent.findUniqueOrThrow({ where: { id: rows[0]!.id } });
@@ -124,24 +146,22 @@ export class OutboxWorker {
 
   async deliver(claim: Claim): Promise<void> {
     try {
+      const isMeet = claim.event.topic === MEET_OPERATION_TOPIC;
+      const meet = isMeet ? await this.dispatchMeet(claim) : null;
       await this.db.$transaction(async (tx) => {
         const current = await this.owned(tx, claim);
         if (!current) return;
         const now = await dbNow(tx);
         if (!current.locked_until || current.locked_until <= now) return rollback('LEASE_EXPIRED');
-        const payload = current.payload;
-        if (
-          current.schema_version !== 1 ||
-          !payload ||
-          typeof payload !== 'object' ||
-          Array.isArray(payload) ||
-          payload.schemaVersion !== 1
-        )
-          return rollback('EVENT_SCHEMA_UNSUPPORTED');
-        const handler = this.handlers.get(current.topic);
-        if (!handler) return rollback('OUTBOX_HANDLER_NOT_REGISTERED');
-        const result = await handler(tx, current, now);
-        if (!result.ok) return rollback(result.error.code);
+        if (!supported(current)) return rollback('EVENT_SCHEMA_UNSUPPORTED');
+        if (isMeet) {
+          if (meet) await settleMeetOperation(tx, current, meet.ticket, now, meet.outcome);
+        } else {
+          const handler = this.handlers.get(current.topic);
+          if (!handler) return rollback('OUTBOX_HANDLER_NOT_REGISTERED');
+          const result = await handler(tx, current, now);
+          if (!result.ok) return rollback(result.error.code);
+        }
         const finished = await dbNow(tx);
         await tx.jobAttempt.update({
           where: { job_id_attempt_no: { job_id: claim.job.id, attempt_no: claim.job.attempts } },
@@ -170,8 +190,39 @@ export class OutboxWorker {
         });
       }, transactionOptions);
     } catch (error: unknown) {
-      await this.fail(claim, safeCode(error));
+      await this.fail(
+        claim,
+        safeCode(error),
+        error instanceof WorkerFailure ? error.retryAfterMs : undefined,
+      );
     }
+  }
+
+  private async dispatchMeet(claim: Claim) {
+    const ticket = await this.db.$transaction(async (tx) => {
+      const current = await this.owned(tx, claim);
+      if (!current) return null;
+      const now = await dbNow(tx);
+      if (!current.locked_until || current.locked_until <= now) return rollback('LEASE_EXPIRED');
+      if (!supported(current)) return rollback('EVENT_SCHEMA_UNSUPPORTED');
+      return prepareMeetOperation(tx, current, claim.token, now);
+    }, transactionOptions);
+    if (!ticket) return null;
+    const outcome = await invokeMeetProvider(ticket, (rotation) =>
+      this.db.$transaction(async (tx) => {
+        const current = await this.owned(tx, claim);
+        if (!current) return false;
+        const now = await dbNow(tx);
+        return (
+          !!current.locked_until &&
+          current.locked_until > now &&
+          (await confirmMeetDispatch(tx, ticket, now, rotation))
+        );
+      }, transactionOptions),
+    );
+    const retry = meetReadRetry(ticket, outcome);
+    if (retry) return rollback(retry.code, retry.retryAfterMs);
+    return { ticket, outcome };
   }
 
   private async owned(tx: Tx, claim: Claim): Promise<OutboxEvent | null> {
@@ -193,6 +244,7 @@ export class OutboxWorker {
         where: { id: event.aggregate_id, status: 'QUEUED' },
         data: { status: 'FAILED', failure_reason: 'DELIVERY_FAILED' },
       });
+    if (event.topic === MEET_OPERATION_TOPIC) await deadMeetOperation(tx, event, now, code);
     await tx.jobRecord.update({
       where: { id: job.id },
       data: {
@@ -222,7 +274,7 @@ export class OutboxWorker {
     });
   }
 
-  private async fail(claim: Claim, code: string): Promise<void> {
+  private async fail(claim: Claim, code: string, retryAfterMs?: number): Promise<void> {
     await this.db.$transaction(async (tx) => {
       if (!(await this.owned(tx, claim))) return;
       const now = await dbNow(tx);
@@ -234,7 +286,7 @@ export class OutboxWorker {
         await this.dead(tx, claim.event, claim.job, now, code);
         return;
       }
-      const next = new Date(+now + retryDelay(claim.job.attempts));
+      const next = new Date(+now + Math.max(retryDelay(claim.job.attempts), retryAfterMs ?? 0));
       await tx.jobRecord.update({
         where: { id: claim.job.id },
         data: {

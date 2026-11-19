@@ -1793,6 +1793,17 @@
     "table": "entitlement_adjustments",
     "fields": [
       {
+        "name": "refund_id",
+        "column": "refund_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -1924,6 +1935,17 @@
     ],
     "relations": [
       {
+        "field": "refund",
+        "type": "RefundRecord",
+        "from": [
+          "refund_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
         "field": "grant_ref",
         "type": "EntitlementGrant",
         "from": [
@@ -1969,6 +1991,10 @@
       }
     ],
     "uniqueSets": [
+      [
+        "refund_id",
+        "grant_id"
+      ],
       [
         "id"
       ],
@@ -2784,6 +2810,200 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "FinancialPeriodDispute",
+    "table": "financial_period_disputes",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "period_id",
+        "column": "period_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "lesson_id",
+        "column": "lesson_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "task_id",
+        "column": "task_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "report_id",
+        "column": "report_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "source_entry_id",
+        "column": "source_entry_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "manager_id",
+        "column": "manager_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "source_version",
+        "column": "source_version",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "status_at_close",
+        "column": "status_at_close",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "registered_at",
+        "column": "registered_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "period",
+        "type": "FinancialPeriod",
+        "from": [
+          "period_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_period"
+      },
+      {
+        "field": "lesson",
+        "type": "LessonOccurrence",
+        "from": [
+          "lesson_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_lesson"
+      },
+      {
+        "field": "task",
+        "type": "CrmTask",
+        "from": [
+          "task_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_task"
+      },
+      {
+        "field": "report",
+        "type": "LessonOutcomeReport",
+        "from": [
+          "report_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_report"
+      },
+      {
+        "field": "source_entry",
+        "type": "LedgerEntry",
+        "from": [
+          "source_entry_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_entry"
+      },
+      {
+        "field": "manager",
+        "type": "StaffAccount",
+        "from": [
+          "manager_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_period_dispute_manager"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "period_id",
+        "task_id"
+      ],
+      [
+        "period_id",
+        "report_id"
+      ],
+      [
+        "id"
       ]
     ]
   },
@@ -4715,6 +4935,47 @@
     "table": "leads",
     "fields": [
       {
+        "name": "public_submission_id",
+        "column": "public_submission_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "public_submission_hash",
+        "column": "public_submission_hash",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Char",
+          "64"
+        ]
+      },
+      {
+        "name": "public_privacy_notice",
+        "column": "public_privacy_notice",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "public_duplicate_suspected",
+        "column": "public_duplicate_suspected",
+        "type": "Boolean",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "archived_student_at",
         "column": "archived_student_at",
         "type": "DateTime",
@@ -4972,6 +5233,9 @@
     ],
     "uniqueSets": [
       [
+        "public_submission_id"
+      ],
+      [
         "trial_lesson_id"
       ],
       [
@@ -5225,6 +5489,28 @@
     "table": "ledger_documents",
     "fields": [
       {
+        "name": "refund_approval_id",
+        "column": "refund_approval_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "refund_transfer_id",
+        "column": "refund_transfer_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
         "name": "distribution_id",
         "column": "distribution_id",
         "type": "String",
@@ -5359,6 +5645,28 @@
     ],
     "relations": [
       {
+        "field": "refund_approval",
+        "type": "RefundRecord",
+        "from": [
+          "refund_approval_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "refund_transfer",
+        "type": "RefundTransfer",
+        "from": [
+          "refund_transfer_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
         "field": "distribution",
         "type": "PaymentDistribution",
         "from": [
@@ -5437,6 +5745,12 @@
       }
     ],
     "uniqueSets": [
+      [
+        "refund_approval_id"
+      ],
+      [
+        "refund_transfer_id"
+      ],
       [
         "distribution_id"
       ],
@@ -6099,6 +6413,89 @@
     ]
   },
   {
+    "name": "LessonAdmissionStart",
+    "table": "lesson_admission_starts",
+    "fields": [
+      {
+        "name": "lesson_id",
+        "column": "lesson_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "permission_id",
+        "column": "permission_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "admitted_at",
+        "column": "admitted_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "source_operation_id",
+        "column": "source_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "lesson",
+        "type": "LessonOccurrence",
+        "from": [
+          "lesson_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "permission",
+        "type": "TemporaryAccessPermission",
+        "from": [
+          "permission_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "lesson_id"
+      ],
+      [
+        "source_operation_id"
+      ]
+    ]
+  },
+  {
     "name": "LessonChangeEvent",
     "table": "lesson_change_events",
     "fields": [
@@ -6683,6 +7080,211 @@
       ],
       [
         "id"
+      ],
+      [
+        "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "LessonOutcomeDisputeDecision",
+    "table": "lesson_outcome_dispute_decisions",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "lesson_id",
+        "column": "lesson_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "report_id",
+        "column": "report_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "outcome_id",
+        "column": "outcome_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "origin_period_id",
+        "column": "origin_period_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "director_id",
+        "column": "director_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "result",
+        "column": "result",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "evidence_reference",
+        "column": "evidence_reference",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "reason",
+        "column": "reason",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "reconstructed_snapshot",
+        "column": "reconstructed_snapshot",
+        "type": "Boolean",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "decided_at",
+        "column": "decided_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "source_operation_id",
+        "column": "source_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "lesson",
+        "type": "LessonOccurrence",
+        "from": [
+          "lesson_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_lod_lesson"
+      },
+      {
+        "field": "report",
+        "type": "LessonOutcomeReport",
+        "from": [
+          "report_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_lod_report"
+      },
+      {
+        "field": "outcome",
+        "type": "LessonActualOutcome",
+        "from": [
+          "outcome_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_lod_outcome"
+      },
+      {
+        "field": "origin_period",
+        "type": "FinancialPeriod",
+        "from": [
+          "origin_period_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_lod_period"
+      },
+      {
+        "field": "director",
+        "type": "StaffAccount",
+        "from": [
+          "director_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": "fk_lod_director"
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "lesson_id"
+      ],
+      [
+        "report_id"
+      ],
+      [
+        "outcome_id"
       ],
       [
         "source_operation_id"
@@ -8157,6 +8759,209 @@
       ],
       [
         "event_key"
+      ]
+    ]
+  },
+  {
+    "name": "PaymentAllocationCorrection",
+    "table": "payment_allocation_corrections",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "source_distribution_id",
+        "column": "source_distribution_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "target_subscription_id",
+        "column": "target_subscription_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "amount",
+        "column": "amount",
+        "type": "Decimal",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Decimal",
+          "20, 4"
+        ]
+      },
+      {
+        "name": "reason",
+        "column": "reason",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "proposed_by_id",
+        "column": "proposed_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "proposed_at",
+        "column": "proposed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "source_operation_id",
+        "column": "source_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "status",
+        "column": "status",
+        "type": "AllocationCorrectionStatus",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "decided_by_id",
+        "column": "decided_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "decided_at",
+        "column": "decided_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "decision_reason",
+        "column": "decision_reason",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "decision_operation_id",
+        "column": "decision_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "source_distribution",
+        "type": "PaymentDistribution",
+        "from": [
+          "source_distribution_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "target_subscription",
+        "type": "Subscription",
+        "from": [
+          "target_subscription_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "proposer",
+        "type": "StaffAccount",
+        "from": [
+          "proposed_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "decider",
+        "type": "StaffAccount",
+        "from": [
+          "decided_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "source_operation_id"
+      ],
+      [
+        "decision_operation_id"
       ]
     ]
   },
@@ -10029,6 +10834,108 @@
     "table": "refund_records",
     "fields": [
       {
+        "name": "request_id",
+        "column": "request_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "prepared_by_id",
+        "column": "prepared_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "prepared_at",
+        "column": "prepared_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "version",
+        "column": "version",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "calculation_snapshot",
+        "column": "calculation_snapshot",
+        "type": "Json",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "quote_revision",
+        "column": "quote_revision",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "approval_basis",
+        "column": "approval_basis",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "declined_by_id",
+        "column": "declined_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "declined_at",
+        "column": "declined_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "decline_reason",
+        "column": "decline_reason",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "id",
         "column": "id",
         "type": "String",
@@ -10221,6 +11128,39 @@
     ],
     "relations": [
       {
+        "field": "request",
+        "type": "ManagerRequest",
+        "from": [
+          "request_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "prepared_by",
+        "type": "StaffAccount",
+        "from": [
+          "prepared_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "declined_by",
+        "type": "StaffAccount",
+        "from": [
+          "declined_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
         "field": "subscription_ref",
         "type": "Subscription",
         "from": [
@@ -10245,6 +11185,9 @@
     ],
     "uniqueSets": [
       [
+        "request_id"
+      ],
+      [
         "id"
       ],
       [
@@ -10255,6 +11198,248 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "RefundTransfer",
+    "table": "refund_transfers",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "refund_id",
+        "column": "refund_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "kind",
+        "column": "kind",
+        "type": "RefundTransferKind",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "status",
+        "column": "status",
+        "type": "RefundTransferStatus",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "amount",
+        "column": "amount",
+        "type": "Decimal",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Decimal",
+          "20, 4"
+        ]
+      },
+      {
+        "name": "occurred_at",
+        "column": "occurred_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "reference",
+        "column": "reference",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "channel",
+        "column": "channel",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "evidence",
+        "column": "evidence",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "original_transfer_id",
+        "column": "original_transfer_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "reported_by_id",
+        "column": "reported_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "reported_at",
+        "column": "reported_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "reviewed_by_id",
+        "column": "reviewed_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "reviewed_at",
+        "column": "reviewed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "review_reason",
+        "column": "review_reason",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "source_operation_id",
+        "column": "source_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "review_operation_id",
+        "column": "review_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "refund",
+        "type": "RefundRecord",
+        "from": [
+          "refund_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "reported_by",
+        "type": "StaffAccount",
+        "from": [
+          "reported_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "reviewed_by",
+        "type": "StaffAccount",
+        "from": [
+          "reviewed_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "original_transfer",
+        "type": "RefundTransfer",
+        "from": [
+          "original_transfer_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "source_operation_id"
+      ],
+      [
+        "review_operation_id"
       ]
     ]
   },
@@ -10908,6 +12093,46 @@
     "table": "sale_conditions",
     "fields": [
       {
+        "name": "published_by_id",
+        "column": "published_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "publication_basis",
+        "column": "publication_basis",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "retired_by_id",
+        "column": "retired_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "retirement_basis",
+        "column": "retirement_basis",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
         "name": "duration_days",
         "column": "duration_days",
         "type": "Int",
@@ -11074,7 +12299,30 @@
         ]
       }
     ],
-    "relations": [],
+    "relations": [
+      {
+        "field": "published_by",
+        "type": "StaffAccount",
+        "from": [
+          "published_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "retired_by",
+        "type": "StaffAccount",
+        "from": [
+          "retired_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
     "uniqueSets": [
       [
         "code",
@@ -15299,6 +16547,696 @@
       ],
       [
         "source_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "TeacherMeetOAuthChallenge",
+    "table": "teacher_meet_oauth_challenges",
+    "fields": [
+      {
+        "name": "teacher_id",
+        "column": "teacher_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "session_id",
+        "column": "session_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "state_hash",
+        "column": "state_hash",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Char",
+          "64"
+        ]
+      },
+      {
+        "name": "verifier_ciphertext",
+        "column": "verifier_ciphertext",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "grant_generation",
+        "column": "grant_generation",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "expires_at",
+        "column": "expires_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "claimed_at",
+        "column": "claimed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "teacher",
+        "type": "TeacherAccount",
+        "from": [
+          "teacher_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "session",
+        "type": "Session",
+        "from": [
+          "session_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "teacher_id"
+      ],
+      [
+        "state_hash"
+      ]
+    ]
+  },
+  {
+    "name": "TeacherMeetOAuthGrant",
+    "table": "teacher_meet_oauth_grants",
+    "fields": [
+      {
+        "name": "teacher_id",
+        "column": "teacher_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "google_subject",
+        "column": "google_subject",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "generation",
+        "column": "generation",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "refresh_ciphertext",
+        "column": "refresh_ciphertext",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "authorized_at",
+        "column": "authorized_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "disconnected_at",
+        "column": "disconnected_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "provider_revoked_at",
+        "column": "provider_revoked_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "revocation_claim_id",
+        "column": "revocation_claim_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "revocation_claimed_at",
+        "column": "revocation_claimed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      }
+    ],
+    "relations": [
+      {
+        "field": "teacher",
+        "type": "TeacherAccount",
+        "from": [
+          "teacher_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "teacher_id"
+      ]
+    ]
+  },
+  {
+    "name": "TeacherMeetOperation",
+    "table": "teacher_meet_operations",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "student_id",
+        "column": "student_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "teacher_id",
+        "column": "teacher_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "assignment_id",
+        "column": "assignment_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "grant_generation",
+        "column": "grant_generation",
+        "type": "Int",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "google_subject",
+        "column": "google_subject",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "kind",
+        "column": "kind",
+        "type": "TeacherMeetOperationKind",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "state",
+        "column": "state",
+        "type": "TeacherMeetOperationState",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "request_operation_id",
+        "column": "request_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "queued_at",
+        "column": "queued_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "dispatch_token",
+        "column": "dispatch_token",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "finished_at",
+        "column": "finished_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "diagnostic_code",
+        "column": "diagnostic_code",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "retry_at",
+        "column": "retry_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "candidate_code",
+        "column": "candidate_code",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "resolves_operation_id",
+        "column": "resolves_operation_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "space_id",
+        "column": "space_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "closed_at",
+        "column": "closed_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "closed_by_id",
+        "column": "closed_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "closure_basis",
+        "column": "closure_basis",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      }
+    ],
+    "relations": [
+      {
+        "field": "student",
+        "type": "Student",
+        "from": [
+          "student_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "teacher",
+        "type": "TeacherAccount",
+        "from": [
+          "teacher_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "assignment",
+        "type": "TeachingAssignment",
+        "from": [
+          "assignment_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "space",
+        "type": "TeacherMeetSpace",
+        "from": [
+          "space_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "resolves_operation",
+        "type": "TeacherMeetOperation",
+        "from": [
+          "resolves_operation_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "closed_by",
+        "type": "StaffAccount",
+        "from": [
+          "closed_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "request_operation_id"
+      ]
+    ]
+  },
+  {
+    "name": "TeacherMeetSpace",
+    "table": "teacher_meet_spaces",
+    "fields": [
+      {
+        "name": "id",
+        "column": "id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": true,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "student_id",
+        "column": "student_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "teacher_id",
+        "column": "teacher_id",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "google_subject",
+        "column": "google_subject",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "resource_name",
+        "column": "resource_name",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "meeting_uri",
+        "column": "meeting_uri",
+        "type": "String",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": null
+      },
+      {
+        "name": "published_at",
+        "column": "published_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "last_verified_at",
+        "column": "last_verified_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": false,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "retired_at",
+        "column": "retired_at",
+        "type": "DateTime",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Timestamptz",
+          "3"
+        ]
+      },
+      {
+        "name": "retired_by_id",
+        "column": "retired_by_id",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": [
+          "Uuid"
+        ]
+      },
+      {
+        "name": "retirement_basis",
+        "column": "retirement_basis",
+        "type": "String",
+        "list": false,
+        "nullable": true,
+        "primary": false,
+        "native": null
+      }
+    ],
+    "relations": [
+      {
+        "field": "student",
+        "type": "Student",
+        "from": [
+          "student_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "teacher",
+        "type": "TeacherAccount",
+        "from": [
+          "teacher_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      },
+      {
+        "field": "retired_by",
+        "type": "StaffAccount",
+        "from": [
+          "retired_by_id"
+        ],
+        "to": [
+          "id"
+        ],
+        "constraint": null
+      }
+    ],
+    "uniqueSets": [
+      [
+        "id"
+      ],
+      [
+        "resource_name"
       ]
     ]
   },

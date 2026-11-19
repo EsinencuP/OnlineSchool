@@ -14,7 +14,7 @@ import { ScheduleEvents } from '../schedule-events.service.js';
 import { ScheduleAccess } from '../schedule-access.service.js';
 import { at } from '../../finance/finance-common.js';
 import { ManagerLessonRights } from '../../finance/manager-payments/lesson-rights.service.js';
-import { meetLink, redactMeet, effectiveMeetLink } from '../meet-link.js';
+import { meetLink, redactMeet, effectiveMeetLink, readPublishedMeetLinks } from '../meet-link.js';
 import { MeetLinkPort } from './meet-link.port.js';
 import { ScheduleRegistry } from '../registry.service.js';
 import { scheduleFailure, schedulePolicy } from './policy.js';
@@ -47,7 +47,7 @@ export class ManagerScheduleWorkflow {
     private readonly meet: MeetLinkPort,
     private readonly registry: ScheduleRegistry,
   ) {}
-  project(row: Row): ManagedLessonView {
+  project(row: Row, pairLink?: string): ManagedLessonView {
     const pending = row.change_approvals.find((r) => r.lesson_version === row.version);
     return {
       kind: row.kind ?? 'REGULAR',
@@ -61,7 +61,7 @@ export class ManagerScheduleWorkflow {
       meetLink: effectiveMeetLink(
         row.meet_link_overridden,
         row.google_meet_link,
-        row.teaching_assignment_ref.google_meet_link,
+        pairLink ?? row.teaching_assignment_ref.google_meet_link,
       ),
       subscriptionId: row.manager_subscription_id,
       chargedLessons: row.t03_entitlementconsumption_lesson_occurrence_id.reduce(
@@ -78,7 +78,9 @@ export class ManagerScheduleWorkflow {
   ): Promise<Result<ManagedLessonView, DomainError>> {
     try {
       const row = await tx.lessonOccurrence.findUnique({ where: { id }, include });
-      return row ? ok(this.project(row)) : err(domainError('LESSON_NOT_FOUND', 404));
+      if (!row) return err(domainError('LESSON_NOT_FOUND', 404));
+      const links = await readPublishedMeetLinks(tx, row.meet_link_overridden ? [] : [id]);
+      return ok(this.project(row, links.get(id)));
     } catch (error: unknown) {
       return err(scheduleFailure(error));
     }
@@ -88,15 +90,16 @@ export class ManagerScheduleWorkflow {
     where: Prisma.LessonOccurrenceWhereInput,
   ): Promise<Result<ManagedLessonView[], DomainError>> {
     try {
-      return ok(
-        (
-          await tx.lessonOccurrence.findMany({
-            where,
-            include,
-            orderBy: [{ scheduled_at: 'asc' }, { id: 'asc' }],
-          })
-        ).map((r) => this.project(r)),
+      const rows = await tx.lessonOccurrence.findMany({
+        where,
+        include,
+        orderBy: [{ scheduled_at: 'asc' }, { id: 'asc' }],
+      });
+      const links = await readPublishedMeetLinks(
+        tx,
+        rows.filter((row) => !row.meet_link_overridden).map((row) => row.id),
       );
+      return ok(rows.map((row) => this.project(row, links.get(row.id))));
     } catch (error: unknown) {
       return err(scheduleFailure(error));
     }

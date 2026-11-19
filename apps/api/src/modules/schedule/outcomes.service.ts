@@ -10,6 +10,7 @@ import { admission } from './booking.service.js';
 import type { LessonOccurrence } from '@online-school/db';
 import { actionEligibility } from '../../core/actor/action-eligibility.js';
 import { recordCheckpoints } from '../education/checkpoints.js';
+import { lessonOutcomeAdmission } from './lesson-outcome-admission.js';
 
 @Injectable()
 export class OutcomesService {
@@ -24,7 +25,7 @@ export class OutcomesService {
     await ctx.tx.$queryRaw`SELECT id FROM lesson_occurrences WHERE id=${id}::uuid FOR UPDATE`;
     const lesson = await this.access.lesson(ctx, id, true),
       now = await at(ctx.tx);
-    await this.startPolicy(ctx, lesson, now);
+    const permissionId = await this.startPolicy(ctx, lesson, now);
     if (lesson.kind === 'TRIAL') {
       if (lesson.trial_started_at) return lesson;
       const started = await ctx.tx.lessonOccurrence.update({
@@ -34,7 +35,17 @@ export class OutcomesService {
       await this.events.change(ctx, id, lesson, started, 'Пробный урок начат преподавателем');
       return started;
     }
+    if (lesson.actual_start_at) return lesson;
     const started = await this.rates.snapshotAtStart(ctx, id, lesson.scheduled_teacher_id, now);
+    if (permissionId)
+      await ctx.tx.lessonAdmissionStart.create({
+        data: {
+          lesson_id: id,
+          permission_id: permissionId,
+          admitted_at: now,
+          source_operation_id: ctx.operationId,
+        },
+      });
     const updated =
       lesson.status === 'STAR_PENDING'
         ? await ctx.tx.lessonOccurrence.update({ where: { id }, data: { status: 'SCHEDULED' } })
@@ -54,15 +65,18 @@ export class OutcomesService {
       'lesson.start',
       now,
       () => this.access.lesson(ctx, uuid(id), true),
-      (lesson) => this.startPolicy(ctx, lesson, now),
+      async (lesson) => {
+        await this.startPolicy(ctx, lesson, now);
+      },
     );
   }
   private async startPolicy(
     ctx: CriticalContext,
     lesson: LessonOccurrence,
     now: Date,
-  ): Promise<void> {
+  ): Promise<string | null> {
     if (
+      lesson.confirmed_report_id ||
       !['SCHEDULED', 'STAR_PENDING'].includes(lesson.status) ||
       now < lesson.scheduled_at ||
       now >= lesson.scheduled_end_at
@@ -71,11 +85,13 @@ export class OutcomesService {
     const en = await ctx.tx.studentSubjectEnrollment.findUniqueOrThrow({
       where: { id: lesson.enrollment_id },
     });
-    if (en.status !== 'ACTIVE') return fail(domainError('ENROLLMENT_INACTIVE', 422));
-    if (lesson.kind === 'TRIAL') return;
+    if (en.status !== 'ACTIVE' || en.valid_from > now || (en.valid_to && en.valid_to <= now))
+      return fail(domainError('ENROLLMENT_INACTIVE', 422));
+    if (lesson.kind === 'TRIAL' || lesson.actual_start_at) return null;
     const allowed = await admission(ctx.tx, lesson.enrollment_id, now);
     if (!allowed.paid && !allowed.permissionId)
       return fail(domainError('PAID_ACCESS_OR_DIRECTOR_PERMISSION_REQUIRED', 403));
+    return allowed.permissionId;
   }
   async report(ctx: CriticalContext, id: string, body: unknown) {
     const i = object(body, ['result', 'actualStartedAt', 'durationMin', 'note', 'studentNoShow']);
@@ -194,20 +210,12 @@ export class OutcomesService {
       );
       if (started.actual_start_at?.getTime() !== report.actual_started_at?.getTime())
         return fail(domainError('ACTUAL_START_SNAPSHOT_MISMATCH', 422));
-      let permission: string | null = null;
-      if (i.temporaryAccessPermissionId !== undefined) {
-        permission = uuid(i.temporaryAccessPermissionId);
-        await ctx.tx
-          .$queryRaw`SELECT id FROM temporary_access_permissions WHERE id=${permission}::uuid FOR UPDATE`;
-        const allowed = await admission(
-          ctx.tx,
-          lesson.enrollment_id,
-          report.actual_started_at!,
-          permission,
-        );
-        if (allowed.permissionId !== permission)
-          return fail(domainError('DIRECTOR_PERMISSION_NOT_APPLICABLE', 422));
-      }
+      const { permissionId, paid } = await lessonOutcomeAdmission(
+        ctx.tx,
+        lesson,
+        report.actual_started_at!,
+        i.temporaryAccessPermissionId,
+      );
       outcome = await ctx.tx.lessonActualOutcome.create({
         data: {
           report_id: report.id,
@@ -217,7 +225,7 @@ export class OutcomesService {
           duration_min: report.duration_min!,
           confirmed_at: now,
           confirmed_by_id: staff,
-          temporary_access_permission_id: permission,
+          temporary_access_permission_id: permissionId,
           rate_snapshot: started.rate_at_start_snapshot!,
           points_snapshot: started.points_at_start_snapshot!,
           rate_basis: started.rate_basis_at_start!,
@@ -227,8 +235,7 @@ export class OutcomesService {
         },
       });
       status = 'CONDUCTED';
-      const allowed = await admission(ctx.tx, lesson.enrollment_id, report.actual_started_at!);
-      if (!allowed.paid && !permission)
+      if (!paid && !permissionId)
         await this.events.task(
           ctx,
           en.student_id,

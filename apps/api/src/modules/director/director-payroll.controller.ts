@@ -13,15 +13,16 @@ import {
 import type { CriticalContext } from '../../core/http.js';
 import { CriticalCommand, CurrentTransaction } from '../../core/idempotency/idempotency.module.js';
 import { unwrap } from '../../core/errors/domain-error.js';
-import { ApiError } from '../../openapi/dtos.js';
+import { ApiError, CloseFinancialPeriodRequest } from '../../openapi/dtos.js';
 import { DirectorPayrollService } from './director-payroll.service.js';
-import { DirectorEmptyCommandDto } from './dto/director-commands.dto.js';
 import {
   CreatePeriodDto,
   PayrollQueryDto,
   PayrollSummaryDto,
   PayrollTeacherDto,
   PeriodDto,
+  PeriodDisputesDto,
+  PeriodDisputesQueryDto,
   PeriodListDto,
   UnresolvedDto,
 } from './dto/director-payroll.dto.js';
@@ -73,8 +74,7 @@ export class DirectorPayrollController {
   @Header('Cache-Control', 'private, no-store')
   @ApiOperation({
     operationId: 'getDirectorUnresolvedFinance',
-    summary:
-      'Registry of open financial facts that block closing a period: unaccrued or disputed lessons, open payouts, draft entries',
+    summary: 'Open financial items: unaccrued or disputed lessons, open payouts and draft entries',
   })
   @ApiOkResponse({ type: UnresolvedDto })
   @ApiNotFoundResponse({ type: ApiError, description: 'PERIOD_NOT_FOUND' })
@@ -91,6 +91,19 @@ export class DirectorPayrollController {
   @ApiOkResponse({ type: PeriodListDto })
   async periods() {
     return unwrap(await this.payroll.list());
+  }
+
+  @Get('periods/:id/disputes')
+  @Header('Cache-Control', 'private, no-store')
+  @ApiOperation({
+    operationId: 'getDirectorPeriodDisputes',
+    summary: 'Preview open disputes or read the register preserved at period closure',
+  })
+  @ApiParam({ name: 'id', type: String, format: 'uuid' })
+  @ApiOkResponse({ type: PeriodDisputesDto })
+  @ApiNotFoundResponse({ type: ApiError, description: 'PERIOD_NOT_FOUND' })
+  async disputes(@Param('id') id: string, @Query() q: PeriodDisputesQueryDto) {
+    return unwrap(await this.payroll.disputes(id, Number(q.page ?? 1)));
   }
 
   @Post('periods')
@@ -122,15 +135,18 @@ export class DirectorPayrollController {
     topic: 'period.closed.v1',
   })
   @ApiParam({ name: 'id', type: String, format: 'uuid' })
-  @ApiBody({ type: DirectorEmptyCommandDto, required: false })
+  @ApiBody({ type: CloseFinancialPeriodRequest, required: false })
   @ApiOperation({
     operationId: 'closeDirectorPeriod',
-    summary:
-      'Close a finished period once nothing blocks it (same rules and audit as the generic period close)',
+    summary: 'Close a finished period with confirmation of any outstanding dispute register',
   })
   @ApiOkResponse({ type: PeriodDto })
   @ApiNotFoundResponse({ type: ApiError, description: 'NOT_FOUND' })
-  @ApiConflictResponse({ type: ApiError, description: 'PERIOD_ALREADY_CLOSED' })
+  @ApiConflictResponse({
+    type: ApiError,
+    description:
+      'PERIOD_ALREADY_CLOSED, PERIOD_DISPUTES_CONFIRMATION_REQUIRED, PERIOD_DISPUTES_CHANGED',
+  })
   @ApiUnprocessableEntityResponse({
     type: ApiError,
     description: 'PERIOD_NOT_FINISHED, PERIOD_HAS_DRAFT_ENTRIES, PERIOD_HAS_UNRESOLVED_FACTS',
@@ -138,9 +154,8 @@ export class DirectorPayrollController {
   async close(
     @CurrentTransaction() ctx: CriticalContext,
     @Param('id') id: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    @Body() _body: DirectorEmptyCommandDto,
+    @Body() body: unknown,
   ) {
-    return unwrap(await this.payroll.close(ctx, id));
+    return unwrap(await this.payroll.close(ctx, id, body));
   }
 }

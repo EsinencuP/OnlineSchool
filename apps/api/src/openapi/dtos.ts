@@ -1,5 +1,5 @@
 // OpenAPI DTO source. Every field carries Swagger and class-validator metadata.
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import type { ApiPropertyOptions } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { SUPPORTED_RECEIPT_CURRENCIES } from '../modules/finance/receipt-policy.js';
@@ -2351,7 +2351,16 @@ export class ConfirmPaymentRequest {}
 
 export class ApproveDistributionRequest {}
 
-export class CloseFinancialPeriodRequest {}
+export class CloseFinancialPeriodRequest {
+  @ApiPropertyOptional({
+    type: String,
+    pattern: '^[0-9a-f]{64}$',
+    description: 'Revision from the director dispute register preview. Required if cases remain open.',
+  })
+  @IsOptional()
+  @Matches(/^[0-9a-f]{64}$/)
+  disputesRevision?: string;
+}
 
 export class GenerateSlotOccurrencesRequest {}
 

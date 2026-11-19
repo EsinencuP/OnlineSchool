@@ -101,6 +101,8 @@ export class TeacherMaterialsController {
   @ApiOperation({
     operationId: 'confirmTeacherMaterialUpload',
     summary: 'Verify the uploaded staging object and publish it as a private file',
+    description:
+      'Require a clean malware verdict on the staging bytes before copying the verified ETag to the private final key.',
   })
   @ApiParam({ name: 'fileId', type: String, format: 'uuid' })
   @ApiOkResponse({ type: MaterialConfirmResponseDto })

@@ -1,3 +1,4 @@
+import { Temporal } from '@js-temporal/polyfill';
 import { intlLocaleFor } from './messages.js';
 import type { Locale } from './messages.js';
 
@@ -78,4 +79,16 @@ export function formatRelativeTime(
   return Number.isFinite(value)
     ? new Intl.RelativeTimeFormat(intlLocaleFor(locale), { numeric: 'always' }).format(value, unit)
     : null;
+}
+
+export function localDateTimeToIso(value: string, timeZone: string): string | null {
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?$/u.test(value)) return null;
+  try {
+    return Temporal.PlainDateTime.from(value)
+      .toZonedDateTime(timeZone, { disambiguation: 'reject' })
+      .toInstant()
+      .toString();
+  } catch {
+    return null;
+  }
 }

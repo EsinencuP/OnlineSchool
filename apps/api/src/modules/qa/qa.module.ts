@@ -1,11 +1,32 @@
-import { Controller, Get, Module, Param, Req, Res } from '@nestjs/common';
-import { ApiCookieAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Authenticated, RequireMfa, RequireRole } from '../../core/rbac/decorators.js';
+import { Controller, Get, Header, Module, Param, Post, Req, Res } from '@nestjs/common';
+import {
+  ApiCookieAuth,
+  ApiHeader,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import {
+  Authenticated,
+  RequireMfa,
+  RequireRole,
+  RequireVerifiedMfa,
+} from '../../core/rbac/decorators.js';
 import { DatabaseService } from '../../core/database/database.module.js';
 import { AuditService } from '../../core/audit/audit.service.js';
 import { domainError, fail, unwrap } from '../../core/errors/domain-error.js';
-import type { HttpRequest, HttpResponse } from '../../core/http.js';
-import { ComponentStatusResponse, FileAccessResponse } from './qa.dto.js';
+import type { CriticalContext, HttpRequest, HttpResponse } from '../../core/http.js';
+import { UUID } from '../../core/http.js';
+import { CriticalCommand, CurrentTransaction } from '../../core/idempotency/idempotency.module.js';
+import {
+  ComponentStatusResponse,
+  FileAccessResponse,
+  OutboxReplayResponse,
+  QueueHealthResponse,
+} from './qa.dto.js';
+import { readQueueHealth } from './queue-health.js';
+import { loadAuditReplaySource, OUTBOX_AUDIT_REPLAY_TOPIC } from './outbox-replay.js';
 import { ApiHealthController, WorkerHealthController } from './worker-health.controller.js';
 
 @ApiTags('QA diagnostics')
@@ -64,6 +85,80 @@ export class QaController {
         checkedAt: new Date().toISOString(),
       };
     }
+  }
+
+  @Get('queues')
+  @RequireRole('DIRECTOR', 'TECH_OPERATOR')
+  @RequireVerifiedMfa()
+  @ApiOperation({
+    operationId: 'getQueueHealth',
+    summary: 'Inspect outbox lag, job leases and outstanding reconciliation',
+    description:
+      'Directors and technical operators with verified MFA. Includes aggregate counts and up to 20 failure references.',
+  })
+  @ApiResponse({ status: 200, type: QueueHealthResponse })
+  @ApiResponse({ status: 401, description: 'Session required' })
+  @ApiResponse({ status: 403, description: 'Privileged role and verified MFA required' })
+  @ApiResponse({ status: 503, description: 'Queue snapshot unavailable' })
+  async queues(@Res({ passthrough: true }) res: HttpResponse): Promise<QueueHealthResponse> {
+    res.setHeader('Cache-Control', 'no-store');
+    let snapshot: QueueHealthResponse | null;
+    try {
+      snapshot = await readQueueHealth(this.database.client);
+    } catch {
+      snapshot = null;
+    }
+    return snapshot ?? fail(domainError('QUEUE_HEALTH_UNAVAILABLE', 503));
+  }
+
+  @Post('outbox/:id/replay')
+  @Header('Cache-Control', 'no-store')
+  @RequireRole('DIRECTOR', 'TECH_OPERATOR')
+  @RequireVerifiedMfa()
+  @CriticalCommand({
+    type: 'ops.outbox.audit-replay',
+    resourceType: 'OutboxEvent',
+    resultIdField: 'eventId',
+    topic: OUTBOX_AUDIT_REPLAY_TOPIC,
+    successStatus: 202,
+    conflictOnPayloadMismatch: true,
+    errorCodeMap: { CONFLICT: 'OUTBOX_REPLAY_ALREADY_QUEUED' },
+  })
+  @ApiHeader({
+    name: 'Idempotency-Key',
+    required: true,
+    schema: { type: 'string', format: 'uuid' },
+  })
+  @ApiHeader({ name: 'X-CSRF-Token', required: true })
+  @ApiParam({ name: 'id', format: 'uuid' })
+  @ApiOperation({
+    operationId: 'replayAuditOutboxEvent',
+    summary: 'Queue recovery of a failed demo-switch acknowledgement',
+  })
+  @ApiResponse({ status: 202, type: OutboxReplayResponse })
+  @ApiResponse({ status: 400, description: 'Invalid event identifier or command headers' })
+  @ApiResponse({ status: 401, description: 'Session required' })
+  @ApiResponse({ status: 403, description: 'Privileged role, verified MFA and CSRF required' })
+  @ApiResponse({ status: 404, description: 'Outbox event not found' })
+  @ApiResponse({ status: 409, description: 'Replay unavailable or already queued' })
+  async replayOutbox(
+    @Param('id') id: string,
+    @CurrentTransaction() ctx: CriticalContext,
+  ): Promise<OutboxReplayResponse> {
+    if (!UUID.test(id)) return fail(domainError('INVALID_OUTBOX_EVENT_ID', 400));
+    const lookup = await loadAuditReplaySource(ctx.tx, id);
+    if (lookup.status === 'missing') return fail(domainError('OUTBOX_EVENT_NOT_FOUND', 404));
+    if (lookup.status === 'ineligible') return fail(domainError('OUTBOX_REPLAY_INELIGIBLE', 409));
+    const replay = await ctx.tx.outboxEvent.findFirst({
+      where: {
+        topic: OUTBOX_AUDIT_REPLAY_TOPIC,
+        aggregate_id: lookup.source.id,
+        status: { in: ['PENDING', 'DELIVERED'] },
+      },
+      select: { id: true },
+    });
+    if (replay) return fail(domainError('OUTBOX_REPLAY_ALREADY_QUEUED', 409));
+    return { eventId: lookup.source.id, status: 'QUEUED' };
   }
 }
 

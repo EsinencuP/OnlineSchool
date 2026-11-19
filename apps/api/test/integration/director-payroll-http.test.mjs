@@ -216,7 +216,8 @@ test('periods are opened and closed by the director only when nothing blocks the
     { blockers: 0, readyToClose: true, finished: true },
   );
 
-  const close = (id, actor = 'director') => send('POST', `director/periods/${id}/close`, actor, {});
+  const close = (id, actor = 'director', body = {}) =>
+    send('POST', `director/periods/${id}/close`, actor, body);
   assert.equal((await close(state.past.id, 'manager')).status, 403);
   assert.equal((await close(randomUUID())).status, 404);
   assert.equal((await close(state.seedPeriod.id)).body.code, 'PERIOD_NOT_FINISHED');
@@ -251,6 +252,66 @@ test('periods are opened and closed by the director only when nothing blocks the
     { blockers: 1, readyToClose: false },
   );
   assert.equal((await close(blocked.body.id)).body.code, 'PERIOD_HAS_UNRESOLVED_FACTS');
+  const report = await client.lessonOutcomeReport.create({
+    data: {
+      lesson_occurrence_id: disputed.id,
+      lesson_version: disputed.version,
+      reported_by_id: disputed.scheduled_teacher_id,
+      version: 1,
+      result: 'DISPUTED',
+      note: 'Fixture dispute with verified teacher report',
+      reported_at: disputed.scheduled_end_at,
+      source_operation_id: randomUUID(),
+    },
+  });
+  await client.lessonOccurrence.update({
+    where: { id: disputed.id },
+    data: { confirmed_report_id: report.id },
+  });
+  const previewPath = `director/periods/${blocked.body.id}/disputes`;
+  assert.equal((await send('GET', previewPath, 'manager')).status, 403);
+  const preview = await send('GET', previewPath, 'director');
+  assert.equal(preview.status, 200, JSON.stringify(preview.body));
+  assert.equal(preview.body.total, 1);
+  assert.equal(preview.body.items[0].reportId, report.id);
+  assert.equal((await close(blocked.body.id)).body.code, 'PERIOD_DISPUTES_CONFIRMATION_REQUIRED');
+  const stale = await close(blocked.body.id, 'director', { disputesRevision: 'a'.repeat(64) });
+  assert.equal(stale.body.code, 'PERIOD_DISPUTES_CHANGED');
+  const withDispute = await close(blocked.body.id, 'director', {
+    disputesRevision: preview.body.revision,
+  });
+  assert.equal(withDispute.status, 200, JSON.stringify(withDispute.body));
+  const archived = await send('GET', previewPath, 'director');
+  assert.equal(archived.body.revision, null);
+  assert.equal(archived.body.items[0].statusAtClose, 'DISPUTED');
+  assert.equal(archived.body.items[0].currentStatus, 'DISPUTED');
+  assert.equal(archived.body.items[0].reportId, report.id);
+  assert.equal(await client.financialPeriodDispute.count({ where: { period_id: blocked.body.id } }), 1);
+  const disputePath = `director/lessons/${disputed.id}/outcome-dispute`;
+  assert.equal((await send('GET', disputePath, 'manager')).status, 403);
+  const review = await send('GET', disputePath, 'director');
+  assert.equal(review.status, 200, JSON.stringify(review.body));
+  assert.equal(review.body.reportId, report.id);
+  assert.equal(review.body.decision, null);
+  const decisionBody = {
+    reportId: report.id,
+    result: 'NOT_CONDUCTED',
+    reason: 'Fixture documentation confirms that the lesson did not take place',
+    evidenceReference: 'fixture-case-21',
+  };
+  const resolution = await send('POST', `${disputePath}/resolve`, 'director', decisionBody);
+  assert.equal(resolution.status, 200, JSON.stringify(resolution.body));
+  assert.equal(resolution.body.originPeriodId, blocked.body.id);
+  assert.equal(resolution.body.outcomeId, null);
+  assert.equal((await send('POST', `${disputePath}/resolve`, 'director', decisionBody)).status, 409);
+  const afterDecision = await send('GET', previewPath, 'director');
+  assert.equal(afterDecision.body.items[0].statusAtClose, 'DISPUTED');
+  assert.equal(afterDecision.body.items[0].currentStatus, 'CANCELLED');
+  assert.equal(afterDecision.body.items[0].resolvedAt, resolution.body.decidedAt);
+  assert.equal(
+    (await client.lessonOccurrence.findUniqueOrThrow({ where: { id: disputed.id } })).confirmed_report_id,
+    report.id,
+  );
   const closed = await close(state.past.id);
   assert.equal(closed.status, 200, JSON.stringify(closed.body));
   assert.ok(closed.body.closedAt);

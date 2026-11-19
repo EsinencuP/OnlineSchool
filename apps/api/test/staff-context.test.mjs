@@ -51,6 +51,7 @@ const profiles = Object.fromEntries(
 const ownStudent = randomUUID(),
   foreignStudent = randomUUID(),
   foreignTeacher = randomUUID();
+const enrollment = { status: 'ACTIVE', valid_from: new Date(+now - 60_000), valid_to: null };
 const lesson = {
   id: randomUUID(),
   scheduled_teacher_id: profiles.TEACHER.id,
@@ -105,10 +106,12 @@ let app,
   portfolio = true,
   closed = false,
   paid = true,
+  startPermission = null,
   revoked = false,
   fullPage = false;
 const writes = [],
-  reads = [];
+  reads = [],
+  admissions = [];
 const findProfile = (kind, { where }) =>
   Object.entries(profiles)
     .filter(([role]) => (kind === 'TEACHER' ? role === 'TEACHER' : role !== 'TEACHER'))
@@ -146,7 +149,14 @@ before(async () => {
           ? { id: randomUUID() }
           : null,
     },
-    studentSubjectEnrollment: { findUniqueOrThrow: async () => ({ status: 'ACTIVE' }) },
+    studentSubjectEnrollment: { findUniqueOrThrow: async () => enrollment },
+    lessonAdmissionStart: {
+      create: async ({ data }) => {
+        assert(!readonly);
+        admissions.push(data);
+        writes.push('admission');
+      },
+    },
     lessonOccurrence: {
       findFirst: async ({ where }) =>
         [lesson, foreignLesson].find(
@@ -259,6 +269,8 @@ before(async () => {
       if (text.includes('financial_periods'))
         return [{ id: randomUUID(), closed_at: closed ? now : null }];
       if (text.includes('SELECT EXISTS')) return [{ ok: paid }];
+      if (startPermission && text.includes('t03_admission_slots_used'))
+        return [{ id: startPermission }];
       return [];
     },
     $transaction: async (fn) => {
@@ -292,9 +304,12 @@ after(async () => app?.close());
 beforeEach(() => {
   writes.length = 0;
   reads.length = 0;
+  admissions.length = 0;
   portfolio = true;
   closed = false;
   paid = true;
+  startPermission = null;
+  enrollment.valid_to = null;
   revoked = false;
   fullPage = false;
   receipt.approval_requested_at = null;
@@ -302,6 +317,7 @@ beforeEach(() => {
   receipt.rejected_at = null;
   lesson.kind = 'TRIAL';
   lesson.status = 'SCHEDULED';
+  lesson.actual_start_at = null;
   for (const p of Object.values(profiles)) p.deactivated_at = null;
   for (const a of Object.values(actors)) a.mfaCompleted = true;
 });
@@ -467,7 +483,9 @@ test('manager own approval request is distinct from director confirmation and fo
 });
 test('manager password-only exception stays scoped to manager routes', async () => {
   const previous = process.env.MANAGER_PASSWORD_ONLY_LOGIN;
+  const previousIds = process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS;
   process.env.MANAGER_PASSWORD_ONLY_LOGIN = 'true';
+  process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS = actors.MANAGER.accountId;
   actors.MANAGER.mfaCompleted = false;
   try {
     assert.equal((await get('MANAGER', 'manager/me')).status, 200);
@@ -479,6 +497,8 @@ test('manager password-only exception stays scoped to manager routes', async () 
   } finally {
     if (previous === undefined) delete process.env.MANAGER_PASSWORD_ONLY_LOGIN;
     else process.env.MANAGER_PASSWORD_ONLY_LOGIN = previous;
+    if (previousIds === undefined) delete process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS;
+    else process.env.MANAGER_PASSWORD_ONLY_ACCOUNT_IDS = previousIds;
   }
 });
 test('director eligibility checks receipt state and open period using read-only SQL without locks', async () => {
@@ -528,6 +548,50 @@ test('regular lesson admission remains server-only: unpaid/permission absent den
     (e) => e.domain.code === metadata.reason,
   );
   assert.deepEqual(writes, []);
+});
+test('teacher eligibility and actual start both deny an enrollment at its expiry boundary', async () => {
+  const outcomes = app.get(OutcomesService);
+  lesson.kind = 'REGULAR';
+  enrollment.valid_to = now;
+  const metadata = await outcomes.startEligibility(context('TEACHER'), lesson.id);
+  assert.equal(metadata.allowed, false);
+  assert.equal(metadata.reason, 'ENROLLMENT_INACTIVE');
+  await assert.rejects(
+    outcomes.start(context('TEACHER'), lesson.id, {}),
+    (e) => e.domain.code === metadata.reason,
+  );
+  assert.deepEqual(writes, []);
+});
+test('a partial-payment lesson reserves the director permission only at actual start and exactly once', async () => {
+  const outcomes = new OutcomesService(
+    app.get(ScheduleAccess),
+    { change: async () => writes.push('lesson-event') },
+    {
+      snapshotAtStart: async (_ctx, _id, _teacher, time) => {
+        lesson.actual_start_at = time;
+        writes.push('rate-snapshot');
+        return lesson;
+      },
+    },
+  );
+  lesson.kind = 'REGULAR';
+  paid = false;
+  startPermission = randomUUID();
+  const ctx = context('TEACHER');
+  assert.equal((await outcomes.startEligibility(ctx, lesson.id)).allowed, true);
+  assert.deepEqual(writes, []);
+  await outcomes.start(ctx, lesson.id, {});
+  assert.deepEqual(admissions, [
+    {
+      lesson_id: lesson.id,
+      permission_id: startPermission,
+      admitted_at: now,
+      source_operation_id: ctx.operationId,
+    },
+  ]);
+  startPermission = null;
+  await outcomes.start(context('TEACHER'), lesson.id, {});
+  assert.deepEqual(writes, ['rate-snapshot', 'admission', 'lesson-event']);
 });
 test('manager workflow reruns portfolio/state policy and never directly confirms receipt', async () => {
   const flow = app.get(ManagerPaymentWorkflow);

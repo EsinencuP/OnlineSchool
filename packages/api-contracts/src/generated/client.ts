@@ -24,6 +24,90 @@ export interface AllocateManagerPaymentDto {
   amount: string;
 }
 
+export type AllocationCorrectionDtoStatus = typeof AllocationCorrectionDtoStatus[keyof typeof AllocationCorrectionDtoStatus];
+
+
+export const AllocationCorrectionDtoStatus = {
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  MANUAL_REVIEW: 'MANUAL_REVIEW',
+} as const;
+
+export interface AllocationCorrectionFactsDto {
+  receiptId: string;
+  sourceSubscriptionId: string;
+  sourceEntryId: string;
+  originPeriodId: string;
+  currency: string;
+  originalAmount: string;
+  receiptAmount: string;
+  /**
+     * Visible to the director.
+     * @nullable
+     */
+  receiptUnallocated: string | null;
+  sourceAdvanceBalance: string;
+  /** @nullable */
+  targetAvailableAmount: string | null;
+  sourceGrantedLessons: number;
+  sourceUsedLessons: number;
+  sourceStartedLessons: number;
+  reviewReasons: string[];
+  asOf: string;
+}
+
+export interface AllocationCorrectionDto {
+  id: string;
+  sourceDistributionId: string;
+  /** @nullable */
+  targetSubscriptionId: string | null;
+  status: AllocationCorrectionDtoStatus;
+  amount: string;
+  reason: string;
+  proposedById: string;
+  proposedAt: string;
+  /** @nullable */
+  decidedById: string | null;
+  /** @nullable */
+  decidedAt: string | null;
+  /** @nullable */
+  decisionReason: string | null;
+  facts: AllocationCorrectionFactsDto;
+}
+
+export type AllocationCorrectionSummaryDtoStatus = typeof AllocationCorrectionSummaryDtoStatus[keyof typeof AllocationCorrectionSummaryDtoStatus];
+
+
+export const AllocationCorrectionSummaryDtoStatus = {
+  PENDING: 'PENDING',
+  REJECTED: 'REJECTED',
+  MANUAL_REVIEW: 'MANUAL_REVIEW',
+} as const;
+
+export interface AllocationCorrectionSummaryDto {
+  id: string;
+  sourceDistributionId: string;
+  /** @nullable */
+  targetSubscriptionId: string | null;
+  status: AllocationCorrectionSummaryDtoStatus;
+  amount: string;
+  reason: string;
+  proposedById: string;
+  proposedAt: string;
+  /** @nullable */
+  decidedById: string | null;
+  /** @nullable */
+  decidedAt: string | null;
+  /** @nullable */
+  decisionReason: string | null;
+}
+
+export interface AllocationCorrectionQueueDto {
+  items: AllocationCorrectionSummaryDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
 export type ApiErrorDetails = { [key: string]: unknown };
 
 export interface ApiError {
@@ -39,9 +123,103 @@ export interface ApproveCrmDisputeDto {
   version: number;
 }
 
+export interface ApproveDisputeCommandDto {
+  /**
+     * taskVersion from the decision card (optimistic lock)
+     * @minimum 1
+     */
+  version: number;
+}
+
 export interface ApproveDistributionRequest { [key: string]: unknown }
 
+export interface ApproveRequestCommandDto {
+  /**
+     * TEMPORARY_ACCESS: lesson limit; defaults to the manager proposal
+     * @minimum 1
+     * @maximum 100
+     */
+  maxLessons?: number;
+  /** TEMPORARY_ACCESS: when the access ends; defaults to the manager proposal */
+  expiresAt?: string;
+  /**
+     * Kept with the decision
+     * @minLength 3
+     * @maxLength 500
+     */
+  note?: string;
+}
+
 export interface ApproveScheduleChangeDto { [key: string]: unknown }
+
+export type AssessSkillDtoLevel = typeof AssessSkillDtoLevel[keyof typeof AssessSkillDtoLevel];
+
+
+export const AssessSkillDtoLevel = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface AssessSkillDto {
+  level: AssessSkillDtoLevel;
+  /**
+     * Internal pedagogical evidence; never shown to the student
+     * @minLength 5
+     * @maxLength 1000
+     */
+  basis: string;
+  /**
+     * Shown to the student
+     * @minLength 1
+     * @maxLength 500
+     */
+  publicComment?: string;
+  /** Confirmed conducted lesson of this enrollment as evidence */
+  lessonId?: string;
+}
+
+export type AssessSkillResponseDtoFromStatus = typeof AssessSkillResponseDtoFromStatus[keyof typeof AssessSkillResponseDtoFromStatus];
+
+
+export const AssessSkillResponseDtoFromStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export type AssessSkillResponseDtoToStatus = typeof AssessSkillResponseDtoToStatus[keyof typeof AssessSkillResponseDtoToStatus];
+
+
+export const AssessSkillResponseDtoToStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface AssessSkillResponseDto {
+  /** Assessment id */
+  id: string;
+  skillId: string;
+  enrollmentId: string;
+  fromStatus: AssessSkillResponseDtoFromStatus;
+  toStatus: AssessSkillResponseDtoToStatus;
+  assessedAt: string;
+}
+
+export interface AssignTeacherCommandDto {
+  subjectId: string;
+  teacherId: string;
+  /**
+     * Why this teacher; kept in history
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
 
 export type CancelManagerLessonDtoInitiator = typeof CancelManagerLessonDtoInitiator[keyof typeof CancelManagerLessonDtoInitiator];
 
@@ -94,7 +272,35 @@ export interface ClaimManagerTaskDto {
   version: number;
 }
 
-export interface CloseFinancialPeriodRequest { [key: string]: unknown }
+export interface CloseFinancialPeriodRequest {
+  /**
+     * Revision from the director dispute register preview. Required if cases remain open.
+     * @pattern ^[0-9a-f]{64}$
+     */
+  disputesRevision?: string;
+}
+
+export interface CompleteCheckpointDto {
+  /**
+     * Shown with the frozen skill snapshot
+     * @minLength 5
+     * @maxLength 2000
+     */
+  teacherSummary: string;
+}
+
+export interface CompleteCheckpointResponseDto {
+  /** Checkpoint id */
+  id: string;
+  completedAt: string;
+  /** @nullable */
+  snapshotId: string | null;
+}
+
+export interface CompleteTeacherMeetOAuthDto {
+  state: string;
+  code: string;
+}
 
 export type ComponentStatusResponseApi = typeof ComponentStatusResponseApi[keyof typeof ComponentStatusResponseApi];
 
@@ -230,6 +436,85 @@ export interface ConfirmUploadResponseDto {
   status: ConfirmUploadResponseDtoStatus;
 }
 
+export type ContactDtoSubjectKind = typeof ContactDtoSubjectKind[keyof typeof ContactDtoSubjectKind];
+
+
+export const ContactDtoSubjectKind = {
+  LEAD: 'LEAD',
+  STUDENT: 'STUDENT',
+  TEACHER: 'TEACHER',
+} as const;
+
+export type ContactDtoChannel = typeof ContactDtoChannel[keyof typeof ContactDtoChannel];
+
+
+export const ContactDtoChannel = {
+  CALL: 'CALL',
+  WHATSAPP: 'WHATSAPP',
+  TELEGRAM: 'TELEGRAM',
+  MESSAGE: 'MESSAGE',
+  EMAIL: 'EMAIL',
+  OTHER: 'OTHER',
+} as const;
+
+export type ContactDtoResult = typeof ContactDtoResult[keyof typeof ContactDtoResult];
+
+
+export const ContactDtoResult = {
+  REACHED: 'REACHED',
+  NO_ANSWER: 'NO_ANSWER',
+  CALLBACK_REQUESTED: 'CALLBACK_REQUESTED',
+  DECLINED: 'DECLINED',
+  WRONG_CONTACT: 'WRONG_CONTACT',
+  OTHER: 'OTHER',
+} as const;
+
+export interface ContactDto {
+  contactId: string;
+  subjectKind: ContactDtoSubjectKind;
+  subjectId: string;
+  /** @nullable */
+  representativeId: string | null;
+  /** @nullable */
+  taskId: string | null;
+  /** @nullable */
+  correctsId: string | null;
+  /**
+     * Set when a later entry fixed this one; show the fixing entry instead
+     * @nullable
+     */
+  supersededById: string | null;
+  channel: ContactDtoChannel;
+  result: ContactDtoResult;
+  summary: string;
+  /** @nullable */
+  nextAction: string | null;
+  /** When the contact happened */
+  occurredAt: string;
+  /** When the server recorded it */
+  recordedAt: string;
+  managerId: string;
+  managerName: string;
+}
+
+export interface ContactPageDto {
+  items: ContactDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface CreateGoalDto {
+  /**
+     * Shown to the student
+     * @minLength 5
+     * @maxLength 500
+     */
+  text: string;
+  targetDate?: string;
+  /** A skill of the enrollment subject */
+  skillId?: string;
+}
+
 export type CreateLeadDtoAudience = typeof CreateLeadDtoAudience[keyof typeof CreateLeadDtoAudience];
 
 
@@ -357,6 +642,45 @@ export interface CreateManagerSubscriptionDto {
   distributionId: string;
   /** Must match the prepared financial package start. */
   startsAt?: string;
+}
+
+export interface CreatePeriodDto {
+  /** Inclusive start (UTC instant) */
+  startsAt: string;
+  /** Exclusive end; 1 to 32 days after the start */
+  endsAt: string;
+}
+
+/**
+ * TEMPORARY_ACCESS: admit the student to limited lessons while the subscription is partly paid. REFUND: ask the director to prepare a refund calculation
+ */
+export type CreateRequestDtoKind = typeof CreateRequestDtoKind[keyof typeof CreateRequestDtoKind];
+
+
+export const CreateRequestDtoKind = {
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND: 'REFUND',
+} as const;
+
+export interface CreateRequestDto {
+  /** TEMPORARY_ACCESS: admit the student to limited lessons while the subscription is partly paid. REFUND: ask the director to prepare a refund calculation */
+  kind: CreateRequestDtoKind;
+  /** Financial subscription of this student */
+  subscriptionId: string;
+  /**
+     * The family's request in short
+     * @minLength 5
+     * @maxLength 500
+     */
+  reason: string;
+  /**
+     * TEMPORARY_ACCESS hint only; the director sets the real limit
+     * @minimum 1
+     * @maximum 100
+     */
+  proposedLessons?: number;
+  /** TEMPORARY_ACCESS hint only; the director sets the real expiry */
+  proposedUntil?: string;
 }
 
 export type SessionResponseAccountKind = typeof SessionResponseAccountKind[keyof typeof SessionResponseAccountKind];
@@ -662,12 +986,282 @@ export interface DashboardSubscriptionDto {
   remainingLessons: number;
 }
 
+/**
+ * @nullable
+ */
+export type DeadOutboxStatusReplayStatus = typeof DeadOutboxStatusReplayStatus[keyof typeof DeadOutboxStatusReplayStatus] | null;
+
+
+export const DeadOutboxStatusReplayStatus = {
+  PENDING: 'PENDING',
+  DELIVERED: 'DELIVERED',
+} as const;
+
+export interface DeadOutboxStatus {
+  id: string;
+  topic: string;
+  /** @minimum 0 */
+  attempts: number;
+  /** @nullable */
+  lastErrorCode: string | null;
+  failedAt: string;
+  /** @nullable */
+  replayStatus: DeadOutboxStatusReplayStatus;
+}
+
+export type DecideRefundDtoDecision = typeof DecideRefundDtoDecision[keyof typeof DecideRefundDtoDecision];
+
+
+export const DecideRefundDtoDecision = {
+  APPROVE: 'APPROVE',
+  DECLINE: 'DECLINE',
+} as const;
+
+export interface DecideRefundDto {
+  decision: DecideRefundDtoDecision;
+  /** @minimum 1 */
+  version: number;
+  /** Required for approval, in the subscription currency */
+  amount?: string;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
+export type DecisionCommandDtoMethod = typeof DecisionCommandDtoMethod[keyof typeof DecisionCommandDtoMethod];
+
+
+export const DecisionCommandDtoMethod = {
+  GET: 'GET',
+  POST: 'POST',
+  PATCH: 'PATCH',
+  DELETE: 'DELETE',
+} as const;
+
+export interface DecisionCommandDto {
+  operationId: string;
+  method: DecisionCommandDtoMethod;
+  path: string;
+  /** What the decision does */
+  effect: string;
+}
+
+export interface DecisionCountsDto {
+  payment: number;
+  distribution: number;
+  scheduleException: number;
+  dispute: number;
+  temporaryAccess: number;
+  refundRequest: number;
+  /** Sum of all kinds */
+  total: number;
+}
+
+export type DecisionDetailDtoKind = typeof DecisionDetailDtoKind[keyof typeof DecisionDetailDtoKind];
+
+
+export const DecisionDetailDtoKind = {
+  PAYMENT: 'PAYMENT',
+  DISTRIBUTION: 'DISTRIBUTION',
+  SCHEDULE_EXCEPTION: 'SCHEDULE_EXCEPTION',
+  DISPUTE: 'DISPUTE',
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND_REQUEST: 'REFUND_REQUEST',
+} as const;
+
+/**
+ * Facts needed to decide (kind specific, no secrets)
+ */
+export type DecisionDetailDtoFacts = { [key: string]: unknown };
+
+export interface DecisionDetailDto {
+  kind: DecisionDetailDtoKind;
+  /** Id of the payment, distribution, approval or task */
+  id: string;
+  /** When the decision became due (oldest first) */
+  requestedAt: string;
+  /**
+     * Manager who asked for the decision
+     * @nullable
+     */
+  requestedBy: string | null;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  studentName: string | null;
+  /** @nullable */
+  amount: string | null;
+  /** @nullable */
+  currency: string | null;
+  /** The decision can be executed right now with the existing command */
+  ready: boolean;
+  /**
+     * Why it is not ready yet
+     * @nullable
+     */
+  blockedBy: string | null;
+  /** Facts needed to decide (kind specific, no secrets) */
+  facts: DecisionDetailDtoFacts;
+  /** Existing commands that decide this item */
+  commands: DecisionCommandDto[];
+}
+
+export type DecisionItemDtoKind = typeof DecisionItemDtoKind[keyof typeof DecisionItemDtoKind];
+
+
+export const DecisionItemDtoKind = {
+  PAYMENT: 'PAYMENT',
+  DISTRIBUTION: 'DISTRIBUTION',
+  SCHEDULE_EXCEPTION: 'SCHEDULE_EXCEPTION',
+  DISPUTE: 'DISPUTE',
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND_REQUEST: 'REFUND_REQUEST',
+} as const;
+
+export interface DecisionItemDto {
+  kind: DecisionItemDtoKind;
+  /** Id of the payment, distribution, approval or task */
+  id: string;
+  /** When the decision became due (oldest first) */
+  requestedAt: string;
+  /**
+     * Manager who asked for the decision
+     * @nullable
+     */
+  requestedBy: string | null;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  studentName: string | null;
+  /** @nullable */
+  amount: string | null;
+  /** @nullable */
+  currency: string | null;
+  /** The decision can be executed right now with the existing command */
+  ready: boolean;
+  /**
+     * Why it is not ready yet
+     * @nullable
+     */
+  blockedBy: string | null;
+}
+
+export interface DecisionPageDto {
+  items: DecisionItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export type DecisionResultDtoKind = typeof DecisionResultDtoKind[keyof typeof DecisionResultDtoKind];
+
+
+export const DecisionResultDtoKind = {
+  PAYMENT: 'PAYMENT',
+  DISTRIBUTION: 'DISTRIBUTION',
+  SCHEDULE_EXCEPTION: 'SCHEDULE_EXCEPTION',
+  DISPUTE: 'DISPUTE',
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND_REQUEST: 'REFUND_REQUEST',
+} as const;
+
+export type DecisionResultDtoOutcome = typeof DecisionResultDtoOutcome[keyof typeof DecisionResultDtoOutcome];
+
+
+export const DecisionResultDtoOutcome = {
+  CONFIRMED: 'CONFIRMED',
+  REJECTED: 'REJECTED',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+} as const;
+
+/**
+ * What the underlying finance/schedule command returned
+ */
+export type DecisionResultDtoResult = { [key: string]: unknown };
+
+export interface DecisionResultDto {
+  kind: DecisionResultDtoKind;
+  /** Id of the decided item */
+  id: string;
+  outcome: DecisionResultDtoOutcome;
+  decidedAt: string;
+  /** What the underlying finance/schedule command returned */
+  result: DecisionResultDtoResult;
+}
+
+export interface DeclineRequestCommandDto {
+  /**
+     * Shown to the manager
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+}
+
 export interface DemoAccountDto {
   key: string;
   name: string;
   role: string;
   login: string;
   home: string;
+}
+
+export interface DirectorEmptyCommandDto { [key: string]: unknown }
+
+export type DirectorMeDtoRole = typeof DirectorMeDtoRole[keyof typeof DirectorMeDtoRole];
+
+
+export const DirectorMeDtoRole = {
+  DIRECTOR: 'DIRECTOR',
+} as const;
+
+export type StaffActorContextDtoRole = typeof StaffActorContextDtoRole[keyof typeof StaffActorContextDtoRole];
+
+
+export const StaffActorContextDtoRole = {
+  TEACHER: 'TEACHER',
+  MANAGER: 'MANAGER',
+  DIRECTOR: 'DIRECTOR',
+  TECH_OPERATOR: 'TECH_OPERATOR',
+} as const;
+
+export type StaffActorContextDtoTimezoneSource = typeof StaffActorContextDtoTimezoneSource[keyof typeof StaffActorContextDtoTimezoneSource];
+
+
+export const StaffActorContextDtoTimezoneSource = {
+  SCHOOL_CONFIGURATION: 'SCHOOL_CONFIGURATION',
+  SCHOOL_DEFAULT: 'SCHOOL_DEFAULT',
+} as const;
+
+export interface StaffActorContextDto {
+  accountId: string;
+  role: StaffActorContextDtoRole;
+  /** @nullable */
+  staffProfileId: string | null;
+  /** @nullable */
+  teacherProfileId: string | null;
+  displayName: string;
+  timezone: string;
+  timezoneSource: StaffActorContextDtoTimezoneSource;
+  /** Server DB clock, not a ledger confirmation */
+  asOf: string;
+  /** @nullable */
+  accountUpdatedAt: string | null;
+  /** @nullable */
+  profileUpdatedAt: string | null;
+}
+
+export interface DirectorMeDto {
+  actorContext: StaffActorContextDto;
+  staffId: string;
+  displayName: string;
+  role: DirectorMeDtoRole;
+  timezone: string;
+  pending: DecisionCountsDto;
+  /** Urgent tasks routed to the director and not accepted yet (OPS-01/B) */
+  openEscalations: number;
 }
 
 export interface DisputeRequestDto {
@@ -823,6 +1417,78 @@ export interface EntitlementGrantResponse {
   [key: string]: unknown;
  }
 
+export type EscalationDtoState = typeof EscalationDtoState[keyof typeof EscalationDtoState];
+
+
+export const EscalationDtoState = {
+  OPEN: 'OPEN',
+  ACCEPTED: 'ACCEPTED',
+  CLOSED: 'CLOSED',
+} as const;
+
+/**
+ * MANAGER_UNAVAILABLE: routed at once; ACCEPT_TIMEOUT: nobody accepted within the window
+ */
+export type EscalationDtoReason = typeof EscalationDtoReason[keyof typeof EscalationDtoReason];
+
+
+export const EscalationDtoReason = {
+  MANAGER_UNAVAILABLE: 'MANAGER_UNAVAILABLE',
+  ACCEPT_TIMEOUT: 'ACCEPT_TIMEOUT',
+} as const;
+
+/**
+ * Primary manager status when the task was escalated
+ */
+export type EscalationDtoManagerStatus = typeof EscalationDtoManagerStatus[keyof typeof EscalationDtoManagerStatus];
+
+
+export const EscalationDtoManagerStatus = {
+  AVAILABLE: 'AVAILABLE',
+  UNAVAILABLE: 'UNAVAILABLE',
+  OFF_SHIFT: 'OFF_SHIFT',
+  UNASSIGNED: 'UNASSIGNED',
+} as const;
+
+export interface EscalationDto {
+  escalationId: string;
+  taskId: string;
+  taskType: string;
+  /** Task description (restricted to staff) */
+  title: string;
+  taskStatus: string;
+  state: EscalationDtoState;
+  /** MANAGER_UNAVAILABLE: routed at once; ACCEPT_TIMEOUT: nobody accepted within the window */
+  reason: EscalationDtoReason;
+  /** Primary manager status when the task was escalated */
+  managerStatus: EscalationDtoManagerStatus;
+  /** @nullable */
+  primaryManagerId: string | null;
+  /** @nullable */
+  primaryManagerName: string | null;
+  /** @nullable */
+  studentId: string | null;
+  /** @nullable */
+  studentName: string | null;
+  /** @nullable */
+  leadId: string | null;
+  /** @nullable */
+  leadName: string | null;
+  /** When the manager had to accept the task */
+  acceptDueAt: string;
+  escalatedAt: string;
+  /** @nullable */
+  acceptedAt: string | null;
+  /** @nullable */
+  acceptedByName: string | null;
+}
+
+export interface EscalationPageDto {
+  items: EscalationDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
 export interface ExportPdfRequestDto {
   subjectId?: string;
   periodFrom?: string;
@@ -893,6 +1559,62 @@ export interface FreezeManagerSubscriptionDto {
 }
 
 export interface GenerateSlotOccurrencesRequest { [key: string]: unknown }
+
+export type GoalCommandResponseDtoStatus = typeof GoalCommandResponseDtoStatus[keyof typeof GoalCommandResponseDtoStatus];
+
+
+export const GoalCommandResponseDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  ACHIEVED: 'ACHIEVED',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface GoalCommandResponseDto {
+  /** Goal id */
+  id: string;
+  status: GoalCommandResponseDtoStatus;
+}
+
+export interface HandoverCommandDto {
+  /** Active manager who becomes responsible */
+  managerId: string;
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  comment?: string;
+}
+
+export type HandoverDtoSubjectKind = typeof HandoverDtoSubjectKind[keyof typeof HandoverDtoSubjectKind];
+
+
+export const HandoverDtoSubjectKind = {
+  STUDENT: 'STUDENT',
+  LEAD: 'LEAD',
+} as const;
+
+export interface HandoverDto {
+  handoverId: string;
+  subjectKind: HandoverDtoSubjectKind;
+  subjectId: string;
+  /** @nullable */
+  fromManagerId: string | null;
+  /** @nullable */
+  fromManagerName: string | null;
+  toManagerId: string;
+  toManagerName: string;
+  /** Open tasks that moved with the client */
+  movedTasks: number;
+  /** @nullable */
+  comment: string | null;
+  handedOverAt: string;
+}
+
+export interface HandoverListDto {
+  /** Newest first */
+  items: HandoverDto[];
+}
 
 export type HealthProbeResponseStatus = typeof HealthProbeResponseStatus[keyof typeof HealthProbeResponseStatus];
 
@@ -1036,6 +1758,96 @@ export interface HouseholdMemberResponse {
   householdId: string;
 }
 
+export interface IssuedDeliveryDto {
+  deliveryId: string;
+  enrollmentId: string;
+  studentId: string;
+}
+
+export interface IssueHomeworkDto {
+  /**
+     * @minLength 1
+     * @maxLength 200
+     */
+  title: string;
+  /**
+     * Plain text instructions
+     * @minLength 1
+     * @maxLength 5000
+     */
+  description: string;
+  /** Must be in the future */
+  dueAt?: string;
+  /** The teacher's own lesson of one enrollment */
+  lessonId?: string;
+  /**
+     * @minItems 1
+     * @maxItems 20
+     */
+  enrollmentIds: string[];
+  /**
+     * Verified files from the teacher's material library; students get read access
+     * @maxItems 5
+     */
+  attachmentFileIds?: string[];
+}
+
+export interface IssueHomeworkResponseDto {
+  /** Assignment id */
+  id: string;
+  deliveries: IssuedDeliveryDto[];
+}
+
+export interface JobHealthCounts {
+  /** @minimum 0 */
+  waiting: number;
+  /** @minimum 0 */
+  ready: number;
+  /**
+     * @minimum 0
+     * @nullable
+     */
+  oldestReadySeconds: number | null;
+  /** @minimum 0 */
+  running: number;
+  /** @minimum 0 */
+  expiredLeases: number;
+  /** @minimum 0 */
+  failed: number;
+  /** @minimum 0 */
+  reconciliationRequired: number;
+}
+
+export type LastContactDtoChannel = typeof LastContactDtoChannel[keyof typeof LastContactDtoChannel];
+
+
+export const LastContactDtoChannel = {
+  CALL: 'CALL',
+  WHATSAPP: 'WHATSAPP',
+  TELEGRAM: 'TELEGRAM',
+  MESSAGE: 'MESSAGE',
+  EMAIL: 'EMAIL',
+  OTHER: 'OTHER',
+} as const;
+
+export type LastContactDtoResult = typeof LastContactDtoResult[keyof typeof LastContactDtoResult];
+
+
+export const LastContactDtoResult = {
+  REACHED: 'REACHED',
+  NO_ANSWER: 'NO_ANSWER',
+  CALLBACK_REQUESTED: 'CALLBACK_REQUESTED',
+  DECLINED: 'DECLINED',
+  WRONG_CONTACT: 'WRONG_CONTACT',
+  OTHER: 'OTHER',
+} as const;
+
+export interface LastContactDto {
+  occurredAt: string;
+  channel: LastContactDtoChannel;
+  result: LastContactDtoResult;
+}
+
 export type LeadDtoStage = typeof LeadDtoStage[keyof typeof LeadDtoStage];
 
 
@@ -1164,6 +1976,8 @@ export interface LeadTaskBriefDto {
 }
 
 export interface LeadDto {
+  /** A matching contact in the intake portfolio requires staff review */
+  possibleDuplicateAtIntake?: boolean;
   leadId: string;
   stage: LeadDtoStage;
   audience: LeadDtoAudience;
@@ -1239,6 +2053,8 @@ export const LeadListItemDtoSource = {
 } as const;
 
 export interface LeadListItemDto {
+  /** A matching contact in the intake portfolio requires staff review */
+  possibleDuplicateAtIntake?: boolean;
   leadId: string;
   stage: LeadListItemDtoStage;
   audience: LeadListItemDtoAudience;
@@ -1451,6 +2267,48 @@ export interface LessonCreateRequest {
   basis: string;
 }
 
+export type LessonDisputeDecisionDtoResult = typeof LessonDisputeDecisionDtoResult[keyof typeof LessonDisputeDecisionDtoResult];
+
+
+export const LessonDisputeDecisionDtoResult = {
+  CONDUCTED: 'CONDUCTED',
+  NOT_CONDUCTED: 'NOT_CONDUCTED',
+} as const;
+
+export interface LessonDisputeDecisionDto {
+  id: string;
+  lessonId: string;
+  reportId: string;
+  /** @nullable */
+  outcomeId: string | null;
+  /** @nullable */
+  originPeriodId: string | null;
+  directorId: string;
+  result: LessonDisputeDecisionDtoResult;
+  reconstructedSnapshot: boolean;
+  decidedAt: string;
+  /** Confirmed facts will require a separate approved payroll accrual */
+  requiresFinancialDecision: boolean;
+}
+
+export interface LessonDisputeReviewDto {
+  lessonId: string;
+  reportId: string;
+  studentId: string;
+  teacherId: string;
+  scheduledAt: string;
+  scheduledEndAt: string;
+  reportedAt: string;
+  reportNote: string;
+  /** @nullable */
+  actualStartedAt: string | null;
+  decision: LessonDisputeDecisionDto | null;
+  /** @nullable */
+  decisionEvidenceReference: string | null;
+  /** @nullable */
+  decisionReason: string | null;
+}
+
 export type LessonHistoryItemDtoAttendanceStatus = typeof LessonHistoryItemDtoAttendanceStatus[keyof typeof LessonHistoryItemDtoAttendanceStatus];
 
 
@@ -1654,6 +2512,45 @@ export interface LoseLeadDto {
   comment?: string;
 }
 
+export type ManagerAvailabilityDtoStatus = typeof ManagerAvailabilityDtoStatus[keyof typeof ManagerAvailabilityDtoStatus];
+
+
+export const ManagerAvailabilityDtoStatus = {
+  AVAILABLE: 'AVAILABLE',
+  UNAVAILABLE: 'UNAVAILABLE',
+  OFF_SHIFT: 'OFF_SHIFT',
+} as const;
+
+export interface ManagerAvailabilityDto {
+  status: ManagerAvailabilityDtoStatus;
+  /**
+     * null while the manager never set a status (treated as AVAILABLE)
+     * @nullable
+     */
+  changedAt: string | null;
+}
+
+export type ManagerAvailabilityRowDtoStatus = typeof ManagerAvailabilityRowDtoStatus[keyof typeof ManagerAvailabilityRowDtoStatus];
+
+
+export const ManagerAvailabilityRowDtoStatus = {
+  AVAILABLE: 'AVAILABLE',
+  UNAVAILABLE: 'UNAVAILABLE',
+  OFF_SHIFT: 'OFF_SHIFT',
+} as const;
+
+export interface ManagerAvailabilityRowDto {
+  managerId: string;
+  fullName: string;
+  status: ManagerAvailabilityRowDtoStatus;
+  /** @nullable */
+  changedAt: string | null;
+}
+
+export interface ManagerAvailabilityListDto {
+  managers: ManagerAvailabilityRowDto[];
+}
+
 export interface ManagerContactsDto {
   whatsapp: string;
   telegram: string;
@@ -1815,42 +2712,6 @@ export const ManagerMeResponseDtoCapabilitiesItem = {
   NOTIFICATIONS_SEND: 'NOTIFICATIONS_SEND',
 } as const;
 
-export type StaffActorContextDtoRole = typeof StaffActorContextDtoRole[keyof typeof StaffActorContextDtoRole];
-
-
-export const StaffActorContextDtoRole = {
-  TEACHER: 'TEACHER',
-  MANAGER: 'MANAGER',
-  DIRECTOR: 'DIRECTOR',
-  TECH_OPERATOR: 'TECH_OPERATOR',
-} as const;
-
-export type StaffActorContextDtoTimezoneSource = typeof StaffActorContextDtoTimezoneSource[keyof typeof StaffActorContextDtoTimezoneSource];
-
-
-export const StaffActorContextDtoTimezoneSource = {
-  SCHOOL_CONFIGURATION: 'SCHOOL_CONFIGURATION',
-  SCHOOL_DEFAULT: 'SCHOOL_DEFAULT',
-} as const;
-
-export interface StaffActorContextDto {
-  accountId: string;
-  role: StaffActorContextDtoRole;
-  /** @nullable */
-  staffProfileId: string | null;
-  /** @nullable */
-  teacherProfileId: string | null;
-  displayName: string;
-  timezone: string;
-  timezoneSource: StaffActorContextDtoTimezoneSource;
-  /** Server DB clock, not a ledger confirmation */
-  asOf: string;
-  /** @nullable */
-  accountUpdatedAt: string | null;
-  /** @nullable */
-  profileUpdatedAt: string | null;
-}
-
 export interface ManagerMeResponseDto {
   actorContext: StaffActorContextDto;
   managerId: string;
@@ -1998,6 +2859,60 @@ export interface ManagerPaymentPageDto {
   total: number;
   page: number;
   pageSize: number;
+}
+
+export type ManagerRequestDtoKind = typeof ManagerRequestDtoKind[keyof typeof ManagerRequestDtoKind];
+
+
+export const ManagerRequestDtoKind = {
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND: 'REFUND',
+} as const;
+
+/**
+ * APPROVED for REFUND means: accepted for calculation. No money moves with this decision
+ */
+export type ManagerRequestDtoStatus = typeof ManagerRequestDtoStatus[keyof typeof ManagerRequestDtoStatus];
+
+
+export const ManagerRequestDtoStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+  WITHDRAWN: 'WITHDRAWN',
+} as const;
+
+export interface ManagerRequestDto {
+  requestId: string;
+  kind: ManagerRequestDtoKind;
+  studentId: string;
+  subscriptionId: string;
+  reason: string;
+  /** @nullable */
+  proposedLessons: number | null;
+  /** @nullable */
+  proposedUntil: string | null;
+  /** APPROVED for REFUND means: accepted for calculation. No money moves with this decision */
+  status: ManagerRequestDtoStatus;
+  requestedAt: string;
+  /** @nullable */
+  decidedAt: string | null;
+  /**
+     * Director's note or reason
+     * @nullable
+     */
+  decisionNote: string | null;
+  /**
+     * Granted temporary access, when approved
+     * @nullable
+     */
+  permissionId: string | null;
+}
+
+export interface ManagerRequestPageDto {
+  items: ManagerRequestDto[];
+  /** @nullable */
+  nextCursor: string | null;
 }
 
 export type ManagerSubscriptionDtoStatus = typeof ManagerSubscriptionDtoStatus[keyof typeof ManagerSubscriptionDtoStatus];
@@ -2239,6 +3154,32 @@ export interface ManagerTaskPageDto {
   nextCursor: string | null;
 }
 
+export interface MarkReadDto {
+  /**
+     * @minItems 1
+     * @maxItems 50
+     */
+  keys: string[];
+}
+
+export interface MarkReadResponseDto {
+  /** Events newly marked read */
+  marked: number;
+}
+
+export type MaterialConfirmResponseDtoStatus = typeof MaterialConfirmResponseDtoStatus[keyof typeof MaterialConfirmResponseDtoStatus];
+
+
+export const MaterialConfirmResponseDtoStatus = {
+  VERIFIED: 'VERIFIED',
+} as const;
+
+export interface MaterialConfirmResponseDto {
+  /** File id */
+  id: string;
+  status: MaterialConfirmResponseDtoStatus;
+}
+
 export interface MaterialItemDto {
   /**
      * Explicit educational subject; null means a legacy contextless grant
@@ -2267,6 +3208,62 @@ export interface MaterialsResponseDto {
   total: number;
   page: number;
   pageSize: number;
+}
+
+export interface MaterialUploadResponseDto {
+  /** File id */
+  id: string;
+  /** Short-lived signed PUT URL for the staging object */
+  uploadUrl: string;
+  expiresAt: string;
+}
+
+export interface MeetDecisionInputDto {
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
+export type MeetDirectorDecisionDtoState = typeof MeetDirectorDecisionDtoState[keyof typeof MeetDirectorDecisionDtoState];
+
+
+export const MeetDirectorDecisionDtoState = {
+  CLOSED_WITHOUT_SPACE: 'CLOSED_WITHOUT_SPACE',
+  RETIRED: 'RETIRED',
+} as const;
+
+export interface MeetDirectorDecisionDto {
+  id: string;
+  state: MeetDirectorDecisionDtoState;
+}
+
+export interface MeetDirectorUnknownDto {
+  id: string;
+  studentId: string;
+  teacherId: string;
+  assignmentId: string;
+  /** @nullable */
+  diagnosticCode: string | null;
+  queuedAt: string;
+}
+
+export interface MeetDirectorSpaceDto {
+  id: string;
+  studentId: string;
+  teacherId: string;
+  publishedAt: string;
+  lastVerifiedAt: string;
+}
+
+export interface MeetDirectorInventoryDto {
+  unresolved: MeetDirectorUnknownDto[];
+  spaces: MeetDirectorSpaceDto[];
+  /** @nullable */
+  nextUnresolved: string | null;
+  /** @nullable */
+  nextSpace: string | null;
 }
 
 export type NotificationItemDtoType = typeof NotificationItemDtoType[keyof typeof NotificationItemDtoType];
@@ -2315,6 +3312,69 @@ export interface NotificationsResponseDto {
   unreadCount: number;
   page: number;
   pageSize: number;
+}
+
+export interface OutboxHealthCounts {
+  /** @minimum 0 */
+  pending: number;
+  /** @minimum 0 */
+  ready: number;
+  /** @minimum 0 */
+  waitingRetry: number;
+  /** @minimum 0 */
+  inFlight: number;
+  /** @minimum 0 */
+  expiredLeases: number;
+  /** @minimum 0 */
+  dead: number;
+  /**
+     * @minimum 0
+     * @nullable
+     */
+  oldestReadySeconds: number | null;
+}
+
+export type OutboxReplayResponseStatus = typeof OutboxReplayResponseStatus[keyof typeof OutboxReplayResponseStatus];
+
+
+export const OutboxReplayResponseStatus = {
+  QUEUED: 'QUEUED',
+} as const;
+
+export interface OutboxReplayResponse {
+  eventId: string;
+  status: OutboxReplayResponseStatus;
+}
+
+export interface OverviewHomeworkDto {
+  notSubmitted: number;
+  awaitingReview: number;
+  needsRevision: number;
+  reviewed: number;
+}
+
+export type OverviewLessonDtoStatus = typeof OverviewLessonDtoStatus[keyof typeof OverviewLessonDtoStatus];
+
+
+export const OverviewLessonDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  STAR_PENDING: 'STAR_PENDING',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface OverviewLessonDto {
+  lessonId: string;
+  startsAt: string;
+  status: OverviewLessonDtoStatus;
+}
+
+export interface OverviewSkillsDto {
+  notStudied: number;
+  familiarizing: number;
+  practicing: number;
+  applying: number;
 }
 
 export interface PasskeyRegisteredResponse {
@@ -2536,6 +3596,110 @@ export interface PayrollItem {
   payouts: PayrollItemPayoutsItem[];
 }
 
+export type PayrollLineDtoStatus = typeof PayrollLineDtoStatus[keyof typeof PayrollLineDtoStatus];
+
+
+export const PayrollLineDtoStatus = {
+  PENDING_ACCRUAL: 'PENDING_ACCRUAL',
+  ACCRUED: 'ACCRUED',
+  PARTIALLY_PAID: 'PARTIALLY_PAID',
+  PAID: 'PAID',
+  NO_PAYMENT: 'NO_PAYMENT',
+} as const;
+
+export interface PayrollLineDto {
+  outcomeId: string;
+  lessonStartedAt: string;
+  durationMin: number;
+  studentName: string;
+  subjectName: string;
+  /** Rate frozen at the actual lesson start */
+  rate: string;
+  points: number;
+  rateBasis: string;
+  currency: string;
+  /** Accrued amount; equals the rate for an ordinary accrual */
+  amount: string;
+  paid: string;
+  status: PayrollLineDtoStatus;
+  /** @nullable */
+  accruedAt: string | null;
+  /** @nullable */
+  lastPaidAt: string | null;
+}
+
+export interface PayrollObligationDto {
+  obligationId: string;
+  accrualId: string;
+  lessonId: string;
+  recognizedAt: string;
+  currency: string;
+  amount: string;
+  paid: string;
+  outstanding: string;
+  openAttempts: number;
+  /** Accrued by a director exception (unpaid lesson) */
+  exception: boolean;
+}
+
+export type PayrollReviewItemDtoStatus = typeof PayrollReviewItemDtoStatus[keyof typeof PayrollReviewItemDtoStatus];
+
+
+export const PayrollReviewItemDtoStatus = {
+  DISPUTED_REPORT: 'DISPUTED_REPORT',
+  AWAITING_DIRECTOR_ACCRUAL: 'AWAITING_DIRECTOR_ACCRUAL',
+} as const;
+
+export interface PayrollReviewItemDto {
+  lessonId: string;
+  reportId: string;
+  lessonAt: string;
+  studentName: string;
+  subjectName: string;
+  status: PayrollReviewItemDtoStatus;
+}
+
+export interface PayrollTotalDto {
+  currency: string;
+  accrued: string;
+  paid: string;
+  /** Accrued minus paid */
+  outstanding: string;
+  /** Confirmed lessons not accrued yet, at their frozen rate */
+  pendingAccrual: string;
+}
+
+export interface PayrollTeacherRowDto {
+  currency: string;
+  /** Recognised teacher accruals */
+  accrued: string;
+  /** Confirmed payouts only */
+  paid: string;
+  /** accrued − paid: still owed to teachers */
+  outstanding: string;
+  teacherId: string;
+  teacherName: string;
+  /** Payout attempts waiting for confirmation or reconciliation */
+  openAttempts: number;
+}
+
+export interface PayrollSummaryDto {
+  /** @nullable */
+  periodId?: string | null;
+  /** One row per currency */
+  totals: PayrollTotalDto[];
+  /** Largest outstanding first */
+  teachers: PayrollTeacherRowDto[];
+}
+
+export interface PayrollTeacherDto {
+  teacherId: string;
+  teacherName: string;
+  totals: PayrollTotalDto[];
+  /** Newest first, at most 200 */
+  obligations: PayrollObligationDto[];
+}
+
 export type PdfExportRequestResultDtoStatus = typeof PdfExportRequestResultDtoStatus[keyof typeof PdfExportRequestResultDtoStatus];
 
 
@@ -2569,6 +3733,90 @@ export interface PdfJobStatusDto {
   expiresAt: string | null;
   /** @nullable */
   failureReason: string | null;
+}
+
+export type PendingContactDtoSubjectKind = typeof PendingContactDtoSubjectKind[keyof typeof PendingContactDtoSubjectKind];
+
+
+export const PendingContactDtoSubjectKind = {
+  LEAD: 'LEAD',
+  STUDENT: 'STUDENT',
+} as const;
+
+export interface PendingContactDto {
+  taskId: string;
+  taskType: string;
+  title: string;
+  dueAt: string;
+  overdue: boolean;
+  subjectKind: PendingContactDtoSubjectKind;
+  subjectId: string;
+  subjectName: string;
+  lastContact: LastContactDto | null;
+}
+
+export interface PendingContactsDto {
+  /** Most overdue first, at most 50 */
+  items: PendingContactDto[];
+}
+
+export interface PeriodDisputeDto {
+  lessonId: string;
+  /** @nullable */
+  taskId: string | null;
+  /** @nullable */
+  reportId: string | null;
+  /** @nullable */
+  sourceEntryId: string | null;
+  /** @nullable */
+  managerId: string | null;
+  /** @nullable */
+  managerAtCloseId: string | null;
+  sourceVersion: number;
+  /** @nullable */
+  statusAtClose: string | null;
+  currentStatus: string;
+  /** @nullable */
+  resolvedAt: string | null;
+  /** @nullable */
+  correctionEntryId: string | null;
+}
+
+export interface PeriodDisputesDto {
+  periodId: string;
+  startsAt: string;
+  endsAt: string;
+  /** @nullable */
+  closedAt: string | null;
+  /** @nullable */
+  closedById: string | null;
+  /**
+     * Closure confirmation for an open period
+     * @nullable
+     */
+  revision: string | null;
+  total: number;
+  page: number;
+  items: PeriodDisputeDto[];
+}
+
+export interface PeriodDto {
+  id: string;
+  startsAt: string;
+  endsAt: string;
+  /** @nullable */
+  closedAt: string | null;
+  /** The period has finished, so it can be closed */
+  finished: boolean;
+  /** Unresolved facts that block closing (0 when closed) */
+  blockers: number;
+  /** finished, not closed and nothing blocks it */
+  readyToClose: boolean;
+}
+
+export interface PeriodListDto {
+  /** Newest first */
+  items: PeriodDto[];
 }
 
 export interface PlatformAccountsDto {
@@ -2671,6 +3919,22 @@ export interface PrepareManagerDistributionDto {
   startsAt?: string;
 }
 
+export interface PrepareRefundDto {
+  /** @minimum 0 */
+  version: number;
+  revision: string;
+  /**
+     * Use zero to submit the evidence for an ineligible or held case
+     * @minimum 0
+     */
+  quantity: number;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
 export interface ProblemDetails {
   type: string;
   title: string;
@@ -2680,6 +3944,213 @@ export interface ProblemDetails {
   code: string;
   requestId: string;
   managerContacts?: ManagerContactsDto;
+}
+
+export interface ProposeAllocationCorrectionDto {
+  amount: string;
+  /** Omit to request a return to the unallocated receipt balance. */
+  targetSubscriptionId?: string;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  reason: string;
+}
+
+export type PublicLeadReceiptDtoStatus = typeof PublicLeadReceiptDtoStatus[keyof typeof PublicLeadReceiptDtoStatus];
+
+
+export const PublicLeadReceiptDtoStatus = {
+  ACCEPTED: 'ACCEPTED',
+} as const;
+
+export interface PublicLeadReceiptDto {
+  status: PublicLeadReceiptDtoStatus;
+}
+
+export type PublicLeadSubmissionDtoAudience = typeof PublicLeadSubmissionDtoAudience[keyof typeof PublicLeadSubmissionDtoAudience];
+
+
+export const PublicLeadSubmissionDtoAudience = {
+  CHILD: 'CHILD',
+  ADULT: 'ADULT',
+} as const;
+
+export interface PublicLeadSubmissionDto {
+  audience: PublicLeadSubmissionDtoAudience;
+  /**
+     * @minLength 2
+     * @maxLength 120
+     */
+  contactName: string;
+  /** @maxLength 120 */
+  guardianName?: string;
+  phone?: string;
+  /** @maxLength 254 */
+  email?: string;
+  subjectId: string;
+  privacyNoticeVersion: string;
+  privacyNoticeAcknowledged: true;
+}
+
+export type PublishReportResponseDtoStatus = typeof PublishReportResponseDtoStatus[keyof typeof PublishReportResponseDtoStatus];
+
+
+export const PublishReportResponseDtoStatus = {
+  PUBLISHED: 'PUBLISHED',
+} as const;
+
+export interface PublishReportResponseDto {
+  /** Report id */
+  id: string;
+  status: PublishReportResponseDtoStatus;
+  publishedAt: string;
+}
+
+export interface PublishSaleConditionDto {
+  code: string;
+  /**
+     * Latest catalog version, or zero for a new code
+     * @minimum 0
+     */
+  expectedVersion: number;
+  /**
+     * @minimum 1
+     * @maximum 10000
+     */
+  lessonCount: number;
+  /**
+     * @minimum 1
+     * @maximum 3660
+     */
+  durationDays: number;
+  /** Original package price in MDL */
+  priceBeforeDiscount: string;
+  /** Absolute package discount in MDL */
+  discount: string;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
+export interface RecoveryHealthCounts {
+  /** @minimum 0 */
+  waiting: number;
+  /** @minimum 0 */
+  needsManual: number;
+}
+
+export interface QueueHealthResponse {
+  checkedAt: string;
+  outbox: OutboxHealthCounts;
+  jobs: JobHealthCounts;
+  recovery: RecoveryHealthCounts;
+  /** @maxItems 20 */
+  latestDead: DeadOutboxStatus[];
+}
+
+export type ReconcilePayoutRequestStatus = typeof ReconcilePayoutRequestStatus[keyof typeof ReconcilePayoutRequestStatus];
+
+
+export const ReconcilePayoutRequestStatus = {
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+} as const;
+
+export interface ReconcilePayoutRequest {
+  status: ReconcilePayoutRequestStatus;
+  /**
+     * Reference to verified external evidence
+     * @maxLength 200
+     */
+  evidenceReference: string;
+  /**
+     * Actual confirmed amount as a decimal string. Required for SUCCEEDED.
+     * @pattern ^(?:0|[1-9]\d{0,15})(?:\.\d{1,4})?$
+     */
+  amount?: string;
+}
+
+export type ReconcilePayoutResponseStatus = typeof ReconcilePayoutResponseStatus[keyof typeof ReconcilePayoutResponseStatus];
+
+
+export const ReconcilePayoutResponseStatus = {
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+} as const;
+
+export interface ReconcilePayoutResponse {
+  id: string;
+  status: ReconcilePayoutResponseStatus;
+  /** @nullable */
+  payoutId: string | null;
+  /** @nullable */
+  ledgerEntryId: string | null;
+}
+
+export interface ReconcileTeacherMeetDto {
+  operationId: string;
+  /** The recovered link of the unresolved create operation */
+  meetingUri: string;
+}
+
+export type RecordContactDtoChannel = typeof RecordContactDtoChannel[keyof typeof RecordContactDtoChannel];
+
+
+export const RecordContactDtoChannel = {
+  CALL: 'CALL',
+  WHATSAPP: 'WHATSAPP',
+  TELEGRAM: 'TELEGRAM',
+  MESSAGE: 'MESSAGE',
+  EMAIL: 'EMAIL',
+  OTHER: 'OTHER',
+} as const;
+
+/**
+ * NO_ANSWER is an attempt, not an informed family
+ */
+export type RecordContactDtoResult = typeof RecordContactDtoResult[keyof typeof RecordContactDtoResult];
+
+
+export const RecordContactDtoResult = {
+  REACHED: 'REACHED',
+  NO_ANSWER: 'NO_ANSWER',
+  CALLBACK_REQUESTED: 'CALLBACK_REQUESTED',
+  DECLINED: 'DECLINED',
+  WRONG_CONTACT: 'WRONG_CONTACT',
+  OTHER: 'OTHER',
+} as const;
+
+export interface RecordContactDto {
+  /** Exactly one of leadId, studentId, teacherId */
+  leadId?: string;
+  studentId?: string;
+  /** A teacher of one of your students */
+  teacherId?: string;
+  /** Linked representative; student contacts only */
+  representativeId?: string;
+  /** Related CRM task; recording does not close it */
+  taskId?: string;
+  /** Fixes an earlier entry; the subject is taken from it and the old entry stays */
+  correctsId?: string;
+  channel: RecordContactDtoChannel;
+  /** NO_ANSWER is an attempt, not an informed family */
+  result: RecordContactDtoResult;
+  /**
+     * Short result; no message texts
+     * @minLength 3
+     * @maxLength 300
+     */
+  summary: string;
+  /**
+     * @minLength 3
+     * @maxLength 300
+     */
+  nextAction?: string;
+  /** When the contact happened; defaults to now, never in the future */
+  occurredAt?: string;
 }
 
 export interface RecoveryCompleteRequest {
@@ -2748,8 +4219,239 @@ export interface RecurringSlotResponse {
   [key: string]: unknown;
  }
 
+export type RefundDecisionDtoStatus = typeof RefundDecisionDtoStatus[keyof typeof RefundDecisionDtoStatus];
+
+
+export const RefundDecisionDtoStatus = {
+  DRAFT: 'DRAFT',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+} as const;
+
+export interface RefundDecisionDto {
+  id: string;
+  version: number;
+  status: RefundDecisionDtoStatus;
+}
+
+export interface RefundCaseDto {
+  requestId: string;
+  studentId: string;
+  subscriptionId: string;
+  decision: RefundDecisionDto | null;
+  pendingTransfers: number;
+  requestedAt: string;
+}
+
+export interface RefundCasesDto {
+  items: RefundCaseDto[];
+  /** @nullable */
+  next: string | null;
+}
+
+export type RefundDetailDtoStatus = typeof RefundDetailDtoStatus[keyof typeof RefundDetailDtoStatus];
+
+
+export const RefundDetailDtoStatus = {
+  DRAFT: 'DRAFT',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+} as const;
+
+export interface RefundQuoteAllocationDto {
+  id: string;
+  paymentId: string;
+  currency: string;
+  amount: string;
+}
+
+export interface RefundQuoteAdvanceDto {
+  currency: string;
+  amount: string;
+}
+
+export interface RefundQuoteGrantDto {
+  id: string;
+  remaining: number;
+}
+
+export type RefundQuoteChargeDtoCategory = typeof RefundQuoteChargeDtoCategory[keyof typeof RefundQuoteChargeDtoCategory];
+
+
+export const RefundQuoteChargeDtoCategory = {
+  CONDUCTED: 'CONDUCTED',
+  APPROVED_CANCELLATION: 'APPROVED_CANCELLATION',
+} as const;
+
+export interface RefundQuoteChargeDto {
+  lessonId: string;
+  consumptionId: string;
+  quantity: number;
+  category: RefundQuoteChargeDtoCategory;
+}
+
+export interface RefundQuoteHoldDto {
+  id: string;
+  reason: string;
+}
+
+export interface RefundQuoteDto {
+  currency: string;
+  unitPrice: string;
+  fullPrice: string;
+  lessonCount: number;
+  allocations: RefundQuoteAllocationDto[];
+  advances: RefundQuoteAdvanceDto[];
+  grants: RefundQuoteGrantDto[];
+  charges: RefundQuoteChargeDto[];
+  holds: RefundQuoteHoldDto[];
+  allocated: string;
+  advance: string;
+  eligibleQuantity: number;
+  maximumAmount: string;
+  revision: string;
+}
+
+export interface RefundDetailDto {
+  id: string;
+  version: number;
+  status: RefundDetailDtoStatus;
+  /** @nullable */
+  preparedById: string | null;
+  /** @nullable */
+  preparedAt: string | null;
+  quantity: number;
+  calculatedAmount: string;
+  calculationBasis: string;
+  /** @nullable */
+  revision: string | null;
+  calculationSnapshot: RefundQuoteDto | null;
+  currency: string;
+  /** @nullable */
+  approvedAmount: string | null;
+  /** @nullable */
+  decidedById: string | null;
+  /** @nullable */
+  decidedAt: string | null;
+  /** @nullable */
+  decisionBasis: string | null;
+}
+
+export type RefundSettlementDtoStatus = typeof RefundSettlementDtoStatus[keyof typeof RefundSettlementDtoStatus];
+
+
+export const RefundSettlementDtoStatus = {
+  AWAITING_REVIEW: 'AWAITING_REVIEW',
+  AWAITING_EXECUTION: 'AWAITING_EXECUTION',
+  PARTIALLY_EXECUTED: 'PARTIALLY_EXECUTED',
+  EXECUTED: 'EXECUTED',
+} as const;
+
+export interface RefundSettlementDto {
+  verifiedNet: string;
+  remaining: string;
+  status: RefundSettlementDtoStatus;
+}
+
+export type RefundTransferDetailDtoKind = typeof RefundTransferDetailDtoKind[keyof typeof RefundTransferDetailDtoKind];
+
+
+export const RefundTransferDetailDtoKind = {
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  RETURNED: 'RETURNED',
+} as const;
+
+export type RefundTransferDetailDtoStatus = typeof RefundTransferDetailDtoStatus[keyof typeof RefundTransferDetailDtoStatus];
+
+
+export const RefundTransferDetailDtoStatus = {
+  REPORTED: 'REPORTED',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export interface RefundTransferDetailDto {
+  id: string;
+  kind: RefundTransferDetailDtoKind;
+  channel: string;
+  status: RefundTransferDetailDtoStatus;
+  amount: string;
+  occurredAt: string;
+  /** @nullable */
+  originalTransferId: string | null;
+  reference: string;
+  evidence: string;
+  reportedById: string;
+  reportedAt: string;
+  /** @nullable */
+  reviewedById: string | null;
+  /** @nullable */
+  reviewedAt: string | null;
+  /** @nullable */
+  reviewReason: string | null;
+}
+
+export type RefundTransferDtoKind = typeof RefundTransferDtoKind[keyof typeof RefundTransferDtoKind];
+
+
+export const RefundTransferDtoKind = {
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  RETURNED: 'RETURNED',
+} as const;
+
+export type RefundTransferDtoStatus = typeof RefundTransferDtoStatus[keyof typeof RefundTransferDtoStatus];
+
+
+export const RefundTransferDtoStatus = {
+  REPORTED: 'REPORTED',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED',
+} as const;
+
+export interface RefundTransferDto {
+  id: string;
+  kind: RefundTransferDtoKind;
+  channel: string;
+  status: RefundTransferDtoStatus;
+  amount: string;
+  occurredAt: string;
+  /** @nullable */
+  originalTransferId: string | null;
+}
+
+export type RefundViewDtoRequestStatus = typeof RefundViewDtoRequestStatus[keyof typeof RefundViewDtoRequestStatus];
+
+
+export const RefundViewDtoRequestStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+  WITHDRAWN: 'WITHDRAWN',
+} as const;
+
+export interface RefundViewDto {
+  requestId: string;
+  requestStatus: RefundViewDtoRequestStatus;
+  subscriptionId: string;
+  quote: RefundQuoteDto | null;
+  decision: RefundDetailDto | null;
+  transfers: RefundTransferDetailDto[];
+  settlement: RefundSettlementDto | null;
+}
+
 export interface RejectManagerPaymentDto {
   /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+}
+
+export interface RejectPaymentCommandDto {
+  /**
+     * Kept in the audit trail; shown to the manager
      * @minLength 3
      * @maxLength 500
      */
@@ -2761,11 +4463,80 @@ export interface RenewManagerSubscriptionDto {
   planId?: string;
 }
 
+export type ReportRefundTransferDtoKind = typeof ReportRefundTransferDtoKind[keyof typeof ReportRefundTransferDtoKind];
+
+
+export const ReportRefundTransferDtoKind = {
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  RETURNED: 'RETURNED',
+} as const;
+
+export interface ReportRefundTransferDto {
+  kind: ReportRefundTransferDtoKind;
+  amount: string;
+  occurredAt: string;
+  originalTransferId?: string;
+  /**
+     * External transfer method
+     * @minLength 2
+     * @maxLength 40
+     */
+  channel: string;
+  /**
+     * Unique bank or reconciliation reference
+     * @minLength 1
+     * @maxLength 160
+     */
+  reference: string;
+  /**
+     * Opaque reference to protected payment evidence
+     * @minLength 5
+     * @maxLength 160
+     */
+  evidence: string;
+}
+
 export interface ReportsResponseDto {
   items: EducationalReportDto[];
   total: number;
   page: number;
   pageSize: number;
+}
+
+export type RequestMaterialUploadDtoMimeType = typeof RequestMaterialUploadDtoMimeType[keyof typeof RequestMaterialUploadDtoMimeType];
+
+
+export const RequestMaterialUploadDtoMimeType = {
+  'application/pdf': 'application/pdf',
+  'image/png': 'image/png',
+  'image/jpeg': 'image/jpeg',
+  'image/webp': 'image/webp',
+  'image/gif': 'image/gif',
+  'text/plain': 'text/plain',
+  'audio/mpeg': 'audio/mpeg',
+  'video/mp4': 'video/mp4',
+  'application/msword': 'application/msword',
+  'application/vndopenxmlformats-officedocumentwordprocessingmldocument': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vndms-excel': 'application/vnd.ms-excel',
+  'application/vndopenxmlformats-officedocumentspreadsheetmlsheet': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vndms-powerpoint': 'application/vnd.ms-powerpoint',
+  'application/vndopenxmlformats-officedocumentpresentationmlpresentation': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+  'application/vndoasisopendocumenttext': 'application/vnd.oasis.opendocument.text',
+} as const;
+
+export interface RequestMaterialUploadDto {
+  /**
+     * @minLength 1
+     * @maxLength 255
+     */
+  fileName: string;
+  /**
+     * @minimum 1
+     * @maximum 52428800
+     */
+  fileSizeBytes: number;
+  mimeType: RequestMaterialUploadDtoMimeType;
 }
 
 export interface RequestUploadUrlDto {
@@ -2823,6 +4594,36 @@ export interface RescheduleRequestResponseDto {
   status: RescheduleRequestResponseDtoStatus;
 }
 
+export type ResolveLessonDisputeDtoResult = typeof ResolveLessonDisputeDtoResult[keyof typeof ResolveLessonDisputeDtoResult];
+
+
+export const ResolveLessonDisputeDtoResult = {
+  CONDUCTED: 'CONDUCTED',
+  NOT_CONDUCTED: 'NOT_CONDUCTED',
+} as const;
+
+export interface ResolveLessonDisputeDto {
+  reportId: string;
+  result: ResolveLessonDisputeDtoResult;
+  /** @maxLength 200 */
+  evidenceReference: string;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  reason: string;
+  /** Documented UTC start; required only when the recorded start is missing. */
+  actualStartedAt?: string;
+  /**
+     * Documented duration for a conducted lesson.
+     * @minimum 1
+     * @maximum 480
+     */
+  durationMin?: number;
+  /** Existing director admission applicable at actual start. */
+  temporaryAccessPermissionId?: string;
+}
+
 export type ResolveManagerDisputeDtoDecision = typeof ResolveManagerDisputeDtoDecision[keyof typeof ResolveManagerDisputeDtoDecision];
 
 
@@ -2850,6 +4651,17 @@ export interface ResolveManagerDisputeDto {
   version: number;
 }
 
+export interface ResolveManagerGeneralDto {
+  /** @minimum 1 */
+  version: number;
+  /**
+     * Outcome of the follow-up, kept in the task history
+     * @minLength 3
+     * @maxLength 500
+     */
+  note: string;
+}
+
 export type ResolveManagerRescheduleDtoDecision = typeof ResolveManagerRescheduleDtoDecision[keyof typeof ResolveManagerRescheduleDtoDecision];
 
 
@@ -2874,6 +4686,139 @@ export interface ResolveManagerRescheduleDto {
   version: number;
 }
 
+export interface RetireSaleConditionDto {
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
+export type ReviewAllocationCorrectionDtoDecision = typeof ReviewAllocationCorrectionDtoDecision[keyof typeof ReviewAllocationCorrectionDtoDecision];
+
+
+export const ReviewAllocationCorrectionDtoDecision = {
+  REJECTED: 'REJECTED',
+  MANUAL_REVIEW: 'MANUAL_REVIEW',
+} as const;
+
+export interface ReviewAllocationCorrectionDto {
+  decision: ReviewAllocationCorrectionDtoDecision;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  reason: string;
+}
+
+export type ReviewHomeworkDtoResult = typeof ReviewHomeworkDtoResult[keyof typeof ReviewHomeworkDtoResult];
+
+
+export const ReviewHomeworkDtoResult = {
+  ACCEPTED: 'ACCEPTED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export interface ReviewHomeworkDto {
+  /** Must be the latest submission of the delivery */
+  submissionId: string;
+  result: ReviewHomeworkDtoResult;
+  /**
+     * Required for NEEDS_REVISION
+     * @minLength 5
+     * @maxLength 2000
+     */
+  comment?: string;
+}
+
+export type ReviewHomeworkResponseDtoResult = typeof ReviewHomeworkResponseDtoResult[keyof typeof ReviewHomeworkResponseDtoResult];
+
+
+export const ReviewHomeworkResponseDtoResult = {
+  ACCEPTED: 'ACCEPTED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export interface ReviewHomeworkResponseDto {
+  /** Review id */
+  id: string;
+  deliveryId: string;
+  submissionId: string;
+  result: ReviewHomeworkResponseDtoResult;
+}
+
+export type ReviewRefundTransferDtoDecision = typeof ReviewRefundTransferDtoDecision[keyof typeof ReviewRefundTransferDtoDecision];
+
+
+export const ReviewRefundTransferDtoDecision = {
+  VERIFY: 'VERIFY',
+  REJECT: 'REJECT',
+} as const;
+
+export interface ReviewRefundTransferDto {
+  decision: ReviewRefundTransferDtoDecision;
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  basis: string;
+}
+
+export interface RevokeAssignmentCommandDto {
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  reason: string;
+}
+
+export interface RevokeMaterialResponseDto {
+  /** Permission id */
+  id: string;
+  revokedAt: string;
+}
+
+export type SaleConditionVersionDtoStatus = typeof SaleConditionVersionDtoStatus[keyof typeof SaleConditionVersionDtoStatus];
+
+
+export const SaleConditionVersionDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  SCHEDULED: 'SCHEDULED',
+  RETIRED: 'RETIRED',
+} as const;
+
+export interface SaleConditionVersionDto {
+  id: string;
+  code: string;
+  version: number;
+  lessonCount: number;
+  /** @nullable */
+  durationDays: number | null;
+  priceBeforeDiscount: string;
+  discount: string;
+  price: string;
+  unitPrice: string;
+  currency: string;
+  validFrom: string;
+  /** @nullable */
+  validTo: string | null;
+  status: SaleConditionVersionDtoStatus;
+  /** @nullable */
+  publishedById: string | null;
+  /** @nullable */
+  publicationBasis: string | null;
+  /** @nullable */
+  retiredById: string | null;
+  /** @nullable */
+  retirementBasis: string | null;
+}
+
+export interface SaleConditionVersionsDto {
+  items: SaleConditionVersionDto[];
+  /** @nullable */
+  next: string | null;
+}
+
 export type SavedDraftDtoStatus = typeof SavedDraftDtoStatus[keyof typeof SavedDraftDtoStatus];
 
 
@@ -2890,6 +4835,42 @@ export interface SavedDraftDto {
 export interface SaveDraftDto {
   /** @maxLength 10000 */
   content: string;
+}
+
+export interface SaveReportDto {
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  achievements: string;
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  growthAreas: string;
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  recommendations: string;
+  /**
+     * @minLength 1
+     * @maxLength 200
+     */
+  teacherSignature: string;
+}
+
+export type SaveReportResponseDtoStatus = typeof SaveReportResponseDtoStatus[keyof typeof SaveReportResponseDtoStatus];
+
+
+export const SaveReportResponseDtoStatus = {
+  DRAFT: 'DRAFT',
+} as const;
+
+export interface SaveReportResponseDto {
+  /** Report id */
+  id: string;
+  status: SaveReportResponseDtoStatus;
 }
 
 export type ScheduleChangeApprovalDtoStatus = typeof ScheduleChangeApprovalDtoStatus[keyof typeof ScheduleChangeApprovalDtoStatus];
@@ -3019,9 +5000,48 @@ export interface SessionInfoDto {
   isCurrent: boolean;
 }
 
+/**
+ * AVAILABLE: urgent tasks wait up to the acceptance window. UNAVAILABLE / OFF_SHIFT: they go to the director at once
+ */
+export type SetManagerAvailabilityDtoStatus = typeof SetManagerAvailabilityDtoStatus[keyof typeof SetManagerAvailabilityDtoStatus];
+
+
+export const SetManagerAvailabilityDtoStatus = {
+  AVAILABLE: 'AVAILABLE',
+  UNAVAILABLE: 'UNAVAILABLE',
+  OFF_SHIFT: 'OFF_SHIFT',
+} as const;
+
+export interface SetManagerAvailabilityDto {
+  /** AVAILABLE: urgent tasks wait up to the acceptance window. UNAVAILABLE / OFF_SHIFT: they go to the director at once */
+  status: SetManagerAvailabilityDtoStatus;
+}
+
 export interface SetManagerMeetDto {
   /** @pattern ^https:\/\/meet\.google\.com\/[a-z]{3}-[a-z]{4}-[a-z]{3}$ */
   url: string;
+}
+
+export interface ShareMaterialDto {
+  /** A taught enrollment; the student gets the file for its subject */
+  enrollmentId: string;
+  /** Optional lesson of this enrollment the file belongs to */
+  lessonId?: string;
+  /**
+     * Display title shown with the lesson
+     * @maxLength 200
+     */
+  lessonTitle?: string;
+  /** Allow saving (attachment) instead of in-browser viewing only */
+  canDownload: boolean;
+  /** Access ends at this instant */
+  expiresAt?: string;
+}
+
+export interface ShareMaterialResponseDto {
+  /** Permission id */
+  id: string;
+  fileId: string;
 }
 
 export type SkillAuditEntryDtoFromStatus = typeof SkillAuditEntryDtoFromStatus[keyof typeof SkillAuditEntryDtoFromStatus];
@@ -3154,7 +5174,91 @@ export interface StaffActionEligibilityDto {
   sourceUpdatedAt: string | null;
 }
 
+export type StaffCardDtoKind = typeof StaffCardDtoKind[keyof typeof StaffCardDtoKind];
+
+
+export const StaffCardDtoKind = {
+  MANAGER: 'MANAGER',
+  TEACHER: 'TEACHER',
+} as const;
+
+/**
+ * MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons
+ */
+export type StaffCardDtoMetrics = { [key: string]: unknown };
+
+export type StatusChangeDtoAction = typeof StatusChangeDtoAction[keyof typeof StatusChangeDtoAction];
+
+
+export const StatusChangeDtoAction = {
+  DEACTIVATED: 'DEACTIVATED',
+  REACTIVATED: 'REACTIVATED',
+} as const;
+
+export interface StatusChangeDto {
+  action: StatusChangeDtoAction;
+  reason: string;
+  byDirectorName: string;
+  changedAt: string;
+}
+
+export interface StaffCardDto {
+  kind: StaffCardDtoKind;
+  id: string;
+  fullName: string;
+  active: boolean;
+  /** @nullable */
+  deactivatedAt: string | null;
+  /** MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons */
+  metrics: StaffCardDtoMetrics;
+  statusHistory: StatusChangeDto[];
+  /** MANAGER: latest hand-overs to or from this manager */
+  handovers: HandoverDto[];
+}
+
+export type StaffItemDtoKind = typeof StaffItemDtoKind[keyof typeof StaffItemDtoKind];
+
+
+export const StaffItemDtoKind = {
+  MANAGER: 'MANAGER',
+  TEACHER: 'TEACHER',
+} as const;
+
+/**
+ * MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons
+ */
+export type StaffItemDtoMetrics = { [key: string]: unknown };
+
+export interface StaffItemDto {
+  kind: StaffItemDtoKind;
+  id: string;
+  fullName: string;
+  active: boolean;
+  /** @nullable */
+  deactivatedAt: string | null;
+  /** MANAGER: students, leads, openTasks, openEscalations, availability. TEACHER: activeStudents, lessonsNext7Days, futureLessons */
+  metrics: StaffItemDtoMetrics;
+}
+
+export interface StaffListDto {
+  items: StaffItemDto[];
+}
+
+export interface StaffStatusCommandDto {
+  /**
+     * Kept in the status history
+     * @minLength 3
+     * @maxLength 500
+     */
+  reason: string;
+}
+
 export interface StartLessonRequest { [key: string]: unknown }
+
+export interface StartTeacherMeetOAuthResponseDto {
+  authorizationUrl: string;
+  expiresAt: string;
+}
 
 export interface StudentAccountIssuedDto {
   accountId: string;
@@ -3628,6 +5732,18 @@ export interface TeacherAccrualResponse {
   [key: string]: unknown;
  }
 
+export interface TeacherAssignmentDto {
+  assignmentId: string;
+  studentId: string;
+  enrollmentId: string;
+  subjectId: string;
+  teacherId: string;
+  validFrom: string;
+  /** @nullable */
+  validTo: string | null;
+  basis: string;
+}
+
 export interface TeacherAvailabilityRequest {
   availabilityId?: string;
   startsAt?: string;
@@ -3647,10 +5763,928 @@ export interface TeacherAvailabilityResponse {
   [key: string]: unknown;
  }
 
+export interface TeacherAvailabilityWindowDto {
+  availabilityId: string;
+  startsAt: string;
+  endsAt: string;
+  timezone: string;
+  /** @nullable */
+  cancelledAt: string | null;
+  /** Non-cancelled lessons overlap the window: edits need a manager request */
+  occupied: boolean;
+  /** @minimum 0 */
+  lessonCount: number;
+}
+
+export interface TeacherAvailabilityResponseDto {
+  from: string;
+  to: string;
+  asOf: string;
+  windows: TeacherAvailabilityWindowDto[];
+}
+
+export interface TeacherSubjectDto {
+  id: string;
+  name: string;
+}
+
+export interface TimeIntervalDto {
+  startsAt: string;
+  endsAt: string;
+}
+
+export interface TeacherCandidateDto {
+  teacherId: string;
+  fullName: string;
+  /** Subjects with a current assignment */
+  subjects: TeacherSubjectDto[];
+  /** Students with a current assignment */
+  activeStudents: number;
+  /** Lessons in the next 7 days */
+  lessonsNext7Days: number;
+  /** Published availability in the next 7 days */
+  availableMinutesNext7Days: number;
+  /** Availability minus booked lessons, next 7 days */
+  freeMinutesNext7Days: number;
+  /** Teaches the requested subject (only with subjectId) */
+  teachesSubject: boolean;
+  /** Free intervals that fit a trial lesson, after the minimum lead time (max 10) */
+  trialSlots: TimeIntervalDto[];
+}
+
+export interface TeacherCandidatesDto {
+  leadId: string;
+  /** @nullable */
+  subjectId: string | null;
+  /** Trial lesson length */
+  trialMinutes: number;
+  /** Teachers with trial slots, best first */
+  candidates: TeacherCandidateDto[];
+}
+
+export type TeacherCheckpointCardDtoType = typeof TeacherCheckpointCardDtoType[keyof typeof TeacherCheckpointCardDtoType];
+
+
+export const TeacherCheckpointCardDtoType = {
+  LESSON_4: 'LESSON_4',
+  LESSON_8: 'LESSON_8',
+} as const;
+
+export type TeacherCheckpointCardDtoState = typeof TeacherCheckpointCardDtoState[keyof typeof TeacherCheckpointCardDtoState];
+
+
+export const TeacherCheckpointCardDtoState = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+} as const;
+
+export type TeacherReportDtoStatus = typeof TeacherReportDtoStatus[keyof typeof TeacherReportDtoStatus];
+
+
+export const TeacherReportDtoStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+} as const;
+
+export interface TeacherReportDto {
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  achievements: string;
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  growthAreas: string;
+  /**
+     * @minLength 1
+     * @maxLength 5000
+     */
+  recommendations: string;
+  /**
+     * @minLength 1
+     * @maxLength 200
+     */
+  teacherSignature: string;
+  reportId: string;
+  status: TeacherReportDtoStatus;
+  periodStart: string;
+  periodEnd: string;
+  /** @nullable */
+  publishedAt: string | null;
+}
+
+export interface TeacherCheckpointCardDto {
+  checkpointId: string;
+  type: TeacherCheckpointCardDtoType;
+  confirmedLessonCount: number;
+  triggeredAt: string;
+  state: TeacherCheckpointCardDtoState;
+  /** @nullable */
+  completedAt: string | null;
+  enrollmentId: string;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  /** @nullable */
+  teacherSummary: string | null;
+  /**
+     * Frozen skill snapshot (LESSON_4, once completed)
+     * @nullable
+     */
+  snapshotId: string | null;
+  /**
+     * Suggested report period start (last eight lessons)
+     * @nullable
+     */
+  suggestedPeriodStart: string | null;
+  /** @nullable */
+  suggestedPeriodEnd: string | null;
+  report: TeacherReportDto | null;
+}
+
+export type TeacherCheckpointItemDtoType = typeof TeacherCheckpointItemDtoType[keyof typeof TeacherCheckpointItemDtoType];
+
+
+export const TeacherCheckpointItemDtoType = {
+  LESSON_4: 'LESSON_4',
+  LESSON_8: 'LESSON_8',
+} as const;
+
+export type TeacherCheckpointItemDtoState = typeof TeacherCheckpointItemDtoState[keyof typeof TeacherCheckpointItemDtoState];
+
+
+export const TeacherCheckpointItemDtoState = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+} as const;
+
+export interface TeacherCheckpointItemDto {
+  checkpointId: string;
+  type: TeacherCheckpointItemDtoType;
+  confirmedLessonCount: number;
+  triggeredAt: string;
+  state: TeacherCheckpointItemDtoState;
+  /** @nullable */
+  completedAt: string | null;
+  enrollmentId: string;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+}
+
+export interface TeacherCheckpointPageDto {
+  items: TeacherCheckpointItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface TeacherConfirmedOutcomeDto {
+  confirmedAt: string;
+  actualStartedAt: string;
+  durationMin: number;
+}
+
+export interface TeacherDirectoryItemDto {
+  teacherId: string;
+  fullName: string;
+  /** Subjects with a current assignment */
+  subjects: TeacherSubjectDto[];
+  /** Students with a current assignment */
+  activeStudents: number;
+  /** Lessons in the next 7 days */
+  lessonsNext7Days: number;
+  /** Published availability in the next 7 days */
+  availableMinutesNext7Days: number;
+  /** Availability minus booked lessons, next 7 days */
+  freeMinutesNext7Days: number;
+  /** Teaches the requested subject (only with subjectId) */
+  teachesSubject: boolean;
+}
+
+export interface TeacherDirectoryDto {
+  items: TeacherDirectoryItemDto[];
+}
+
+export interface TeacherEnrollmentDto {
+  enrollmentId: string;
+  studentId: string;
+  studentName: string;
+  subjectId: string;
+  subjectName: string;
+  assignedFrom: string;
+  /**
+     * Confirmed conducted lessons in this subject
+     * @minimum 0
+     */
+  confirmedLessons: number;
+  /** @nullable */
+  nextLessonAt: string | null;
+}
+
+export interface TeacherEnrollmentsResponseDto {
+  items: TeacherEnrollmentDto[];
+}
+
+export type TeacherGoalDtoStatus = typeof TeacherGoalDtoStatus[keyof typeof TeacherGoalDtoStatus];
+
+
+export const TeacherGoalDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  ACHIEVED: 'ACHIEVED',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface TeacherGoalDto {
+  goalId: string;
+  text: string;
+  /** @nullable */
+  targetDate: string | null;
+  status: TeacherGoalDtoStatus;
+  /** @nullable */
+  skillId: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TeacherGoalsResponseDto {
+  enrollmentId: string;
+  goals: TeacherGoalDto[];
+}
+
+export type TeacherHomeworkCardDtoState = typeof TeacherHomeworkCardDtoState[keyof typeof TeacherHomeworkCardDtoState];
+
+
+export const TeacherHomeworkCardDtoState = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  AWAITING_REVIEW: 'AWAITING_REVIEW',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+  REVIEWED: 'REVIEWED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export type TeacherHomeworkReviewDtoResult = typeof TeacherHomeworkReviewDtoResult[keyof typeof TeacherHomeworkReviewDtoResult];
+
+
+export const TeacherHomeworkReviewDtoResult = {
+  ACCEPTED: 'ACCEPTED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+} as const;
+
+export interface TeacherHomeworkReviewDto {
+  reviewId: string;
+  result: TeacherHomeworkReviewDtoResult;
+  /** @nullable */
+  comment: string | null;
+  reviewedAt: string;
+}
+
+export interface TeacherHomeworkSubmissionDto {
+  submissionId: string;
+  version: number;
+  submittedAt: string;
+  /** The student's text answer */
+  text: string;
+  review: TeacherHomeworkReviewDto | null;
+}
+
+export interface TeacherHomeworkCardDto {
+  deliveryId: string;
+  title: string;
+  issuedAt: string;
+  /** @nullable */
+  dueAt: string | null;
+  state: TeacherHomeworkCardDtoState;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  /** @minimum 0 */
+  submissionCount: number;
+  /** @nullable */
+  latestSubmittedAt: string | null;
+  /** The latest submission came after dueAt */
+  isLate: boolean;
+  description: string;
+  /** @nullable */
+  lessonId: string | null;
+  /** Newest version first */
+  submissions: TeacherHomeworkSubmissionDto[];
+  /** The latest submission has no review yet */
+  canReview: boolean;
+}
+
+export type TeacherHomeworkItemDtoState = typeof TeacherHomeworkItemDtoState[keyof typeof TeacherHomeworkItemDtoState];
+
+
+export const TeacherHomeworkItemDtoState = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  AWAITING_REVIEW: 'AWAITING_REVIEW',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+  REVIEWED: 'REVIEWED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export interface TeacherHomeworkItemDto {
+  deliveryId: string;
+  title: string;
+  issuedAt: string;
+  /** @nullable */
+  dueAt: string | null;
+  state: TeacherHomeworkItemDtoState;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  /** @minimum 0 */
+  submissionCount: number;
+  /** @nullable */
+  latestSubmittedAt: string | null;
+  /** The latest submission came after dueAt */
+  isLate: boolean;
+}
+
+export interface TeacherHomeworkPageDto {
+  items: TeacherHomeworkItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export type TeacherJournalItemDtoState = typeof TeacherJournalItemDtoState[keyof typeof TeacherJournalItemDtoState];
+
+
+export const TeacherJournalItemDtoState = {
+  AWAITING_REPORT: 'AWAITING_REPORT',
+  AWAITING_CONFIRMATION: 'AWAITING_CONFIRMATION',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type TeacherJournalItemDtoKind = typeof TeacherJournalItemDtoKind[keyof typeof TeacherJournalItemDtoKind];
+
+
+export const TeacherJournalItemDtoKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
+
+/**
+ * Latest report of this lesson version
+ * @nullable
+ */
+export type TeacherJournalItemDtoLatestReportResult = typeof TeacherJournalItemDtoLatestReportResult[keyof typeof TeacherJournalItemDtoLatestReportResult] | null;
+
+
+export const TeacherJournalItemDtoLatestReportResult = {
+  CONDUCTED: 'CONDUCTED',
+  NOT_CONDUCTED: 'NOT_CONDUCTED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface TeacherJournalItemDto {
+  lessonId: string;
+  startsAt: string;
+  endsAt: string;
+  state: TeacherJournalItemDtoState;
+  kind: TeacherJournalItemDtoKind;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  /** Lesson end + 24 hours */
+  reportDeadlineAt: string;
+  /** AWAITING_REPORT and past the 24 hour deadline */
+  overdue: boolean;
+  /**
+     * Latest report of this lesson version
+     * @nullable
+     */
+  latestReportResult: TeacherJournalItemDtoLatestReportResult;
+}
+
+export interface TeacherJournalPageDto {
+  items: TeacherJournalItemDto[];
+  /** @nullable */
+  nextCursor: string | null;
+  asOf: string;
+}
+
+export type TeacherLessonCardDtoState = typeof TeacherLessonCardDtoState[keyof typeof TeacherLessonCardDtoState];
+
+
+export const TeacherLessonCardDtoState = {
+  AWAITING_REPORT: 'AWAITING_REPORT',
+  AWAITING_CONFIRMATION: 'AWAITING_CONFIRMATION',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type TeacherLessonCardDtoKind = typeof TeacherLessonCardDtoKind[keyof typeof TeacherLessonCardDtoKind];
+
+
+export const TeacherLessonCardDtoKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
+
+/**
+ * Latest report of this lesson version
+ * @nullable
+ */
+export type TeacherLessonCardDtoLatestReportResult = typeof TeacherLessonCardDtoLatestReportResult[keyof typeof TeacherLessonCardDtoLatestReportResult] | null;
+
+
+export const TeacherLessonCardDtoLatestReportResult = {
+  CONDUCTED: 'CONDUCTED',
+  NOT_CONDUCTED: 'NOT_CONDUCTED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type TeacherLessonReportDtoResult = typeof TeacherLessonReportDtoResult[keyof typeof TeacherLessonReportDtoResult];
+
+
+export const TeacherLessonReportDtoResult = {
+  CONDUCTED: 'CONDUCTED',
+  NOT_CONDUCTED: 'NOT_CONDUCTED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export interface TeacherLessonReportDto {
+  reportId: string;
+  version: number;
+  result: TeacherLessonReportDtoResult;
+  studentNoShow: boolean;
+  /** @nullable */
+  actualStartedAt: string | null;
+  /** @nullable */
+  durationMin: number | null;
+  note: string;
+  reportedAt: string;
+  /** Latest report of the current lesson version */
+  current: boolean;
+}
+
+export interface TeacherLessonCardDto {
+  lessonId: string;
+  startsAt: string;
+  endsAt: string;
+  state: TeacherLessonCardDtoState;
+  kind: TeacherLessonCardDtoKind;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  /** Lesson end + 24 hours */
+  reportDeadlineAt: string;
+  /** AWAITING_REPORT and past the 24 hour deadline */
+  overdue: boolean;
+  /**
+     * Latest report of this lesson version
+     * @nullable
+     */
+  latestReportResult: TeacherLessonCardDtoLatestReportResult;
+  /**
+     * Server-recorded actual start; a CONDUCTED report must use exactly this value
+     * @nullable
+     */
+  actualStartedAt: string | null;
+  /** The lesson has ended and may still receive a (new) report */
+  canReport: boolean;
+  reports: TeacherLessonReportDto[];
+  confirmedOutcome: TeacherConfirmedOutcomeDto | null;
+}
+
+export type TeacherMaterialDtoStatus = typeof TeacherMaterialDtoStatus[keyof typeof TeacherMaterialDtoStatus];
+
+
+export const TeacherMaterialDtoStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+} as const;
+
+export interface TeacherMaterialDto {
+  fileId: string;
+  fileName: string;
+  sizeBytes: number;
+  mimeType: string;
+  status: TeacherMaterialDtoStatus;
+  createdAt: string;
+  /**
+     * Currently active grants of this file
+     * @minimum 0
+     */
+  activeGrants: number;
+}
+
+export interface TeacherMaterialPageDto {
+  items: TeacherMaterialDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export type TeacherMeetConnectionDtoState = typeof TeacherMeetConnectionDtoState[keyof typeof TeacherMeetConnectionDtoState];
+
+
+export const TeacherMeetConnectionDtoState = {
+  DISCONNECTED: 'DISCONNECTED',
+  REVOCATION_PENDING: 'REVOCATION_PENDING',
+  CONNECTED: 'CONNECTED',
+} as const;
+
+export interface TeacherMeetConnectionDto {
+  state: TeacherMeetConnectionDtoState;
+  available: boolean;
+}
+
+export type TeacherMeetOperationDtoKind = typeof TeacherMeetOperationDtoKind[keyof typeof TeacherMeetOperationDtoKind];
+
+
+export const TeacherMeetOperationDtoKind = {
+  CREATE: 'CREATE',
+  VERIFY: 'VERIFY',
+  RECONCILE: 'RECONCILE',
+} as const;
+
+export type TeacherMeetOperationDtoState = typeof TeacherMeetOperationDtoState[keyof typeof TeacherMeetOperationDtoState];
+
+
+export const TeacherMeetOperationDtoState = {
+  QUEUED: 'QUEUED',
+  DISPATCHING: 'DISPATCHING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  UNKNOWN: 'UNKNOWN',
+  RECONCILED: 'RECONCILED',
+  CLOSED_WITHOUT_SPACE: 'CLOSED_WITHOUT_SPACE',
+} as const;
+
+export interface TeacherMeetOperationDto {
+  id: string;
+  kind: TeacherMeetOperationDtoKind;
+  state: TeacherMeetOperationDtoState;
+  queuedAt: string;
+  /** @nullable */
+  finishedAt: string | null;
+  /** @nullable */
+  diagnosticCode: string | null;
+  /** @nullable */
+  retryAt: string | null;
+}
+
+export interface TeacherMeetSpaceDto {
+  meetLink: string;
+  lastVerifiedAt: string;
+}
+
+export interface TeacherMeetPairDto {
+  assignmentId: string;
+  published: TeacherMeetSpaceDto | null;
+  latestOperation: TeacherMeetOperationDto | null;
+  /** @nullable */
+  unresolvedOperationId: string | null;
+}
+
+export type TeacherMeResponseDtoRole = typeof TeacherMeResponseDtoRole[keyof typeof TeacherMeResponseDtoRole];
+
+
+export const TeacherMeResponseDtoRole = {
+  TEACHER: 'TEACHER',
+} as const;
+
+export interface TeacherMeResponseDto {
+  actorContext: StaffActorContextDto;
+  teacherId: string;
+  displayName: string;
+  role: TeacherMeResponseDtoRole;
+  /**
+     * Students with an active assignment
+     * @minimum 0
+     */
+  activeStudentCount: number;
+  timezone: string;
+}
+
+export type TeacherNotificationDtoType = typeof TeacherNotificationDtoType[keyof typeof TeacherNotificationDtoType];
+
+
+export const TeacherNotificationDtoType = {
+  LESSON_SCHEDULED: 'LESSON_SCHEDULED',
+  LESSON_RESCHEDULED: 'LESSON_RESCHEDULED',
+  LESSON_CANCELLED: 'LESSON_CANCELLED',
+  HOMEWORK_SUBMITTED: 'HOMEWORK_SUBMITTED',
+  CHECKPOINT_DUE: 'CHECKPOINT_DUE',
+  SCHEDULE_REQUEST_RESOLVED: 'SCHEDULE_REQUEST_RESOLVED',
+} as const;
+
+/**
+ * Where the notification leads
+ */
+export type TeacherNotificationDtoTargetKind = typeof TeacherNotificationDtoTargetKind[keyof typeof TeacherNotificationDtoTargetKind];
+
+
+export const TeacherNotificationDtoTargetKind = {
+  LESSON: 'LESSON',
+  HOMEWORK: 'HOMEWORK',
+  CHECKPOINT: 'CHECKPOINT',
+  SCHEDULE_REQUEST: 'SCHEDULE_REQUEST',
+} as const;
+
+export interface TeacherNotificationDto {
+  /** Stable event key; use it to mark the event read */
+  key: string;
+  type: TeacherNotificationDtoType;
+  occurredAt: string;
+  read: boolean;
+  studentName: string;
+  subjectName: string;
+  /**
+     * Lesson time when the event is about a lesson
+     * @nullable
+     */
+  lessonAt: string | null;
+  /** Where the notification leads */
+  targetKind: TeacherNotificationDtoTargetKind;
+  targetId: string;
+}
+
+export interface TeacherNotificationPageDto {
+  items: TeacherNotificationDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface TeacherNotificationSummaryDto {
+  /**
+     * Unread events of the last 90 days (capped at 500)
+     * @minimum 0
+     */
+  unreadCount: number;
+  /** @nullable */
+  latestAt: string | null;
+}
+
+export interface TeacherPasskeyDto {
+  id: string;
+  createdAt: string;
+  /** @nullable */
+  lastUsedAt: string | null;
+  backedUp: boolean;
+}
+
 export interface TeacherPayrollResponse {
   teacherId: string;
   /** @maxItems 100 */
   items: PayrollItem[];
+}
+
+export interface TeacherPayrollResponseDto {
+  month: string;
+  timezone: string;
+  totals: PayrollTotalDto[];
+  lines: PayrollLineDto[];
+  /** Own lessons awaiting a decision, without an estimated amount. */
+  reviewItems?: PayrollReviewItemDto[];
+}
+
+export interface TeacherProfileDto {
+  teacherId: string;
+  fullName: string;
+  /**
+     * Read-only: changed by school staff after identity checks
+     * @nullable
+     */
+  email: string | null;
+  /** @nullable */
+  phone: string | null;
+  timezone: string;
+  /** Active passkeys (MFA); credential material is never exposed */
+  passkeys: TeacherPasskeyDto[];
+}
+
+export type TeacherScheduleRequestDtoStatus = typeof TeacherScheduleRequestDtoStatus[keyof typeof TeacherScheduleRequestDtoStatus];
+
+
+export const TeacherScheduleRequestDtoStatus = {
+  PENDING: 'PENDING',
+  RESOLVED: 'RESOLVED',
+} as const;
+
+export interface TeacherScheduleRequestDto {
+  requestId: string;
+  status: TeacherScheduleRequestDtoStatus;
+  createdAt: string;
+  reason: string;
+  /** @nullable */
+  requestedStartAt: string | null;
+  /** @nullable */
+  requestedEndAt: string | null;
+  /** @nullable */
+  lessonId: string | null;
+  /** @nullable */
+  slotId: string | null;
+  /**
+     * Current time of the targeted lesson
+     * @nullable
+     */
+  lessonStartsAt: string | null;
+  studentName: string;
+  subjectName: string;
+}
+
+export interface TeacherScheduleRequestPageDto {
+  items: TeacherScheduleRequestDto[];
+  /** @nullable */
+  nextCursor: string | null;
+}
+
+export interface TeacherSharedMaterialDto {
+  permissionId: string;
+  fileId: string;
+  fileName: string;
+  canDownload: boolean;
+  /** @nullable */
+  lessonId: string | null;
+  /** @nullable */
+  lessonTitle: string | null;
+  sharedAt: string;
+  /** @nullable */
+  expiresAt: string | null;
+  /** @nullable */
+  revokedAt: string | null;
+}
+
+export interface TeacherSharedMaterialsDto {
+  enrollmentId: string;
+  /** Grants issued by this teacher, newest first (max 200) */
+  items: TeacherSharedMaterialDto[];
+}
+
+export type TeacherSkillDtoStatus = typeof TeacherSkillDtoStatus[keyof typeof TeacherSkillDtoStatus];
+
+
+export const TeacherSkillDtoStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface TeacherSkillDto {
+  skillId: string;
+  name: string;
+  category: string;
+  /** A skill of this student only (not the subject catalog) */
+  personal: boolean;
+  status: TeacherSkillDtoStatus;
+  /** @nullable */
+  assessedAt: string | null;
+  /** @nullable */
+  assessedByName: string | null;
+  /**
+     * Student-visible comment of the last change
+     * @nullable
+     */
+  publicComment: string | null;
+}
+
+export type TeacherSkillHistoryItemDtoFromStatus = typeof TeacherSkillHistoryItemDtoFromStatus[keyof typeof TeacherSkillHistoryItemDtoFromStatus];
+
+
+export const TeacherSkillHistoryItemDtoFromStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export type TeacherSkillHistoryItemDtoToStatus = typeof TeacherSkillHistoryItemDtoToStatus[keyof typeof TeacherSkillHistoryItemDtoToStatus];
+
+
+export const TeacherSkillHistoryItemDtoToStatus = {
+  NOT_STUDIED: 'NOT_STUDIED',
+  FAMILIARIZING: 'FAMILIARIZING',
+  PRACTICING: 'PRACTICING',
+  APPLYING: 'APPLYING',
+} as const;
+
+export interface TeacherSkillHistoryItemDto {
+  auditId: string;
+  changedAt: string;
+  fromStatus: TeacherSkillHistoryItemDtoFromStatus;
+  toStatus: TeacherSkillHistoryItemDtoToStatus;
+  teacherName: string;
+  /** @nullable */
+  publicComment: string | null;
+  /** Internal evidence (teacher view only) */
+  basis: string;
+}
+
+export interface TeacherSkillHistoryDto {
+  skillId: string;
+  skillName: string;
+  items: TeacherSkillHistoryItemDto[];
+}
+
+export interface TeacherSkillMapDto {
+  enrollmentId: string;
+  studentName: string;
+  subjectName: string;
+  skills: TeacherSkillDto[];
+}
+
+export interface TeacherStudentOverviewDto {
+  enrollmentId: string;
+  studentId: string;
+  studentName: string;
+  subjectName: string;
+  confirmedLessons: number;
+  /**
+     * Confirmed lessons until the next skill review
+     * @minimum 1
+     * @maximum 4
+     */
+  lessonsToNextReview: number;
+  /** Next lessons of this teacher (max 5) */
+  upcomingLessons: OverviewLessonDto[];
+  /** Latest past lessons of this teacher (max 5) */
+  recentLessons: OverviewLessonDto[];
+  homework: OverviewHomeworkDto;
+  skills: OverviewSkillsDto;
+  activeGoals: number;
+  /** Skill reviews and reports waiting for this teacher */
+  pendingCheckpoints: number;
+}
+
+export type TeacherTodayLessonDtoStatus = typeof TeacherTodayLessonDtoStatus[keyof typeof TeacherTodayLessonDtoStatus];
+
+
+export const TeacherTodayLessonDtoStatus = {
+  SCHEDULED: 'SCHEDULED',
+  STAR_PENDING: 'STAR_PENDING',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type TeacherTodayLessonDtoKind = typeof TeacherTodayLessonDtoKind[keyof typeof TeacherTodayLessonDtoKind];
+
+
+export const TeacherTodayLessonDtoKind = {
+  REGULAR: 'REGULAR',
+  TRIAL: 'TRIAL',
+} as const;
+
+/**
+ * The URL itself is not exposed here
+ */
+export type TeacherTodayLessonDtoMeetLinkState = typeof TeacherTodayLessonDtoMeetLinkState[keyof typeof TeacherTodayLessonDtoMeetLinkState];
+
+
+export const TeacherTodayLessonDtoMeetLinkState = {
+  PRESENT: 'PRESENT',
+  MISSING: 'MISSING',
+} as const;
+
+export interface TeacherTodayLessonDto {
+  lessonId: string;
+  startsAt: string;
+  endsAt: string;
+  status: TeacherTodayLessonDtoStatus;
+  kind: TeacherTodayLessonDtoKind;
+  studentId: string;
+  studentName: string;
+  subjectCode: string;
+  subjectName: string;
+  /** Join window opens 10 minutes before start */
+  joinOpensAt: string;
+  /** The URL itself is not exposed here */
+  meetLinkState: TeacherTodayLessonDtoMeetLinkState;
+  /** A confirmed actual outcome exists for this lesson */
+  outcomeRecorded: boolean;
+}
+
+export interface TeacherTodayResponseDto {
+  date: string;
+  timezone: string;
+  asOf: string;
+  lessons: TeacherTodayLessonDto[];
+}
+
+export interface TeacherWindowDto {
+  startsAt: string;
+  endsAt: string;
+  availabilityId: string;
+  timezone: string;
+  /** Booked lessons inside the window */
+  busy: TimeIntervalDto[];
+  /** Window minus booked lessons */
+  free: TimeIntervalDto[];
+}
+
+export interface TeacherWindowsDto {
+  teacherId: string;
+  fullName: string;
+  windows: TeacherWindowDto[];
 }
 
 export interface TeachingAssignmentCreateRequest {
@@ -3720,6 +6754,70 @@ export interface TransitionLeadDto {
 
 export interface UnreadCountDto {
   unreadCount: number;
+}
+
+/**
+ * Total per kind (items are capped at 100 per kind)
+ */
+export type UnresolvedDtoCounts = {[key: string]: number};
+
+export type UnresolvedItemDtoKind = typeof UnresolvedItemDtoKind[keyof typeof UnresolvedItemDtoKind];
+
+
+export const UnresolvedItemDtoKind = {
+  UNACCRUED_LESSON: 'UNACCRUED_LESSON',
+  DISPUTED_LESSON: 'DISPUTED_LESSON',
+  OPEN_PAYOUT_ATTEMPT: 'OPEN_PAYOUT_ATTEMPT',
+  DRAFT_LEDGER_ENTRY: 'DRAFT_LEDGER_ENTRY',
+} as const;
+
+export interface UnresolvedItemDto {
+  kind: UnresolvedItemDtoKind;
+  /** Lesson, payout attempt or ledger entry */
+  id: string;
+  at: string;
+  /** @nullable */
+  teacherName: string | null;
+  /** @nullable */
+  studentName: string | null;
+  /** @nullable */
+  amount: string | null;
+  /** @nullable */
+  currency: string | null;
+  detail: string;
+}
+
+export interface UnresolvedDto {
+  /** @nullable */
+  periodId: string | null;
+  /** Total per kind (items are capped at 100 per kind) */
+  counts: UnresolvedDtoCounts;
+  /** Oldest first */
+  items: UnresolvedItemDto[];
+}
+
+export type UpdateGoalDtoStatus = typeof UpdateGoalDtoStatus[keyof typeof UpdateGoalDtoStatus];
+
+
+export const UpdateGoalDtoStatus = {
+  ACTIVE: 'ACTIVE',
+  ACHIEVED: 'ACHIEVED',
+  PAUSED: 'PAUSED',
+  ARCHIVED: 'ARCHIVED',
+} as const;
+
+export interface UpdateGoalDto {
+  /**
+     * @minLength 5
+     * @maxLength 500
+     */
+  text?: string;
+  /**
+     * null clears the date
+     * @nullable
+     */
+  targetDate?: string | null;
+  status?: UpdateGoalDtoStatus;
 }
 
 export type UpdateLeadDtoAudience = typeof UpdateLeadDtoAudience[keyof typeof UpdateLeadDtoAudience];
@@ -3808,6 +6906,21 @@ export interface UpdateStudentContactsDto {
   version: number;
 }
 
+export interface UpdateTeacherProfileDto {
+  /**
+     * E.164; null clears the number
+     * @nullable
+     */
+  phone: string | null;
+}
+
+export interface UpdateTeacherProfileResponseDto {
+  /** Teacher id */
+  id: string;
+  /** @nullable */
+  phone: string | null;
+}
+
 export interface UploadUrlResponseDto {
   uploadUrl: string;
   fileId: string;
@@ -3845,6 +6958,14 @@ export interface WebAuthnStartRequest {
   email?: string;
 }
 
+export interface WithdrawRequestDto {
+  /**
+     * @minLength 3
+     * @maxLength 500
+     */
+  note?: string;
+}
+
 export interface WorkspaceLessonDetailDto {
   id: string;
   startsAt: string;
@@ -3865,6 +6986,144 @@ export interface WorkspaceDetailDto {
   actorContext: StaffActorContextDto;
   item: WorkspaceLessonDetailDto | WorkspaceStudentDetailDto | WorkspaceHomeworkDto | WorkspaceTaskDto;
 }
+
+export type GetDirectorDecisionsParams = {
+kind?: GetDirectorDecisionsKind;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetDirectorDecisionsKind = typeof GetDirectorDecisionsKind[keyof typeof GetDirectorDecisionsKind];
+
+
+export const GetDirectorDecisionsKind = {
+  PAYMENT: 'PAYMENT',
+  DISTRIBUTION: 'DISTRIBUTION',
+  SCHEDULE_EXCEPTION: 'SCHEDULE_EXCEPTION',
+  DISPUTE: 'DISPUTE',
+  TEMPORARY_ACCESS: 'TEMPORARY_ACCESS',
+  REFUND_REQUEST: 'REFUND_REQUEST',
+} as const;
+
+export type ListDirectorAllocationCorrectionsParams = {
+after?: string;
+};
+
+export type ListDirectorEscalationsParams = {
+/**
+ * OPEN: not accepted yet; ACCEPTED: director took it; CLOSED: the task is finished
+ */
+state?: ListDirectorEscalationsState;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type ListDirectorEscalationsState = typeof ListDirectorEscalationsState[keyof typeof ListDirectorEscalationsState];
+
+
+export const ListDirectorEscalationsState = {
+  OPEN: 'OPEN',
+  ACCEPTED: 'ACCEPTED',
+  CLOSED: 'CLOSED',
+} as const;
+
+export type GetDirectorUnresolvedFinanceParams = {
+/**
+ * Only accruals recognised in this financial period; default: all time
+ */
+periodId?: string;
+};
+
+export type ListDirectorHandoversParams = {
+studentId?: string;
+leadId?: string;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+};
+
+export type GetDirectorMeetInventoryParams = {
+afterUnresolved?: string;
+afterSpace?: string;
+};
+
+export type GetDirectorPayrollSummaryParams = {
+/**
+ * Only accruals recognised in this financial period; default: all time
+ */
+periodId?: string;
+};
+
+export type GetDirectorPeriodDisputesParams = {
+/**
+ * @pattern ^[1-9][0-9]{0,3}$
+ */
+page?: string;
+};
+
+export type ListDirectorRefundCasesParams = {
+after?: string;
+};
+
+export type ListDirectorSaleConditionsParams = {
+after?: string;
+code?: string;
+};
+
+export type ListDirectorStaffParams = {
+kind?: ListDirectorStaffKind;
+/**
+ * true: only active, false: only deactivated; default: all
+ */
+active?: string;
+/**
+ * Case-insensitive name fragment
+ * @maxLength 100
+ */
+search?: string;
+};
+
+export type ListDirectorStaffKind = typeof ListDirectorStaffKind[keyof typeof ListDirectorStaffKind];
+
+
+export const ListDirectorStaffKind = {
+  MANAGER: 'MANAGER',
+  TEACHER: 'TEACHER',
+} as const;
+
+export type ListManagerContactsParams = {
+/**
+ * Exactly one of leadId, studentId, teacherId
+ */
+leadId?: string;
+studentId?: string;
+teacherId?: string;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
 
 export type GetManagerDashboardParams = {
 lessonsHorizonHours?: GetManagerDashboardLessonsHorizonHours;
@@ -3924,6 +7183,14 @@ export const ListManagerLeadsSource = {
   OTHER: 'OTHER',
 } as const;
 
+export type ListManagerLeadTeacherCandidatesParams = {
+/**
+ * @minimum 1
+ * @maximum 14
+ */
+days?: number;
+};
+
 export type ClearManagerLessonMeetLinkBody = { [key: string]: unknown };
 
 export type GetManagerOptionsParams = {
@@ -3931,6 +7198,30 @@ studentId?: string;
 };
 
 export type ConfirmManagerPaymentBody = { [key: string]: unknown };
+
+export type ListManagerRequestsParams = {
+studentId?: string;
+status?: ListManagerRequestsStatus;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type ListManagerRequestsStatus = typeof ListManagerRequestsStatus[keyof typeof ListManagerRequestsStatus];
+
+
+export const ListManagerRequestsStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED',
+  WITHDRAWN: 'WITHDRAWN',
+} as const;
 
 export type ListManagerScheduleParams = {
 kind?: ListManagerScheduleKind;
@@ -4096,6 +7387,26 @@ cursor?: string;
  * @maximum 100
  */
 limit?: number;
+};
+
+export type ListManagerTeachersParams = {
+/**
+ * Case-insensitive name fragment
+ * @maxLength 100
+ */
+search?: string;
+/**
+ * Put teachers who already teach it first
+ */
+subjectId?: string;
+};
+
+export type GetManagerTeacherAvailabilityParams = {
+from: string;
+/**
+ * At most 31 days after from
+ */
+to: string;
 };
 
 export type GetStudentHomeworkParams = {
@@ -4305,6 +7616,181 @@ page?: number;
  * @maximum 100
  */
 pageSize?: number;
+};
+
+export type GetTeacherAvailabilityParams = {
+/**
+ * Defaults to now
+ */
+from?: string;
+/**
+ * Defaults to from + 90 days; the span is at most 366 days
+ */
+to?: string;
+includeCancelled?: GetTeacherAvailabilityIncludeCancelled;
+};
+
+export type GetTeacherAvailabilityIncludeCancelled = typeof GetTeacherAvailabilityIncludeCancelled[keyof typeof GetTeacherAvailabilityIncludeCancelled];
+
+
+export const GetTeacherAvailabilityIncludeCancelled = {
+  true: 'true',
+  false: 'false',
+} as const;
+
+export type GetTeacherCheckpointsParams = {
+state?: GetTeacherCheckpointsState;
+type?: GetTeacherCheckpointsType;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherCheckpointsState = typeof GetTeacherCheckpointsState[keyof typeof GetTeacherCheckpointsState];
+
+
+export const GetTeacherCheckpointsState = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+} as const;
+
+export type GetTeacherCheckpointsType = typeof GetTeacherCheckpointsType[keyof typeof GetTeacherCheckpointsType];
+
+
+export const GetTeacherCheckpointsType = {
+  LESSON_4: 'LESSON_4',
+  LESSON_8: 'LESSON_8',
+} as const;
+
+export type GetTeacherHomeworkParams = {
+state?: GetTeacherHomeworkState;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherHomeworkState = typeof GetTeacherHomeworkState[keyof typeof GetTeacherHomeworkState];
+
+
+export const GetTeacherHomeworkState = {
+  NOT_SUBMITTED: 'NOT_SUBMITTED',
+  AWAITING_REVIEW: 'AWAITING_REVIEW',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+  REVIEWED: 'REVIEWED',
+  CANCELLED: 'CANCELLED',
+} as const;
+
+export type GetTeacherJournalParams = {
+state?: GetTeacherJournalState;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherJournalState = typeof GetTeacherJournalState[keyof typeof GetTeacherJournalState];
+
+
+export const GetTeacherJournalState = {
+  AWAITING_REPORT: 'AWAITING_REPORT',
+  AWAITING_CONFIRMATION: 'AWAITING_CONFIRMATION',
+  CONDUCTED: 'CONDUCTED',
+  CANCELLED: 'CANCELLED',
+  DISPUTED: 'DISPUTED',
+} as const;
+
+export type GetTeacherMaterialsParams = {
+state?: GetTeacherMaterialsState;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherMaterialsState = typeof GetTeacherMaterialsState[keyof typeof GetTeacherMaterialsState];
+
+
+export const GetTeacherMaterialsState = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+} as const;
+
+export type GetTeacherNotificationsParams = {
+state?: GetTeacherNotificationsState;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherNotificationsState = typeof GetTeacherNotificationsState[keyof typeof GetTeacherNotificationsState];
+
+
+export const GetTeacherNotificationsState = {
+  ALL: 'ALL',
+  UNREAD: 'UNREAD',
+} as const;
+
+export type GetTeacherPayrollStatementParams = {
+/**
+ * School-timezone calendar month; defaults to the current one
+ */
+month?: string;
+};
+
+export type GetTeacherScheduleRequestsParams = {
+status?: GetTeacherScheduleRequestsStatus;
+/**
+ * @minimum 1
+ * @maximum 50
+ */
+limit?: number;
+/**
+ * Opaque cursor from the previous page
+ */
+cursor?: string;
+};
+
+export type GetTeacherScheduleRequestsStatus = typeof GetTeacherScheduleRequestsStatus[keyof typeof GetTeacherScheduleRequestsStatus];
+
+
+export const GetTeacherScheduleRequestsStatus = {
+  PENDING: 'PENDING',
+  RESOLVED: 'RESOLVED',
+} as const;
+
+export type GetTeacherTodayParams = {
+/**
+ * Calendar day in the school timezone; defaults to the current day
+ */
+date?: string;
 };
 
 export const getGetApiHealthUrl = () => {
@@ -4795,6 +8281,1455 @@ return schoolFetch<WebAuthnStartResponse>(getRegisterPasskeyStartUrl(),
 
 
 
+export const getGetDirectorDecisionsUrl = (params?: GetDirectorDecisionsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/decisions?${stringifiedParams}` : `/api/v1/director/decisions`
+}
+
+/**
+ * @summary Everything that waits for a director decision, oldest first
+ */
+export const getDirectorDecisions = (params?: GetDirectorDecisionsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DecisionPageDto>(getGetDirectorDecisionsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorDecisionUrl = (kind: 'PAYMENT' | 'DISTRIBUTION' | 'SCHEDULE_EXCEPTION' | 'DISPUTE' | 'TEMPORARY_ACCESS' | 'REFUND_REQUEST',
+    id: string,) => {
+
+
+
+
+  return `/api/v1/director/decisions/${kind}/${id}`
+}
+
+/**
+ * @summary Facts of one pending decision and the existing commands that decide it
+ */
+export const getDirectorDecision = (kind: 'PAYMENT' | 'DISTRIBUTION' | 'SCHEDULE_EXCEPTION' | 'DISPUTE' | 'TEMPORARY_ACCESS' | 'REFUND_REQUEST',
+    id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DecisionDetailDto>(getGetDirectorDecisionUrl(kind,id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorDecisionSummaryUrl = () => {
+
+
+
+
+  return `/api/v1/director/decisions/summary`
+}
+
+/**
+ * @summary Pending decisions per kind
+ */
+export const getDirectorDecisionSummary = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DecisionCountsDto>(getGetDirectorDecisionSummaryUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getDirectorApproveDisputeUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/disputes/${id}/approve`
+}
+
+/**
+ * @summary Execute the full-reversal proposal of an escalated attendance dispute
+ */
+export const directorApproveDispute = (id: string,
+    approveDisputeCommandDto: ApproveDisputeCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorApproveDisputeUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(approveDisputeCommandDto)
+  }
+);}
+
+
+
+export const getListDirectorAllocationCorrectionsUrl = (params?: ListDirectorAllocationCorrectionsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/distribution-corrections?${stringifiedParams}` : `/api/v1/director/distribution-corrections`
+}
+
+/**
+ * @summary List open allocation corrections
+ */
+export const listDirectorAllocationCorrections = (params?: ListDirectorAllocationCorrectionsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<AllocationCorrectionQueueDto>(getListDirectorAllocationCorrectionsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getReviewAllocationCorrectionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/distribution-corrections/${id}/review`
+}
+
+/**
+ * @summary Decline a proposal or refer it for manual financial settlement
+ */
+export const reviewAllocationCorrection = (id: string,
+    reviewAllocationCorrectionDto: ReviewAllocationCorrectionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<AllocationCorrectionSummaryDto>(getReviewAllocationCorrectionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reviewAllocationCorrectionDto)
+  }
+);}
+
+
+
+export const getDirectorApproveDistributionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/distributions/${id}/approve`
+}
+
+/**
+ * @summary Approve the allocation of a confirmed payment to a subscription
+ */
+export const directorApproveDistribution = (id: string,
+    directorEmptyCommandDto?: DirectorEmptyCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorApproveDistributionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directorEmptyCommandDto)
+  }
+);}
+
+
+
+export const getListDirectorEscalationsUrl = (params?: ListDirectorEscalationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/escalations?${stringifiedParams}` : `/api/v1/director/escalations`
+}
+
+/**
+ * @summary Urgent tasks routed to the director (OPS-01/B), oldest first
+ */
+export const listDirectorEscalations = (params?: ListDirectorEscalationsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<EscalationPageDto>(getListDirectorEscalationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorEscalationUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/escalations/${id}`
+}
+
+/**
+ * @summary One escalation with its source task
+ */
+export const getDirectorEscalation = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<EscalationDto>(getGetDirectorEscalationUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getAcceptDirectorEscalationUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/escalations/${id}/accept`
+}
+
+/**
+ * @summary Take responsibility for an escalated task; the task stays open, the client keeps their manager
+ */
+export const acceptDirectorEscalation = (id: string,
+    directorEmptyCommandDto?: DirectorEmptyCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<EscalationDto>(getAcceptDirectorEscalationUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directorEmptyCommandDto)
+  }
+);}
+
+
+
+export const getGetDirectorUnresolvedFinanceUrl = (params?: GetDirectorUnresolvedFinanceParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/finance/unresolved?${stringifiedParams}` : `/api/v1/director/finance/unresolved`
+}
+
+/**
+ * @summary Open financial items: unaccrued or disputed lessons, open payouts and draft entries
+ */
+export const getDirectorUnresolvedFinance = (params?: GetDirectorUnresolvedFinanceParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<UnresolvedDto>(getGetDirectorUnresolvedFinanceUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListDirectorHandoversUrl = (params?: ListDirectorHandoversParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/handovers?${stringifiedParams}` : `/api/v1/director/handovers`
+}
+
+/**
+ * @summary Manager hand-over journal, newest first; filter by student or lead
+ */
+export const listDirectorHandovers = (params?: ListDirectorHandoversParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<HandoverListDto>(getListDirectorHandoversUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getReassignLeadManagerUrl = (leadId: string,) => {
+
+
+
+
+  return `/api/v1/director/leads/${leadId}/manager`
+}
+
+/**
+ * @summary Hand the lead over to another active manager; open tasks move with it
+ */
+export const reassignLeadManager = (leadId: string,
+    handoverCommandDto: HandoverCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<HandoverDto>(getReassignLeadManagerUrl(leadId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(handoverCommandDto)
+  }
+);}
+
+
+
+export const getGetDirectorLessonOutcomeDisputeUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/lessons/${id}/outcome-dispute`
+}
+
+/**
+ * @summary Review the confirmed disputed report and any later director decision
+ */
+export const getDirectorLessonOutcomeDispute = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<LessonDisputeReviewDto>(getGetDirectorLessonOutcomeDisputeUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getResolveDirectorLessonOutcomeDisputeUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/lessons/${id}/outcome-dispute/resolve`
+}
+
+/**
+ * @summary Record the evidenced lesson result. Payroll remains a separate decision.
+ */
+export const resolveDirectorLessonOutcomeDispute = (id: string,
+    resolveLessonDisputeDto: ResolveLessonDisputeDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<LessonDisputeDecisionDto>(getResolveDirectorLessonOutcomeDisputeUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resolveLessonDisputeDto)
+  }
+);}
+
+
+
+export const getListDirectorManagerAvailabilityUrl = () => {
+
+
+
+
+  return `/api/v1/director/managers/availability`
+}
+
+/**
+ * @summary Working status of every active manager
+ */
+export const listDirectorManagerAvailability = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerAvailabilityListDto>(getListDirectorManagerAvailabilityUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorMeUrl = () => {
+
+
+
+
+  return `/api/v1/director/me`
+}
+
+/**
+ * @summary Director profile with pending decision counters
+ */
+export const getDirectorMe = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<DirectorMeDto>(getGetDirectorMeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorMeetInventoryUrl = (params?: GetDirectorMeetInventoryParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/meet?${stringifiedParams}` : `/api/v1/director/meet`
+}
+
+/**
+ * @summary Read unresolved creation attempts and published pair spaces
+ */
+export const getDirectorMeetInventory = (params?: GetDirectorMeetInventoryParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<MeetDirectorInventoryDto>(getGetDirectorMeetInventoryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCloseDirectorUnknownMeetCreationUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/meet/operations/${id}/close-without-space`
+}
+
+/**
+ * @summary Record that an external investigation found no created space and allow a new request
+ */
+export const closeDirectorUnknownMeetCreation = (id: string,
+    meetDecisionInputDto: MeetDecisionInputDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<MeetDirectorDecisionDto>(getCloseDirectorUnknownMeetCreationUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(meetDecisionInputDto)
+  }
+);}
+
+
+
+export const getRetireDirectorMeetSpaceUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/meet/spaces/${id}/retire`
+}
+
+/**
+ * @summary Retire the future-use link after reviewing the need for replacement
+ */
+export const retireDirectorMeetSpace = (id: string,
+    meetDecisionInputDto: MeetDecisionInputDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<MeetDirectorDecisionDto>(getRetireDirectorMeetSpaceUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(meetDecisionInputDto)
+  }
+);}
+
+
+
+export const getDirectorConfirmPaymentUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/payments/${id}/confirm`
+}
+
+/**
+ * @summary Confirm a received payment: posts it to the ledger once; allocation is a separate decision
+ */
+export const directorConfirmPayment = (id: string,
+    directorEmptyCommandDto?: DirectorEmptyCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorConfirmPaymentUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directorEmptyCommandDto)
+  }
+);}
+
+
+
+export const getDirectorRejectPaymentUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/payments/${id}/reject`
+}
+
+/**
+ * @summary Reject a pending payment receipt with a reason (not possible after confirmation)
+ */
+export const directorRejectPayment = (id: string,
+    rejectPaymentCommandDto: RejectPaymentCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorRejectPaymentUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(rejectPaymentCommandDto)
+  }
+);}
+
+
+
+export const getGetDirectorPayrollSummaryUrl = (params?: GetDirectorPayrollSummaryParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/payroll/summary?${stringifiedParams}` : `/api/v1/director/payroll/summary`
+}
+
+/**
+ * @summary What teachers earned, what was actually paid and what is still owed, per currency and teacher
+ */
+export const getDirectorPayrollSummary = (params?: GetDirectorPayrollSummaryParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PayrollSummaryDto>(getGetDirectorPayrollSummaryUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorPayrollTeacherUrl = (teacherId: string,) => {
+
+
+
+
+  return `/api/v1/director/payroll/teachers/${teacherId}`
+}
+
+/**
+ * @summary Obligations of one teacher with paid and outstanding amounts
+ */
+export const getDirectorPayrollTeacher = (teacherId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PayrollTeacherDto>(getGetDirectorPayrollTeacherUrl(teacherId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListDirectorPeriodsUrl = () => {
+
+
+
+
+  return `/api/v1/director/periods`
+}
+
+/**
+ * @summary Financial periods with the number of blockers and readiness to close
+ */
+export const listDirectorPeriods = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PeriodListDto>(getListDirectorPeriodsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateDirectorPeriodUrl = () => {
+
+
+
+
+  return `/api/v1/director/periods`
+}
+
+/**
+ * @summary Open a financial period (UTC bounds chosen by the director). Without one no accrual or posting is possible
+ */
+export const createDirectorPeriod = (createPeriodDto: CreatePeriodDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<PeriodDto>(getCreateDirectorPeriodUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createPeriodDto)
+  }
+);}
+
+
+
+export const getCloseDirectorPeriodUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/periods/${id}/close`
+}
+
+/**
+ * @summary Close a finished period with confirmation of any outstanding dispute register
+ */
+export const closeDirectorPeriod = (id: string,
+    closeFinancialPeriodRequest?: CloseFinancialPeriodRequest, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<PeriodDto>(getCloseDirectorPeriodUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(closeFinancialPeriodRequest)
+  }
+);}
+
+
+
+export const getGetDirectorPeriodDisputesUrl = (id: string,
+    params?: GetDirectorPeriodDisputesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/periods/${id}/disputes?${stringifiedParams}` : `/api/v1/director/periods/${id}/disputes`
+}
+
+/**
+ * @summary Preview open disputes or read the register preserved at period closure
+ */
+export const getDirectorPeriodDisputes = (id: string,
+    params?: GetDirectorPeriodDisputesParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PeriodDisputesDto>(getGetDirectorPeriodDisputesUrl(id,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getListDirectorRefundCasesUrl = (params?: ListDirectorRefundCasesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/refunds?${stringifiedParams}` : `/api/v1/director/refunds`
+}
+
+/**
+ * @summary List accepted refund requests, decisions and pending transfer reviews
+ */
+export const listDirectorRefundCases = (params?: ListDirectorRefundCasesParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<RefundCasesDto>(getListDirectorRefundCasesUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getDirectorApproveRequestUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/requests/${id}/approve`
+}
+
+/**
+ * @summary Approve a manager request: temporary access (limit and expiry, not a payment) or a refund calculation (no money moves)
+ */
+export const directorApproveRequest = (id: string,
+    approveRequestCommandDto?: ApproveRequestCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorApproveRequestUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(approveRequestCommandDto)
+  }
+);}
+
+
+
+export const getDirectorDeclineRequestUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/requests/${id}/decline`
+}
+
+/**
+ * @summary Decline a manager request with a reason the manager sees
+ */
+export const directorDeclineRequest = (id: string,
+    declineRequestCommandDto: DeclineRequestCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorDeclineRequestUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(declineRequestCommandDto)
+  }
+);}
+
+
+
+export const getGetDirectorRefundUrl = (requestId: string,) => {
+
+
+
+
+  return `/api/v1/director/requests/${requestId}/refund`
+}
+
+/**
+ * @summary Review the documented refund calculation and transfer evidence
+ */
+export const getDirectorRefund = (requestId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<RefundViewDto>(getGetDirectorRefundUrl(requestId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getDecideDirectorRefundUrl = (requestId: string,) => {
+
+
+
+
+  return `/api/v1/director/requests/${requestId}/refund/decide`
+}
+
+/**
+ * @summary Approve the evidenced amount or decline the refund project
+ */
+export const decideDirectorRefund = (requestId: string,
+    decideRefundDto: DecideRefundDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RefundDecisionDto>(getDecideDirectorRefundUrl(requestId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(decideRefundDto)
+  }
+);}
+
+
+
+export const getReviewDirectorRefundTransferUrl = (requestId: string,
+    transferId: string,) => {
+
+
+
+
+  return `/api/v1/director/requests/${requestId}/refund/transfers/${transferId}/review`
+}
+
+/**
+ * @summary Verify or reject a reported external transfer or return
+ */
+export const reviewDirectorRefundTransfer = (requestId: string,
+    transferId: string,
+    reviewRefundTransferDto: ReviewRefundTransferDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RefundTransferDto>(getReviewDirectorRefundTransferUrl(requestId,transferId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reviewRefundTransferDto)
+  }
+);}
+
+
+
+export const getListDirectorSaleConditionsUrl = (params?: ListDirectorSaleConditionsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/sale-conditions?${stringifiedParams}` : `/api/v1/director/sale-conditions`
+}
+
+/**
+ * @summary List current and historical sale condition versions
+ */
+export const listDirectorSaleConditions = (params?: ListDirectorSaleConditionsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<SaleConditionVersionsDto>(getListDirectorSaleConditionsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getRetireDirectorSaleConditionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/sale-conditions/${id}/retire`
+}
+
+/**
+ * @summary Close a sale condition for new purchases
+ */
+export const retireDirectorSaleCondition = (id: string,
+    retireSaleConditionDto: RetireSaleConditionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SaleConditionVersionDto>(getRetireDirectorSaleConditionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(retireSaleConditionDto)
+  }
+);}
+
+
+
+export const getPublishDirectorSaleConditionUrl = () => {
+
+
+
+
+  return `/api/v1/director/sale-conditions/publish`
+}
+
+/**
+ * @summary Publish a new sale condition version for future purchases
+ */
+export const publishDirectorSaleCondition = (publishSaleConditionDto: PublishSaleConditionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SaleConditionVersionDto>(getPublishDirectorSaleConditionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(publishSaleConditionDto)
+  }
+);}
+
+
+
+export const getDirectorApproveScheduleExceptionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/director/schedule-exceptions/${id}/approve`
+}
+
+/**
+ * @summary Approve one exact lesson version and change; the manager then applies it
+ */
+export const directorApproveScheduleException = (id: string,
+    directorEmptyCommandDto?: DirectorEmptyCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<DecisionResultDto>(getDirectorApproveScheduleExceptionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(directorEmptyCommandDto)
+  }
+);}
+
+
+
+export const getListDirectorStaffUrl = (params?: ListDirectorStaffParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/director/staff?${stringifiedParams}` : `/api/v1/director/staff`
+}
+
+/**
+ * @summary Managers and teachers with their load; deactivated people included on request
+ */
+export const listDirectorStaff = (params?: ListDirectorStaffParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffListDto>(getListDirectorStaffUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetDirectorStaffCardUrl = (kind: 'MANAGER' | 'TEACHER',
+    id: string,) => {
+
+
+
+
+  return `/api/v1/director/staff/${kind}/${id}`
+}
+
+/**
+ * @summary One manager or teacher: load, status history and (managers) hand-overs
+ */
+export const getDirectorStaffCard = (kind: 'MANAGER' | 'TEACHER',
+    id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StaffCardDto>(getGetDirectorStaffCardUrl(kind,id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getDeactivateDirectorStaffUrl = (kind: 'MANAGER' | 'TEACHER',
+    id: string,) => {
+
+
+
+
+  return `/api/v1/director/staff/${kind}/${id}/deactivate`
+}
+
+/**
+ * @summary Stop a manager or teacher from working. A manager must hand over every client and task first; a teacher must have no future lessons
+ */
+export const deactivateDirectorStaff = (kind: 'MANAGER' | 'TEACHER',
+    id: string,
+    staffStatusCommandDto: StaffStatusCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StaffItemDto>(getDeactivateDirectorStaffUrl(kind,id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(staffStatusCommandDto)
+  }
+);}
+
+
+
+export const getReactivateDirectorStaffUrl = (kind: 'MANAGER' | 'TEACHER',
+    id: string,) => {
+
+
+
+
+  return `/api/v1/director/staff/${kind}/${id}/reactivate`
+}
+
+/**
+ * @summary Let a deactivated person work again
+ */
+export const reactivateDirectorStaff = (kind: 'MANAGER' | 'TEACHER',
+    id: string,
+    staffStatusCommandDto: StaffStatusCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<StaffItemDto>(getReactivateDirectorStaffUrl(kind,id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(staffStatusCommandDto)
+  }
+);}
+
+
+
+export const getReassignStudentManagerUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/director/students/${studentId}/manager`
+}
+
+/**
+ * @summary Hand the student over to another active manager. Open tasks of the client move with them; history keeps the old executor
+ */
+export const reassignStudentManager = (studentId: string,
+    handoverCommandDto: HandoverCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<HandoverDto>(getReassignStudentManagerUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(handoverCommandDto)
+  }
+);}
+
+
+
 export const getGetCrmDisputeResolutionUrl = (taskId: string,) => {
 
 
@@ -4858,6 +9793,30 @@ return schoolFetch<CrmDisputeResolutionDto>(getApproveCrmDisputeResolutionUrl(ta
 
 
 
+export const getGetAllocationCorrectionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/distribution-corrections/${id}`
+}
+
+/**
+ * @summary Review the proposed allocation correction and current financial facts
+ */
+export const getAllocationCorrection = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<AllocationCorrectionDto>(getGetAllocationCorrectionUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getApproveDistributionUrl = (id: string,) => {
 
 
@@ -4893,6 +9852,45 @@ return schoolFetch<PaymentDistributionResponse>(getApproveDistributionUrl(id),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(approveDistributionRequest)
+  }
+);}
+
+
+
+export const getProposeAllocationCorrectionUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/distributions/${id}/correction-proposals`
+}
+
+/**
+ * @summary Record an erroneous allocation and its proposed correction
+ */
+export const proposeAllocationCorrection = (id: string,
+    proposeAllocationCorrectionDto: ProposeAllocationCorrectionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<AllocationCorrectionDto>(getProposeAllocationCorrectionUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(proposeAllocationCorrectionDto)
   }
 );}
 
@@ -5475,6 +10473,161 @@ return schoolFetch<LessonResponse>(getStartLessonUrl(id),
 
 
 
+export const getGetManagerAvailabilityUrl = () => {
+
+
+
+
+  return `/api/v1/manager/availability`
+}
+
+/**
+ * @summary Working status that decides how urgent tasks are routed (OPS-01/B)
+ */
+export const getManagerAvailability = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerAvailabilityDto>(getGetManagerAvailabilityUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getSetManagerAvailabilityUrl = () => {
+
+
+
+
+  return `/api/v1/manager/availability`
+}
+
+/**
+ * @summary Set the working status; UNAVAILABLE / OFF_SHIFT send urgent tasks to the director
+ */
+export const setManagerAvailability = (setManagerAvailabilityDto: SetManagerAvailabilityDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerAvailabilityDto>(getSetManagerAvailabilityUrl(),
+  {
+    ...options,
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(setManagerAvailabilityDto)
+  }
+);}
+
+
+
+export const getListManagerContactsUrl = (params?: ListManagerContactsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/contacts?${stringifiedParams}` : `/api/v1/manager/contacts`
+}
+
+/**
+ * @summary Contact history of one lead, student or own-portfolio teacher, newest first
+ */
+export const listManagerContacts = (params?: ListManagerContactsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ContactPageDto>(getListManagerContactsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getRecordManagerContactUrl = () => {
+
+
+
+
+  return `/api/v1/manager/contacts`
+}
+
+/**
+ * @summary Record a manual contact attempt or conversation. Append-only: fix mistakes with correctsId. Sends nothing to the family.
+ */
+export const recordManagerContact = (recordContactDto: RecordContactDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ContactDto>(getRecordManagerContactUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(recordContactDto)
+  }
+);}
+
+
+
+export const getListManagerPendingContactsUrl = () => {
+
+
+
+
+  return `/api/v1/manager/contacts/pending`
+}
+
+/**
+ * @summary Open contact obligations from tasks with the latest recorded result (MGR-04)
+ */
+export const listManagerPendingContacts = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PendingContactsDto>(getListManagerPendingContactsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
 export const getGetManagerDashboardUrl = (params?: GetManagerDashboardParams,) => {
   const normalizedParams = new URLSearchParams();
 
@@ -5729,6 +10882,39 @@ return schoolFetch<LeadDto>(getReopenManagerLeadUrl(leadId),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(leadVersionDto)
+  }
+);}
+
+
+
+export const getListManagerLeadTeacherCandidatesUrl = (leadId: string,
+    params?: ListManagerLeadTeacherCandidatesParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/leads/${leadId}/teacher-candidates?${stringifiedParams}` : `/api/v1/manager/leads/${leadId}/teacher-candidates`
+}
+
+/**
+ * @summary Teachers with free trial slots for the lead; schedule the trial with scheduleManagerTrial
+ */
+export const listManagerLeadTeacherCandidates = (leadId: string,
+    params?: ListManagerLeadTeacherCandidatesParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherCandidatesDto>(getListManagerLeadTeacherCandidatesUrl(leadId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
   }
 );}
 
@@ -6227,6 +11413,76 @@ return schoolFetch<ManagerPaymentDto>(getRejectManagerPaymentUrl(paymentId),
 
 
 
+export const getListManagerRequestsUrl = (params?: ListManagerRequestsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/requests?${stringifiedParams}` : `/api/v1/manager/requests`
+}
+
+/**
+ * @summary Requests to the director for the own portfolio, newest first
+ */
+export const listManagerRequests = (params?: ListManagerRequestsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<ManagerRequestPageDto>(getListManagerRequestsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getWithdrawManagerRequestUrl = (requestId: string,) => {
+
+
+
+
+  return `/api/v1/manager/requests/${requestId}/withdraw`
+}
+
+/**
+ * @summary Take back a request the director has not decided yet
+ */
+export const withdrawManagerRequest = (requestId: string,
+    withdrawRequestDto: WithdrawRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerRequestDto>(getWithdrawManagerRequestUrl(requestId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(withdrawRequestDto)
+  }
+);}
+
+
+
 export const getListManagerScheduleUrl = (params: ListManagerScheduleParams,) => {
   const normalizedParams = new URLSearchParams();
 
@@ -6648,6 +11904,153 @@ export const listManagerPayments = (studentId: string,
 
 
 
+export const getCreateManagerRequestUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/requests`
+}
+
+/**
+ * @summary Formalise a family request for the director: temporary access (partial payment) or a refund calculation
+ */
+export const createManagerRequest = (studentId: string,
+    createRequestDto: CreateRequestDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerRequestDto>(getCreateManagerRequestUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createRequestDto)
+  }
+);}
+
+
+
+export const getGetManagerRefundUrl = (studentId: string,
+    requestId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/requests/${requestId}/refund`
+}
+
+/**
+ * @summary Read the refund calculation and external transfer register
+ */
+export const getManagerRefund = (studentId: string,
+    requestId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<RefundViewDto>(getGetManagerRefundUrl(studentId,requestId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getPrepareManagerRefundUrl = (studentId: string,
+    requestId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/requests/${requestId}/refund/prepare`
+}
+
+/**
+ * @summary Submit the refund calculation for director approval
+ */
+export const prepareManagerRefund = (studentId: string,
+    requestId: string,
+    prepareRefundDto: PrepareRefundDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RefundDecisionDto>(getPrepareManagerRefundUrl(studentId,requestId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(prepareRefundDto)
+  }
+);}
+
+
+
+export const getReportManagerRefundTransferUrl = (studentId: string,
+    requestId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/requests/${requestId}/refund/transfers`
+}
+
+/**
+ * @summary Report evidence of an external transfer or return
+ */
+export const reportManagerRefundTransfer = (studentId: string,
+    requestId: string,
+    reportRefundTransferDto: ReportRefundTransferDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<RefundTransferDto>(getReportManagerRefundTransferUrl(studentId,requestId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reportRefundTransferDto)
+  }
+);}
+
+
+
 export const getListManagerSubscriptionsUrl = (studentId: string,) => {
 
 
@@ -6700,6 +12103,45 @@ return schoolFetch<ManagerSubscriptionDto>(getCreateManagerSubscriptionUrl(stude
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(createManagerSubscriptionDto)
+  }
+);}
+
+
+
+export const getAssignManagerTeacherUrl = (studentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/students/${studentId}/teaching-assignments`
+}
+
+/**
+ * @summary Assign a teacher to the student for a subject (creates the enrollment when missing)
+ */
+export const assignManagerTeacher = (studentId: string,
+    assignTeacherCommandDto: AssignTeacherCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<TeacherAssignmentDto>(getAssignManagerTeacherUrl(studentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(assignTeacherCommandDto)
   }
 );}
 
@@ -6898,6 +12340,45 @@ return schoolFetch<ManagerTaskDto>(getClaimManagerTaskUrl(taskId),
 
 
 
+export const getResolveManagerTaskGeneralUrl = (taskId: string,) => {
+
+
+
+
+  return `/api/v1/manager/tasks/${taskId}/resolve`
+}
+
+/**
+ * Closes a general follow-up (including a teacher schedule-change request) from IN_PROGRESS with a note.
+ */
+export const resolveManagerTaskGeneral = (taskId: string,
+    resolveManagerGeneralDto: ResolveManagerGeneralDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ManagerTaskDto>(getResolveManagerTaskGeneralUrl(taskId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(resolveManagerGeneralDto)
+  }
+);}
+
+
+
 export const getResolveManagerTaskDisputeUrl = (taskId: string,) => {
 
 
@@ -6971,6 +12452,109 @@ return schoolFetch<ManagerTaskDto>(getResolveManagerTaskRescheduleUrl(taskId),
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
     body: JSON.stringify(resolveManagerRescheduleDto)
+  }
+);}
+
+
+
+export const getListManagerTeachersUrl = (params?: ListManagerTeachersParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/teachers?${stringifiedParams}` : `/api/v1/manager/teachers`
+}
+
+/**
+ * @summary Teacher directory: subjects, load and free time for the next 7 days
+ */
+export const listManagerTeachers = (params?: ListManagerTeachersParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherDirectoryDto>(getListManagerTeachersUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetManagerTeacherAvailabilityUrl = (teacherId: string,
+    params: GetManagerTeacherAvailabilityParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/manager/teachers/${teacherId}/availability?${stringifiedParams}` : `/api/v1/manager/teachers/${teacherId}/availability`
+}
+
+/**
+ * @summary Availability windows with booked and free intervals (range up to 31 days)
+ */
+export const getManagerTeacherAvailability = (teacherId: string,
+    params: GetManagerTeacherAvailabilityParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherWindowsDto>(getGetManagerTeacherAvailabilityUrl(teacherId,params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getRevokeManagerTeacherUrl = (assignmentId: string,) => {
+
+
+
+
+  return `/api/v1/manager/teaching-assignments/${assignmentId}/revoke`
+}
+
+/**
+ * @summary End a current assignment; future held lessons get a follow-up task
+ */
+export const revokeManagerTeacher = (assignmentId: string,
+    revokeAssignmentCommandDto: RevokeAssignmentCommandDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<TeacherAssignmentDto>(getRevokeManagerTeacherUrl(assignmentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(revokeAssignmentCommandDto)
   }
 );}
 
@@ -7135,6 +12719,46 @@ return schoolFetch<ConfirmedPayoutResponse>(getConfirmPayoutUrl(id),
 
 
 
+export const getReconcilePayoutUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/payouts/${id}/reconcile`
+}
+
+/**
+ * Verified MFA and DIRECTOR only. Resolves a pending or unknown attempt based on external evidence. This command does not initiate a transfer.
+ * @summary Record a verified external payout result
+ */
+export const reconcilePayout = (id: string,
+    reconcilePayoutRequest: ReconcilePayoutRequest, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ReconcilePayoutResponse>(getReconcilePayoutUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reconcilePayoutRequest)
+  }
+);}
+
+
+
 export const getCreatePayoutAttemptUrl = () => {
 
 
@@ -7208,7 +12832,7 @@ export const getCloseFinancialPeriodUrl = (id: string,) => {
 }
 
 /**
- * MFA required. DIRECTOR only; past completed period without draft/unresolved financial facts.
+ * MFA required. DIRECTOR only; verified disputes remain in a separate confirmed register.
  * @summary Close financial period
  */
 export const closeFinancialPeriod = (id: string,
@@ -7385,6 +13009,44 @@ export const getPlatformWorkspaceDetail = (section: 'lessons' | 'students' | 'ho
 
 
 
+export const getSubmitPublicLeadUrl = () => {
+
+
+
+
+  return `/api/v1/public/leads`
+}
+
+/**
+ * @summary Submit a public enquiry into the existing CRM and acknowledge the saved request
+ */
+export const submitPublicLead = (publicLeadSubmissionDto: PublicLeadSubmissionDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<PublicLeadReceiptDto>(getSubmitPublicLeadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(publicLeadSubmissionDto)
+  }
+);}
+
+
+
 export const getGetComponentStatusUrl = () => {
 
 
@@ -7400,6 +13062,55 @@ export const getGetComponentStatusUrl = () => {
 export const getComponentStatus = ( options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<ComponentStatusResponse>(getGetComponentStatusUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getReplayAuditOutboxEventUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/qa/outbox/${id}/replay`
+}
+
+/**
+ * @summary Queue recovery of a failed demo-switch acknowledgement
+ */
+export const replayAuditOutboxEvent = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<OutboxReplayResponse>(getReplayAuditOutboxEventUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getGetQueueHealthUrl = () => {
+
+
+
+
+  return `/api/v1/qa/queues`
+}
+
+/**
+ * Directors and technical operators with verified MFA. Includes aggregate counts and up to 20 failure references.
+ * @summary Inspect outbox lag, job leases and outstanding reconciliation
+ */
+export const getQueueHealth = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<QueueHealthResponse>(getGetQueueHealthUrl(),
   {
     ...options,
     method: 'GET'
@@ -7761,7 +13472,7 @@ export const getConfirmStudentHomeworkUploadUrl = (hwId: string,
 }
 
 /**
- * HEAD validates actual bytes and content type; conditional COPY creates the private immutable final object. No client URL can overwrite it. Only confirmed files may be submitted.
+ * Inspect the staging bytes and require a clean malware verdict before copying the verified ETag to the private final key.
  * @summary Verify S3 upload and seal a server-only final object
  */
 export const confirmStudentHomeworkUpload = (hwId: string,
@@ -7827,7 +13538,7 @@ export const getRequestStudentHomeworkUploadUrl = (hwId: string,) => {
 }
 
 /**
- * PUT the file bytes with the exact declared Content-Type and size. Then confirm through the API. Cached command results contain only fileId; replay never extends the URL expiry. Maximum 50 MiB per file.
+ * PUT the file bytes with the exact declared Content-Type and size. Confirmation accepts the supported document and media types, including a verified format under application/octet-stream. Maximum 50 MiB. A cached result never extends URL expiry.
  * @summary Create PENDING file and 15-minute private S3 PUT capability
  */
 export const requestStudentHomeworkUpload = (hwId: string,
@@ -9102,6 +14813,1322 @@ export const getGetTeacherPayrollUrl = (id: string,) => {
 export const getTeacherPayroll = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
 
   return schoolFetch<TeacherPayrollResponse>(getGetTeacherPayrollUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherMeetPairUrl = (assignmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/assignments/${assignmentId}/meet`
+}
+
+/**
+ * @summary Read the Meet space and operation state for an active teaching assignment
+ */
+export const getTeacherMeetPair = (assignmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeetPairDto>(getGetTeacherMeetPairUrl(assignmentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateTeacherMeetSpaceUrl = (assignmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/assignments/${assignmentId}/meet/create`
+}
+
+/**
+ * @summary Queue a single Google Meet space creation for the pair
+ */
+export const createTeacherMeetSpace = (assignmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeetOperationDto>(getCreateTeacherMeetSpaceUrl(assignmentId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getReconcileTeacherMeetSpaceUrl = (assignmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/assignments/${assignmentId}/meet/reconcile`
+}
+
+/**
+ * @summary Verify the teacher-supplied recovery reference for an unresolved creation
+ */
+export const reconcileTeacherMeetSpace = (assignmentId: string,
+    reconcileTeacherMeetDto: ReconcileTeacherMeetDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<TeacherMeetOperationDto>(getReconcileTeacherMeetSpaceUrl(assignmentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reconcileTeacherMeetDto)
+  }
+);}
+
+
+
+export const getVerifyTeacherMeetSpaceUrl = (assignmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/assignments/${assignmentId}/meet/verify`
+}
+
+/**
+ * @summary Queue confirmation of the published Meet resource by name
+ */
+export const verifyTeacherMeetSpace = (assignmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeetOperationDto>(getVerifyTeacherMeetSpaceUrl(assignmentId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherAvailabilityUrl = (params?: GetTeacherAvailabilityParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/availability?${stringifiedParams}` : `/api/v1/teacher/availability`
+}
+
+/**
+ * @summary The teacher's own availability windows with an occupied flag
+ */
+export const getTeacherAvailability = (params?: GetTeacherAvailabilityParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherAvailabilityResponseDto>(getGetTeacherAvailabilityUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherCheckpointsUrl = (params?: GetTeacherCheckpointsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/checkpoints?${stringifiedParams}` : `/api/v1/teacher/checkpoints`
+}
+
+/**
+ * @summary Skill reviews (4 lessons) and education reports (8 lessons) of taught students
+ */
+export const getTeacherCheckpoints = (params?: GetTeacherCheckpointsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherCheckpointPageDto>(getGetTeacherCheckpointsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherCheckpointUrl = (checkpointId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/checkpoints/${checkpointId}`
+}
+
+/**
+ * @summary One checkpoint with its summary, frozen snapshot and report draft
+ */
+export const getTeacherCheckpoint = (checkpointId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherCheckpointCardDto>(getGetTeacherCheckpointUrl(checkpointId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCompleteTeacherCheckpointUrl = (checkpointId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/checkpoints/${checkpointId}/complete`
+}
+
+/**
+ * @summary Finish a 4-lesson skill review; freezes the skill snapshot the student sees
+ */
+export const completeTeacherCheckpoint = (checkpointId: string,
+    completeCheckpointDto: CompleteCheckpointDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<CompleteCheckpointResponseDto>(getCompleteTeacherCheckpointUrl(checkpointId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(completeCheckpointDto)
+  }
+);}
+
+
+
+export const getSaveTeacherReportDraftUrl = (checkpointId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/checkpoints/${checkpointId}/report`
+}
+
+/**
+ * @summary Create or update the draft education report of an 8-lesson checkpoint
+ */
+export const saveTeacherReportDraft = (checkpointId: string,
+    saveReportDto: SaveReportDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<SaveReportResponseDto>(getSaveTeacherReportDraftUrl(checkpointId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(saveReportDto)
+  }
+);}
+
+
+
+export const getPublishTeacherReportUrl = (checkpointId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/checkpoints/${checkpointId}/report/publish`
+}
+
+/**
+ * @summary Publish the draft report to the student (immutable afterwards)
+ */
+export const publishTeacherReport = (checkpointId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<PublishReportResponseDto>(getPublishTeacherReportUrl(checkpointId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherEnrollmentsUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/enrollments`
+}
+
+/**
+ * @summary Active enrollments the teacher currently teaches (roster)
+ */
+export const getTeacherEnrollments = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherEnrollmentsResponseDto>(getGetTeacherEnrollmentsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherGoalsUrl = (enrollmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/goals`
+}
+
+/**
+ * @summary A taught student's learning goals
+ */
+export const getTeacherGoals = (enrollmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherGoalsResponseDto>(getGetTeacherGoalsUrl(enrollmentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCreateTeacherGoalUrl = (enrollmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/goals`
+}
+
+/**
+ * @summary Set a learning goal for a taught student
+ */
+export const createTeacherGoal = (enrollmentId: string,
+    createGoalDto: CreateGoalDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<GoalCommandResponseDto>(getCreateTeacherGoalUrl(enrollmentId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(createGoalDto)
+  }
+);}
+
+
+
+export const getUpdateTeacherGoalUrl = (enrollmentId: string,
+    goalId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/goals/${goalId}`
+}
+
+/**
+ * @summary Edit a goal, mark it achieved, pause or archive it (history is kept by the database)
+ */
+export const updateTeacherGoal = (enrollmentId: string,
+    goalId: string,
+    updateGoalDto: UpdateGoalDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<GoalCommandResponseDto>(getUpdateTeacherGoalUrl(enrollmentId,goalId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateGoalDto)
+  }
+);}
+
+
+
+export const getGetTeacherSharedMaterialsUrl = (enrollmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/materials`
+}
+
+/**
+ * @summary Files this teacher shared with a taught student, for the enrollment subject
+ */
+export const getTeacherSharedMaterials = (enrollmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherSharedMaterialsDto>(getGetTeacherSharedMaterialsUrl(enrollmentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherStudentOverviewUrl = (enrollmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/overview`
+}
+
+/**
+ * @summary Student card: progress counters, upcoming/recent lessons, homework, skills and goals
+ */
+export const getTeacherStudentOverview = (enrollmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherStudentOverviewDto>(getGetTeacherStudentOverviewUrl(enrollmentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherSkillMapUrl = (enrollmentId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/skills`
+}
+
+/**
+ * @summary A taught student's skill map with current public statuses
+ */
+export const getTeacherSkillMap = (enrollmentId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherSkillMapDto>(getGetTeacherSkillMapUrl(enrollmentId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getAssessTeacherSkillUrl = (enrollmentId: string,
+    skillId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/skills/${skillId}/assessments`
+}
+
+/**
+ * @summary Record a new level of a skill for a taught student
+ */
+export const assessTeacherSkill = (enrollmentId: string,
+    skillId: string,
+    assessSkillDto: AssessSkillDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<AssessSkillResponseDto>(getAssessTeacherSkillUrl(enrollmentId,skillId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(assessSkillDto)
+  }
+);}
+
+
+
+export const getGetTeacherSkillHistoryUrl = (enrollmentId: string,
+    skillId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/enrollments/${enrollmentId}/skills/${skillId}/history`
+}
+
+/**
+ * @summary Status changes of one skill, newest first (last 50)
+ */
+export const getTeacherSkillHistory = (enrollmentId: string,
+    skillId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherSkillHistoryDto>(getGetTeacherSkillHistoryUrl(enrollmentId,skillId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherHomeworkUrl = (params?: GetTeacherHomeworkParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/homework?${stringifiedParams}` : `/api/v1/teacher/homework`
+}
+
+/**
+ * @summary Homework the teacher issued; state=AWAITING_REVIEW is the review queue
+ */
+export const getTeacherHomework = (params?: GetTeacherHomeworkParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherHomeworkPageDto>(getGetTeacherHomeworkUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getIssueTeacherHomeworkUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/homework`
+}
+
+/**
+ * @summary Issue homework to assigned students (one delivery per enrollment)
+ */
+export const issueTeacherHomework = (issueHomeworkDto: IssueHomeworkDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<IssueHomeworkResponseDto>(getIssueTeacherHomeworkUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(issueHomeworkDto)
+  }
+);}
+
+
+
+export const getGetTeacherHomeworkCardUrl = (deliveryId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/homework/${deliveryId}`
+}
+
+/**
+ * @summary One issued homework with submission versions and reviews
+ */
+export const getTeacherHomeworkCard = (deliveryId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherHomeworkCardDto>(getGetTeacherHomeworkCardUrl(deliveryId),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getReviewTeacherHomeworkUrl = (deliveryId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/homework/${deliveryId}/review`
+}
+
+/**
+ * @summary Accept or return the latest submission of an issued homework
+ */
+export const reviewTeacherHomework = (deliveryId: string,
+    reviewHomeworkDto: ReviewHomeworkDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ReviewHomeworkResponseDto>(getReviewTeacherHomeworkUrl(deliveryId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(reviewHomeworkDto)
+  }
+);}
+
+
+
+export const getGetTeacherJournalUrl = (params?: GetTeacherJournalParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/journal?${stringifiedParams}` : `/api/v1/teacher/journal`
+}
+
+/**
+ * @summary The teacher's ended lessons with their outcome-report state, newest first
+ */
+export const getTeacherJournal = (params?: GetTeacherJournalParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherJournalPageDto>(getGetTeacherJournalUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherLessonUrl = (id: string,) => {
+
+
+
+
+  return `/api/v1/teacher/lessons/${id}`
+}
+
+/**
+ * @summary Own lesson card with report history and the confirmed outcome
+ */
+export const getTeacherLesson = (id: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherLessonCardDto>(getGetTeacherLessonUrl(id),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherMaterialsUrl = (params?: GetTeacherMaterialsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/materials?${stringifiedParams}` : `/api/v1/teacher/materials`
+}
+
+/**
+ * @summary The teacher's private material library
+ */
+export const getTeacherMaterials = (params?: GetTeacherMaterialsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMaterialPageDto>(getGetTeacherMaterialsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getConfirmTeacherMaterialUploadUrl = (fileId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/materials/${fileId}/confirm`
+}
+
+/**
+ * Require a clean malware verdict on the staging bytes before copying the verified ETag to the private final key.
+ * @summary Verify the uploaded staging object and publish it as a private file
+ */
+export const confirmTeacherMaterialUpload = (fileId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<MaterialConfirmResponseDto>(getConfirmTeacherMaterialUploadUrl(fileId),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getShareTeacherMaterialUrl = (fileId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/materials/${fileId}/grants`
+}
+
+/**
+ * @summary Give a taught student access to a verified file (optionally tied to a lesson)
+ */
+export const shareTeacherMaterial = (fileId: string,
+    shareMaterialDto: ShareMaterialDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<ShareMaterialResponseDto>(getShareTeacherMaterialUrl(fileId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(shareMaterialDto)
+  }
+);}
+
+
+
+export const getRevokeTeacherMaterialUrl = (permissionId: string,) => {
+
+
+
+
+  return `/api/v1/teacher/materials/grants/${permissionId}`
+}
+
+/**
+ * @summary Withdraw a student’s access to a file
+ */
+export const revokeTeacherMaterial = (permissionId: string, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<RevokeMaterialResponseDto>(getRevokeTeacherMaterialUrl(permissionId),
+  {
+    ...options,
+    method: 'DELETE'
+
+
+  }
+);}
+
+
+
+export const getRequestTeacherMaterialUploadUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/materials/uploads`
+}
+
+/**
+ * @summary Register a file and get a short-lived signed URL to upload it to staging
+ */
+export const requestTeacherMaterialUpload = (requestMaterialUploadDto: RequestMaterialUploadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<MaterialUploadResponseDto>(getRequestTeacherMaterialUploadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(requestMaterialUploadDto)
+  }
+);}
+
+
+
+export const getGetTeacherMeUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/me`
+}
+
+/**
+ * @summary Current teacher profile
+ */
+export const getTeacherMe = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeResponseDto>(getGetTeacherMeUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherMeetConnectionUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/meet/oauth`
+}
+
+/**
+ * @summary Read the connection state for the signed-in teacher
+ */
+export const getTeacherMeetConnection = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeetConnectionDto>(getGetTeacherMeetConnectionUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getCompleteTeacherMeetOAuthUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/meet/oauth/complete`
+}
+
+/**
+ * @summary Complete consent once using the originating teacher session
+ */
+export const completeTeacherMeetOAuth = (completeTeacherMeetOAuthDto: CompleteTeacherMeetOAuthDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<TeacherMeetConnectionDto>(getCompleteTeacherMeetOAuthUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(completeTeacherMeetOAuthDto)
+  }
+);}
+
+
+
+export const getDisconnectTeacherMeetOAuthUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/meet/oauth/disconnect`
+}
+
+/**
+ * @summary Disable the connection locally and request Google token revocation
+ */
+export const disconnectTeacherMeetOAuth = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherMeetConnectionDto>(getDisconnectTeacherMeetOAuthUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getStartTeacherMeetOAuthUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/meet/oauth/start`
+}
+
+/**
+ * @summary Start the teacher Google consent flow
+ */
+export const startTeacherMeetOAuth = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<StartTeacherMeetOAuthResponseDto>(getStartTeacherMeetOAuthUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherNotificationsUrl = (params?: GetTeacherNotificationsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/notifications?${stringifiedParams}` : `/api/v1/teacher/notifications`
+}
+
+/**
+ * @summary Work notifications of the last 90 days (lessons, homework, checkpoints, requests)
+ */
+export const getTeacherNotifications = (params?: GetTeacherNotificationsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherNotificationPageDto>(getGetTeacherNotificationsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getMarkTeacherNotificationsReadUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/notifications/read`
+}
+
+/**
+ * @summary Mark listed events read
+ */
+export const markTeacherNotificationsRead = (markReadDto: MarkReadDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<MarkReadResponseDto>(getMarkTeacherNotificationsReadUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(markReadDto)
+  }
+);}
+
+
+
+export const getMarkAllTeacherNotificationsReadUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/notifications/read-all`
+}
+
+/**
+ * @summary Mark everything up to now read; later events stay unread
+ */
+export const markAllTeacherNotificationsRead = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<MarkReadResponseDto>(getMarkAllTeacherNotificationsReadUrl(),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherNotificationSummaryUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/notifications/summary`
+}
+
+/**
+ * @summary Unread indicator for the notification bell
+ */
+export const getTeacherNotificationSummary = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherNotificationSummaryDto>(getGetTeacherNotificationSummaryUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherPayrollStatementUrl = (params?: GetTeacherPayrollStatementParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/payroll?${stringifiedParams}` : `/api/v1/teacher/payroll`
+}
+
+/**
+ * @summary The teacher's own monthly statement: confirmed lessons, accruals and payouts (read-only)
+ */
+export const getTeacherPayrollStatement = (params?: GetTeacherPayrollStatementParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherPayrollResponseDto>(getGetTeacherPayrollStatementUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherProfileUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/profile`
+}
+
+/**
+ * @summary Own contact data and active passkeys (no credential material)
+ */
+export const getTeacherProfile = ( options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherProfileDto>(getGetTeacherProfileUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getUpdateTeacherProfileUrl = () => {
+
+
+
+
+  return `/api/v1/teacher/profile`
+}
+
+/**
+ * @summary Change the own phone number (the only self-service contact field)
+ */
+export const updateTeacherProfile = (updateTeacherProfileDto: UpdateTeacherProfileDto, options?: Parameters<typeof schoolFetch>[1]) => {
+
+    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
+    if (!h) return {};
+    if (h instanceof Headers) return Object.fromEntries(h.entries());
+    if (Symbol.iterator in h) {
+      return Object.fromEntries(
+        Array.from(h as Iterable<Iterable<string>>, (entry) => Array.from(entry) as [string, string]),
+      );
+    }
+    const headers: Record<string, string | readonly string[]> = {};
+    for (const [name, value] of Object.entries<string | readonly string[] | undefined>(h)) {
+      if (value !== undefined) headers[name] = value;
+    }
+    return headers;
+  };
+return schoolFetch<UpdateTeacherProfileResponseDto>(getUpdateTeacherProfileUrl(),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
+    body: JSON.stringify(updateTeacherProfileDto)
+  }
+);}
+
+
+
+export const getGetTeacherScheduleRequestsUrl = (params?: GetTeacherScheduleRequestsParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/schedule-requests?${stringifiedParams}` : `/api/v1/teacher/schedule-requests`
+}
+
+/**
+ * @summary Schedule change requests the teacher sent to the manager, newest first
+ */
+export const getTeacherScheduleRequests = (params?: GetTeacherScheduleRequestsParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherScheduleRequestPageDto>(getGetTeacherScheduleRequestsUrl(params),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+export const getGetTeacherTodayUrl = (params?: GetTeacherTodayParams,) => {
+  const normalizedParams = new URLSearchParams();
+
+  Object.entries(params || {}).forEach(([key, value]) => {
+
+    if (value !== undefined) {
+      normalizedParams.append(key, value === null ? 'null' : String(value))
+    }
+  });
+
+  const stringifiedParams = normalizedParams.toString();
+
+  return stringifiedParams.length > 0 ? `/api/v1/teacher/today?${stringifiedParams}` : `/api/v1/teacher/today`
+}
+
+/**
+ * @summary The teacher's own lessons for one school-timezone calendar day
+ */
+export const getTeacherToday = (params?: GetTeacherTodayParams, options?: Parameters<typeof schoolFetch>[1]) => {
+
+  return schoolFetch<TeacherTodayResponseDto>(getGetTeacherTodayUrl(params),
   {
     ...options,
     method: 'GET'

@@ -10,6 +10,7 @@ export const ACCESS = {
   roles: 'core.roles',
   permissions: 'core.permissions',
   mfa: 'core.mfa',
+  verifiedMfa: 'core.verifiedMfa',
   preMfa: 'core.preMfa',
   student: 'core.student',
   roleErrorCode: 'core.roleErrorCode',
@@ -21,6 +22,7 @@ export const RequireRole = (...roles: RoleCode[]) => SetMetadata(ACCESS.roles, r
 export const RequirePermission = (...permissions: string[]) =>
   SetMetadata(ACCESS.permissions, permissions);
 export const RequireMfa = () => SetMetadata(ACCESS.mfa, true);
+export const RequireVerifiedMfa = () => SetMetadata(ACCESS.verifiedMfa, true);
 export const AllowPreMfa = () => SetMetadata(ACCESS.preMfa, true);
 export const RequireStudentAccess = (parameter = 'id') => SetMetadata(ACCESS.student, parameter);
 export const CurrentAccount = createParamDecorator(

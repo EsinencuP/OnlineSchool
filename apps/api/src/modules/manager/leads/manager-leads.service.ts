@@ -82,8 +82,10 @@ export interface LeadIntakePort {
     managerId: string,
     dto: CreateLeadDto,
     source: CreateLeadDto['source'],
+    submission?: PublicLeadSubmission,
   ): Promise<Result<{ leadId: string }, DomainError>>;
 }
+type PublicLeadSubmission = { id: string; hash: string; notice: string; requestId: string };
 @Injectable()
 export class ManagerLeadsService implements LeadIntakePort {
   constructor(
@@ -164,6 +166,7 @@ export class ManagerLeadsService implements LeadIntakePort {
       trialAt: row.trial_lesson?.scheduled_at.toISOString() ?? null,
       nextActionAt: row.tasks[0]?.due_at.toISOString() ?? null,
       isOverdue: row.tasks.some((t) => t.due_at < now),
+      ...(row.public_duplicate_suspected ? { possibleDuplicateAtIntake: true } : {}),
     };
   }
   private view(row: Row, now: Date): LeadDto {
@@ -327,6 +330,7 @@ export class ManagerLeadsService implements LeadIntakePort {
     dto: CreateLeadDto,
     c: Pick<CriticalContext, 'tx' | 'operationId' | 'requestId'>,
     system = false,
+    submission?: PublicLeadSubmission,
   ): Promise<Result<LeadDto, DomainError>> {
     if (Object.values(dto).some((v) => v === null) || dto.contactName.trim().length < 2)
       return err(domainError('INVALID_INPUT', 422));
@@ -350,9 +354,14 @@ export class ManagerLeadsService implements LeadIntakePort {
       },
     });
     if (count >= config.perMinute) return err(domainError('LEAD_RATE_LIMITED', 429));
-    if (!dto.forceCreate) {
+    let possibleExistingId: string | null = null;
+    if (!dto.forceCreate || submission) {
       const d = await this.duplicate(ctx, dto, c.tx);
-      if (!d.ok) return d;
+      if (!d.ok) {
+        if (!submission || d.error.code !== 'LEAD_DUPLICATE_SUSPECTED') return d;
+        const candidate = d.error.details?.existingId;
+        if (typeof candidate === 'string') possibleExistingId = candidate;
+      }
     }
     const row = await c.tx.lead.create({
       data: {
@@ -368,6 +377,14 @@ export class ManagerLeadsService implements LeadIntakePort {
         source: dto.source,
         comment: dto.comment ?? null,
         stage_changed_at: now,
+        ...(submission
+          ? {
+              public_submission_id: submission.id,
+              public_submission_hash: submission.hash,
+              public_privacy_notice: submission.notice,
+              public_duplicate_suspected: possibleExistingId !== null,
+            }
+          : {}),
       },
     });
     await c.tx.assignedManager.create({
@@ -386,7 +403,10 @@ export class ManagerLeadsService implements LeadIntakePort {
       system ? { requestId: ctx.requestId, operationId: c.operationId } : this.actor(ctx, c),
       row.id,
       'LEAD_CREATED',
-      { forceCreate: dto.forceCreate === true },
+      {
+        forceCreate: dto.forceCreate === true,
+        ...(possibleExistingId ? { possibleExistingId } : {}),
+      },
     );
     return ok(this.view(unwrap(await this.find(ctx, row.id, c.tx)), now));
   }
@@ -401,10 +421,25 @@ export class ManagerLeadsService implements LeadIntakePort {
       return actor.ok ? this.writeCreate(ctx, dto, c) : actor;
     });
   }
+  private async priorPublicSubmission(
+    tx: Prisma.TransactionClient,
+    submission: PublicLeadSubmission,
+  ): Promise<Result<{ leadId: string } | null, DomainError>> {
+    const accepted = await tx.lead.findUnique({
+      where: { public_submission_id: submission.id },
+      select: { id: true, public_submission_hash: true },
+    });
+    if (!accepted) return ok(null);
+    return accepted.public_submission_hash === submission.hash
+      ? ok({ leadId: accepted.id })
+      : err(domainError('LEAD_SUBMISSION_CONFLICT', 409));
+  }
+
   async intake(
     managerId: string,
     dto: CreateLeadDto,
     source: CreateLeadDto['source'],
+    submission?: PublicLeadSubmission,
   ): Promise<Result<{ leadId: string }, DomainError>> {
     const input = plainToInstance(IntakeDto, { ...dto, source });
     if (
@@ -415,7 +450,12 @@ export class ManagerLeadsService implements LeadIntakePort {
       }).length
     )
       return err(domainError('INVALID_INPUT', 422));
-    return this.transactions.runResult(async (tx) => {
+    const write = await this.transactions.runResult(async (tx) => {
+      if (submission) {
+        const prior = await this.priorPublicSubmission(tx, submission);
+        if (!prior.ok) return prior;
+        if (prior.value) return ok(prior.value);
+      }
       const now = await at(tx),
         manager = await tx.staffAccount.findFirst({
           where: {
@@ -439,18 +479,26 @@ export class ManagerLeadsService implements LeadIntakePort {
           managerId,
           accountId: manager.account_id,
           sessionId: randomUUID(),
-          requestId: randomUUID(),
+          requestId: submission?.requestId ?? randomUUID(),
         },
         operationId = randomUUID();
-      // No public route exposes intake; the system identity is recorded explicitly.
       const result = await this.writeCreate(
         ctx,
         input,
         { tx, operationId, requestId: ctx.requestId },
         true,
+        submission,
       );
       return result.ok ? ok({ leadId: result.value.leadId }) : result;
     });
+    if (submission && !write.ok && write.error.code === 'CONFLICT') {
+      return this.transactions.runReadOnly(async (tx) => {
+        const prior = await this.priorPublicSubmission(tx, submission);
+        if (!prior.ok) return prior;
+        return prior.value ? ok(prior.value) : write;
+      });
+    }
+    return write;
   }
   private async lock(
     ctx: ManagerContext,
