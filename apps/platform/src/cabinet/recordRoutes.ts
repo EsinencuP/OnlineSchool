@@ -3,6 +3,20 @@ import type { Details } from './contract.js';
 export const managerPaymentsLink = (studentId: string) =>
   '/manager/students/' + encodeURIComponent(studentId) + '/payments';
 
+export const teacherStudentsPath = '/teacher/students';
+export const teacherReportsPath = '/teacher/reports';
+
+export const homeworkPath = '/teacher/homework';
+
+export const teacherHomeworkNavigation = {
+  ru: { title: 'Домашние задания', newTitle: 'Новое задание', issue: 'Выдать задание' },
+  ro: { title: 'Teme pentru acasă', newTitle: 'Temă nouă', issue: 'Atribuie tema' },
+};
+
+export function issueHomeworkUrl(lessonId?: string) {
+  return homeworkPath + '/new' + (lessonId ? '?' + new URLSearchParams({ lessonId }) : '');
+}
+
 const records = [
   {
     path: '/student/lessons',
@@ -31,19 +45,19 @@ const records = [
     params: ['id'],
   },
   {
-    path: '/teacher/students',
+    path: teacherStudentsPath,
     lists: ['getTeacherEnrollments'],
     read: 'getTeacherStudentOverview',
     keys: ['enrollmentId'],
   },
   {
-    path: '/teacher/homework',
+    path: homeworkPath,
     lists: ['getTeacherHomework'],
     read: 'getTeacherHomeworkCard',
     keys: ['deliveryId'],
   },
   {
-    path: '/teacher/reports',
+    path: teacherReportsPath,
     lists: ['getTeacherCheckpoints'],
     read: 'getTeacherCheckpoint',
     keys: ['checkpointId'],

@@ -1,3 +1,14 @@
+import {
+  teacherReportsFixture,
+  verifyTeacherReportCommands,
+  verifyTeacherReportDirectory,
+} from './teacher-reports.mjs';
+import {
+  teacherStudentsFixture,
+  verifyTeacherStudentOverview,
+  verifyTeacherStudentWorkflows,
+} from './teacher-students.mjs';
+import { teacherHomeworkFixture, verifyTeacherHomework } from './teacher-homework.mjs';
 import { paymentChecks } from './payments.mjs';
 import { accountFixture, verifyLockedStudentPassword, verifyStudentAccount } from './account.mjs';
 import { notificationFixture, verifyNotifications } from './notifications.mjs';
@@ -9,7 +20,9 @@ import { extname, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const dist = fileURLToPath(new URL('../../dist/', import.meta.url));
-const output = fileURLToPath(new URL('../../../../output/new-cabinets/', import.meta.url));
+const output = process.env.CABINET_SMOKE_OUTPUT
+  ? resolve(process.env.CABINET_SMOKE_OUTPUT)
+  : fileURLToPath(new URL('../../../../output/new-cabinets/', import.meta.url));
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript',
@@ -252,10 +265,6 @@ const fixture = {
       },
     ],
   },
-  '/api/v1/teacher/homework': {
-    items: [{ ...homework, deliveryId: homeworkId, studentName: 'Анна Мирова' }],
-    total: 1,
-  },
   '/api/v1/manager/dashboard': {
     leads: {},
     students: { active: 6 },
@@ -323,6 +332,22 @@ async function open(role, slug, displayName, page, startSignedIn = true) {
   const reports = [];
   const reportReads = [];
   const pdfWrites = [];
+  const teacherHomework = teacherHomeworkFixture({ date, lessonId, subjectId, alternateSubjectId });
+  const teacherStudents = teacherStudentsFixture({
+    date,
+    future: new Date(Date.parse(date) + 24 * 60 * 60 * 1000).toISOString(),
+    lessonId,
+    priorLessonId,
+    homework: teacherHomework,
+    alternateSubjectId,
+  });
+  const teacherReports = teacherReportsFixture({
+    date,
+    lessonId,
+    priorLessonId,
+    enrollmentId: teacherHomework.enrollmentId,
+    studentId: teacherHomework.studentId,
+  });
   const notices = notificationFixture({ date, reportId, homeworkId, planId });
   const studentAccount = accountFixture({ date, displayName, accountId });
   const markedReports = new Set();
@@ -403,6 +428,14 @@ async function open(role, slug, displayName, page, startSignedIn = true) {
             }
           : {}),
       });
+    if (role === 'TEACHER') {
+      const reportReply = teacherReports.handle(url, req, json);
+      if (reportReply) return reportReply;
+      const studentReply = teacherStudents.handle(url, req, json);
+      if (studentReply) return studentReply;
+      const homeworkReply = teacherHomework.handle(url, req, json);
+      if (homeworkReply) return homeworkReply;
+    }
     if (role === 'TEACHER' && path === '/api/v1/teacher/today') {
       const asked = url.searchParams.get('date');
       if (asked) requestedDays.add(asked);
@@ -420,6 +453,7 @@ async function open(role, slug, displayName, page, startSignedIn = true) {
         startsAt: date,
         endsAt: teacherEnd,
         state: reports.length ? 'AWAITING_CONFIRMATION' : 'AWAITING_REPORT',
+        studentId: teacherHomework.studentId,
         studentName: 'Анна Мирова',
         subjectName: 'Математика',
         reportDeadlineAt: teacherDeadline,
@@ -772,6 +806,9 @@ async function open(role, slug, displayName, page, startSignedIn = true) {
     pdfWrites,
     noticeCommands: notices.commands,
     studentAccount,
+    teacherHomework,
+    teacherStudents,
+    teacherReports,
     suspend: () => {
       suspended = true;
     },
@@ -784,8 +821,17 @@ try {
   browser = await chromium.launch({ channel: 'chrome', headless: true });
   for (const [role, slug, name, visible] of cases) {
     const page = await browser.newPage({ viewport: { width: 1410, height: 1020 } });
-    const { allowStart, requests, reportReads, pdfWrites, noticeCommands, studentAccount } =
-      await open(role, slug, name, page);
+    const {
+      allowStart,
+      requests,
+      reportReads,
+      pdfWrites,
+      noticeCommands,
+      studentAccount,
+      teacherHomework,
+      teacherStudents,
+      teacherReports,
+    } = await open(role, slug, name, page);
     await page.goto(base + '/' + slug);
     await page
       .getByRole('heading', { level: 1 })
@@ -1121,6 +1167,37 @@ try {
         actualStartedAt: teacherStart,
         durationMin: 35,
       });
+      await verifyTeacherStudentOverview(
+        page,
+        base,
+        teacherStudents,
+        screenshots ? output : undefined,
+      );
+      await verifyTeacherStudentWorkflows(
+        page,
+        base,
+        teacherStudents,
+        screenshots ? output : undefined,
+      );
+      await verifyTeacherReportDirectory(
+        page,
+        base,
+        teacherReports,
+        screenshots ? output : undefined,
+      );
+      await verifyTeacherReportCommands(
+        page,
+        base,
+        teacherReports,
+        screenshots ? output : undefined,
+      );
+      await verifyTeacherHomework(
+        page,
+        base,
+        lessonId,
+        teacherHomework,
+        screenshots ? output : undefined,
+      );
     }
     if (role === 'MANAGER') {
       await page.getByRole('link', { name: /Связаться с семьёй/ }).click();
@@ -1284,7 +1361,7 @@ try {
   await verifyLockedStudentPassword({ page: student, base, account: studentApi.studentAccount });
   assert.deepEqual(errors, []);
   console.log(
-    'OK: profile and account security, notification drawer, inbox and read retries, published reports, PDF recovery and verified download, subscription balances, payment precision and ledger, subjects, scoped lessons and materials, skill maps and history, five cabinet dashboards, 2K brand and subject art, mobile menu and overflow, login, record deep links, weekly teacher schedule, manager/director payment transitions and allocation, student file verification, homework recovery and review, lesson request recovery, deduction dispute and access suspension.',
+    'OK: profile and account security, notification drawer, inbox and read retries, published reports, PDF recovery and verified download, subscription balances, payment precision and ledger, subjects, scoped lessons and materials, skill maps and history, five cabinet dashboards, 2K brand and subject art, mobile menu and overflow, login, record deep links, weekly teacher schedule, journal pagination, checkpoints and report publication, scoped teacher student overview, goals and assessment, teacher homework issue and review, manager/director payment transitions and allocation, student file verification, homework recovery and review, lesson request recovery, deduction dispute and access suspension.',
   );
 } finally {
   await browser?.close();

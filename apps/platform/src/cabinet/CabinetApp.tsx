@@ -31,7 +31,12 @@ import {
 } from './StudentSubjects.js';
 import { subjectSelection, withSubject } from './studentSubjectRoutes.js';
 import { MeetConnection, PrivateUpload } from './Workflows.js';
-import { managerPaymentsLink, recordPage, recordUrl } from './recordRoutes.js';
+import {
+  managerPaymentsLink,
+  recordPage,
+  recordUrl,
+  teacherHomeworkNavigation,
+} from './recordRoutes.js';
 import { TeacherLessonCard } from './TeacherLesson.js';
 import { TeacherSchedule } from './TeacherSchedule.js';
 import { profileOperation, sections, sectionAliases } from './sections.js';
@@ -63,6 +68,39 @@ const StudentReportsPanel = lazy(() =>
     default: () => (
       <LoadState
         error={new Error('REPORTS_VIEW_UNAVAILABLE')}
+        retry={() => window.location.reload()}
+      />
+    ),
+  })),
+);
+
+const TeacherHomeworkPanel = lazy(() =>
+  import('./TeacherHomework.js').catch(() => ({
+    default: () => (
+      <LoadState
+        error={new Error('HOMEWORK_VIEW_UNAVAILABLE')}
+        retry={() => window.location.reload()}
+      />
+    ),
+  })),
+);
+
+const TeacherStudentsPanel = lazy(() =>
+  import('./TeacherStudents.js').catch(() => ({
+    default: () => (
+      <LoadState
+        error={new Error('TEACHER_STUDENTS_VIEW_UNAVAILABLE')}
+        retry={() => window.location.reload()}
+      />
+    ),
+  })),
+);
+
+const TeacherReportsPanel = lazy(() =>
+  import('./TeacherReports.js').catch(() => ({
+    default: () => (
+      <LoadState
+        error={new Error('TEACHER_REPORTS_VIEW_UNAVAILABLE')}
         retry={() => window.location.reload()}
       />
     ),
@@ -131,6 +169,7 @@ function Shell({
   const nav = sections[role];
   const { locale } = useLocale();
   const { text: accountText } = useAccountCopy();
+  const homeworkText = teacherHomeworkNavigation[locale];
   const passwordPage =
     role === 'STUDENT' && route.section === 'security' && route.detail === 'change-password';
   const alias =
@@ -145,16 +184,33 @@ function Shell({
   const skillPage = role === 'STUDENT' && route.section === 'skills';
   const studentSubscription = role === 'STUDENT' && section.id === 'subscription';
   const studentReports = role === 'STUDENT' && section.id === 'reports';
+  const teacherHomework = role === 'TEACHER' && section.id === 'homework';
+  const teacherStudents = role === 'TEACHER' && section.id === 'students';
+  const teacherReports = role === 'TEACHER' && section.id === 'reports';
+  const rosterTitle = locale === 'ro' ? 'Elevi' : 'Ученики';
   const studentHelp = role === 'STUDENT' && section.id === 'help';
   const subjectQuery = role === 'STUDENT' ? subjectSelection(search, 'subjectId') : null;
+  function sectionTitle(item: { id: string; title: string }) {
+    if (role === 'STUDENT' && locale === 'ro') return studentTitlesRo[item.id] ?? item.title;
+    if (role === 'TEACHER' && item.id === 'homework') return homeworkText.title;
+    if (role === 'TEACHER' && item.id === 'students') return rosterTitle;
+    if (role === 'TEACHER' && item.id === 'reports' && locale === 'ro')
+      return 'Registru și rapoarte';
+    return item.title;
+  }
   const title = passwordPage
     ? accountText('changePassword')
-    : skillPage
-      ? locale === 'ro'
-        ? 'Harta competențelor'
-        : 'Карта навыков'
-      : ((locale === 'ro' && role === 'STUDENT' ? studentTitlesRo[section.id] : undefined) ??
-        section.title);
+    : teacherHomework && route.detail === 'new'
+      ? homeworkText.newTitle
+      : teacherStudents && route.detail
+        ? locale === 'ro'
+          ? 'Fișa elevului'
+          : 'Карточка ученика'
+        : skillPage
+          ? locale === 'ro'
+            ? 'Harta competențelor'
+            : 'Карта навыков'
+          : sectionTitle(section);
   const profile = useEndpoint<Details>(profileOperation[role]);
   const accounts = useEndpoint<Accounts>('getPlatformAccounts');
   const [menu, setMenu] = useState(false);
@@ -373,10 +429,7 @@ function Shell({
                 }}
               >
                 <Icon name={item.icon} size={20} />
-                <span>
-                  {(locale === 'ro' && role === 'STUDENT' ? studentTitlesRo[item.id] : undefined) ??
-                    item.title}
-                </span>
+                <span>{sectionTitle(item)}</span>
               </a>
             ))}
         </nav>
@@ -590,6 +643,39 @@ function Shell({
                   zone={zone}
                   navigate={navigate}
                 />
+              ) : teacherHomework ? (
+                <Suspense fallback={<LoadState refreshing />}>
+                  <TeacherHomeworkPanel
+                    {...(route.detail
+                      ? { detail: detailPage?.params.deliveryId ?? route.detail }
+                      : {})}
+                    search={search}
+                    zone={zone}
+                    navigate={navigate}
+                  />
+                </Suspense>
+              ) : teacherStudents ? (
+                <Suspense fallback={<LoadState refreshing />}>
+                  <TeacherStudentsPanel
+                    {...(route.detail
+                      ? { detail: detailPage?.params.enrollmentId ?? route.detail }
+                      : {})}
+                    search={search}
+                    zone={zone}
+                    navigate={navigate}
+                  />
+                </Suspense>
+              ) : teacherReports ? (
+                <Suspense fallback={<LoadState refreshing />}>
+                  <TeacherReportsPanel
+                    {...(route.detail
+                      ? { detail: detailPage?.params.checkpointId ?? route.detail }
+                      : {})}
+                    search={search}
+                    zone={zone}
+                    navigate={navigate}
+                  />
+                </Suspense>
               ) : skillPage ? (
                 subjectQuery === '' ? (
                   <SubjectUnavailable navigate={navigate} />

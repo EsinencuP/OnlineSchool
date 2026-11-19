@@ -2165,3 +2165,168 @@ a.cab-metric:hover {
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(min(155px, 100%), 1fr));
 }
+
+.cab-homework-issue-fields {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cab-teacher-homework-grid {
+  align-items: start;
+}
+.cab-teacher-homework-toolbar,
+.cab-teacher-homework-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cab-teacher-homework-toolbar .cab-form-label {
+  flex: 0 1 230px;
+}
+.cab-teacher-homework-meta {
+  justify-content: flex-start;
+  color: var(--muted);
+  font-size: 12px;
+}
+.cab-teacher-homework-feedback p {
+  flex: 1 1 220px;
+}
+.cab-teacher-homework-list,
+.cab-homework-checklist {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.cab-teacher-homework-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px 14px;
+  overflow-wrap: anywhere;
+}
+.cab-teacher-homework-row h2 {
+  font-size: 16px;
+}
+.cab-teacher-homework-row .cab-inline-link {
+  display: inline;
+}
+.cab-teacher-homework-row > .cab-teacher-homework-meta {
+  justify-content: flex-end;
+}
+.cab-homework-checklist li {
+  padding-inline: 8px;
+  border-radius: 9px;
+  background: #f8f5fc;
+  overflow-wrap: anywhere;
+}
+.cab-homework-checklist .cab-lesson-checkbox input {
+  flex-shrink: 0;
+}
+.cab-homework-attachments > summary {
+  cursor: pointer;
+  font-weight: 620;
+}
+.cab-homework-attachments[open] > summary {
+  margin-bottom: 10px;
+}
+@media (max-width: 590px) {
+  .cab-teacher-homework-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .cab-teacher-homework-row > .cab-teacher-homework-meta {
+    grid-column: 2;
+    justify-content: flex-start;
+  }
+}
+
+.cab-roster-list {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cab-roster-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 260px) auto;
+  align-items: center;
+  gap: 10px 14px;
+  overflow-wrap: anywhere;
+  transition: border-color 180ms ease-out;
+}
+.cab-roster-row:hover {
+  border-color: #cdb8ec;
+}
+.cab-roster-name {
+  display: grid;
+  gap: 4px;
+}
+.cab-roster-name p,
+.cab-roster-details {
+  color: var(--muted);
+  font-size: 13px;
+}
+.cab-roster-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+  gap: 10px;
+  margin: 0;
+}
+.cab-roster-metrics .cab-metric {
+  align-content: center;
+  min-height: 88px;
+  overflow-wrap: anywhere;
+}
+.cab-roster-metrics dt {
+  font-size: 13px;
+}
+.cab-roster-metrics dd {
+  margin: 0;
+  order: -1;
+}
+.cab-roster-overview {
+  align-items: start;
+}
+.cab-roster-counters {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+.cab-roster-counters div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.cab-roster-counters dd {
+  margin: 0;
+  font-weight: 700;
+}
+@media (max-width: 650px) {
+  .cab-roster-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+  .cab-roster-details {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
+
+.cab-lesson-report-meta {
+  display: grid;
+  gap: 4px;
+  justify-items: start;
+}
+
+.cab-report-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.cab-report-filters .cab-form-label {
+  flex: 0 1 250px;
+}

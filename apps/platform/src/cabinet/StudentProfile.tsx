@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 import type { components } from '@online-school/api-contracts';
 import { Icon } from '@online-school/ui';
 import { CabinLink } from './Home.js';
-import { useStudentAccountAction } from './studentAccountAction.js';
+import { useCabinetAction } from './hooks.js';
 import { accountFailure, accountOutcomeUnknown, useAccountCopy } from './studentAccountCopy.js';
 import type { AccountMessage } from './studentAccountCopy.js';
 import { isRouteUuid } from './studentSubjectRoutes.js';
@@ -50,7 +50,7 @@ export function StudentProfile({
   const [avatar, setAvatar] = useState('');
   const [message, setMessage] = useState<AccountMessage | null>(null);
   const [pending, setPending] = useState<Update | null>(null);
-  const { busy, run } = useStudentAccountAction();
+  const { busy, run } = useCabinetAction();
   const trimmed = alias.trim();
 
   async function save(update: Update) {

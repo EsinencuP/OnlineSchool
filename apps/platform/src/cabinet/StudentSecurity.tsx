@@ -5,8 +5,7 @@ import { leaveSession, verifySessionOutcome } from '@online-school/account-ui';
 import { ConfirmDialog, formatDateTime, Icon } from '@online-school/ui';
 import { CabinetError } from './contract.js';
 import { CabinLink } from './Home.js';
-import { useEndpoint } from './hooks.js';
-import { useStudentAccountAction } from './studentAccountAction.js';
+import { useCabinetAction, useEndpoint } from './hooks.js';
 import {
   accountFailure,
   accountOutcomeUnknown,
@@ -63,7 +62,7 @@ export function StudentPassword({
   const { text } = useAccountCopy();
   const hint = useId();
   const [message, setMessage] = useState<AccountMessage | null>(null);
-  const { busy, run } = useStudentAccountAction();
+  const { busy, run } = useCabinetAction();
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
@@ -164,7 +163,7 @@ function StudentEmail({ currentEmail }: { currentEmail: string }) {
   const [address, setAddress] = useState('');
   const [challenge, setChallenge] = useState<string | null>(null);
   const [message, setMessage] = useState<AccountMessage | null>(null);
-  const { busy, run } = useStudentAccountAction();
+  const { busy, run } = useCabinetAction();
   async function send(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy || challenge) return;
@@ -288,7 +287,7 @@ function StudentSessions({ zone }: { zone: string }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
   const [message, setMessage] = useState<AccountMessage | null>(null);
-  const { busy, run } = useStudentAccountAction();
+  const { busy, run } = useCabinetAction();
   const at = (value: string) => formatDateTime(value, locale, zone) ?? '—';
 
   async function revoke() {

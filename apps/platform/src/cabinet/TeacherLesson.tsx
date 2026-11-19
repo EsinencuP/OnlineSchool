@@ -7,6 +7,7 @@ import { CabinLink } from './Home.js';
 import { useEndpoint } from './hooks.js';
 import { weekSearch } from './TeacherSchedule.js';
 import { teacherCopy } from './teacherCopy.js';
+import { issueHomeworkUrl, teacherHomeworkNavigation } from './recordRoutes.js';
 
 type Schemas = components['schemas'];
 type Lesson = Schemas['TeacherLessonCardDto'];
@@ -169,6 +170,7 @@ export function TeacherLessonCard({
 }) {
   const { locale } = useLocale();
   const t = teacherCopy[locale];
+  const homeworkText = teacherHomeworkNavigation[locale];
   const detail = useEndpoint<Lesson>('getTeacherLesson', { id });
   const lesson = detail.data?.lessonId === id ? detail.data : null;
   const eligible = useEndpoint<Schemas['StaffActionEligibilityDto']>(
@@ -354,6 +356,13 @@ export function TeacherLessonCard({
                 </p>
               )}
               <div className="cab-form-actions">
+                <CabinLink
+                  to={issueHomeworkUrl(id)}
+                  className="cab-button cab-secondary"
+                  navigate={navigate}
+                >
+                  <Icon name="tasks" size={16} /> {homeworkText.issue}
+                </CabinLink>
                 {canStart && !pending && (
                   <button
                     type="button"
