@@ -136,9 +136,14 @@ export async function request<T>(
   const body =
     options.body ?? (operation.requestBody?.content['application/json'] ? {} : undefined);
   if (body !== undefined) messages.set('Content-Type', 'application/json');
-  const response = Object.entries(operation.responses ?? {}).find(([status]) =>
+  const successes = Object.entries(operation.responses ?? {}).filter(([status]) =>
     status.startsWith('2'),
   );
+  const response = successes[0];
+  const empty =
+    response?.[0] === '204' ||
+    (successes.some(([status]) => status === '204') &&
+      successes.every(([, spec]) => !Object.keys(spec.content ?? {}).length));
   const binary =
     response?.[1].content &&
     !response[1].content['application/json'] &&
@@ -152,7 +157,7 @@ export async function request<T>(
     ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
     ...(options.signal ? { signal: options.signal } : {}),
     ...(binary ? { binaryResponse: true } : {}),
-    ...(response?.[0] === '204' ? { emptyResponse: true } : {}),
+    ...(empty ? { emptyResponse: true } : {}),
   });
   if (!result.ok) return Promise.reject(new CabinetError(result.error));
   return result.value;

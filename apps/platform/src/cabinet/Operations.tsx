@@ -483,14 +483,18 @@ function ReadPanel({
   revision,
   onPick,
   onRecord,
+  fixedQuery,
 }: {
   operation: Operation;
   context: Record<string, string>;
   revision: number;
   onPick: (row: Details) => void;
   onRecord?: (value: unknown) => void;
+  fixedQuery?: Record<string, string>;
 }) {
-  const definitions = fields(operation, {});
+  const definitions = fields(operation, {}).filter(
+    (field) => field.section !== 'query' || !Object.hasOwn(fixedQuery ?? {}, field.name),
+  );
   const autoQuery = useRef(initialFilters(operation.operationId));
   const initialPath = Object.fromEntries(
     definitions
@@ -503,7 +507,7 @@ function ReadPanel({
     query: Record<string, string | number | boolean>;
   } | null>(null);
   const path = submitted?.params ?? initialPath;
-  const query = submitted?.query ?? autoQuery.current;
+  const query = { ...(submitted?.query ?? autoQuery.current), ...fixedQuery };
   const canRead = !roleReadsRequireContext(definitions, path, query);
   const result = useEndpoint<unknown>(
     canRead ? operation.operationId : null,
@@ -748,11 +752,13 @@ export function OperationWorkspace({
   detailPage,
   extra,
   onPick,
+  fixedQuery,
 }: {
   section: Section;
   detailPage?: RecordPage;
   extra?: ReactNode;
   onPick?: (operation: string, row: Details) => void;
+  fixedQuery?: Record<string, string>;
 }) {
   const reads = section.reads.filter((id) => operations[id]);
   const detailId = detailPage?.operation;
@@ -812,6 +818,7 @@ export function OperationWorkspace({
             operation={operation}
             context={context}
             revision={revision}
+            {...(fixedQuery ? { fixedQuery } : {})}
             {...(operation.operationId === detailId ? { onRecord: setOpenedRecord } : {})}
             onPick={(row) => {
               setSelection(rowContext(row, operation.operationId, scopedParams));

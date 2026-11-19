@@ -9,11 +9,18 @@ import { display, LoadState, Status } from './Operations.js';
 import { useEndpoint } from './hooks.js';
 import { homes, record, rowsOf, safeMeet } from './contract.js';
 import { recordUrl } from './recordRoutes.js';
+import { subjectSkills, subjectUrl, withSubject } from './studentSubjectRoutes.js';
 import type { Details, Role } from './contract.js';
 
 type Schemas = components['schemas'];
 type Navigate = (url: string) => void;
-type HomeProps = { role: Role; name: string; zone: string; navigate: Navigate };
+type HomeProps = {
+  role: Role;
+  name: string;
+  zone: string;
+  navigate: Navigate;
+  noticePreview?: ReactNode;
+};
 type Tone = 'violet' | 'mint' | 'peach' | 'blue' | 'rose';
 type Summary = { title: string; value: unknown; icon: IconName; tone: Tone; to?: string };
 const zeroDay = 86400_000;
@@ -305,7 +312,7 @@ function MiniCalendar({
   );
 }
 
-function StudentHome({ name, zone, navigate }: HomeProps) {
+function StudentHome({ name, zone, navigate, noticePreview }: HomeProps) {
   const result = useEndpoint<Schemas['DashboardResponseDto']>('getStudentDashboard');
   const upcoming = useEndpoint<Schemas['LessonsResponseDto']>('getStudentUpcomingLessons');
   const homework = useEndpoint<Schemas['HomeworkResponseDto']>(
@@ -313,7 +320,7 @@ function StudentHome({ name, zone, navigate }: HomeProps) {
     {},
     { page: 1, pageSize: 3 },
   );
-  const subjects = useEndpoint<unknown>('getStudentSubjects');
+  const subjects = useEndpoint<Schemas['StudentSubjectsResponseDto']>('getStudentSubjects');
   const lesson = result.data?.nextLesson;
   const meet = lesson?.canJoin ? safeMeet(lesson.meetLink) : null;
   const rows = rowsOf(upcoming.data);
@@ -446,7 +453,7 @@ function StudentHome({ name, zone, navigate }: HomeProps) {
           <Panel
             title="Мои предметы"
             action={
-              <SectionLink to="/student/subjects" navigate={navigate}>
+              <SectionLink to={subjectSkills} navigate={navigate}>
                 Карта навыков
               </SectionLink>
             }
@@ -457,17 +464,17 @@ function StudentHome({ name, zone, navigate }: HomeProps) {
                 refreshing={subjects.pending}
                 retry={subjects.refresh}
               />
-            ) : rowsOf(subjects.data).length ? (
+            ) : subjects.data?.items.length ? (
               <div className="cab-subject-grid">
-                {rowsOf(subjects.data).map((row, i) => (
+                {subjects.data.items.map((row, i) => (
                   <CabinLink
-                    to="/student/subjects"
+                    to={subjectUrl(row.subjectId)}
                     navigate={navigate}
-                    key={String(row.subjectId ?? i)}
+                    key={row.subjectId}
                     className={`cab-subject-tile cab-tone-${(['violet', 'mint', 'peach', 'blue'] as const)[i % 4]}`}
                   >
-                    <SubjectIcon subject={textValue(row.subjectName)} />
-                    <strong>{display(row.subjectName)}</strong>
+                    <SubjectIcon subject={row.subjectName} />
+                    <strong>{row.subjectName}</strong>
                     <Status value={row.displayStatus} />
                   </CabinLink>
                 ))}
@@ -524,6 +531,7 @@ function StudentHome({ name, zone, navigate }: HomeProps) {
               </SectionLink>
             </div>
           )}
+          {noticePreview}
         </aside>
       </div>
     </>
@@ -737,7 +745,17 @@ export function Home(props: HomeProps) {
   if (props.role === 'STUDENT') return <StudentHome {...props} />;
   return <StaffHome {...props} role={props.role} />;
 }
-export function SchedulePreview({ role, zone }: { role: Role; zone: string }) {
+export function SchedulePreview({
+  role,
+  zone,
+  navigate,
+  subjectId,
+}: {
+  role: Role;
+  zone: string;
+  navigate: Navigate;
+  subjectId?: string;
+}) {
   const [now] = useState(() => new Date());
   const [range, setRange] = useState(0);
   const pivot = new Date(now.getTime() + range * 7 * zeroDay);
@@ -754,7 +772,7 @@ export function SchedulePreview({ role, zone }: { role: Role; zone: string }) {
       ? { from: from.toISOString(), to: to.toISOString() }
       : role === 'TEACHER'
         ? { date: dateLabel(pivot, zone) }
-        : { period: 'week', pageSize: 100 },
+        : { period: 'week', pageSize: 100, ...(subjectId ? { subjectId } : {}) },
   );
   const days =
     role === 'TEACHER'
@@ -830,6 +848,19 @@ export function SchedulePreview({ role, zone }: { role: Role; zone: string }) {
           days={days}
           horizon={read.data ? { from: from.toISOString(), to: to.toISOString() } : null}
           events={events}
+          {...(role === 'STUDENT'
+            ? {
+                renderEvent: (event: CalendarEvent) => (
+                  <CabinLink
+                    to={withSubject('/student/lessons/' + encodeURIComponent(event.id), subjectId)}
+                    navigate={navigate}
+                    className="cab-inline-link"
+                  >
+                    {event.title}
+                  </CabinLink>
+                ),
+              }
+            : {})}
         />
       )}
     </Panel>

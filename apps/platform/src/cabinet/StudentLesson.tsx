@@ -5,8 +5,9 @@ import { CabinetError, request, safeMeet } from './contract.js';
 import { CabinLink } from './Home.js';
 import { useEndpoint } from './hooks.js';
 import { StudentLessonRequest } from './StudentLessonRequest.js';
+import { studentPasswordPath, useAccountCopy } from './studentAccountCopy.js';
+import { withSubject } from './studentSubjectRoutes.js';
 import { studyStatus, useStudy } from './studentStudyCopy.js';
-import type { StudyText } from './studentStudyCopy.js';
 
 type Schemas = components['schemas'];
 
@@ -34,7 +35,7 @@ function Info({ text, retry, error }: { text: string; retry?: () => void; error?
   );
 }
 
-function MaterialAction({
+export function MaterialAction({
   file,
   onAccessChange,
 }: {
@@ -125,20 +126,19 @@ function MaterialAction({
   );
 }
 
-function Pager({
+export function StudyPager({
   page,
   total,
   pageSize,
   change,
-  text,
 }: {
   page: number;
   total: number;
   pageSize: number;
   change: (page: number) => void;
-  text: StudyText;
 }) {
-  if (total <= pageSize) return null;
+  const { text } = useStudy();
+  if (total <= pageSize && page === 1) return null;
   return (
     <div className="cab-form-actions">
       <button
@@ -212,12 +212,11 @@ function LessonResources({
                 </li>
               ))}
             </ul>
-            <Pager
+            <StudyPager
               page={homework.data.page}
               pageSize={homework.data.pageSize}
               total={homework.data.total}
               change={setHomeworkPage}
-              text={text}
             />
           </>
         ) : (
@@ -245,12 +244,11 @@ function LessonResources({
                 </li>
               ))}
             </ul>
-            <Pager
+            <StudyPager
               page={materials.data.page}
               pageSize={materials.data.pageSize}
               total={materials.data.total}
               change={setMaterialsPage}
-              text={text}
             />
           </>
         ) : (
@@ -263,12 +261,14 @@ function LessonResources({
 
 export function StudentLessonCard({
   id,
+  subjectId,
   accountId,
   zone,
   navigate,
   refreshAccess,
 }: {
   id: string;
+  subjectId?: string;
   accountId: string;
   zone: string;
   navigate: (url: string) => void;
@@ -302,7 +302,14 @@ export function StudentLessonCard({
       <div className="cab-page-title">
         <h1>{text('details')}</h1>
       </div>
-      <CabinLink to="/student/lessons" navigate={navigate} className="cab-inline-link">
+      <CabinLink
+        to={withSubject(
+          '/student/lessons',
+          lesson && lesson.subjectId !== subjectId ? null : subjectId,
+        )}
+        navigate={navigate}
+        className="cab-inline-link"
+      >
         {text('back')}
       </CabinLink>
       {result.pending ? (
@@ -409,13 +416,7 @@ export function StudentLessonCard({
   );
 }
 
-export function StudentSuspended({
-  contacts,
-  refresh,
-}: {
-  contacts?: Schemas['ManagerContactsDto'];
-  refresh: () => void;
-}) {
+export function StudentManagerContacts({ contacts }: { contacts?: Schemas['ManagerContactsDto'] }) {
   const { text } = useStudy();
   const phone = contacts?.phoneE164;
   const candidates = [
@@ -427,9 +428,7 @@ export function StudentSuspended({
   );
   const validPhone = phone && /^\+[1-9]\d{6,14}$/.test(phone);
   return (
-    <section className="cab-card cab-panel cab-detail cab-password-gate">
-      <h1>{text('suspended')}</h1>
-      <p>{text('suspendedHint')}</p>
+    <div className="cab-lesson-stack">
       <h2>{text('managerContacts')}</h2>
       {contacts?.displayName && <p>{contacts.displayName}</p>}
       {validPhone || links.length ? (
@@ -455,9 +454,38 @@ export function StudentSuspended({
       ) : (
         <p className="cab-detail-subtitle">{text('noContacts')}</p>
       )}
-      <button type="button" className="cab-button cab-secondary" onClick={refresh}>
-        {text('refresh')}
-      </button>
+    </div>
+  );
+}
+
+export function StudentSuspended({
+  contacts,
+  refresh,
+  navigate,
+}: {
+  contacts?: Schemas['ManagerContactsDto'];
+  refresh: () => void;
+  navigate: (url: string) => void;
+}) {
+  const { text } = useStudy();
+  const { text: accountText } = useAccountCopy();
+  return (
+    <section className="cab-card cab-panel cab-detail cab-password-gate">
+      <h1>{text('suspended')}</h1>
+      <p>{text('suspendedHint')}</p>
+      <StudentManagerContacts {...(contacts ? { contacts } : {})} />
+      <div className="cab-action-grid">
+        <button type="button" className="cab-button cab-secondary" onClick={refresh}>
+          {text('refresh')}
+        </button>
+        <CabinLink
+          to={studentPasswordPath}
+          navigate={navigate}
+          className="cab-button cab-secondary"
+        >
+          {accountText('changePassword')}
+        </CabinLink>
+      </div>
     </section>
   );
 }
