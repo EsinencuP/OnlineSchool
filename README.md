@@ -1,27 +1,37 @@
-# Онлайн-академия
+# 2K Academy
 
-[Открыть кабинеты K8K](https://onlineschool-xi.vercel.app/account?ui.k8k=1) · [Индекс проекта](PUBLIC_INDEX.md) · [Каталоги файлов](PUBLIC_FILES.json)
+[Открыть кабинеты 2K Academy](https://onlineschool-xi.vercel.app/account) · [Индекс проекта](PUBLIC_INDEX.md) · [Каталоги файлов](PUBLIC_FILES.json)
 
-## Состояние проекта на 18 ноября 2026
+## Состояние проекта на 19 ноября 2026
 
 - **GitHub `main`.** В исходниках доступны кабинеты ученика и преподавателя, очередь решений и кадровые операции руководителя, а также справочники, журнал контактов и запросы руководителю в CRM менеджера. Контракты API опубликованы в репозитории. [Инкремент бэкенда](https://github.com/EsinencuP/OnlineSchool/commit/e24df4227798ef6c42111d200ecc7642fc78ef07) · [OpenAPI](packages/api-contracts/openapi/openapi.json)
-- **Рабочая версия Vercel.** Публичный адрес обслуживает сборка `9fac950`. Сборка исходников `163f3b8` завершилась ошибкой Prisma `P3009` из-за незавершённой миграции `20261116150000_dir04_staff_lifecycle`. [Исходники рабочей сборки](https://github.com/EsinencuP/OnlineSchool/commit/9fac9500079b02bb3adabe264c23dbb9da3445c1) · [Исходники проверенной сборки main](https://github.com/EsinencuP/OnlineSchool/commit/163f3b82025bbbc5446327452a195252074f8b3d)
-- **Результаты QA.** При проверке 18 ноября API ответил `200`, worker — `503`. В Neon применены первые 44 миграции. Два расчётных периода закончились, последний — 2 ноября в 00:00 UTC. Текущего и будущих открытых периодов на момент проверки не было.
-- **Приёмка MVP.** Открыты восстановление цепочки миграций и работы worker, сквозная регрессия PostgreSQL, проверка Google Meet API с реальным провайдером и испытание восстановления из резервной копии. FND-GATE остаётся открытым. [Статус проверок](tests/FOUNDATION_STATUS.json) · [Регламент QA](PHASE0_CHECKS.md) · [Развёртывание](infra/vercel/README.md)
+- **Рабочая версия Vercel.** На основном адресе развёрнут коммит `d745b49` с новым интерфейсом 2K Academy, включая разделы преподавателя «Ученики», «Домашние задания» и «Журнал и отчёты». [Коммит выпуска](https://github.com/EsinencuP/OnlineSchool/commit/d745b49f03b1555b2007ed4cc618e272f2bf7d0c)
+- **Результаты проверки выпуска.** Все пять маршрутов кабинетов и API ответили `200`, проверка worker — `503`. В Neon применены все 56 миграций. При проверке 18 ноября открытых расчётных периодов не было.
+- **Приёмка MVP.** Открыты восстановление работы worker, сквозная регрессия PostgreSQL, проверка Google Meet API с реальным провайдером и испытание восстановления из резервной копии. FND-GATE остаётся открытым. [Статус проверок](tests/FOUNDATION_STATUS.json) · [Регламент QA](PHASE0_CHECKS.md) · [Развёртывание](infra/vercel/README.md)
 
-Параметр `ui.k8k=1` открывает интерфейс K8K и сохраняется в текущей вкладке.
 Для перехода между ролями после входа используйте меню аккаунта и пункт «Сменить пользователя».
 
-[Ученик](https://onlineschool-xi.vercel.app/student?ui.k8k=1) ·
-[Преподаватель](https://onlineschool-xi.vercel.app/teacher?ui.k8k=1) ·
-[Менеджер](https://onlineschool-xi.vercel.app/manager?ui.k8k=1) ·
-[Руководитель](https://onlineschool-xi.vercel.app/director?ui.k8k=1) ·
-[Техоператор](https://onlineschool-xi.vercel.app/operator?ui.k8k=1)
+[Ученик](https://onlineschool-xi.vercel.app/student) ·
+[Преподаватель](https://onlineschool-xi.vercel.app/teacher) ·
+[Менеджер](https://onlineschool-xi.vercel.app/manager) ·
+[Руководитель](https://onlineschool-xi.vercel.app/director) ·
+[Техоператор](https://onlineschool-xi.vercel.app/operator)
 
 ## Вход в демонстрационную школу
 
-Откройте [общую форму входа](https://onlineschool-xi.vercel.app/account) и используйте выданные данные демо-аккаунта. После входа платформа откроет кабинет выбранной роли.
-Для знакомства с учебными и CRM-сценариями предусмотрены демонстрационные аккаунты ученика, преподавателя, менеджера, руководителя и техоператора.
+Откройте [форму входа на Vercel](https://onlineschool-xi.vercel.app/account). Выберите логин по роли и используйте пароль, выданный вам владельцем проекта по приватному каналу.
+
+| Роль | Демо-аккаунт | Логин |
+| --- | --- | --- |
+| Ученик | Анна Волкова | `anna.demo@onlineschool.test` |
+| Ученик | Максим Русу | `maksim.demo@onlineschool.test` |
+| Ученик | София Ионеску | `sofia.demo@onlineschool.test` |
+| Ученик | Даниил Марин | `daniil.demo@onlineschool.test` |
+| Преподаватель | Андрей Мельник | `andrei.demo@onlineschool.test` |
+| Преподаватель | Елена Попеску | `elena.demo@onlineschool.test` |
+| Менеджер | Тамара | `tamara.demo@onlineschool.test` |
+| Руководитель | Паша | `pasha.demo@onlineschool.test` |
+| Техоператор | Технический оператор | `qa.tech@onlineschool.test` |
 
 ## Смена пользователя внутри кабинета
 
