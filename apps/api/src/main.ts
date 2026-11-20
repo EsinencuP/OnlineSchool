@@ -1,8 +1,41 @@
 import 'reflect-metadata';
+import { readFile } from 'node:fs/promises';
+import { join, resolve } from 'node:path';
 import { Logger } from '@nestjs/common';
+import type { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
+import type { HttpRequest, HttpResponse } from './core/http.js';
 import { setupSwagger } from './openapi/swagger.js';
+
+async function serveCabinets(app: INestApplication, directory: string) {
+  const root = resolve(directory);
+  const index = await readFile(join(root, 'index.html'));
+  app.getHttpAdapter().useStaticAssets!(join(root, 'assets'), {
+    prefix: '/assets/',
+    index: false,
+    maxAge: '1y',
+    immutable: true,
+  });
+  app.use((req: HttpRequest, res: HttpResponse, next: () => void) => {
+    const path = req.url?.split('?')[0] ?? '';
+    if (
+      (req.method !== 'GET' && req.method !== 'HEAD') ||
+      !/^\/(?:$|(?:account|student|teacher|manager|director|operator)(?:\/|$))/.test(path)
+    ) {
+      next();
+      return;
+    }
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Content-Length': index.length,
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy': 'same-origin',
+    });
+    res.end(req.method === 'HEAD' ? undefined : index);
+  });
+}
 
 async function bootstrap(): Promise<void> {
   const port = Number(process.env.PORT ?? 3000);
@@ -16,6 +49,7 @@ async function bootstrap(): Promise<void> {
   setupSwagger(app);
   app.enableShutdownHooks();
   try {
+    if (process.env.PLATFORM_DIST_DIR) await serveCabinets(app, process.env.PLATFORM_DIST_DIR);
     await app.listen(port, process.env.HOST ?? '127.0.0.1');
   } catch {
     await app.close();

@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags, ApiCookieAuth, ApiParam } from '@ne
 import { Authenticated, Public, RequireRole } from '../../core/rbac/decorators.js';
 import { DatabaseService } from '../../core/database/database.module.js';
 import type { HttpRequest, HttpResponse } from '../../core/http.js';
-import { demoAccounts, demoSwitchAllowed } from '../identity/demo-accounts.js';
+import { availableDemoAccounts, demoSwitchAllowed } from '../identity/demo-accounts.js';
 import {
   PlatformAccountsDto,
   PlatformWorkspaceDto,
@@ -136,16 +136,23 @@ export class PlatformController {
     @Res({ passthrough: true }) res: HttpResponse,
   ): Promise<PlatformAccountsDto> {
     res.setHeader('Cache-Control', 'no-store');
-    const account = req.account
-      ? await this.db.client.authAccount.findUnique({
-          where: { id: req.account.accountId },
-          select: { login_id: true },
-        })
-      : null;
+    const available = await availableDemoAccounts(this.db.client);
+    const current = available.find(({ accountId }) => accountId === req.account?.accountId);
+    const legacy =
+      !current && req.account && available.length
+        ? await this.db.client.authAccount.findUnique({
+            where: { id: req.account.accountId },
+            select: { login_id: true },
+          })
+        : null;
+    const canSwitch = demoSwitchAllowed(
+      req.account,
+      current?.choice.login ?? legacy?.login_id ?? '',
+    );
     return {
-      enabled: demoSwitchAllowed(req.account, account?.login_id ?? ''),
-      currentKey: demoAccounts.find((a) => a.login === account?.login_id)?.key ?? null,
-      items: process.env.PLATFORM_DEMO_SWITCHING === 'true' ? demoAccounts : [],
+      enabled: canSwitch && available.some(({ accountId }) => accountId !== req.account?.accountId),
+      currentKey: current?.choice.key ?? null,
+      items: available.map(({ choice }) => choice),
     };
   }
 

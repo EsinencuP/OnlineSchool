@@ -9,6 +9,8 @@ CREATE ROLE app_migrate LOGIN PASSWORD :'migrate_password' NOSUPERUSER NOCREATED
 CREATE ROLE app_runtime LOGIN PASSWORD :'runtime_password' INHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
 GRANT online_school_runtime TO app_runtime;
 ALTER DATABASE :"database_name" OWNER TO app_migrate;
+-- Prisma date values use UTC at the database boundary. School calendar helpers apply local time.
+ALTER DATABASE :"database_name" SET TimeZone TO 'UTC';
 REVOKE CREATE ON SCHEMA public FROM PUBLIC;
 GRANT USAGE,CREATE ON SCHEMA public TO app_migrate;
 GRANT USAGE ON SCHEMA public TO online_school_runtime;

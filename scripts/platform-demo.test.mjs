@@ -1,7 +1,40 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { accounts, demoSetupInput, demoId, marker } from './platform-demo-plan.mjs';
+import {
+  accounts,
+  demoSetupInput,
+  demoId,
+  marker,
+  railwayTestDatabase,
+} from './platform-demo-plan.mjs';
 import { provisionBase, provisionPaid } from './provision-platform-demo.mjs';
+
+test('Railway demo migrations are restricted to the isolated test database and separate roles', () => {
+  const target = {
+    APP_ENV: 'qa',
+    RAILWAY_ENVIRONMENT_NAME: 'test',
+    RAILWAY_PROJECT_ID: 'fixture',
+    DIRECT_URL:
+      'postgresql://app_migrate:fixture@postgres.railway.internal:5432/online_school_qa_railway',
+    DATABASE_URL:
+      'postgresql://app_runtime:fixture@postgres.railway.internal:5432/online_school_qa_railway',
+  };
+  assert.equal(railwayTestDatabase(target), true);
+  for (const change of [
+    { RAILWAY_ENVIRONMENT_NAME: 'production' },
+    { APP_ENV: 'production' },
+    { VERCEL_ENV: 'production' },
+    { DATABASE_URL: target.DIRECT_URL },
+    {
+      DIRECT_URL: target.DIRECT_URL.replace(
+        'postgres.railway.internal',
+        'postgres.example.invalid',
+      ),
+    },
+    { DIRECT_URL: target.DIRECT_URL.replace('online_school_qa_railway', 'online_school') },
+  ])
+    assert.equal(railwayTestDatabase({ ...target, ...change }), false);
+});
 
 const now = Date.UTC(2026, 10, 1, 16);
 const rows = accounts.map((a) => ({

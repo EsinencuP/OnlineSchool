@@ -85,6 +85,29 @@ type AccountError = 'account.switchFailed' | 'account.logoutFailed';
 function unknownOutcome(status: number) {
   return status === 0 || status >= 500;
 }
+export async function switchAccount(key: string): Promise<'retired' | 'rejected'> {
+  const lease = sessionSignal();
+  if (lease.aborted) return 'retired';
+  const result = await mutation((options) =>
+    switchDemoUser({ key: key as Parameters<typeof switchDemoUser>[0]['key'] }, options),
+  );
+  if (lease.aborted) return 'retired';
+  if (result.ok && Object.values(homes).includes(result.value?.home)) {
+    leaveSession(result.value.home);
+  } else if (!result.ok && result.error.status === 401) {
+    leaveSession('/account');
+  } else if (
+    result.ok ||
+    unknownOutcome(result.error.status) ||
+    result.error.code === 'INVALID_RESPONSE'
+  ) {
+    verifySessionOutcome();
+  } else {
+    return 'rejected';
+  }
+  return 'retired';
+}
+
 async function logoutAccount(): Promise<AccountLogoutOutcome> {
   const result = await mutation((o) => deleteSession({}, o));
   if (result.ok || result.error.status === 401) return 'ended';
@@ -143,24 +166,11 @@ export function AccountMenu({
     };
   }, []);
   async function change(key: string) {
-    const lease = sessionSignal();
-    if (inFlight.current || lease.aborted) return;
+    if (inFlight.current) return;
     inFlight.current = true;
     setPending('switch');
     setError(null);
-    const result = await mutation((o) =>
-      switchDemoUser({ key: key as Parameters<typeof switchDemoUser>[0]['key'] }, o),
-    );
-    if (lease.aborted) return;
-    if (result.ok && Object.values(homes).includes(result.value.home))
-      return leaveSession(result.value.home);
-    if (!result.ok && result.error.status === 401) return leaveSession('/account');
-    if (
-      result.ok ||
-      unknownOutcome(result.error.status) ||
-      result.error.code === 'INVALID_RESPONSE'
-    )
-      return verifySessionOutcome();
+    if ((await switchAccount(key)) === 'retired') return;
     inFlight.current = false;
     setError('account.switchFailed');
     setPending(null);

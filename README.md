@@ -116,15 +116,53 @@ pnpm build
 pnpm --filter @online-school/api start
 # В отдельных терминалах:
 pnpm --filter @online-school/worker start
-pnpm --filter @online-school/qa-shell dev
+pnpm --filter @online-school/platform dev
 ```
 
-API по умолчанию слушает `http://127.0.0.1:3000`, QA-оболочка —
+API по умолчанию слушает `http://127.0.0.1:3000`, платформа —
 `http://127.0.0.1:5173`. Vite перенаправляет `/api/*` в локальный backend.
 `GET /health` проверяет только жизнь HTTP-процесса. Он не подтверждает доступность
 БД или готовность релиза. Worker обрабатывает PostgreSQL outbox и reconciliation,
 при остановке завершает текущую обработку и освобождает таймеры/подключения.
 [Доставка, восстановление и эксплуатация TASK-11](apps/worker/WORKER.md).
+
+### Локальный демостенд
+
+Подготовьте отдельную PostgreSQL 18 на loopback с именем
+`online_school_qa_demo` или `online_school_qa_demo_utc` и часовым поясом PostgreSQL `UTC`.
+В локальном окружении задайте `APP_ENV=qa`,
+`DIRECT_URL` для миграций, `DATABASE_URL` для API и worker,
+`CSRF_SIGNING_SECRET` и уникальный тестовый `PLATFORM_LOCAL_DEMO_PASSWORD`
+длиной от 16 символов. Используйте отдельные роли миграций и приложения
+из [настройки PostgreSQL](infra/postgres/00-roles.sql).
+
+```sh
+pnpm --filter @online-school/api build
+pnpm --filter @online-school/db db:deploy
+node packages/db/prisma/seed.mjs
+node scripts/provision-platform-demo.mjs --local
+```
+
+Для API включите `QA_PASSWORD_ONLY_LOGIN=true`, `PLATFORM_DEMO_SWITCHING=true`
+и задайте `QA_PASSWORD_ONLY_ACCOUNT_IDS` значением из вывода seed. Запустите API
+на порту 3000, worker и фронтенд платформы в разных терминалах.
+
+```sh
+pnpm --filter @online-school/api start
+pnpm --filter @online-school/worker start
+pnpm --filter @online-school/platform dev
+```
+
+Откройте [локальный вход](http://localhost:5173/account). Используйте любой
+логин из таблицы демо-аккаунтов и локальный тестовый пароль. Меню аккаунта
+позволяет перейти в остальные кабинеты. База содержит четыре оплаченных
+абонемента с 22 правами на уроки, 12 записей в расписании, домашние задания
+с двумя ответами и одной проверкой, заявку CRM и задачи. Тестовые платежи
+помечены `OWNER-DEMO-NO-REAL-MONEY`.
+Повторный seed сохраняет созданные записи и пароль.
+
+Облачный вариант с той же синтетической школой описан в
+[инструкции для Railway](infra/railway/README.md).
 
 Для работы над API/worker: запустите `pnpm --filter @online-school/api watch`
 и `pnpm --filter @online-school/api dev` в разных терминалах; аналогично для worker.

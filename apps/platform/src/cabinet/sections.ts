@@ -1,5 +1,6 @@
 import type { IconName } from '@online-school/ui';
 import type { Role } from './contract.js';
+import { actionTitle } from './actionCopy.js';
 
 export type Section = {
   id: string;
@@ -387,80 +388,6 @@ export const profileOperation: Record<Role, string | null> = {
   TECH_OPERATOR: 'getStaffActorContext',
 };
 
-const names: Record<string, string> = {
-  getStudentLessons: 'Расписание',
-  getStudentUpcomingLessons: 'Ближайшие уроки',
-  getStudentLessonHistory: 'История занятий',
-  getStudentLesson: 'Карточка урока',
-  getStudentLessonRequestResult: 'Результат запроса',
-  requestStudentLessonReschedule: 'Запросить перенос',
-  disputeStudentLessonDeduction: 'Оспорить списание',
-  getStudentHomework: 'Все задания',
-  getStudentHomeworkDetail: 'Карточка задания',
-  saveStudentHomeworkDraft: 'Сохранить черновик',
-  submitStudentHomework: 'Сдать задание',
-  getStudentSubjects: 'Мои предметы',
-  getStudentSkillMaps: 'Карта навыков',
-  getStudentSkillSnapshots: 'История прогресса',
-  getStudentSkillAudit: 'Изменения навыков',
-  getStudentReports: 'Опубликованные отчёты',
-  requestStudentEducationPdf: 'Экспорт в PDF',
-  markAllStudentNotificationsRead: 'Прочитать все',
-  getStudentSubscriptionLedger: 'История уроков и списаний',
-  getStudentSubscriptionPayments: 'Подтверждённые оплаты',
-  getTeacherToday: 'Уроки на день',
-  getTeacherLesson: 'Карточка урока',
-  startLesson: 'Начать урок',
-  reportLessonOutcome: 'Записать итог урока',
-  getTeacherEnrollments: 'Мои ученики',
-  getTeacherStudentOverview: 'Карточка ученика',
-  issueTeacherHomework: 'Выдать задание',
-  reviewTeacherHomework: 'Проверить задание',
-  getTeacherHomework: 'Выданные задания',
-  getTeacherMeetConnection: 'Подключение Google Meet',
-  getTeacherPayrollStatement: 'Моя ведомость',
-  listManagerStudents: 'Все ученики',
-  getManagerStudentCard: 'Карточка ученика',
-  createManagerStudent: 'Добавить ученика',
-  listManagerLeads: 'Воронка заявок',
-  createManagerLead: 'Новая заявка',
-  listManagerSchedule: 'Расписание школы',
-  listManagerTasks: 'Очередь задач',
-  getManagerTask: 'Карточка задачи',
-  claimManagerTask: 'Взять в работу',
-  listManagerPayments: 'Платежи ученика',
-  createManagerPayment: 'Зарегистрировать поступление',
-  listManagerSubscriptions: 'Абонементы ученика',
-  listManagerTeachers: 'Справочник преподавателей',
-  listManagerRequests: 'Запросы',
-  listManagerContacts: 'История контактов',
-  getDirectorDecisions: 'Очередь решений',
-  getDirectorDecision: 'Карточка решения',
-  getDirectorDecisionSummary: 'Сводка решений',
-  listDirectorEscalations: 'Срочные задачи',
-  listDirectorStaff: 'Сотрудники',
-  listDirectorHandovers: 'История передач',
-  getDirectorPayrollSummary: 'Сводка начислений',
-  getDirectorUnresolvedFinance: 'Открытые вопросы',
-  listDirectorPeriods: 'Расчётные периоды',
-  createDirectorPeriod: 'Открыть период',
-  closeDirectorPeriod: 'Закрыть период',
-  listDirectorRefundCases: 'Заявки на возврат',
-  listDirectorAllocationCorrections: 'Корректировки распределения',
-  listDirectorSaleConditions: 'Условия продажи',
-  publishDirectorSaleCondition: 'Опубликовать условия',
-  getDirectorMeetInventory: 'Состояние Google Meet',
-  getComponentStatus: 'Состояние компонентов',
-  getQueueHealth: 'Состояние очередей',
-  replayAuditOutboxEvent: 'Повторить обработку',
-  getStudentMe: 'Профиль ученика',
-  getStudentMaterials: 'Доступные материалы',
-  getStudentNotifications: 'Все уведомления',
-  getTeacherNotifications: 'Все уведомления',
-  getTeacherProfile: 'Профиль преподавателя',
-  getDirectorMe: 'Профиль руководителя',
-  getStaffActorContext: 'Полномочия сессии',
-};
 export function friendly(value: string) {
   return value
     .replace(/([a-z\d])([A-Z])/g, '$1 $2')
@@ -468,5 +395,5 @@ export function friendly(value: string) {
     .replace(/^./, (letter) => letter.toUpperCase());
 }
 export function operationName(id: string) {
-  return names[id] ?? friendly(id);
+  return actionTitle(id);
 }

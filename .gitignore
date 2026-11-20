@@ -3,6 +3,16 @@ dist/
 dist-tools/
 .identity-ops/
 .codex/
+!/.codex/
+/.codex/*
+!/.codex/config.toml
+!/.codex/agents/
+/.codex/agents/*
+!/.codex/agents/qa_engineer.toml
+!/.codex/agents/student_agent.toml
+!/.codex/agents/teacher_agent.toml
+!/.codex/agents/manager_agent.toml
+!/.codex/agents/director_agent.toml
 .playwright-mcp/
 .vercel/
 .neon

@@ -1,0 +1,6 @@
+interface:
+  display_name: "K8K QA Status"
+  short_description: "История циклов, дефекты и принятые риски"
+  default_prompt: "Используй $qa-status для запуска команды K8K QA."
+policy:
+  allow_implicit_invocation: false

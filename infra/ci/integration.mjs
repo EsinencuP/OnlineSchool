@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { randomBytes } from 'node:crypto';
 import { spawn } from 'node:child_process';
-import { readdir } from 'node:fs/promises';
+import { appendFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import pg from '../../packages/db/node_modules/pg/lib/index.js';
 
@@ -79,33 +79,35 @@ async function main() {
     await run(process.execPath, ['packages/db/prisma/seed.mjs'], {
       DIRECT_URL: connection(template),
     });
+    const apiTests = 'apps/api/test/integration';
+    const cabinetFiles = (await readdir(new URL(`../../${apiTests}/`, import.meta.url)))
+      .filter((file) =>
+        /^(?:(?:director|manager|teacher)(?:-[a-z-]+)?|student-cabinet)-http\.test\.mjs$/.test(
+          file,
+        ),
+      )
+      .sort();
     const specs = [
       ['db', 'online_school_test_db', 'packages/db/test/integration', 'TEST_DATABASE_URL'],
-      [
-        'core',
-        'online_school_test_api',
-        'apps/api/test/integration',
-        'TEST_DATABASE_URL',
-        'core-http.test.mjs',
-      ],
+      ['core', 'online_school_test_api', apiTests, 'TEST_DATABASE_URL', 'core-http.test.mjs'],
       [
         'identity',
         'online_school_test_identity',
-        'apps/api/test/integration',
+        apiTests,
         'IDENTITY_TEST_DATABASE_URL',
         'identity-http.test.mjs',
       ],
       [
         'finance',
         'online_school_test_finance',
-        'apps/api/test/integration',
+        apiTests,
         'FINANCE_TEST_DATABASE_URL',
         'finance-http.test.mjs',
       ],
       [
         'schedule',
         'online_school_test_schedule',
-        'apps/api/test/integration',
+        apiTests,
         'SCHEDULE_TEST_DATABASE_URL',
         'schedule-http.test.mjs',
       ],
@@ -115,7 +117,15 @@ async function main() {
         'apps/worker/test/integration',
         'WORKER_TEST_DATABASE_URL',
       ],
+      ...cabinetFiles.map((file, index) => [
+        file.replace('-http.test.mjs', ''),
+        `online_school_test_cabinet_${index}`,
+        apiTests,
+        'TEACHER_TEST_DATABASE_URL',
+        file,
+      ]),
     ];
+    const results = [];
     for (const [label, prefix, directory, variable, filename] of specs) {
       const name = `${prefix}_ci_${suffix}`;
       await admin.query(`CREATE DATABASE ${name} TEMPLATE ${template}`);
@@ -125,12 +135,32 @@ async function main() {
             .filter((f) => f.endsWith('.test.mjs'))
             .sort();
       console.log(`PostgreSQL 18 integration suite: ${label}`);
-      await run(
-        process.execPath,
-        ['--test', '--test-concurrency=1', ...files.map((f) => `${directory}/${f}`)],
-        { [variable]: connection(name) },
-      );
+      try {
+        await run(
+          process.execPath,
+          ['--test', '--test-concurrency=1', ...files.map((f) => `${directory}/${f}`)],
+          { [variable]: connection(name) },
+        );
+        results.push({ label, status: 'Passed' });
+      } catch (error) {
+        results.push({ label, status: 'Failed' });
+        console.error(`${label}: ${safe(error.message)}`);
+      }
     }
+    const summary = [
+      '### PostgreSQL 18 integration',
+      '',
+      'Applied migrations to an empty database and loaded the reference roles before cloning.',
+      '',
+      '| Suite | Result |',
+      '| --- | --- |',
+      ...results.map(({ label, status }) => `| ${label} | ${status} |`),
+      '',
+    ].join('\n');
+    if (process.env.GITHUB_STEP_SUMMARY)
+      await appendFile(process.env.GITHUB_STEP_SUMMARY, summary + '\n');
+    const failed = results.filter(({ status }) => status === 'Failed').map(({ label }) => label);
+    if (failed.length) throw new Error(`PostgreSQL 18 integration failed: ${failed.join(', ')}`);
   } finally {
     await admin.end();
   }

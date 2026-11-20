@@ -41,13 +41,24 @@ const actor = (key = 'anna', role = 'STUDENT') => ({
 function identityFixture() {
   const service = Object.create(IdentityService.prototype);
   const writes = [];
+  const target = {
+    id: demoAccountId('pasha'),
+    login_id: 'pasha.demo@onlineschool.test',
+    kind: 'STAFF',
+    role_assignments: [{ role: { code: 'DIRECTOR' } }],
+  };
+  const tx = {
+    $queryRaw: async () => [{ now: new Date() }],
+    authAccount: {
+      findUnique: async () => ({ login_id: 'anna.demo@onlineschool.test' }),
+      findMany: async ({ where }) =>
+        where.id.in.includes(target.id) && where.login_id.in.includes(target.login_id)
+          ? [target]
+          : [],
+    },
+  };
   service.actor = async () => actor();
-  service.account = async (_tx, id) =>
-    id === demoAccountId('anna')
-      ? { id, login_id: 'anna.demo@onlineschool.test', kind: 'STUDENT' }
-      : { id, login_id: 'pasha.demo@onlineschool.test', kind: 'STAFF' };
-  service.roles = async () => ['DIRECTOR'];
-  service.execute = async (_req, action, work) => ({ action, outcome: await work({}) });
+  service.execute = async (_req, action, work) => ({ action, outcome: await work(tx) });
   service.revoke = async (...args) => writes.push(['revoke', ...args.slice(1)]);
   service.sessions = {
     issue: async (_tx, id, mfa, recovery) => {
@@ -55,7 +66,7 @@ function identityFixture() {
       return { sessionId: 'new-session' };
     },
   };
-  return { service, writes };
+  return { service, writes, tx, target };
 }
 test('switch catalog uses exactly the provisioned demo identities and no passwords', () => {
   for (const a of accounts) {
@@ -104,7 +115,7 @@ test('switch revokes only the source session and issues target session with trut
   ]);
 });
 test('invalid source and disabled target fail before revocation or session issuance', async () => {
-  const { service, writes } = identityFixture();
+  const { service, writes, target, tx } = identityFixture();
   service.actor = async () => ({ ...actor(), recoveryOnly: true });
   await assert.rejects(
     () => service.switchDemo({ body: { key: 'pasha' } }),
@@ -112,19 +123,45 @@ test('invalid source and disabled target fail before revocation or session issua
   );
   assert.deepEqual(writes, []);
   service.actor = async () => actor();
-  service.roles = async () => ['MANAGER'];
+  target.role_assignments = [{ role: { code: 'MANAGER' } }];
   await assert.rejects(
     () => service.switchDemo({ body: { key: 'pasha' } }),
     /DEMO_ACCOUNT_UNAVAILABLE/,
   );
   assert.deepEqual(writes, []);
-  service.roles = async () => ['DIRECTOR'];
+  target.role_assignments = [{ role: { code: 'DIRECTOR' } }];
   process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = demoAccountId('anna');
   await assert.rejects(
     () => service.switchDemo({ body: { key: 'pasha' } }),
     /DEMO_ACCOUNT_UNAVAILABLE/,
   );
+  process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS = `${demoAccountId('anna')},${target.id}`;
+  tx.authAccount.findMany = async () => [];
+  await assert.rejects(
+    () => service.switchDemo({ body: { key: 'pasha' } }),
+    /DEMO_ACCOUNT_UNAVAILABLE/,
+  );
   assert.deepEqual(writes, []);
+});
+test('catalog reports only eligible database accounts and stays disabled for anonymous callers', async () => {
+  const { tx } = identityFixture();
+  const controller = new PlatformController({ client: tx });
+  const res = { setHeader() {} };
+  const anonymous = await controller.accounts({}, res);
+  assert.equal(anonymous.enabled, false);
+  assert.deepEqual(
+    anonymous.items.map((entry) => entry.key),
+    ['pasha'],
+  );
+  const authenticated = await controller.accounts({ account: actor() }, res);
+  assert.equal(authenticated.enabled, true);
+  assert.equal(authenticated.currentKey, null);
+  process.env.PLATFORM_DEMO_SWITCHING = 'false';
+  assert.deepEqual(await controller.accounts({ account: actor() }, res), {
+    enabled: false,
+    currentKey: null,
+    items: [],
+  });
 });
 test('arbitrary account IDs, roles and unlisted keys are never accepted as a switch target', async () => {
   const { service, writes } = identityFixture();

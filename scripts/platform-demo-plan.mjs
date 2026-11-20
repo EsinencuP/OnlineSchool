@@ -83,6 +83,36 @@ export function demoId(label) {
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`;
 }
 export const operation = (label) => demoId(`operation:${label}`);
+export function railwayTestDatabase(env) {
+  if (
+    env.APP_ENV !== 'qa' ||
+    env.RAILWAY_ENVIRONMENT_NAME !== 'test' ||
+    !env.RAILWAY_PROJECT_ID ||
+    env.VERCEL_ENV
+  )
+    return false;
+  try {
+    const direct = new URL(env.DIRECT_URL);
+    const runtime = new URL(env.DATABASE_URL);
+    return (
+      direct.protocol === 'postgresql:' &&
+      runtime.protocol === direct.protocol &&
+      direct.hostname.endsWith('.railway.internal') &&
+      direct.host === runtime.host &&
+      direct.pathname === '/online_school_qa_railway' &&
+      runtime.pathname === direct.pathname &&
+      direct.username === 'app_migrate' &&
+      runtime.username === 'app_runtime' &&
+      !direct.search &&
+      !runtime.search &&
+      !direct.hash &&
+      !runtime.hash
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function demoSetupInput(env, now = Date.now()) {
   const until = Number(env.PLATFORM_DEMO_SETUP_UNTIL);
   if (

@@ -1202,13 +1202,16 @@ try {
     if (role === 'MANAGER') {
       await page.getByRole('link', { name: /Связаться с семьёй/ }).click();
       await page.waitForURL(base + '/manager/tasks/' + taskId);
-      await page.getByText('Анна Мирова', { exact: true }).waitFor();
-      await page.getByText('Действия раздела', { exact: true }).click();
-      await page.getByRole('button', { name: 'Взять в работу' }).click();
+      await page.getByRole('definition').filter({ hasText: 'Анна Мирова' }).first().waitFor();
+      // Quick actions are always visible; no disclosure to open first.
+      await page.locator('.cab-quick-action', { hasText: 'Взять в работу' }).click();
       await page.getByLabel('Версия').waitFor();
       assert.equal(await page.getByLabel('Версия').inputValue(), '7');
-      await page.getByRole('button', { name: 'Подтвердить', exact: true }).click();
-      await page.getByText('Команда подтверждена сервером.').waitFor();
+      await page
+        .getByRole('dialog')
+        .getByRole('button', { name: 'Взять в работу', exact: true })
+        .click();
+      await page.getByText('Готово — изменения сохранены.').waitFor();
       assert.deepEqual(claim, { version: 7 });
       await finance.manager(page, base, screenshots ? output : null);
     }

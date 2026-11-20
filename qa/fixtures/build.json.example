@@ -1,0 +1,14 @@
+{
+  "environment": "qa",
+  "origin": "http://127.0.0.1:5173",
+  "commit": "REPLACE_WITH_FULL_GIT_COMMIT",
+  "version": "REPLACE_WITH_BUILD_ID",
+  "migration": "REPLACE_WITH_APPLIED_MIGRATION",
+  "database": "REPLACE_WITH_SYNTHETIC_DATABASE_LABEL",
+  "synthetic": true,
+  "externalEffects": "disabled",
+  "writes": "blocked",
+  "changes": [
+    "REPLACE_WITH_CHANGE_SUMMARY"
+  ]
+}

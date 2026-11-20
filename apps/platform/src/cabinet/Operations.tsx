@@ -12,92 +12,13 @@ import {
 } from './contract.js';
 import type { Details, Operation, Schema } from './contract.js';
 import { useEndpoint } from './hooks.js';
-import { friendly, operationName } from './sections.js';
+import { operationName } from './sections.js';
+import { actionHint, actionStyle, enumTitle, fieldTitle, t, variantTitle } from './actionCopy.js';
+import { PersonCard, personFrom } from './PersonCard.js';
 import type { RecordPage } from './recordRoutes.js';
 import type { Section } from './sections.js';
 
-const labels: Record<string, string> = {
-  id: 'Идентификатор',
-  studentId: 'Ученик',
-  teacherId: 'Преподаватель',
-  lessonId: 'Урок',
-  hwId: 'Домашнее задание',
-  taskId: 'Задача',
-  staffId: 'Сотрудник',
-  requestId: 'Запрос',
-  enrollmentId: 'Запись на предмет',
-  subjectId: 'Предмет',
-  periodId: 'Период',
-  amount: 'Сумма',
-  currency: 'Валюта',
-  reason: 'Причина',
-  note: 'Комментарий',
-  basis: 'Основание',
-  startsAt: 'Начало',
-  endsAt: 'Окончание',
-  from: 'С начала',
-  to: 'До',
-  date: 'Дата',
-  status: 'Статус',
-  kind: 'Тип',
-  search: 'Поиск',
-  currentPassword: 'Текущий пароль',
-  newPassword: 'Новый пароль',
-  email: 'Электронная почта',
-  title: 'Название',
-  version: 'Версия',
-  decision: 'Решение',
-  result: 'Результат',
-  displayName: 'Имя',
-  fullName: 'Полное имя',
-  durationMinutes: 'Длительность, мин',
-  createdAt: 'Создано',
-  updatedAt: 'Обновлено',
-  scheduledAt: 'Запланировано',
-  summary: 'Сводка',
-  subjectName: 'Предмет',
-  studentName: 'Ученик',
-  teacherName: 'Преподаватель',
-  generatedAt: 'Обновлено',
-  description: 'Описание',
-  totals: 'Итого',
-  contactName: 'Контакт',
-  validUntil: 'Действует до',
-  features: 'Возможности',
-  reviewedAt: 'Проверено',
-};
-const statuses: Record<string, string> = {
-  SCHEDULED: 'Запланирован',
-  CONDUCTED: 'Проведён',
-  CANCELLED: 'Отменён',
-  COMPLETED: 'Завершён',
-  STAR_PENDING: 'Ожидает продления',
-  DISPUTED: 'Оспаривается',
-  OPEN: 'Открыто',
-  IN_PROGRESS: 'В работе',
-  RESOLVED: 'Решено',
-  REJECTED: 'Отклонено',
-  PENDING: 'Ожидает',
-  NOT_SUBMITTED: 'Не сдано',
-  SUBMITTED: 'Сдано',
-  REVIEWED: 'Проверено',
-  NEEDS_REVISION: 'На доработке',
-  ACTIVE: 'Активно',
-  EXPIRED: 'Истёк',
-  FROZEN: 'Заморожен',
-  LIMITED: 'Ограничен',
-  CONFIRMED: 'Подтверждено',
-  APPROVED: 'Одобрено',
-  ok: 'Работает',
-  stale: 'Данные устарели',
-  stopped: 'Остановлен',
-  unknown: 'Неизвестно',
-  unavailable: 'Недоступен',
-  PAYMENT: 'Платёж',
-  DISTRIBUTION: 'Распределение',
-  TEMPORARY_ACCESS: 'Временный допуск',
-};
-export const fieldLabel = (key: string) => labels[key] ?? friendly(key);
+export const fieldLabel = (key: string) => fieldTitle(key);
 const invisible =
   /(^id$|Id$|Ids$|Token$|^csrf|^signature|^password|^secret|^nonce|^url$|^signedUrl$|^uploadUrl$|^downloadUrl$|^meetLink$)/i;
 const color = (value: string) =>
@@ -109,8 +30,9 @@ const color = (value: string) =>
         ? 'mint'
         : 'violet';
 
+const lowerStatuses = new Set(['ok', 'stale', 'stopped', 'unknown', 'unavailable']);
 export function statusLabel(value: string) {
-  return statuses[value] ?? value;
+  return /^[A-Z][A-Z0-9_]*$/.test(value) || lowerStatuses.has(value) ? enumTitle(value) : value;
 }
 export function Status({ value }: { value: unknown }) {
   if (typeof value !== 'string' || !value) return null;
@@ -128,13 +50,13 @@ export function LoadState({
   if (refreshing)
     return (
       <div className="cab-empty" role="status">
-        <span className="cab-spinner" /> Загружаем данные…
+        <span className="cab-spinner" /> {t('Загружаем данные…', 'Se încarcă datele…')}
       </div>
     );
   if (!error)
     return (
       <div className="cab-empty">
-        <Icon name="circle" size={18} /> Пока здесь нет записей
+        <Icon name="circle" size={18} /> {t('Пока здесь нет записей', 'Încă nu există înregistrări')}
       </div>
     );
   return (
@@ -143,7 +65,7 @@ export function LoadState({
       <span>{readableError(error)}</span>
       {retry && (
         <button className="cab-text-button" onClick={retry}>
-          Повторить
+          {t('Повторить', 'Reîncearcă')}
         </button>
       )}
     </div>
@@ -151,10 +73,10 @@ export function LoadState({
 }
 export function display(value: unknown): string {
   if (value === null || value === undefined || value === '') return '—';
-  if (typeof value === 'boolean') return value ? 'Да' : 'Нет';
+  if (typeof value === 'boolean') return value ? t('Да', 'Da') : t('Нет', 'Nu');
   if (typeof value === 'string') {
     if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(value) && Number.isFinite(Date.parse(value))) {
-      return new Intl.DateTimeFormat('ru', {
+      return new Intl.DateTimeFormat(t('ru', 'ro'), {
         day: 'numeric',
         month: 'short',
         hour: '2-digit',
@@ -163,7 +85,7 @@ export function display(value: unknown): string {
     }
     return statusLabel(value);
   }
-  if (typeof value === 'number') return new Intl.NumberFormat('ru').format(value);
+  if (typeof value === 'number') return new Intl.NumberFormat(t('ru', 'ro')).format(value);
   if (
     Array.isArray(value) &&
     value.every((item) => ['string', 'number', 'boolean'].includes(typeof item))
@@ -190,7 +112,7 @@ function itemTitle(row: Details) {
     ? display(row[key])
     : typeof row.status === 'string'
       ? statusLabel(row.status)
-      : 'Запись';
+      : t('Запись', 'Înregistrare');
 }
 function visibleEntries(data: Details) {
   return Object.entries(data).filter(([key, value]) => !invisible.test(key) && value !== undefined);
@@ -277,10 +199,12 @@ function ResponseBody({
   if (rawUrl)
     return (
       <a className="cab-button cab-primary" href={rawUrl} target="_blank" rel="noreferrer">
-        Открыть файл <Icon name="external" size={16} />
+        {t('Открыть файл', 'Deschide fișierul')} <Icon name="external" size={16} />
       </a>
     );
   if (!rows.length) {
+    const person = personFrom(sourceId, object);
+    if (person) return <PersonCard person={person} />;
     if (
       Object.keys(object).some((key) => Array.isArray(object[key])) &&
       visibleEntries(object).every(([, item]) => Array.isArray(item) && !item.length)
@@ -288,6 +212,7 @@ function ResponseBody({
       return <LoadState />;
     return <ObjectDetails data={object} />;
   }
+  const selectedPerson = selected ? personFrom(sourceId, selected) : null;
   return (
     <>
       <div className="cab-record-list">
@@ -330,12 +255,17 @@ function ResponseBody({
           );
         })}
       </div>
-      {selected && (
-        <div className="cab-row-inspector">
-          <h3>{itemTitle(selected)}</h3>
-          <ObjectDetails data={selected} />
-        </div>
-      )}
+      {selected &&
+        (selectedPerson ? (
+          <div className="cab-row-inspector">
+            <PersonCard person={selectedPerson} />
+          </div>
+        ) : (
+          <div className="cab-row-inspector">
+            <h3>{itemTitle(selected)}</h3>
+            <ObjectDetails data={selected} />
+          </div>
+        ))}
     </>
   );
 }
@@ -398,13 +328,42 @@ function formFields(values: FormData, definitions: Field[]) {
   return { params, query, body };
 }
 
-function OperationInput({ field, hint }: { field: Field; hint?: string }) {
+const recordField = /(^id$|Id$)/;
+function OperationInput({
+  field,
+  hint,
+  pickedLabel,
+}: {
+  field: Field;
+  hint?: string;
+  // Command forms: a record chosen in the list fills its identifier; show the record, not the UUID.
+  pickedLabel?: string;
+}) {
   const { schema, required, name, section } = field;
   const id = `${section}:${name}`;
   const type = schemaType(schema);
   const choices = schema.enum ?? (type === 'boolean' ? [true, false] : undefined);
   const multiline =
     type === 'array' || type === 'object' || /reason|description|note|comment|text/i.test(name);
+  const [manual, setManual] = useState(false);
+  if (!manual && pickedLabel !== undefined && hint && recordField.test(name) && type === 'string') {
+    const label = pickedLabel || t('выбранная запись', 'înregistrarea selectată');
+    return (
+      <div className="cab-form-label cab-picked-field">
+        <span>{fieldLabel(name)}</span>
+        <input type="hidden" name={id} value={hint} />
+        <span className="cab-picked-chip">
+          <Icon name="check" size={15} />
+          <span>{section === 'path' ? label : t(`из записи «${label}»`, `din „${label}”`)}</span>
+          {section !== 'path' && (
+            <button type="button" className="cab-text-button" onClick={() => setManual(true)}>
+              {t('Изменить', 'Modifică')}
+            </button>
+          )}
+        </span>
+      </div>
+    );
+  }
   return (
     <label className="cab-form-label">
       <span>
@@ -413,10 +372,10 @@ function OperationInput({ field, hint }: { field: Field; hint?: string }) {
       </span>
       {choices ? (
         <select name={id} required={required} defaultValue={hint ?? ''}>
-          <option value="">Выберите значение</option>
+          <option value="">{t('Выберите значение', 'Alegeți o valoare')}</option>
           {choices.map((value) => (
             <option key={String(value)} value={String(value)}>
-              {display(value)}
+              {typeof value === 'string' ? enumTitle(value) : display(value)}
             </option>
           ))}
         </select>
@@ -433,6 +392,11 @@ function OperationInput({ field, hint }: { field: Field; hint?: string }) {
         <input
           name={id}
           required={required}
+          placeholder={
+            recordField.test(name) && type === 'string'
+              ? t('Выберите запись в списке', 'Alegeți o înregistrare din listă')
+              : undefined
+          }
           defaultValue={schema.format === 'date-time' ? hint?.slice(0, 16) : hint}
           type={
             /password|^token$/i.test(name)
@@ -538,7 +502,7 @@ function ReadPanel({
     <>
       {definitions.length > 0 && (
         <details className="cab-disclosure cab-filters" open={!canRead || undefined}>
-          <summary>Параметры и фильтры</summary>
+          <summary>{t('Параметры и фильтры', 'Parametri și filtre')}</summary>
           <form onSubmit={search} className="cab-fields" key={JSON.stringify([path, query])}>
             {definitions.map((field) => (
               <OperationInput
@@ -551,19 +515,24 @@ function ReadPanel({
             ))}
             {invalid && (
               <p className="cab-form-error" role="alert">
-                Проверьте формат параметров.
+                {t('Проверьте формат параметров.', 'Verificați formatul parametrilor.')}
               </p>
             )}
             <div className="cab-form-actions">
               <button className="cab-button cab-primary" type="submit">
-                Применить
+                {t('Применить', 'Aplică')}
               </button>
             </div>
           </form>
         </details>
       )}
       {!canRead ? (
-        <div className="cab-empty">Выберите запись или заполните обязательные параметры.</div>
+        <div className="cab-empty">
+          {t(
+            'Выберите запись или заполните обязательные параметры.',
+            'Alegeți o înregistrare sau completați parametrii obligatorii.',
+          )}
+        </div>
       ) : result.pending || result.error ? (
         <LoadState refreshing={result.pending} error={result.error} retry={result.refresh} />
       ) : (
@@ -579,7 +548,7 @@ function ReadPanel({
           className="cab-button cab-secondary"
           onClick={() => setSubmitted({ params: path, query: { ...query, cursor: more } })}
         >
-          Следующая страница <Icon name="arrow" size={16} />
+          {t('Следующая страница', 'Pagina următoare')} <Icon name="arrow" size={16} />
         </button>
       )}
     </>
@@ -591,11 +560,13 @@ export function CommandPanel({
   context,
   close,
   onDone,
+  pickedLabel,
 }: {
   id: string;
   context: Record<string, string>;
   close: () => void;
   onDone: () => void;
+  pickedLabel?: string;
 }) {
   const operation = operations[id]!;
   const requestShape = requestSchema(operation);
@@ -647,7 +618,12 @@ export function CommandPanel({
         if (!open && !busy) close();
       }}
       title={operationName(id)}
-      description={done ? 'Команда подтверждена сервером.' : 'Проверьте параметры перед отправкой.'}
+      description={
+        done
+          ? t('Готово — изменения сохранены.', 'Gata — modificările au fost salvate.')
+          : (actionHint(id) ??
+            t('Заполните поля и подтвердите действие.', 'Completați câmpurile și confirmați.'))
+      }
       pending={busy}
       contentProps={{ className: 'cab-dialog' }}
     >
@@ -655,21 +631,18 @@ export function CommandPanel({
         <>
           {outcome !== undefined && <ResponseBody sourceId={id} value={outcome} />}
           <button type="button" className="cab-button cab-primary" onClick={close}>
-            Готово
+            {t('Готово', 'Gata')}
           </button>
         </>
       ) : (
         <form onSubmit={(event) => void submit(event)} className="cab-fields">
           {variants && variants.length > 1 && (
             <label className="cab-form-label">
-              <span>Вариант действия</span>
+              <span>{t('Вариант действия', 'Varianta acțiunii')}</span>
               <select value={variant} onChange={(event) => setVariant(Number(event.target.value))}>
                 {variants.map((entry, index) => (
                   <option key={index} value={index}>
-                    {entry.$ref
-                      ?.split('/')
-                      .at(-1)
-                      ?.replace(/([a-z])([A-Z])/g, '$1 $2') ?? `Вариант ${index + 1}`}
+                    {variantTitle(entry.$ref?.split('/').at(-1), index)}
                   </option>
                 ))}
               </select>
@@ -680,6 +653,7 @@ export function CommandPanel({
               key={`${variant}:${field.section}:${field.name}`}
               field={field}
               hint={context[field.name] ?? ''}
+              {...(pickedLabel !== undefined ? { pickedLabel } : {})}
             />
           ))}
           {error != null && (
@@ -694,10 +668,14 @@ export function CommandPanel({
               onClick={close}
               disabled={busy}
             >
-              Отмена
+              {t('Отмена', 'Anulează')}
             </button>
-            <button className="cab-button cab-primary" type="submit" disabled={busy}>
-              {busy ? 'Отправляем…' : 'Подтвердить'}
+            <button
+              className={`cab-button ${actionStyle(id).tone === 'danger' ? 'cab-danger' : 'cab-primary'}`}
+              type="submit"
+              disabled={busy}
+            >
+              {busy ? t('Сохраняем…', 'Se salvează…') : operationName(id)}
             </button>
           </div>
         </form>
@@ -776,23 +754,24 @@ export function OperationWorkspace({
   );
   const [command, setCommand] = useState<string | null>(null);
   const [revision, setRevision] = useState(0);
+  const [pickedTitle, setPickedTitle] = useState<string | null>(null);
   const operation = operations[active];
+  const hasRecord = Object.keys(context).some((key) => recordField.test(key));
+  const recordTitle = selection
+    ? (pickedTitle ?? '')
+    : Object.keys(detail).length
+      ? itemTitle(detail)
+      : '';
   return (
     <>
       {extra}
       {commands.length > 0 && (
-        <details className="cab-disclosure cab-command-switch">
-          <summary>
-            <Icon name="tasks" size={17} /> Действия раздела
-          </summary>
-          <div className="cab-action-grid">
-            {commands.map((id) => (
-              <button className="cab-button cab-secondary" key={id} onClick={() => setCommand(id)}>
-                {operationName(id)} <Icon name="arrow" size={15} />
-              </button>
-            ))}
-          </div>
-        </details>
+        <QuickActions
+          commands={commands}
+          context={context}
+          recordTitle={hasRecord ? recordTitle : null}
+          onRun={setCommand}
+        />
       )}
       <div className="cab-card cab-work-card">
         {reads.length > 1 && (
@@ -822,6 +801,7 @@ export function OperationWorkspace({
             {...(operation.operationId === detailId ? { onRecord: setOpenedRecord } : {})}
             onPick={(row) => {
               setSelection(rowContext(row, operation.operationId, scopedParams));
+              setPickedTitle(itemTitle(row));
               onPick?.(operation.operationId, row);
             }}
           />
@@ -836,8 +816,102 @@ export function OperationWorkspace({
           context={context}
           close={() => setCommand(null)}
           onDone={() => setRevision((value) => value + 1)}
+          {...(hasRecord ? { pickedLabel: recordTitle } : {})}
         />
       )}
     </>
+  );
+}
+
+function missingRecord(id: string, context: Record<string, string>) {
+  const path = operations[id]?.path ?? '';
+  return [...path.matchAll(/\{([^}]+)\}/g)].some(([, name]) => !name || !context[name]);
+}
+
+function QuickActions({
+  commands,
+  context,
+  recordTitle,
+  onRun,
+}: {
+  commands: string[];
+  context: Record<string, string>;
+  recordTitle: string | null;
+  onRun: (id: string) => void;
+}) {
+  const main = commands.filter((id) => !actionStyle(id).advanced);
+  const advanced = commands.filter((id) => actionStyle(id).advanced);
+  const needsRecord = commands.some((id) => missingRecord(id, context));
+  return (
+    <section className="cab-card cab-quick" aria-labelledby="cab-quick-title">
+      <header className="cab-quick-head">
+        <h2 id="cab-quick-title">{t('Быстрые действия', 'Acțiuni rapide')}</h2>
+        {recordTitle !== null ? (
+          <span className="cab-quick-target">
+            <Icon name="check" size={15} />
+            {t('Для записи:', 'Pentru:')} <strong>{recordTitle || t('выбрана', 'selectată')}</strong>
+          </span>
+        ) : (
+          needsRecord && (
+            <span className="cab-quick-tip">
+              <Icon name="info" size={15} />
+              {t(
+                'Выберите запись в списке ниже — данные подставятся в действие',
+                'Alegeți o înregistrare din lista de mai jos — datele se completează automat',
+              )}
+            </span>
+          )
+        )}
+      </header>
+      {main.length > 0 && (
+        <div className="cab-quick-grid">
+          {main.map((id) => {
+            const { icon, tone } = actionStyle(id);
+            const hint = actionHint(id);
+            const waiting = missingRecord(id, context);
+            return (
+              <button
+                key={id}
+                type="button"
+                className={`cab-quick-action is-${tone}`}
+                onClick={() => onRun(id)}
+              >
+                <span className="cab-quick-icon" aria-hidden="true">
+                  <Icon name={icon} size={19} />
+                </span>
+                <span className="cab-quick-text">
+                  <strong>{operationName(id)}</strong>
+                  {hint && <small>{hint}</small>}
+                  {waiting && (
+                    <em className="cab-quick-badge">
+                      {t('нужна запись из списка', 'necesită o înregistrare')}
+                    </em>
+                  )}
+                </span>
+                <Icon name="arrow" size={16} className="cab-quick-arrow" />
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {advanced.length > 0 && (
+        <div className="cab-quick-advanced">
+          <span>{t('Служебные операции', 'Operațiuni de serviciu')}</span>
+          <div>
+            {advanced.map((id) => (
+              <button
+                key={id}
+                type="button"
+                className={`cab-quick-chip ${actionStyle(id).tone === 'danger' ? 'is-danger' : ''}`}
+                onClick={() => onRun(id)}
+              >
+                <Icon name={actionStyle(id).icon} size={14} />
+                {operationName(id)}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }

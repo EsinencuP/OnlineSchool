@@ -31,7 +31,7 @@ function validReport(value) {
     validMap(value.checks, /^[A-Z_]+$/, count) &&
     validMap(
       value.datasets,
-      /^[a-z_]+$/,
+      /^[a-z_][a-z0-9_]*$/,
       (d) => count(d?.rows) && typeof d.digest === 'string' && sha256.test(d.digest),
     )
   );

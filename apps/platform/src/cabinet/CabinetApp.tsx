@@ -1,14 +1,15 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import type { SessionResponse, components } from '@online-school/api-contracts';
-import { leaveSession } from '@online-school/account-ui';
+import { leaveSession, switchAccount } from '@online-school/account-ui';
 import { Icon, LanguageSelector, useLocale } from '@online-school/ui';
 import { AccessScreen, canEnter, sessionHome } from './Access.js';
 import { academyName, Brand } from './Brand.js';
-import { CabinetError, homes, readableError, request, roleNames } from './contract.js';
+import { CabinetError, homes, request, roleNames } from './contract.js';
 import type { Details, Role } from './contract.js';
 import { CabinLink, Home, SchedulePreview } from './Home.js';
 import { useEndpoint } from './hooks.js';
 import { LoadState, OperationWorkspace } from './Operations.js';
+import { DirectorPayrollChart, TeacherEarnings } from './Analytics.js';
 import type { PaymentRoute } from './Payments.js';
 import { StudentLessonCard, StudentManagerContacts, StudentSuspended } from './StudentLesson.js';
 import { StudentHomework } from './StudentHomework.js';
@@ -167,7 +168,7 @@ function Shell({
 }) {
   const route = identify(path);
   const nav = sections[role];
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const { text: accountText } = useAccountCopy();
   const homeworkText = teacherHomeworkNavigation[locale];
   const passwordPage =
@@ -216,7 +217,8 @@ function Shell({
   const [menu, setMenu] = useState(false);
   const [account, setAccount] = useState(false);
   const [switching, setSwitching] = useState(false);
-  const [accountError, setAccountError] = useState('');
+  const switchingRef = useRef(false);
+  const [accountError, setAccountError] = useState(false);
   const [profileChange, setProfileChange] = useState<{
     base: Details | null;
     name: string;
@@ -309,21 +311,15 @@ function Shell({
     profile.data?.hasActiveAccess,
   ]);
   async function swap(key: string) {
-    if (switching) return;
+    if (switchingRef.current) return;
+    switchingRef.current = true;
     setSwitching(true);
-    setAccountError('');
-    try {
-      const result = await request<{ home: string }>('switchDemoUser', { body: { key } });
-      if (!Object.values(homes).includes(result.home)) {
-        setAccountError('Не удалось открыть кабинет.');
-        setSwitching(false);
-        return;
-      }
-      leaveSession(result.home);
-    } catch (error) {
-      setAccountError(readableError(error));
-      setSwitching(false);
-    }
+    setAccountError(false);
+    if ((await switchAccount(key)) === 'retired') return;
+    switchingRef.current = false;
+    setSwitching(false);
+    setAccountError(true);
+    accounts.refresh();
   }
   const currentDemo = accounts.data?.items.find((x) => x.key === accounts.data?.currentKey);
   const shownName = name || currentDemo?.name || roleNames[role];
@@ -356,6 +352,10 @@ function Shell({
           extra={
             role === 'TEACHER' && section.id === 'lessons' ? (
               <TeacherSchedule zone={zone} navigate={navigate} />
+            ) : role === 'TEACHER' && section.id === 'payroll' && !route.detail ? (
+              <TeacherEarnings />
+            ) : role === 'DIRECTOR' && section.id === 'finance' && !route.detail ? (
+              <DirectorPayrollChart />
             ) : (role === 'STUDENT' && section.id === 'lessons' && !route.detail) ||
               (role === 'MANAGER' && section.id === 'schedule' && !route.detail) ? (
               <SchedulePreview
@@ -493,7 +493,7 @@ function Shell({
                 className="cab-account-button"
                 onClick={() => {
                   setAccount(!account);
-                  setAccountError('');
+                  setAccountError(false);
                 }}
                 aria-expanded={account}
                 aria-label={accountText('profile') + ' · ' + shownName}
@@ -526,35 +526,44 @@ function Shell({
                       Мой профиль
                     </CabinLink>
                   )}
-                  {accounts.data?.enabled &&
-                    accounts.data.items.length > 0 &&
-                    !locked &&
-                    !suspended && (
-                      <label className="cab-form-label">
-                        <span>Сменить пользователя</span>
-                        <select
-                          value={accounts.data.currentKey ?? ''}
-                          disabled={switching}
-                          onChange={(e) => {
-                            if (e.target.value) void swap(e.target.value);
-                          }}
-                        >
-                          <option value="">Выберите демо-аккаунт</option>
-                          {accounts.data.items.map((choice) => (
-                            <option key={choice.key} value={choice.key}>
-                              {choice.name}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                    )}
+                  {accounts.data?.enabled && !locked && (
+                    <label className="cab-form-label">
+                      <span>{t('account.switchUser')}</span>
+                      <select
+                        value={accounts.data.currentKey ?? ''}
+                        disabled={switching}
+                        onChange={(e) => {
+                          if (e.target.value) void swap(e.target.value);
+                        }}
+                      >
+                        <option value="" disabled>
+                          {t('account.selectDemo')}
+                        </option>
+                        {accounts.data.items.map((choice) => (
+                          <option key={choice.key} value={choice.key}>
+                            {choice.name}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
+                  {accounts.error && !locked && (
+                    <button className="cab-text-button" type="button" onClick={accounts.refresh}>
+                      {t('account.catalogUnavailable')}
+                    </button>
+                  )}
                   <LanguageSelector />
-                  <button className="cab-text-button" type="button" onClick={leave}>
+                  <button
+                    className="cab-text-button"
+                    type="button"
+                    onClick={leave}
+                    disabled={switching}
+                  >
                     Выйти
                   </button>
                   {accountError && (
                     <p className="cab-form-error" role="alert">
-                      {accountError}
+                      {t('account.switchFailed')}
                     </p>
                   )}
                 </div>

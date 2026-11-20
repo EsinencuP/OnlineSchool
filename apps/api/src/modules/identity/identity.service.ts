@@ -40,7 +40,7 @@ import type {
   StudentIdentityCommand,
 } from './student-account-provisioning.js';
 import { WebAuthnConfig } from './webauthn.config.js';
-import { demoAccounts, demoAccountId, demoSwitchAllowed } from './demo-accounts.js';
+import { availableDemoAccounts, demoAccounts, demoSwitchAllowed } from './demo-accounts.js';
 
 type Tx = Prisma.TransactionClient;
 export type IdentityOutcome = {
@@ -281,25 +281,15 @@ export class IdentityService {
     if (!target) return Promise.resolve(err(domainError('INVALID_INPUT', 400)));
     return this.execute(req, 'auth.demo.switch', async (tx) => {
       const actor = await this.actor(req, tx);
-      const source = await this.account(tx, actor.accountId);
-      if (!demoSwitchAllowed(actor, source.login_id))
+      const source = await tx.authAccount.findUnique({
+        where: { id: actor.accountId },
+        select: { login_id: true },
+      });
+      if (!demoSwitchAllowed(actor, source?.login_id ?? ''))
         return fail(domainError('DEMO_SWITCH_FORBIDDEN', 403));
-      const targetId =
-        target.key === 'tech'
-          ? (await tx.authAccount.findUnique({ where: { login_id: target.login } }))?.id
-          : demoAccountId(target.key);
-      if (!targetId) return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
-      const account = await this.account(tx, targetId);
-      const roles = await this.roles(tx, account.id);
-      const kind =
-        target.role === 'STUDENT' ? 'STUDENT' : target.role === 'TEACHER' ? 'TEACHER' : 'STAFF';
-      if (
-        account.login_id !== target.login ||
-        account.kind !== kind ||
-        roles[0] !== target.role ||
-        !qaPasswordOnlyLogin({ accountId: account.id, kind, roles })
-      )
-        return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
+      await tx.$queryRaw`SELECT id FROM auth_accounts WHERE login_id = ${target.login} FOR UPDATE`;
+      const [destination] = await availableDemoAccounts(tx, [target]);
+      if (!destination) return fail(domainError('DEMO_ACCOUNT_UNAVAILABLE', 403));
       await this.revoke(
         tx,
         actor.accountId,
@@ -308,7 +298,7 @@ export class IdentityService {
         false,
         actor.sessionId,
       );
-      const issued = await this.sessions.issue(tx, account.id, null, false, req);
+      const issued = await this.sessions.issue(tx, destination.accountId, null, false, req);
       return {
         actorId: actor.accountId,
         resourceType: 'Session',

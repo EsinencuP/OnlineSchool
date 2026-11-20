@@ -14,7 +14,11 @@ function report() {
     checkedAt,
     migrationVersion,
     checks: { LEDGER_UNBALANCED: 0, PAID_RIGHTS_NEGATIVE: 0 },
-    datasets: { ledger_entries: { rows: 10, digest }, lesson_occurrences: { rows: 15, digest } },
+    datasets: {
+      ledger_entries: { rows: 10, digest },
+      lesson_occurrences: { rows: 15, digest },
+      s3_objects: { rows: 2, digest },
+    },
   };
 }
 

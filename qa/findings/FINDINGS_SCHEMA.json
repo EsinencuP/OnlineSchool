@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "K8K QA finding",
+  "type": "object",
+  "required": [
+    "id",
+    "cycle_id",
+    "build_commit",
+    "environment",
+    "agent",
+    "role",
+    "requirement_id",
+    "module",
+    "route",
+    "type",
+    "severity",
+    "status",
+    "title",
+    "description",
+    "preconditions",
+    "steps_to_reproduce",
+    "expected_result",
+    "actual_result",
+    "reproducibility",
+    "business_impact",
+    "security_impact",
+    "evidence",
+    "suggested_fix",
+    "acceptance_criteria",
+    "regression_scope",
+    "created_at",
+    "verified_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^K8K-QA-\\d{8}T\\d{9}Z-[a-z0-9]{8}-\\d{3,}$"
+    },
+    "cycle_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "build_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "environment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent": {
+      "type": "string",
+      "minLength": 1
+    },
+    "role": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requirement_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "module": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "enum": [
+        "BUG",
+        "SECURITY",
+        "PERFORMANCE",
+        "UX",
+        "REGRESSION",
+        "DATA_INTEGRITY",
+        "ACCESSIBILITY",
+        "ENHANCEMENT",
+        "PRODUCT_DECISION"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "P0",
+        "P1",
+        "P2",
+        "P3"
+      ]
+    },
+    "status": {
+      "enum": [
+        "OPEN",
+        "TRIAGED",
+        "ACCEPTED",
+        "IN_PROGRESS",
+        "FIXED",
+        "READY_FOR_RETEST",
+        "VERIFIED",
+        "REOPENED",
+        "REJECTED",
+        "DEFERRED"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preconditions": {
+      "type": "string",
+      "minLength": 1
+    },
+    "steps_to_reproduce": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expected_result": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actual_result": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reproducibility": {
+      "type": "string",
+      "minLength": 1
+    },
+    "business_impact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "security_impact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "suggested_fix": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance_criteria": {
+      "type": "string",
+      "minLength": 1
+    },
+    "regression_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verified_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

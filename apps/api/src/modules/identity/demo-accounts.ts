@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import type { AccountContext } from '../../core/http.js';
+import type { Prisma } from '@online-school/db';
+import { UUID, type AccountContext } from '../../core/http.js';
 import { qaPasswordOnlyLogin } from '../../core/session/qa-password-policy.js';
 
 const namespace = 'platform-demo-2026-11-01-v1';
@@ -97,4 +98,62 @@ export function demoSwitchAllowed(actor: AccountContext | undefined, login: stri
     ) ||
       legacyLogins.get(login) === actor.roles[0])
   );
+}
+
+type DemoAccount = (typeof demoAccounts)[number];
+
+export async function availableDemoAccounts(
+  db: Prisma.TransactionClient,
+  choices: readonly DemoAccount[] = demoAccounts,
+) {
+  if (
+    process.env.PLATFORM_DEMO_SWITCHING !== 'true' ||
+    process.env.QA_PASSWORD_ONLY_LOGIN !== 'true'
+  )
+    return [];
+
+  const ids = (process.env.QA_PASSWORD_ONLY_ACCOUNT_IDS ?? '')
+    .split(',')
+    .map((id) => id.trim().toLowerCase())
+    .filter((id) => UUID.test(id));
+  if (!ids.length) return [];
+
+  const [{ now }] = await db.$queryRaw<[{ now: Date }]>`SELECT clock_timestamp() AS now`;
+  const accounts = await db.authAccount.findMany({
+    where: {
+      id: { in: ids },
+      login_id: { in: choices.map((choice) => choice.login) },
+      disabled_at: null,
+      recovery_registration_required: false,
+      OR: [
+        { kind: 'STAFF', staff_profile: { deactivated_at: null } },
+        { kind: 'TEACHER', teacher_profile: { deactivated_at: null } },
+        {
+          kind: 'STUDENT',
+          student_profile: { deactivated_at: null, must_change_password: false },
+        },
+      ],
+    },
+    select: {
+      id: true,
+      login_id: true,
+      kind: true,
+      role_assignments: {
+        where: {
+          valid_from: { lte: now },
+          OR: [{ valid_to: null }, { valid_to: { gt: now } }],
+        },
+        select: { role: { select: { code: true } } },
+      },
+    },
+  });
+  return choices.flatMap((choice) => {
+    const account = accounts.find((row) => row.login_id === choice.login);
+    if (!account || (choice.key !== 'tech' && account.id !== demoAccountId(choice.key))) return [];
+    const roles = account.role_assignments.map(({ role }) => role.code);
+    return roles[0] === choice.role &&
+      qaPasswordOnlyLogin({ accountId: account.id, kind: account.kind, roles })
+      ? [{ choice, accountId: account.id }]
+      : [];
+  });
 }

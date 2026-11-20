@@ -6,6 +6,7 @@ import type { CalendarEvent, IconName } from '@online-school/ui';
 import { StageArt } from './Access.js';
 import { SubjectIcon } from './Brand.js';
 import { display, LoadState, Status } from './Operations.js';
+import { DirectorPayrollChart, ManagerAnalytics } from './Analytics.js';
 import { useEndpoint } from './hooks.js';
 import { homes, record, rowsOf, safeMeet } from './contract.js';
 import { recordUrl } from './recordRoutes.js';
@@ -674,6 +675,8 @@ function StaffHome({ role, name, zone, navigate }: HomeProps & { role: Exclude<R
         <LoadState error={result.error} refreshing={result.pending} retry={result.refresh} />
       ) : null}
       <Metrics items={summary[role]} navigate={navigate} />
+      {role === 'MANAGER' && result.data ? <ManagerAnalytics payload={payload} /> : null}
+      {role === 'DIRECTOR' ? <DirectorPayrollChart /> : null}
       <div className="cab-home-grid cab-staff-home">
         <div className="cab-main-column">
           <Panel

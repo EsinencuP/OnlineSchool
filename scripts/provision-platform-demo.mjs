@@ -10,10 +10,17 @@ import {
   demoId as id,
   operation as op,
   demoSetupInput,
+  railwayTestDatabase,
 } from './platform-demo-plan.mjs';
 
 const source = (key) => ({ id: id(key), source_operation_id: op(key) });
 const eventKey = (phase) => `${namespace}:${phase}`;
+const localOperator = {
+  key: 'tech',
+  login: 'qa.tech@onlineschool.test',
+  role: 'TECH_OPERATOR',
+  name: 'Технический оператор',
+};
 let step = 'guard';
 async function transaction(db, work, timeout) {
   for (let attempt = 1; attempt <= 3; attempt++) {
@@ -71,7 +78,7 @@ async function identity(tx, row, directorId, now) {
       id: id(`role:${row.key}`),
       account_id: id(`account:${row.key}`),
       role_id: role.id,
-      assigned_by_staff_id: directorId,
+      assigned_by_staff_id: directorId ?? null,
       valid_from: now,
     },
   });
@@ -84,8 +91,15 @@ async function identity(tx, row, directorId, now) {
   };
   await (kind === 'TEACHER' ? tx.teacherAccount : tx.staffAccount).create({ data });
 }
-export async function provisionBase(tx, rows) {
+export async function provisionBase(tx, rows, local = false) {
   await tx.$executeRaw`SELECT pg_advisory_xact_lock(120061251)`;
+  if (
+    local &&
+    (await tx.authAccount.count({
+      where: { id: { notIn: rows.map((row) => id(`account:${row.key}`)) } },
+    }))
+  )
+    throw new Error('PLATFORM_DEMO_LOCAL_DATABASE_NOT_ISOLATED');
   const completed = await tx.auditEvent.findUnique({ where: { event_key: eventKey('base') } });
   if (completed) return { status: 'already-provisioned', at: completed.recorded_at };
   const [{ now }] = await tx.$queryRaw`SELECT clock_timestamp() AS now`;
@@ -106,15 +120,15 @@ export async function provisionBase(tx, rows) {
     orderBy: { id: 'asc' },
     select: { id: true },
   });
-  if (!director) throw new Error('PLATFORM_DEMO_DIRECTOR_UNAVAILABLE');
+  if (!director && !local) throw new Error('PLATFORM_DEMO_DIRECTOR_UNAVAILABLE');
   step = 'identities';
-  for (const account of accounts.filter((a) => a.role !== 'STUDENT'))
-    await identity(
-      tx,
-      { ...account, hash: rows.find((r) => r.key === account.key).hash },
-      director.id,
-      now,
-    );
+  const staff = rows.filter((row) => row.role !== 'STUDENT');
+  const demoDirector = staff.find((row) => row.role === 'DIRECTOR');
+  if (!director) await identity(tx, demoDirector, null, now);
+  for (const row of staff) {
+    if (director || row !== demoDirector)
+      await identity(tx, row, director?.id ?? id('profile:pasha'), now);
+  }
   // Reserve nothing in AuthAccount for pupils: their credentials are installed only AFTER paid rights exist.
   for (const pupil of pupils) {
     const account = accounts.find((a) => a.key === pupil.key);
@@ -304,7 +318,7 @@ export async function provisionBase(tx, rows) {
   return { status: 'provisioned', at: now };
 }
 
-export async function provisionPaid(tx, rows, services) {
+export async function provisionPaid(tx, rows, services, local = false) {
   await tx.$executeRaw`SELECT pg_advisory_xact_lock(120061251)`;
   if (await tx.auditEvent.findUnique({ where: { event_key: eventKey('paid') } }))
     return { status: 'already-provisioned' };
@@ -313,12 +327,12 @@ export async function provisionPaid(tx, rows, services) {
   const { addSchoolDays, localDay, schoolMidnight } =
     await import('../apps/api/dist/modules/finance/manager-subscriptions/time.js');
   const midnight = schoolMidnight(localDay(base.recorded_at, 'Europe/Chisinau'), 'Europe/Chisinau');
-  const ctx = (key, role = 'MANAGER') => ({
+  const ctx = (key, role = 'MANAGER', account = role === 'MANAGER' ? 'tamara' : 'pasha') => ({
     tx,
     actor: {
-      accountId: id(`account:${role === 'MANAGER' ? 'tamara' : 'pasha'}`),
+      accountId: id(`account:${account}`),
       sessionId: id('maintenance-context'),
-      kind: 'STAFF',
+      kind: role === 'STUDENT' || role === 'TEACHER' ? role : 'STAFF',
       roles: [role],
       role,
       mfaCompleted: false,
@@ -337,7 +351,7 @@ export async function provisionPaid(tx, rows, services) {
   if (!period) {
     const start = new Date(now);
     start.setUTCHours(0, 0, 0, 0);
-    const end = new Date(+start + 86400000);
+    const end = new Date(+start + (local ? 35 : 1) * 86400000);
     if (
       await tx.financialPeriod.findFirst({
         where: { starts_at: { lt: end }, ends_at: { gt: start } },
@@ -453,6 +467,46 @@ export async function provisionPaid(tx, rows, services) {
       );
     }
   }
+  if (local) {
+    step = 'homework-responses';
+    const examples = [
+      {
+        key: 'anna',
+        teacher: 'andrei',
+        content: '[ДЕМО] 3x + 5 = 20. Вычитаю 5 из обеих частей, затем делю на 3. Получаю x = 5.',
+        comment: '[ДЕМО] Ход решения верный. Добавь решения остальных четырёх уравнений.',
+      },
+      {
+        key: 'sofia',
+        content: '[ДЕМО] I like this book because the story is funny. I read it every summer.',
+      },
+    ];
+    for (const example of examples) {
+      const deliveryId = id(`delivery:${example.key}`);
+      const studentId = id(`student:${example.key}`);
+      const accountId = id(`account:${example.key}`);
+      const student = need(
+        await services.homework.authorize(tx, accountId, studentId, deliveryId),
+        'HOMEWORK_ACCESS',
+      );
+      const submission = await services.homework.submit(
+        ctx(`homework-submit:${example.key}`, 'STUDENT', example.key),
+        student,
+        deliveryId,
+        { content: example.content },
+      );
+      if (!example.teacher) continue;
+      await services.homeworkReview.review(
+        ctx(`homework-review:${example.key}`, 'TEACHER', example.teacher),
+        deliveryId,
+        {
+          submissionId: submission.submissionId,
+          result: 'NEEDS_REVISION',
+          comment: example.comment,
+        },
+      );
+    }
+  }
   step = 'notifications';
   for (const [key, pupil, body] of [
     [
@@ -498,18 +552,71 @@ export async function provisionPaid(tx, rows, services) {
     manualInAppMessages: 2,
   };
 }
+function verifyLocalTarget() {
+  const { APP_ENV, VERCEL, VERCEL_ENV, DIRECT_URL, DATABASE_URL } = process.env;
+  let target, runtime;
+  try {
+    target = new URL(DIRECT_URL);
+    runtime = new URL(DATABASE_URL);
+  } catch {
+    throw new Error('PLATFORM_DEMO_LOCAL_DATABASE_REQUIRED');
+  }
+  if (
+    APP_ENV !== 'qa' ||
+    VERCEL ||
+    VERCEL_ENV ||
+    !['postgres:', 'postgresql:'].includes(target.protocol) ||
+    !['127.0.0.1', 'localhost', '[::1]'].includes(target.hostname) ||
+    !/^\/online_school_(?:test_)?qa[a-z0-9_]*$/.test(target.pathname) ||
+    runtime.protocol !== target.protocol ||
+    runtime.host !== target.host ||
+    runtime.pathname !== target.pathname ||
+    runtime.search ||
+    runtime.hash ||
+    target.search ||
+    target.hash
+  )
+    throw new Error('PLATFORM_DEMO_LOCAL_DATABASE_REQUIRED');
+}
+
+async function isolatedSetupInput(railway) {
+  if (railway) {
+    if (!railwayTestDatabase(process.env)) throw new Error('PLATFORM_DEMO_RAILWAY_TEST_REQUIRED');
+  } else verifyLocalTarget();
+  const password = process.env.PLATFORM_LOCAL_DEMO_PASSWORD;
+  if ((password?.length ?? 0) < 16) throw new Error('PLATFORM_DEMO_LOCAL_PASSWORD_REQUIRED');
+
+  const { Passwords } = await import('../apps/api/dist/modules/identity/passwords.js');
+  const hash = need(await new Passwords().hash(password), 'PASSWORD');
+  return {
+    rows: [...accounts, localOperator].map((row) => ({ ...row, hash })),
+    paid: true,
+  };
+}
+
 async function main() {
-  const input = demoSetupInput(process.env);
+  const railway = process.argv[2] === '--railway-test';
+  const local = railway || process.argv[2] === '--local';
+  const requireApi = createRequire(new URL('../apps/api/package.json', import.meta.url));
+  requireApi('reflect-metadata');
+  const input = local ? await isolatedSetupInput(railway) : demoSetupInput(process.env);
   if (!input) return;
   const connection = createDirectClient();
   if (!connection.ok) throw new Error('PLATFORM_DEMO_DATABASE_UNAVAILABLE');
   let app;
   try {
-    const base = await transaction(connection.value, (tx) => provisionBase(tx, input.rows), 60000);
+    if (local) {
+      const [{ zone }] = await connection.value
+        .$queryRaw`SELECT current_setting('TimeZone') AS zone`;
+      if (zone !== 'UTC') throw new Error('PLATFORM_DEMO_LOCAL_DATABASE_UTC_REQUIRED');
+    }
+    const base = await transaction(
+      connection.value,
+      (tx) => provisionBase(tx, input.rows, local),
+      60000,
+    );
     console.log(JSON.stringify({ platformDemo: { phase: 'base', ...base } }));
     if (input.paid) {
-      const requireApi = createRequire(new URL('../apps/api/package.json', import.meta.url));
-      requireApi('reflect-metadata');
       const { NestFactory } = requireApi('@nestjs/core');
       const { AppModule } = await import('../apps/api/dist/app.module.js');
       const { PaymentsService } =
@@ -532,18 +639,29 @@ async function main() {
         notifications: new NotificationOutboxPublisher(),
         now: at,
       };
+      if (local) {
+        const { StudentHomeworkService } =
+          await import('../apps/api/dist/student/homework/homework.service.js');
+        const { TeacherHomeworkService } =
+          await import('../apps/api/dist/modules/teacher/teacher-homework.service.js');
+        services.homework = app.get(StudentHomeworkService);
+        services.homeworkReview = app.get(TeacherHomeworkService);
+      }
       const paid = await transaction(
         connection.value,
-        (tx) => provisionPaid(tx, input.rows, services),
+        (tx) => provisionPaid(tx, input.rows, services, local),
         300000,
       );
       console.log(JSON.stringify({ platformDemo: { phase: 'paid', ...paid } }));
     }
     // A second call must return before identity/data writes, preserving any subsequent owner edits.
-    const repeat = await connection.value.$transaction((tx) => provisionBase(tx, input.rows), {
-      isolationLevel: 'Serializable',
-      timeout: 10000,
-    });
+    const repeat = await connection.value.$transaction(
+      (tx) => provisionBase(tx, input.rows, local),
+      {
+        isolationLevel: 'Serializable',
+        timeout: 10000,
+      },
+    );
     if (repeat.status !== 'already-provisioned')
       throw new Error('PLATFORM_DEMO_IDEMPOTENCE_FAILED');
     if (input.paid) {
@@ -555,6 +673,10 @@ async function main() {
         throw new Error('PLATFORM_DEMO_IDEMPOTENCE_FAILED');
     }
     console.log('PLATFORM_DEMO_IDEMPOTENCE_OK');
+    if (local)
+      console.log(
+        `QA_PASSWORD_ONLY_ACCOUNT_IDS=${input.rows.map((row) => id(`account:${row.key}`)).join(',')}`,
+      );
   } finally {
     if (app) await app.close();
     await connection.value.$disconnect();
