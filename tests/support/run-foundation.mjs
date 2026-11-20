@@ -38,7 +38,7 @@ else if (process.argv.includes('--safe-only'))
   console.log('Safe checks passed. This command does not establish FND-GATE.');
 else {
   console.error(
-    'FND-GATE NOT PASSED: clean/previous migrations, full real PostgreSQL/API/concurrency/crash regression lack an owner-permitted target. No databases created and no working data reset. See tests/FOUNDATION_STATUS.json.',
+    'FND-GATE NOT PASSED: review integration-test results and the outstanding acceptance items in tests/FOUNDATION_STATUS.json.',
   );
   process.exitCode = 1;
 }

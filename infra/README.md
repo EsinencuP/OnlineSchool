@@ -188,9 +188,11 @@ workspace-зависимости. Новые FND-GATE/E2E наборы отно�
 Внешние CI secrets допустимы только для отдельной проверенной CI-БД, никогда для
 рабочего Neon; текущий runner намеренно отклоняет remote hosts и рабочее имя БД.
 
-Сейчас не запускаемый `infra/ci/integration.mjs` проверяет CI=true, localhost, тестовый prefix и PostgreSQL 18,
-создаёт новый пустой template, один раз применяет миграции/reference seed, затем делает
-шесть новых изолированных клонов для DB, Core, Identity, Finance, Schedule и Worker.
+Job `integration-test` запускает `infra/ci/integration.mjs` с временным сервисом
+PostgreSQL 18. Сценарий проверяет CI=true, loopback, тестовый префикс и версию
+PostgreSQL, применяет миграции и reference seed к пустой базе и создаёт свой
+клон для каждой группы. Покрытие включает DB, Core, Identity, Finance, Schedule,
+Worker и HTTP-сценарии кабинетов ученика, преподавателя, менеджера и руководителя.
 Не использует DROP/reset и не повторяет тесты в рабочей БД. Соединения редактируются
 в диагностике. Trust authentication включён только для одноразового loopback CI-сервиса:
 старые тесты создают runtime probes без паролей. Compose/Neon/VPS используют пароли.

@@ -1,13 +1,13 @@
 {
   "task": "TASK-15",
-  "status": "BLOCKED_BY_ACCEPTANCE_ENVIRONMENT_CONSTRAINT",
-  "ownerPolicy": "One existing Vercel/Neon working environment. No extra or disposable PostgreSQL/test databases.",
+  "status": "ACCEPTANCE_INCOMPLETE",
+  "ownerPolicy": "Disposable PostgreSQL 18 inside GitHub Actions is approved as of 2026-11-20. Working databases are excluded from these suites.",
   "groups": [
     {
       "id": 1,
       "status": "PARTIAL",
       "verified": "73 models, 818 columns, 164 FKs, SQL guards and seven migration checksums compared to a read-only Neon catalog capture",
-      "blocked": "Clean-DB migration and previous-version rehearsal cannot run on the populated working database without reset or another database."
+      "blocked": "Clean-DB migration evidence is pending the CI run. Previous-version rehearsal uses a separate acceptance procedure."
     },
     {
       "id": 2,
@@ -50,7 +50,7 @@
       "tests": "tests/api/finance.test.mjs; tests/api/schedule.test.mjs; tests/integration/education-files.test.mjs"
     }
   ],
-  "ciRealPostgres18Regression": "NOT_RUN_NO_PERMITTED_TARGET",
+  "ciRealPostgres18Regression": "ENABLED_AWAITING_VERIFIED_RUN",
   "criticalHighDefectClearance": "NOT_ESTABLISHED_WITHOUT_COMPLETE_REGRESSION",
   "fndGate": "NOT_PASSED"
 }

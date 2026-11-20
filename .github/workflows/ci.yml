@@ -59,10 +59,7 @@ jobs:
       - run: python infra/ci/check-migration-syntax.py
 
   integration-test:
-    # Owner decision, TASK-14: one working environment, no additional test databases.
-    # Existing destructive/synthetic suites must not be redirected to the working Neon DB.
-    # Deferred until the owner approves a compatible TASK-15 verification strategy.
-    if: ${{ false }}
+    # Owner approval, 2026-11-20: run against a disposable PostgreSQL service on this runner.
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     services:
@@ -88,7 +85,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with: { persist-credentials: false }
       - uses: ./.github/actions/setup
-      - run: pnpm --filter @online-school/db build && pnpm --filter @online-school/worker build
+      - run: pnpm --filter @online-school/worker... build
       - run: pnpm test:integration:ci
 
   build:
