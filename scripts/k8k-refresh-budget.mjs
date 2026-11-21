@@ -28,7 +28,7 @@ const require = createRequire(new URL('apps/manager-web/package.json', root));
 const { build } = await import(pathToFileURL(require.resolve('vite')));
 const { default: react } = await import(pathToFileURL(require.resolve('@vitejs/plugin-react')));
 const previous = JSON.parse(
-  await readFile(new URL(`output/k8k-tasks/${baseline}/budgets.json`, root), 'utf8'),
+  await readFile(new URL(`tests/fixtures/ui-baselines/${baseline}.json`, root), 'utf8'),
 );
 assert.equal(previous.method, FONT_METHOD_V2);
 const plans = [...previous.rows];

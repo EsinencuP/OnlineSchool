@@ -1,25 +1,4 @@
-# MGR-06 — расписание менеджера
-
-## Шаг 0: реальные модели и команды
-
-| ТЗ                        | Реальный контракт                                                                                                                                         | Применение                                                                                                |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Lesson / LessonStatus     | LessonOccurrence; SCHEDULED, STAR_PENDING, CONDUCTED, CANCELLED, DISPUTED                                                                                 | Устойчивые id/original_scheduled_at/occurrence_date                                                       |
-| «Исход подтверждается»    | LessonOutcomeReport, actual_start_at, confirmed_report_id                                                                                                 | Отдельного такого enum нет; изменение блокируется по фактам                                               |
-| StudentProfile.managerId  | Student + AssignedManager                                                                                                                                 | Только ManagerScopeService и его portfolioWhere                                                           |
-| Subscription              | ManagerSubscription + ManagerSubscriptionPeriod + финансовый Subscription                                                                                 | Выбор направления и неизменяемой покупки                                                                  |
-| Разрешённый преподаватель | TeachingAssignment + StudentSubjectEnrollment + TeacherAccount                                                                                            | Периоды назначения и доступность проверяет Schedule                                                       |
-| Команда создания          | BookingService.one                                                                                                                                        | Блокировки преподавателя/доступности, EXCLUDE, задания deadline                                           |
-| Перенос                   | BookingService.reschedule                                                                                                                                 | Прежний lessonId и исходный ключ, новая ревизия и события                                                 |
-| Отмена                    | BookingService.cancel                                                                                                                                     | Организационный факт CANCELLED без исхода/оценок                                                          |
-| Списание при отмене       | ManagerFinanceFacade.publishDeduction → ManagerLessonRights → EntitlementsService.consume(APPROVED_CANCELLATION) → FinanceLedger/LedgerPublicationService | Одна оплаченная единица и существующий Ledger                                                             |
-| Meet по умолчанию         | TeachingAssignment.google_meet_link                                                                                                                       | Наследуется до явного override конкретного урока                                                          |
-| LessonCancellationPort    | ScheduleFreezeCancellation                                                                                                                                | Реальная отмена без списания в транзакции MGR-04                                                          |
-| Запрос директора          | Новый ScheduleChangeApproval                                                                                                                              | Имеющийся ScheduleChangeRequest — запрос преподавателя с teacher_id; он не подменяет директорское решение |
-
-Прочитаны Schedule/core/schema, ограничения `no_overlapping_confirmed_lessons`, identity
-guard, Finance consumption/publication и правила TRF-02—05/17—18. Источник истины по
-пересечениям — существующий EXCLUDE; второй календарный движок не введён.
+# расписание менеджера
 
 ## API и выбор направления
 
@@ -53,7 +32,7 @@ BookingService повторно проверяет активность и до�
 
 ## Исключения и неизменяемость
 
-[Решения владельца](../../../../../../docs/online_academy_manager_schedule_decisions_2026_10_31.md):
+[Решения владельца](../../../../../../docs/schedule-rules.md):
 60 минут; отдельное решение директора. Граница своевременности — 24 часа по умолчанию;
 ровно24 часа принимаются как своевременно. Настройки — LESSON_MIN_LEAD_MINUTES и
 LESSON_FREE_CHANGE_HOURS; неверные значения блокируют изменения.
@@ -133,21 +112,3 @@ Audit: LESSON_CREATED/RESCHEDULED/CANCELLED/MEET_LINK_SET/MEET_LINK_CLEARED и �
 schedule.lesson.changed.v1 для Schedule-потребителей; payload содержит action и адресный
 контекст, без Meeting-кода. Pending approval не выдаётся за состоявшийся перенос.
 Доставка внешних сообщений в MGR-06 не реализуется и не объявляется успешной.
-
-## Доказательства и границы приёмки
-
-`pnpm test:mgr06` — 109 проверок (87 HTTP,14 unit,8 SDK/OpenAPI).
-Затронутые MGR-01/04/05, student dashboard/lessons/subscription и schema/ERD —340 проверок;
-ещё9 core/Finance/Schedule unit и1 отдельный headless worker smoke. Всего459 уникальных
-проверок. API/worker/contracts и потребители компилируются, адресный ESLint и Prisma validate
-проходят. OpenAPI/Orval обновлены:116 операций. Моделей93, FK216.
-
-Миграция `20261031140000_mgr06_schedule` подготовлена. Данные и ID прежних уроков сохраняются;
-история переносов не backfill-ится предположениями. Офлайн разобраны17 SQL-вариантов,
-13 statements миграции и2 PL/pgSQL-функции. Артефакты — `tests/evidence/mgr06-verification.json`
-и `mgr06-sql-syntax.json`.
-
-**Миграция не применена.** По PHASE0_CHECKS.md нет отдельной тестовой БД и destructive-прогонов
-на рабочей. HTTP-тесты используют настоящий Nest/core/Schedule/Finance с mock Prisma.
-Имитированные конкурирующие запросы/23P01 не доказывают реальный EXCLUDE, PostgreSQL18
-гонки, grants или прохождение полной цепочки миграций. Рабочая приёмка/FND-GATE не закрыты.

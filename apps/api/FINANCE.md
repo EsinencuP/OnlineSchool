@@ -1,13 +1,13 @@
-# TASK-08 — Finance
+# Finance
 
-Реализованы 17 HTTP-операций Finance. Все требуют серверной сессии и завершённого
+Финансовые операции требуют серверной сессии и завершённого
 MFA; POST дополнительно требуют CSRF и UUID `Idempotency-Key`. Права и назначение
 менеджера повторно проверяются внутри SERIALIZABLE-транзакции, включая возврат
 кэшированного результата. Бизнес-записи, AuditEvent, OutboxEvent и результат команды
 фиксируются атомарно. Отказ обязательного аудита отменяет также проводку и CRM-задачу.
 
 Это локальная реализация по утверждённым требованиям, без production GO/FND-GATE.
-Канонические решения: [CON-01—11](../../docs/online_academy_CON_01_11_owner_decisions_addendum_v1.0.md).
+Канонические решения: [CON-01—11](../../docs/academy-rules.md).
 
 ## Маршруты и доступ
 
@@ -170,7 +170,7 @@ TeacherEngagement хранит периоды работы, TeacherTenureCredit 
 ученики/оплаченные заморозки с остатком прав, без временного неоплаченного допуска.
 
 `TeacherRateService.snapshotAtStart(ctx, lessonId, teacherId, time)` экспортирован для
-команды фактического начала TASK-09. Вызывать только внутри критической транзакции
+команды фактического начала урока. Вызывать только внутри критической транзакции
 с серверным/доверенно подтверждённым временем; отдельного HTTP для подмены времени нет.
 Сервис сохраняет ставку, очки, валюту, вид основания и evidence на фактический старт.
 Изменение влияет на следующий подходящий урок сразу, без ожидания первого числа;
@@ -225,39 +225,3 @@ MFA может сверить PENDING/UNKNOWN через `POST /api/v1/payouts/:
 Финансово-правовая приёмка исключений, округления и бухгалтерских документов
 остаётся открытой. Проверка миграции и конкурентных сценариев требует
 разрешённой PostgreSQL.
-
-## Worker и проверка
-
-Worker раз в секунду выбирает только `finance.temporary-access.expire.v1`, используя
-FOR UPDATE SKIP LOCKED, lease 30 секунд и не более трёх попыток. По истечении допуска
-он атомарно создаёт одну внутреннюю CRM-задачу текущему менеджеру, Audit и Outbox;
-права не продлевает. Повторная обработка не дублирует задачу. Общий outbox dispatcher
-и внешние интеграции остаются TASK-11.
-
-Новая четвёртая migration `20261026050000_task08_finance` добавляет три HR-модели,
-источники ledger, необходимые FK/UNIQUE/SQL-защиты и минимальные runtime-права.
-Прежние миграции сохранены. До upgrade preflight отклоняет двойные reversal;
-исправление старых данных автоматически не выполняется.
-
-```sh
-pnpm install --frozen-lockfile
-pnpm -r typecheck
-pnpm -r build
-pnpm -r lint
-pnpm test
-# Три отдельные migrated localhost БД online_school_test*:
-# TEST_DATABASE_URL, IDENTITY_TEST_DATABASE_URL, FINANCE_TEST_DATABASE_URL
-pnpm --filter @online-school/api test:integration
-# Отдельная reference-seeded TEST_DATABASE_URL для DB-регрессии:
-pnpm --filter @online-school/db test:integration
-# Отдельная QA_DATABASE_URL online_school_qa*:
-pnpm --filter @online-school/db test:qa
-```
-
-Три новых unit-теста проверяют границы очков/ставок, шестимесячный возврат и точность
-денег. Четырнадцать Finance HTTP/PG тестов работают под настоящей ограниченной
-runtime-ролью: права, idempotency, конкурентное списание, reversal, полная/частичная
-оплата, неизвестная выплата, атомарный откат при отказе Audit, неизменность snapshot
-и самостоятельная обработка worker. Синтетические данные; реальные платежи не создаются.
-
-[Prisma 7: Serializable и retry P2034](https://www.prisma.io/docs/orm/v7/prisma-client/queries/transactions).

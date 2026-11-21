@@ -1,4 +1,4 @@
-# TASK-11 — Outbox, retry и reconciliation
+# Outbox, retry и reconciliation
 
 Отдельный Node.js 24 процесс (`NestFactory.createApplicationContext`, без HTTP listener).
 Новый dispatcher работает в `apps/worker`; прежние ScheduleDeadlines и
@@ -135,27 +135,3 @@ evidence исходной операции; автоматического сб�
 Включение допустимо после проверки новой версии API и worker, миграции и прав
 на удаление объектов выбранного bucket. Для хранилища с версиями требуется
 отдельная политика хранения прежних версий. [Семантика DeleteObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html)
-
-## Адресная проверка 26 октября 2026
-
-Prisma generation, компиляция worker, адресный ESLint и 2 unit/lifecycle проверки.
-На изолированной копии PostgreSQL **18.6** применена только новая миграция поверх
-TASK-09; прошли **12** коротких интеграционных тестов: два worker, SKIP LOCKED,
-rollback, retry, DEAD без остановки очереди, реальный SIGKILL Node child после claim,
-перезапуск/reclaim/fencing, пять handlers без дублей, deadline 24h и reconciliation
-с доказательствами/таймаутом/ручной эскалацией. Время в тестовых due-fixtures задано
-явно, чтобы рассинхронизация часов Node/PostgreSQL не делала smoke нестабильным.
-
-```powershell
-pnpm --filter @online-school/worker test
-$env:WORKER_TEST_DATABASE_URL='postgresql://postgres@127.0.0.1:55441/online_school_test_task11'
-pnpm --filter @online-school/worker test:integration
-```
-
-Тестовая БД должна быть отдельной, migrated и reference-seeded; suite создаёт
-синтетические записи и откладывает старые PENDING fixtures в своей TASK-11 БД.
-Тесты отвергают remote, production и иные имена БД. Полная регрессия и повторные
-migration rehearsals отложены в PHASE0_CHECKS.md; FND-GATE и production GO не выданы.
-
-Справочные контракты: [PostgreSQL 18 row locking](https://www.postgresql.org/docs/18/sql-select.html#SQL-FOR-UPDATE-SHARE),
-[Prisma interactive transactions](https://www.prisma.io/docs/orm/v7/prisma-client/queries/transactions).

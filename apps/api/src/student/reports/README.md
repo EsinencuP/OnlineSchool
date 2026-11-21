@@ -1,8 +1,4 @@
-# STU-09 — образовательные отчёты и PDF-выписка
-
-Статус на 2026-10-28: код и целевые проверки готовы. Владелец выбрал завершение
-с отложенной PostgreSQL-проверкой. Миграции в рабочую БД и деплой не выполнялись;
-реальные PostgreSQL/S3 и сквозная доставка PDF ещё не проверены.
+# образовательные отчёты и PDF-выписка
 
 ## API
 
@@ -26,7 +22,7 @@ POST требуют CSRF и UUID `Idempotency-Key`. Read receipt и задани
 SDK использует отдельный mutator для пустых ответов read; остальные JSON-операции
 продолжают отвергать неожиданный пустой успешный ответ.
 
-TASK-032 добавляет только адресное чтение и восстановление потерянного202.
+После потери ответа HTTP 202 клиент проверяет статус экспорта.
 Detail использует тот же publishedReportsCte/reportJson/normalizeReport, что list.
 Receipt ищет существующий PdfExportJob по student_id, requested_by и job_ref
 type/source_operation_id/deduplication_key. ACCEPTED — факт постановки, не готовность
@@ -40,7 +36,6 @@ mounted PDF UI до expiry/unmount; каждый download сначала чит�
 Polling — последовательный GET раз в2s, максимум30 попыток/60s; остановка клиента
 не отменяет job. Возврат/resume читает прежний job, новый export только явный.
 401/403/session replacement скрывает данные и отменяет reads/timers.
-Состояния, RU/RO и local evidence: [TASK-032](../../../../../output/k8k-tasks/TASK-032/report.md).
 Новые GET/SDK проверены локально; реальные PostgreSQL/S3/worker delivery и FND-GATE
 по-прежнему не принимаются этим browser/mock evidence.
 
@@ -111,26 +106,3 @@ Content-Type application/pdf, no-store; create-only PUT (`If-None-Match: *`).
 не изменены. Реальный провайдер должен поддерживать SigV4/3600 секунд и приватный
 bucket; инфраструктурная политика или временные credentials могут сократить срок.
 Ошибки API содержат безопасный код без S3/SQL/личных данных.
-
-## Проверки и оставшаяся приёмка
-
-`pnpm test:stu09` — 81 целевая проверка с mock Prisma/S3, включая настоящий
-Nest HTTP/session/CSRF/idempotency pipeline, rollback, ownership, retry/fencing,
-отзыв доступа, фиксированное истечение с мокированным временем и generated SDK.
-Дополнительно прошли две существующие transport-проверки. Настоящий PDF рендерится
-командой `node tests/support/render-education-pdf-sample.mjs` после worker build;
-образец полностью синтетический, три A4 страницы визуально проверены.
-
-Миграция `20261027170000_stu09_reports_pdf` подготовлена после STU-01–08.
-Prisma validate/generate, API/worker/SDK builds и целевой lint прошли.
-24 SQL statements, четыре PLpgSQL-функции и десять source-exact SELECT fixture
-сценариев разобраны офлайн через libpg_query/pglast; это не проверка SQL binding,
-прав, блокировок, триггеров и фактического исполнения.
-Read-only сценарий `tests/integration/student-reports-readonly.test.mjs` подготовлен
-для PostgreSQL 18; по решению владельца он не запускался. Он не заменяет будущую
-проверку write constraints, конкурентных worker claims и реального S3 download/expiry.
-
-Результаты: `infra/STU09_EVIDENCE.json`, `tests/evidence/stu09-sql-syntax.json`,
-`tests/evidence/stu09-pdf-review.json`. Проверка рабочей среды, применение миграций,
-сквозной экспорт через S3 и FND-GATE остаются открытыми. Дополнительные БД,
-ветки Neon и контейнеры не создавались; Docker image и полная регрессия не запускались.

@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { gzipSync } from 'node:zlib';
 const root = resolve(import.meta.dirname, '..');
 const baseline = JSON.parse(
-  await readFile(resolve(root, 'output/k8k-phase0/bundle-baseline.json'), 'utf8'),
+  await readFile(resolve(root, 'tests/fixtures/ui-baselines/initial-bundles.json'), 'utf8'),
 );
 const rows = [];
 for (const app of ['student-cabinet', 'manager-web', 'platform']) {

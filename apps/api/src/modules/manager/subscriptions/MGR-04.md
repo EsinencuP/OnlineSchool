@@ -1,4 +1,4 @@
-# MGR-04 — управляемые абонементы
+# управляемые абонементы
 
 Реализованы пять manager-роутов: список и создание по ученику, продление,
 заморозка и разморозка по ID управляемого абонемента. Сессионная роль MANAGER,
@@ -6,28 +6,6 @@
 SERIALIZABLE-транзакции scope повторяется, включая replay. Чужой и отсутствующий
 ID абонемента дают одинаковый SUBSCRIPTION_NOT_FOUND без подробностей.
 Мутации требуют CSRF и UUID Idempotency-Key. Ответ списка — private, no-store.
-
-## Шаг 0: ТЗ → код
-
-| ТЗ                                | Реальный код и решение                                                                                      |
-| --------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| StudentProfile                    | Student, учебное направление StudentSubjectEnrollment                                                       |
-| ManagerProfile                    | StaffAccount MANAGER, портфолио AssignedManager                                                             |
-| Тариф                             | SaleCondition; новый nullable duration_days без исторического backfill                                      |
-| Финансовая покупка / Subscription | существующий Subscription — неизменяемые цена, количество и исходная цена права                             |
-| Управляемый абонемент             | новый ManagerSubscription с жизненным циклом, сроком и snapshot таймзоны                                    |
-| Покупки продления                 | ManagerSubscriptionPeriod, один финансовый Subscription можно присоединить только один раз                  |
-| SubscriptionOperation             | ManagerSubscriptionOperation; UNIQUE distribution_id, payment_id не используется как ключ                   |
-| SubscriptionFreeze                | новый SubscriptionFreeze с локальными датами и UTC-границами, фактическим закрытием                         |
-| История для ученика               | существующий SubscriptionFreezeHistory, trigger сохраняет фактическую границу раннего завершения            |
-| Остаток занятий                   | существующие EntitlementGrant/Consumption/Adjustment, без второго поля баланса                              |
-| LedgerPublication                 | LedgerPublicationService подтверждает уже опубликованный источник; Finance создаёт права по этому основанию |
-| LessonCancellationPort            | транзакционный порт; пока MGR-06 не подключён, реализация возвращает явный 503                              |
-
-Утверждённые владельцем [решения 31.10.2026](../../../../../../docs/online_academy_manager_subscription_decisions_2026_10_31.md):
-30/60 дней, один активный абонемент на направление, готовое распределение на входе.
-MGR-05 не объявлен завершённым. Новый контракт использует distributionId вместо
-старого paymentId, ошибка повторного использования — DISTRIBUTION_ALREADY_USED.
 
 ## Создание, продление и финансы
 
@@ -107,46 +85,3 @@ manager.subscription.*.v1. Worker проецирует его в существ�
 и inbox по канонической паре operationId/subscriptionId. Повторная доставка не
 создаёт дубль. Комментарий заморозки, цены и суммы в уведомление/Audit не копируются.
 Внешние каналы MGR-08 остаются отдельной задачей.
-
-## Проверки и ограничения
-
-`pnpm test:mgr04`: реальные Nest guards/pipe/critical interceptor/filter с mock
-Prisma, переходы, scope/replay, CSRF/DTO, распределения/допуски, продление и чтение
-остатка, лимиты/даты/DST, rollback, конкурентные вызовы и worker/SDK. Concurrency
-fixture сериализует транзакции и не доказывает гонки PostgreSQL.
-
-Миграция 20261031120000_mgr04_managed_subscriptions подготовлена, не применена.
-Prisma validate, компиляция и офлайн SQL parse не доказывают исполнение constraints,
-grants, триггеров, планов или всей миграционной цепочки на PostgreSQL 18.
-Согласно PHASE0_CHECKS.md рабочие данные не изменялись, дополнительная БД/ветка/
-контейнер не создавались. Рабочий MGR-05 → director allocation → MGR-04 и реальная
-отмена уроков MGR-06, внешняя доставка и FND-GATE требуют отдельной приёмки.
-
-Итог адресной проверки: 62/62 теста MGR-04 (unit, фактический Nest HTTP, SDK/worker)
-и 296 проверок затронутых контуров. Отдельно прошли schema/ERD contract для 92
-текущих моделей и старт/остановка standalone worker без DATABASE_URL/HTTP.
-Для worker выделен FinanceInfrastructureModule с явными Database/Audit/Policy
-зависимостями, без финансовых HTTP-контроллеров. API/worker/API-contracts сборки,
-student-cabinet typecheck, адресные ESLint и Prisma validate/generate успешны.
-OpenAPI/Orval обновлены: 100 операций. Офлайн разобраны 26 SQL-вариантов, 42
-statements миграции и 6 PL/pgSQL-функций. Доказательства: tests/evidence/mgr04-*.json.
-
-## Продолжение MGR-05, 31.10.2026
-
-Исторический Finance-адаптер покупки переименован в ManagerAllocationFinance.
-Единый manager/finance/ManagerFinanceFacade теперь обслуживает платежи и команды
-абонемента. MGR-05 готовит финансовую покупку/предложение, директор утверждает
-распределение и публикует деньги; при полной оплате выдаются только недостающие
-права. MGR-04 получает готовый distributionId и повторно права не выдаёт.
-Новые распределения отзывают прежние действующие ограниченные допуски;
-неполная оплата требует нового отдельного директорского решения.
-Подробности и текущая проверка — в ../payments/MGR-05.md; исходные итоги выше исторические.
-
-## Продолжение MGR-06, 31.10.2026
-
-LessonCancellationPort реализован через ScheduleFreezeCancellation вместо заглушки.
-Заморозка с cancelConflictingLessons отменяет пересекающие её SCHEDULED/STAR_PENDING
-в той же транзакции, без списания и расхода лимита переносов. Отказ финального
-Audit/Outbox заморозки откатывает уже отменённые уроки. Прошлое/факты остаются
-неизменяемыми. Проверка через реальный Nest с mock Prisma и границы приёмки —
-в ../schedule/MGR-06.md; предыдущая отметка порта как будущего — историческая.

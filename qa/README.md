@@ -1,4 +1,4 @@
-# K8K Independent QA
+# OnlineSchool Independent QA
 
 Откройте `D:\OnlineSchool` как проект Codex и в новом чате вызовите `$qa-status`. Команды доступны в [COMMANDS.md](COMMANDS.md). Для проверки установки запустите `$qa-cycle --self-test` или `node qa/scripts/qa.mjs cycle --self-test` из корня. Этот прогон поднимает короткоживущую синтетическую страницу и использует реальный Codex CLI, Playwright MCP и Chromium.
 

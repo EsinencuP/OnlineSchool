@@ -118,7 +118,7 @@ async function build() {
   const router = await readFile(path.join(root, 'apps/student-cabinet/src/router.tsx'), 'utf8');
   const routes = [...router.matchAll(/path:\s*'([^']+)'/g)].map((m) => m[1]);
   const previous = JSON.parse(
-    await readFile(path.join(root, 'output/ui-motion-2026-11-08/budgets.json'), 'utf8'),
+    await readFile(path.join(root, 'tests/fixtures/ui-baselines/student-motion-bundles.json'), 'utf8'),
   ).rows.find((row) => row.app === 'student-cabinet');
   await writeFile(
     path.join(run, 'budgets.json'),

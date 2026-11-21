@@ -1,8 +1,4 @@
-# STU-10 — внутренний колокольчик ученика
-
-Историческая основа STU-10 на 2026-10-28: код и адресные проверки готовы. PostgreSQL-проверка
-отложена по решению владельца, принятому в STU-08. Миграция подготовлена после
-STU-01–09, в рабочую БД не применялась. Деплой и сквозная приёмка не выполнялись.
+# внутренний колокольчик ученика
 
 ## Контракт
 
@@ -102,55 +98,3 @@ shutdown останавливает новые claims и дожидается а
 для защиты от повторной доставки; автоматического физического удаления истории нет.
 Частичный индекс unread не содержит тела уведомления; активная лента имеет индекс
 student_id/archived_at/created_at/id, очередь — частичный индекс недоставленных.
-
-`pnpm test:stu10` содержит 54 unit/actual Nest HTTP/worker/SDK проверки с mock Prisma.
-Проверены роли/сессии/CSRF, владение, no-store, paging/count, пустые 204 и replay,
-rollback, первый read, новые события после read-all, публичные шаблоны и payload,
-идемпотентная доставка, stop/drain и отсутствие блокировки других poll.
-Это не доказательство SQL constraints или реальной конкурентной работы PostgreSQL.
-
-Prisma validate/generate, API/worker/SDK build и целевой lint прошли. OpenAPI —
-78 операций. pglast/libpg_query разобрал 28 SQL statements, пять PLpgSQL и одну SQL
-функцию, 13 запросов с непрерывными параметрами. Подготовлены 10 read-only сценариев:
-изолированная лента, paging, 500/501 записи, TTL, стабильный tie-break и часовой пояс
-напоминаний. Тест `tests/integration/student-notifications-readonly.test.mjs` по решению
-владельца **не запускался**; он использует виртуальные CTE, без fixture INSERT.
-
-Доказательства: `infra/STU10_EVIDENCE.json`, `tests/evidence/stu10-sql-syntax.json`.
-Для приёмки остаются реальная цепочка миграций/права/SQL binding, transactional
-source triggers, конкурентные create/read-all и worker claims, 500/TTL/expiry на
-PostgreSQL и end-to-end на рабочей среде. Полный FND-GATE остаётся открытым.
-Дополнительные БД/ветки Neon/контейнеры и production-записи не создавались.
-
-
-## TASK-033 — актуальное представление, 2026-11-08
-
-GET list принимает optional `locale=ru|ro` (default ru); неизвестные query keys,
-массивы/другие локали отвергаются400. page/pageSize/response shape и остальные
-149 операций совместимы. Count остаётся одним COUNT без metadata JOIN.
-
-Только list выбирает explicit catalog key/params собственного canonical source
-(id/student/type) либо IN_APP dispatch (source_id/student). Existing source.type
-является ключом notificationContent; dispatch.template_code — renderNotification.
-Полные public params проверяются существующими registry validators. Внутренняя
-metadata удаляется до ответа. Если metadata отсутствует/неполна/несовместима,
-возвращаются stored title/body без догадок. MANUAL_MESSAGE всегда сохраняет
-человеческий текст. Переключение языка не пишет inbox/source/read_at/event_key/payload
-и не восстанавливает params из caption или приватных записей.
-
-K8K использует единственный общий Drawer из bell и legacy redirect к events=1.
-Preview только при open, count независимо; закрытие удаляет только events.
-Тип+валидный публичный UUID определяют существующий route, payload.url игнорируется.
-Целевой API отдельно авторизует объект. Read/read-all не означает report read,
-учебное действие, платёж или CRM command. При unknown сначала GET-сверка, затем
-retry с тем же UUID; новый read-all — отдельное явное намерение.
-
-Свежие локальные проверки: 86 API/HTTP/SDK mocks (baseline65 до изменений),
-12 presentation tests, 13 Chromium, 29 screenshots RU/RO × 360/768/1024/1280,
-axe360 без нарушений, 50/50 route budgets включая шрифты. 149 операций/response
-schemas сохранены, новой миграции/зависимости нет. Producer/template/outbox/worker
-SHA сохранены. PostgreSQL/triggers/projector/реальная конкуренция/500/TTL не
-выполнялись; это отдельная приёмка. Предыдущие counts в разделе STU-10 исторические.
-
-[Отчёт TASK-033](../../../../../output/k8k-tasks/TASK-033/report.md) ·
-[Матрица источников](../../../../../output/k8k-tasks/TASK-033/source-audit.md).

@@ -1,6 +1,6 @@
 // Owner-authorized live review smoke. No business mutations, fixtures or provisioning.
 import assert from 'node:assert/strict';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { chromium, expect } from '@playwright/test';
@@ -10,10 +10,9 @@ const evidenceRoot = path.join(root, '.vercel/release/review-smoke');
 const out = path.join(evidenceRoot, 'runs', new Date().toISOString().replaceAll(':', '-'));
 await mkdir(out, { recursive: true });
 const origin = 'https://onlineschool-xi.vercel.app';
-const readme = await readFile(path.join(root, 'README.md'), 'utf8');
-const access = readme.split('\n').find((line) => line.includes('`tamara.demo@'));
-assert(access, 'Owner-published demo login must exist');
-const credentials = [...access.matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+const email = process.env.QA_MANAGER_EMAIL;
+const password = process.env.QA_MANAGER_PASSWORD;
+assert(email && password, 'Set QA_MANAGER_EMAIL and QA_MANAGER_PASSWORD for the synthetic manager');
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({
   viewport: { width: 1280, height: 900 },
@@ -84,8 +83,8 @@ async function visit(role, url, screenshot = false) {
 }
 try {
   await visit('LOGIN', '/account?ui.k8k=1', true);
-  await page.locator('input[name=email]').fill(credentials[0]);
-  await page.locator('input[name=password]').fill(credentials[1]);
+  await page.locator('input[name=email]').fill(email);
+  await page.locator('input[name=password]').fill(password);
   await page.locator('form button[type=submit]').click();
   await expect(page).toHaveURL(/\/manager(?:\?|$)/, { timeout: 60000 });
   await visit('MANAGER', '/manager?ui.k8k=1', true);

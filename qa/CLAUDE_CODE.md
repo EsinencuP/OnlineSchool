@@ -1,4 +1,4 @@
-# K8K QA — Claude Code edition
+# OnlineSchool QA — Claude Code edition
 
 Слой Claude Code поверх общей структуры `qa/` (матрицы, шаблоны, схема дефектов, фикстуры общие с Codex-версией). Codex-раннер (`qa/scripts/qa.mjs`, `.agents/`, `.codex/`) не тронут и работает независимо.
 

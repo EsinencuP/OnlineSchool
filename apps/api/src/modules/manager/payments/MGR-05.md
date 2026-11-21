@@ -1,22 +1,4 @@
-# MGR-05 — поступления и подготовка распределений
-
-## Шаг 0: ТЗ → реальный код
-
-| ТЗ                           | Реализация                                         | Значение                                         |
-| ---------------------------- | -------------------------------------------------- | ------------------------------------------------ |
-| PaymentRecord                | PaymentReceipt                                     | Поступление, student_id — только контакт CRM     |
-| StudentProfile               | Student + AssignedManager                          | Портфолио через ManagerScopeService              |
-| ManagerProfile               | StaffAccount + RoleAssignment                      | Сессионная роль MANAGER, активный профиль        |
-| Subscription                 | Subscription + ManagerSubscription/Period          | Финансовая покупка и управляемый жизненный цикл  |
-| Использование платежа        | PaymentDistribution + ManagerSubscriptionOperation | Уникальность по распределению, не по поступлению |
-| LedgerPublicationService     | FinanceLedger → LedgerPublicationService           | Существующая сбалансированная публикация         |
-| Состояние платежа            | Вычисляемый ManagerPaymentStatus                   | Состояние канонического поступления и публикации |
-| ManagerFinanceFacade         | manager/finance/manager-finance.facade.ts          | Единственный адаптер финансовых команд менеджера |
-| Старый MGR-04 Finance facade | Finance/ManagerAllocationFinance                   | Внутренняя проверка покупки и оплаченных прав    |
-
-Сверены core/session, policy, RBAC, CSRF, CriticalCommand, TransactionService, Audit,
-FinanceAccess, PaymentsService, LedgerPublicationService, schema.prisma и SQL-триггеры.
-Новая модель платежей и второй механизм аутентификации не введены.
+# поступления и подготовка распределений
 
 ## Контракт поступления
 
@@ -96,27 +78,3 @@ publishAdjustment — ограниченный порт для MGR-07: пров�
 сумму/число уроков и отсутствие повтора, возвращает APPROVAL_REQUIRED.
 Публиковать директорскую корректировку от имени менеджера порт не позволяет;
 сохранение и обработка эскалации остаются задачей MGR-07.
-
-## Проверки и оставшаяся приёмка
-
-`pnpm test:mgr05`: денежная точность, MDL, legacy-проекция, роли/CSRF/scope,
-идемпотентность, competing requests, <=3 retry, отказы Ledger/Audit/Outbox, рассрочка,
-отзыв допусков, два ребёнка из одного поступления, адаптер корректировок, ESLint и SDK/OpenAPI.
-Адресная регрессия MGR-02/03/04 и затронутых student-read моделей; отдельный worker smoke.
-Доказательства: `tests/evidence/mgr05-verification.json` и `mgr05-sql-syntax.json`.
-
-Миграция `20261031130000_mgr05_receipts` подготовлена: nullable метаданные старых строк,
-ограничения снимка и отклонения, уникальный reference, индексы, признак manager_prepared,
-узкие runtime grants. Prisma validate/client generation и офлайн SQL/PLpgSQL parser проходят.
-**Миграция не применялась.** По PHASE0_CHECKS.md запрещены отдельная тестовая БД и destructive
-прогоны на рабочей БД. HTTP-тесты используют настоящие Nest/core/Finance сервисы с mock Prisma;
-очередь транзакций фикстуры не доказывает гонки, SQL constraints/grants или работу PostgreSQL18.
-Общий gate, рабочая приёмка и доставка внешних уведомлений этим не подтверждаются.
-
-## Продолжение MGR-07, 01.11.2026
-
-Описанное выше ожидание обработки эскалации реализовано в [MGR-07](../tasks/MGR-07.md).
-Менеджер по-прежнему получает APPROVAL_REQUIRED от publishAdjustment. Полную отмену
-исходного списания исполняет отдельный DIRECTOR workflow Finance; частичный эффект
-остаётся отдельным финансовым решением. refundLessons=0 допустим только с положительной
-денежной суммой как частичный запрос. Исторические доказательства MGR-05 выше сохранены.

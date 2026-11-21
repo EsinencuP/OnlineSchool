@@ -1,29 +1,5 @@
 # MGR-08: уведомления, 01.11.2026
 
-## Шаг 0: сверка
-
-Прочитаны schema.prisma, канонический NotificationService/STU-10, SQL guards/capture,
-StudentNotificationProjector, OutboxWorker/JobRecord/JobAttempt, Resend OTP adapter,
-ManagerScopeService и producers MGR-03/04/05/06/07. Применены core session/MFA/CSRF,
-CriticalCommand и SERIALIZABLE с максимум3 попытками. Параллельного inbox нет.
-
-| ТЗ                          | Реальный код                                                                         |
-| --------------------------- | ------------------------------------------------------------------------------------ |
-| StudentProfile              | Student; контакты Student.email, портфолио через AssignedManager/ManagerScopeService |
-| ManagerProfile              | StaffAccount + активный manager context                                              |
-| StudentNotification         | существующий immutable StudentNotification, read_at/archived_at STU-10               |
-| Системный intent            | существующий StudentNotificationSource с проверкой публичного факта                  |
-| Канал/статус доставки       | новый NotificationDispatch; отдельно от прочтения inbox                              |
-| NotificationStatus          | NotificationDeliveryStatus QUEUED/SENT/FAILED                                        |
-| NotificationOutboxPublisher | единый enqueue(tx,event), Result; без сетевого провайдера                            |
-| NotificationService         | существующая каноническая проекция source → inbox                                    |
-| Email provider              | Resend, существующие RESEND_API_KEY/STUDENT_EMAIL_FROM                               |
-| Локаль                      | новый Student.notification_locale, default ru; поддержаны ru/en, неизвестная → ru    |
-
-Схема содержит94 модели/221FK. Миграция `20261101100000_mgr08_notifications`
-добавляет только delivery intent/status и локаль, enum-коды и индексы. Старые
-уведомления, ID, receipt/read/archive и SQL проверки прежних типов сохраняются.
-
 ## HTTP и безопасность
 
 POST `/api/v1/manager/students/:studentId/notifications` принимает channel IN_APP/EMAIL,
@@ -94,7 +70,7 @@ snapshot/терминального статуса и связь source с со�
 ## Worker и ограничения доставки
 
 Системный канал — активный аккаунт → IN_APP, иначе email контакта → EMAIL.
-По [решению владельца](../../../../../../docs/online_academy_manager_notification_decisions_2026_11_01.md)
+По [решению владельца](../../../../../../docs/manager-rules.md)
 при отсутствии обоих исходная операция завершается, intent сразу FAILED с
 NO_DELIVERY_CHANNEL. Ручной запрос без выбранного канала422 и откатывается.
 
@@ -113,26 +89,3 @@ Committed claim сохраняет first_attempt_at перед внешним в
 нового сетевого запроса. Неопределённый внешний исход требует сверки, а не нового
 автоматического ключа. Это также может остановить доставку после длительного сбоя
 процесса ещё до первой фактической отправки. Сетевые ошибки и адреса не логируются.
-
-## Проверки и оставшаяся приёмка
-
-59 собственных проверок:36 HTTP,20 unit,3 SDK. Покрыты переменные всех14 шаблонов
-ru/en/fallback, роли/scope/replay, CSRF, rate limit, ссылки/HTML как текст, отсутствие
-секретов/текста в Audit/Outbox, system no-channel, provider retry/окно дедупликации,
-claim/DEAD, исходный перенос rollback и событие только после director publication.
-408 адресных регрессионных проверок MGR-03–07/STU-10,28 architecture/schema/ERD и
-1 standalone worker smoke успешны:496 уникальных проверок. Сборки API/worker/
-api-contracts, типизация student-cabinet/qa-shell, Prisma validate и генерация
-OpenAPI/Orval, адресный ESLint проходят. OpenAPI125 операций.
-
-Офлайн разобраны23 SQL statements/2 PLpgSQL функции миграции,15 captured запросов
-и изменённые inbox/projector queries. Доказательства:
-`tests/evidence/mgr08-verification.json`, `mgr08-sql-syntax.json`.
-
-Миграция **не применялась**. HTTP использует реальные Nest/core/domain сервисы с
-mock Prisma и сериализованной очередью фикстуры. Это не доказывает PostgreSQL18
-гонки, locks, constraints, grants, triggers или цепочку миграций. Отдельная БД и
-destructive suites не запускались по PHASE0_CHECKS.md. Все provider вызовы в тестах
-заменены mock fetch/provider; реальные письма не отправлялись. Настройка проверенного
-отправителя/ключей, живой worker и рабочая email/inbox приёмка остаются до выпуска;
-FND-GATE этим не закрыт.
