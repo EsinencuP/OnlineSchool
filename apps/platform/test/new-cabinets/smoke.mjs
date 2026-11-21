@@ -1265,7 +1265,15 @@ try {
   });
   await student.getByRole('button', { name: 'Прикрепить файл' }).click();
   await student.getByText('Файл проверен и добавлен.').waitFor();
+  const submitsBefore = studentApi.requests.filter((path) => path.endsWith('/submit')).length;
   await student.getByRole('button', { name: 'Сдать задание', exact: true }).click();
+  // Submitting asks first; nothing is sent until the student confirms.
+  await student.getByText(/Сдать работу на проверку\?/).waitFor();
+  assert.equal(
+    studentApi.requests.filter((path) => path.endsWith('/submit')).length,
+    submitsBefore,
+  );
+  await student.getByRole('button', { name: 'Да, сдать', exact: true }).click();
   await student.getByText(/Статус отправки неизвестен/).waitFor();
   await student.getByRole('button', { name: 'Проверить результат', exact: true }).click();
   await student.getByText('Задание сдано.', { exact: true }).waitFor();
