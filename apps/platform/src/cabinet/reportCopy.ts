@@ -3,6 +3,10 @@ import { useLocale } from '@online-school/ui';
 const copy = {
   skills: ['Карта навыков', 'Harta competențelor'],
   empty: ['Опубликованных отчётов пока нет.', 'Nu există încă rapoarte publicate.'],
+  emptyHint: [
+    'Отчёт появится здесь, когда преподаватель опубликует его по итогам контрольной точки.',
+    'Raportul apare aici după ce profesorul îl publică în urma punctului de control.',
+  ],
   open: ['Открыть отчёт', 'Deschide raportul'],
   back: ['К отчётам', 'Înapoi la rapoarte'],
   new: ['Новый', 'Nou'],

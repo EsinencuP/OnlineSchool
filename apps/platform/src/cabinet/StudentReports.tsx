@@ -224,7 +224,10 @@ function ReportDirectory({ params, navigate }: { params: URLSearchParams; naviga
           ))}
         </ul>
       ) : (
-        <p className="cab-empty">{text('empty')}</p>
+        <p className="cab-empty cab-empty-stack">
+          <span>{text('empty')}</span>
+          <small>{text('emptyHint')}</small>
+        </p>
       )}
       <StudyPager
         {...list.data}

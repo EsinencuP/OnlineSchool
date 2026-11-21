@@ -4,6 +4,7 @@ import type { components } from '@online-school/api-contracts';
 import { Icon } from '@online-school/ui';
 import { CabinLink } from './Home.js';
 import { useCabinetAction } from './hooks.js';
+import { zoneLabel } from './Operations.js';
 import { accountFailure, accountOutcomeUnknown, useAccountCopy } from './studentAccountCopy.js';
 import type { AccountMessage } from './studentAccountCopy.js';
 import { isRouteUuid } from './studentSubjectRoutes.js';
@@ -111,7 +112,7 @@ export function StudentProfile({
           )}
           <div>
             <dt>{text('timezone')}</dt>
-            <dd>{zone}</dd>
+            <dd>{zoneLabel(zone)}</dd>
           </div>
         </dl>
         <CabinLink to="/student/security" navigate={navigate} className="cab-inline-link">

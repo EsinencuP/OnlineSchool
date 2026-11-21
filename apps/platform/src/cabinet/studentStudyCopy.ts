@@ -122,6 +122,13 @@ const studyCopy = {
     'Starea trimiterii este necunoscută. Verifică dacă a apărut o versiune nouă.',
   ],
   sendAgain: ['Повторить исходную отправку', 'Repetă trimiterea inițială'],
+  confirmSend: [
+    'Сдать работу на проверку? После сдачи её нельзя изменить до ответа преподавателя.',
+    'Trimiți tema la verificare? După trimitere nu o poți modifica până la răspunsul profesorului.',
+  ],
+  confirmSendYes: ['Да, сдать', 'Da, trimite'],
+  confirmSendNo: ['Вернуться к ответу', 'Înapoi la răspuns'],
+  awaitingReview: ['Ждёт проверки', 'Așteaptă verificarea'],
   assignmentError: [
     'Задание сейчас не удалось сохранить. Проверьте ответ и доступ.',
     'Tema nu a putut fi salvată. Verifică răspunsul și accesul.',

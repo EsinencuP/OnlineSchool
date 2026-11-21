@@ -40,6 +40,7 @@ import {
 } from './recordRoutes.js';
 import { TeacherLessonCard } from './TeacherLesson.js';
 import { TeacherSchedule } from './TeacherSchedule.js';
+import { ManagerSchedule } from './ManagerSchedule.js';
 import { profileOperation, sections, sectionAliases } from './sections.js';
 
 const PaymentRoutePanel = lazy(() =>
@@ -277,6 +278,8 @@ function Shell({
     role === 'STUDENT' && section.id === 'lessons' ? detailPage?.params.lessonId : undefined;
   const teacherLessonId =
     role === 'TEACHER' && section.id === 'lessons' ? detailPage?.params.id : undefined;
+  const teacherSchedule = role === 'TEACHER' && section.id === 'lessons';
+  const managerSchedule = role === 'MANAGER' && section.id === 'schedule' && !route.detail;
   const locked = role === 'STUDENT' && profile.data?.mustChangePassword === true;
   const suspended = role === 'STUDENT' && profile.data?.hasActiveAccess === false;
   const profileUnknown =
@@ -350,22 +353,33 @@ function Shell({
           {...(fixedQuery ? { fixedQuery } : {})}
           {...(detailPage ? { detailPage } : {})}
           extra={
-            role === 'TEACHER' && section.id === 'lessons' ? (
+            teacherSchedule ? (
               <TeacherSchedule zone={zone} navigate={navigate} />
             ) : role === 'TEACHER' && section.id === 'payroll' && !route.detail ? (
               <TeacherEarnings />
             ) : role === 'DIRECTOR' && section.id === 'finance' && !route.detail ? (
               <DirectorPayrollChart />
-            ) : (role === 'STUDENT' && section.id === 'lessons' && !route.detail) ||
-              (role === 'MANAGER' && section.id === 'schedule' && !route.detail) ? (
+            ) : role === 'STUDENT' && section.id === 'lessons' && !route.detail ? (
               <SchedulePreview
-                role={role}
                 zone={zone}
                 navigate={navigate}
                 {...(subjectId ? { subjectId } : {})}
               />
             ) : undefined
           }
+          {...(managerSchedule
+            ? {
+                renderExtra: ({ revision, context, select, openCommand }) => (
+                  <ManagerSchedule
+                    zone={zone}
+                    revision={revision}
+                    selectedId={context.lessonId}
+                    onSelect={(lesson) => select('listManagerSchedule', lesson)}
+                    onCreate={() => openCommand('createManagerLesson')}
+                  />
+                ),
+              }
+            : {})}
           onPick={(id, row) => {
             const destination = recordUrl(id, row);
             if (destination) navigate(withSubject(destination, subjectLessons));
@@ -601,7 +615,7 @@ function Shell({
             />
           ) : (
             <>
-              {!teacherLessonId && !studentLessonId && !studentPayments && (
+              {!teacherSchedule && !managerSchedule && !studentLessonId && !studentPayments && (
                 <div className="cab-page-title">
                   <div>
                     <h1>{title}</h1>

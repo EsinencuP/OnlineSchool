@@ -23,3 +23,7 @@
 3. Запишите исправление через `node qa/scripts/qa.mjs submit-fix <cycle-id> qa/fixtures/fix.json`. Отправка переводит каждую принятую карточку в READY_FOR_RETEST с сохранением промежуточных событий.
 4. Обновите marker и локальный manifest до сборки, содержащей fix commit. Вызовите `$qa-retest <cycle-id> --build qa/fixtures/build.json`. Независимый QA Engineer проверит исходные действия и регрессию. При недоступном сценарии карточка остаётся READY_FOR_RETEST, а причины сохраняются в отчёте.
 5. Смотрите `$qa-status` и независимые отчёты. Допуск к выпуску остаётся отдельным решением владельца.
+
+## Claude Code
+
+Параллельный слой команд `/student`, `/teacher`, `/manager`, `/director`, `/qa-engineer`, `/qa-cycle`, `/qa-fix`, `/qa-retest`, `/qa-status`, `/qa-bootstrap` описан в [CLAUDE_CODE.md](CLAUDE_CODE.md).

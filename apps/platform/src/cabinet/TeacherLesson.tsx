@@ -340,7 +340,11 @@ export function TeacherLessonCard({
             <section className="cab-card cab-panel cab-detail cab-lesson-summary">
               <div className="cab-panel-title">
                 <h2>{lesson.subjectName}</h2>
-                <span className="cab-status cab-tone-violet">{t.lessonStates[lesson.state]}</span>
+                <span className="cab-status cab-tone-violet">
+                  {lesson.state === 'AWAITING_REPORT' && Date.parse(lesson.endsAt) > Date.now()
+                    ? t.scheduled
+                    : t.lessonStates[lesson.state]}
+                </span>
               </div>
               <p className="cab-detail-subtitle">
                 {lesson.studentName} · {lesson.kind === 'TRIAL' ? t.trial : t.regular}

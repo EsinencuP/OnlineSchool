@@ -59,6 +59,7 @@ function HomeworkEditor({
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [pending, setPending] = useState<Submission | null>(null);
   const [checked, setChecked] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const action = useRef<AbortController | null>(null);
   const draftKey = useRef<{ content: string; key: string } | null>(null);
   useEffect(() => () => action.current?.abort(), []);
@@ -149,6 +150,7 @@ function HomeworkEditor({
           onChange={(event) => {
             setAnswer(event.target.value);
             setFeedback(null);
+            setConfirming(false);
           }}
         />
       </label>
@@ -222,20 +224,47 @@ function HomeworkEditor({
           <button
             type="button"
             className="cab-button cab-primary"
-            disabled={busy || uploading || !answer.trim()}
-            onClick={() =>
-              void perform({
-                key: crypto.randomUUID(),
-                body: { content: answer.trim(), fileIds: files.map(({ id }) => id) },
-                baseline: Math.max(
-                  0,
-                  ...versionHistory(item).map(({ versionNumber }) => versionNumber),
-                ),
-              })
-            }
+            disabled={busy || uploading || !answer.trim() || confirming}
+            onClick={() => {
+              setFeedback(null);
+              setConfirming(true);
+            }}
           >
             {text('sendAssignment')}
           </button>
+        </div>
+      )}
+      {confirming && !pending && (
+        <div className="cab-confirm" role="group" aria-label={text('sendAssignment')}>
+          <p>{text('confirmSend')}</p>
+          <div className="cab-form-actions">
+            <button
+              type="button"
+              className="cab-button cab-secondary"
+              disabled={busy}
+              onClick={() => setConfirming(false)}
+            >
+              {text('confirmSendNo')}
+            </button>
+            <button
+              type="button"
+              className="cab-button cab-primary"
+              disabled={busy || uploading || !answer.trim()}
+              onClick={() => {
+                setConfirming(false);
+                void perform({
+                  key: crypto.randomUUID(),
+                  body: { content: answer.trim(), fileIds: files.map(({ id }) => id) },
+                  baseline: Math.max(
+                    0,
+                    ...versionHistory(item).map(({ versionNumber }) => versionNumber),
+                  ),
+                });
+              }}
+            >
+              {text('confirmSendYes')}
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -276,6 +305,7 @@ export function StudentHomework({
   const [receipt, setReceipt] = useState(false);
   const item = result.data?.homeworkId === id ? result.data : null;
   const versions = item ? versionHistory(item) : [];
+  const latestVersion = Math.max(0, ...versions.map(({ versionNumber }) => versionNumber));
   const editable = item && (item.status === 'NOT_SUBMITTED' || item.status === 'NEEDS_REVISION');
   const date = (value: string) => formatDateTime(value, locale, zone) ?? '—';
   function accepted() {
@@ -348,10 +378,17 @@ export function StudentHomework({
                         </time>
                         <p className="cab-long-copy">{version.content}</p>
                         <FileList files={version.attachments} />
-                        {version.teacherStatus && (
+                        {version.teacherStatus ? (
                           <span className="cab-status cab-tone-violet">
                             {studyStatus(version.teacherStatus, text)}
                           </span>
+                        ) : (
+                          item?.status === 'SUBMITTED' &&
+                          version.versionNumber === latestVersion && (
+                            <span className="cab-status cab-tone-peach">
+                              {text('awaitingReview')}
+                            </span>
+                          )
                         )}
                         {version.teacherComment && (
                           <div>

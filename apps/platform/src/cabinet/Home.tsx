@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ReactNode } from 'react';
 import type { components } from '@online-school/api-contracts';
-import { Calendar, Icon } from '@online-school/ui';
+import { Calendar, Icon, formatDateOnly, localDateTimeToIso } from '@online-school/ui';
 import type { CalendarEvent, IconName } from '@online-school/ui';
 import { StageArt } from './Access.js';
 import { SubjectIcon } from './Brand.js';
@@ -45,6 +45,19 @@ const formatClock = (value: unknown, zone: string) =>
         new Date(value),
       )
     : '—';
+// "Сегодня" for today's events, otherwise a short weekday and date: rows at the same clock time stay distinct.
+const formatDay = (value: unknown, zone: string) => {
+  if (typeof value !== 'string' || !Number.isFinite(Date.parse(value))) return null;
+  const date = new Date(value);
+  return dateLabel(date, zone) === dateLabel(new Date(), zone)
+    ? 'Сегодня'
+    : new Intl.DateTimeFormat('ru', {
+        timeZone: zone,
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+      }).format(date);
+};
 function textValue(value: unknown) {
   return typeof value === 'string' ? value : '';
 }
@@ -172,9 +185,12 @@ function EventList({
       {rows.slice(0, 6).map((row, index) => {
         const start = row.startsAt ?? row.scheduledAt ?? row.dueAt ?? row.requestedAt;
         const title = textValue(row.subjectName ?? row.title ?? row.studentName) || 'Занятие';
-        const subtitle = [row.teacherName, row.studentName].find(
+        const person = [row.teacherName, row.studentName].find(
           (name) => typeof name === 'string' && name !== title,
         );
+        const subtitle =
+          [formatDay(start, zone), person].filter((part) => typeof part === 'string').join(' · ') ||
+          undefined;
         const target = row.lessonId ?? row.id ?? row.taskId ?? row.deliveryId;
         const destination = operation ? recordUrl(operation, row) : null;
         return (
@@ -355,8 +371,7 @@ function StudentHome({ name, zone, navigate, noticePreview }: HomeProps) {
                 </p>
               ) : lesson ? (
                 <p>
-                  {display(lesson.scheduledAt)} · {lesson.durationMinutes} мин
-                  <br />
+                  {display(lesson.scheduledAt)} · {lesson.durationMinutes} мин ·{' '}
                   {lesson.teacherName}
                 </p>
               ) : (
@@ -523,7 +538,7 @@ function StudentHome({ name, zone, navigate, noticePreview }: HomeProps) {
                   {result.data.subscription.isFrozen
                     ? 'На заморозке'
                     : result.data.subscription.validUntil
-                      ? `До ${result.data.subscription.validUntil}`
+                      ? `До ${formatDateOnly(result.data.subscription.validUntil, 'ru') ?? result.data.subscription.validUntil}`
                       : 'Действует'}
                 </p>
               </div>
@@ -551,9 +566,19 @@ const roleDetailsSource: Record<Exclude<Role, 'STUDENT'>, string> = {
   DIRECTOR: 'getDirectorDecisions',
   TECH_OPERATOR: 'getQueueHealth',
 };
+// The teacher's home queue is the review queue, not every issued homework.
+const roleDetailsQuery: Partial<Record<Exclude<Role, 'STUDENT'>, Record<string, string>>> = {
+  TEACHER: { state: 'AWAITING_REVIEW' },
+};
+const reviewQueuePath = '/teacher/homework?state=AWAITING_REVIEW';
+const pageCount = (data: unknown) => {
+  if (!data) return null;
+  const rows = rowsOf(data).length;
+  return typeof record(data).nextCursor === 'string' ? `${rows}+` : rows;
+};
 function StaffHome({ role, name, zone, navigate }: HomeProps & { role: Exclude<Role, 'STUDENT'> }) {
   const result = useEndpoint<unknown>(roleHomeSource[role]);
-  const details = useEndpoint<unknown>(roleDetailsSource[role]);
+  const details = useEndpoint<unknown>(roleDetailsSource[role], undefined, roleDetailsQuery[role]);
   const payload = record(result.data);
   const home = homes[role];
   const summary: Record<typeof role, Summary[]> = {
@@ -573,11 +598,11 @@ function StaffHome({ role, name, zone, navigate }: HomeProps & { role: Exclude<R
         to: home + '/reports',
       },
       {
-        title: 'Выданные задания',
-        value: record(details.data).total,
+        title: 'Ждут проверки',
+        value: pageCount(details.data),
         icon: 'tasks',
         tone: 'peach',
-        to: home + '/homework',
+        to: reviewQueuePath,
       },
     ],
     MANAGER: [
@@ -652,7 +677,7 @@ function StaffHome({ role, name, zone, navigate }: HomeProps & { role: Exclude<R
         ? payload.upcomingLessons.map(record)
         : [];
   const mainPage: Record<typeof role, { title: string; path: string }> = {
-    TEACHER: { title: 'Задания к проверке', path: '/teacher/homework' },
+    TEACHER: { title: 'Задания к проверке', path: reviewQueuePath },
     MANAGER: { title: 'Очередь задач', path: '/manager/tasks' },
     DIRECTOR: { title: 'Очередь решений', path: '/director/decisions' },
     TECH_OPERATOR: { title: 'Очереди worker', path: '/operator/queues' },
@@ -749,40 +774,33 @@ export function Home(props: HomeProps) {
   return <StaffHome {...props} role={props.role} />;
 }
 export function SchedulePreview({
-  role,
   zone,
   navigate,
   subjectId,
 }: {
-  role: Role;
   zone: string;
   navigate: Navigate;
   subjectId?: string;
 }) {
   const [now] = useState(() => new Date());
-  const [range, setRange] = useState(0);
-  const pivot = new Date(now.getTime() + range * 7 * zeroDay);
-  const from = new Date(pivot.getTime() - 12 * 3600_000);
-  const to = new Date(pivot.getTime() + 7.5 * zeroDay);
+  // period=week is the ISO Monday-start week in the student's zone; the calendar must claim exactly that.
+  const today = dateLabel(now, zone);
+  const todayUtc = Date.parse(today + 'T00:00:00Z');
+  const monday = todayUtc - ((new Date(todayUtc).getUTCDay() + 6) % 7) * zeroDay;
+  const weekDay = (offset: number) =>
+    new Date(monday + offset * zeroDay).toISOString().slice(0, 10);
+  const from = localDateTimeToIso(weekDay(0) + 'T00:00', zone);
+  const to = localDateTimeToIso(weekDay(7) + 'T00:00', zone);
   const read = useEndpoint<unknown>(
-    role === 'MANAGER'
-      ? 'listManagerSchedule'
-      : role === 'TEACHER'
-        ? 'getTeacherToday'
-        : 'getStudentLessons',
+    'getStudentLessons',
     {},
-    role === 'MANAGER'
-      ? { from: from.toISOString(), to: to.toISOString() }
-      : role === 'TEACHER'
-        ? { date: dateLabel(pivot, zone) }
-        : { period: 'week', pageSize: 100, ...(subjectId ? { subjectId } : {}) },
+    {
+      period: 'week',
+      pageSize: 100,
+      ...(subjectId ? { subjectId } : {}),
+    },
   );
-  const days =
-    role === 'TEACHER'
-      ? [dateLabel(pivot, zone)]
-      : Array.from({ length: 7 }, (_, index) =>
-          dateLabel(new Date(pivot.getTime() + index * zeroDay), zone),
-        );
+  const days = Array.from({ length: 7 }, (_, index) => weekDay(index));
   const events: CalendarEvent[] = rowsOf(read.data).flatMap((row) => {
     const id = row.id ?? row.lessonId;
     const startsAt = row.startsAt ?? row.scheduledAt;
@@ -813,57 +831,27 @@ export function SchedulePreview({
     ];
   });
   return (
-    <Panel
-      title="Календарь занятий"
-      action={
-        role !== 'STUDENT' && (
-          <div className="cab-calendar-controls">
-            <button
-              type="button"
-              className="cab-button cab-secondary"
-              aria-label="Предыдущий интервал"
-              onClick={() => setRange(range - 1)}
-            >
-              ‹
-            </button>
-            <button type="button" className="cab-button cab-secondary" onClick={() => setRange(0)}>
-              Сегодня
-            </button>
-            <button
-              type="button"
-              className="cab-button cab-secondary"
-              aria-label="Следующий интервал"
-              onClick={() => setRange(range + 1)}
-            >
-              ›
-            </button>
-          </div>
-        )
-      }
-    >
+    <Panel title="Календарь занятий">
       {read.error || read.pending ? (
         <LoadState refreshing={read.pending} error={read.error} retry={read.refresh} />
       ) : (
         <Calendar
           label="Занятия"
           timeZone={zone}
-          view={role === 'TEACHER' ? 'day' : 'week'}
+          view="week"
           days={days}
-          horizon={read.data ? { from: from.toISOString(), to: to.toISOString() } : null}
+          horizon={read.data && from && to ? { from, to } : null}
           events={events}
-          {...(role === 'STUDENT'
-            ? {
-                renderEvent: (event: CalendarEvent) => (
-                  <CabinLink
-                    to={withSubject('/student/lessons/' + encodeURIComponent(event.id), subjectId)}
-                    navigate={navigate}
-                    className="cab-inline-link"
-                  >
-                    {event.title}
-                  </CabinLink>
-                ),
-              }
-            : {})}
+          stateLabel={(event) => (event.state === 'busy' ? 'Запланирован' : undefined)}
+          renderEvent={(event) => (
+            <CabinLink
+              to={withSubject('/student/lessons/' + encodeURIComponent(event.id), subjectId)}
+              navigate={navigate}
+              className="cab-inline-link"
+            >
+              {event.title}
+            </CabinLink>
+          )}
         />
       )}
     </Panel>

@@ -29,8 +29,8 @@ type Subject = Schemas['StudentSubjectDto'];
 type Navigate = (url: string) => void;
 
 const copy = {
-  choose: ['Абонемент по предмету', 'Abonament pe disciplină'],
-  defaultPlan: ['Абонемент по умолчанию', 'Abonamentul implicit'],
+  choose: ['Показать абонемент по предмету', 'Arată abonamentul pe disciplină'],
+  defaultPlan: ['Текущий абонемент', 'Abonamentul curent'],
   linkedPlan: ['Абонемент по ссылке', 'Abonamentul din link'],
   period: ['Период абонемента', 'Perioada abonamentului'],
   remaining: ['Осталось оплаченных уроков', 'Lecții plătite rămase'],
@@ -44,8 +44,9 @@ const copy = {
   admissionLimit: ['Лимит уроков по допуску', 'Limita de lecții cu acces temporar'],
   admissionUntil: ['Допуск действует до', 'Acces temporar valabil până la'],
   history: ['История абонемента', 'Istoricul abonamentului'],
-  payments: ['Подтверждённые оплаты', 'Plăți confirmate'],
-  ledger: ['Остаток уроков', 'Soldul lecțiilor'],
+  payments: ['Оплаты', 'Plăți'],
+  paidAmount: ['Сумма оплаты', 'Suma plății'],
+  ledger: ['Движение уроков', 'Mișcarea lecțiilor'],
   emptyPayments: ['Подтверждённых оплат пока нет.', 'Nu există încă plăți confirmate.'],
   emptyLedger: ['Операций с остатком пока нет.', 'Nu există încă operațiuni privind soldul.'],
   lessonsAdded: ['Начислено уроков', 'Lecții adăugate'],
@@ -214,6 +215,7 @@ function Payments({ items, zone }: { items: Schemas['PaymentHistoryItemDto'][]; 
       {items.map((payment, index) => (
         <li key={payment.paymentId + ':' + index}>
           <div>
+            <span className="cab-detail-subtitle">{text('paidAmount')}</span>
             <strong>
               {formatMoneyAmount(payment.amount, payment.currency, locale) ?? text('unknown')}
             </strong>

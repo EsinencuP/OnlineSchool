@@ -1,5 +1,6 @@
 import { initializeLocale } from '@online-school/ui';
 import type { IconName } from '@online-school/ui';
+import { responseEnumNames, responseFieldNames } from './fieldCopy.js';
 
 // Russian/Romanian copy for every API operation, form field and enum value the
 // generic cabinet workspace can show. Unknown keys fall back to a readable form
@@ -1149,12 +1150,18 @@ export function actionStyle(id: string) {
     advanced: copy?.advanced === true,
   };
 }
+const camelKey = (key: string) => key.replace(/_([a-z\d])/g, (_, letter: string) => letter.toUpperCase());
 export function fieldTitle(key: string) {
-  const pair = fieldNames[key];
+  const camel = camelKey(key);
+  const pair =
+    fieldNames[key] ??
+    fieldNames[camel] ??
+    responseFieldNames[camel] ??
+    (/^[A-Z][A-Z0-9_]*$/.test(key) ? (enumNames[key] ?? responseEnumNames[key]) : undefined);
   return pair ? pick(pair) : readable(key);
 }
 export function enumTitle(value: string) {
-  const pair = enumNames[value];
+  const pair = enumNames[value] ?? responseEnumNames[value];
   return pair ? pick(pair) : value;
 }
 export function variantTitle(name: string | undefined, index: number) {

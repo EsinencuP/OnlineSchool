@@ -33,6 +33,10 @@ const copy = {
   ],
   noMaps: ['Карт навыков пока нет.', 'Nu există încă hărți de competențe.'],
   noSkills: ['На этом этапе пока нет навыков.', 'Nu există încă competențe la această etapă.'],
+  noSkillsHint: [
+    'Навыки появятся здесь, когда преподаватель оценит их по итогам уроков. Загляните на другие этапы.',
+    'Competențele apar aici după ce profesorul le evaluează în urma lecțiilor. Verifică și alte etape.',
+  ],
   goals: ['Цели обучения', 'Obiective de învățare'],
   achieved: ['Достигнута', 'Atins'],
   inProgress: ['В работе', 'În lucru'],
@@ -181,7 +185,10 @@ function SkillBoard({
           ))}
         </ul>
       ) : (
-        <p className="cab-empty">{text('noSkills')}</p>
+        <p className="cab-empty cab-empty-stack">
+          <span>{text('noSkills')}</span>
+          <small>{text('noSkillsHint')}</small>
+        </p>
       )}
       <details className="cab-disclosure">
         <summary>{text('goals')}</summary>

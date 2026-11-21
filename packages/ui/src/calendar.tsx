@@ -94,6 +94,8 @@ export type CalendarProps = {
   events: readonly CalendarEvent[];
   refreshing?: boolean;
   renderEvent?: (event: CalendarEvent) => ReactNode;
+  /** Overrides the generic availability chip, e.g. a student's lesson is "scheduled", not "busy". */
+  stateLabel?: (event: CalendarEvent) => string | undefined;
 };
 const stateLabels = {
   protected: 'calendarProtected',
@@ -183,6 +185,7 @@ export function Calendar({
   events,
   refreshing,
   renderEvent,
+  stateLabel,
 }: CalendarProps) {
   const { t, intlLocale } = useLocale();
   const groups = useMemo(
@@ -242,7 +245,7 @@ export function Calendar({
                       <time dateTime={event.endsAt}>{times?.format(new Date(event.endsAt))}</time>
                     </p>
                     <StatusChip tone={stateTones[event.state]}>
-                      {t(stateLabels[event.state])}
+                      {stateLabel?.(event) ?? t(stateLabels[event.state])}
                     </StatusChip>
                     {renderEvent ? renderEvent(event) : <p>{event.title}</p>}
                   </li>

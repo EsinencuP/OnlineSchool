@@ -14,6 +14,7 @@ import type { Details, Operation, Schema } from './contract.js';
 import { useEndpoint } from './hooks.js';
 import { operationName } from './sections.js';
 import { actionHint, actionStyle, enumTitle, fieldTitle, t, variantTitle } from './actionCopy.js';
+import { serviceFields } from './fieldCopy.js';
 import { PersonCard, personFrom } from './PersonCard.js';
 import type { RecordPage } from './recordRoutes.js';
 import type { Section } from './sections.js';
@@ -71,6 +72,27 @@ export function LoadState({
     </div>
   );
 }
+const zoneCities: Record<string, readonly [string, string]> = {
+  'Europe/Chisinau': ['Кишинёв', 'Chișinău'],
+  'Europe/Bucharest': ['Бухарест', 'București'],
+  'Europe/Kyiv': ['Киев', 'Kiev'],
+  'Europe/Kiev': ['Киев', 'Kiev'],
+  'Europe/Moscow': ['Москва', 'Moscova'],
+};
+/** "Europe/Chisinau" → "Кишинёв (GMT+2)"; unknown or invalid zones are shown as given. */
+export function zoneLabel(zone: string) {
+  try {
+    const offset = new Intl.DateTimeFormat('en-US', { timeZone: zone, timeZoneName: 'shortOffset' })
+      .formatToParts(new Date())
+      .find((part) => part.type === 'timeZoneName')?.value;
+    const city = zoneCities[zone];
+    const name = city ? t(city[0], city[1]) : (zone.split('/').pop() ?? zone).replace(/_/g, ' ');
+    return offset ? `${name} (${offset})` : name;
+  } catch {
+    return zone;
+  }
+}
+
 export function display(value: unknown): string {
   if (value === null || value === undefined || value === '') return '—';
   if (typeof value === 'boolean') return value ? t('Да', 'Da') : t('Нет', 'Nu');
@@ -106,6 +128,7 @@ const titleKeys = [
   'kind',
   'type',
 ];
+const sourceTitleKey: Record<string, string> = { getTeacherNotifications: 'type' };
 function itemTitle(row: Details) {
   const key = titleKeys.find((key) => typeof row[key] === 'string' && row[key]);
   return key
@@ -115,7 +138,9 @@ function itemTitle(row: Details) {
       : t('Запись', 'Înregistrare');
 }
 function visibleEntries(data: Details) {
-  return Object.entries(data).filter(([key, value]) => !invisible.test(key) && value !== undefined);
+  return Object.entries(data).filter(
+    ([key, value]) => !invisible.test(key) && !serviceFields.has(key) && value !== undefined,
+  );
 }
 
 export function ObjectDetails({ data, depth = 0 }: { data: Details; depth?: number }) {
@@ -134,7 +159,15 @@ export function ObjectDetails({ data, depth = 0 }: { data: Details; depth?: numb
           .map(([key, value]) => (
             <div key={key}>
               <dt>{fieldLabel(key)}</dt>
-              <dd>{key === 'status' ? <Status value={value} /> : display(value)}</dd>
+              <dd>
+                {key === 'status' ? (
+                  <Status value={value} />
+                ) : /^time_?zone$/i.test(key) && typeof value === 'string' ? (
+                  zoneLabel(value)
+                ) : (
+                  display(value)
+                )}
+              </dd>
             </div>
           ))}
       </dl>
@@ -207,11 +240,17 @@ function ResponseBody({
     if (person) return <PersonCard person={person} />;
     if (
       Object.keys(object).some((key) => Array.isArray(object[key])) &&
-      visibleEntries(object).every(([, item]) => Array.isArray(item) && !item.length)
+      visibleEntries(object)
+        .filter(([key]) => !['total', 'page', 'pageSize'].includes(key))
+        .every(([, item]) => Array.isArray(item) && !item.length)
     )
       return <LoadState />;
     return <ObjectDetails data={object} />;
   }
+  // Event feeds have no title field: the event type is what the row is about.
+  const titleKey = sourceTitleKey[sourceId];
+  const rowTitle = (row: Details) =>
+    titleKey && typeof row[titleKey] === 'string' ? display(row[titleKey]) : itemTitle(row);
   const selectedPerson = selected ? personFrom(sourceId, selected) : null;
   return (
     <>
@@ -221,12 +260,14 @@ function ResponseBody({
             'scheduledAt',
             'startsAt',
             'dueAt',
+            'occurredAt',
+            'subjectName',
             'teacherName',
             'studentName',
             'email',
             'amount',
           ]
-            .filter((key) => row[key] !== undefined && display(row[key]) !== itemTitle(row))
+            .filter((key) => row[key] !== undefined && display(row[key]) !== rowTitle(row))
             .slice(0, 3)
             .map((key) => display(row[key]))
             .join(' · ');
@@ -246,7 +287,7 @@ function ResponseBody({
                 <Icon name="materials" size={18} />
               </span>
               <span className="cab-record-content">
-                <strong>{itemTitle(row)}</strong>
+                <strong>{rowTitle(row)}</strong>
                 {subtitle && <small>{subtitle}</small>}
               </span>
               <Status value={row.status ?? row.displayStatus} />
@@ -262,7 +303,7 @@ function ResponseBody({
           </div>
         ) : (
           <div className="cab-row-inspector">
-            <h3>{itemTitle(selected)}</h3>
+            <h3>{rowTitle(selected)}</h3>
             <ObjectDetails data={selected} />
           </div>
         ))}
@@ -329,6 +370,7 @@ function formFields(values: FormData, definitions: Field[]) {
 }
 
 const recordField = /(^id$|Id$)/;
+const concurrencyField = /^(version|expectedVersion|revision|disputesRevision)$/;
 function OperationInput({
   field,
   hint,
@@ -346,6 +388,8 @@ function OperationInput({
   const multiline =
     type === 'array' || type === 'object' || /reason|description|note|comment|text/i.test(name);
   const [manual, setManual] = useState(false);
+  // Optimistic-concurrency tokens are prefilled from the opened record; users never edit them.
+  if (hint && concurrencyField.test(name)) return <input type="hidden" name={id} value={hint} />;
   if (!manual && pickedLabel !== undefined && hint && recordField.test(name) && type === 'string') {
     const label = pickedLabel || t('выбранная запись', 'înregistrarea selectată');
     return (
@@ -430,7 +474,18 @@ function initialFilters(id: string): Record<string, string | number | boolean> {
   }
   return {};
 }
-const roleReadsRequireContext = (fields: Field[], path: Details, query: Details) =>
+// Reads whose API requires exactly one of several optional query params (OpenAPI cannot express it).
+const requiresOneOf: Record<string, string[]> = {
+  listManagerContacts: ['leadId', 'studentId', 'teacherId'],
+};
+const roleReadsRequireContext = (
+  operationId: string,
+  fields: Field[],
+  path: Details,
+  query: Details,
+) =>
+  (requiresOneOf[operationId]?.every((name) => query[name] === undefined || query[name] === '') ??
+    false) ||
   fields.some(
     (field) =>
       field.required &&
@@ -472,7 +527,7 @@ function ReadPanel({
   } | null>(null);
   const path = submitted?.params ?? initialPath;
   const query = { ...(submitted?.query ?? autoQuery.current), ...fixedQuery };
-  const canRead = !roleReadsRequireContext(definitions, path, query);
+  const canRead = !roleReadsRequireContext(operation.operationId, definitions, path, query);
   const result = useEndpoint<unknown>(
     canRead ? operation.operationId : null,
     path,
@@ -729,12 +784,19 @@ export function OperationWorkspace({
   section,
   detailPage,
   extra,
+  renderExtra,
   onPick,
   fixedQuery,
 }: {
   section: Section;
   detailPage?: RecordPage;
   extra?: ReactNode;
+  renderExtra?: (controls: {
+    revision: number;
+    context: Record<string, string>;
+    select: (operation: string, row: Details) => void;
+    openCommand: (id: string) => void;
+  }) => ReactNode;
   onPick?: (operation: string, row: Details) => void;
   fixedQuery?: Record<string, string>;
 }) {
@@ -762,9 +824,15 @@ export function OperationWorkspace({
     : Object.keys(detail).length
       ? itemTitle(detail)
       : '';
+  function select(operationId: string, row: Details) {
+    setSelection(rowContext(row, operationId, scopedParams));
+    setPickedTitle(itemTitle(row));
+    onPick?.(operationId, row);
+  }
   return (
     <>
       {extra}
+      {renderExtra?.({ revision, context, select, openCommand: setCommand })}
       {commands.length > 0 && (
         <QuickActions
           commands={commands}
@@ -799,11 +867,7 @@ export function OperationWorkspace({
             revision={revision}
             {...(fixedQuery ? { fixedQuery } : {})}
             {...(operation.operationId === detailId ? { onRecord: setOpenedRecord } : {})}
-            onPick={(row) => {
-              setSelection(rowContext(row, operation.operationId, scopedParams));
-              setPickedTitle(itemTitle(row));
-              onPick?.(operation.operationId, row);
-            }}
+            onPick={(row) => select(operation.operationId, row)}
           />
         ) : (
           <LoadState />

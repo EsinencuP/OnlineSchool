@@ -869,6 +869,12 @@ a.cab-metric:hover {
   padding: 12px;
   font-size: 13px;
 }
+.cab-empty-stack {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+}
 .cab-empty-error,
 .cab-form-error {
   background: #fff0f6;
@@ -878,6 +884,17 @@ a.cab-metric:hover {
   border-radius: 11px;
   padding: 9px 11px;
   font-size: 13px;
+}
+.cab-confirm {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 10px;
+}
+.cab-confirm p {
+  margin: 0;
+  color: var(--ink);
 }
 .cab-spinner {
   border: 2px solid #d8cdea;
@@ -1248,13 +1265,6 @@ a.cab-metric:hover {
 .k8k-calendar-times {
   font-size: 10px;
   font-weight: 650;
-}
-.cab-calendar-controls {
-  display: flex;
-  gap: 4px;
-}
-.cab-calendar-controls button {
-  min-height: 33px;
 }
 @keyframes cab-spin {
   to {

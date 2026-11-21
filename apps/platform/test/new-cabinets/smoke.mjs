@@ -98,6 +98,14 @@ const skillId = '00000000-0000-4000-8000-000000000311';
 const teacherDay = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Chisinau' }).format(
   new Date(date),
 );
+// period=week is the ISO week in Europe/Chisinau: keep the student's lesson upcoming but inside it.
+const weekDayIndex = (new Date(teacherDay + 'T00:00:00Z').getUTCDay() + 6) % 7;
+const weekEndBound =
+  Date.parse(teacherDay + 'T00:00:00Z') + (7 - weekDayIndex) * 86400_000 - 3 * 3600_000;
+const studentLessonAt =
+  weekEndBound > Date.parse(date)
+    ? Date.parse(date) + (weekEndBound - Date.parse(date)) / 2
+    : Date.parse(date) + 60_000;
 const teacherStart = new Date(Date.parse(date) + 891).toISOString();
 const teacherEnd = new Date(Date.parse(date) + 45 * 60_000).toISOString();
 const teacherDeadline = new Date(Date.parse(teacherEnd) + 86400_000).toISOString();
@@ -105,7 +113,7 @@ const sentReports = [];
 const requestedDays = new Set();
 const lesson = {
   lessonId,
-  scheduledAt: new Date(Date.parse(date) + 2 * 86400_000).toISOString(),
+  scheduledAt: new Date(studentLessonAt).toISOString(),
   durationMinutes: 45,
   teacherName: 'Андрей Петров',
   subjectName: 'Математика',
@@ -947,7 +955,7 @@ try {
       await page.getByText(/600[,.]1234\s+MDL/).waitFor();
       await page.getByRole('button', { name: 'Следующая страница' }).click();
       await page.getByText(/1[,.]005\s+USD/).waitFor();
-      await page.getByRole('button', { name: 'Остаток уроков' }).click();
+      await page.getByRole('button', { name: 'Движение уроков' }).click();
       await page.getByText('Разморозка абонемента', { exact: true }).waitFor();
       assert.equal(
         await page.locator('.cab-subscription-history dd').first().textContent(),
@@ -964,7 +972,7 @@ try {
       await page.locator('.cab-account-button').click();
       await page.locator('.k8k-language select').selectOption('ru');
       await page
-        .getByRole('combobox', { name: 'Абонемент по предмету' })
+        .getByRole('combobox', { name: 'Показать абонемент по предмету' })
         .selectOption(expiredPlanId);
       await page.getByText('Подтверждённых оплат пока нет.').waitFor();
       await page.getByText('Истёк', { exact: true }).waitFor();
@@ -1105,7 +1113,7 @@ try {
     if (role === 'TEACHER') {
       await page.goto(base + '/teacher/lessons');
       await page
-        .locator('.k8k-calendar-days')
+        .getByRole('region', { name: 'Расписание преподавателя' })
         .getByRole('link', { name: /Математика/ })
         .click();
       assert.equal(requestedDays.size, 7);
@@ -1205,8 +1213,13 @@ try {
       await page.getByRole('definition').filter({ hasText: 'Анна Мирова' }).first().waitFor();
       // Quick actions are always visible; no disclosure to open first.
       await page.locator('.cab-quick-action', { hasText: 'Взять в работу' }).click();
-      await page.getByLabel('Версия').waitFor();
-      assert.equal(await page.getByLabel('Версия').inputValue(), '7');
+      // The concurrency version is prefilled and hidden; the user never edits it.
+      await page.getByRole('dialog').waitFor();
+      assert.equal(await page.getByLabel('Версия').count(), 0);
+      assert.equal(
+        await page.getByRole('dialog').locator('input[type="hidden"][name="body:version"]').inputValue(),
+        '7',
+      );
       await page
         .getByRole('dialog')
         .getByRole('button', { name: 'Взять в работу', exact: true })
