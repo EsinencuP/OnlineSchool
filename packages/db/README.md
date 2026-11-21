@@ -1,16 +1,6 @@
-# Identity, Access и CRM — TASK-02
+# База данных
 
-Текущий инкремент и команды для новых/существующих БД:
-[SQL guards, миграции и QA seed — TASK-05](MIGRATIONS_SEED.md).
-Полная модель Education/Files/Audit/Outbox/Jobs описана в [TASK-04](EDUCATION_INFRA.md).
-Полная схема после TASK-07 содержит 66 моделей: init + TASK-05 guards + TASK-07 Identity;
-[Identity и recovery](../../apps/api/IDENTITY.md). Исходная история TASK-02/03 сохранена
-отдельно. Ниже описан исходный инкремент TASK-02 с поздними уточнениями.
-
-Реализованы 20 моделей задачи и общий технический `AuthAccount`. Все PK —
-`String @id @default(uuid()) @db.Uuid`; каждая модель содержит `created_at`
-и `updated_at`. Внешние ключи имеют явные имена и `ON DELETE/UPDATE RESTRICT`.
-PII отмечены в Prisma-схеме; комментарий не заменяет серверные права доступа.
+[Схема и связи](ERD.md) · [Миграции и seed](MIGRATIONS_SEED.md) · [Финансовые ограничения](FINANCE.md) · [Учебные данные](EDUCATION_INFRA.md).
 
 ## Владение и связи
 
@@ -57,52 +47,3 @@ PII отмечены в Prisma-схеме; комментарий не заме�
 - CRM хранит проверившего связь менеджера, историю назначений, внутренние задачи
   и результаты контактов. `idempotency_key` уникален для отдельной производной задачи;
   `source_event_id` может повторяться у разных задач одного события.
-
-## Незавершённые междоменные зависимости
-
-В исходном TASK-02 финансовые ссылки были UUID-снимками без FK. В TASK-03 добавлены
-Subscription/PaymentReceipt/TemporaryAccessPermission и именованные FK активации.
-Проверяются принадлежность ученику, подтверждённое распределение, полнота оплаты
-либо отдельный действующий допуск. [Текущие ограничения и проверки](FINANCE.md).
-Полный авторизованный API активации и audit/outbox остаются следующими задачами.
-
-`source_event_id` получит связь с моделью outbox в TASK-04. Серверные RBAC/контекстные
-проверки, MFA, однократное потребление challenge и отзыв действующих сессий реализуются
-в TASK-06/07; текущая схема не является готовой системой аутентификации. Семейное
-членство и SQL-целостность не выдают прав на учебные или финансовые данные.
-Журнал общего аудита, политика retention и защита истории от прикладных изменений
-остаются следующими задачами. FND-GATE и production GO не закрыты.
-
-## Проверка на чистой PostgreSQL 18
-
-Из корня workspace, PowerShell; используется отдельная локальная тестовая БД:
-
-```powershell
-docker run --detach --name online-school-task02-verify --publish 127.0.0.1:55432:5432 --env POSTGRES_HOST_AUTH_METHOD=trust --env POSTGRES_DB=online_school_test_identity postgres:18
-$env:DIRECT_URL = 'postgresql://postgres@127.0.0.1:55432/online_school_test_identity'
-pnpm --filter @online-school/db db:validate
-pnpm --filter @online-school/db db:migrate
-pnpm --filter @online-school/db build
-$env:TEST_DATABASE_URL = $env:DIRECT_URL
-pnpm --filter @online-school/db test:integration
-pnpm --filter @online-school/db exec prisma migrate status
-pnpm --filter @online-school/db exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
-docker stop online-school-task02-verify
-```
-
-Дождитесь готовности PostgreSQL перед миграцией. Runtime `DATABASE_URL` не используется
-миграциями. Интеграционные тесты требуют loopback-адрес и имя БД с префиксом
-`online_school_test` или `online_school_task02`; обычный `pnpm test` не требует БД.
-Тестовые данные синтетические; тесты откатывают транзакции или удаляют свои записи.
-
-**Проверено 26 октября 2026:** PostgreSQL **18.6**, образ `postgres:18`
-(`sha256:edb0c08dc33befd0262ab3b5cf1c4f3f8cfd8b09e88c05b45adee29d6761ddb6`).
-На новой пустой БД применены обе миграции через `prisma migrate dev`.
-`prisma validate`, `prisma generate`, 12 интеграционных проверок — успешно;
-`migrate status` — up to date, `migrate diff --exit-code` — 0, различий нет.
-Включены конкурентная вставка двух активных членств, сохранение истории,
-активация только с актёром-директором, границы MFA/session и реальные Prisma-запросы.
-
-Основания: TECH-02/B, TECH-03/B, TECH-04/C, TECH-05/A, TECH-14/B, CON-02/B.
-Документация: [частичные индексы Prisma 7](https://www.prisma.io/docs/orm/v7/prisma-schema/data-model/indexes),
-[расширение миграций собственным SQL](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/unsupported-database-features).

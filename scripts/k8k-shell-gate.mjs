@@ -15,9 +15,9 @@ const images = new URL('screenshots/', out);
 await mkdir(images, { recursive: true });
 const load = async (path) => JSON.parse(await readFile(new URL(path, root), 'utf8'));
 const write = (name, value) => writeFile(new URL(name, out), JSON.stringify(value, null, 2) + '\n');
-const prev = await load('output/k8k-tasks/TASK-022/budgets.json');
+const prev = await load('tests/fixtures/ui-baselines/TASK-022.json');
 const baseline = await load(
-  'output/k8k-tasks/TASK-004/runs/2026-11-03T21-10-19-078Z-0b1240/bundle.json',
+  'tests/fixtures/ui-baselines/route-bundles.json',
 );
 const key = (row) => `${row.app}|${row.role}|${row.route}`;
 const old = new Map(baseline.rows.map((row) => [key(row), row]));

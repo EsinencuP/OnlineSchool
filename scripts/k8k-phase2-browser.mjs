@@ -64,7 +64,7 @@ const rows = [],
   failures = [];
 const now = Date.now();
 const catalog = JSON.parse(
-  await readFile(resolve(root, 'output/k8k-phase0/demo-catalog.json'), 'utf8'),
+  await readFile(resolve(root, 'tests/fixtures/ui-baselines/demo-catalog.json'), 'utf8'),
 ).items;
 try {
   for (const [role, url, apiRole] of [

@@ -42,7 +42,7 @@ const manifest = JSON.parse(actualAssets.get('.vite/manifest.json').toString());
 const previous = JSON.parse(
   await readFile(
     new URL(
-      '../../../../output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/bundle.json',
+      '../../../../tests/fixtures/ui-baselines/shared-ui-bundles.json',
       import.meta.url,
     ),
     'utf8',

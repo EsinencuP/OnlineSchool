@@ -1,4 +1,4 @@
-# TASK-10 — OpenAPI и TypeScript-клиент
+# OpenAPI и TypeScript-клиент
 
 `GET /api/docs` отдаёт Swagger UI, `GET /api/docs-json` — OpenAPI **3.1.0**, версия
 API **v1**. Спецификация содержит 46 реальных бизнес-операций Identity/CRM/Finance/

@@ -1,10 +1,9 @@
-# TASK-14 — единая рабочая публикация MVP
+# Рабочее развёртывание на Vercel
 
 Решение владельца: единственный проект `onlineschool`, постоянный адрес
 https://onlineschool-xi.vercel.app, существующая Neon `onlineschool` / main /
 `online_school` в Frankfurt, PostgreSQL 18. Дополнительных проектов, веток или БД
-QA/staging/shadow не создаётся. QA app удалён по решению владельца 01.11.2026;
-общий вход и staff-кабинеты находятся в `apps/platform`. Preview deployments выключены.
+QA/staging/shadow не создаётся. Общий вход и staff-кабинеты находятся в `apps/platform`. Preview deployments выключены.
 
 Корневой `vercel.json` собирает React SPA и настоящую NestJS Function. Worker —
 отдельный Daemon из `Dockerfile.worker`, 1 GiB, одна instance `fra1`, 45 секунд
@@ -124,22 +123,3 @@ Node 24, install `pnpm install --frozen-lockfile`, output `apps/platform/dist`. 
 часов непрерывной работы. При исчерпании любой квоты Vercel останавливает Daemons
 до следующего месяца UTC или до перехода на Pro. Данные сохраняются в Neon,
 а health сообщает о недоступности worker.
-
-На 18 ноября API отвечает, worker health возвращает HTTP 503. Записи за момент
-остановки недоступны из-за окна хранения журналов на Hobby. Для непрерывной
-работы worker владелец должен утвердить условия размещения, покрывающие полный
-месяц. [Снимок проверки](../../tests/evidence/backend-release-readonly-2026-11-18.json)
-
-20 ноября 2026 Vercel подтвердил причину остановки production worker. Команда
-исчерпала месячную квоту Daemons Hobby в 5 CPU-часов. При желаемой одной инстанции
-в `fra1` готовых инстанций было ноль, а повторный запрос масштабирования
-до одной инстанции оставил worker в состоянии `Stopped`. Отдельный пробник
-дважды получил API `200` и worker `503`. Минимальная память Daemons составляет
-1 GiB. Следующая проверка восстановления нужна после сброса квоты в начале
-месяца UTC. [Карточка worker](https://vercel.com/themrack26-1196s-projects/onlineschool/daemons/worker?scope=target%3Aproduction)
-
-Источники: https://vercel.com/docs/daemons,
-https://vercel.com/docs/daemons/config-reference,
-https://vercel.com/docs/daemons/limits.
-
-TASK-15, ручная приёмка и FND-GATE остаются отдельными открытыми этапами.

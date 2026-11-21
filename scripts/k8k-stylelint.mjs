@@ -60,8 +60,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const baseline = JSON.parse(
     await readFile(path.join(root, 'packages/ui/tests/stylelint-legacy.json'), 'utf8'),
   );
-  for (const item of baseline.entries)
-    await readFile(path.join(root, `docs/k8k-redesign-tasks/${item.removeInTask}.md`));
   const comparison = compareBaseline(findings, baseline.entries);
   console.log(
     JSON.stringify(

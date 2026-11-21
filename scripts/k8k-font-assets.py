@@ -1,4 +1,4 @@
-"""TASK-006 local font asset generation/verification. Never reads environment files."""
+"""Local font asset generation and verification. Never reads environment files."""
 import argparse
 import hashlib
 import io
@@ -10,7 +10,7 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent
 parser = argparse.ArgumentParser()
 parser.add_argument("command", choices=["generate", "check"])
-parser.add_argument("--tools", type=Path, default=ROOT / "output/k8k-tasks/TASK-006/tooling")
+parser.add_argument("--tools", type=Path, default=ROOT / "output/font-tools")
 args = parser.parse_args()
 sys.path.insert(0, str(args.tools.resolve()))
 fontTools = importlib.import_module("fontTools")

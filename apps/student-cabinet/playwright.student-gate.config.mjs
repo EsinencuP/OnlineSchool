@@ -51,7 +51,6 @@ export default {
         'navigation.spec.mjs',
         'student-gate.acceptance.mjs',
       ],
-      grepInvert: /subject-baseline/,
     },
     {
       name: 'editor-preservation',

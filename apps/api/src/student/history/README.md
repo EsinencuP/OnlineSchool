@@ -1,4 +1,4 @@
-# STU-04 — Lesson history and addressed deduction disputes
+# Lesson history and addressed deduction disputes
 
 GET `/api/v1/student/lessons/history` returns confirmed COMPLETED and NO_SHOW
 lessons, descending by scheduled_at/id, with default page=1/pageSize=20 and maximum 100. One statement computes count and page; an empty page keeps the true total.
@@ -86,30 +86,3 @@ bypass duplicate protection. Address/type are immutable; eligibility is checked 
 creation/reopening. A manager can continue or close a case after the 30-day window
 or after a right was restored; ordinary progress/closure does not rerun initial
 admission. A reopened case must qualify again.
-
-## Migrations and verification
-
-Enum additions are committed in `20261027120000_stu04_dispute_enums` before the
-index/checks use them in `20261027120100_stu04_history_disputes`. The second migration
-adds the two nullable snapshots, invariant triggers and open-case uniqueness. No
-existing journal values or financial history are rewritten.
-
-Run API/worker builds then `pnpm test:stu04`. Targeted unit/real-Nest-HTTP tests use
-mock Prisma to check two accounts, Decimal precision, legacy nulls, exact boundaries,
-409/replay, audit/outbox rollback, snapshot propagation and simulation of two
-competing commands. That storage simulation does not prove actual database races.
-
-Four exact-source SELECT projections passed on existing PostgreSQL 18.6 as
-app_runtime using read-only CTE fixtures: complete history, page 2, empty page and
-another student's isolated history. Cases include published/draft/reversed quantity
-deductions, legacy snapshots, NO_SHOW, OPEN/IN_PROGRESS/resolved cases and the exact
-30-day boundary. Money JSON deliberately differs from rights snapshots. Fixtures
-create no persistent objects or rows. With an explicitly supplied existing working
-STU_READONLY_DATABASE_URL, tests/integration/student-history-readonly.test.mjs
-reproduces them inside BEGIN READ ONLY.
-
-The new migrations have not been applied. Actual snapshot-trigger enforcement,
-unique-index race behavior, and working-domain dispute creation remain acceptance
-checks for a migrated authorized target. These read-only projections and storage
-mocks do not close FND-GATE or grant production GO. The 30-day rule implements
-STU-04; it does not reopen or close unrelated historical decisions sharing CON codes.

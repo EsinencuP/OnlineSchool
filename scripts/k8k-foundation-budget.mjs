@@ -12,7 +12,7 @@ const { build } = await import(pathToFileURL(require.resolve('vite')));
 const { default: react } = await import(pathToFileURL(require.resolve('@vitejs/plugin-react')));
 const previous = JSON.parse(
   await readFile(
-    new URL('output/k8k-tasks/TASK-012/runs/2026-11-04T05-14-33.552Z/bundle.json', root),
+    new URL('tests/fixtures/ui-baselines/shared-ui-bundles.json', root),
     'utf8',
   ),
 );

@@ -1,41 +1,4 @@
-# MGR-02 — CRM-список и карточка ученика
-
-Реализация в локальном рабочем дереве, 31.10.2026. Основание — задача MGR-02 из
-`docs/AI Coder Tasks — Модуль 2 Кабинет менеджера.md` и уточнение владельца в чате
-о денежном балансе Ledger. Миграция подготовлена, к рабочей БД не применялась.
-
-## Шаг 0 и модель
-
-| ТЗ                       | Реализация / решение                                                                                                                                                                                                |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| StudentProfile           | Существующий `Student`, без новой модели.                                                                                                                                                                           |
-| version                  | Добавлен `Student.version Int @default(1)`. PATCH сравнивает версию и увеличивает её на 1.                                                                                                                          |
-| managerNote              | Добавлен `Student.manager_note String?`; закрытая PII.                                                                                                                                                              |
-| managerId                | Существующий `AssignedManager.manager_id`; ID берётся только из ManagerContext.                                                                                                                                     |
-| status                   | Вычисляемый CRM-статус, не новая колонка Student: ARCHIVED → LEAD без начавшегося абонемента → EXPIRED → FROZEN → ACTIVE.                                                                                           |
-| hasAccount               | Наличие недеактивированной `StudentAccount`; создание Student не создаёт аккаунт.                                                                                                                                   |
-| guardianName             | `Representative` + `StudentRepresentativeLink`: отдельный неподтверждённый контакт AUTHORIZED_CONTACT/PENDING с basis CRM_CONTACT_ONLY. Это не подтверждение родительства или юридического права.                   |
-| guardianPhone            | Читается из существующего представителя. Нового поля ввода guardianPhone задача не добавляет.                                                                                                                       |
-| activeSubscription       | `Subscription` через `StudentSubjectEnrollment`; начавшийся действующий абонемент, включая замороженный. `valid_to` может быть NULL.                                                                                |
-| remainingLessons         | Существующие `subscriptionFacts` из модуля 1, с его подтверждениями, проводками, корректировками и временными границами. Опция startedOnly действует только для manager; обычные student-запросы не меняют выборку. |
-| LedgerPublicationService | Реальный `modules/finance/ledger-publication.service.ts`; менеджер не пишет в него или Ledger напрямую в MGR-02.                                                                                                    |
-| Навыки                   | `SkillEntry` и последняя подтверждённая `SkillAssessment` по предметной истории; освоено = APPLYING.                                                                                                                |
-| ДЗ                       | `HomeworkDelivery`, `HomeworkSubmission`, `HomeworkAssignment`; отменённые выдачи и архивные задания исключены.                                                                                                     |
-| Отчёт                    | `EducationReport` через `ProgressCheckpoint`; только дата/статус последней версии.                                                                                                                                  |
-
-Миграция `20261031100000_mgr02_student_crm` сохраняет старые записи: version=1,
-manager_note=NULL. Она добавляет ограничения, индексы и точечные runtime grants.
-Триггер версий учитывает изменение CRM-полей также другими писателями, поэтому
-они не обходят оптимистическую блокировку менеджера. Общий представитель семьи
-не переименовывается: замена CRM-контакта завершает только свой PENDING-link и
-создаёт новую контактную запись. Подтверждённые семейные связи сохраняются.
-
-Индексы из ТЗ адаптированы к фактической схеме: связь `(manager_id, ended_at,
-assigned_at, student_id)`, Student `(full_name,id)` и `(created_at,id)`, задачи
-`(student_id,status,due_at,id)`, платежи `(student_id,registered_at,id)`. Индекс
-`managerId,status` невозможен без дублирования вычисляемого статуса/назначения.
-GIN по lower(full_name) создаётся только при уже установленном pg_trgm;
-миграция не устанавливает расширение и не расширяет права runtime на DDL.
+# CRM-список и карточка ученика
 
 ## Маршруты и безопасность
 
@@ -146,7 +109,7 @@ credit minus debit по CUSTOMER_ADVANCE для всех абонементов 
 В соответствии с реальной схемой PaymentReceipt.student_id — только CRM-контакт.
 Нераспределённые средства семьи не приписываются этому ученику автоматически:
 UNALLOCATED_FUNDS не смешиваются с его CUSTOMER_ADVANCE. Владелец явно утвердил
-эту привязку 31.10.2026; см. docs/online_academy_manager_finance_distribution_clarification_2026_10_31.md.
+эту привязку 31.10.2026; см. docs/manager-rules.md.
 Автоматического переноса/распределения средств нет. История карточки показывает
 только распределённую ученику часть поступления, когда его контакт доступен
 менеджеру, без общей суммы поступления или нераспределённого остатка семьи.
@@ -163,39 +126,3 @@ AWAITING_APPROVAL — нет подтверждения поступления �
 PENDING — отсутствует публикация поступления либо распределения; CONFIRMED — обе
 публикации есть. Баланс не выводится суммированием этого массива. Нераспределённые
 средства семьи и полные суммы общих поступлений в карточку не включаются.
-
-## Проверки и границы доказательств
-
-```powershell
-pnpm --filter @online-school/db db:validate
-pnpm --filter @online-school/api build
-pnpm --filter @online-school/worker build
-pnpm generate:client
-pnpm generate
-pnpm exec tsc -b packages/api-contracts --pretty false
-pnpm test:mgr02
-```
-
-Набор manager-students / manager-students-http / manager-students-sdk проверяет
-контракты, реальные Nest guard/pipe/interceptor/filter, replay, rollback, версии,
-PII allowlist, денежные строки, курсоры/параметры SQL и бюджет запросов. Prisma
-storage подменён; concurrency-тест не объявляется проверкой гонок PostgreSQL.
-Синтаксический анализатор PostgreSQL отдельно проверил шесть вариантов list SQL,
-card, balance и migration SQL; БД и тестовые данные для этого не создавались.
-
-Prisma validate, целевые сборки/lint и генерация проходят. Попытка schema-only
-migrate diff в установленном CLI не произвела SQL-артефакт и не принята как
-доказательство миграции. Живое применение, SQL-план, runtime grants/trigger и
-финансовая сверка на PostgreSQL не проверялись. PHASE0_CHECKS.md запрещает
-одноразовый PostgreSQL; рабочая БД не изменялась. FND-GATE/production GO этим
-инкрементом не закрываются.
-
-В адресной регрессии обнаружены три старых unit-ожидания STU-07, разрешавших GET
-подписки без активного доступа. Они приведены к уже действующему STU-11 (402);
-приложение и его актуальные HTTP-тесты для этого правила не изменялись.
-
-Итог: 200/200 адресных тестов в 10 наборах — MGR-01, MGR-02, student-context/
-student-http и STU-07. Собственный набор MGR-02 содержит 64 теста. Прошли
-API/worker/API-contracts compilation, адресный ESLint, Prisma validate и генерация
-OpenAPI/Orval; девять финальных SQL-вариантов прошли syntax parse. Это не общий
-project regression и не доказательство выполнения миграции на PostgreSQL.

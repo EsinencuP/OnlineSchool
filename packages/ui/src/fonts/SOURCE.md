@@ -14,7 +14,7 @@ readable system fallback; human-provided text is not normalized or rewritten.
 Regeneration/check tooling is isolated; no JS/runtime dependencies:
 
 ```powershell
-python -m pip install --no-deps --only-binary=:all: --target output/k8k-tasks/TASK-006/tooling -r scripts/k8k-font-requirements.txt
+python -m pip install --no-deps --only-binary=:all: --target output/font-tools -r scripts/k8k-font-requirements.txt
 pnpm k8k:fonts:check
 ```
 

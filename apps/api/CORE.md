@@ -1,10 +1,4 @@
-# TASK-06 — защищённое ядро NestJS
-
-Проверено 26 октября 2026. `CoreModule` подключён глобально; доменные модули находятся
-в `src/modules/`. Identity и Student/Household registry реализованы в
-[TASK-07](IDENTITY.md); Schedule/Education/Storage/Integrations — точки следующих задач.
-Сервис публикации ledger перенесён в `modules/finance`; его базовая
-policy по-прежнему запрещает публикацию, пока TASK-08 не подключит финансовые команды.
+# Защищённое ядро NestJS
 
 ## Порядок обработки
 
@@ -34,7 +28,7 @@ SameSite=Strict, без Domain. Абсолютный TTL — 8 часов, inact
 в `last_seen_at`. Роли читаются из действующих RoleAssignment, поэтому не остаются
 действительными после отзыва назначения. Эти сведения не принимаются из cookie/body.
 `SessionService.revoke` атомарно меняет revoked_at, добавляет AccessRevocation и AuditEvent.
-Выдача сессий — доверенный внутренний API для последующей проверки личности TASK-07.
+Выдача сессий — доверенный внутренний API проверки личности.
 
 Staff/teacher без MFA не получают бизнес-доступ. `@AllowPreMfa` действует только на
 четырёх POST WebAuthn register/authenticate start/finish; `@RequireMfa` запрещает такой
@@ -114,25 +108,7 @@ backoff 25/50 ms + jitter. Повторяются только serialization/dea
 `maxRetries` сохранён как имя параметра задания, но означает предел общего числа
 попыток 1–3. Другие ошибки не повторяются; exhausted → Result с 503.
 
-## Проверка
-
-Четыре unit-теста входят в обычный `pnpm test`. Девять HTTP/PG тестов запускаются
-отдельно против одноразовой локальной PostgreSQL 18 с обеими миграциями:
-
-```sh
-# TEST_DATABASE_URL = прямой адрес localhost, имя online_school_test*.
-pnpm --filter @online-school/api test:integration
-```
-
-Интеграционный набор добавляет синтетические fixtures через seedQA; не сбрасывает БД.
-Покрыты 401/403, default deny, MFA, CSRF всех mutation verbs/подделка подписи, cookie flags,
-актуальные manager/teacher/student policies, challenge ownership/replay/варианты URL,
-request ID на malformed JSON и 404, одинаковые/разные payload, конкурентный повтор
-из разных сессий, откат при domain/audit/outbox ошибках, отзыв/TTL/idle/роль.
-Дополнительно прошла прежняя регрессия 31 DB-теста. Production GO/FND-GATE этим
-инкрементом не выдаются.
-
-## Подключение Finance (TASK-08)
+## Подключение Finance
 
 FinanceScopeGuard устанавливает resourceAuthorizer для текущего запроса.
 AccessService вызывает его также внутри критической транзакции перед чтением

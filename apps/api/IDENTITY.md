@@ -1,4 +1,4 @@
-# TASK-07 — Identity, Passkeys и Recovery
+# Identity, Passkeys и Recovery
 
 Реализовано и проверено 26 октября 2026 на PostgreSQL 18.6. Используется закреплённая
 `@simplewebauthn/server` **14.0.3**; API и правила проверки сверены с
@@ -14,7 +14,7 @@ WEBAUTHN_RP_ID=qa.your-school.example
 WEBAUTHN_ALLOWED_ORIGIN=https://qa.your-school.example
 ```
 
-Исторический пример TASK-07. В TASK-12 владелец утвердил постоянный адрес
+Постоянный адрес рабочего проекта
 `https://onlineschool-xi.vercel.app` для единственного рабочего проекта.
 Конфигурация принимает ровно один HTTPS hostname: RP ID совпадает с origin hostname;
 wildcard, credentials, path, port и завершающий `/` запрещены. Постоянный точный
@@ -146,25 +146,3 @@ AssignedManager; StudentAccount и EntitlementGrant не создаются. Hou
 проверяя доступ ко всем её ученикам и новому ребёнку. Добавление Representative требует
 действующей VERIFIED связи с доступным ребёнком группы. Director действует по организационной
 политике. Нет отдельного родительского логина и автоматического сопоставления контактов.
-
-## Миграция и проверки
-
-`20261026040000_task07_identity` добавляется после двух прежних миграций, включая legacy chain.
-Теперь 66 моделей: RecoveryAuthorization, RecoveryRequest и AuthRateLimit; добавлены
-recovery flags, login challenge binding и creator Household. Все PK UUID, timestamps и
-именованные RESTRICT FK сохранены. Есть SQL state/hash/period checks и append-only guards.
-
-На PostgreSQL 18.6 проверены чистая установка и upgrade заполненной TASK-06 staging-схемы:
-старые значения всех колонок, ID и timestamps сохранились, status current, schema diff 0.
-Это локальная репетиция; внешний staging/production не менялись.
-
-```sh
-# Две отдельные одноразовые локальные БД online_school_test*, с тремя миграциями.
-# TEST_DATABASE_URL — core tests; IDENTITY_TEST_DATABASE_URL — Identity tests.
-pnpm --filter @online-school/api test:integration
-```
-
-Прошли 9 core + 11 Identity HTTP/PG сценариев с реальными synthetic ES256/CBOR assertions,
-31 прежний DB-тест и 6 QA seed/SQL тестов. Отдельно проверены оба maintenance CLI на
-синтетических записях. Физический FIDO2/браузер, QA DNS/TLS, внешняя проверка личности,
-production deployment и формальный FND-GATE этой локальной проверкой не подтверждаются.

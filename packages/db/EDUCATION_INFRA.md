@@ -1,45 +1,4 @@
-# Education, Files, Audit, Outbox, Jobs — TASK-04
-
-Добавлены 16 моделей задачи и HomeworkDelivery, который сохраняет требуемое TECH-11/B
-разделение задания и выдачи конкретному ученику. Полная схема TASK-02/03/04 содержит
-**63 модели**, UUID PK, обязательные created_at/updated_at, именованные FK с RESTRICT.
-Денежные поля TASK-03 остаются Decimal(20,4); Float не добавлен.
-
-| Контур                 | Модели                                                                                                                                       |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Education              | HomeworkAssignment, HomeworkDelivery, HomeworkSubmission, SubmissionReview, SkillEntry, SkillAssessment, ProgressCheckpoint, EducationReport |
-| Files                  | S3Object, FilePermission, FileAuditLog                                                                                                       |
-| Audit / Infrastructure | AuditEvent, IdempotencyRecord, OutboxEvent, JobRecord, JobAttempt, RecoveryState                                                             |
-
-После этого инкремента TASK-05 добавляет миграцию guards и отдельный полный QA seed:
-[актуальные команды и проверка миграций](MIGRATIONS_SEED.md). Описанная ниже единая init
-и reference seed сохраняются без изменения; текущая активная цепочка содержит init + guards.
-
-## Единая init и сохранённая история
-
-Для новой БД используется единственная активная миграция
-`prisma/migrations/20261026020000_init/migration.sql`. Она содержит полную DDL,
-частичные индексы, EXCLUDE, CHECK, триггеры и RLS TASK-02/03/04; применение атомарно.
-`prisma migrate dev --name init` на чистой PostgreSQL 18.6 применяет **одну** миграцию,
-не создавая вторую из-за расхождения схемы. DEFAULT TTL записан в канонической форме
-PostgreSQL, чтобы повторное сравнение не создавало пустые изменения DEFAULT.
-
-Четыре исходные миграции перемещены в `prisma/migrations-history/` без изменения
-байтов. Их SHA-256 сохранены в `task02-task03-sha256.json`. В этом же каталоге есть
-отдельная новая delta `20261026020100_task04_education_files_infra` для прежних БД.
-Это альтернативные цепочки, выбираемые конфигурацией:
-
-| База                                 | Конфигурация / команда                                                       |
-| ------------------------------------ | ---------------------------------------------------------------------------- |
-| Новая, пустая                        | prisma.config.ts → `pnpm --filter @online-school/db db:migrate --name init`  |
-| Уже имеет четыре миграции TASK-02/03 | prisma.legacy.config.ts → `pnpm --filter @online-school/db db:deploy:legacy` |
-
-Прежнюю БД не сбрасывают и не помечают init применённой автоматически. Для неё
-добавляется только delta, старые IDs/checksums сохраняются. На отдельной тестовой
-БД проверены последовательность 4 → 5 миграций, сохранение контрольной Student-записи
-и отсутствие различий со схемой после обновления. Настоящая пользовательская БД
-не изменялась. Прежние фиктивные UUID-ссылки в CRM, если они есть в другой среде,
-нужно сверить до применения нового FK; фиктивные audit/outbox не создаются миграцией.
+# Education, Files, Audit, Outbox, Jobs
 
 ## Seed
 
@@ -131,31 +90,3 @@ CONFIRMED/ABSENT требуют evidence_ref/reconciled_at и не переза�
 AuditEvent и OutboxEvent. Тест коллизии outbox подтверждает откат проводки и нового
 аудита целиком. Повтор команды оставляет одну пару audit/outbox. Штатная политика
 публикации по-прежнему запрещающая до ACL TASK-06/08, финансового endpoint нет.
-
-## Проверка
-
-Новая одноразовая PostgreSQL 18, PowerShell, из корня workspace:
-
-```powershell
-docker run --detach --name online-school-task04-verify --publish 127.0.0.1:55434:5432 --env POSTGRES_HOST_AUTH_METHOD=trust --env POSTGRES_DB=online_school_test_task04 postgres:18
-$env:DIRECT_URL = 'postgresql://postgres@127.0.0.1:55434/online_school_test_task04'
-pnpm --filter @online-school/db db:validate
-pnpm --filter @online-school/db exec prisma migrate dev --name init
-pnpm --filter @online-school/db exec prisma db seed
-pnpm --filter @online-school/db exec prisma db seed
-$env:TEST_DATABASE_URL = $env:DIRECT_URL
-pnpm --filter @online-school/db test:integration
-pnpm --filter @online-school/db exec prisma migrate status
-pnpm --filter @online-school/db exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
-docker stop online-school-task04-verify
-```
-
-Дождитесь готовности БД. Тестовая база должна быть локальной с префиксом
-online_school_test; часть тестов оставляет синтетические записи. Проверено
-**26 октября 2026, PostgreSQL 18.6**: одна init, повторный/параллельный seed,
-31 интеграционная проверка (22 прежние + 9 новых), schema diff — 0.
-Производственные данные, полноценные пользовательские API, ACL, S3/Meet-интеграция,
-работающий dispatcher/worker и production GO этим инкрементом не подтверждаются.
-
-[Prisma 7: seed](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/seeding),
-[объединение миграций](https://www.prisma.io/docs/orm/v7/prisma-migrate/workflows/squashing-migrations).

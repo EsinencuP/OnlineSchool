@@ -11,13 +11,5 @@ export default {
     ...base.webServer,
     cwd: fileURLToPath(new URL('./', import.meta.url)),
     reuseExistingServer: false,
-    env:
-      process.argv.includes('--grep') && process.argv.includes('subject-baseline')
-        ? {
-            STUDENT_FIXTURE_DIST: fileURLToPath(
-              new URL('../../output/k8k-tasks/TASK-025/baseline-dist/', import.meta.url),
-            ),
-          }
-        : {},
   },
 };

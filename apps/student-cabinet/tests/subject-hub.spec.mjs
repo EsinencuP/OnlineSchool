@@ -26,20 +26,6 @@ const screenshot = async (page, name) => {
   await page.screenshot({ path: fileURLToPath(new URL(name, evidence)), animations: 'disabled' });
 };
 
-for (const locale of ['ru', 'ro']) {
-  test(`subject-baseline ${locale}`, async ({ request, context, page }) => {
-    await start({ request, context, page }, locale);
-    for (const width of widths) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto('/student?ui.k8k=1');
-      await expect(page.locator('.k8k-lesson-hero')).toBeVisible();
-      await expect(page.locator('.k8k-main h1')).toContainText(longName);
-      await screenshot(page, `baseline/${locale}-${width}-home.png`);
-      if (width < 1024) await page.locator('.k8k-menu-button').click();
-      await screenshot(page, `baseline/${locale}-${width}-menu.png`);
-    }
-  });
-}
 const englishId = '60000000-0000-4000-8000-000000000001';
 const mathId = '60000000-0000-4000-8000-000000000002';
 const foreignId = '60000000-0000-4000-8000-000000000099';

@@ -1,6 +1,4 @@
-# STU-05 — Student homework
-
-Status: implemented in source; working migration/deployment and full PostgreSQL write/concurrency acceptance remain pending FND-GATE. This increment uses the existing working environment and does not provision a QA database, branch or container.
+# Student homework
 
 ## Routes and identity
 
@@ -26,7 +24,7 @@ The deadline is soft, including null deadlines. Lateness compares server submiss
 
 `HomeworkDraft` has one primary key per delivery. Saving overwrites its content and refreshes a 30-day server expiry. Expired drafts are hidden immediately by the list query. The standalone worker clears expired plaintext in batches of 100 using SKIP LOCKED, at most once a minute. Submission clears plaintext and expires the row in the same critical transaction; no runtime DELETE permission is needed.
 
-TASK-030 preserves the existing student frontend's 2-second debounce and serialized save queue. Refetch and draft expiry preserve current input and selection; a newly expired server draft removes the saved claim. List order and pagination come from the server, with no status tabs. Unknown submission freezes the original key/body and checks the existing detail/version projection before an explicit retry. A matching newer version confirms delivery without another POST; an unchanged editable version allows only the same-key/body retry. Upload confirmation retries retain the intent and skip a successful PUT; an expired presign requests a new intent. Local mock/browser evidence is recorded in [TASK-030](../../../../../output/k8k-tasks/TASK-030/report.md); it does not repeat or extend the historical provider evidence below.
+The homework editor uses a 2-second debounce and serialized save queue. Refetch and draft expiry preserve current input and selection; a newly expired server draft removes the saved claim. List order and pagination come from the server, with no status tabs. Unknown submission freezes the original key/body and checks the existing detail/version projection before an explicit retry. A matching newer version confirms delivery without another POST; an unchanged editable version allows only the same-key/body retry. Upload confirmation retries retain the intent and skip a successful PUT; an expired presign requests a new intent.
 
 ## Private direct uploads
 
@@ -39,11 +37,3 @@ The presigned URL signs size and MIME type, writes to a random staging key and e
 Homework uploads share the document and media policy used by teacher materials. A browser may declare `application/octet-stream` when it lacks a MIME type. Confirmation then requires a supported detected format or valid UTF-8 plain text. A mismatch or an unavailable, incomplete or rejecting scanner result leaves the upload unconfirmed. The handler reads at most 50 MiB per file and reserves two concurrent inspections per API instance. The worker can clean expired staging uploads after opt-in. See [scanner deployment](../../../../../infra/vercel/README.md#проверка-на-вредоносное-содержимое).
 
 An interrupted confirmation leaves the durable upload intent PENDING and can be retried. A signing failure after DB commit is recovered with the same command key and original file record. Expired upload URLs require a new upload command. The [worker cleanup policy](../../../../worker/WORKER.md#очистка-истёкших-загрузок) covers expired staging. Download authorization remains a separate file-service feature. This route returns file metadata.
-
-## Verification and deployment boundary
-
-`pnpm test:stu05` runs unit and actual Nest HTTP tests with mock Prisma/storage. Mock parallel writes verify application wiring, not PostgreSQL lock/index races. Five exact-source SELECT projections were also executed on existing PostgreSQL 18.6 as `app_runtime`, using CTE-only fictional rows: all four statuses, pagination/total, isolation, expiry, late flag, historical comments and verified version attachments. No working business rows were modified.
-
-A real S3 probe on the working private bucket passed: CORS preflight 200, PUT 200, 900-second signature, HEAD size, conditional copy, final immutability after reusing staging PUT, unsigned GET 403, mismatched size/type 403. Probe objects were removed. No credentials or signed URLs are included in evidence.
-
-The migration is prepared but unapplied. This evidence does not establish FND-GATE or grant permission to open the student cabinet. Full migration/real write races and manual working acceptance remain pending the approved gate; no alternate test database is created to bypass the owner's restriction.
