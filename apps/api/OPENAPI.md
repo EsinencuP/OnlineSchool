@@ -1,6 +1,6 @@
-# TASK-10 — OpenAPI и TypeScript-клиент
+# OpenAPI и TypeScript-клиент
 
-`GET /api/docs` отдаёт Swagger UI, `GET /api/docs-json` — OpenAPI **3.1.0**, версия
+`GET /api/docs` отдаёт документацию Swagger, `GET /api/docs-json` — OpenAPI **3.1.0**, версия
 API **v1**. Спецификация содержит 46 реальных бизнес-операций Identity/CRM/Finance/
 Schedule и health/CSRF. Универсальных CRUD-маршрутов не добавлено.
 
@@ -19,7 +19,7 @@ JSON number отклоняется как INVALID_MONEY/422. Доверие к W
 
 В Swagger нет секретов, сессий или текущих персональных данных. Документационные
 маршруты получают X-Request-ID; Swagger не сохраняет введённую авторизацию.
-Открытый UI не обходит роли/MFA/CSRF бизнес-маршрутов.
+Бизнес-маршруты требуют предусмотренные для них роли, MFA и CSRF.
 
 ## Генерация и использование
 
@@ -61,11 +61,6 @@ credentials=include; ошибки HTTP/сети возвращаются Result,
 Для Node/явно настроенного API допустим `{ baseUrl }`; браузер по умолчанию использует
 тот же origin. CSRF, cookies и постоянный HTTPS QA-домен настраиваются по Identity
 runbook; preview origins не становятся доверенными.
-
-Выполнены только короткие адресные проверки: генерация клиента, компиляция API/
-contracts/QA-shell, UI/JSON 200, общие metadata/локальные $ref, вызов health через SDK
-и отклонение числового денежного DTO. Полная регрессия и интеграционная приёмка —
-[в конце фазы 0](../../PHASE0_CHECKS.md).
 
 [NestJS Swagger](https://docs.nestjs.com/openapi/introduction) ·
 [Orval fetch](https://github.com/orval-labs/orval/blob/master/docs/content/docs/guides/fetch.mdx).

@@ -1,6 +1,7 @@
 // Runs inside the existing Vercel project's protected production build environment.
 // No credentials are sent to GitHub, command arguments, generated files or build logs.
 import { spawnSync } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
 import { checkReleaseMigrations, parseDatabaseTarget } from './migration-preflight.mjs';
 
 function run(args, env = process.env, quiet = false) {
@@ -54,7 +55,6 @@ delete buildEnv.DIRECT_DATABASE_URL;
 delete buildEnv.DIRECT_URL;
 run(['--filter', '@online-school/api', 'build'], buildEnv);
 await checkMigrations(direct, false);
-run(['--filter', '@online-school/platform', 'build'], buildEnv);
 run(
   ['--filter', '@online-school/db', 'exec', 'prisma', 'migrate', 'deploy'],
   {
@@ -77,13 +77,14 @@ if (process.env.MANAGER_SETUP_UNTIL) {
     DIRECT_URL: direct,
   });
 }
-run(['exec', 'node', 'scripts/student-cabinet-runtime-check.mjs'], buildEnv);
+run(['exec', 'node', 'scripts/check-student-runtime.mjs'], buildEnv);
 if (process.env.STUDENT_TEST_PROVISION_UNTIL) {
-  run(['exec', 'node', 'scripts/student-cabinet-provision.mjs'], {
+  run(['exec', 'node', 'scripts/provision-student-test-data.mjs'], {
     ...buildEnv,
     DIRECT_URL: direct,
   });
 }
-if (process.env.STUDENT_CABINET_INSPECT_UNTIL) {
-  run(['exec', 'node', 'scripts/student-cabinet-inspect.mjs'], { ...buildEnv, DIRECT_URL: direct });
+if (process.env.STUDENT_DB_INSPECT_UNTIL) {
+  run(['exec', 'node', 'scripts/inspect-student-db.mjs'], { ...buildEnv, DIRECT_URL: direct });
 }
+mkdirSync(new URL('../../output/vercel-static/', import.meta.url), { recursive: true });

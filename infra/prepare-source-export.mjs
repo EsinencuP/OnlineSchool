@@ -21,14 +21,11 @@ const files = [
   '.prettierrc.json',
   '.prettierignore',
   '.editorconfig',
-  'PHASE0_CHECKS.md',
   'docker-compose.yml',
   'docker-compose.vps.yml',
   'nginx.conf',
   'vercel.json',
   'Dockerfile.worker',
-  'jest.config.mjs',
-  'playwright.config.mjs',
 ];
 async function walk(rel) {
   for (const entry of await readdir(new URL(rel + '/', root), { withFileTypes: true })) {
@@ -46,7 +43,7 @@ async function walk(rel) {
       entry.isFile() &&
       (entry.name === 'Dockerfile' ||
         entry.name === '.env.example' ||
-        /\.(ts|tsx|js|mjs|cjs|json|yaml|yml|sql|toml|md|css|html|prisma|conf|template|sh|patch)$/.test(
+        /\.(ts|js|mjs|cjs|json|yaml|yml|sql|toml|md|prisma|conf|template|sh|patch)$/.test(
           entry.name,
         )) &&
       !entry.name.startsWith('.env') &&
@@ -56,7 +53,7 @@ async function walk(rel) {
     else if (entry.name === '.env.example') files.push(path);
   }
 }
-for (const rel of ['api', 'apps', 'packages', 'infra', '.github', 'tests', 'patches']) await walk(rel);
+for (const rel of ['api', 'apps', 'packages', 'infra', '.github', 'patches']) await walk(rel);
 for (const file of await readdir(new URL('scripts/', root)))
   if (file.endsWith('.mjs')) files.push('scripts/' + file);
 const secrets = [];

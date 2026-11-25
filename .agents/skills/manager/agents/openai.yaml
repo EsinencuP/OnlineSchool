@@ -1,6 +1,0 @@
-interface:
-  display_name: "K8K Manager"
-  short_description: "Браузерная проверка кабинета менеджера"
-  default_prompt: "Используй $manager для запуска команды K8K QA."
-policy:
-  allow_implicit_invocation: false

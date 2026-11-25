@@ -289,7 +289,7 @@ export async function provisionBase(tx, rows, local = false) {
       key: 'homework',
       pupil: 'sofia',
       title: '[ДЕМО] Напомнить Софии о домашнем задании',
-      text: 'Проверить работу по английскому и отправить напоминание в кабинет ученика.',
+      text: 'Проверить работу по английскому и отправить ученику напоминание.',
       due: new Date(+now - 3600000),
       status: 'OPEN',
     },

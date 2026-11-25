@@ -1,32 +1,5 @@
 # MGR-07: очередь и решения CRM, 01.11.2026
 
-## Шаг 0: сверка с кодом
-
-Изучены schema.prisma, SessionGuard/ManagerRoute, ManagerScopeService,
-CriticalCommand/TransactionService, Audit/Outbox, MGR-04/05/06, Finance
-EntitlementsService/Ledger, student lessons/history и существующие CRM producers.
-Новый механизм аутентификации и параллельная модель задач не вводятся.
-
-| ТЗ                       | Фактический код                                                                       |
-| ------------------------ | ------------------------------------------------------------------------------------- |
-| StudentProfile           | Student; портфолио через AssignedManager и ManagerScopeService.portfolioWhere         |
-| ManagerProfile           | StaffAccount, активный контекст ядра и назначение AssignedManager                     |
-| CrmTask                  | CrmTask / crm_tasks; snake_case поля Prisma                                           |
-| CHARGE_DISPUTE           | ATTENDANCE_DISPUTE                                                                    |
-| GENERAL                  | MANUAL                                                                                |
-| RESCHEDULE_REQUEST       | одноимённый CrmTaskType, создаётся StudentCrmTaskService                              |
-| SUBSCRIPTION_EXPIRING    | новый тип enum, payload указывает ManagerSubscription                                 |
-| REJECTED                 | новый enum; прежний CANCELLED читается как терминальный REJECTED                      |
-| Subscription             | ManagerSubscription для управляемого срока; Subscription для финансовой покупки       |
-| Исходное списание        | EntitlementConsumption → LedgerDocument → опубликованный LedgerEntry                  |
-| Корректировка            | EntitlementAdjustment CONSUMPTION_CANCELLATION и обратная запись Ledger               |
-| LedgerPublicationService | существующий Finance LedgerPublicationService через EntitlementsService/FinanceLedger |
-| JwtAuthGuard             | существующая сессия PostgreSQL; ManagerRoute/ядро/MFA                                 |
-
-FOLLOW_UP, PAYMENT_FOLLOW_UP и учебные типы не включены в публичный whitelist.
-Их прежние сроки и процессы здесь не переопределяются. Новые ученические запросы
-и оспаривания получают срок now+24 часа; существующие строки не переписываются.
-
 ## API и область доступа
 
 Реализованы GET `/api/v1/manager/tasks`, GET `/:taskId`, POST `/:taskId/claim`,
@@ -45,10 +18,9 @@ limit=25, максимум100. Сортировка due_at/id стабильна
 изменения статусов/портфолио учитываются на следующем запросе.
 
 DTO строгие, discriminated payload содержит только разрешённые поля. Комментарий
-передаётся обычной строкой JSON; HTML не исполняется и не объявляется безопасным.
-Текст нужно выводить React text node, без dangerouslySetInnerHTML. LedgerRef берётся
-из Finance, произвольные payload-ссылки игнорируются. Для недоказуемого старого
-списания ledgerRef/chargedAmount/currency=null, автоматический ACCEPT запрещён.
+передаётся обычной строкой JSON. LedgerRef берётся из Finance, произвольные
+payload-ссылки игнорируются. Для недоказуемого старого списания
+ledgerRef/chargedAmount/currency=null, автоматический ACCEPT запрещён.
 Чужие данные семьи не читаются. GET ответы private/no-store.
 
 ## Состояния и атомарность
@@ -73,7 +45,7 @@ lessonId. Конфликт слота или последующий отказ C
 
 ## Оспаривание и решение владельца
 
-Применено [решение владельца](../../../../../../docs/online_academy_manager_task_decisions_2026_11_01.md):
+Применено [решение владельца](../../../../../../docs/manager-rules.md):
 полная отмена через директора, частичные запросы отдельно. Менеджер вызывает только
 ManagerFinanceFacade: scoped disputeSource и ограниченный publishAdjustment.
 Последний проверяет исходное списание и возвращает APPROVAL_REQUIRED, а не проводку.
@@ -117,19 +89,3 @@ ledger_publication_id и dispute_resolution_key, индекс due_at/id. SQL tri
 Каждое решение создаёт `manager.task.decision.v1` с studentId/taskId/lessonId,
 статусом/решением и ссылкой на публикацию при исполнении. Claim создаёт
 `manager.task.changed.v1`; отдельно сохраняются технические command events.
-MGR-08 должен сформировать и доставить уведомление из этих событий. Доставка
-письма/внешнего сообщения и новая CRM UI в этом инкременте не реализуются.
-
-85 собственных проверок (72 HTTP,7 unit,6 SDK) и348 уникальных проверок затронутых
-контуров/schema/ERD,9 kernel unit и1 standalone worker smoke успешны:443 всего.
-Сборки API/worker/api-contracts, typecheck student-cabinet/qa-shell, адресный ESLint,
-Prisma validate и генерация OpenAPI/Orval проходят. Схема93 модели/218FK;
-OpenAPI123 операции. SQL/PLpgSQL новой миграции,16 captured SQL вариантов и
-изменённый historyRecords проверены офлайн. Доказательства —
-`tests/evidence/mgr07-verification.json`, `mgr07-sql-syntax.json`.
-
-Миграция `20261101090000_mgr07_crm_tasks` **не применялась**. Настоящие Nest/core/
-Schedule/Finance сервисы в HTTP используют mock Prisma и сериализованную очередь
-фикстуры: это не доказательство PostgreSQL18 гонок, locks, grants, triggers или
-цепочки миграций. Destructive проверки рабочей БД, отдельная тестовая БД и общий
-gate не запускались по PHASE0_CHECKS.md. Рабочая приёмка и FND-GATE остаются открыты.

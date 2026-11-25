@@ -1,6 +1,0 @@
-interface:
-  display_name: "K8K QA Retest"
-  short_description: "Повторная проверка и регрессия исправлений"
-  default_prompt: "Используй $qa-retest для запуска команды K8K QA."
-policy:
-  allow_implicit_invocation: false

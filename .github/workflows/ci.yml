@@ -31,8 +31,6 @@ jobs:
       - uses: ./.github/actions/setup
       - run: pnpm -r lint
       - run: pnpm exec eslint infra scripts --max-warnings 0
-      # Local CSS/token tests only; no credentials, app/server, database or provider.
-      - run: pnpm --filter @online-school/ui test:design
 
   unit-test:
     runs-on: ubuntu-24.04
@@ -41,7 +39,6 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with: { persist-credentials: false }
       - uses: ./.github/actions/setup
-      - run: node --test qa/scripts/qa.test.mjs
       - run: pnpm --filter @online-school/worker... build
       - run: pnpm test:fnd:unit
       - run: pnpm test:unit
@@ -135,21 +132,6 @@ jobs:
       - run: pnpm --filter @online-school/api build && pnpm --filter @online-school/worker build
       # No PostgreSQL service or working database credentials. Missing acceptance groups fail visibly.
       - run: pnpm test:fnd:ci
-
-  manager-frontend:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with: { persist-credentials: false }
-      - uses: ./.github/actions/setup
-      - run: pnpm --filter @online-school/api-contracts build
-      - run: pnpm --filter @online-school/manager-web build
-      - run: pnpm --filter @online-school/manager-web test
-      - run: pnpm --filter @online-school/manager-web exec playwright install --with-deps chromium
-      # OpenAPI-derived MSW only: no database, production credentials, mail, recordings or traces.
-      - run: pnpm --filter @online-school/manager-web test:e2e
-      - run: node scripts/mgr10-bundle-budget.mjs
 
   docker-build:
     runs-on: ubuntu-24.04

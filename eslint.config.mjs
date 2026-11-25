@@ -12,11 +12,7 @@ export default tseslint.config(
       '**/dist-tools/**',
       '**/.turbo/**',
       '**/src/generated/**',
-      'ref/**',
-      'template/**',
       '.codex/**',
-      '.playwright-mcp/**',
-      'apps/manager-web/test/public/**',
     ],
   },
   js.configs.recommended,
@@ -26,45 +22,11 @@ export default tseslint.config(
     rules: { 'no-throw-literal': 'error' },
   },
   {
-    files: [
-      'apps/platform/src/**/*.{ts,tsx}',
-      'apps/student-cabinet/src/**/*.{ts,tsx}',
-      'apps/manager-web/src/**/*.{ts,tsx}',
-    ],
-    languageOptions: { globals: globals.browser },
-  },
-  {
-    files: ['apps/manager-web/test/*.mjs'],
-    languageOptions: { globals: { ...globals.browser, ...globals.node } },
-  },
-  {
-    files: ['apps/*/src/**/*.{ts,tsx}', 'packages/*/src/**/*.{ts,tsx}'],
+    files: ['apps/*/src/**/*.ts', 'packages/*/src/**/*.ts'],
     rules: {
       'no-restricted-syntax': [
         'error',
         { selector: 'ThrowStatement', message: 'Return Result<T, E> for application failures.' },
-      ],
-    },
-  },
-  {
-    files: ['apps/manager-web/src/**/*.{ts,tsx}'],
-    rules: {
-      'no-restricted-syntax': [
-        'error',
-        { selector: 'ThrowStatement', message: 'Return Result for application failures.' },
-        {
-          selector: 'CallExpression[callee.name=/^(Number|parseFloat|fetch)$/]',
-          message: 'Use decimal strings and the generated API client.',
-        },
-        { selector: 'NewExpression[callee.name="Number"]', message: 'Use Decimal for money.' },
-        {
-          selector: 'CallExpression[callee.property.name=/^(parseFloat|toNumber)$/]',
-          message: 'Keep money as Decimal strings.',
-        },
-        {
-          selector: 'JSXAttribute[name.name="dangerouslySetInnerHTML"]',
-          message: 'Render user input as plain text.',
-        },
       ],
     },
   },

@@ -1,4 +1,4 @@
-# STU-02 — Dashboard
+# Dashboard
 
 `GET /api/v1/student/dashboard` uses all STU-01 guards before consulting the cache.
 It returns the current eligible SCHEDULED lesson or the nearest future SCHEDULED
@@ -80,44 +80,3 @@ without caching a potentially mixed result. Cache backend failures fall back to
 loading data, while failure to validate the DB revision fails closed with a
 sanitized 503. Errors are never cached. This is revision-validated aggregation,
 not a claim that separate pool connections share a PostgreSQL MVCC snapshot.
-
-## Verification and release state
-
-Run `pnpm --filter @online-school/api build` then `pnpm test:stu02`. The targeted
-suite checks real Nest routing/session boundaries with mock Prisma, two-account
-cache isolation, CSRF-independent GET behavior, timestamp/Decimal serialization,
-parallel execution, Meet boundaries and mock CacheManager invalidation. A short
-STU-01 HTTP regression and the current ERD contract were also checked.
-
-Two actual PostgreSQL 18 read-only CTE cases verified latest submission/review
-selection, cancelled homework, other-student isolation, latest skill levels and
-unconfirmed/future assessments. CTE rows exist only for a SELECT; no databases,
-tables, branches or persistent fixtures were created. Reproducible statements and
-expectations are in tests/evidence/stu02-readonly-projections.json. With an explicitly
-provided existing working connection, `STU_READONLY_DATABASE_URL=...` allows running
-tests/integration/student-dashboard-readonly.test.mjs in a READ ONLY transaction.
-
-Read-only SELECT smokes against the existing working schema passed for the four
-projections with an absent student ID and the undeployed Meet column replaced by
-NULL. They also exposed missing runtime SELECT grants on educational tables; those
-minimal grants are included in the new migration. Homework/skill base-table syntax
-was checked with the owner role; runtime grants still require deployment/retest.
-
-The controlled four-query latency test logged <200ms. **Working-domain/database
-latency is not established** by that mock-latency test. The new migration and
-invalidation triggers are prepared, not applied or exercised on live data. Real
-two-student DB/API E2E and deployment acceptance remain pending along with STU-01
-and FND-GATE. This code does not open the student frontend or grant production GO.
-
-`tests/api/student-dashboard-live.test.mjs` is prepared for that working-domain
-acceptance using two already provisioned ordinary STUDENT accounts, supplied through
-`STU_DASHBOARD_A_EMAIL/PASSWORD` and `STU_DASHBOARD_B_EMAIL/PASSWORD`. Both need paid
-access, completed password change and distinct upcoming lessons. It logs in through
-the normal session/CSRF endpoints, checks cache isolation, and logs both sessions out.
-It does not create students, payments or grants. It has not been run; absent
-credentials skip it rather than inventing accounts or weakening access checks.
-
-The pinned Nest cache-manager declaration needs a narrow pnpm type patch for
-exactOptionalPropertyTypes and a missing Cacheable type dependency extension.
-Runtime code is unchanged; strict TypeScript/lib checking remains enabled. Patches
-are included in source export and Docker build context for reproducible installs.

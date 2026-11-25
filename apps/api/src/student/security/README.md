@@ -1,4 +1,4 @@
-# STU-11 — профиль, безопасность и блокировка
+# профиль, безопасность и блокировка
 
 Состояние на 2026-10-28: реализация и целевые проверки готовы. PostgreSQL-проверка
 отложена по решению владельца STU-08/09/10. Миграция подготовлена, не применялась;
@@ -133,35 +133,6 @@ nullable `student_phone_e164`. Разрешены HTTPS wa.me, HTTPS t.me и н�
 относятся к rollout и конфигурации сотрудников. Первоначальная смена пароля
 по-прежнему предшествует выдаче контактов.
 
-В QA-оболочке добавлен отдельный StudentAccess: forced-password → suspended → active.
-Экран «Доступ приостановлен» показывает только валидные контакты; временный пароль
-сначала меняется через PATCH, поля очищаются при отправке/ошибке. Ученик не попадает
-в staff MFA/passkey и QA command workspace. Bootstrap обновляется после смены
-пароля и возврата фокуса. Это минимальный access экран; полноценные UI профиля,
-email и управления сессиями относятся к последующей реализации ученического UI.
-
-## Доказательства и приёмка
-
-`pnpm test:stu11`: 66 новых unit/actual Nest HTTP/SDK проверок с mock Prisma/S3/mail;
-реальный scrypt отдельно проверен на 8 символах. Дополнительно прошли 61 адресная
-регрессионная проверка STU-01/STU-07 и transport/empty-response. Тесты выполнялись
-логическими адресными наборами, без повторного общего прогона.
-
-В браузере на синтетических API проверены восемь access/password сценариев и три
-скриншота (desktop, 390 px, first password). Это не реальные DB/session/email
-end-to-end доказательства; local API/health отдельно не поднимался.
-Prisma validate/generate, API/worker/SDK/frontend builds и целевой lint — PASS.
-OpenAPI85. Офлайн разобраны 24 SQL statements/6 PLpgSQL bodies, соответствие новых
-колонок Prisma и шесть CTE-сценариев личного менеджера. Read-only PostgreSQL тест
-`tests/integration/student-security-readonly.test.mjs` подготовлен, не запускался.
-
-Результаты: `infra/STU11_EVIDENCE.json`, `tests/evidence/stu11-sql-syntax.json`,
-`tests/evidence/stu11-browser.json`. До production acceptance остаются миграции/
-typed binding/constraints/grants и гонки на PostgreSQL, реальная доставка OTP,
-проверка S3-avatar и данных назначенного менеджера, полный browser→API→DB/provider
-поток и FND-GATE. Дополнительные БД/ветки/контейнеры, deployment и production-записи
-в этом TASK не выполнялись.
-
 ## Уточнение MGR-03, 31.10.2026
 
 До смены первоначального пароля GET /student/me и GET /auth/csrf теперь также
@@ -169,29 +140,3 @@ typed binding/constraints/grants и гонки на PostgreSQL, реальная
 DELETE /auth/session. Срок нового временного пароля 72 часа; повторная установка
 того же пароля запрещена. Ранее приведённые результаты STU-11 — исторический
 снимок; текущий контракт и проверки описаны в [MGR-03](../../modules/manager/accounts/MGR-03.md).
-
-
-## TASK-034 — актуальный RU/RO клиент, 2026-11-08
-
-Backend DTO/guards/password/email/session/profile whitelist и исходная auth-политика
-не изменены. Alias контролируется отдельным input state без key={me.displayName};
-фоновые /me и locale не стирают dirty input. PATCH по-прежнему только displayName
-(поддержанный сервером owned avatar API не расширялся; нового upload UI нет).
-
-Secret commands клиента используют прямые closures и existing CSRF/write transport,
-без generic query mutation variables/serialized secret intent. UUID — корреляция
-явной попытки, не replay cache для password/OTP. Поля очищаются после попытки;
-unknown request не означает отправку кода и не повторяется автоматически.
-Unknown login/password/email-confirm/logout использует существующий account-ui
-verifySessionOutcome: abort/clear/cache/private DOM и явная проверка сессии.
-verifySessionOutcome лишь публично re-exported, сам session boundary не менялся.
-Успешный confirm сбрасывает локальный session context, уведомляет другие вкладки,
-заново читает /me и открывает профиль с авторитетным email. Current revoke409,
-foreign/unknown404, own-other204 остаются прежними серверными правилами.
-
-Suspended содержит только безопасные контакты TASK-027, locale и logout;
-его freshness использует timeZone собственного /me. Initial password проверяется
-раньше suspended, отдельный subject limit не закрывает весь кабинет.
-73 свежих security API/HTTP/SDK mocks прошли;19 Chromium,65 screenshots и точное
-покрытие описаны в [TASK-034](../../../../../output/k8k-tasks/TASK-034/report.md).
-Настоящая почта/OTP/ротация cookies/S3/avatar и полный gate этим не приняты.

@@ -14,7 +14,6 @@ minimumReleaseAgeExclude:
 onlyBuiltDependencies:
   - '@nestjs/core'
   - '@prisma/engines'
-  - esbuild
   - prisma
 patchedDependencies:
   '@nestjs/cache-manager@12.0.1': patches/@nestjs__cache-manager@12.0.1.patch

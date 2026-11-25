@@ -1,4 +1,4 @@
-# STU-03 — Student lessons
+# Student lessons
 
 `GET /api/v1/student/lessons` and
 `POST /api/v1/student/lessons/:lessonId/reschedule-request` use the STU-01 session,
@@ -49,7 +49,7 @@ GET `/api/v1/student/lessons/:lessonId/requests/:requestKey` checks the current
 student and lesson scope, then reads the existing CRM task by its stable actor,
 command type and original idempotency key. CREATED confirms only task creation.
 Optional type selects the command namespace explicitly when an actor reused one
-UUID in different commands. The UI always supplies it.
+UUID in different commands.
 No committed task yields UNKNOWN, including an in-flight command. No body, staff
 identity or other pupil's task is returned. This GET does not retry a command or
 change attendance, rights or money.
@@ -104,27 +104,3 @@ already committed task or dead-letter an unknown event. Reason/preferredDate sta
 the private task payload, not in the outbox notification or logs.
 The same handler registry now also recognizes STU-01's existing
 `student.password.change.v1` event, which previously had no registered observer.
-
-## Migration and verification
-
-`20261027110000_stu03_student_lessons` adds the task type, task lesson/payload fields
-and ownership/payload guards, student timezone with DB validation, and explicit
-no-show classification with its consistency constraint. Existing tasks keep null
-lesson/payload; old reports default false. No historic no-shows are inferred.
-
-Run API/worker build then `pnpm test:stu03`. Targeted checks cover real Nest HTTP
-with mock Prisma storage, two student scopes, CSRF, 201/replay/mismatch, atomic
-rollback, 24h/Meet boundaries, query validation and DST. Five exact-source SQL
-projections also passed on the existing PostgreSQL 18.6 using app_runtime and
-CTE-only fixtures: today, archive, page 2, page beyond the end, and calendar month.
-No tables, databases, branches or persistent fixture rows were created. Existing
-runtime report SELECT, task INSERT/SELECT and lesson lock privileges were verified.
-`tests/integration/student-lessons-readonly.test.mjs` reproduces these SELECTs in
-a READ ONLY transaction when STU_READONLY_DATABASE_URL explicitly points to the
-existing working database; absent credentials do not imply a successful DB run.
-
-The migration has not been applied, and real working-domain task creation and
-migration/trigger acceptance remain pending. STU-01/STU-02 and the foundation gate
-are also still pending deployment/acceptance; this draft implementation does not
-open the student frontend or grant production GO. The new 24h request rule follows
-STU-03 and does not close the separate CON-04/A financial-policy review.

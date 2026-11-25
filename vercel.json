@@ -1,10 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite",
+  "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "node infra/vercel/build.mjs",
-  "outputDirectory": "apps/platform/dist",
-  "regions": ["fra1"],
+  "outputDirectory": "output/vercel-static",
+  "regions": [
+    "fra1"
+  ],
   "functions": {
     "api/handler.ts": {
       "maxDuration": 60
@@ -37,10 +39,6 @@
     {
       "source": "/health",
       "destination": "/api/handler"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/index.html"
     }
   ],
   "headers": [
@@ -58,78 +56,6 @@
         {
           "key": "X-Frame-Options",
           "value": "DENY"
-        }
-      ]
-    },
-    {
-      "source": "/index.html",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/student/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/manager/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/account",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/teacher/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/director/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
-    },
-    {
-      "source": "/operator/:path*",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
         }
       ]
     }

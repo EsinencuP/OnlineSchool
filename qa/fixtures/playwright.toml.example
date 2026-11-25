@@ -1,5 +1,0 @@
-# Add only if codex mcp get playwright reports no server.
-# Paste into the project's .codex/config.toml and reopen Codex.
-[mcp_servers.playwright]
-command = "npx"
-args = ["-y", "@playwright/mcp@0.0.83", "--headless", "--isolated"]

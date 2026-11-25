@@ -1,14 +1,8 @@
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-export default defineConfig(({ mode }) => ({
-  base: '/manager/',
-  build: { manifest: true },
-  publicDir: mode === 'mock' ? 'test/public' : false,
+import { defineConfig } from 'vite';
+
+export default defineConfig({
   plugins: [react()],
-  server: {
-    host: '127.0.0.1',
-    port: 5177,
-    proxy: mode === 'mock' ? {} : { '/api': 'http://127.0.0.1:3000' },
-  },
-  preview: { host: '127.0.0.1', port: 4180 },
-}));
+  server: { port: 5174, strictPort: true },
+  test: { environment: 'node' },
+} as Parameters<typeof defineConfig>[0]);

@@ -1,70 +1,92 @@
-import React, { Suspense, lazy } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { SessionExitBoundary } from '@online-school/account-ui';
-import { initializeLocale } from '@online-school/ui';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { queryClient } from './api/client.js';
-import { RequireManager } from './session.js';
-import { Layout } from './components/layout.js';
-import { ErrorBoundary } from './components/error-boundary.js';
-import { ru } from './i18n/ru.js';
-import './style.css';
-import '@online-school/ui/style.css';
-const Login = lazy(() => import('./pages/Login.js'));
-const Dashboard = lazy(() => import('./pages/Dashboard.js'));
-const Students = lazy(() => import('./pages/Students.js'));
-const Student = lazy(() => import('./pages/Student.js'));
-const Account = lazy(() => import('./pages/Account.js'));
-const Schedule = lazy(() => import('./pages/Schedule.js'));
-const Tasks = lazy(() => import('./pages/Tasks.js'));
-const Task = lazy(() => import('./pages/Task.js'));
-const Leads = lazy(() => import('./pages/Leads.js'));
-const Lead = lazy(() => import('./pages/Lead.js'));
-initializeLocale();
-if (import.meta.env.MODE === 'mock') await (await import('./test/browser.js')).startMocks();
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { ManagerLayout } from './manager/Layout';
+import { Dashboard } from './manager/pages/Dashboard';
+import { Leads } from './manager/pages/Leads';
+import { Payments } from './manager/pages/Payments';
+import { Schedule } from './manager/pages/Schedule';
+import { Students } from './manager/pages/Students';
+import { Tasks } from './manager/pages/Tasks';
+import { ManagerStoreProvider } from './manager/store';
+import { RolePicker } from './RolePicker';
+import { StudentLayout } from './student/Layout';
+import { StudentHome } from './student/pages/Home';
+import { StudentHomework } from './student/pages/Homework';
+import { StudentLessons } from './student/pages/Lessons';
+import { StudentMaterials, StudentNotifications, StudentReports, StudentSubscription } from './student/pages/More';
+import { StudentProgress } from './student/pages/Progress';
+import { StudentStoreProvider } from './student/store';
+import { TeacherLayout } from './teacher/Layout';
+import { TeacherJournal } from './teacher/pages/Journal';
+import { TeacherSchedule } from './teacher/pages/Schedule';
+import { TeacherStudents } from './teacher/pages/Students';
+import { TeacherToday } from './teacher/pages/Today';
+import { TeacherCheckpoints, TeacherHomework, TeacherMaterials, TeacherPayroll } from './teacher/pages/Work';
+import { TeacherStoreProvider } from './teacher/store';
+import './styles.css';
+
+const router = createBrowserRouter([
+  { path: '/', element: <RolePicker /> },
+  {
+    path: '/manager',
+    element: <ManagerLayout />,
+    children: [
+      { index: true, element: <Dashboard /> },
+      { path: 'leads', element: <Leads /> },
+      { path: 'students', element: <Students /> },
+      { path: 'tasks', element: <Tasks /> },
+      { path: 'schedule', element: <Schedule /> },
+      { path: 'payments', element: <Payments /> },
+    ],
+  },
+  {
+    path: '/teacher',
+    element: <TeacherLayout />,
+    children: [
+      { index: true, element: <TeacherToday /> },
+      { path: 'schedule', element: <TeacherSchedule /> },
+      { path: 'journal', element: <TeacherJournal /> },
+      { path: 'students', element: <TeacherStudents /> },
+      { path: 'homework', element: <TeacherHomework /> },
+      { path: 'checkpoints', element: <TeacherCheckpoints /> },
+      { path: 'materials', element: <TeacherMaterials /> },
+      { path: 'payroll', element: <TeacherPayroll /> },
+    ],
+  },
+  {
+    path: '/student',
+    element: <StudentLayout />,
+    children: [
+      { index: true, element: <StudentHome /> },
+      { path: 'lessons', element: <StudentLessons /> },
+      { path: 'homework', element: <StudentHomework /> },
+      { path: 'progress', element: <StudentProgress /> },
+      { path: 'reports', element: <StudentReports /> },
+      { path: 'materials', element: <StudentMaterials /> },
+      { path: 'subscription', element: <StudentSubscription /> },
+      { path: 'notifications', element: <StudentNotifications /> },
+    ],
+  },
+  { path: '*', element: <Navigate to="/" replace /> },
+]);
+
+/** All cabinet stores live at the root, so switching cabinets keeps demo changes. */
+function Root() {
+  return (
+    <ManagerStoreProvider>
+      <TeacherStoreProvider>
+        <StudentStoreProvider>
+          <RouterProvider router={router} />
+        </StudentStoreProvider>
+      </TeacherStoreProvider>
+    </ManagerStoreProvider>
+  );
+}
+
 createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <SessionExitBoundary>
-      <QueryClientProvider client={queryClient}>
-        <ErrorBoundary>
-          <BrowserRouter>
-            <Suspense
-              fallback={
-                <p className="state" role="status">
-                  {ru.loading}
-                </p>
-              }
-            >
-              <Routes>
-                <Route path="/manager/login" element={<Login />} />
-                <Route element={<RequireManager />}>
-                  <Route element={<Layout />}>
-                    <Route path="/manager" element={<Dashboard />} />
-                    <Route path="/manager/leads" element={<Leads />} />
-                    <Route path="/manager/leads/:id" element={<Lead />} />
-                    <Route path="/manager/students" element={<Students />} />
-                    <Route path="/manager/students/:id" element={<Student />} />
-                    <Route path="/manager/students/:id/account" element={<Account />} />
-                    <Route path="/manager/schedule" element={<Schedule />} />
-                    <Route path="/manager/tasks" element={<Tasks />} />
-                    <Route path="/manager/tasks/:id" element={<Task />} />
-                  </Route>
-                </Route>
-                <Route
-                  path="*"
-                  element={
-                    <main className="auth-shell">
-                      <h1>{ru.notFound}</h1>
-                      <a href="/manager">{ru.dashboard}</a>
-                    </main>
-                  }
-                />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </ErrorBoundary>
-      </QueryClientProvider>
-    </SessionExitBoundary>
-  </React.StrictMode>,
+  <StrictMode>
+    <Root />
+  </StrictMode>,
 );
+

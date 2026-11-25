@@ -1,3 +1,0 @@
-apps/apps.rar filter=lfs diff=lfs merge=lfs -text
-# Acceptance manifests hash exact bytes, including source backups and JSONL.
-output/** -text

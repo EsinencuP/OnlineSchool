@@ -3,8 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "dist-tools/**", "*.tsbuildinfo", "src/generated/**"],
-      "env": ["VITE_API_BASE_URL"]
+      "outputs": ["dist/**", "dist-tools/**", "*.tsbuildinfo", "src/generated/**"]
     },
     "typecheck": { "dependsOn": ["^build"], "cache": false },
     "lint": { "outputs": [] },

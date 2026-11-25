@@ -1,20 +1,4 @@
-# Schedule, Finance, Entitlements, Ledger — TASK-03
-
-Это описание инкремента TASK-03. Текущий baseline и дальнейшие дополнения:
-[TASK-04](EDUCATION_INFRA.md) — единая init, сохранённая legacy-цепочка,
-реальные AuditEvent/OutboxEvent и 31 интеграционная проверка.
-
-В Prisma добавлены 25 моделей TASK-03 (всего 46 моделей вместе с TASK-02).
-Две новые миграции создают таблицы, именованные FK, уникальные ключи команд,
-частичные индексы и SQL-проверки. Все PK — UUID, даты — timestamptz(3),
-`created_at`/`updated_at` обязательны. Исторические связи не удаляются каскадно.
-
-| Контур   | Модели                                                                                                                                              |
-| -------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Schedule | Subject, StudentSubjectEnrollment, TeachingAssignment, TeacherAvailability, RecurringSlot, LessonOccurrence, LessonChangeEvent, LessonActualOutcome |
-| Права    | SaleCondition, Subscription, EntitlementGrant, EntitlementConsumption, EntitlementAdjustment, TemporaryAccessPermission                             |
-| Деньги   | LedgerEntry, LedgerLine, LedgerDocument, PaymentReceipt, PaymentDistribution, RefundRecord, FinancialPeriod                                         |
-| Payroll  | TeacherAccrual, PayrollObligation, PayoutAttempt, ConfirmedPayout                                                                                   |
+# Schedule, Finance, Entitlements, Ledger
 
 ## Денежные и количественные факты
 
@@ -125,44 +109,3 @@ RefundRecord сохраняет исходную цену оплаченных �
 отдельно утверждение директором и доказанное исполнение возврата. Утверждение не равно
 переводу денег. Методика 11.3.2/A сохранена; юридические вопросы, округление, документы
 и сроки не объявлены решёнными этой схемой. Экономика 11.4 не закрывается.
-
-## Проверка и границы
-
-Из корня, после запуска изолированной PostgreSQL 18 (loopback):
-
-```powershell
-$env:DIRECT_URL = 'postgresql://postgres@127.0.0.1:55433/online_school_test_task03'
-pnpm --filter @online-school/db db:validate
-pnpm --filter @online-school/db db:migrate
-pnpm build
-$env:TEST_DATABASE_URL = $env:DIRECT_URL
-pnpm --filter @online-school/db test:integration
-pnpm --filter @online-school/db exec prisma migrate status
-pnpm --filter @online-school/db exec prisma migrate diff --from-config-datasource --to-schema prisma/schema.prisma --exit-code
-```
-
-Интеграционные тесты используют отдельную локальную БД с префиксом online_school_test.
-Часть сценариев откатывает транзакции, а конкурентные и NestJS-сценарии оставляют
-синтетические записи в этой одноразовой БД. Она не должна содержать реальные данные.
-На чистой PostgreSQL **18.6** применены все четыре миграции; интеграционная серия
-содержит 22 проверки (12 TASK-02 + 10 TASK-03). Сравнение Prisma-схемы и БД — без различий.
-
-Миграции не создают фиктивных платежей для старых StudentAccount. Если в другой среде
-уже есть записи с прежними UUID-заглушками, до применения FK требуется сверка реальных
-оснований и контролируемое заполнение activation_subscription_id. Пустой стенд прошёл
-приёмку; миграция существующих пользовательских данных этой проверкой не подтверждена.
-
-Production GO/FND-GATE, полные Finance/Schedule API, ACL, аудит/outbox, автоматизация
-возвратов, банковская интеграция и юридическая приёмка остаются открытыми.
-
-Источники: TECH-06—10, CON-02/B, CON-03/A, CON-10/B; для нормативных деталей действуют
-канонические документы в docs/. [Ограничения PostgreSQL 18](https://www.postgresql.org/docs/18/ddl-constraints.html),
-[Prisma: транзакции](https://www.prisma.io/docs/orm/v7/prisma-client/queries/transactions).
-
-## Последующий инкремент TASK-08
-
-Finance API, контекстная publication policy и атомарные финансовые Audit/Outbox
-реализованы после исторической проверки TASK-03, описанной выше.
-Текущая схема содержит 69 моделей и четыре миграции текущей цепочки;
-прежние baseline SQL не переписаны. Подробности и оставшиеся внешние границы:
-[Finance API](../../apps/api/FINANCE.md).

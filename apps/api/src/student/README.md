@@ -1,9 +1,9 @@
-# STU-01 — StudentModule
+# StudentModule
 
-> Current policy, STU-11 (2026-10-28): only GET `/me` and POST/PATCH
+> Only GET `/me` and POST/PATCH
 > `/security/change-password` are bootstrap exceptions. Initial-password403 and
 > inactive-access402 apply to profile/security and subscription reads as well.
-> Earlier STU-01 evidence below remains historical. See [STU-11](security/README.md).
+> See [account security](security/README.md).
 
 The module owns `/api/v1/student/*`. `StudentProfile` in the product contract maps to
 the existing `Student` registry identity plus its `StudentAccount` login linkage.
@@ -26,9 +26,7 @@ request, including concurrent invocations. It never accepts a client-supplied
 student ID as the authenticated context.
 
 `GET /api/v1/student/me` returns `StudentMeResponseDto`, including the login email
-and `mustChangePassword`. `avatarUrl` is currently null; private avatar delivery
-belongs to the profile/file feature. The future student frontend redirects an
-initial-password account to `/security/change-password`.
+and `mustChangePassword`. `avatarUrl` is currently null.
 
 ## Access and errors
 
@@ -62,30 +60,3 @@ session/CSRF cookies, and writes the mandatory audit/outbox pair. An audit failu
 rolls the entire operation back. Credential values and tokens are excluded from
 audit/outbox payloads. This minimal endpoint supports STU-01's first-login flow;
 recovery, email verification and other STU-11 features are outside this task.
-
-## Migration and verification
-
-`20261027090000_stu01_student_context` adds
-`student_accounts.must_change_password NOT NULL DEFAULT true`. Existing student
-accounts therefore require a password change after applying it. Staff accounts
-are unaffected. The migration is prepared but has not been applied to the working
-Neon database in this task.
-
-After `pnpm --filter @online-school/api build`, run `pnpm test:stu01`.
-The suite checks actual Nest routing, guards, sessions, CSRF on all four mutation
-verbs, password rotation/rollback, request caching and ProblemDetails transport,
-using mock Prisma. The access SQL also passed a read-only syntax/runtime-role
-smoke against the existing PostgreSQL 18 database with an absent student ID.
-No extra databases, branches or PostgreSQL containers were created.
-
-The real CRM → first confirmed payment → provisioned student login → password
-change → cabinet scenario is **not verified** by these mock-backed tests. Neither
-the migration deployment nor that acceptance scenario nor the Phase 0 FND-GATE
-is declared complete. Keep the change in a draft PR until its foundation and
-deployment acceptance are resolved; no student frontend is opened by this task.
-
-MGR-03 (2026-10-31) supersedes the earlier initial-password bootstrap exception:
-pending students also receive PASSWORD_CHANGE_REQUIRED on GET /student/me and
-GET /auth/csrf. Only the password-change command and DELETE /auth/session are
-allowed. See [MGR-03](../modules/manager/accounts/MGR-03.md) for the one-time
-credential, expiry, distribution-backed activation and verification limits.

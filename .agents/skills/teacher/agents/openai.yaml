@@ -1,6 +1,0 @@
-interface:
-  display_name: "K8K Teacher"
-  short_description: "Браузерная проверка кабинета учителя"
-  default_prompt: "Используй $teacher для запуска команды K8K QA."
-policy:
-  allow_implicit_invocation: false

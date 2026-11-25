@@ -1,8 +1,4 @@
-# STU-09 — образовательные отчёты и PDF-выписка
-
-Статус на 2026-10-28: код и целевые проверки готовы. Владелец выбрал завершение
-с отложенной PostgreSQL-проверкой. Миграции в рабочую БД и деплой не выполнялись;
-реальные PostgreSQL/S3 и сквозная доставка PDF ещё не проверены.
+# образовательные отчёты и PDF-выписка
 
 ## API
 
@@ -11,13 +7,13 @@ active-access guards STU-01. `studentProfileId` берётся из сервер
 Ответы приватные (`Cache-Control: no-store`). Ученических команд создания или
 редактирования образовательного отчёта нет.
 
-| Маршрут                                          | Поведение                                                                                                         |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| `GET /api/v1/student/reports?page=1&pageSize=10` | Опубликованные отчёты, `createdAt DESC, reportId DESC`; pageSize 1–100; items/total/page/pageSize                 |
-| `GET /api/v1/student/reports/:reportId` | Один отчёт из того же published set, независимо от страницы; unknown/foreign/draft/future/superseded — одинаковый403 |
-| `POST /api/v1/student/reports/:reportId/read`    | Пустое тело; первый вызов 204, повторный 200 с пустым телом, включая replay того же ключа; isNew становится false |
-| `POST /api/v1/student/reports/export-pdf`        | 202, `{jobId,status:'QUEUED',estimatedReadyAt}`; пустое тело означает всю историю                                 |
-| `GET /api/v1/student/reports/export-pdf/:jobId`  | QUEUED/PROCESSING/READY/FAILED; чужое или неизвестное задание — 403                                               |
+| Маршрут                                                      | Поведение                                                                                                            |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `GET /api/v1/student/reports?page=1&pageSize=10`             | Опубликованные отчёты, `createdAt DESC, reportId DESC`; pageSize 1–100; items/total/page/pageSize                    |
+| `GET /api/v1/student/reports/:reportId`                      | Один отчёт из того же published set, независимо от страницы; unknown/foreign/draft/future/superseded — одинаковый403 |
+| `POST /api/v1/student/reports/:reportId/read`                | Пустое тело; первый вызов 204, повторный 200 с пустым телом, включая replay того же ключа; isNew становится false    |
+| `POST /api/v1/student/reports/export-pdf`                    | 202, `{jobId,status:'QUEUED',estimatedReadyAt}`; пустое тело означает всю историю                                    |
+| `GET /api/v1/student/reports/export-pdf/:jobId`              | QUEUED/PROCESSING/READY/FAILED; чужое или неизвестное задание — 403                                                  |
 | `GET /api/v1/student/reports/export-pdf/requests/:requestId` | Read-only сверка исходного enqueue UUID: ACCEPTED + jobId либо UNKNOWN/null. Не подписывает URL и не создаёт задание |
 
 POST требуют CSRF и UUID `Idempotency-Key`. Read receipt и задание создаются
@@ -26,23 +22,13 @@ POST требуют CSRF и UUID `Idempotency-Key`. Read receipt и задани
 SDK использует отдельный mutator для пустых ответов read; остальные JSON-операции
 продолжают отвергать неожиданный пустой успешный ответ.
 
-TASK-032 добавляет только адресное чтение и восстановление потерянного202.
+После потери ответа HTTP 202 клиент проверяет статус экспорта.
 Detail использует тот же publishedReportsCte/reportJson/normalizeReport, что list.
 Receipt ищет существующий PdfExportJob по student_id, requested_by и job_ref
 type/source_operation_id/deduplication_key. ACCEPTED — факт постановки, не готовность
-PDF; UNKNOWN не доказывает, что команда не выполнялась. Перед явным повтором UI
-проверяет receipt и сохраняет прежний UUID/body. После reload без исходного body
-допустима только GET-сверка, без эвристического нового POST.
-
-В UI session-owned query cache хранит intent/selection/UUID, без signed URL.
-URL страницы содержит только report/page/job/request IDs. Signed URL живёт в памяти
-mounted PDF UI до expiry/unmount; каждый download сначала читает job заново.
-Polling — последовательный GET раз в2s, максимум30 попыток/60s; остановка клиента
-не отменяет job. Возврат/resume читает прежний job, новый export только явный.
-401/403/session replacement скрывает данные и отменяет reads/timers.
-Состояния, RU/RO и local evidence: [TASK-032](../../../../../output/k8k-tasks/TASK-032/report.md).
-Новые GET/SDK проверены локально; реальные PostgreSQL/S3/worker delivery и FND-GATE
-по-прежнему не принимаются этим browser/mock evidence.
+PDF. При `UNKNOWN` результат команды остаётся неизвестным. Повтор использует
+исходные UUID и тело запроса. Статус можно проверить отдельным GET, который
+не создаёт новое задание.
 
 Необязательное тело экспорта: `{subjectId?,periodFrom?,periodTo?}`. Даты строго
 YYYY-MM-DD, границы включительны по часовому поясу ученика, включая DST. Чужой
@@ -111,26 +97,3 @@ Content-Type application/pdf, no-store; create-only PUT (`If-None-Match: *`).
 не изменены. Реальный провайдер должен поддерживать SigV4/3600 секунд и приватный
 bucket; инфраструктурная политика или временные credentials могут сократить срок.
 Ошибки API содержат безопасный код без S3/SQL/личных данных.
-
-## Проверки и оставшаяся приёмка
-
-`pnpm test:stu09` — 81 целевая проверка с mock Prisma/S3, включая настоящий
-Nest HTTP/session/CSRF/idempotency pipeline, rollback, ownership, retry/fencing,
-отзыв доступа, фиксированное истечение с мокированным временем и generated SDK.
-Дополнительно прошли две существующие transport-проверки. Настоящий PDF рендерится
-командой `node tests/support/render-education-pdf-sample.mjs` после worker build;
-образец полностью синтетический, три A4 страницы визуально проверены.
-
-Миграция `20261027170000_stu09_reports_pdf` подготовлена после STU-01–08.
-Prisma validate/generate, API/worker/SDK builds и целевой lint прошли.
-24 SQL statements, четыре PLpgSQL-функции и десять source-exact SELECT fixture
-сценариев разобраны офлайн через libpg_query/pglast; это не проверка SQL binding,
-прав, блокировок, триггеров и фактического исполнения.
-Read-only сценарий `tests/integration/student-reports-readonly.test.mjs` подготовлен
-для PostgreSQL 18; по решению владельца он не запускался. Он не заменяет будущую
-проверку write constraints, конкурентных worker claims и реального S3 download/expiry.
-
-Результаты: `infra/STU09_EVIDENCE.json`, `tests/evidence/stu09-sql-syntax.json`,
-`tests/evidence/stu09-pdf-review.json`. Проверка рабочей среды, применение миграций,
-сквозной экспорт через S3 и FND-GATE остаются открытыми. Дополнительные БД,
-ветки Neon и контейнеры не создавались; Docker image и полная регрессия не запускались.

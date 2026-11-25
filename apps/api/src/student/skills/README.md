@@ -1,4 +1,4 @@
-# STU-08 — «Мой путь знаний»: карта навыков
+# «Мой путь знаний»: карта навыков
 
 Read-only student routes use the STU-01 server context (`Student.id`), STUDENT
 role, changed initial password and active cabinet access. No client-supplied
@@ -87,49 +87,3 @@ automatic checkpoint creation, the working-day calendar, 2/3-day deadlines,
 reminders and manager escalation still require the teacher/report workflow.
 No student GET performs any of those writes or changes a skill status.
 CON-07/B's 4/8 cadence and deadlines remain requirements for that workflow.
-
-## Verification and release boundary
-
-Two additive migrations are prepared: `20261027160000_stu08_skill_level` and
-`20261027160100_stu08_skills`. The enum extension is committed separately. No
-existing migration is rewritten, and no STU-08 migration has been applied to
-the working database. Do not publish this API before its schema is deployed
-through an authorized release; earlier pending STU migrations still apply.
-
-Targeted API/SDK compilation, 45 unit/actual Nest HTTP cases and changed-file
-lint passed. SQL/PLpgSQL syntax was parsed offline. The 21 source-exact SQL CTE
-cases are prepared in `tests/integration/student-skills-readonly.test.mjs`.
-They run only with an explicit `STU_READONLY_DATABASE_URL`, inside BEGIN READ
-ONLY, shadowing source tables with CTE fixtures and rolling back afterwards.
-
-Actual PostgreSQL execution was deferred by the owner's explicit answer on
-27.10.2026: «Завершить с отложенной PostgreSQL-проверкой». The connected Neon
-session cannot authorize the working project, and Node cannot read its existing
-private runtime file (EPERM). No alternate database, branch or container was
-created; no secret was copied or bypassed. Mock tests and syntax parsing do not
-prove SQL binding, row isolation or trigger execution on PostgreSQL.
-
-Actual migrations, trigger rollback/immutability/concurrency tests, teacher
-confirmation and student working acceptance remain pending. See
-`infra/STU08_EVIDENCE.json`. STU-08 does not close FND-GATE or grant production GO.
-
-## TASK-031 local frontend/read-contract acceptance — 2026-11-08
-
-The additive snapshot filter uses SkillSnapshotQueryDto/Pipe and the existing
-service/query; OpenAPI/SDK were regenerated through the standard scripts with a
-database-blocking preload during export. All 147 operations and prior responses
-remain compatible. No migration or teacher mutation was added. The subject
-confirmed-CONDUCTED counter and stored frozen names/comments are preserved.
-
-The student UI now uses a shared three-stage legend and neutral NOT_STUDIED,
-read-only public audit, authoritative goals and per-subject historical URLs.
-Absence of an assessment does not invent a teacher or an assessment date.
-Snapshot4 and report8 have distinct labels/links. Reads refresh on return and
-explicit refresh without polling; 403 overrides cache and session revocation
-discards late reads. Full RU/RO and local browser evidence are recorded in
-[TASK-031](../../../../../output/k8k-tasks/TASK-031/report.md).
-
-Fresh evidence: 57 unit/Nest HTTP mocks and 10 Chromium scenarios, including the
-unchanged original four-state case. Counter SQL checks are structural source
-checks, not PostgreSQL execution. Historical 21 CTE cases above were not run;
-real database binding/trigger/concurrency and teacher publication remain NOT_RUN.

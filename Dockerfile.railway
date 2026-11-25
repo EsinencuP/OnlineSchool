@@ -5,8 +5,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates
 WORKDIR /workspace
 COPY --chown=node:node . .
 RUN pnpm install --frozen-lockfile \
-    && pnpm --filter @online-school/api build \
-    && pnpm --filter @online-school/platform build
-ENV NODE_ENV=production HOST=0.0.0.0 PLATFORM_DIST_DIR=/workspace/apps/platform/dist
+    && pnpm --filter @online-school/api build
+ENV NODE_ENV=production HOST=0.0.0.0
 USER node
 CMD ["sh", "-c", "node infra/railway/predeploy.mjs && exec env -u DIRECT_URL -u PLATFORM_LOCAL_DEMO_PASSWORD node apps/api/dist/main.js"]

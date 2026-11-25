@@ -1,6 +1,0 @@
-interface:
-  display_name: "K8K QA Engineer"
-  short_description: "Независимый технический аудит сборки"
-  default_prompt: "Используй $qa-engineer для запуска команды K8K QA."
-policy:
-  allow_implicit_invocation: false
