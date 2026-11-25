@@ -1,7 +1,6 @@
 // Runs inside the existing Vercel project's protected production build environment.
 // No credentials are sent to GitHub, command arguments, generated files or build logs.
 import { spawnSync } from 'node:child_process';
-import { mkdirSync } from 'node:fs';
 import { checkReleaseMigrations, parseDatabaseTarget } from './migration-preflight.mjs';
 
 function run(args, env = process.env, quiet = false) {
@@ -54,6 +53,7 @@ const buildEnv = { ...process.env };
 delete buildEnv.DIRECT_DATABASE_URL;
 delete buildEnv.DIRECT_URL;
 run(['--filter', '@online-school/api', 'build'], buildEnv);
+run(['--filter', '@online-school/manager-web', 'build'], buildEnv);
 await checkMigrations(direct, false);
 run(
   ['--filter', '@online-school/db', 'exec', 'prisma', 'migrate', 'deploy'],
@@ -87,4 +87,3 @@ if (process.env.STUDENT_TEST_PROVISION_UNTIL) {
 if (process.env.STUDENT_DB_INSPECT_UNTIL) {
   run(['exec', 'node', 'scripts/inspect-student-db.mjs'], { ...buildEnv, DIRECT_URL: direct });
 }
-mkdirSync(new URL('../../output/vercel-static/', import.meta.url), { recursive: true });

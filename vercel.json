@@ -1,9 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
+  "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "node infra/vercel/build.mjs",
-  "outputDirectory": "output/vercel-static",
+  "outputDirectory": "apps/manager-web/dist",
   "regions": [
     "fra1"
   ],
@@ -39,6 +39,10 @@
     {
       "source": "/health",
       "destination": "/api/handler"
+    },
+    {
+      "source": "/:cabinet(manager|teacher|student)/:path*",
+      "destination": "/index.html"
     }
   ],
   "headers": [

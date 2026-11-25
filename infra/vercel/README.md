@@ -115,8 +115,10 @@ direct connection, после чего повторяет проверку и т
 сохраняет `DEAD`, а `DELIVERED` у повтора подтверждает восстановление аудита.
 
 Root Directory в Vercel — корень репозитория (иначе Daemons beta не поддерживается),
-Node 24, install `pnpm install --frozen-lockfile`, output `output/vercel-static`.
-Каталог создаётся при сборке и остаётся пустым. Активен корневой `vercel.json`.
+Node 24, install `pnpm install --frozen-lockfile`, output `apps/manager-web/dist`.
+Корневой `vercel.json` публикует демо-кабинеты с синтетическими данными и
+переключением ролей на `/`, `/manager`, `/teacher` и `/student`. Запросы `/api/*`
+обслуживает NestJS Function.
 
 План Hobby Daemons beta даёт команде 5 Active CPU-hours и 420 GB-hours выделенной
 памяти в месяц. При размере worker 1 GiB квоты памяти хватит максимум на 420
