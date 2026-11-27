@@ -73,7 +73,7 @@ export function DirectorDecisions() {
           <Empty title="Нет решений по этому фильтру" text={all.length ? 'Сбросьте фильтр, чтобы увидеть остальные.' : 'Очередь пуста.'} />
         </section>
       ) : (
-        <div className="table-wrap">
+        <div className="table-wrap boxed">
           <table>
             <thead>
               <tr>

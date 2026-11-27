@@ -56,4 +56,6 @@ export interface TeacherState {
   requests: ScheduleRequest[];
   notifications: TeacherNotification[];
   payroll: { month: string; lines: PayrollLine[] };
+  /** Previous months, oldest first — each item is one GET /teacher/payroll?month=YYYY-MM response. */
+  payrollHistory: { month: string; lines: PayrollLine[] }[];
 }

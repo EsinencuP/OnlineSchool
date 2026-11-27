@@ -48,7 +48,9 @@ export function Shell({ role, nav, person, now, search, bell, toasts, dismiss, o
     <div className="shell" data-role={role}>
       <aside className={`sidebar${open ? ' open' : ''}`} aria-label="Навигация кабинета">
         <div className="brand">
-          <img src="/logo.svg" alt="2K Academy" />
+          <span className="brand-pad">
+            <img src="/logo.svg" alt="2K Academy" />
+          </span>
         </div>
         <nav style={{ display: 'grid', gap: 2 }}>
           {nav.map((item) => {

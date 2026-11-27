@@ -56,7 +56,7 @@ export function StudentReports() {
                     if (r.isNew) run({ type: 'report.read', reportId: r.reportId });
                   }}
                 >
-                  <img src={SUBJECT_ICON[r.subjectName]} alt="" width={52} height={52} style={{ objectFit: 'contain' }} />
+                  <img src={SUBJECT_ICON[r.subjectName]} alt="" className="subject-art md" />
                   <span className="grow">
                     <span className="title" style={{ fontSize: 16 }}>{r.subjectName} · {r.lessonCount} уроков</span>
                     <span className="sub">{fmtDay(r.periodFrom)} — {fmtDay(r.periodTo)} · {r.teacherName}</span>
@@ -159,7 +159,7 @@ export function StudentSubscription() {
         {state.subscriptions.map((s) => (
           <section key={s.subscriptionId} className="card" style={{ display: 'grid', gap: 14 }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-              <img src={SUBJECT_ICON[s.subjectName]} alt="" width={44} height={44} style={{ objectFit: 'contain' }} />
+              <img src={SUBJECT_ICON[s.subjectName]} alt="" className="subject-art md" />
               <div style={{ flex: 1 }}>
                 <b style={{ display: 'block' }}>{s.subjectName}</b>
                 <span className="muted" style={{ fontSize: 12 }}>{s.planName}</span>

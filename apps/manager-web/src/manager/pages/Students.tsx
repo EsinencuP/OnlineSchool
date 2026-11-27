@@ -83,7 +83,7 @@ export function Students() {
           <Empty title="Никого не нашли" text="Измените фильтр или запрос." />
         </section>
       ) : (
-        <div className="table-wrap">
+        <div className="table-wrap boxed">
           <table>
             <thead>
               <tr>

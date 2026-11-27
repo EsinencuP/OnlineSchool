@@ -1,14 +1,16 @@
 import { Download, Info, Share2, X } from 'lucide-react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { fmtDateTime, fmtDay, fmtMoney, relative } from '../../shared/format';
+import { HBarList, TileShape } from '../../shared/analytics';
+import { Chart } from '../../shared/Chart';
+import { dayKey, fmtDateTime, fmtDay, fmtMoney, relative } from '../../shared/format';
 import { Avatar, Badge, Empty, Notice, Panel } from '../../shared/ui';
 import { selectPayrollTotals, selectRate } from '../logic';
 import { RATE_TABLE } from '../seed';
 import { useTeacher } from '../store';
 import type { Checkpoint, HomeworkItem } from '../types';
 
-const HW_STATE: Record<HomeworkItem['state'], { label: string; tone: 'blue' | 'yellow' | 'coral' | 'teal' | 'neutral' }> = {
+export const HW_STATE: Record<HomeworkItem['state'], { label: string; tone: 'blue' | 'yellow' | 'coral' | 'teal' | 'neutral' }> = {
   NOT_SUBMITTED: { label: 'Не сдано', tone: 'blue' },
   AWAITING_REVIEW: { label: 'Ждёт проверки', tone: 'yellow' },
   NEEDS_REVISION: { label: 'На доработке', tone: 'coral' },
@@ -253,11 +255,14 @@ export function TeacherPayroll() {
         </div>
       </div>
       <div className="grid-4">
-        <section className="tile tile-teal" style={{ minHeight: 120 }}><span style={{ fontWeight: 600 }}>Начислено</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto' }}>{fmtMoney(t.accrued, 'MDL')}</span></section>
-        <section className="tile tile-blue" style={{ minHeight: 120 }}><span style={{ fontWeight: 600 }}>Выплачено</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto' }}>{fmtMoney(t.paid, 'MDL')}</span></section>
-        <section className="tile tile-yellow" style={{ minHeight: 120 }}><span style={{ fontWeight: 600 }}>К выплате</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto' }}>{fmtMoney(t.outstanding, 'MDL')}</span></section>
-        <section className="tile tile-violet" style={{ minHeight: 120 }}><span style={{ fontWeight: 600 }}>Ожидает начисления</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto' }}>{fmtMoney(t.pendingAccrual, 'MDL')}</span></section>
+        <section className="tile tile-teal" style={{ minHeight: 120 }}><TileShape color="teal" /><span style={{ fontWeight: 600, position: 'relative' }}>Начислено</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto', position: 'relative' }}>{fmtMoney(t.accrued, 'MDL')}</span></section>
+        <section className="tile tile-blue" style={{ minHeight: 120 }}><TileShape color="blue" /><span style={{ fontWeight: 600, position: 'relative' }}>Выплачено</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto', position: 'relative' }}>{fmtMoney(t.paid, 'MDL')}</span></section>
+        <section className="tile tile-yellow" style={{ minHeight: 120 }}><TileShape color="yellow" /><span style={{ fontWeight: 600, position: 'relative' }}>К выплате</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto', position: 'relative' }}>{fmtMoney(t.outstanding, 'MDL')}</span></section>
+        <section className="tile tile-violet" style={{ minHeight: 120 }}><TileShape color="violet" /><span style={{ fontWeight: 600, position: 'relative' }}>Ожидает начисления</span><span className="big-num num" style={{ fontSize: 26, marginTop: 'auto', position: 'relative' }}>{fmtMoney(t.pendingAccrual, 'MDL')}</span></section>
       </div>
+
+      <PayrollAnalytics />
+
       <section className="card" aria-labelledby="h-rate">
         <div className="card-head"><h3 id="h-rate">Текущая ставка: {fmtMoney(r.rate, 'MDL')} за урок</h3></div>
         <div className="two-col">
@@ -284,14 +289,14 @@ export function TeacherPayroll() {
       <section className="card" style={{ padding: 14 }}>
         <div className="table-wrap">
           <table>
-            <thead><tr><th>Урок</th><th>Ученик</th><th>Основание</th><th>Сумма</th><th>Статус</th></tr></thead>
+            <thead><tr><th>Урок</th><th>Ученик</th><th>Основание</th><th className="r">Сумма</th><th>Статус</th></tr></thead>
             <tbody>
               {state.payroll.lines.map((l) => (
                 <tr key={l.outcomeId} style={{ cursor: 'default' }}>
                   <td className="num">{fmtDateTime(l.lessonStartedAt)}</td>
                   <td>{l.studentName}</td>
                   <td className="muted" style={{ fontSize: 12 }}>{l.rateBasis}</td>
-                  <td className="num" style={{ fontWeight: 600 }}>{fmtMoney(l.amount, l.currency)}</td>
+                  <td className="num r" style={{ fontWeight: 600 }}>{fmtMoney(l.amount, l.currency)}</td>
                   <td><Badge tone={PAY_STATUS[l.status].tone}>{PAY_STATUS[l.status].label}</Badge></td>
                 </tr>
               ))}
@@ -300,5 +305,153 @@ export function TeacherPayroll() {
         </div>
       </section>
     </div>
+  );
+}
+
+const GOAL_KEY = 'teacher.payroll.goal';
+const readGoal = () => {
+  try {
+    const v = Number(window.localStorage.getItem(GOAL_KEY));
+    return Number.isFinite(v) && v > 0 ? v : 12000;
+  } catch {
+    return 12000;
+  }
+};
+const monthName = (m: string, opts: Intl.DateTimeFormatOptions = { month: 'short' }) =>
+  new Date(`${m}-15T12:00:00Z`).toLocaleDateString('ru-RU', { timeZone: 'UTC', ...opts }).replace('.', '');
+
+/**
+ * Earnings analytics from payroll lines only (GET /teacher/payroll?month=… per month).
+ * The goal calculator is a projection at the current rate, labelled as such.
+ */
+function PayrollAnalytics() {
+  const { state } = useTeacher();
+  const [goal, setGoal] = useState(readGoal);
+  const r = selectRate(state);
+  const months = [...state.payrollHistory, state.payroll];
+  const sums = months.map((m) => selectPayrollTotals(m.lines));
+  const accrued = sums.map((x) => Number(x.accrued));
+  const paid = sums.map((x) => Number(x.paid));
+  const lessonsCount = months.map((m) => m.lines.filter((l) => l.status !== 'NO_PAYMENT').length);
+  const best = accrued.slice(0, -1).reduce((b, v, i, a) => (v > a[b]! ? i : b), 0);
+
+  // Current month by school day: daily amount and running total.
+  const current = state.payroll.lines.filter((l) => l.status !== 'NO_PAYMENT');
+  const today = dayKey(state.now);
+  const days = Array.from({ length: Number(today.slice(8, 10)) }, (_, i) => `${today.slice(0, 8)}${String(i + 1).padStart(2, '0')}`);
+  const daily = days.map((k) => current.filter((l) => dayKey(l.lessonStartedAt) === k).reduce((a, l) => a + Number(l.amount), 0));
+  const running = daily.map((_, i) => daily.slice(0, i + 1).reduce((a, b) => a + b, 0));
+
+  const byStudent = new Map<string, number>();
+  for (const l of current) byStudent.set(l.studentName, (byStudent.get(l.studentName) ?? 0) + Number(l.amount));
+
+  const earned = running.at(-1) ?? 0;
+  const rate = Number(r.rate);
+  const left = Math.max(0, goal - earned);
+  const need = rate > 0 ? Math.ceil(left / rate) : 0;
+  const scheduled = state.lessons.filter((l) => l.status === 'SCHEDULED' && l.startsAt > state.now && dayKey(l.startsAt).slice(0, 7) === today.slice(0, 7)).length;
+  const forecast = earned + scheduled * rate;
+  const money = (v: number) => fmtMoney(v.toFixed(2), 'MDL');
+
+  return (
+    <>
+      <div className="two-col">
+        <section className="card" aria-labelledby="h-months">
+          <div className="card-head">
+            <h3 id="h-months">Доход по месяцам</h3>
+            <span className="right muted" style={{ fontSize: 13 }}>
+              лучший: {monthName(months[best]!.month, { month: 'long' })}
+            </span>
+          </div>
+          <Chart
+            label="Начислено и выплачено по месяцам"
+            height={220}
+            labels={months.map((m, i) => (i === months.length - 1 ? `${monthName(m.month)} · идёт` : monthName(m.month)))}
+            tipTitle={(i) => `${monthName(months[i]!.month, { month: 'long', year: 'numeric' })}${i === months.length - 1 ? ' (идёт)' : ''}`}
+            series={[
+              { key: 'acc', name: 'Начислено', color: 'var(--teal)', type: 'bar', values: accrued, format: money },
+              { key: 'paid', name: 'Выплачено', color: 'var(--blue)', type: 'bar', values: paid, format: money },
+            ]}
+            extra={(i) => `${lessonsCount[i]} уроков · ${months[i]!.lines[0] ? `ставка ${fmtMoney(months[i]!.lines[0]!.rate, 'MDL')}` : 'нет уроков'}`}
+          />
+        </section>
+        <section className="card" aria-labelledby="h-days">
+          <div className="card-head">
+            <h3 id="h-days">Этот месяц по дням</h3>
+            <span className="right muted" style={{ fontSize: 13 }}>
+              {money(earned)}
+            </span>
+          </div>
+          <Chart
+            label="Начисления текущего месяца по дням, нарастающим итогом"
+            height={220}
+            labels={days.map((k) => String(Number(k.slice(8, 10))))}
+            tipTitle={(i) => new Date(`${days[i]}T12:00:00Z`).toLocaleDateString('ru-RU', { timeZone: 'UTC', weekday: 'short', day: 'numeric', month: 'long' })}
+            series={[
+              { key: 'run', name: 'С начала месяца', color: 'var(--teal)', type: 'area', values: running, format: money },
+              { key: 'day', name: 'За день', color: 'var(--ink)', type: 'bar', values: daily, format: money },
+            ]}
+          />
+        </section>
+      </div>
+
+      <div className="two-col">
+        <section className="card" aria-labelledby="h-by-student">
+          <div className="card-head">
+            <h3 id="h-by-student">По ученикам · этот месяц</h3>
+          </div>
+          <HBarList
+            label="Начисления текущего месяца по ученикам"
+            empty="В этом месяце ещё нет начислений"
+            rows={[...byStudent]
+              .sort((a, b) => b[1] - a[1])
+              .map(([name, v]) => ({ key: name, label: name, value: v, display: money(v), sub: `${Math.round(v / (rate || 1))} ур.` }))}
+          />
+        </section>
+        <section className="tile tile-yellow" aria-labelledby="h-goal">
+          <TileShape color="yellow" />
+          <h3 id="h-goal">Цель на месяц</h3>
+          <div className="field" style={{ marginTop: 12, position: 'relative', maxWidth: 260 }}>
+            <label htmlFor="goal">Сколько хочу заработать, лей</label>
+            <input
+              id="goal"
+              type="number"
+              min={0}
+              step={500}
+              value={goal}
+              onChange={(e) => {
+                const v = Math.max(0, Number(e.target.value) || 0);
+                setGoal(v);
+                try {
+                  window.localStorage.setItem(GOAL_KEY, String(v));
+                } catch {
+                  // storage unavailable: keep the value for this visit only
+                }
+              }}
+            />
+          </div>
+          <div className="metric-row" style={{ position: 'relative' }}>
+            <div className="metric">
+              <b className="num">{money(earned)}</b>
+              <span>уже начислено</span>
+            </div>
+            <div className="metric">
+              <b className="num">{left > 0 ? need : 0}</b>
+              <span>уроков осталось провести</span>
+            </div>
+            <div className="metric">
+              <b className="num">{money(forecast)}</b>
+              <span>прогноз · {scheduled} запланировано</span>
+            </div>
+          </div>
+          <div className="hb-track" style={{ position: 'relative', marginTop: 14 }} aria-hidden="true">
+            <i style={{ width: `${goal > 0 ? Math.min(100, (earned / goal) * 100) : 0}%`, background: 'var(--ink)' }} />
+          </div>
+          <span className="section-note" style={{ position: 'relative', marginTop: 8 }}>
+            Расчёт по текущей ставке {fmtMoney(r.rate, 'MDL')} за урок — это прогноз, а не начисление.
+          </span>
+        </section>
+      </div>
+    </>
   );
 }

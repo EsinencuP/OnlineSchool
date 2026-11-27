@@ -27,7 +27,7 @@ export function StudentProgress() {
       <div className="chips" role="group" aria-label="Предмет">
         {subjects.map((s) => (
           <button key={s} type="button" className="chip" aria-pressed={subject === s} onClick={() => setSubject(s)}>
-            <img src={SUBJECT_ICON[s]} alt="" width={20} height={20} style={{ objectFit: 'contain' }} />
+            <img src={SUBJECT_ICON[s]} alt="" className="subject-art xs" />
             {s}
           </button>
         ))}

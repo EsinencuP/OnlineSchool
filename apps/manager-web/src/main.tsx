@@ -25,6 +25,7 @@ import { StudentProgress } from './student/pages/Progress';
 import { StudentStoreProvider } from './student/store';
 import { TeacherLayout } from './teacher/Layout';
 import { TeacherJournal } from './teacher/pages/Journal';
+import { TeacherLessons } from './teacher/pages/Lessons';
 import { TeacherSchedule } from './teacher/pages/Schedule';
 import { TeacherStudents } from './teacher/pages/Students';
 import { TeacherToday } from './teacher/pages/Today';
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <TeacherToday /> },
       { path: 'schedule', element: <TeacherSchedule /> },
+      { path: 'lessons', element: <TeacherLessons /> },
       { path: 'journal', element: <TeacherJournal /> },
       { path: 'students', element: <TeacherStudents /> },
       { path: 'homework', element: <TeacherHomework /> },

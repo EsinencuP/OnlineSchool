@@ -1,6 +1,7 @@
-import { ArrowUpRight, Clock, TriangleAlert, Video, VideoOff } from 'lucide-react';
+import { Clock, Video, VideoOff } from 'lucide-react';
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TileShape } from '../../shared/analytics';
 import { Bars } from '../../shared/charts';
 import { dayKey, fmtDay, fmtMoney, fmtTime, plural, relative } from '../../shared/format';
 import { MiniCalendar } from '../../shared/MiniCalendar';
@@ -23,7 +24,6 @@ export function TeacherToday() {
   const navigate = useNavigate();
   const journal = useMemo(() => selectJournal(state), [state]);
   const awaiting = journal.filter((j) => j.state === 'AWAITING_REPORT');
-  const overdue = awaiting.filter((j) => j.overdue);
   const todayKey = dayKey(state.now);
   const today = state.lessons.filter((l) => dayKey(l.startsAt) === todayKey && l.status !== 'CANCELLED');
   const upcomingToday = today.filter((l) => l.endsAt > state.now);
@@ -66,16 +66,7 @@ export function TeacherToday() {
           <img className="mascot" src="/mascot.svg" alt="" />
         </section>
 
-        {overdue.length > 0 && (
-          <button type="button" className="row-item alert-row" onClick={() => navigate('/teacher/journal')}>
-            <TriangleAlert size={18} />
-            <span className="grow">
-              <b>{overdue.length} {plural(overdue.length, 'урок', 'урока', 'уроков')} без результата дольше 24 часов</b>
-              <span style={{ display: 'block', fontSize: 13, color: 'var(--ink-2)' }}>Задача уже ушла менеджеру. Внесите результат, чтобы урок попал в начисления.</span>
-            </span>
-            <ArrowUpRight size={18} />
-          </button>
-        )}
+        <AfterLesson />
 
         <div className="grid-4">
           <Kpi tone="tile-yellow" label="Ждут результата" value={awaiting.length} hint="в течение 24 ч" onClick={() => navigate('/teacher/journal')} />
@@ -83,6 +74,8 @@ export function TeacherToday() {
           <Kpi tone="tile-violet" label="Контрольные точки" value={cps.length} hint="каждые 4 / 8 уроков" onClick={() => navigate('/teacher/checkpoints')} />
           <Kpi tone="tile-teal" label="Начислено за месяц" value={fmtMoney(totals.accrued, 'MDL')} hint={`ставка ${fmtMoney(rate.rate, 'MDL')}`} onClick={() => navigate('/teacher/payroll')} />
         </div>
+
+        <LessonProgress />
 
         <section className="card" aria-labelledby="h-today">
           <div className="card-head">
@@ -160,6 +153,8 @@ export function TeacherToday() {
 
       <aside className="side-col" aria-label="Календарь и уведомления">
         <MiniCalendar now={state.now} busy={busy} />
+        <MonthSummary />
+        <ManagerContact />
         <section className="card" aria-labelledby="h-notes">
           <div className="card-head">
             <h3 id="h-notes">Уведомления</h3>
@@ -189,5 +184,167 @@ function Kpi({ tone, label, value, hint, onClick }: { tone: string; label: strin
       <span className="big-num num" style={{ marginTop: 'auto', fontSize: typeof value === 'number' ? 40 : 24 }}>{value}</span>
       <span className="muted" style={{ fontSize: 12 }}>{hint}</span>
     </button>
+  );
+}
+
+/** This month vs last month from payroll lines (GET /teacher/payroll?month=…). */
+function MonthSummary() {
+  const { state } = useTeacher();
+  const navigate = useNavigate();
+  const prev = state.payrollHistory.at(-1);
+  const sum = (lines: typeof state.payroll.lines) => lines.reduce((a, l) => a + Number(l.amount), 0);
+  const now = state.payroll.lines.filter((l) => l.status !== 'NO_PAYMENT');
+  const before = prev ? prev.lines.filter((l) => l.status !== 'NO_PAYMENT') : [];
+  // Same elapsed days of the previous month, so the comparison is fair mid-month.
+  const day = Number(dayKey(state.now).slice(8, 10));
+  const beforeSoFar = before.filter((l) => Number(dayKey(l.lessonStartedAt).slice(8, 10)) <= day);
+  const delta = now.length - beforeSoFar.length;
+  return (
+    <button type="button" className="tile tile-teal" style={{ border: 0, textAlign: 'left', minHeight: 0 }} onClick={() => navigate('/teacher/payroll')}>
+      <TileShape color="teal" />
+      <span style={{ fontWeight: 600, position: 'relative' }}>Мой месяц</span>
+      <div className="metric-row" style={{ position: 'relative' }}>
+        <div className="metric">
+          <b className="num">{now.length}</b>
+          <span>уроков проведено</span>
+        </div>
+        <div className="metric">
+          <b className="num">{fmtMoney(sum(now).toFixed(2), 'MDL')}</b>
+          <span>начислено</span>
+        </div>
+      </div>
+      <span className="muted" style={{ fontSize: 12, position: 'relative', marginTop: 8 }}>
+        {prev ? `${delta >= 0 ? '+' : '−'}${Math.abs(delta)} уроков к тому же дню прошлого месяца` : 'нет данных за прошлый месяц'} · аналитика в «Начислениях»
+      </span>
+    </button>
+  );
+}
+
+/** Requests to the manager (POST/GET /teacher/schedule-requests) surfaced on the home page. */
+function ManagerContact() {
+  const { state } = useTeacher();
+  const navigate = useNavigate();
+  const pending = state.requests.filter((r) => r.status === 'PENDING');
+  return (
+    <section className="card" aria-labelledby="h-mgr">
+      <div className="card-head">
+        <h3 id="h-mgr">Связь с менеджером</h3>
+        <span className="right">
+          <Badge tone={pending.length ? 'yellow' : 'teal'}>{pending.length ? `${pending.length} ждут ответа` : 'всё решено'}</Badge>
+        </span>
+      </div>
+      <div className="list">
+        {state.requests.slice(0, 3).map((r) => (
+          <button key={r.requestId} type="button" className="row-item" onClick={() => navigate('/teacher/schedule')}>
+            <span className="grow">
+              <span className="title">{r.reason}</span>
+              <span className="sub">{r.studentName ?? 'Без привязки к уроку'}</span>
+            </span>
+            <Badge tone={r.status === 'PENDING' ? (r.emergency ? 'coral' : 'yellow') : 'teal'}>{r.status === 'PENDING' ? (r.emergency ? 'Экстренно' : 'Ждёт') : 'Решён'}</Badge>
+          </button>
+        ))}
+      </div>
+      <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+        <button type="button" className="btn btn-dark btn-sm" onClick={() => navigate('/teacher/schedule?request=new')}>
+          Написать запрос
+        </button>
+        <button type="button" className="btn btn-ghost btn-sm" onClick={() => navigate('/teacher/schedule')}>
+          Все запросы
+        </button>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * "После урока": every past lesson still waiting for its result, oldest deadline first,
+ * with the action on the row. Mirrors GET /teacher/journal (state AWAITING_REPORT).
+ */
+function AfterLesson() {
+  const { state } = useTeacher();
+  const navigate = useNavigate();
+  const items = selectJournal(state)
+    .filter((j) => j.state === 'AWAITING_REPORT')
+    .sort((a, b) => a.reportDeadlineAt.localeCompare(b.reportDeadlineAt));
+  if (items.length === 0) return null;
+  return (
+    <section className="card after-lesson" aria-labelledby="h-after">
+      <div className="card-head">
+        <h3 id="h-after">После урока</h3>
+        <Badge tone={items.some((j) => j.overdue) ? 'coral' : 'yellow'}>{items.length}</Badge>
+        <span className="right muted" style={{ fontSize: 12 }}>подтвердите факт и тему урока — без этого он не попадёт в начисления</span>
+      </div>
+      <div className="list">
+        {items.map((j) => (
+          <div key={j.lessonId} className={`row-item${j.overdue ? ' overdue-row' : ''}`}>
+            <span className="time-pill num">{fmtDay(j.startsAt)}, {fmtTime(j.startsAt)}</span>
+            <span className="grow">
+              <span className="title">{j.studentName}</span>
+              <span className="sub">
+                {j.subjectName}
+                {j.kind === 'TRIAL' ? ' · пробный' : ''} ·{' '}
+                {j.overdue ? <b className="neg">срок прошёл {relative(j.reportDeadlineAt, state.now)}, задача ушла менеджеру</b> : `внести до ${fmtTime(j.reportDeadlineAt)}, ${fmtDay(j.reportDeadlineAt)}`}
+              </span>
+            </span>
+            <button type="button" className="btn btn-dark btn-sm" onClick={() => navigate(`/teacher/journal?lesson=${j.lessonId}`)}>
+              Внести результат
+            </button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** Lessons of this month and week: how many are planned and how many already have a result. */
+function LessonProgress() {
+  const { state } = useTeacher();
+  const navigate = useNavigate();
+  const today = dayKey(state.now);
+  const done = new Set(selectJournal(state).filter((j) => j.state === 'CONDUCTED').map((j) => j.lessonId));
+  const monday = (() => {
+    const d = new Date(`${today}T12:00:00Z`);
+    d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+    return d.toISOString().slice(0, 10);
+  })();
+  const sunday = (() => {
+    const d = new Date(`${monday}T12:00:00Z`);
+    d.setUTCDate(d.getUTCDate() + 6);
+    return d.toISOString().slice(0, 10);
+  })();
+  const live = state.lessons.filter((l) => l.status !== 'CANCELLED');
+  const month = live.filter((l) => dayKey(l.startsAt).slice(0, 7) === today.slice(0, 7));
+  const week = live.filter((l) => dayKey(l.startsAt) >= monday && dayKey(l.startsAt) <= sunday);
+  const trials = month.filter((l) => l.kind === 'TRIAL');
+  const nextTrial = trials.find((l) => l.startsAt > state.now);
+  const tile = (title: string, list: typeof live, tone: string, range: string) => {
+    const d = list.filter((l) => done.has(l.lessonId)).length;
+    const pct = list.length ? Math.round((d / list.length) * 100) : 0;
+    return (
+      <button type="button" className={`tile ${tone}`} style={{ border: 0, textAlign: 'left', minHeight: 0 }} onClick={() => navigate(`/teacher/lessons?range=${range}`)}>
+        <span style={{ fontWeight: 600, position: 'relative' }}>{title}</span>
+        <span className="big-num num" style={{ fontSize: 34, marginTop: 10, position: 'relative' }}>{list.length}</span>
+        <span style={{ fontSize: 12, position: 'relative', display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
+          <span>проведено {d}</span>
+          <b className="num">{pct}%</b>
+        </span>
+        <span className="bar" style={{ position: 'relative', marginTop: 6, background: 'rgb(13 26 56 / 10%)' }} aria-hidden="true">
+          <i style={{ width: `${pct}%` }} />
+        </span>
+      </button>
+    );
+  };
+  return (
+    <div className="grid-3">
+      {tile('Уроки в этом месяце', month, 'tile-blue', 'month')}
+      {tile('Уроки на этой неделе', week, 'tile-violet', 'week')}
+      <button type="button" className="tile tile-yellow" style={{ border: 0, textAlign: 'left', minHeight: 0 }} onClick={() => navigate('/teacher/lessons?range=month&kind=TRIAL')}>
+        <span style={{ fontWeight: 600, position: 'relative' }}>Пробные уроки</span>
+        <span className="big-num num" style={{ fontSize: 34, marginTop: 10, position: 'relative' }}>{trials.length}</span>
+        <span style={{ fontSize: 12, position: 'relative', marginTop: 6 }}>
+          {nextTrial ? `ближайший ${fmtDay(nextTrial.startsAt)}, ${fmtTime(nextTrial.startsAt)} · ${nextTrial.studentName}` : 'в этом месяце больше нет'}
+        </span>
+      </button>
+    </div>
   );
 }

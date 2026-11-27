@@ -95,6 +95,36 @@ const LEADS: LeadSeed[] = [
   { name: 'Глеб Рошка', guardian: 'Ирина Рошка', subject: 'Информатика', stage: 'LOST', source: 'PHONE', grade: 7, createdHoursAgo: 300, nextActionInHours: null },
 ];
 
+/**
+ * Closed leads of the last 30 days, so the 30-day conversion chart has real records behind it.
+ * Deterministic: [name, subject, hours ago, converted?].
+ */
+const CLOSED_HISTORY: [string, string, number, boolean][] = [
+  ['Ника Бурлаку', 'Математика', 30, true], ['Тимофей Ганя', 'Физика', 52, false], ['Мария Кироган', 'Английский язык', 75, true],
+  ['Артур Лупашку', 'Информатика', 98, false], ['Дарина Мунтяну', 'Математика', 121, true], ['Платон Рябой', 'История', 146, false],
+  ['Василиса Гуцу', 'Английский язык', 170, true], ['Матвей Чобану', 'Химия', 196, false], ['Ксения Попа', 'Математика', 219, false],
+  ['Фёдор Дабижа', 'Физика', 243, true], ['Агата Стратан', 'Английский язык', 268, true], ['Илья Морарь', 'Информатика', 290, false],
+  ['Алина Цуркан', 'Математика', 318, true], ['Степан Олару', 'История', 343, false], ['Вера Лунгу', 'Английский язык', 365, true],
+  ['Савва Пыслару', 'Физика', 392, false], ['Милана Рошка', 'Математика', 414, true], ['Ян Кожокару', 'Химия', 440, false],
+  ['Таисия Гылкэ', 'Английский язык', 463, false], ['Богдан Попеску', 'Информатика', 487, true], ['Ева Ткачук', 'Математика', 512, false],
+  ['Лука Чорба', 'Физика', 536, true], ['Аня Бужор', 'Английский язык', 560, true], ['Дамир Урсу', 'История', 585, false],
+  ['Соня Балан', 'Математика', 608, true], ['Кирилл Ника', 'Английский язык', 633, false], ['Елизавета Сырбу', 'Физика', 657, true],
+  ['Марк Казаку', 'Информатика', 682, false],
+];
+const SOURCES: LeadSource[] = ['SITE', 'PHONE', 'REFERRAL', 'MESSENGER'];
+LEADS.push(
+  ...CLOSED_HISTORY.map(([name, subject, hours, won], k): LeadSeed => ({
+    name,
+    guardian: null,
+    subject,
+    stage: won ? 'CONVERTED' : 'LOST',
+    source: SOURCES[k % SOURCES.length]!,
+    grade: 5 + (k % 7),
+    createdHoursAgo: hours,
+    nextActionInHours: null,
+  })),
+);
+
 const maskPhone = (p: string) => `${p.slice(0, 7)} ••• ${p.slice(-3)}`;
 
 export function createSeed(nowDate = new Date()): ManagerState {

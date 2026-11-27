@@ -10,6 +10,24 @@ import { Link } from 'react-router-dom';
  */
 
 export type KpiTone = 'neutral' | 'problem' | 'warn' | 'ok';
+export type TileColor = 'yellow' | 'coral' | 'teal' | 'blue' | 'violet';
+
+/** v1 decorative shapes; one per tile colour so a colour always reads as the same kind of block. */
+const SHAPES: Record<TileColor, string> = {
+  yellow: 'M35 0h30v35h35v30H65v35H35V65H0V35h35z',
+  coral: 'M50 88 10 50a22 22 0 0 1 40-30 22 22 0 0 1 40 30z',
+  teal: 'M50 100 0 0h100z',
+  blue: 'm50 0 12 30 32-6-20 26 20 26-32-6-12 30-12-30-32 6 20-26L6 24l32 6z',
+  violet: 'M50 0a50 50 0 1 1 0 100A50 50 0 0 1 50 0z',
+};
+
+export function TileShape({ color }: { color: TileColor }) {
+  return (
+    <svg className="shape" viewBox="0 0 100 100" aria-hidden="true">
+      <path d={SHAPES[color]} fill={`var(--${color})`} />
+    </svg>
+  );
+}
 
 export function KpiCard({
   label,
@@ -17,6 +35,7 @@ export function KpiCard({
   unit,
   context,
   tone = 'neutral',
+  color = 'blue',
   to,
   children,
 }: {
@@ -25,13 +44,17 @@ export function KpiCard({
   unit?: string;
   /** Baseline or period, e.g. "за 30 дней", "из 12". */
   context?: ReactNode;
+  /** problem colours the number; the tile colour stays the entity colour. */
   tone?: KpiTone;
+  /** Entity colour: the same colour means the same kind of metric everywhere. */
+  color?: TileColor;
   /** Level-3 drill-down: the records behind the number. */
   to?: string;
   children?: ReactNode;
 }) {
   const body = (
     <>
+      <TileShape color={color} />
       <span className="kpi-label">{label}</span>
       <span className="kpi-value num">
         {value}
@@ -39,10 +62,10 @@ export function KpiCard({
       </span>
       {context && <span className="kpi-context">{context}</span>}
       {children}
-      {to && <ChevronRight size={16} className="kpi-go" aria-hidden="true" />}
+      {to && <ChevronRight size={18} className="kpi-go" aria-hidden="true" />}
     </>
   );
-  const cls = `kpi kpi-${tone}`;
+  const cls = `tile tile-${color} kpi kpi-${tone}`;
   return to ? (
     <Link to={to} className={cls}>
       {body}
@@ -140,7 +163,8 @@ export function DailyColumns({
         </span>
         <span>{days.at(-1) ? fmt(days.at(-1)!) : ''}</span>
       </figcaption>
-      <table className="sr-only">
+      <div className="sr-only">
+        <table>
         <caption>{label}</caption>
         <tbody>
           {days.map((d, i) => (
@@ -153,6 +177,7 @@ export function DailyColumns({
           ))}
         </tbody>
       </table>
+      </div>
     </figure>
   );
 }

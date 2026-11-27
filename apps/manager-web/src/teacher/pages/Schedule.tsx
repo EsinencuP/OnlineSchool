@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { fmtDateTime, fmtTime } from '../../shared/format';
 import { Avatar, Badge, Notice, Panel } from '../../shared/ui';
 import { WeekGrid, weekDays, weekRangeLabel } from '../../shared/WeekGrid';
@@ -14,7 +15,9 @@ export function TeacherSchedule() {
   const { state, run } = useTeacher();
   const [week, setWeek] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
-  const [requestFor, setRequestFor] = useState<string | null | undefined>(undefined);
+  const [params] = useSearchParams();
+  // `?request=new` (from the Today page) opens the request dialog straight away.
+  const [requestFor, setRequestFor] = useState<string | null | undefined>(params.get('request') === 'new' ? null : undefined);
   const [win, setWin] = useState({ weekday: 5, from: 15, to: 18 });
   const days = weekDays(state.now, week);
   const lesson = state.lessons.find((l) => l.lessonId === selected) ?? null;

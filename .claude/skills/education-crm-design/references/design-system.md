@@ -1,20 +1,23 @@
 # Design system (apps/manager-web/src/styles.css)
 
+Base = the v1 stylesheet (cream canvas, navy sidebar, tinted tiles with shapes, large radii).
+The "Staff cabinets layer" at the end of `styles.css` adds tables, charts, calendar and KPI tiles
+on top of it. The student cabinet uses only the v1 base.
+
 ## Tokens (`:root`)
-- Canvas: `--bg #f3f4f7`, `--surface #fff`, `--surface-2`, `--surface-3`, `--line`, `--line-strong`.
-- Text: `--ink`, `--ink-2`, `--muted` (≥ 4.5:1 on white).
-- Semantic: `--ok/--ok-tint`, `--warn/--warn-tint`, `--danger/--danger-tint`, `--info/--info-tint`.
-- Data: `--c-people` (people/lessons), `--c-money` (money), `--c-prev` (previous period, secondary,
-  cancelled), `--c-grid`.
-- Brand (meaning only, never decoration): `--yellow` manager accent / trial lesson, `--teal` teacher,
-  `--violet`, `--coral`, `--blue` + tints. Role accent: `.shell[data-role] --accent`.
-- Spacing `--s1..--s6` = 4/8/12/16/24/32. Type `--fs-xs..--fs-2xl` = 12/13/14/16/20/24.
-- Radii `--radius-sm 8`, `--radius 10`, `--radius-lg 12`. Shadows: `--shadow` (hairline), `--shadow-pop` (drawers).
+- Canvas (v1): `--bg #f4f1ea` cream, `--surface #fff`, `--surface-2`, `--surface-3`, `--line`; staff layer adds `--line-strong`.
+- Text: `--ink`, `--ink-2`, `--muted`. Sidebar: `--navy-deep`.
+- Brand colours with tints and inks: `--yellow`, `--coral`, `--teal`, `--blue`, `--violet` — used as entity
+  colours (see design-principles §2). Role accent: `.shell[data-role] --accent`.
+- Staff layer aliases: `--danger`, `--ok`, `--c-people` (= blue), `--c-money` (= teal), `--c-prev`, `--shadow-pop`.
+- Radii (v1): `--radius-lg 26`, `--radius 18`, `--radius-sm 12`.
 
 ## Components
 | Need | Use |
 |---|---|
-| KPI tile with drill-down | `KpiCard` (`tone`: neutral/problem/warn/ok, `to`) inside `.kpis` |
+| KPI tile with drill-down | `KpiCard` (`color` = entity, `tone` problem colours the number, `to`) inside `.kpis` |
+| Interactive chart | `Chart` (bars/lines/areas, hover tooltip, keyboard, sr-only table) |
+| Notion-style calendar | `MonthPicker`, `MonthGrid` + `WeekGrid`; teachers as colour-coded toggleable calendars |
 | Category comparison | `HBarList` (ranked, linkable rows) |
 | Small daily counts | `DailyColumns` |
 | Composition, ≤ 5 parts | `ShareBar` |

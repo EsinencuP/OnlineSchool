@@ -16,6 +16,10 @@ export interface GridItem {
   /** Left edge colour: status at a glance without relying on the fill alone. */
   edge?: string;
   cancelled?: boolean;
+  /** Trial lesson: dashed outline. */
+  trial?: boolean;
+  /** Needs attention (e.g. disputed): red ring. */
+  alert?: boolean;
   label: string;
   /** Resource column (e.g. teacher id) for the day-by-resource view. */
   column?: string;
@@ -150,7 +154,7 @@ export function WeekGrid({
                 <button
                   key={it.id}
                   type="button"
-                  className={`lesson-block${it.cancelled ? ' cancelled' : ''}`}
+                  className={`lesson-block${it.cancelled ? ' cancelled' : ''}${it.trial ? ' trial' : ''}${it.alert ? ' alert' : ''}`}
                   style={{
                     top: top + 2,
                     height,

@@ -77,14 +77,18 @@ export function createTeacherSeed(nowDate = new Date()): TeacherState {
     nextLessonAt: null,
   }));
 
-  // ---- lessons: previous, current and next week from weekly slots ----
+  // ---- lessons: from the start of the previous month to next week, from weekly slots ----
   const lessons: TeacherLesson[] = [];
   const reports: Record<string, LessonReport> = {};
   let n = 0;
-  for (let w = -1; w <= 1; w++) {
+  const prevMonthStart = new Date(nowDate.getFullYear(), nowDate.getMonth() - 1, 1).getTime();
+  const weeksBack = Math.ceil((monday - prevMonthStart) / (7 * D));
+  for (let w = -weeksBack; w <= 1; w++) {
     STUDENTS.forEach((s, i) => {
       for (const [wd, hour] of s.slots) {
         const startsAt = monday + (w * 7 + wd) * D + hour * H;
+        // No lessons before the student was assigned to this teacher.
+        if (startsAt < day0 - s.sinceDays * D) continue;
         const endsAt = startsAt + H;
         n += 1;
         const lessonId = id(4, n);
@@ -122,6 +126,44 @@ export function createTeacherSeed(nowDate = new Date()): TeacherState {
       }
     });
   }
+  // Keep the history consistent with each enrollment's confirmed-lesson counter: drop the oldest
+  // conducted lessons beyond `confirmed` (they belong to time outside this teacher's record).
+  STUDENTS.forEach((st, i) => {
+    const done = lessons.filter((l) => l.studentId === id(2, i + 1) && l.status === 'CONDUCTED');
+    for (const extra of done.slice(0, Math.max(0, done.length - st.confirmed))) {
+      lessons.splice(lessons.indexOf(extra), 1);
+      delete reports[extra.lessonId];
+    }
+  });
+  // Former students (no longer assigned) taught in the previous month: their lessons stay in
+  // the teacher's history and payroll, but they have no enrollment here.
+  const FORMER = ['Ника Бурлаку', 'Тимофей Ганя', 'Мария Кироган', 'Артур Лупашку', 'Дарина Мунтяну'];
+  const prevEnd = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1).getTime();
+  for (let t = prevMonthStart; t < prevEnd; t += D) {
+    const wd = (new Date(t).getDay() + 6) % 7;
+    FORMER.forEach((name, k) => {
+      if (wd !== k % 5 && wd !== (k + 2) % 5) return;
+      const startsAt = new Date(t).setHours(10 + k, 0, 0, 0);
+      n += 1;
+      const lessonId = id(4, n);
+      lessons.push({
+        lessonId,
+        startsAt: iso(startsAt),
+        endsAt: iso(startsAt + H),
+        status: 'CONDUCTED',
+        kind: 'REGULAR',
+        studentId: id(2, 100 + k),
+        studentName: name,
+        subjectCode: 'MATH',
+        subjectName: 'Математика',
+        joinOpensAt: iso(startsAt - 10 * 60_000),
+        meetLinkState: 'PRESENT',
+        outcomeRecorded: true,
+      });
+      reports[lessonId] = { reportId: id(5, n), version: 1, result: 'CONDUCTED', studentNoShow: false, actualStartedAt: iso(startsAt), durationMin: 60, note: 'Урок проведён по плану.', reportedAt: iso(startsAt + 3 * H), current: true };
+    });
+  }
+
   // A trial lesson tomorrow (diagnostics happen only in a trial, rule 9.14).
   n += 1;
   lessons.push({
@@ -309,6 +351,63 @@ export function createTeacherSeed(nowDate = new Date()): TeacherState {
       lastPaidAt: now - new Date(l.startsAt).getTime() > 7 * D ? at(-3, 12) : null,
     }));
 
+  // ---- payroll history: previous 6 months, fully paid (as returned per month by the API) ----
+  const LESSONS_PER_MONTH = [36, 41, 38, 47, 44, 52];
+  const payrollHistory = LESSONS_PER_MONTH.map((count, k) => {
+    const back = LESSONS_PER_MONTH.length - k;
+    const first = new Date(nowDate.getFullYear(), nowDate.getMonth() - back, 1);
+    const monthKey = `${first.getFullYear()}-${String(first.getMonth() + 1).padStart(2, '0')}`;
+    // The previous month is covered by the seeded lessons: its payroll comes from them,
+    // so the lessons list and the earnings charts agree. Older months are synthetic.
+    if (back === 1) {
+      const next = new Date(first.getFullYear(), first.getMonth() + 1, 1).getTime();
+      const fromLessons: PayrollLine[] = lessons
+        .filter((l) => l.status === 'CONDUCTED' && new Date(l.startsAt).getTime() >= first.getTime() && new Date(l.startsAt).getTime() < next)
+        .map((l) => ({
+          outcomeId: id(17, Number.parseInt(l.lessonId.slice(-6), 16)),
+          lessonStartedAt: l.startsAt,
+          durationMin: 60,
+          studentName: l.studentName,
+          subjectName: l.subjectName,
+          rate: '220.00',
+          points: 9,
+          rateBasis: '9 очков (стаж 6 + ученики 3) → 220 лей, снимок на начало урока',
+          currency: 'MDL',
+          amount: '220.00',
+          paid: '220.00',
+          status: 'PAID',
+          accruedAt: iso(new Date(l.endsAt).getTime() + 3 * H),
+          lastPaidAt: iso(new Date(first.getFullYear(), first.getMonth() + 1, 5, 12).getTime()),
+        }));
+      return { month: monthKey, lines: fromLessons };
+    }
+    const daysInMonth = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+    const rate = back > 3 ? '200.00' : '220.00';
+    const points = back > 3 ? 7 : 9;
+    const monthLines: PayrollLine[] = Array.from({ length: count }, (_, n) => {
+      const day = 1 + ((n * 7 + k) % daysInMonth);
+      const start = new Date(first.getFullYear(), first.getMonth(), day, 15 + (n % 4)).getTime();
+      const student = STUDENTS[(n + k) % STUDENTS.length]!;
+      return {
+        outcomeId: id(18, k * 100 + n + 1),
+        lessonStartedAt: iso(start),
+        durationMin: 60,
+        studentName: student.name,
+        subjectName: 'Математика',
+        rate,
+        points,
+        rateBasis: `${points} очков → ${rate.replace('.00', '')} лей, снимок на начало урока`,
+        currency: 'MDL',
+        amount: rate,
+        paid: rate,
+        status: 'PAID',
+        accruedAt: iso(start + 4 * H),
+        lastPaidAt: iso(new Date(first.getFullYear(), first.getMonth() + 1, 5, 12).getTime()),
+      };
+    });
+    return { month: monthKey, lines: monthLines };
+  });
+
   return {
     me: {
       teacherId: id(0, 1),
@@ -334,5 +433,6 @@ export function createTeacherSeed(nowDate = new Date()): TeacherState {
     requests,
     notifications,
     payroll: { month: `${nowDate.getFullYear()}-${String(nowDate.getMonth() + 1).padStart(2, '0')}`, lines },
+    payrollHistory,
   };
 }

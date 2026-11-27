@@ -1,4 +1,4 @@
-import { BookOpenCheck, CalendarDays, ClipboardCheck, FolderOpen, House, NotebookPen, Users, Wallet } from 'lucide-react';
+import { BookOpenCheck, CalendarDays, ClipboardCheck, FolderOpen, House, ListChecks, NotebookPen, Users, Wallet } from 'lucide-react';
 import { Shell } from '../shared/Shell';
 import { selectJournal } from './logic';
 import { useTeacher } from './store';
@@ -23,6 +23,7 @@ export function TeacherLayout() {
       nav={[
         { group: 'Работа', to: '/teacher', label: 'Сегодня', icon: <House size={18} /> },
         { group: 'Работа', to: '/teacher/schedule', label: 'Расписание', icon: <CalendarDays size={18} /> },
+        { group: 'Работа', to: '/teacher/lessons', label: 'Уроки', icon: <ListChecks size={18} /> },
         { group: 'Работа', to: '/teacher/journal', label: 'Журнал уроков', icon: <BookOpenCheck size={18} />, count: awaitingReport },
         { group: 'Ученики', to: '/teacher/students', label: 'Ученики', icon: <Users size={18} /> },
         { group: 'Ученики', to: '/teacher/homework', label: 'Задания', icon: <NotebookPen size={18} />, count: toReview },

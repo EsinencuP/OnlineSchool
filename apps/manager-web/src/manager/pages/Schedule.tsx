@@ -1,33 +1,44 @@
-import { ChevronLeft, ChevronRight, Video, VideoOff } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, TriangleAlert, Video, VideoOff } from 'lucide-react';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { HBarList, Segmented } from '../../shared/analytics';
+import { Segmented } from '../../shared/analytics';
 import { dayKey, fmtDateTime, fmtTime, plural } from '../../shared/format';
+import { addMonths, MonthGrid, MonthPicker, monthKeys, monthLabel } from '../../shared/MonthGrid';
 import { Avatar, Badge, Notice, Panel } from '../../shared/ui';
 import { addDays, dayLabel, WeekGrid, weekDays, weekRangeLabel, type GridColumn } from '../../shared/WeekGrid';
 import { lessonStatus } from '../labels';
 import { useManager } from '../store';
 import type { LessonView } from '../types';
 
-type View = 'week' | 'day';
+type View = 'day' | 'week' | 'month';
 type Kind = 'ALL' | 'REGULAR' | 'TRIAL';
 
+/** One colour per teacher, like separate calendars in Notion Calendar. */
+const PALETTE = [
+  { solid: '#e0a100', tint: '#fff1c2' },
+  { solid: '#3d8ef0', tint: '#dcebfd' },
+  { solid: '#ff5471', tint: '#ffdfe5' },
+  { solid: '#00a9ae', tint: '#ccf1f1' },
+  { solid: '#906ddf', tint: '#ebe3fc' },
+  { solid: '#f08a24', tint: '#ffe6cf' },
+];
+
+const validDate = (v: string | null) => (v && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(`${v}T12:00:00Z`)) ? v : null);
+
 /**
- * Manager schedule. Week view answers "what does this teacher's week look like";
- * day view puts teachers side by side to find gaps and overlaps. View, teacher and
- * date live in the URL, so links from the dashboard and Back keep the context.
- * Booking/rescheduling rules are unchanged: only the existing cancel command is offered.
+ * Manager schedule in a Notion Calendar layout: left sidebar with a month picker and
+ * teachers as toggleable colour-coded calendars; right side Day / Week / Month views.
+ * Teacher colour = whose lesson; status = icon and strike-through. View, date and the
+ * visible teachers live in the URL. Booking rules are unchanged: only cancel is offered.
  */
 export function Schedule() {
   const { state } = useManager();
   const [params, setParams] = useSearchParams();
   const [kind, setKind] = useState<Kind>('ALL');
-  const view: View = params.get('view') === 'day' ? 'day' : 'week';
-  const teacherId = params.get('teacher');
   const today = dayKey(state.now);
-  const rawDate = params.get('date');
-  // Hand-edited or stale links must not break the page: fall back to today.
-  const anchor = rawDate && /^\d{4}-\d{2}-\d{2}$/.test(rawDate) && !Number.isNaN(Date.parse(`${rawDate}T12:00:00Z`)) ? rawDate : today;
+  const rawView = params.get('view');
+  const view: View = rawView === 'day' || rawView === 'month' ? rawView : 'week';
+  const anchor = validDate(params.get('date')) ?? today;
   const selected = params.get('lesson');
   const set = (patch: Record<string, string | null>) => {
     const next = new URLSearchParams(params);
@@ -38,151 +49,182 @@ export function Schedule() {
     setParams(next, { replace: true });
   };
 
+  // Visible teachers: `t` = comma list of ids; legacy `teacher` = one id; none = all.
+  const ids = state.teachers.map((t) => t.teacherId);
+  const rawT = params.get('t') ?? params.get('teacher');
+  const visible = new Set(rawT ? rawT.split(',').filter((id) => ids.includes(id)) : ids);
+  const setVisible = (next: Set<string>) => set({ t: next.size === ids.length || next.size === 0 ? null : [...next].join(','), teacher: null });
+  const color = (teacherId: string) => PALETTE[Math.max(0, ids.indexOf(teacherId)) % PALETTE.length]!;
+
   const week = weekDays(`${anchor}T12:00:00Z`, 0);
-  const range = view === 'week' ? week : [anchor];
-  const teacher = state.teachers.find((t) => t.teacherId === teacherId) ?? null;
-  const inRange = state.lessons.filter((l) => range.includes(dayKey(l.startsAt)) && (kind === 'ALL' || l.kind === kind));
-  const visible = inRange.filter((l) => !teacher || l.teacherId === teacher.teacherId);
+  const range = view === 'day' ? [anchor] : view === 'week' ? week : monthKeys(anchor).filter((k) => k.slice(0, 7) === anchor.slice(0, 7));
+  const inRange = new Set(range);
+  const lessons = state.lessons.filter((l) => visible.has(l.teacherId) && (kind === 'ALL' || l.kind === kind));
+  const shown = lessons.filter((l) => inRange.has(dayKey(l.startsAt)));
   const lesson = state.lessons.find((l) => l.lessonId === selected) ?? null;
-  const noLink = visible.filter((l) => l.status === 'SCHEDULED' && !l.meetLink).length;
-  const step = view === 'week' ? 7 : 1;
+  const noLink = shown.filter((l) => l.status === 'SCHEDULED' && !l.meetLink && l.startsAt > state.now).length;
+  const busy = new Set(state.lessons.filter((l) => visible.has(l.teacherId) && l.status !== 'CANCELLED').map((l) => dayKey(l.startsAt)));
+
+  const step = (dir: 1 | -1) => set({ date: view === 'month' ? addMonths(anchor, dir) : addDays(anchor, dir * (view === 'week' ? 7 : 1)) });
+  const title = view === 'day' ? dayLabel(anchor) : view === 'week' ? weekRangeLabel(week) : monthLabel(anchor);
+  const visibleTeachers = state.teachers.filter((t) => visible.has(t.teacherId));
 
   const columns: GridColumn[] | undefined =
     view === 'day'
-      ? (teacher ? [teacher] : state.teachers).map((t) => ({
+      ? visibleTeachers.map((t) => ({
           key: t.teacherId,
           day: anchor,
           label: t.name,
           head: (
             <span className="res">
-              <Avatar name={t.name} />
-              <b>{t.name.split(' ')[0]}</b>
+              <i className="res-dot" style={{ background: color(t.teacherId).solid }} />
+              <b>{t.name}</b>
             </span>
           ),
         }))
       : undefined;
 
-  const perTeacher = state.teachers
-    .map((t) => {
-      const ls = inRange.filter((l) => l.teacherId === t.teacherId && l.status !== 'CANCELLED');
-      const hours = ls.reduce((a, l) => a + (new Date(l.endsAt).getTime() - new Date(l.startsAt).getTime()) / 3600_000, 0);
-      return { t, n: ls.length, hours };
-    })
-    .sort((a, b) => b.n - a.n);
-  const linkFor = (id: string | null) => {
-    const next = new URLSearchParams(params);
-    if (id) next.set('teacher', id);
-    else next.delete('teacher');
-    next.delete('lesson');
-    return `/manager/schedule?${next.toString()}`;
-  };
+  const marker = (l: LessonView) =>
+    l.status === 'CONDUCTED' ? <Check size={12} aria-hidden="true" /> : l.status === 'DISPUTED' ? <TriangleAlert size={12} aria-hidden="true" /> : null;
+  const describe = (l: LessonView) =>
+    `${fmtTime(l.startsAt)}–${fmtTime(l.endsAt)} ${l.studentName}, ${l.subjectName}, ${l.teacherName}, ${lessonStatus[l.status].label}${l.kind === 'TRIAL' ? ', пробный' : ''}`;
 
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
+    <div className="ncal-page">
       <div className="page-head">
         <div>
           <h1>Расписание</h1>
-          <p>Уроки учеников вашего портфеля и пробные занятия по заявкам.</p>
-        </div>
-        <div className="actions" style={{ alignItems: 'center' }}>
-          <Segmented<View> label="Вид" value={view} onChange={(v) => set({ view: v === 'week' ? null : v })} options={[['day', 'День'], ['week', 'Неделя']]} />
-          <button type="button" className="icon-btn" aria-label={view === 'week' ? 'Предыдущая неделя' : 'Предыдущий день'} onClick={() => set({ date: addDays(anchor, -step) })}>
-            <ChevronLeft size={16} />
-          </button>
-          <span className="date-pill" style={{ display: 'inline-flex', minWidth: 190, justifyContent: 'center' }}>{view === 'week' ? weekRangeLabel(week) : dayLabel(anchor)}</span>
-          <button type="button" className="icon-btn" aria-label={view === 'week' ? 'Следующая неделя' : 'Следующий день'} onClick={() => set({ date: addDays(anchor, step) })}>
-            <ChevronRight size={16} />
-          </button>
-          <button type="button" className="btn btn-ghost btn-sm" disabled={range.includes(today)} style={range.includes(today) ? { visibility: 'hidden' } : undefined} onClick={() => set({ date: null })}>
-            Сегодня
-          </button>
+          <p>Уроки учеников вашего портфеля и пробные занятия по заявкам. Каждый преподаватель — свой календарь и свой цвет.</p>
         </div>
       </div>
 
-      <div className="toolbar">
-        <div className="chips" role="group" aria-label="Преподаватель">
-          <button type="button" className="chip" aria-pressed={!teacher} onClick={() => set({ teacher: null })}>
-            Все преподаватели
-          </button>
-          {state.teachers.map((t) => (
-            <button key={t.teacherId} type="button" className="chip" aria-pressed={teacher?.teacherId === t.teacherId} onClick={() => set({ teacher: t.teacherId })}>
-              {t.name}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="toolbar">
-        <Segmented<Kind> label="Тип урока" value={kind} onChange={setKind} options={[['ALL', 'Все уроки'], ['REGULAR', 'Регулярные'], ['TRIAL', 'Пробные']]} />
-        <span className="grow" />
-        <div className="legend" style={{ marginTop: 0 }}>
-          <span><i style={{ background: 'var(--c-people)' }} />Запланирован</span>
-          <span><i style={{ background: 'var(--ok)' }} />Проведён</span>
-          <span><i style={{ background: 'var(--yellow)' }} />Ждёт оценки</span>
-          <span><i style={{ background: 'var(--danger)' }} />Оспорен</span>
-          <span><i style={{ background: 'var(--c-prev)' }} />Отменён</span>
-          <span><i style={{ background: 'var(--yellow-tint)', border: '1px solid var(--yellow)' }} />Пробный</span>
-        </div>
-      </div>
+      <div className="ncal">
+        <aside className="ncal-side card" aria-label="Календари">
+          <MonthPicker anchor={anchor} today={today} inRange={(k) => inRange.has(k)} busy={busy} onPick={(k) => set({ date: k === today ? null : k })} onMonth={(k) => set({ date: k })} />
 
-      {noLink > 0 && (
-        <Notice tone="coral" icon={<VideoOff size={16} />}>
-          {noLink} {plural(noLink, 'урок', 'урока', 'уроков')} без ссылки на видеовстречу в выбранном периоде.
-        </Notice>
-      )}
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 260px', gap: 16, alignItems: 'start' }} className="schedule-layout">
-        <WeekGrid
-          days={view === 'week' ? week : undefined}
-          columns={columns}
-          now={state.now}
-          onOpen={(id) => set({ lesson: id })}
-          items={visible.map((l) => ({
-            id: l.lessonId,
-            column: l.teacherId,
-            startsAt: l.startsAt,
-            endsAt: l.endsAt,
-            title: l.studentName,
-            subtitle: `${l.kind === 'TRIAL' ? 'пробный · ' : ''}${teacher || view === 'day' ? l.subjectName : l.teacherName.split(' ')[0]}`,
-            cancelled: l.status === 'CANCELLED',
-            background: l.kind === 'TRIAL' ? 'var(--yellow-tint)' : l.status === 'CANCELLED' ? 'var(--surface-3)' : 'var(--info-tint)',
-            edge: lessonEdge(l),
-            label: `${fmtTime(l.startsAt)}–${fmtTime(l.endsAt)} ${l.studentName}, ${l.subjectName}, ${l.teacherName}, ${lessonStatus[l.status].label}${l.kind === 'TRIAL' ? ', пробный' : ''}`,
-          }))}
-        />
-
-        <aside className="card" aria-labelledby="h-load" style={{ position: 'sticky', top: 12 }}>
-          <div className="card-head">
-            <h3 id="h-load">Уроки по преподавателям</h3>
+          <div className="ncal-list">
+            <div className="ncal-list-head">
+              <b>Преподаватели</b>
+              <button type="button" className="link" onClick={() => setVisible(new Set(visible.size === ids.length ? [] : ids))}>
+                {visible.size === ids.length ? 'Скрыть всех' : 'Показать всех'}
+              </button>
+            </div>
+            {state.teachers.map((t) => {
+              const on = visible.has(t.teacherId);
+              const c = color(t.teacherId);
+              const n = state.lessons.filter((l) => l.teacherId === t.teacherId && l.status !== 'CANCELLED' && inRange.has(dayKey(l.startsAt))).length;
+              return (
+                <div key={t.teacherId} className="ncal-cal">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={on}
+                      onChange={() => {
+                        const next = new Set(visible);
+                        if (on) next.delete(t.teacherId);
+                        else next.add(t.teacherId);
+                        setVisible(next);
+                      }}
+                    />
+                    <span className="ncal-box" style={{ background: on ? c.solid : 'transparent', borderColor: c.solid }} aria-hidden="true">
+                      {on && <Check size={12} />}
+                    </span>
+                    <span className="ncal-name">
+                      {t.name}
+                      <small>{t.subjects.join(', ')}</small>
+                    </span>
+                  </label>
+                  <button type="button" className="ncal-only" onClick={() => setVisible(new Set([t.teacherId]))} aria-label={`Показать только ${t.name}`}>
+                    только
+                  </button>
+                  <span className="ncal-count num" title="Уроков в выбранном периоде, без отменённых">
+                    {n}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-          <p className="section-note" style={{ marginTop: -6, marginBottom: 8 }}>
-            {view === 'week' ? 'неделя' : 'день'} · без отменённых · только ваш портфель
-          </p>
-          <HBarList
-            label="Количество уроков по преподавателям в выбранном периоде"
-            rows={perTeacher.map(({ t, n, hours }) => ({
-              key: t.teacherId,
-              label: t.name,
-              sub: n ? `${hours.toFixed(hours % 1 ? 1 : 0)} ч` : undefined,
-              value: n,
-              to: linkFor(teacher?.teacherId === t.teacherId ? null : t.teacherId),
-              tone: teacher && teacher.teacherId !== t.teacherId ? ('muted' as const) : undefined,
-            }))}
-          />
+
+          <Segmented<Kind> label="Тип урока" value={kind} onChange={setKind} options={[['ALL', 'Все'], ['REGULAR', 'Регулярные'], ['TRIAL', 'Пробные']]} />
+
+          <div className="ncal-legend">
+            <span><Check size={12} /> проведён</span>
+            <span><TriangleAlert size={12} /> оспорен</span>
+            <span><s>отменён</s></span>
+            <span><i className="trial-swatch" /> пробный</span>
+          </div>
         </aside>
+
+        <section className="ncal-main card" aria-label="Календарь">
+          <div className="ncal-bar">
+            <button type="button" className="btn btn-ghost btn-sm" onClick={() => set({ date: null })} disabled={inRange.has(today)}>
+              Сегодня
+            </button>
+            <button type="button" className="icon-btn" aria-label="Назад" onClick={() => step(-1)}>
+              <ChevronLeft size={16} />
+            </button>
+            <button type="button" className="icon-btn" aria-label="Вперёд" onClick={() => step(1)}>
+              <ChevronRight size={16} />
+            </button>
+            <h2 className="ncal-title">{title}</h2>
+            <span className="grow" />
+            <Segmented<View> label="Вид" value={view} onChange={(v) => set({ view: v === 'week' ? null : v })} options={[['day', 'День'], ['week', 'Неделя'], ['month', 'Месяц']]} />
+          </div>
+
+          {noLink > 0 && (
+            <Notice tone="coral" icon={<VideoOff size={16} />}>
+              {noLink} {plural(noLink, 'предстоящий урок', 'предстоящих урока', 'предстоящих уроков')} без ссылки на видеовстречу.
+            </Notice>
+          )}
+
+          {visible.size === 0 ? (
+            <p className="muted" style={{ padding: 24, textAlign: 'center' }}>Отметьте хотя бы одного преподавателя слева.</p>
+          ) : view === 'month' ? (
+            <MonthGrid
+              anchor={anchor}
+              today={today}
+              onOpen={(id) => set({ lesson: id })}
+              onDay={(k) => set({ view: 'day', date: k })}
+              items={lessons.map((l) => ({
+                id: l.lessonId,
+                startsAt: l.startsAt,
+                title: l.studentName,
+                color: color(l.teacherId).solid,
+                tint: color(l.teacherId).tint,
+                cancelled: l.status === 'CANCELLED',
+                marker: marker(l),
+                label: describe(l),
+              }))}
+            />
+          ) : (
+            <WeekGrid
+              days={view === 'week' ? week : undefined}
+              columns={columns}
+              now={state.now}
+              onOpen={(id) => set({ lesson: id })}
+              items={shown.map((l) => ({
+                id: l.lessonId,
+                column: l.teacherId,
+                startsAt: l.startsAt,
+                endsAt: l.endsAt,
+                title: l.studentName,
+                subtitle: `${l.kind === 'TRIAL' ? 'пробный · ' : ''}${l.status === 'CONDUCTED' ? '✓ ' : l.status === 'DISPUTED' ? '⚠ ' : ''}${l.subjectName}`,
+                cancelled: l.status === 'CANCELLED',
+                background: color(l.teacherId).tint,
+                edge: color(l.teacherId).solid,
+                trial: l.kind === 'TRIAL',
+                alert: l.status === 'DISPUTED',
+                label: describe(l),
+              }))}
+            />
+          )}
+        </section>
       </div>
 
       {lesson && <LessonDrawer l={lesson} onClose={() => set({ lesson: null })} />}
     </div>
   );
 }
-
-/** Status is carried by the block's left edge; fill only distinguishes trial lessons. */
-const lessonEdge = (l: LessonView) =>
-  l.status === 'CANCELLED' ? 'var(--c-prev)'
-  : l.status === 'DISPUTED' ? 'var(--danger)'
-  : l.status === 'CONDUCTED' ? 'var(--ok)'
-  : l.status === 'STAR_PENDING' ? 'var(--yellow)'
-  : 'var(--c-people)';
 
 function LessonDrawer({ l, onClose }: { l: LessonView; onClose: () => void }) {
   const { state, run } = useManager();

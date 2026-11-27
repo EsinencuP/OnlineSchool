@@ -68,7 +68,7 @@ export function StudentLessons() {
                   const requested = state.rescheduleRequests.find((r) => r.lessonId === l.lessonId);
                   return (
                     <div key={l.lessonId} className="card" style={{ padding: 16, display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap' }}>
-                      <img src={SUBJECT_ICON[l.subjectName]} alt="" width={48} height={48} style={{ objectFit: 'contain' }} />
+                      <img src={SUBJECT_ICON[l.subjectName]} alt="" className="subject-art md" />
                       <div style={{ flex: 1, minWidth: 180 }}>
                         <b style={{ display: 'block' }}>{l.subjectName}</b>
                         <span className="muted" style={{ fontSize: 13 }}>
@@ -117,7 +117,7 @@ export function StudentLessons() {
                   <tr key={h.lessonId} style={{ cursor: 'default' }}>
                     <td>
                       <div className="cell-person">
-                        <img src={SUBJECT_ICON[h.subjectName]} alt="" width={36} height={36} style={{ objectFit: 'contain' }} />
+                        <img src={SUBJECT_ICON[h.subjectName]} alt="" className="subject-art sm" />
                         <div>
                           <b>{h.subjectName}</b>
                           <span>{fmtDateTime(h.scheduledAt)} · {h.teacherName}</span>

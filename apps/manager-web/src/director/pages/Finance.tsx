@@ -28,16 +28,16 @@ export function DirectorFinance() {
 
       {state.payroll.totals.map((t) => (
         <div key={t.currency} className="kpis" aria-label={`Итоги по зарплате, ${t.currency}`}>
-          <KpiCard label="Начислено преподавателям" value={fmtMoney(t.accrued, t.currency)} context="текущий период" />
-          <KpiCard label="Выплачено" value={fmtMoney(t.paid, t.currency)} context="подтверждённые выплаты" />
-          <KpiCard label="Осталось выплатить" value={fmtMoney(t.outstanding, t.currency)} context="начислено − выплачено" tone={Number(t.outstanding) > 0 ? 'warn' : 'ok'} />
-          <KpiCard label="Ждут начисления" value={fmtMoney(t.pendingAccrual, t.currency)} context="подтверждённые уроки без начисления" to="/director/finance?kind=UNACCRUED_LESSON" />
+          <KpiCard color="teal" label="Начислено преподавателям" value={fmtMoney(t.accrued, t.currency)} context="текущий период" />
+          <KpiCard color="blue" label="Выплачено" value={fmtMoney(t.paid, t.currency)} context="подтверждённые выплаты" />
+          <KpiCard color="yellow" label="Осталось выплатить" value={fmtMoney(t.outstanding, t.currency)} context="начислено − выплачено" tone={Number(t.outstanding) > 0 ? 'warn' : 'ok'} />
+          <KpiCard color="violet" label="Ждут начисления" value={fmtMoney(t.pendingAccrual, t.currency)} context="подтверждённые уроки без начисления" to="/director/finance?kind=UNACCRUED_LESSON" />
         </div>
       ))}
 
       <section aria-labelledby="h-pay">
         <div className="section-title"><h2 id="h-pay">Расчёты с преподавателями</h2></div>
-        <div className="table-wrap" style={{ maxHeight: 'none' }}>
+        <div className="table-wrap boxed">
           <table>
             <thead>
               <tr>
@@ -91,7 +91,7 @@ export function DirectorFinance() {
           {items.length === 0 ? (
             <section className="card"><Empty title="Нет фактов этого типа" /></section>
           ) : (
-            <div className="table-wrap" style={{ maxHeight: 'none' }}>
+            <div className="table-wrap boxed">
               <table>
                 <thead>
                   <tr>
@@ -118,7 +118,7 @@ export function DirectorFinance() {
 
         <section aria-labelledby="h-per">
           <div className="section-title"><h2 id="h-per">Периоды</h2></div>
-          <div className="table-wrap" style={{ maxHeight: 'none' }}>
+          <div className="table-wrap boxed">
             <table>
               <thead>
                 <tr>

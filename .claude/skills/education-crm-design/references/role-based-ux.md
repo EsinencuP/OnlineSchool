@@ -12,4 +12,5 @@ Rules:
 - Actions respect the mirrored backend rules (`*/logic.ts`); UI never offers a command the role does not have.
   Manager: cancel lesson with reason; no booking/reschedule changes without an owner decision.
   Director: approve only `ready` decisions; decline only request kinds, reason 3–500 chars.
-- Teacher cabinet keeps one alert row max and no decorative mascot; student cabinet may keep the mascot.
+- Teacher cabinet: earnings analytics (months, days, students, goal calculator labelled as a projection) and a «Связь с менеджером» card built on schedule requests; a real chat needs a backend endpoint.
+- Student cabinet: exactly the v1 look — largest UI, mascot, pictures, colourful charts. Do not restyle it.

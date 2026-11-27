@@ -62,7 +62,7 @@ function Managers({ rows }: { rows: StaffItem[] }) {
   const { sorted, sort, toggle } = useSort<StaffItem, MKey>(rows, { key: 'openTasks', dir: 'desc' }, (s, k) => (k === 'name' ? s.fullName : managerMetrics(s)[k]));
   if (rows.length === 0) return <section className="card"><Empty title="Никого не нашли" /></section>;
   return (
-    <div className="table-wrap">
+    <div className="table-wrap boxed">
       <table>
         <thead>
           <tr>
@@ -100,7 +100,7 @@ function Teachers({ rows }: { rows: StaffItem[] }) {
   const max = Math.max(1, ...rows.map((r) => teacherMetrics(r).lessonsNext7Days));
   if (rows.length === 0) return <section className="card"><Empty title="Никого не нашли" /></section>;
   return (
-    <div className="table-wrap">
+    <div className="table-wrap boxed">
       <table>
         <thead>
           <tr>
@@ -139,7 +139,7 @@ function Escalations({ rows }: { rows: Escalation[] }) {
   const sorted = [...rows].sort((a, b) => (a.state === b.state ? a.escalatedAt.localeCompare(b.escalatedAt) : a.state === 'OPEN' ? -1 : 1));
   if (rows.length === 0) return <section className="card"><Empty title="Эскалаций нет" /></section>;
   return (
-    <div className="table-wrap">
+    <div className="table-wrap boxed">
       <table>
         <thead>
           <tr>

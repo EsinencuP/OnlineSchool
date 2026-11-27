@@ -78,7 +78,7 @@ function HomeworkCard({ h, now, onOpen }: { h: HomeworkItem; now: string; onOpen
       }}
     >
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        <img src={SUBJECT_ICON[h.subjectName]} alt="" width={40} height={40} style={{ objectFit: 'contain', background: '#fff', borderRadius: 12, padding: 2 }} />
+        <img src={SUBJECT_ICON[h.subjectName]} alt="" className="subject-art sm" />
         <span style={{ fontSize: 12, opacity: 0.8 }}>{h.subjectName}</span>
         <span style={{ marginLeft: 'auto' }}>
           <Badge tone={h.isLate ? 'coral' : homeworkStatus[h.status].tone}>{h.isLate ? 'Просрочено' : homeworkStatus[h.status].label}</Badge>

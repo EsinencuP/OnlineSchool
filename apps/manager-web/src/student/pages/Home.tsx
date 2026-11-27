@@ -76,8 +76,8 @@ export function StudentHome() {
 
         <div className="grid-3">
           {state.subscriptions.map((s) => (
-            <section key={s.subscriptionId} className={`tile ${s.isFrozen ? 'tile-blue' : s.subjectName === 'Математика' ? 'tile-yellow' : 'tile-coral'}`} style={{ minHeight: 170 }}>
-              <img src={SUBJECT_ICON[s.subjectName]} alt="" className="shape" style={{ opacity: 0.9, width: 110, height: 'auto', right: -8, top: 8 }} />
+            <section key={s.subscriptionId} className={`tile has-art ${s.isFrozen ? 'tile-blue' : s.subjectName === 'Математика' ? 'tile-yellow' : 'tile-coral'}`} style={{ minHeight: 170 }}>
+              <img src={SUBJECT_ICON[s.subjectName]} alt="" className="subject-art lg" />
               <h3 style={{ fontSize: 16 }}>{s.subjectName}</h3>
               <span className="muted" style={{ fontSize: 12 }}>{s.teacherName}</span>
               <div style={{ marginTop: 'auto' }}>
@@ -111,7 +111,7 @@ export function StudentHome() {
               <div className="list">
                 {todo.slice(0, 4).map((h) => (
                   <button key={h.homeworkId} type="button" className="row-item" onClick={() => navigate(`/student/homework?id=${h.homeworkId}`)}>
-                    <img src={SUBJECT_ICON[h.subjectName]} alt="" width={36} height={36} style={{ objectFit: 'contain' }} />
+                    <img src={SUBJECT_ICON[h.subjectName]} alt="" className="subject-art sm" />
                     <span className="grow">
                       <span className="title">{h.title}</span>
                       <span className="sub">{h.subjectName}{h.dueAt ? ` · до ${fmtDay(h.dueAt)}` : ''}</span>

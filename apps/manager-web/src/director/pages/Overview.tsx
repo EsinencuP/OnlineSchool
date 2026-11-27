@@ -45,6 +45,7 @@ export function DirectorOverview() {
       <div className="kpis" aria-label="Ключевые показатели">
         <KpiCard
           label="Ждут вашего решения"
+          color="yellow"
           value={decisions.length}
           context={oldest ? `старейшее — ${oldestDays ? `${oldestDays} ${plural(oldestDays, 'день', 'дня', 'дней')}` : 'сегодня'}${blocked ? ` · ${blocked} заблок.` : ''}` : 'очередь пуста'}
           tone={oldestDays >= 3 ? 'problem' : decisions.length ? 'warn' : 'ok'}
@@ -52,20 +53,23 @@ export function DirectorOverview() {
         />
         <KpiCard
           label="Открытые эскалации"
+          color="coral"
           value={openEsc.length}
           context={openEsc.length ? `${openEsc.filter((e) => e.reason === 'MANAGER_UNAVAILABLE').length} — менеджер недоступен` : 'все приняты'}
           tone={openEsc.length ? 'problem' : 'ok'}
           to="/director/team?tab=escalations"
         />
-        <KpiCard label="Менеджеры на связи" value={`${available} / ${managers.length}`} context="сейчас" tone={available < managers.length ? 'warn' : 'neutral'} to="/director/team" />
+        <KpiCard color="teal" label="Менеджеры на связи" value={`${available} / ${managers.length}`} context="сейчас" tone={available < managers.length ? 'warn' : 'neutral'} to="/director/team" />
         <KpiCard
           label="Долг перед преподавателями"
+          color="blue"
           value={payroll ? fmtMoney(payroll.outstanding, payroll.currency) : '—'}
           context={payroll ? `начислено ${fmtMoney(payroll.accrued, payroll.currency)} · выплачено ${fmtMoney(payroll.paid, payroll.currency)}` : 'нет данных'}
           to="/director/finance"
         />
         <KpiCard
           label="Блокеры закрытия периода"
+          color="violet"
           value={period ? period.blockers : '—'}
           context={period ? `период ${fmtDay(period.startsAt)} — ${fmtDay(new Date(new Date(period.endsAt).getTime() - 12 * 3600_000).toISOString())}` : 'нет периода'}
           tone={period && period.blockers > 0 ? 'warn' : 'neutral'}
