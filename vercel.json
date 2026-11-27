@@ -41,7 +41,7 @@
       "destination": "/api/handler"
     },
     {
-      "source": "/:cabinet(manager|teacher|student)/:path*",
+      "source": "/:cabinet(director|manager|teacher|student)/:path*",
       "destination": "/index.html"
     }
   ],

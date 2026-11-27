@@ -2,6 +2,7 @@ import { Mail, Phone, Search, Snowflake } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Ring } from '../../shared/charts';
+import { SortTh, useSort } from '../../shared/analytics';
 import { Avatar, Badge, Bar, Empty, Notice, Panel } from '../../shared/ui';
 import { FREEZE_MAX_DAYS, FREEZE_MAX_TOTAL_DAYS } from '../logic';
 import { useManager } from '../store';
@@ -9,24 +10,41 @@ import type { StudentListItem, StudentStatus } from '../types';
 import { fmtDateTime, fmtDay, fmtMoney, relative } from '../../shared/format';
 import { paymentStatus, studentStatus, taskType } from '../labels';
 
-const FILTERS: (StudentStatus | 'ALL')[] = ['ALL', 'ACTIVE', 'FROZEN', 'EXPIRED'];
+type Filter = StudentStatus | 'ALL' | 'DEBT';
+const FILTERS: Filter[] = ['ALL', 'ACTIVE', 'FROZEN', 'EXPIRED', 'DEBT'];
+const isDebt = (s: StudentListItem) => s.balance.startsWith('-');
+const matches = (s: StudentListItem, f: Filter) => f === 'ALL' || (f === 'DEBT' ? isDebt(s) : s.status === f);
+type SortKey = 'name' | 'remaining' | 'balance' | 'next' | 'tasks';
 
 export function Students() {
   const { state } = useManager();
   const [params, setParams] = useSearchParams();
-  const [filter, setFilter] = useState<StudentStatus | 'ALL'>('ALL');
+  const filter = (params.get('status') as Filter | null) ?? 'ALL';
+  const setFilter = (f: Filter) => {
+    const next = new URLSearchParams(params);
+    if (f === 'ALL') next.delete('status');
+    else next.set('status', f);
+    setParams(next, { replace: true });
+  };
   const [q, setQ] = useState(params.get('q') ?? '');
   const selected = state.students.find((s) => s.studentId === params.get('id')) ?? null;
 
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return state.students.filter((s) => {
-      if (filter !== 'ALL' && s.status !== filter) return false;
+      if (!matches(s, filter)) return false;
       if (!needle) return true;
       const card = state.cards[s.studentId];
       return [s.fullName, card?.contacts.guardianName ?? '', s.maskedPhone ?? ''].some((v) => v.toLowerCase().includes(needle));
     });
   }, [state.students, state.cards, filter, q]);
+  const { sorted, sort, toggle } = useSort<StudentListItem, SortKey>(rows, { key: 'tasks', dir: 'desc' }, (s, k) =>
+    k === 'name' ? s.fullName
+    : k === 'remaining' ? (s.activeSubscription?.remainingLessons ?? null)
+    : k === 'balance' ? Number(s.balance)
+    : k === 'next' ? (s.nextLessonAt ? -new Date(s.nextLessonAt).getTime() : null)
+    : s.overdueTasksCount * 100 + s.openTasksCount,
+  );
 
   const open = (id: string | null) => {
     const next = new URLSearchParams(params);
@@ -48,8 +66,8 @@ export function Students() {
         <div className="chips" role="group" aria-label="Статус">
           {FILTERS.map((f) => (
             <button key={f} type="button" className="chip" aria-pressed={filter === f} onClick={() => setFilter(f)}>
-              {f === 'ALL' ? 'Все' : studentStatus[f].label}
-              <span className="n">{f === 'ALL' ? state.students.length : state.students.filter((s) => s.status === f).length}</span>
+              {f === 'ALL' ? 'Все' : f === 'DEBT' ? 'С долгом' : studentStatus[f].label}
+              <span className="n">{state.students.filter((s) => matches(s, f)).length}</span>
             </button>
           ))}
         </div>
@@ -60,38 +78,38 @@ export function Students() {
         </div>
       </div>
 
-      <section className="card" style={{ padding: 14 }}>
-        {rows.length === 0 ? (
+      {rows.length === 0 ? (
+        <section className="card">
           <Empty title="Никого не нашли" text="Измените фильтр или запрос." />
-        ) : (
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Ученик</th>
-                  <th>Статус</th>
-                  <th>Абонемент</th>
-                  <th>Баланс</th>
-                  <th>Следующий урок</th>
-                  <th>Задачи</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((s) => (
-                  <StudentRow key={s.studentId} s={s} now={state.now} onOpen={() => open(s.studentId)} />
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </section>
+        </section>
+      ) : (
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <SortTh k="name" sort={sort} onSort={toggle}>Ученик</SortTh>
+                <th scope="col">Статус</th>
+                <SortTh k="remaining" sort={sort} onSort={toggle}>Абонемент</SortTh>
+                <SortTh k="balance" sort={sort} onSort={toggle} align="r">Баланс</SortTh>
+                <SortTh k="next" sort={sort} onSort={toggle}>Следующий урок</SortTh>
+                <SortTh k="tasks" sort={sort} onSort={toggle}>Задачи</SortTh>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((s) => (
+                <StudentRow key={s.studentId} s={s} now={state.now} total={state.subscriptions.find((x) => x.id === s.activeSubscription?.id)?.totalLessons ?? null} onOpen={() => open(s.studentId)} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {selected && <StudentDrawer studentId={selected.studentId} onClose={() => open(null)} />}
     </div>
   );
 }
 
-function StudentRow({ s, now, onOpen }: { s: StudentListItem; now: string; onOpen: () => void }) {
+function StudentRow({ s, now, total, onOpen }: { s: StudentListItem; now: string; total: number | null; onOpen: () => void }) {
   const sub = s.activeSubscription;
   const neg = s.balance.startsWith('-');
   return (
@@ -110,15 +128,15 @@ function StudentRow({ s, now, onOpen }: { s: StudentListItem; now: string; onOpe
         {sub ? (
           <div style={{ display: 'grid', gap: 6 }}>
             <span className="num" style={{ fontSize: 13 }}>
-              {sub.remainingLessons} зан. · до {sub.endsAt ? fmtDay(sub.endsAt) : '—'}
+              {sub.remainingLessons}{total ? ` из ${total}` : ''} зан. · до {sub.endsAt ? fmtDay(sub.endsAt) : '—'}
             </span>
-            <Bar value={sub.remainingLessons} max={12} color={sub.remainingLessons <= 2 ? 'var(--coral)' : 'var(--teal)'} />
+            {total ? <Bar value={sub.remainingLessons} max={total} color={sub.remainingLessons <= 2 ? 'var(--danger)' : 'var(--c-people)'} /> : null}
           </div>
         ) : (
           <span className="muted">Нет активного</span>
         )}
       </td>
-      <td className={`num${neg ? ' neg' : ''}`}>{fmtMoney(s.balance, s.balanceCurrency)}</td>
+      <td className={`num r${neg ? ' neg' : ''}`}>{fmtMoney(s.balance, s.balanceCurrency)}</td>
       <td className="num">{s.nextLessonAt ? `${fmtDateTime(s.nextLessonAt)}` : <span className="muted">—</span>}<div className="muted" style={{ fontSize: 12 }}>{s.nextLessonAt ? relative(s.nextLessonAt, now) : ''}</div></td>
       <td>
         {s.openTasksCount === 0 ? (

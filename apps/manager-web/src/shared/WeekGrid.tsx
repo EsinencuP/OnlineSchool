@@ -1,4 +1,5 @@
-import { dayKey, fmtTime } from './format';
+import type { ReactNode } from 'react';
+import { dayKey, fmtTime, hourOf } from './format';
 
 export const GRID_START_H = 9;
 export const GRID_END_H = 21;
@@ -12,68 +13,123 @@ export interface GridItem {
   title: string;
   subtitle: string;
   background: string;
+  /** Left edge colour: status at a glance without relying on the fill alone. */
+  edge?: string;
   cancelled?: boolean;
   label: string;
+  /** Resource column (e.g. teacher id) for the day-by-resource view. */
+  column?: string;
 }
 
-export function weekDays(nowIso: string, weekOffset: number): Date[] {
-  const today = new Date(nowIso);
-  today.setHours(0, 0, 0, 0);
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7) + weekOffset * 7);
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    return d;
+/** A column is a school-timezone day; in resource mode it is one resource on that day. */
+export interface GridColumn {
+  key: string;
+  day: string;
+  head: ReactNode;
+  label: string;
+  weekend?: boolean;
+}
+
+const keyToNoonUtc = (key: string) => new Date(`${key}T12:00:00Z`);
+const noonKey = (d: Date) => d.toISOString().slice(0, 10);
+
+/** Monday-first week of day keys (YYYY-MM-DD, school timezone) around `nowIso`. */
+export function weekDays(nowIso: string, weekOffset: number): string[] {
+  const today = keyToNoonUtc(dayKey(nowIso));
+  const monday = new Date(today.getTime() - ((today.getUTCDay() + 6) % 7) * 864e5 + weekOffset * 7 * 864e5);
+  return Array.from({ length: 7 }, (_, i) => noonKey(new Date(monday.getTime() + i * 864e5)));
+}
+
+/** Day key shifted by n days. */
+export const addDays = (key: string, n: number) => noonKey(new Date(keyToNoonUtc(key).getTime() + n * 864e5));
+
+const fmtKey = (key: string, opts: Intl.DateTimeFormatOptions) => keyToNoonUtc(key).toLocaleDateString('ru-RU', { timeZone: 'UTC', ...opts });
+export const dayLabel = (key: string) => fmtKey(key, { weekday: 'long', day: 'numeric', month: 'long' });
+export const weekRangeLabel = (days: string[]) => `${fmtKey(days[0]!, { day: 'numeric', month: 'long' })} — ${fmtKey(days[6]!, { day: 'numeric', month: 'long' })}`;
+
+export function dayColumns(days: string[]): GridColumn[] {
+  return days.map((k) => {
+    const wd = (keyToNoonUtc(k).getUTCDay() + 6) % 7;
+    return { key: k, day: k, head: <>{DOW[wd]}<b className="num">{keyToNoonUtc(k).getUTCDate()}</b></>, label: `${DOW[wd]} ${keyToNoonUtc(k).getUTCDate()}`, weekend: wd >= 5 };
   });
 }
 
-export const weekRangeLabel = (days: Date[]) =>
-  `${days[0]!.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })} — ${days[6]!.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' })}`;
+/**
+ * Side-by-side lanes for overlapping items: items that overlap transitively form one cluster,
+ * each item takes the first free lane, and the whole cluster shares the cluster's lane count.
+ */
+export function layoutLanes(items: { id: string; startsAt: string; endsAt: string }[]) {
+  const out = new Map<string, { lane: number; of: number }>();
+  const sorted = [...items].sort((a, b) => a.startsAt.localeCompare(b.startsAt) || b.endsAt.localeCompare(a.endsAt));
+  let cluster: { id: string; lane: number }[] = [];
+  let laneEnds: string[] = [];
+  let clusterEnd = '';
+  const flush = () => {
+    for (const c of cluster) out.set(c.id, { lane: c.lane, of: laneEnds.length });
+    cluster = [];
+    laneEnds = [];
+  };
+  for (const it of sorted) {
+    if (cluster.length && it.startsAt >= clusterEnd) flush();
+    let lane = laneEnds.findIndex((end) => end <= it.startsAt);
+    if (lane === -1) lane = laneEnds.push(it.endsAt) - 1;
+    else laneEnds[lane] = it.endsAt;
+    cluster.push({ id: it.id, lane });
+    clusterEnd = cluster.length === 1 || it.endsAt > clusterEnd ? it.endsAt : clusterEnd;
+  }
+  flush();
+  return out;
+}
 
 /**
- * Week calendar shared by manager and teacher cabinets. Overlapping items are
- * laid out in lanes; optional `shade` paints availability windows per weekday.
+ * Calendar grid shared by manager and teacher cabinets. Pass `days` for a week, or
+ * `columns` for one day split by resource. Overlapping items are laid out in lanes;
+ * `shade` paints availability windows per column index (weekday in week mode).
  */
 export function WeekGrid({
   days,
+  columns,
   items,
   now,
   onOpen,
   shade,
 }: {
-  days: Date[];
+  days?: string[];
+  columns?: GridColumn[];
   items: GridItem[];
   now: string;
   onOpen: (id: string) => void;
-  shade?: (weekday: number) => { from: number; to: number }[];
+  shade?: (index: number) => { from: number; to: number }[];
 }) {
-  const keys = days.map((d) => dayKey(d.toISOString()));
+  const cols = columns ?? dayColumns(days ?? []);
   const todayKey = dayKey(now);
-  const nowDate = new Date(now);
-  const hours = GRID_END_H - GRID_START_H;
+  // Widen the default 09–21 window so early or late lessons are never dropped.
+  const shown = items.filter((it) => cols.some((c) => c.day === dayKey(it.startsAt)));
+  const startH = Math.max(0, Math.min(GRID_START_H, ...shown.map((it) => Math.floor(hourOf(it.startsAt)))));
+  const endH = Math.min(24, Math.max(GRID_END_H, ...shown.map((it) => Math.ceil(hourOf(it.startsAt) + (new Date(it.endsAt).getTime() - new Date(it.startsAt).getTime()) / 3600_000))));
+  const hours = endH - startH;
+  const nowTop = (hourOf(now) - startH) * ROW;
 
   return (
-    <div className="week" role="grid" aria-label="Неделя">
+    <div className="week" role="region" aria-label="Расписание" style={{ ['--cols' as string]: cols.length }}>
       <div />
-      {days.map((d, i) => (
-        <div key={i} className={`week-day-head${keys[i] === todayKey ? ' today' : ''}`}>
-          {DOW[i]}
-          <b className="num">{d.getDate()}</b>
+      {cols.map((c) => (
+        <div key={c.key} className={`week-day-head${!columns && c.day === todayKey ? ' today' : ''}`}>
+          {c.head}
         </div>
       ))}
       <div>
         {Array.from({ length: hours }, (_, h) => (
           <div key={h} className="week-hour num">
-            {String(GRID_START_H + h).padStart(2, '0')}:00
+            {String(startH + h).padStart(2, '0')}:00
           </div>
         ))}
       </div>
-      {days.map((d, i) => {
-        const dayItems = items.filter((it) => dayKey(it.startsAt) === keys[i]);
-        const nowTop = (nowDate.getHours() + nowDate.getMinutes() / 60 - GRID_START_H) * ROW;
+      {cols.map((c, i) => {
+        const colItems = items.filter((it) => dayKey(it.startsAt) === c.day && (!columns || it.column === c.key));
+        const lanes = layoutLanes(colItems);
         return (
-          <div key={i} className={`week-col${i >= 5 ? ' weekend' : ''}`} role="gridcell" aria-label={`${DOW[i]} ${d.getDate()}: ${dayItems.length}`}>
+          <div key={c.key} className={`week-col${c.weekend ? ' weekend' : ''}`} role="group" aria-label={`${c.label}: ${colItems.length}`}>
             {Array.from({ length: hours }, (_, h) => (
               <div key={h} className="week-slot-line" />
             ))}
@@ -81,18 +137,15 @@ export function WeekGrid({
               <div
                 key={k}
                 className="avail-shade"
-                style={{ top: (Math.max(w.from, GRID_START_H) - GRID_START_H) * ROW, height: (Math.min(w.to, GRID_END_H) - Math.max(w.from, GRID_START_H)) * ROW }}
+                style={{ top: (Math.max(w.from, startH) - startH) * ROW, height: Math.max(0, Math.min(w.to, endH) - Math.max(w.from, startH)) * ROW }}
                 aria-hidden="true"
               />
             ))}
-            {keys[i] === todayKey && nowTop > 0 && nowTop < hours * ROW && <div className="now-marker" style={{ top: nowTop }} aria-hidden="true" />}
-            {dayItems.map((it) => {
-              const overlapping = dayItems.filter((o) => o.startsAt < it.endsAt && it.startsAt < o.endsAt);
-              const lane = overlapping.indexOf(it);
-              const s = new Date(it.startsAt);
-              const top = (s.getHours() + s.getMinutes() / 60 - GRID_START_H) * ROW;
-              if (top < 0 || top > hours * ROW) return null;
-              const height = Math.max(28, ((new Date(it.endsAt).getTime() - s.getTime()) / 3600_000) * ROW - 4);
+            {c.day === todayKey && nowTop > 0 && nowTop < hours * ROW && <div className="now-marker" style={{ top: nowTop }} aria-hidden="true" />}
+            {colItems.map((it) => {
+              const { lane, of } = lanes.get(it.id) ?? { lane: 0, of: 1 };
+              const top = (hourOf(it.startsAt) - startH) * ROW;
+              const height = Math.max(28, ((new Date(it.endsAt).getTime() - new Date(it.startsAt).getTime()) / 3600_000) * ROW - 4);
               return (
                 <button
                   key={it.id}
@@ -102,12 +155,14 @@ export function WeekGrid({
                     top: top + 2,
                     height,
                     background: it.background,
-                    left: `calc(${(lane / overlapping.length) * 100}% + 3px)`,
-                    width: `calc(${100 / overlapping.length}% - 6px)`,
+                    ['--block-edge' as string]: it.edge ?? 'transparent',
+                    left: `calc(${(lane / of) * 100}% + 3px)`,
+                    width: `calc(${100 / of}% - 6px)`,
                     right: 'auto',
                   }}
                   onClick={() => onOpen(it.id)}
                   aria-label={it.label}
+                  title={it.label}
                 >
                   <b>{it.title}</b>
                   <span className="num">

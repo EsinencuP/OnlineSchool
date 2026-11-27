@@ -37,7 +37,6 @@ export interface TeacherBrief {
   teacherId: string;
   name: string;
   subjects: string[];
-  loadPercent: number;
 }
 
 export interface ManagerState {
@@ -51,6 +50,4 @@ export interface ManagerState {
   lessons: LessonView[];
   payments: PaymentView[];
   teachers: TeacherBrief[];
-  /** Lead conversion per day for the last 14 days (created, converted). */
-  leadTrend: { day: string; created: number; converted: number }[];
 }

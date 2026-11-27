@@ -26,12 +26,12 @@ const iso = (base: number, offsetMs: number) => new Date(base + offsetMs).toISOS
 const hourFloor = (t: number) => Math.floor(t / H) * H;
 
 const TEACHERS: TeacherBrief[] = [
-  { teacherId: uid(1, 1), name: 'Елена Морозан', subjects: ['Математика'], loadPercent: 82 },
-  { teacherId: uid(1, 2), name: 'Андрей Чобану', subjects: ['Физика', 'Химия'], loadPercent: 64 },
-  { teacherId: uid(1, 3), name: 'Мария Русу', subjects: ['Английский язык'], loadPercent: 91 },
-  { teacherId: uid(1, 4), name: 'Игорь Лупу', subjects: ['Информатика'], loadPercent: 47 },
-  { teacherId: uid(1, 5), name: 'Ольга Попа', subjects: ['История'], loadPercent: 38 },
-  { teacherId: uid(1, 6), name: 'Наталья Гуцу', subjects: ['Математика', 'Физика'], loadPercent: 73 },
+  { teacherId: uid(1, 1), name: 'Елена Морозан', subjects: ['Математика'] },
+  { teacherId: uid(1, 2), name: 'Андрей Чобану', subjects: ['Физика', 'Химия'] },
+  { teacherId: uid(1, 3), name: 'Мария Русу', subjects: ['Английский язык'] },
+  { teacherId: uid(1, 4), name: 'Игорь Лупу', subjects: ['Информатика'] },
+  { teacherId: uid(1, 5), name: 'Ольга Попа', subjects: ['История'] },
+  { teacherId: uid(1, 6), name: 'Наталья Гуцу', subjects: ['Математика', 'Физика'] },
 ];
 
 interface StudentSeed {
@@ -471,12 +471,6 @@ export function createSeed(nowDate = new Date()): ManagerState {
     };
   });
 
-  const leadTrend = Array.from({ length: 14 }, (_, k) => {
-    const created = [3, 5, 2, 6, 4, 7, 3, 5, 8, 4, 6, 5, 7, 3][k]!;
-    const converted = [1, 1, 0, 2, 1, 3, 1, 2, 3, 1, 2, 2, 3, 1][k]!;
-    return { day: iso(slot, (k - 13) * D), created, converted };
-  });
-
   return {
     me: {
       managerId: uid(0, 1),
@@ -504,6 +498,5 @@ export function createSeed(nowDate = new Date()): ManagerState {
     lessons: lessons.sort((a, b) => a.startsAt.localeCompare(b.startsAt)),
     payments,
     teachers: TEACHERS,
-    leadTrend,
   };
 }

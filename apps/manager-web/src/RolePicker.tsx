@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 
 const CABINETS = [
   {
+    to: '/director',
+    title: 'Руководитель',
+    tone: 'tile-violet',
+    who: 'Анна Бордя',
+    points: ['Очередь решений: оплаты, возвраты, исключения', 'Эскалации и нагрузка команды', 'Расчёты с преподавателями', 'Закрытие финансового периода'],
+  },
+  {
     to: '/manager',
     title: 'Менеджер',
     tone: 'tile-yellow',
@@ -31,9 +38,9 @@ export function RolePicker() {
     <div style={{ minHeight: '100%', padding: '40px 16px', display: 'grid', placeItems: 'center' }}>
       <div style={{ width: 'min(1120px, 100%)', display: 'grid', gap: 28 }}>
         <header style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap' }}>
-          <img src="/logo.svg" alt="2K Academy" style={{ height: 64 }} />
+          <img src="/logo.svg" alt="2K Academy" style={{ height: 48 }} />
           <div>
-            <h1 style={{ fontSize: 32, fontWeight: 600, letterSpacing: '-.02em' }}>Кабинеты платформы</h1>
+            <h1 style={{ fontSize: 24, fontWeight: 600, letterSpacing: '-.01em' }}>Кабинеты платформы</h1>
             <p className="muted">Демо без входа: данные синтетические и хранятся в памяти браузера. Формат данных совпадает с API /api/v1.</p>
           </div>
         </header>

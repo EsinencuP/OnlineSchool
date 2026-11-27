@@ -67,11 +67,11 @@ export function TeacherToday() {
         </section>
 
         {overdue.length > 0 && (
-          <button type="button" className="row-item" style={{ background: 'var(--coral)', color: '#fff', padding: '14px 18px' }} onClick={() => navigate('/teacher/journal')}>
-            <TriangleAlert size={20} />
+          <button type="button" className="row-item alert-row" onClick={() => navigate('/teacher/journal')}>
+            <TriangleAlert size={18} />
             <span className="grow">
               <b>{overdue.length} {plural(overdue.length, 'урок', 'урока', 'уроков')} без результата дольше 24 часов</b>
-              <span style={{ display: 'block', fontSize: 13, opacity: 0.9 }}>Задача уже ушла менеджеру. Внесите результат, чтобы урок попал в начисления.</span>
+              <span style={{ display: 'block', fontSize: 13, color: 'var(--ink-2)' }}>Задача уже ушла менеджеру. Внесите результат, чтобы урок попал в начисления.</span>
             </span>
             <ArrowUpRight size={18} />
           </button>
@@ -149,7 +149,7 @@ export function TeacherToday() {
               <h3 id="h-load">Нагрузка недели</h3>
               <span className="right muted num" style={{ fontSize: 13 }}>{weekLoad.reduce((a, b) => a + b, 0)} / {state.limits.perWeek}</span>
             </div>
-            <Bars values={weekLoad} highlight={(new Date(state.now).getDay() + 6) % 7} color="var(--teal)" label={`Уроков по дням недели: ${weekLoad.join(', ')}`} />
+            <Bars values={weekLoad} highlight={(new Date(state.now).getDay() + 6) % 7} color="var(--teal)" limit={state.limits.perDay} label={`Уроков по дням недели: ${weekLoad.join(', ')}; лимит ${state.limits.perDay} в день`} />
             <div className="legend" style={{ justifyContent: 'space-between' }}>
               {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((d, i) => <span key={d}>{d} <b className="num">{weekLoad[i]}</b></span>)}
             </div>

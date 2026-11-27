@@ -42,32 +42,41 @@ export function Sparkline({
   );
 }
 
+/**
+ * Solid columns for a small series (e.g. lessons per weekday). The highlighted column is
+ * the current one; `limit` draws the allowed maximum as a dashed reference line.
+ */
 export function Bars({
   values,
   highlight,
-  color = 'var(--ink)',
+  color = 'var(--c-people)',
   height = 96,
   label,
+  limit,
 }: {
   values: number[];
   highlight?: number;
   color?: string;
   height?: number;
   label: string;
+  limit?: number;
 }) {
-  const max = Math.max(1, ...values);
+  const max = Math.max(1, limit ?? 0, ...values);
   return (
-    <div role="img" aria-label={label} style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height }}>
+    <div role="img" aria-label={label} style={{ position: 'relative', display: 'flex', alignItems: 'flex-end', gap: 6, height, borderBottom: '1px solid var(--line-strong)' }}>
+      {limit ? (
+        <span aria-hidden="true" style={{ position: 'absolute', left: 0, right: 0, bottom: `${(limit / max) * 100}%`, borderTop: '1px dashed var(--danger)' }} />
+      ) : null}
       {values.map((v, i) => (
         <div
           key={i}
           style={{
             flex: 1,
-            height: `${Math.max(6, (v / max) * 100)}%`,
-            borderRadius: 99,
-            background: i === highlight ? color : 'transparent',
-            border: i === highlight ? 0 : `2px dashed ${color}`,
-            opacity: i === highlight ? 1 : 0.45,
+            height: `${(v / max) * 100}%`,
+            minHeight: v > 0 ? 3 : 0,
+            borderRadius: '3px 3px 0 0',
+            background: limit && v > limit ? 'var(--danger)' : i === highlight ? color : 'var(--c-prev)',
+            opacity: i === highlight || (limit && v > limit) ? 1 : 0.55,
           }}
         />
       ))}

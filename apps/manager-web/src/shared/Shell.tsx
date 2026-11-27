@@ -5,9 +5,10 @@ import { fmtDayLong } from './format';
 import type { Toast } from './store';
 import { Avatar } from './ui';
 
-export type Role = 'manager' | 'teacher' | 'student';
+export type Role = 'director' | 'manager' | 'teacher' | 'student';
 
 export const ROLE_LABEL: Record<Role, string> = {
+  director: 'Руководитель',
   manager: 'Менеджер',
   teacher: 'Преподаватель',
   student: 'Ученик',

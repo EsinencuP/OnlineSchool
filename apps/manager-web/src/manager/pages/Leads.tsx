@@ -14,9 +14,22 @@ const SUBJECTS = ['Математика', 'Английский язык', 'Фи
 export function Leads() {
   const { state } = useManager();
   const [params, setParams] = useSearchParams();
-  const [closed, setClosed] = useState(false);
+  // Filters live in the URL so links from the dashboard land filtered and Back restores them.
+  const closed = params.get('view') === 'closed';
+  const setClosed = (v: boolean) => {
+    const next = new URLSearchParams(params);
+    if (v) next.set('view', 'closed');
+    else next.delete('view');
+    setParams(next, { replace: true });
+  };
   const [source, setSource] = useState<LeadSource | 'ALL'>('ALL');
-  const [onlyOverdue, setOnlyOverdue] = useState(false);
+  const onlyOverdue = params.get('overdue') === '1';
+  const setOnlyOverdue = (fn: (v: boolean) => boolean) => {
+    const next = new URLSearchParams(params);
+    if (fn(onlyOverdue)) next.set('overdue', '1');
+    else next.delete('overdue');
+    setParams(next, { replace: true });
+  };
   const selectedId = params.get('lead');
   const selected = state.leads.find((l) => l.leadId === selectedId) ?? null;
   const creating = params.get('new') === '1';

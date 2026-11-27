@@ -1,6 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { DirectorLayout } from './director/Layout';
+import { DirectorDecisions } from './director/pages/Decisions';
+import { DirectorFinance } from './director/pages/Finance';
+import { DirectorOverview } from './director/pages/Overview';
+import { DirectorTeam } from './director/pages/Team';
+import { DirectorStoreProvider } from './director/store';
 import { ManagerLayout } from './manager/Layout';
 import { Dashboard } from './manager/pages/Dashboard';
 import { Leads } from './manager/pages/Leads';
@@ -28,6 +34,16 @@ import './styles.css';
 
 const router = createBrowserRouter([
   { path: '/', element: <RolePicker /> },
+  {
+    path: '/director',
+    element: <DirectorLayout />,
+    children: [
+      { index: true, element: <DirectorOverview /> },
+      { path: 'decisions', element: <DirectorDecisions /> },
+      { path: 'team', element: <DirectorTeam /> },
+      { path: 'finance', element: <DirectorFinance /> },
+    ],
+  },
   {
     path: '/manager',
     element: <ManagerLayout />,
@@ -75,11 +91,13 @@ const router = createBrowserRouter([
 function Root() {
   return (
     <ManagerStoreProvider>
-      <TeacherStoreProvider>
-        <StudentStoreProvider>
-          <RouterProvider router={router} />
-        </StudentStoreProvider>
-      </TeacherStoreProvider>
+      <DirectorStoreProvider>
+        <TeacherStoreProvider>
+          <StudentStoreProvider>
+            <RouterProvider router={router} />
+          </StudentStoreProvider>
+        </TeacherStoreProvider>
+      </DirectorStoreProvider>
     </ManagerStoreProvider>
   );
 }

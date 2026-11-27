@@ -10,6 +10,14 @@ const weekdayFmt = dtf({ weekday: 'short' });
 const keyFmt = dtf({ year: 'numeric', month: '2-digit', day: '2-digit' });
 
 export const fmtTime = (iso: string) => timeFmt.format(new Date(iso));
+
+const hourFmt = dtf({ hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+/** Decimal hour of the day in school timezone (14:30 → 14.5), independent of the browser timezone. */
+export const hourOf = (iso: string) => {
+  const p = hourFmt.formatToParts(new Date(iso));
+  const get = (t: string) => Number(p.find((x) => x.type === t)?.value ?? 0);
+  return get('hour') + get('minute') / 60;
+};
 export const fmtDay = (iso: string) => dayFmt.format(new Date(iso)).replace('.', '');
 export const fmtDayLong = (iso: string) => dayLongFmt.format(new Date(iso));
 export const fmtWeekday = (iso: string) => weekdayFmt.format(new Date(iso));

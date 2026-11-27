@@ -28,6 +28,11 @@ export type Command =
   | { type: 'task.claim'; taskId: string }
   | { type: 'task.resolve'; taskId: string; note: string }
   | { type: 'payment.requestApproval'; paymentId: string }
+  /**
+   * Director decision (POST /director/payments/{id}/confirm|reject). It lives in this store
+   * because the demo keeps payment state here; the manager UI never dispatches it.
+   */
+  | { type: 'payment.decide'; paymentId: string; decision: 'CONFIRM' | 'REJECT'; reason?: string }
   | { type: 'subscription.freeze'; subscriptionId: string; days: number }
   | { type: 'subscription.unfreeze'; subscriptionId: string }
   | { type: 'lesson.cancel'; lessonId: string; reason: string };
@@ -251,6 +256,25 @@ export function execute(state: ManagerState, cmd: Command): CommandResult {
           payments: state.payments.map((x) => (x.id === p.id ? { ...x, status: 'AWAITING_APPROVAL' } : x)),
         },
         message: 'Платёж отправлен директору на подтверждение',
+      };
+    }
+    case 'payment.decide': {
+      const p = state.payments.find((x) => x.id === cmd.paymentId);
+      if (!p) return fail('NOT_FOUND', errorText('NOT_FOUND'));
+      if (p.status !== 'AWAITING_APPROVAL') return fail('PAYMENT_NOT_AWAITING_APPROVAL', 'Платёж уже не ждёт решения директора.');
+      const reason = cmd.reason?.trim() ?? '';
+      if (cmd.decision === 'REJECT' && (reason.length < 3 || reason.length > 500))
+        return fail('REASON_REQUIRED', 'Укажите причину — от 3 до 500 символов, её увидит менеджер.');
+      const status = cmd.decision === 'CONFIRM' ? 'CONFIRMED' : 'REJECTED';
+      return {
+        ok: true,
+        state: {
+          ...state,
+          payments: state.payments.map((x) =>
+            x.id === p.id ? { ...x, status, rejectionReason: status === 'REJECTED' ? reason : null } : x,
+          ),
+        },
+        message: status === 'CONFIRMED' ? 'Оплата подтверждена' : 'Оплата отклонена, менеджер увидит причину',
       };
     }
     case 'subscription.freeze': {

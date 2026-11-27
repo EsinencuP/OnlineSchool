@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cabinets-web",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["--filter", "@online-school/manager-web", "dev"],
+      "port": 5174
+    }
+  ]
+}
